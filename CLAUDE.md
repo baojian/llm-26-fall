@@ -6,7 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Course materials for **Natural Language Processing and Large Language Models** (CS40008.01) at Fudan University, Fall 2026. All course content in this repository (lecture notes, examples, exercises, docs) is written in English, even though the course is taught in Chinese.
 
-The repo is currently scaffolding only: `README.md`, a student-facing `docs/schedule.md` (class period times and our 2026–2027 meeting dates), a uv project definition with the core dependencies, and a `.gitignore`. There is no source code, no tests, and no lint/format configuration yet. Do not assume a package layout exists; check the tree before referencing paths.
+The repo is currently scaffolding only: `README.md`, the course website `index.html` (see below), a student-facing `docs/schedule.md` (class period times and our 2026–2027 meeting dates), a git-ignored `workspace/` for students' own files, a uv project definition with the core dependencies, and a `.gitignore`. There is no source code, no tests, and no lint/format configuration yet. Do not assume a package layout exists; check the tree before referencing paths.
+
+## Course website (`index.html`)
+
+The public course page is a single hand-written `index.html` at the repo root with inline CSS and a few lines of vanilla JS (it highlights the current teaching week from each row's `data-start` Sunday date). No build step, no external assets; `.nojekyll` makes GitHub Pages serve it as-is from the `main` branch root, the same setup as the Spring 2026 site at `baojian/llm-26`. Edit the HTML directly. Keep dates in the "Key dates" cards and the schedule table consistent with `docs/schedule.md`. Weekly materials (slides, notebooks, PDFs) get linked from the matching table row when they are added. The Fall 2026 storyline, grading, and project format come from the instructor's teaching plan, kept outside this repo.
 
 ## Python environment (uv)
 
@@ -32,5 +36,7 @@ Prefer `uv run <cmd>` over activating `.venv` manually. When test or lint tools 
 
 - **Changes go through pull requests.** The README states lecture materials are prepared via PRs so they stay reviewable. Do not commit directly to `main`.
 - **Never commit model weights or experiment output.** `.gitignore` excludes `*.pt`, `*.pth`, `*.ckpt`, `*.safetensors`, `checkpoints/`, `outputs/`, and `logs/`. Keep large artifacts out of git; reference download locations instead.
+- **Instructor material lives elsewhere.** Solutions, hidden tests, rubrics, answer keys, and grading scripts belong in the private companion repo `baojian/llm-26-fall-instructors` (checked out at `../llm-26-fall-instructors`). Never add them here. Assignment handouts arrive in this repo only through that repo's `grading/strip_solutions.py`, so do not hand-edit released handout files; fix the canonical copy there and re-release.
+- **Student work lives in `workspace/`.** Its contents are git-ignored except `workspace/README.md`, so students can pull updates without conflicts. Never place course material there, and never commit anything from it. When a student asks to modify a course file, copy it into `workspace/` and edit the copy; run it from the repo root with `uv run python workspace/<file>.py`.
 - **Secrets stay in `.env`** (ignored). If an example config is needed, name it `.env.example`, which is explicitly allowed by `.gitignore`.
 - Student contributions via issues and PRs are planned but participation guidelines have not been published yet.

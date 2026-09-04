@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS40008.01 NLP &amp; LLMs · Fall 2026 · Fudan University</title>
+<meta name="description" content="Natural Language Processing and Large Language Models, Fall 2026 at Fudan University. Wednesdays 13:30–16:10, HGX103.">
+<style>
+  :root {
+    --bg: #fbfbf9; --fg: #1d1f24; --muted: #5b6270; --line: #e2e4e8;
+    --card: #ffffff; --accent: #1f4e8c; --accent-soft: #e8eef7;
+    --star: #b5651d; --star-soft: #fff3e6; --now: #eef8ee; --holiday: #faf0f0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a; --fg: #e7e9ee; --muted: #a0a7b4; --line: #2b2f37;
+      --card: #1b1e24; --accent: #7fb0f0; --accent-soft: #1d2a3d;
+      --star: #f0a860; --star-soft: #2e2318; --now: #1c2b1c; --holiday: #2c1d1d;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code { font: 0.92em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; }
+  pre { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  pre code { background: none; padding: 0; }
+
+  header.hero { padding: 40px 20px 24px; border-bottom: 1px solid var(--line); background: var(--card); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  .hero h1 { margin: 0 0 6px; font-size: 2rem; line-height: 1.2; letter-spacing: -0.01em; }
+  .hero .sub { margin: 0; color: var(--muted); font-size: 1.05rem; }
+  .hero .meta { margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--muted); font-size: 0.95rem; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 600; font-size: 0.85rem; }
+  .chip.now-chip { background: var(--now); color: #2c6b2c; }
+  @media (prefers-color-scheme: dark) { .chip.now-chip { color: #9fd89f; } }
+
+  nav.top { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+  nav.top .wrap { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 10px 20px; font-size: 0.95rem; }
+  nav.top a { color: var(--fg); font-weight: 500; }
+  nav.top a:hover { color: var(--accent); text-decoration: none; }
+
+  main section { padding: 36px 0 8px; border-bottom: 1px solid var(--line); }
+  main section:last-of-type { border-bottom: none; }
+  h2 { font-size: 1.5rem; margin: 0 0 14px; letter-spacing: -0.01em; }
+  h3 { font-size: 1.12rem; margin: 22px 0 8px; }
+  p, ul, ol { margin: 0 0 12px; }
+  ul, ol { padding-left: 1.3em; }
+  li { margin: 3px 0; }
+  .muted { color: var(--muted); }
+  .lead { font-size: 1.07rem; }
+  .star { color: var(--star); font-weight: 700; }
+  .callout { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 8px; padding: 12px 16px; margin: 14px 0; }
+  .callout.star-note { border-left-color: var(--star); background: var(--star-soft); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 14px 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+  .card h3 { margin-top: 0; }
+  dl.info { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+  dl.info dt { color: var(--muted); font-weight: 500; }
+  dl.info dd { margin: 0; }
+
+  .table-wrap { overflow-x: auto; margin: 14px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--card); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.93rem; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-top: 1px solid var(--line); }
+  thead th { border-top: none; background: var(--accent-soft); color: var(--accent); font-weight: 600; white-space: nowrap; }
+  tbody tr:first-child td { border-top: none; }
+  td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  td.date { white-space: nowrap; }
+  td .lens { display: block; color: var(--muted); font-size: 0.9em; margin-top: 3px; }
+  td .starline { display: block; color: var(--star); font-size: 0.92em; margin-top: 4px; }
+  td .due { display: inline-block; margin: 2px 4px 2px 0; padding: 1px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-weight: 600; font-size: 0.86em; white-space: nowrap; }
+  tr.now td { background: var(--now); }
+  tr.holiday td { background: var(--holiday); }
+  tr.holiday td .flag { display: block; font-weight: 600; color: #a33; margin-top: 3px; }
+  @media (prefers-color-scheme: dark) { tr.holiday td .flag { color: #f08a8a; } }
+  #schedule table { min-width: 900px; }
+
+  .weights { display: flex; height: 14px; border-radius: 7px; overflow: hidden; border: 1px solid var(--line); margin: 10px 0 6px; }
+  .weights span { display: block; height: 100%; }
+  .weights .w-part { background: #9db8dc; } .weights .w-quiz { background: #6f97cf; }
+  .weights .w-asg { background: #3f6fb4; } .weights .w-proj { background: var(--accent); }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.92rem; color: var(--muted); }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+  footer { padding: 28px 20px 40px; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); }
+  @media print {
+    nav.top { display: none; } body { font-size: 12px; } .table-wrap { border: none; }
+    #schedule table { min-width: 0; } a { color: inherit; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>CS40008.01 Natural Language Processing and Large Language Models</h1>
+    <p class="sub">Fall 2026 · School of Data Science, Fudan University</p>
+    <div class="meta">
+      <span>Wednesdays 13:30–16:10 (periods 6–8)</span>
+      <span>HGX103, Handan Campus</span>
+      <span>Sep 9 – Dec 23, 2026 · 16 teaching weeks</span>
+      <span id="now-chip" class="chip now-chip" hidden></span>
+    </div>
+    <p class="meta" style="margin-top:12px">
+      <a href="https://github.com/baojian/llm-26-fall">Course repository</a>
+      <a href="https://github.com/baojian/llm-26-fall/blob/main/docs/schedule.md">Meeting dates and class periods</a>
+      <a href="https://elearning.fudan.edu.cn/">eLearning (submissions)</a>
+      <a href="https://baojian.github.io/llm-26/">Previous edition (Spring 2026)</a>
+    </p>
+  </div>
+</header>
+
+<nav class="top"><div class="wrap">
+  <a href="#overview">Overview</a>
+  <a href="#info">Info</a>
+  <a href="#dates">Key dates</a>
+  <a href="#schedule">Schedule</a>
+  <a href="#assessment">Assessment</a>
+  <a href="#project">Project</a>
+  <a href="#policies">Policies</a>
+  <a href="#resources">Resources</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="overview">
+  <h2>Course overview</h2>
+  <p class="lead">This course covers the foundations and modern frontiers of Natural Language Processing (NLP), with a heavy emphasis on <strong>Large Language Models (LLMs)</strong>. You will learn the modern pipeline for building an LLM: tokenization, language modeling, the Transformer, pretraining, evaluation, post-training, retrieval, alignment, efficiency, and agents.</p>
+
+  <h3>This edition's storyline: one denoiser, many corruptions</h3>
+  <p>A language model is a learned reverse process. Pick a way to corrupt a token sequence (the <em>forward process</em>), train a network to undo one step of it (the <em>denoiser</em>), and run the reverse process from pure corruption back to text (the <em>sampler</em>). Every model in this course is that triple with a different corruption. The NLP content is the same as before; the story that connects it is new.</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Corruption (forward process)</th><th>Denoiser</th><th>Reverse process</th><th>What NLP calls it</th><th>Week</th></tr></thead>
+    <tbody>
+      <tr><td>Delete everything but the centre word</td><td>linear, one step</td><td>none (representation only)</td><td>word2vec skip-gram</td><td>3</td></tr>
+      <tr><td>Hide the future: reveal tokens left to right, one per step</td><td>next-token predictor</td><td>ancestral, fixed order</td><td>n-gram, NPLM, RNN, GPT</td><td>2, 4, 7</td></tr>
+      <tr><td>Hide 15% of tokens at random, once</td><td>one-step mask predictor</td><td>one step</td><td>BERT / masked LM</td><td>8</td></tr>
+      <tr><td>Hide a random fraction <em>t</em> of tokens, for every <em>t</em> in [0, 1]</td><td>mask predictor conditioned on <em>t</em></td><td>iterative unmasking, learned order</td><td>masked diffusion LMs (MDLM, LLaDA, Dream, Mercury)</td><td>8</td></tr>
+      <tr><td>Replace tokens with random ones</td><td>token corrector</td><td>iterative editing</td><td>uniform-state diffusion (D3PM, UDLM, Duo)</td><td>13 <span class="star">★</span></td></tr>
+      <tr><td>Add Gaussian noise to embeddings</td><td>vector field / score</td><td>ODE or SDE solver</td><td>continuous diffusion LMs, flow matching</td><td>13 <span class="star">★</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Three facts carry the argument, and each gets its own in-class demonstration: BERT's loss is one step of absorbing-state diffusion (Week 8); a left-to-right LM is masked diffusion with a fixed unmasking order (Week 8); and post-training is the same recipe for both families, with SFT as denoising on curated data and RLHF/GRPO/DPO as reward-tilted reverse processes (Week 10). You will build one small code base with three functions, <code>corrupt(x, t)</code>, <code>denoiser(x_t, t, cond)</code>, and <code>sample(denoiser, cond)</code>. Week 5's Transformer is the denoiser. Every later week changes <code>corrupt</code> or <code>sample</code>, never the network.</p>
+
+  <h3>Who this course is for</h3>
+  <ul>
+    <li><strong>Prerequisites:</strong> no formal prerequisites. For Fudan students, it is safe to take this course in your second year. The core needs only expectation, KL divergence, Bayes' rule, Markov chains, and Jensen's inequality, all reviewed in Week 1.</li>
+    <li><strong>Mixed audience:</strong> senior undergraduates and master's students share the room. Lectures use discrete time and discrete states in the core. Continuous time (SDEs, CTMCs, score entropy, flow matching) lives in the <span class="star">★</span> layer and in Week 13.</li>
+  </ul>
+  <div class="callout star-note">
+    <strong><span class="star">★</span> Graduate layer.</strong> The last 25–30 minutes of each block go deeper while undergraduates start the exercise. <span class="star">★</span> material is never on a quiz. Every assignment has a <span class="star">★</span> part: required and worth 25% for master's students, a bonus worth up to 5% for undergraduates.
+  </div>
+</section>
+
+<section id="info">
+  <h2>Basic info</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>People</h3>
+      <dl class="info">
+        <dt>Instructor</dt><dd><a href="https://baojian.github.io/">Baojian Zhou</a> · bjzhou AT fudan.edu.cn</dd>
+        <dt>TAs</dt><dd>TBA</dd>
+        <dt>Office hours</dt><dd>TBA</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h3>Time and place</h3>
+      <dl class="info">
+        <dt>Lectures</dt><dd>Wednesdays, periods 6–8, 13:30–16:10</dd>
+        <dt>Room</dt><dd>HGX103, Handan Campus</dd>
+        <dt>Weeks</dt><dd>1–16, Sep 9 – Dec 23, 2026 (<a href="https://github.com/baojian/llm-26-fall/blob/main/docs/schedule.md">calendar</a>)</dd>
+        <dt>No class</dt><dd>Oct 7 (National Day). Make-up session TBA.</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h3>Getting set up</h3>
+      <p>The repository ships a locked Python 3.11 environment managed with <a href="https://docs.astral.sh/uv/">uv</a>. Put your own files in <code>workspace/</code>; git ignores it, so pulling new material never conflicts with your work.</p>
+<pre><code>git clone https://github.com/baojian/llm-26-fall.git
+cd llm-26-fall
+uv sync
+uv run python workspace/my_script.py</code></pre>
+    </div>
+  </div>
+</section>
+
+<section id="dates">
+  <h2>Key dates</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Assignments</h3>
+      <ul>
+        <li><strong>A1 Foundations of text</strong> · released Week 1 · due Week 5, Oct 7, 23:59</li>
+        <li><strong>A2 One denoiser, three corruptions</strong> · Weeks 5–8 · due Week 9, Nov 4, 23:59</li>
+        <li><strong>A3 Steering both families</strong> · Weeks 9–11 · due Week 12, Nov 25, 23:59</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Quizzes</h3>
+      <p>Five closed-book, 15-minute quizzes in class. Lowest score dropped.</p>
+      <ul>
+        <li>Quiz 1 · Week 3, Sep 23</li>
+        <li>Quiz 2 · Week 5, Oct 7 (holiday; date TBA)</li>
+        <li>Quiz 3 · Week 7, Oct 21</li>
+        <li>Quiz 4 · Week 10, Nov 11</li>
+        <li>Quiz 5 · Week 12, Nov 25</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Project</h3>
+      <ul>
+        <li>Pods formed · Week 5</li>
+        <li>One-page proposal · Week 7, Oct 21</li>
+        <li>Baseline reproduction · Week 9, Nov 4</li>
+        <li>Pod draft review · Week 10, Nov 11</li>
+        <li>Poster session · Week 12, Nov 25</li>
+        <li>Oral defences · Weeks 15–16, Dec 16 and 23</li>
+        <li>Final report and decision log · Week 17, Dec 30, 23:59</li>
+      </ul>
+    </div>
+  </div>
+  <p class="muted">All submissions go through <a href="https://elearning.fudan.edu.cn/">eLearning</a>. Weeks 17–18 (Dec 27 – Jan 9) are the university's exam weeks.</p>
+</section>
+
+<section id="schedule">
+  <h2>Weekly schedule</h2>
+  <p class="muted">Slides, notebooks, and paper PDFs will be linked from each row as the semester proceeds. <span class="star">★</span> lines are the graduate layer. "Principles" is Lai, Song, Kim, Mitsufuji, and Ermon, <a href="https://arxiv.org/abs/2510.21890"><em>The Principles of Diffusion Models</em></a>; "MIT" is Holderrieth and Erives, <a href="https://diffusion.csail.mit.edu/"><em>Introduction to Flow Matching and Diffusion Models</em></a>; "JM" is Jurafsky and Martin, <a href="https://web.stanford.edu/~jurafsky/slp3/"><em>Speech and Language Processing</em></a>.</p>
+
+  <div class="table-wrap">
+  <table id="week-table">
+    <thead><tr><th>Wk</th><th>Date</th><th>Topic</th><th>In class</th><th>Readings</th><th>Due</th></tr></thead>
+    <tbody>
+      <tr data-start="2026-09-06"><td class="num">1</td><td class="date">Sep 9</td>
+        <td><strong>Tokenization</strong><span class="lens">Tokens are the discrete state space; [MASK] is an absorbing state; vocabulary size is the size of the state space.</span></td>
+        <td>BPE notebook. Poll: which vocabulary size shortens Chinese vs English?<span class="starline">★ Heaps' law and state-space size</span></td>
+        <td>JM ch. 2; Principles ch. 1</td>
+        <td><span class="due">A1 released</span></td></tr>
+      <tr data-start="2026-09-13"><td class="num">2</td><td class="date">Sep 16</td>
+        <td><strong>N-gram language models and perplexity</strong><span class="lens">A generative model is P(x); all training maximises likelihood or a bound. Counting is the simplest denoiser of "hide the future".</span></td>
+        <td>N-gram notebook. "Teach the model" exercise with a local Qwen 0.5B.<span class="starline">★ Jensen → ELBO in 10 lines (needed in Week 8)</span></td>
+        <td>JM ch. 3; Principles ch. 1.3</td>
+        <td></td></tr>
+      <tr data-start="2026-09-20"><td class="num">3</td><td class="date">Sep 23</td>
+        <td><strong>Embeddings and classification</strong><span class="lens">Skip-gram as one-step denoising. The classifier p(y | x) returns as guidance in Week 10.</span></td>
+        <td>Embeddings notebook with Chinese analogies. <strong>Quiz 1.</strong><span class="starline">★ Denoising autoencoders ↔ score matching (Vincent 2011)</span></td>
+        <td>JM ch. 4–5</td>
+        <td></td></tr>
+      <tr data-start="2026-09-27"><td class="num">4</td><td class="date">Sep 30</td>
+        <td><strong>Neural LMs, RNNs, attention</strong><span class="lens">Parameterising the denoiser; context mixing.</span></td>
+        <td>Neural-LM notebook. First hacker slot: Bahdanau attention, live.<span class="starline">★ Why teacher forcing = denoising every position in parallel</span></td>
+        <td>NPLM (Bengio 2003); Bahdanau et al. 2015</td>
+        <td></td></tr>
+      <tr data-start="2026-10-04" class="holiday"><td class="num">5</td><td class="date">Oct 7</td>
+        <td><strong>Transformer I</strong><span class="lens">The denoiser architecture. Causal mask vs bidirectional mask = which corruption you reverse.</span><span class="flag">No class on Oct 7 (National Day, Oct 1–7). Make-up session TBA.</span></td>
+        <td>Transformer notebook. Pods formed. <strong>Quiz 2.</strong><span class="starline">★ Positional encodings and time conditioning (t as an extra token)</span></td>
+        <td>Vaswani et al. 2017</td>
+        <td><span class="due">A1 due</span></td></tr>
+      <tr data-start="2026-10-11"><td class="num">6</td><td class="date">Oct 14</td>
+        <td><strong>Transformer II and training</strong><span class="lens">Same block, two masks.</span></td>
+        <td>Keep/Stop/Start survey. GPT-2 leaderboard opens.<span class="starline">★ Scaling laws as loss-vs-compute curves for both families</span></td>
+        <td>—</td>
+        <td></td></tr>
+      <tr data-start="2026-10-18"><td class="num">7</td><td class="date">Oct 21</td>
+        <td><strong>GPT pretraining and decoding</strong><span class="lens">Autoregression = fixed-order reverse process. Temperature and top-p = noise level and truncation.</span></td>
+        <td>train_gpt2 notebook. <strong>Quiz 3.</strong><span class="starline">★ Speculative decoding as a two-model sampler</span></td>
+        <td>GPT-1/2/3; Principles ch. 2 (DDPM ELBO)</td>
+        <td><span class="due">Proposal due</span></td></tr>
+      <tr data-start="2026-10-25"><td class="num">8</td><td class="date">Oct 28</td>
+        <td><strong>BERT → masked diffusion LMs</strong> (the pivot)<span class="lens">BERT's loss is one step of absorbing-state diffusion. A left-to-right LM is masked diffusion with a fixed order. Same Transformer, different mask, different sampler.</span></td>
+        <td><strong>The "aha" lab:</strong> change <code>corrupt</code> and the loss in the GPT-2 code, get a masked diffusion LM, sample from it.<span class="starline">★ Derive the MDLM ELBO; autoregression as the identity-order case</span></td>
+        <td>D3PM; MDLM; <a href="https://kuleshov-group.github.io/blog/blog/2026/how-to-build-a-diffusion-language-model/">How to build a diffusion LM</a>; LLaDA; Dream; Principles ch. 12.2</td>
+        <td></td></tr>
+      <tr data-start="2026-11-01"><td class="num">9</td><td class="date">Nov 4</td>
+        <td><strong>Evaluation and benchmarks</strong><span class="lens">Perplexity is exact NLL for AR models but only an ELBO for diffusion LMs, so comparisons need care. Samplers change scores.</span></td>
+        <td>Goodhart lab on HellaSwag.<span class="starline">★ Sampler-centric evaluation of diffusion LMs</span></td>
+        <td>GLUE; MMLU; HellaSwag</td>
+        <td><span class="due">A2 due</span> <span class="due">Baseline due</span></td></tr>
+      <tr data-start="2026-11-08"><td class="num">10</td><td class="date">Nov 11</td>
+        <td><strong>Post-training: SFT, RM, PPO, GRPO, DPO</strong><span class="lens">Reward-tilted reverse processes. Guidance is the training-free version.</span></td>
+        <td>GRPO live lab with a reward-hacking hunt on the AR model. <strong>Quiz 4.</strong><span class="starline">★ The same GRPO on the Week 8 diffusion LM (d1); classifier-free guidance for LLMs; MIT lab 3</span></td>
+        <td>InstructGPT; DPO; DeepSeek-R1; d1; Principles ch. 8; MIT §5</td>
+        <td><span class="due">Pod draft review</span></td></tr>
+      <tr data-start="2026-11-15"><td class="num">11</td><td class="date">Nov 18</td>
+        <td><strong>Information retrieval and RAG</strong><span class="lens">Conditional generation p(x | retrieved c). Denoiser features as embeddings.</span></td>
+        <td>RAG notebook on your own course notes. Guest lecture if booked.<span class="starline">★ DiffEmbed: diffusion LMs as text embedders</span></td>
+        <td>JM ch. 11; DPR</td>
+        <td></td></tr>
+      <tr data-start="2026-11-22"><td class="num">12</td><td class="date">Nov 25</td>
+        <td><strong>Poster session</strong><span class="lens">Every student presents preliminary results; pods present side by side.</span></td>
+        <td>Posters and structured peer review in pods. <strong>Quiz 5.</strong></td>
+        <td>—</td>
+        <td><span class="due">A3 due</span> <span class="due">Poster</span></td></tr>
+      <tr data-start="2026-11-29"><td class="num">13</td><td class="date">Dec 2</td>
+        <td><strong>Diffusion LMs in continuous time</strong> <span class="star">★</span><span class="lens">The backbone under everything: probability evolution, Fokker–Planck for continuous states, Kolmogorov forward / CTMC for tokens.</span></td>
+        <td>Seminar paper: Dream 7B or SEDD. Hacker: uniform-state corruption.<span class="starline">★ Score entropy (SEDD); flow matching on embeddings; MIT labs 1–2</span></td>
+        <td>Principles ch. 4–6, 12; MIT §2–4</td>
+        <td></td></tr>
+      <tr data-start="2026-12-06"><td class="num">14</td><td class="date">Dec 9</td>
+        <td><strong>Alignment and safety</strong><span class="lens">Guidance and its failure modes. Red-teaming both families.</span></td>
+        <td>Red-teaming lab against a local model. Seminar paper.<span class="starline">★ "Safer by diffusion, broken by context"</span></td>
+        <td>Constitutional AI</td>
+        <td></td></tr>
+      <tr data-start="2026-12-13"><td class="num">15</td><td class="date">Dec 16</td>
+        <td><strong>Efficiency and fast sampling</strong><span class="lens">The KV cache is AR-only; diffusion buys parallel decoding. Few-step samplers and distillation are the diffusion answer.</span></td>
+        <td>Hacker: add a KV cache to the Week 7 code and measure tokens/s. Seminar paper. Oral defences begin.<span class="starline">★ Block diffusion (BD3LM); consistency and distillation (Principles ch. 9–11)</span></td>
+        <td>FlashAttention; BD3LM</td>
+        <td><span class="due">Defences</span></td></tr>
+      <tr data-start="2026-12-20"><td class="num">16</td><td class="date">Dec 23</td>
+        <td><strong>Agents and frontiers</strong><span class="lens">Sampling with tool feedback. Unified discrete diffusion for text and images.</span></td>
+        <td>Hacker: a tool-use loop. Oral defences. Final review: one denoiser, six corruptions, one recipe for steering it.<span class="starline">★ Multimodal discrete diffusion</span></td>
+        <td><a href="https://rdi.berkeley.edu/llm-agents/">Berkeley LLM Agents F26</a> (pre-watch); <a href="https://arxiv.org/abs/2506.13759">discrete diffusion survey</a></td>
+        <td><span class="due">Defences</span></td></tr>
+      <tr data-start="2026-12-27"><td class="num">17</td><td class="date">Dec 30</td>
+        <td><strong>Exam week</strong> (no lecture)</td>
+        <td>—</td><td>—</td>
+        <td><span class="due">Final report</span> <span class="due">Decision log</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="muted">Weeks 13–16 run as role-playing seminars: a 30–40 minute framing lecture, then a paper discussed from assigned roles (peer reviewer, archaeologist, researcher, practitioner, hacker, private investigator, social-impact assessor). Master's students take the reviewer and hacker roles first and lead the pod discussion.</p>
+</section>
+
+<section id="assessment">
+  <h2>Assessment</h2>
+  <div class="weights" aria-hidden="true">
+    <span class="w-part" style="width:5%"></span><span class="w-quiz" style="width:15%"></span>
+    <span class="w-asg" style="width:40%"></span><span class="w-proj" style="width:40%"></span>
+  </div>
+  <div class="legend">
+    <span><i style="background:#9db8dc"></i>Participation 5%</span>
+    <span><i style="background:#6f97cf"></i>Quizzes 15%</span>
+    <span><i style="background:#3f6fb4"></i>Assignments 40%</span>
+    <span><i style="background:var(--accent)"></i>Project 40%</span>
+  </div>
+
+  <h3>Participation (5%)</h3>
+  <p>Exit tickets and in-class polls. Full credit at 80% or more submitted. Each exit ticket asks two things: the muddiest point today, and the one thing that helped most.</p>
+
+  <h3>Quizzes (15%)</h3>
+  <p>Five closed-book, 15-minute quizzes in Weeks 3, 5, 7, 10, and 12. The lowest score is dropped. Quizzes are identical for undergraduates and master's students, and <span class="star">★</span> material is never on a quiz.</p>
+
+  <h3>Assignments (40%)</h3>
+  <ul>
+    <li><strong>A1 Foundations of text</strong> (Weeks 1–4, due Week 5). Tokenization, n-gram models, embeddings, and a first neural LM. <span class="star">★</span> the ELBO derivation.</li>
+    <li><strong>A2 One denoiser, three corruptions</strong> (Weeks 5–8, due Week 9). Train the same small Transformer under causal, one-step-mask, and random-rate-mask corruption on the same data with the same budget. Compare NLL / ELBO and samples. <span class="star">★</span> add uniform-state corruption and derive its posterior.</li>
+    <li><strong>A3 Steering both families</strong> (Weeks 9–11, due Week 12). GRPO with a verifiable reward (letter counting, arithmetic) on the AR model. <span class="star">★</span> the same on the masked diffusion LM, with the ELBO-based policy gradient derived.</li>
+  </ul>
+  <p><span class="star">★</span> parts are required and worth 25% of each assignment for master's students, and a bonus worth up to 5% for undergraduates.</p>
+
+  <h3>Project (40%)</h3>
+  <p>Individual work inside three-person pods. Details below.</p>
+</section>
+
+<section id="project">
+  <h2>Course project</h2>
+  <p class="lead">One project per student, reviewed inside a pod of three (one master's student and two undergraduates), with a short oral defence. What we assess is judgement: choosing the question, designing the evaluation, and deciding what to keep from what your coding assistant proposed.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Track A · Build</h3>
+      <p>Build a small chat model under a fixed budget: tokenizer → pretrain → SFT → RL → evaluation, following <a href="https://github.com/karpathy/nanochat">nanochat</a>'s stages. Either an autoregressive model or a masked diffusion LM.</p>
+    </div>
+    <div class="card">
+      <h3>Track B · Reproduce and extend</h3>
+      <p>Reproduce one main table from a 2025–26 paper and extend it with an ablation, a new dataset, or a new setting.</p>
+    </div>
+  </div>
+
+  <h3>Every project must include something an assistant cannot supply</h3>
+  <p>Choose at least one: a dataset you collected yourself; a Chinese-language angle; a reproduction of a table from a 2025–26 paper with a measured discrepancy; or a negative result, explained.</p>
+
+  <h3>Deliverables</h3>
+  <ol>
+    <li><strong>Pods formed</strong> (Week 5).</li>
+    <li><strong>One-page proposal</strong> (Week 7): problem, dataset, baselines.</li>
+    <li><strong>Baseline reproduction</strong> (Week 9).</li>
+    <li><strong>Pod draft review</strong> (Week 10): each pod reviews its members' drafts and writes one shared comparison page relating its three projects.</li>
+    <li><strong>Poster session</strong> (Week 12): preliminary results, pods present side by side, structured peer review.</li>
+    <li><strong>Oral defence</strong> (Weeks 15–16): 8 minutes per student during exercise time, with the instructor and TAs.</li>
+    <li><strong>Final report</strong> (Week 17): at most 4 pages of main content in the <a href="https://www.overleaf.com/latex/templates/association-for-computational-linguistics-acl-conference/jvxskxpnznfj">ACL template</a>, unlimited appendix, plus code and a <strong>one-page decision log</strong>: what the assistant proposed, what you rejected, and why. The log is graded.</li>
+  </ol>
+
+  <h3>What good looks like</h3>
+  <ul>
+    <li><strong>Undergraduates:</strong> a careful reproduction, one extension, an honest evaluation, the decision log, and the defence.</li>
+    <li><strong>Master's students:</strong> an original question with an ablation, one <span class="star">★</span> component (a continuous-time formulation, a sampler analysis, or a diffusion-vs-AR comparison), and reviewer duty for the pod.</li>
+  </ul>
+  <p>Each student receives a fixed GPU-hour budget on the university cluster. Small models are the point of this course, not a limitation.</p>
+</section>
+
+<section id="policies">
+  <h2>Policies</h2>
+  <h3>AI assistants</h3>
+  <div class="callout">
+    <p><strong>Allowed</strong> for concepts, debugging, and boilerplate on assignments and the project. <strong>Every submission carries a disclosure box</strong> saying which tools you used and for what. <strong>Quizzes and in-class exercises are closed-assistant.</strong> The project includes a graded decision log of what the assistant proposed and what you rejected.</p>
+  </div>
+  <h3>Academic integrity</h3>
+  <p>Please read <a href="https://baojian.github.io/llm-26/assets/Fudan-academic-integrity.pdf">the course policy on academic integrity</a>. Undisclosed AI use, copied code without attribution, and fabricated results are treated as misconduct.</p>
+  <h3>Submissions</h3>
+  <p>All work is submitted through <a href="https://elearning.fudan.edu.cn/">eLearning</a> by 23:59 on the due date.</p>
+</section>
+
+<section id="resources">
+  <h2>Resources</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Textbooks and notes</h3>
+      <ul>
+        <li><a href="https://web.stanford.edu/~jurafsky/slp3/">Speech and Language Processing</a>, Jurafsky and Martin, 3rd ed. draft (core).</li>
+        <li><a href="https://niutrans.github.io/NLPBook/">Natural Language Processing: Neural Networks and Large Language Models</a>, NiuTrans (core, Chinese).</li>
+        <li><a href="https://arxiv.org/abs/2510.21890">The Principles of Diffusion Models</a>, Lai et al. Ch. 1–2 for the core, ch. 6, 8, 9–12 for <span class="star">★</span>.</li>
+        <li><a href="https://diffusion.csail.mit.edu/">MIT 6.S184 Flow Matching and Diffusion Models</a>: notes, videos, and labs 1–3 (<span class="star">★</span> problem sets).</li>
+        <li><a href="https://kuleshov-group.github.io/blog/blog/2026/how-to-build-a-diffusion-language-model/">How to build a diffusion language model</a>, Kuleshov group (Week 8 tutorial).</li>
+        <li><a href="https://github.com/VILA-Lab/Awesome-DLMs">Awesome-DLMs</a> and the <a href="https://arxiv.org/abs/2506.13759">discrete diffusion survey</a> for seminar paper picks.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Compute</h3>
+      <ul>
+        <li>Register for a <a href="https://cfff.fudan.edu.cn/home">Fudan CFFF</a> account in Week 1.</li>
+        <li>We use <a href="http://qz.cfff.fudan.edu.cn/">Qizhi</a> for GPU jobs. Each student has a fixed GPU-hour budget for the project.</li>
+        <li>Most exercises run on a laptop or a single small GPU by design.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Related courses</h3>
+      <ul>
+        <li><a href="https://cs336.stanford.edu/">Stanford CS336</a>: Language Modeling from Scratch. Our Python environment mirrors its lecture repo.</li>
+        <li><a href="https://web.stanford.edu/class/cs224n/">Stanford CS224N</a>: NLP with Deep Learning.</li>
+        <li><a href="https://cmu-l3.github.io/anlp-spring2026/">CMU Advanced NLP</a>.</li>
+        <li><a href="https://rdi.berkeley.edu/llm-agents/">Berkeley LLM Agents</a>, Fall 2026.</li>
+        <li><a href="https://baojian.github.io/llm-26/">Spring 2026 edition</a> of this course: slides, notebooks, and readings for the classical NLP weeks.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <p>CS40008.01 · Natural Language Processing and Large Language Models · Fall 2026 · Fudan University. Maintained by <a href="https://github.com/baojian">Baojian Zhou</a>. Source on <a href="https://github.com/baojian/llm-26-fall">GitHub</a>.</p>
+</div></footer>
+
+<script>
+  // Highlight the current teaching week and show it in the header. No dependencies.
+  (function () {
+    var rows = document.querySelectorAll('#week-table tbody tr[data-start]');
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var chip = document.getElementById('now-chip');
+    var first = null, current = null;
+    rows.forEach(function (tr) {
+      var start = new Date(tr.getAttribute('data-start') + 'T00:00:00');
+      var end = new Date(start); end.setDate(end.getDate() + 7);
+      if (!first) first = start;
+      if (today >= start && today < end) current = tr;
+    });
+    if (current) {
+      current.classList.add('now');
+      var wk = current.querySelector('td.num').textContent;
+      chip.textContent = wk === '17' ? 'Exam week' : 'This week: Week ' + wk;
+      chip.hidden = false;
+    } else if (first && today < first) {
+      var days = Math.round((first - today) / 86400000) + 3; // first lecture is the Wednesday
+      chip.textContent = 'First class in ' + days + ' day' + (days === 1 ? '' : 's');
+      chip.hidden = false;
+    }
+  })();
+</script>
+</body>
+</html>

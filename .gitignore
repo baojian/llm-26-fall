@@ -43,3 +43,7 @@ checkpoints/
 *.safetensors
 
 # uv.lock is intentionally tracked for reproducible course environments.
+
+# Student workspace: everything inside is local except the README
+workspace/*
+!workspace/README.md
