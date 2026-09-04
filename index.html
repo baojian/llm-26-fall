@@ -22,8 +22,14 @@
   html { scroll-behavior: smooth; scroll-padding-top: 64px; }
   body {
     margin: 0; background: var(--bg); color: var(--fg);
-    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
   }
+  html.zh body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", "Segoe UI", Roboto, sans-serif; line-height: 1.7; }
+  /* Language pairs: every translatable text is <span class="en">…</span><span class="zh">…</span>. */
+  .en, .zh { display: contents; }
+  html:not(.zh) .zh { display: none; }
+  html.zh .en { display: none; }
+
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
   code { font: 0.92em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; }
@@ -40,9 +46,12 @@
   @media (prefers-color-scheme: dark) { .chip.now-chip { color: #9fd89f; } }
 
   nav.top { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
-  nav.top .wrap { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 10px 20px; font-size: 0.95rem; }
+  nav.top .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 18px; padding: 8px 20px; font-size: 0.95rem; }
   nav.top a { color: var(--fg); font-weight: 500; }
   nav.top a:hover { color: var(--accent); text-decoration: none; }
+  .lang-toggle { margin-left: auto; display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--card); }
+  .lang-toggle button { background: none; border: 0; padding: 3px 12px; cursor: pointer; color: var(--muted); font: inherit; font-size: 0.85rem; font-weight: 600; }
+  .lang-toggle button[aria-pressed="true"] { background: var(--accent); color: #fff; }
 
   main section { padding: 36px 0 8px; border-bottom: 1px solid var(--line); }
   main section:last-of-type { border-bottom: none; }
@@ -98,92 +107,112 @@
 
 <header class="hero">
   <div class="wrap">
-    <h1>CS40008.01 Natural Language Processing and Large Language Models</h1>
-    <p class="sub">Fall 2026 · School of Data Science, Fudan University</p>
+    <h1><span class="en">CS40008.01 NLP and LLMs</span><span class="zh">CS40008.01 自然语言处理与大语言模型</span></h1>
+    <p class="sub"><span class="en">Fall 2026 · School of Data Science, Fudan University</span><span class="zh">2026 年秋季学期 · 复旦大学大数据学院</span></p>
     <div class="meta">
-      <span>Wednesdays 13:30–16:10 (periods 6–8)</span>
-      <span>HGX103, Handan Campus</span>
-      <span>Sep 9 – Dec 23, 2026 · 16 teaching weeks</span>
+      <span><span class="en">Wednesdays 13:30–16:10 (periods 6–8)</span><span class="zh">每周三 13:30–16:10（第 6–8 节）</span></span>
+      <span><span class="en">HGX103, Handan Campus</span><span class="zh">邯郸校区 HGX103</span></span>
+      <span><span class="en">Sep 9 – Dec 23, 2026 · 16 teaching weeks</span><span class="zh">2026 年 9 月 9 日 – 12 月 23 日 · 共 16 个教学周</span></span>
       <span id="now-chip" class="chip now-chip" hidden></span>
     </div>
     <p class="meta" style="margin-top:12px">
-      <a href="https://github.com/baojian/llm-26-fall">Course repository</a>
-      <a href="https://github.com/baojian/llm-26-fall/blob/main/docs/schedule.md">Meeting dates and class periods</a>
-      <a href="https://elearning.fudan.edu.cn/">eLearning (submissions)</a>
-      <a href="https://baojian.github.io/llm-26/">Previous edition (Spring 2026)</a>
+      <a href="https://github.com/baojian/llm-26-fall"><span class="en">Course repository</span><span class="zh">课程代码仓库</span></a>
+      <a href="https://github.com/baojian/llm-26-fall/blob/main/docs/schedule.md"><span class="en">Meeting dates and class periods</span><span class="zh">上课日期与节次</span></a>
+      <a href="https://elearning.fudan.edu.cn/"><span class="en">eLearning (submissions)</span><span class="zh">eLearning（作业提交）</span></a>
+      <a href="https://baojian.github.io/llm-26/"><span class="en">Previous edition (Spring 2026)</span><span class="zh">上一版课程（2026 春）</span></a>
     </p>
   </div>
 </header>
 
 <nav class="top"><div class="wrap">
-  <a href="#overview">Overview</a>
-  <a href="#info">Info</a>
-  <a href="#dates">Key dates</a>
-  <a href="#schedule">Schedule</a>
-  <a href="#assessment">Assessment</a>
-  <a href="#project">Project</a>
-  <a href="#policies">Policies</a>
-  <a href="#resources">Resources</a>
+  <a href="#overview"><span class="en">Overview</span><span class="zh">概览</span></a>
+  <a href="#info"><span class="en">Info</span><span class="zh">基本信息</span></a>
+  <a href="#dates"><span class="en">Key dates</span><span class="zh">重要日期</span></a>
+  <a href="#schedule"><span class="en">Schedule</span><span class="zh">每周安排</span></a>
+  <a href="#assessment"><span class="en">Assessment</span><span class="zh">考核</span></a>
+  <a href="#project"><span class="en">Project</span><span class="zh">课程项目</span></a>
+  <a href="#policies"><span class="en">Policies</span><span class="zh">课程政策</span></a>
+  <a href="#resources"><span class="en">Resources</span><span class="zh">资源</span></a>
+  <div class="lang-toggle" role="group" aria-label="Language / 语言">
+    <button type="button" data-lang="en" aria-pressed="true">EN</button>
+    <button type="button" data-lang="zh" aria-pressed="false">中文</button>
+  </div>
 </div></nav>
 
 <main class="wrap">
 
 <section id="overview">
-  <h2>Course overview</h2>
-  <p class="lead">This course covers the foundations and modern frontiers of Natural Language Processing (NLP), with a heavy emphasis on <strong>Large Language Models (LLMs)</strong>. You will learn the modern pipeline for building an LLM: tokenization, language modeling, the Transformer, pretraining, evaluation, post-training, retrieval, alignment, efficiency, and agents.</p>
+  <h2><span class="en">Course overview</span><span class="zh">课程概览</span></h2>
+  <p class="lead">
+    <span class="en">This course covers the foundations and modern frontiers of Natural Language Processing (NLP), with a heavy emphasis on <strong>Large Language Models (LLMs)</strong>. You will learn the modern pipeline for building an LLM: tokenization, language modeling, the Transformer, pretraining, evaluation, post-training, retrieval, alignment, efficiency, and agents.</span>
+    <span class="zh">本课程讲授自然语言处理（NLP）的基础与前沿，重点是<strong>大语言模型（LLMs）</strong>。你将学习构建一个 LLM 的完整现代流程：分词、语言建模、Transformer、预训练、评测、后训练、检索、对齐、效率与智能体。</span>
+  </p>
 
-  <h3>This edition's storyline: one denoiser, many corruptions</h3>
-  <p>A language model is a learned reverse process. Pick a way to corrupt a token sequence (the <em>forward process</em>), train a network to undo one step of it (the <em>denoiser</em>), and run the reverse process from pure corruption back to text (the <em>sampler</em>). Every model in this course is that triple with a different corruption. The NLP content is the same as before; the story that connects it is new.</p>
+  <h3><span class="en">This edition's storyline: one denoiser, many corruptions</span><span class="zh">本学期的主线：一个去噪器，多种加噪方式</span></h3>
+  <p>
+    <span class="en">A language model is a learned reverse process. Pick a way to corrupt a token sequence (the <em>forward process</em>), train a network to undo one step of it (the <em>denoiser</em>), and run the reverse process from pure corruption back to text (the <em>sampler</em>). Every model in this course is that triple with a different corruption. The NLP content is the same as before; the story that connects it is new.</span>
+    <span class="zh">语言模型是一个学到的反向过程。选定一种破坏 token 序列的方式（<em>前向过程</em>），训练一个网络去撤销其中一步（<em>去噪器</em>），再从完全被破坏的状态出发运行反向过程，直到还原出文本（<em>采样器</em>）。本课程中的每个模型都是这样一个三元组，只是加噪方式不同。NLP 的内容与以往相同，串起它们的故事是新的。</span>
+  </p>
 
   <div class="table-wrap">
   <table>
-    <thead><tr><th>Corruption (forward process)</th><th>Denoiser</th><th>Reverse process</th><th>What NLP calls it</th><th>Week</th></tr></thead>
+    <thead><tr>
+      <th><span class="en">Corruption (forward process)</span><span class="zh">加噪方式（前向过程）</span></th>
+      <th><span class="en">Denoiser</span><span class="zh">去噪器</span></th>
+      <th><span class="en">Reverse process</span><span class="zh">反向过程</span></th>
+      <th><span class="en">What NLP calls it</span><span class="zh">在 NLP 中的名称</span></th>
+      <th><span class="en">Week</span><span class="zh">周</span></th>
+    </tr></thead>
     <tbody>
-      <tr><td>Delete everything but the centre word</td><td>linear, one step</td><td>none (representation only)</td><td>word2vec skip-gram</td><td>3</td></tr>
-      <tr><td>Hide the future: reveal tokens left to right, one per step</td><td>next-token predictor</td><td>ancestral, fixed order</td><td>n-gram, NPLM, RNN, GPT</td><td>2, 4, 7</td></tr>
-      <tr><td>Hide 15% of tokens at random, once</td><td>one-step mask predictor</td><td>one step</td><td>BERT / masked LM</td><td>8</td></tr>
-      <tr><td>Hide a random fraction <em>t</em> of tokens, for every <em>t</em> in [0, 1]</td><td>mask predictor conditioned on <em>t</em></td><td>iterative unmasking, learned order</td><td>masked diffusion LMs (MDLM, LLaDA, Dream, Mercury)</td><td>8</td></tr>
-      <tr><td>Replace tokens with random ones</td><td>token corrector</td><td>iterative editing</td><td>uniform-state diffusion (D3PM, UDLM, Duo)</td><td>13 <span class="star">★</span></td></tr>
-      <tr><td>Add Gaussian noise to embeddings</td><td>vector field / score</td><td>ODE or SDE solver</td><td>continuous diffusion LMs, flow matching</td><td>13 <span class="star">★</span></td></tr>
+      <tr><td><span class="en">Delete everything but the centre word</span><span class="zh">只保留中心词，删掉其余全部</span></td><td><span class="en">linear, one step</span><span class="zh">线性，单步</span></td><td><span class="en">none (representation only)</span><span class="zh">无（仅学表示）</span></td><td>word2vec skip-gram</td><td>3</td></tr>
+      <tr><td><span class="en">Hide the future: reveal tokens left to right, one per step</span><span class="zh">遮住未来：从左到右每步揭示一个 token</span></td><td><span class="en">next-token predictor</span><span class="zh">下一个 token 预测器</span></td><td><span class="en">ancestral, fixed order</span><span class="zh">祖先采样，顺序固定</span></td><td>n-gram, NPLM, RNN, GPT</td><td>2, 4, 7</td></tr>
+      <tr><td><span class="en">Hide 15% of tokens at random, once</span><span class="zh">一次性随机遮住 15% 的 token</span></td><td><span class="en">one-step mask predictor</span><span class="zh">单步掩码预测器</span></td><td><span class="en">one step</span><span class="zh">单步</span></td><td><span class="en">BERT / masked LM</span><span class="zh">BERT / 掩码语言模型</span></td><td>8</td></tr>
+      <tr><td><span class="en">Hide a random fraction <em>t</em> of tokens, for every <em>t</em> in [0, 1]</span><span class="zh">随机遮住比例为 <em>t</em> 的 token，<em>t</em> 取遍 [0, 1]</span></td><td><span class="en">mask predictor conditioned on <em>t</em></span><span class="zh">以 <em>t</em> 为条件的掩码预测器</span></td><td><span class="en">iterative unmasking, learned order</span><span class="zh">迭代去掩码，顺序可学</span></td><td><span class="en">masked diffusion LMs (MDLM, LLaDA, Dream, Mercury)</span><span class="zh">掩码扩散语言模型（MDLM、LLaDA、Dream、Mercury）</span></td><td>8</td></tr>
+      <tr><td><span class="en">Replace tokens with random ones</span><span class="zh">用随机 token 替换原 token</span></td><td><span class="en">token corrector</span><span class="zh">token 纠错器</span></td><td><span class="en">iterative editing</span><span class="zh">迭代编辑</span></td><td><span class="en">uniform-state diffusion (D3PM, UDLM, Duo)</span><span class="zh">均匀态扩散（D3PM、UDLM、Duo）</span></td><td>13 <span class="star">★</span></td></tr>
+      <tr><td><span class="en">Add Gaussian noise to embeddings</span><span class="zh">向词向量加入高斯噪声</span></td><td><span class="en">vector field / score</span><span class="zh">向量场 / 得分函数</span></td><td><span class="en">ODE or SDE solver</span><span class="zh">ODE 或 SDE 求解器</span></td><td><span class="en">continuous diffusion LMs, flow matching</span><span class="zh">连续扩散语言模型、流匹配</span></td><td>13 <span class="star">★</span></td></tr>
     </tbody>
   </table>
   </div>
 
-  <p>Three facts carry the argument, and each gets its own in-class demonstration: BERT's loss is one step of absorbing-state diffusion (Week 8); a left-to-right LM is masked diffusion with a fixed unmasking order (Week 8); and post-training is the same recipe for both families, with SFT as denoising on curated data and RLHF/GRPO/DPO as reward-tilted reverse processes (Week 10). You will build one small code base with three functions, <code>corrupt(x, t)</code>, <code>denoiser(x_t, t, cond)</code>, and <code>sample(denoiser, cond)</code>. Week 5's Transformer is the denoiser. Every later week changes <code>corrupt</code> or <code>sample</code>, never the network.</p>
+  <p>
+    <span class="en">Three facts carry the argument, and each gets its own in-class demonstration: BERT's loss is one step of absorbing-state diffusion (Week 8); a left-to-right LM is masked diffusion with a fixed unmasking order (Week 8); and post-training is the same recipe for both families, with SFT as denoising on curated data and RLHF/GRPO/DPO as reward-tilted reverse processes (Week 10). You will build one small code base with three functions, <code>corrupt(x, t)</code>, <code>denoiser(x_t, t, cond)</code>, and <code>sample(denoiser, cond)</code>. Week 5's Transformer is the denoiser. Every later week changes <code>corrupt</code> or <code>sample</code>, never the network.</span>
+    <span class="zh">三个事实支撑这条主线，每个都有对应的课堂演示：BERT 的损失就是吸收态扩散的一步（第 8 周）；从左到右的语言模型就是去掩码顺序固定的掩码扩散（第 8 周）；两类模型的后训练是同一套配方——SFT 是在精选数据上做去噪，RLHF/GRPO/DPO 则是被奖励“倾斜”的反向过程（第 10 周）。你将只写一个小代码库，包含三个函数：<code>corrupt(x, t)</code>、<code>denoiser(x_t, t, cond)</code> 与 <code>sample(denoiser, cond)</code>。第 5 周的 Transformer 就是去噪器；之后每一周只改 <code>corrupt</code> 或 <code>sample</code>，从不改网络。</span>
+  </p>
 
-  <h3>Who this course is for</h3>
+  <h3><span class="en">Who this course is for</span><span class="zh">适合谁来上</span></h3>
   <ul>
-    <li><strong>Prerequisites:</strong> no formal prerequisites. For Fudan students, it is safe to take this course in your second year. The core needs only expectation, KL divergence, Bayes' rule, Markov chains, and Jensen's inequality, all reviewed in Week 1.</li>
-    <li><strong>Mixed audience:</strong> senior undergraduates and master's students share the room. Lectures use discrete time and discrete states in the core. Continuous time (SDEs, CTMCs, score entropy, flow matching) lives in the <span class="star">★</span> layer and in Week 13.</li>
+    <li><span class="en"><strong>Prerequisites:</strong> no formal prerequisites. For Fudan students, it is safe to take this course in your second year. The core needs only expectation, KL divergence, Bayes' rule, Markov chains, and Jensen's inequality, all reviewed in Week 1.</span><span class="zh"><strong>先修要求：</strong>无正式先修要求。复旦学生二年级即可修读。核心内容只需要期望、KL 散度、贝叶斯公式、马尔可夫链与 Jensen 不等式，第 1 周都会复习。</span></li>
+    <li><span class="en"><strong>Mixed audience:</strong> senior undergraduates and master's students share the room. Lectures use discrete time and discrete states in the core. Continuous time (SDEs, CTMCs, score entropy, flow matching) lives in the <span class="star">★</span> layer and in Week 13.</span><span class="zh"><strong>混合班级：</strong>高年级本科生与硕士生同堂。核心讲授只用离散时间与离散状态；连续时间（SDE、CTMC、得分熵、流匹配）放在 <span class="star">★</span> 层与第 13 周。</span></li>
   </ul>
   <div class="callout star-note">
-    <strong><span class="star">★</span> Graduate layer.</strong> The last 25–30 minutes of each block go deeper while undergraduates start the exercise. <span class="star">★</span> material is never on a quiz. Every assignment has a <span class="star">★</span> part: required and worth 25% for master's students, a bonus worth up to 5% for undergraduates.
+    <span class="en"><strong><span class="star">★</span> Graduate layer.</strong> The last 25–30 minutes of each block go deeper while undergraduates start the exercise. <span class="star">★</span> material is never on a quiz. Every assignment has a <span class="star">★</span> part: required and worth 25% for master's students, a bonus worth up to 5% for undergraduates.</span>
+    <span class="zh"><strong><span class="star">★</span> 研究生层。</strong>每次课最后 25–30 分钟深入讲解，本科生同时开始做练习。<span class="star">★</span> 内容不进小测。每次作业都有 <span class="star">★</span> 部分：硕士生必做，占 25%；本科生选做，最高加 5 分。</span>
   </div>
 </section>
 
 <section id="info">
-  <h2>Basic info</h2>
+  <h2><span class="en">Basic info</span><span class="zh">基本信息</span></h2>
   <div class="grid">
     <div class="card">
-      <h3>People</h3>
+      <h3><span class="en">People</span><span class="zh">授课团队</span></h3>
       <dl class="info">
-        <dt>Instructor</dt><dd><a href="https://baojian.github.io/">Baojian Zhou</a> · bjzhou AT fudan.edu.cn</dd>
-        <dt>TAs</dt><dd>TBA</dd>
-        <dt>Office hours</dt><dd>TBA</dd>
+        <dt><span class="en">Instructor</span><span class="zh">授课教师</span></dt><dd><a href="https://baojian.github.io/"><span class="en">Baojian Zhou</span><span class="zh">周宝健</span></a> · bjzhou AT fudan.edu.cn</dd>
+        <dt><span class="en">TAs</span><span class="zh">助教</span></dt><dd><span class="en">TBA</span><span class="zh">待定</span></dd>
+        <dt><span class="en">Office hours</span><span class="zh">答疑时间</span></dt><dd><span class="en">TBA</span><span class="zh">待定</span></dd>
       </dl>
     </div>
     <div class="card">
-      <h3>Time and place</h3>
+      <h3><span class="en">Time and place</span><span class="zh">时间地点</span></h3>
       <dl class="info">
-        <dt>Lectures</dt><dd>Wednesdays, periods 6–8, 13:30–16:10</dd>
-        <dt>Room</dt><dd>HGX103, Handan Campus</dd>
-        <dt>Weeks</dt><dd>1–16, Sep 9 – Dec 23, 2026 (<a href="https://github.com/baojian/llm-26-fall/blob/main/docs/schedule.md">calendar</a>)</dd>
-        <dt>No class</dt><dd>Oct 7 (National Day). Make-up session TBA.</dd>
+        <dt><span class="en">Lectures</span><span class="zh">上课时间</span></dt><dd><span class="en">Wednesdays, periods 6–8, 13:30–16:10</span><span class="zh">每周三第 6–8 节，13:30–16:10</span></dd>
+        <dt><span class="en">Room</span><span class="zh">教室</span></dt><dd><span class="en">HGX103, Handan Campus</span><span class="zh">邯郸校区 HGX103</span></dd>
+        <dt><span class="en">Weeks</span><span class="zh">教学周</span></dt><dd><span class="en">1–16, Sep 9 – Dec 23, 2026 (<a href="https://github.com/baojian/llm-26-fall/blob/main/docs/schedule.md">calendar</a>)</span><span class="zh">第 1–16 周，2026 年 9 月 9 日 – 12 月 23 日（<a href="https://github.com/baojian/llm-26-fall/blob/main/docs/schedule.md">校历</a>）</span></dd>
+        <dt><span class="en">No class</span><span class="zh">停课</span></dt><dd><span class="en">Oct 7 (National Day). Make-up session TBA.</span><span class="zh">10 月 7 日（国庆节）。补课时间另行通知。</span></dd>
       </dl>
     </div>
     <div class="card">
-      <h3>Getting set up</h3>
-      <p>The repository ships a locked Python 3.11 environment managed with <a href="https://docs.astral.sh/uv/">uv</a>. Put your own files in <code>workspace/</code>; git ignores it, so pulling new material never conflicts with your work.</p>
+      <h3><span class="en">Getting set up</span><span class="zh">环境配置</span></h3>
+      <p><span class="en">The repository ships a locked Python 3.11 environment managed with <a href="https://docs.astral.sh/uv/">uv</a>. Put your own files in <code>workspace/</code>; git ignores it, so pulling new material never conflicts with your work.</span><span class="zh">仓库自带由 <a href="https://docs.astral.sh/uv/">uv</a> 管理并锁定的 Python 3.11 环境。请把你自己的文件放在 <code>workspace/</code> 中；该目录被 git 忽略，拉取新课件时不会与你的工作冲突。</span></p>
 <pre><code>git clone https://github.com/baojian/llm-26-fall.git
 cd llm-26-fall
 uv sync
@@ -193,251 +222,261 @@ uv run python workspace/my_script.py</code></pre>
 </section>
 
 <section id="dates">
-  <h2>Key dates</h2>
+  <h2><span class="en">Key dates</span><span class="zh">重要日期</span></h2>
   <div class="grid">
     <div class="card">
-      <h3>Assignments</h3>
+      <h3><span class="en">Assignments</span><span class="zh">作业</span></h3>
       <ul>
-        <li><strong>A1 Foundations of text</strong> · released Week 1 · due Week 5, Oct 7, 23:59</li>
-        <li><strong>A2 One denoiser, three corruptions</strong> · Weeks 5–8 · due Week 9, Nov 4, 23:59</li>
-        <li><strong>A3 Steering both families</strong> · Weeks 9–11 · due Week 12, Nov 25, 23:59</li>
+        <li><span class="en"><strong>A1 Foundations of text</strong> · released Week 1 · due Week 5, Oct 7, 23:59</span><span class="zh"><strong>A1 文本基础</strong> · 第 1 周发布 · 第 5 周截止，10 月 7 日 23:59</span></li>
+        <li><span class="en"><strong>A2 One denoiser, three corruptions</strong> · Weeks 5–8 · due Week 9, Nov 4, 23:59</span><span class="zh"><strong>A2 一个去噪器，三种加噪</strong> · 第 5–8 周 · 第 9 周截止，11 月 4 日 23:59</span></li>
+        <li><span class="en"><strong>A3 Steering both families</strong> · Weeks 9–11 · due Week 12, Nov 25, 23:59</span><span class="zh"><strong>A3 引导两类模型</strong> · 第 9–11 周 · 第 12 周截止，11 月 25 日 23:59</span></li>
       </ul>
     </div>
     <div class="card">
-      <h3>Quizzes</h3>
-      <p>Five closed-book, 15-minute quizzes in class. Lowest score dropped.</p>
+      <h3><span class="en">Quizzes</span><span class="zh">小测</span></h3>
+      <p><span class="en">Five closed-book, 15-minute quizzes in class. Lowest score dropped.</span><span class="zh">五次闭卷课堂小测，每次 15 分钟。去掉最低一次。</span></p>
       <ul>
-        <li>Quiz 1 · Week 3, Sep 23</li>
-        <li>Quiz 2 · Week 5, Oct 7 (holiday; date TBA)</li>
-        <li>Quiz 3 · Week 7, Oct 21</li>
-        <li>Quiz 4 · Week 10, Nov 11</li>
-        <li>Quiz 5 · Week 12, Nov 25</li>
+        <li><span class="en">Quiz 1 · Week 3, Sep 23</span><span class="zh">小测 1 · 第 3 周，9 月 23 日</span></li>
+        <li><span class="en">Quiz 2 · Week 5, Oct 7 (holiday; date TBA)</span><span class="zh">小测 2 · 第 5 周，10 月 7 日（假期，日期待定）</span></li>
+        <li><span class="en">Quiz 3 · Week 7, Oct 21</span><span class="zh">小测 3 · 第 7 周，10 月 21 日</span></li>
+        <li><span class="en">Quiz 4 · Week 10, Nov 11</span><span class="zh">小测 4 · 第 10 周，11 月 11 日</span></li>
+        <li><span class="en">Quiz 5 · Week 12, Nov 25</span><span class="zh">小测 5 · 第 12 周，11 月 25 日</span></li>
       </ul>
     </div>
     <div class="card">
-      <h3>Project</h3>
+      <h3><span class="en">Project</span><span class="zh">课程项目</span></h3>
       <ul>
-        <li>Pods formed · Week 5</li>
-        <li>One-page proposal · Week 7, Oct 21</li>
-        <li>Baseline reproduction · Week 9, Nov 4</li>
-        <li>Pod draft review · Week 10, Nov 11</li>
-        <li>Poster session · Week 12, Nov 25</li>
-        <li>Oral defences · Weeks 15–16, Dec 16 and 23</li>
-        <li>Final report and decision log · Week 17, Dec 30, 23:59</li>
+        <li><span class="en">Pods formed · Week 5</span><span class="zh">组建小组 · 第 5 周</span></li>
+        <li><span class="en">One-page proposal · Week 7, Oct 21</span><span class="zh">一页提案 · 第 7 周，10 月 21 日</span></li>
+        <li><span class="en">Baseline reproduction · Week 9, Nov 4</span><span class="zh">基线复现 · 第 9 周，11 月 4 日</span></li>
+        <li><span class="en">Pod draft review · Week 10, Nov 11</span><span class="zh">小组草稿互评 · 第 10 周，11 月 11 日</span></li>
+        <li><span class="en">Poster session · Week 12, Nov 25</span><span class="zh">海报展示 · 第 12 周，11 月 25 日</span></li>
+        <li><span class="en">Oral defences · Weeks 15–16, Dec 16 and 23</span><span class="zh">口头答辩 · 第 15–16 周，12 月 16 日与 23 日</span></li>
+        <li><span class="en">Final report and decision log · Week 17, Dec 30, 23:59</span><span class="zh">期末报告与决策日志 · 第 17 周，12 月 30 日 23:59</span></li>
       </ul>
     </div>
   </div>
-  <p class="muted">All submissions go through <a href="https://elearning.fudan.edu.cn/">eLearning</a>. Weeks 17–18 (Dec 27 – Jan 9) are the university's exam weeks.</p>
+  <p class="muted"><span class="en">All submissions go through <a href="https://elearning.fudan.edu.cn/">eLearning</a>. Weeks 17–18 (Dec 27 – Jan 9) are the university's exam weeks.</span><span class="zh">所有提交都通过 <a href="https://elearning.fudan.edu.cn/">eLearning</a> 完成。第 17–18 周（12 月 27 日 – 1 月 9 日）为学校考试周。</span></p>
 </section>
 
 <section id="schedule">
-  <h2>Weekly schedule</h2>
-  <p class="muted">Slides, notebooks, and paper PDFs will be linked from each row as the semester proceeds. <span class="star">★</span> lines are the graduate layer. "Principles" is Lai, Song, Kim, Mitsufuji, and Ermon, <a href="https://arxiv.org/abs/2510.21890"><em>The Principles of Diffusion Models</em></a>; "MIT" is Holderrieth and Erives, <a href="https://diffusion.csail.mit.edu/"><em>Introduction to Flow Matching and Diffusion Models</em></a>; "JM" is Jurafsky and Martin, <a href="https://web.stanford.edu/~jurafsky/slp3/"><em>Speech and Language Processing</em></a>.</p>
+  <h2><span class="en">Weekly schedule</span><span class="zh">每周安排</span></h2>
+  <p class="muted">
+    <span class="en">Slides, notebooks, and paper PDFs will be linked from each row as the semester proceeds. <span class="star">★</span> lines are the graduate layer. "Principles" is Lai, Song, Kim, Mitsufuji, and Ermon, <a href="https://arxiv.org/abs/2510.21890"><em>The Principles of Diffusion Models</em></a>; "MIT" is Holderrieth and Erives, <a href="https://diffusion.csail.mit.edu/"><em>Introduction to Flow Matching and Diffusion Models</em></a>; "JM" is Jurafsky and Martin, <a href="https://web.stanford.edu/~jurafsky/slp3/"><em>Speech and Language Processing</em></a>.</span>
+    <span class="zh">幻灯片、notebook 与论文 PDF 将随学期进行链接到对应行。<span class="star">★</span> 行为研究生层。“Principles” 指 Lai、Song、Kim、Mitsufuji 与 Ermon 的 <a href="https://arxiv.org/abs/2510.21890"><em>The Principles of Diffusion Models</em></a>；“MIT” 指 Holderrieth 与 Erives 的 <a href="https://diffusion.csail.mit.edu/"><em>Introduction to Flow Matching and Diffusion Models</em></a>；“JM” 指 Jurafsky 与 Martin 的 <a href="https://web.stanford.edu/~jurafsky/slp3/"><em>Speech and Language Processing</em></a>。</span>
+  </p>
 
   <div class="table-wrap">
   <table id="week-table">
-    <thead><tr><th>Wk</th><th>Date</th><th>Topic</th><th>In class</th><th>Readings</th><th>Due</th></tr></thead>
+    <thead><tr>
+      <th><span class="en">Wk</span><span class="zh">周</span></th>
+      <th><span class="en">Date</span><span class="zh">日期</span></th>
+      <th><span class="en">Topic</span><span class="zh">主题</span></th>
+      <th><span class="en">In class</span><span class="zh">课堂内容</span></th>
+      <th><span class="en">Readings</span><span class="zh">阅读</span></th>
+      <th><span class="en">Due</span><span class="zh">截止</span></th>
+    </tr></thead>
     <tbody>
-      <tr data-start="2026-09-06"><td class="num">1</td><td class="date">Sep 9</td>
-        <td><strong>Tokenization</strong><span class="lens">Tokens are the discrete state space; [MASK] is an absorbing state; vocabulary size is the size of the state space.</span></td>
-        <td>BPE notebook. Poll: which vocabulary size shortens Chinese vs English?<span class="starline">★ Heaps' law and state-space size</span></td>
+      <tr data-start="2026-09-06"><td class="num">1</td><td class="date"><span class="en">Sep 9</span><span class="zh">9 月 9 日</span></td>
+        <td><span class="en"><strong>Tokenization</strong><span class="lens">Tokens are the discrete state space; [MASK] is an absorbing state; vocabulary size is the size of the state space.</span></span><span class="zh"><strong>分词（Tokenization）</strong><span class="lens">token 是离散状态空间；[MASK] 是吸收态；词表大小就是状态空间的大小。</span></span></td>
+        <td><span class="en">BPE notebook. Poll: which vocabulary size shortens Chinese vs English?<span class="starline">★ Heaps' law and state-space size</span></span><span class="zh">BPE notebook。投票：哪种词表大小能让中文和英文更短？<span class="starline">★ Heaps 定律与状态空间大小</span></span></td>
         <td>JM ch. 2; Principles ch. 1</td>
-        <td><span class="due">A1 released</span></td></tr>
-      <tr data-start="2026-09-13"><td class="num">2</td><td class="date">Sep 16</td>
-        <td><strong>N-gram language models and perplexity</strong><span class="lens">A generative model is P(x); all training maximises likelihood or a bound. Counting is the simplest denoiser of "hide the future".</span></td>
-        <td>N-gram notebook. "Teach the model" exercise with a local Qwen 0.5B.<span class="starline">★ Jensen → ELBO in 10 lines (needed in Week 8)</span></td>
+        <td><span class="due"><span class="en">A1 released</span><span class="zh">A1 发布</span></span></td></tr>
+      <tr data-start="2026-09-13"><td class="num">2</td><td class="date"><span class="en">Sep 16</span><span class="zh">9 月 16 日</span></td>
+        <td><span class="en"><strong>N-gram language models and perplexity</strong><span class="lens">A generative model is P(x); all training maximises likelihood or a bound. Counting is the simplest denoiser of "hide the future".</span></span><span class="zh"><strong>n-gram 语言模型与困惑度</strong><span class="lens">生成模型就是 P(x)；所有训练都在最大化似然或其下界。计数是“遮住未来”这种加噪最简单的去噪器。</span></span></td>
+        <td><span class="en">N-gram notebook. "Teach the model" exercise with a local Qwen 0.5B.<span class="starline">★ Jensen → ELBO in 10 lines (needed in Week 8)</span></span><span class="zh">n-gram notebook。用本地 Qwen 0.5B 做“教模型”练习。<span class="starline">★ 从 Jensen 不等式到 ELBO 的 10 行推导（第 8 周要用）</span></span></td>
         <td>JM ch. 3; Principles ch. 1.3</td>
         <td></td></tr>
-      <tr data-start="2026-09-20"><td class="num">3</td><td class="date">Sep 23</td>
-        <td><strong>Embeddings and classification</strong><span class="lens">Skip-gram as one-step denoising. The classifier p(y | x) returns as guidance in Week 10.</span></td>
-        <td>Embeddings notebook with Chinese analogies. <strong>Quiz 1.</strong><span class="starline">★ Denoising autoencoders ↔ score matching (Vincent 2011)</span></td>
+      <tr data-start="2026-09-20"><td class="num">3</td><td class="date"><span class="en">Sep 23</span><span class="zh">9 月 23 日</span></td>
+        <td><span class="en"><strong>Embeddings and classification</strong><span class="lens">Skip-gram as one-step denoising. The classifier p(y | x) returns as guidance in Week 10.</span></span><span class="zh"><strong>词向量与分类</strong><span class="lens">Skip-gram 是单步去噪。分类器 p(y | x) 在第 10 周将以“引导”的身份回归。</span></span></td>
+        <td><span class="en">Embeddings notebook with Chinese analogies. <strong>Quiz 1.</strong><span class="starline">★ Denoising autoencoders ↔ score matching (Vincent 2011)</span></span><span class="zh">词向量 notebook，含中文类比题。<strong>小测 1。</strong><span class="starline">★ 去噪自编码器 ↔ 得分匹配（Vincent 2011）</span></span></td>
         <td>JM ch. 4–5</td>
         <td></td></tr>
-      <tr data-start="2026-09-27"><td class="num">4</td><td class="date">Sep 30</td>
-        <td><strong>Neural LMs, RNNs, attention</strong><span class="lens">Parameterising the denoiser; context mixing.</span></td>
-        <td>Neural-LM notebook. First hacker slot: Bahdanau attention, live.<span class="starline">★ Why teacher forcing = denoising every position in parallel</span></td>
+      <tr data-start="2026-09-27"><td class="num">4</td><td class="date"><span class="en">Sep 30</span><span class="zh">9 月 30 日</span></td>
+        <td><span class="en"><strong>Neural LMs, RNNs, attention</strong><span class="lens">Parameterising the denoiser; context mixing.</span></span><span class="zh"><strong>神经语言模型、RNN 与注意力</strong><span class="lens">参数化去噪器；混合上下文。</span></span></td>
+        <td><span class="en">Neural-LM notebook. First hacker slot: Bahdanau attention, live.<span class="starline">★ Why teacher forcing = denoising every position in parallel</span></span><span class="zh">神经语言模型 notebook。第一次动手环节：现场实现 Bahdanau 注意力。<span class="starline">★ 为什么 teacher forcing 就是并行地对每个位置去噪</span></span></td>
         <td>NPLM (Bengio 2003); Bahdanau et al. 2015</td>
         <td></td></tr>
-      <tr data-start="2026-10-04" class="holiday"><td class="num">5</td><td class="date">Oct 7</td>
-        <td><strong>Transformer I</strong><span class="lens">The denoiser architecture. Causal mask vs bidirectional mask = which corruption you reverse.</span><span class="flag">No class on Oct 7 (National Day, Oct 1–7). Make-up session TBA.</span></td>
-        <td>Transformer notebook. Pods formed. <strong>Quiz 2.</strong><span class="starline">★ Positional encodings and time conditioning (t as an extra token)</span></td>
+      <tr data-start="2026-10-04" class="holiday"><td class="num">5</td><td class="date"><span class="en">Oct 7</span><span class="zh">10 月 7 日</span></td>
+        <td><span class="en"><strong>Transformer I</strong><span class="lens">The denoiser architecture. Causal mask vs bidirectional mask = which corruption you reverse.</span><span class="flag">No class on Oct 7 (National Day, Oct 1–7). Make-up session TBA.</span></span><span class="zh"><strong>Transformer I</strong><span class="lens">去噪器的架构。因果掩码与双向掩码 = 你要逆转哪种加噪。</span><span class="flag">10 月 7 日停课（国庆节，10 月 1–7 日）。补课时间另行通知。</span></span></td>
+        <td><span class="en">Transformer notebook. Pods formed. <strong>Quiz 2.</strong><span class="starline">★ Positional encodings and time conditioning (t as an extra token)</span></span><span class="zh">Transformer notebook。组建小组。<strong>小测 2。</strong><span class="starline">★ 位置编码与时间条件（把 t 当作额外的 token）</span></span></td>
         <td>Vaswani et al. 2017</td>
-        <td><span class="due">A1 due</span></td></tr>
-      <tr data-start="2026-10-11"><td class="num">6</td><td class="date">Oct 14</td>
-        <td><strong>Transformer II and training</strong><span class="lens">Same block, two masks.</span></td>
-        <td>Keep/Stop/Start survey. GPT-2 leaderboard opens.<span class="starline">★ Scaling laws as loss-vs-compute curves for both families</span></td>
+        <td><span class="due"><span class="en">A1 due</span><span class="zh">A1 截止</span></span></td></tr>
+      <tr data-start="2026-10-11"><td class="num">6</td><td class="date"><span class="en">Oct 14</span><span class="zh">10 月 14 日</span></td>
+        <td><span class="en"><strong>Transformer II and training</strong><span class="lens">Same block, two masks.</span></span><span class="zh"><strong>Transformer II 与训练</strong><span class="lens">同一个模块，两种掩码。</span></span></td>
+        <td><span class="en">Keep/Stop/Start survey. GPT-2 leaderboard opens.<span class="starline">★ Scaling laws as loss-vs-compute curves for both families</span></span><span class="zh">Keep/Stop/Start 问卷。GPT-2 排行榜开放。<span class="starline">★ 把缩放定律看作两类模型的损失–算力曲线</span></span></td>
         <td>—</td>
         <td></td></tr>
-      <tr data-start="2026-10-18"><td class="num">7</td><td class="date">Oct 21</td>
-        <td><strong>GPT pretraining and decoding</strong><span class="lens">Autoregression = fixed-order reverse process. Temperature and top-p = noise level and truncation.</span></td>
-        <td>train_gpt2 notebook. <strong>Quiz 3.</strong><span class="starline">★ Speculative decoding as a two-model sampler</span></td>
+      <tr data-start="2026-10-18"><td class="num">7</td><td class="date"><span class="en">Oct 21</span><span class="zh">10 月 21 日</span></td>
+        <td><span class="en"><strong>GPT pretraining and decoding</strong><span class="lens">Autoregression = fixed-order reverse process. Temperature and top-p = noise level and truncation.</span></span><span class="zh"><strong>GPT 预训练与解码</strong><span class="lens">自回归 = 顺序固定的反向过程。温度与 top-p = 噪声水平与截断。</span></span></td>
+        <td><span class="en">train_gpt2 notebook. <strong>Quiz 3.</strong><span class="starline">★ Speculative decoding as a two-model sampler</span></span><span class="zh">train_gpt2 notebook。<strong>小测 3。</strong><span class="starline">★ 把投机解码看作双模型采样器</span></span></td>
         <td>GPT-1/2/3; Principles ch. 2 (DDPM ELBO)</td>
-        <td><span class="due">Proposal due</span></td></tr>
-      <tr data-start="2026-10-25"><td class="num">8</td><td class="date">Oct 28</td>
-        <td><strong>BERT → masked diffusion LMs</strong> (the pivot)<span class="lens">BERT's loss is one step of absorbing-state diffusion. A left-to-right LM is masked diffusion with a fixed order. Same Transformer, different mask, different sampler.</span></td>
-        <td><strong>The "aha" lab:</strong> change <code>corrupt</code> and the loss in the GPT-2 code, get a masked diffusion LM, sample from it.<span class="starline">★ Derive the MDLM ELBO; autoregression as the identity-order case</span></td>
+        <td><span class="due"><span class="en">Proposal due</span><span class="zh">提案截止</span></span></td></tr>
+      <tr data-start="2026-10-25"><td class="num">8</td><td class="date"><span class="en">Oct 28</span><span class="zh">10 月 28 日</span></td>
+        <td><span class="en"><strong>BERT → masked diffusion LMs</strong> (the pivot)<span class="lens">BERT's loss is one step of absorbing-state diffusion. A left-to-right LM is masked diffusion with a fixed order. Same Transformer, different mask, different sampler.</span></span><span class="zh"><strong>从 BERT 到掩码扩散语言模型</strong>（转折点）<span class="lens">BERT 的损失是吸收态扩散的一步。从左到右的语言模型是顺序固定的掩码扩散。同一个 Transformer，不同的掩码，不同的采样器。</span></span></td>
+        <td><span class="en"><strong>The "aha" lab:</strong> change <code>corrupt</code> and the loss in the GPT-2 code, get a masked diffusion LM, sample from it.<span class="starline">★ Derive the MDLM ELBO; autoregression as the identity-order case</span></span><span class="zh"><strong>“顿悟”实验：</strong>改动 GPT-2 代码中的 <code>corrupt</code> 与损失函数，得到一个掩码扩散语言模型并从中采样。<span class="starline">★ 推导 MDLM 的 ELBO；自回归是“恒等顺序”的特例</span></span></td>
         <td>D3PM; MDLM; <a href="https://kuleshov-group.github.io/blog/blog/2026/how-to-build-a-diffusion-language-model/">How to build a diffusion LM</a>; LLaDA; Dream; Principles ch. 12.2</td>
         <td></td></tr>
-      <tr data-start="2026-11-01"><td class="num">9</td><td class="date">Nov 4</td>
-        <td><strong>Evaluation and benchmarks</strong><span class="lens">Perplexity is exact NLL for AR models but only an ELBO for diffusion LMs, so comparisons need care. Samplers change scores.</span></td>
-        <td>Goodhart lab on HellaSwag.<span class="starline">★ Sampler-centric evaluation of diffusion LMs</span></td>
+      <tr data-start="2026-11-01"><td class="num">9</td><td class="date"><span class="en">Nov 4</span><span class="zh">11 月 4 日</span></td>
+        <td><span class="en"><strong>Evaluation and benchmarks</strong><span class="lens">Perplexity is exact NLL for AR models but only an ELBO for diffusion LMs, so comparisons need care. Samplers change scores.</span></span><span class="zh"><strong>评测与基准</strong><span class="lens">困惑度对自回归模型是精确的 NLL，对扩散语言模型只是 ELBO，因此比较时要小心。采样器会改变分数。</span></span></td>
+        <td><span class="en">Goodhart lab on HellaSwag.<span class="starline">★ Sampler-centric evaluation of diffusion LMs</span></span><span class="zh">在 HellaSwag 上做 Goodhart 实验。<span class="starline">★ 以采样器为中心的扩散语言模型评测</span></span></td>
         <td>GLUE; MMLU; HellaSwag</td>
-        <td><span class="due">A2 due</span> <span class="due">Baseline due</span></td></tr>
-      <tr data-start="2026-11-08"><td class="num">10</td><td class="date">Nov 11</td>
-        <td><strong>Post-training: SFT, RM, PPO, GRPO, DPO</strong><span class="lens">Reward-tilted reverse processes. Guidance is the training-free version.</span></td>
-        <td>GRPO live lab with a reward-hacking hunt on the AR model. <strong>Quiz 4.</strong><span class="starline">★ The same GRPO on the Week 8 diffusion LM (d1); classifier-free guidance for LLMs; MIT lab 3</span></td>
+        <td><span class="due"><span class="en">A2 due</span><span class="zh">A2 截止</span></span> <span class="due"><span class="en">Baseline due</span><span class="zh">基线截止</span></span></td></tr>
+      <tr data-start="2026-11-08"><td class="num">10</td><td class="date"><span class="en">Nov 11</span><span class="zh">11 月 11 日</span></td>
+        <td><span class="en"><strong>Post-training: SFT, RM, PPO, GRPO, DPO</strong><span class="lens">Reward-tilted reverse processes. Guidance is the training-free version.</span></span><span class="zh"><strong>后训练：SFT、RM、PPO、GRPO、DPO</strong><span class="lens">被奖励倾斜的反向过程。引导是免训练的版本。</span></span></td>
+        <td><span class="en">GRPO live lab with a reward-hacking hunt on the AR model. <strong>Quiz 4.</strong><span class="starline">★ The same GRPO on the Week 8 diffusion LM (d1); classifier-free guidance for LLMs; MIT lab 3</span></span><span class="zh">GRPO 现场实验，在自回归模型上追踪奖励作弊。<strong>小测 4。</strong><span class="starline">★ 在第 8 周的扩散语言模型上运行同样的 GRPO（d1）；LLM 的无分类器引导；MIT lab 3</span></span></td>
         <td>InstructGPT; DPO; DeepSeek-R1; d1; Principles ch. 8; MIT §5</td>
-        <td><span class="due">Pod draft review</span></td></tr>
-      <tr data-start="2026-11-15"><td class="num">11</td><td class="date">Nov 18</td>
-        <td><strong>Information retrieval and RAG</strong><span class="lens">Conditional generation p(x | retrieved c). Denoiser features as embeddings.</span></td>
-        <td>RAG notebook on your own course notes. Guest lecture if booked.<span class="starline">★ DiffEmbed: diffusion LMs as text embedders</span></td>
+        <td><span class="due"><span class="en">Pod draft review</span><span class="zh">小组草稿互评</span></span></td></tr>
+      <tr data-start="2026-11-15"><td class="num">11</td><td class="date"><span class="en">Nov 18</span><span class="zh">11 月 18 日</span></td>
+        <td><span class="en"><strong>Information retrieval and RAG</strong><span class="lens">Conditional generation p(x | retrieved c). Denoiser features as embeddings.</span></span><span class="zh"><strong>信息检索与 RAG</strong><span class="lens">条件生成 p(x | 检索到的 c)。用去噪器的特征做嵌入。</span></span></td>
+        <td><span class="en">RAG notebook on your own course notes. Guest lecture if booked.<span class="starline">★ DiffEmbed: diffusion LMs as text embedders</span></span><span class="zh">在你自己的课程笔记上做 RAG notebook。如有安排，客座讲座。<span class="starline">★ DiffEmbed：把扩散语言模型用作文本嵌入器</span></span></td>
         <td>JM ch. 11; DPR</td>
         <td></td></tr>
-      <tr data-start="2026-11-22"><td class="num">12</td><td class="date">Nov 25</td>
-        <td><strong>Poster session</strong><span class="lens">Every student presents preliminary results; pods present side by side.</span></td>
-        <td>Posters and structured peer review in pods. <strong>Quiz 5.</strong></td>
+      <tr data-start="2026-11-22"><td class="num">12</td><td class="date"><span class="en">Nov 25</span><span class="zh">11 月 25 日</span></td>
+        <td><span class="en"><strong>Poster session</strong><span class="lens">Every student presents preliminary results; pods present side by side.</span></span><span class="zh"><strong>海报展示</strong><span class="lens">每位同学展示初步结果；小组并排展示。</span></span></td>
+        <td><span class="en">Posters and structured peer review in pods. <strong>Quiz 5.</strong></span><span class="zh">海报与小组内结构化互评。<strong>小测 5。</strong></span></td>
         <td>—</td>
-        <td><span class="due">A3 due</span> <span class="due">Poster</span></td></tr>
-      <tr data-start="2026-11-29"><td class="num">13</td><td class="date">Dec 2</td>
-        <td><strong>Diffusion LMs in continuous time</strong> <span class="star">★</span><span class="lens">The backbone under everything: probability evolution, Fokker–Planck for continuous states, Kolmogorov forward / CTMC for tokens.</span></td>
-        <td>Seminar paper: Dream 7B or SEDD. Hacker: uniform-state corruption.<span class="starline">★ Score entropy (SEDD); flow matching on embeddings; MIT labs 1–2</span></td>
+        <td><span class="due"><span class="en">A3 due</span><span class="zh">A3 截止</span></span> <span class="due"><span class="en">Poster</span><span class="zh">海报</span></span></td></tr>
+      <tr data-start="2026-11-29"><td class="num">13</td><td class="date"><span class="en">Dec 2</span><span class="zh">12 月 2 日</span></td>
+        <td><span class="en"><strong>Diffusion LMs in continuous time</strong> <span class="star">★</span><span class="lens">The backbone under everything: probability evolution, Fokker–Planck for continuous states, Kolmogorov forward / CTMC for tokens.</span></span><span class="zh"><strong>连续时间下的扩散语言模型</strong> <span class="star">★</span><span class="lens">一切背后的骨架：概率演化——连续状态用 Fokker–Planck 方程，token 用 Kolmogorov 前向方程 / CTMC。</span></span></td>
+        <td><span class="en">Seminar paper: Dream 7B or SEDD. Hacker: uniform-state corruption.<span class="starline">★ Score entropy (SEDD); flow matching on embeddings; MIT labs 1–2</span></span><span class="zh">研讨论文：Dream 7B 或 SEDD。动手环节：均匀态加噪。<span class="starline">★ 得分熵（SEDD）；词向量上的流匹配；MIT labs 1–2</span></span></td>
         <td>Principles ch. 4–6, 12; MIT §2–4</td>
         <td></td></tr>
-      <tr data-start="2026-12-06"><td class="num">14</td><td class="date">Dec 9</td>
-        <td><strong>Alignment and safety</strong><span class="lens">Guidance and its failure modes. Red-teaming both families.</span></td>
-        <td>Red-teaming lab against a local model. Seminar paper.<span class="starline">★ "Safer by diffusion, broken by context"</span></td>
+      <tr data-start="2026-12-06"><td class="num">14</td><td class="date"><span class="en">Dec 9</span><span class="zh">12 月 9 日</span></td>
+        <td><span class="en"><strong>Alignment and safety</strong><span class="lens">Guidance and its failure modes. Red-teaming both families.</span></span><span class="zh"><strong>对齐与安全</strong><span class="lens">引导及其失效模式。对两类模型做红队测试。</span></span></td>
+        <td><span class="en">Red-teaming lab against a local model. Seminar paper.<span class="starline">★ "Safer by diffusion, broken by context"</span></span><span class="zh">针对本地模型的红队实验。研讨论文。<span class="starline">★ “Safer by diffusion, broken by context”</span></span></td>
         <td>Constitutional AI</td>
         <td></td></tr>
-      <tr data-start="2026-12-13"><td class="num">15</td><td class="date">Dec 16</td>
-        <td><strong>Efficiency and fast sampling</strong><span class="lens">The KV cache is AR-only; diffusion buys parallel decoding. Few-step samplers and distillation are the diffusion answer.</span></td>
-        <td>Hacker: add a KV cache to the Week 7 code and measure tokens/s. Seminar paper. Oral defences begin.<span class="starline">★ Block diffusion (BD3LM); consistency and distillation (Principles ch. 9–11)</span></td>
+      <tr data-start="2026-12-13"><td class="num">15</td><td class="date"><span class="en">Dec 16</span><span class="zh">12 月 16 日</span></td>
+        <td><span class="en"><strong>Efficiency and fast sampling</strong><span class="lens">The KV cache is AR-only; diffusion buys parallel decoding. Few-step samplers and distillation are the diffusion answer.</span></span><span class="zh"><strong>效率与快速采样</strong><span class="lens">KV 缓存只属于自回归；扩散换来并行解码。少步采样器与蒸馏是扩散一方的答案。</span></span></td>
+        <td><span class="en">Hacker: add a KV cache to the Week 7 code and measure tokens/s. Seminar paper. Oral defences begin.<span class="starline">★ Block diffusion (BD3LM); consistency and distillation (Principles ch. 9–11)</span></span><span class="zh">动手环节：给第 7 周的代码加 KV 缓存并测 tokens/s。研讨论文。口头答辩开始。<span class="starline">★ 块扩散（BD3LM）；一致性与蒸馏（Principles ch. 9–11）</span></span></td>
         <td>FlashAttention; BD3LM</td>
-        <td><span class="due">Defences</span></td></tr>
-      <tr data-start="2026-12-20"><td class="num">16</td><td class="date">Dec 23</td>
-        <td><strong>Agents and frontiers</strong><span class="lens">Sampling with tool feedback. Unified discrete diffusion for text and images.</span></td>
-        <td>Hacker: a tool-use loop. Oral defences. Final review: one denoiser, six corruptions, one recipe for steering it.<span class="starline">★ Multimodal discrete diffusion</span></td>
-        <td><a href="https://rdi.berkeley.edu/llm-agents/">Berkeley LLM Agents F26</a> (pre-watch); <a href="https://arxiv.org/abs/2506.13759">discrete diffusion survey</a></td>
-        <td><span class="due">Defences</span></td></tr>
-      <tr data-start="2026-12-27"><td class="num">17</td><td class="date">Dec 30</td>
-        <td><strong>Exam week</strong> (no lecture)</td>
+        <td><span class="due"><span class="en">Defences</span><span class="zh">答辩</span></span></td></tr>
+      <tr data-start="2026-12-20"><td class="num">16</td><td class="date"><span class="en">Dec 23</span><span class="zh">12 月 23 日</span></td>
+        <td><span class="en"><strong>Agents and frontiers</strong><span class="lens">Sampling with tool feedback. Unified discrete diffusion for text and images.</span></span><span class="zh"><strong>智能体与前沿</strong><span class="lens">带工具反馈的采样。文本与图像统一的离散扩散。</span></span></td>
+        <td><span class="en">Hacker: a tool-use loop. Oral defences. Final review: one denoiser, six corruptions, one recipe for steering it.<span class="starline">★ Multimodal discrete diffusion</span></span><span class="zh">动手环节：工具调用循环。口头答辩。期末回顾：一个去噪器、六种加噪、一套引导配方。<span class="starline">★ 多模态离散扩散</span></span></td>
+        <td><a href="https://rdi.berkeley.edu/llm-agents/">Berkeley LLM Agents F26</a> (<span class="en">pre-watch</span><span class="zh">课前观看</span>); <a href="https://arxiv.org/abs/2506.13759"><span class="en">discrete diffusion survey</span><span class="zh">离散扩散综述</span></a></td>
+        <td><span class="due"><span class="en">Defences</span><span class="zh">答辩</span></span></td></tr>
+      <tr data-start="2026-12-27"><td class="num">17</td><td class="date"><span class="en">Dec 30</span><span class="zh">12 月 30 日</span></td>
+        <td><span class="en"><strong>Exam week</strong> (no lecture)</span><span class="zh"><strong>考试周</strong>（无课）</span></td>
         <td>—</td><td>—</td>
-        <td><span class="due">Final report</span> <span class="due">Decision log</span></td></tr>
+        <td><span class="due"><span class="en">Final report</span><span class="zh">期末报告</span></span> <span class="due"><span class="en">Decision log</span><span class="zh">决策日志</span></span></td></tr>
     </tbody>
   </table>
   </div>
-  <p class="muted">Weeks 13–16 run as role-playing seminars: a 30–40 minute framing lecture, then a paper discussed from assigned roles (peer reviewer, archaeologist, researcher, practitioner, hacker, private investigator, social-impact assessor). Master's students take the reviewer and hacker roles first and lead the pod discussion.</p>
+  <p class="muted"><span class="en">Weeks 13–16 run as role-playing seminars: a 30–40 minute framing lecture, then a paper discussed from assigned roles (peer reviewer, archaeologist, researcher, practitioner, hacker, private investigator, social-impact assessor). Master's students take the reviewer and hacker roles first and lead the pod discussion.</span><span class="zh">第 13–16 周以角色扮演研讨的形式进行：先用 30–40 分钟讲框架，再从指定角色（同行评审、考古学家、研究者、从业者、黑客、私家侦探、社会影响评估者）出发讨论一篇论文。硕士生先承担评审与黑客角色，并主持小组讨论。</span></p>
 </section>
 
 <section id="assessment">
-  <h2>Assessment</h2>
+  <h2><span class="en">Assessment</span><span class="zh">考核</span></h2>
   <div class="weights" aria-hidden="true">
     <span class="w-part" style="width:5%"></span><span class="w-quiz" style="width:15%"></span>
     <span class="w-asg" style="width:40%"></span><span class="w-proj" style="width:40%"></span>
   </div>
   <div class="legend">
-    <span><i style="background:#9db8dc"></i>Participation 5%</span>
-    <span><i style="background:#6f97cf"></i>Quizzes 15%</span>
-    <span><i style="background:#3f6fb4"></i>Assignments 40%</span>
-    <span><i style="background:var(--accent)"></i>Project 40%</span>
+    <span><i style="background:#9db8dc"></i><span class="en">Participation 5%</span><span class="zh">平时参与 5%</span></span>
+    <span><i style="background:#6f97cf"></i><span class="en">Quizzes 15%</span><span class="zh">小测 15%</span></span>
+    <span><i style="background:#3f6fb4"></i><span class="en">Assignments 40%</span><span class="zh">作业 40%</span></span>
+    <span><i style="background:var(--accent)"></i><span class="en">Project 40%</span><span class="zh">课程项目 40%</span></span>
   </div>
 
-  <h3>Participation (5%)</h3>
-  <p>Exit tickets and in-class polls. Full credit at 80% or more submitted. Each exit ticket asks two things: the muddiest point today, and the one thing that helped most.</p>
+  <h3><span class="en">Participation (5%)</span><span class="zh">平时参与（5%）</span></h3>
+  <p><span class="en">Exit tickets and in-class polls. Full credit at 80% or more submitted. Each exit ticket asks two things: the muddiest point today, and the one thing that helped most.</span><span class="zh">课后反馈单与课堂投票。提交率达到 80% 即得满分。每张反馈单问两件事：今天最没弄懂的点，以及最有帮助的一点。</span></p>
 
-  <h3>Quizzes (15%)</h3>
-  <p>Five closed-book, 15-minute quizzes in Weeks 3, 5, 7, 10, and 12. The lowest score is dropped. Quizzes are identical for undergraduates and master's students, and <span class="star">★</span> material is never on a quiz.</p>
+  <h3><span class="en">Quizzes (15%)</span><span class="zh">小测（15%）</span></h3>
+  <p><span class="en">Five closed-book, 15-minute quizzes in Weeks 3, 5, 7, 10, and 12. The lowest score is dropped. Quizzes are identical for undergraduates and master's students, and <span class="star">★</span> material is never on a quiz.</span><span class="zh">第 3、5、7、10、12 周共五次闭卷小测，每次 15 分钟。去掉最低一次。本科生与硕士生题目相同，<span class="star">★</span> 内容不进小测。</span></p>
 
-  <h3>Assignments (40%)</h3>
+  <h3><span class="en">Assignments (40%)</span><span class="zh">作业（40%）</span></h3>
   <ul>
-    <li><strong>A1 Foundations of text</strong> (Weeks 1–4, due Week 5). Tokenization, n-gram models, embeddings, and a first neural LM. <span class="star">★</span> the ELBO derivation.</li>
-    <li><strong>A2 One denoiser, three corruptions</strong> (Weeks 5–8, due Week 9). Train the same small Transformer under causal, one-step-mask, and random-rate-mask corruption on the same data with the same budget. Compare NLL / ELBO and samples. <span class="star">★</span> add uniform-state corruption and derive its posterior.</li>
-    <li><strong>A3 Steering both families</strong> (Weeks 9–11, due Week 12). GRPO with a verifiable reward (letter counting, arithmetic) on the AR model. <span class="star">★</span> the same on the masked diffusion LM, with the ELBO-based policy gradient derived.</li>
+    <li><span class="en"><strong>A1 Foundations of text</strong> (Weeks 1–4, due Week 5). Tokenization, n-gram models, embeddings, and a first neural LM. <span class="star">★</span> the ELBO derivation.</span><span class="zh"><strong>A1 文本基础</strong>（第 1–4 周，第 5 周截止）。分词、n-gram 模型、词向量与第一个神经语言模型。<span class="star">★</span> ELBO 推导。</span></li>
+    <li><span class="en"><strong>A2 One denoiser, three corruptions</strong> (Weeks 5–8, due Week 9). Train the same small Transformer under causal, one-step-mask, and random-rate-mask corruption on the same data with the same budget. Compare NLL / ELBO and samples. <span class="star">★</span> add uniform-state corruption and derive its posterior.</span><span class="zh"><strong>A2 一个去噪器，三种加噪</strong>（第 5–8 周，第 9 周截止）。用同一份数据、同一算力预算，在因果、单步掩码、随机比例掩码三种加噪下训练同一个小 Transformer；比较 NLL / ELBO 与采样结果。<span class="star">★</span> 加入均匀态加噪并推导其后验。</span></li>
+    <li><span class="en"><strong>A3 Steering both families</strong> (Weeks 9–11, due Week 12). GRPO with a verifiable reward (letter counting, arithmetic) on the AR model. <span class="star">★</span> the same on the masked diffusion LM, with the ELBO-based policy gradient derived.</span><span class="zh"><strong>A3 引导两类模型</strong>（第 9–11 周，第 12 周截止）。在自回归模型上用可验证奖励（数字母、算术）做 GRPO。<span class="star">★</span> 在掩码扩散语言模型上做同样的事，并推导基于 ELBO 的策略梯度。</span></li>
   </ul>
-  <p><span class="star">★</span> parts are required and worth 25% of each assignment for master's students, and a bonus worth up to 5% for undergraduates.</p>
+  <p><span class="en"><span class="star">★</span> parts are required and worth 25% of each assignment for master's students, and a bonus worth up to 5% for undergraduates.</span><span class="zh"><span class="star">★</span> 部分：硕士生必做，占每次作业的 25%；本科生选做，最高加 5 分。</span></p>
 
-  <h3>Project (40%)</h3>
-  <p>Individual work inside three-person pods. Details below.</p>
+  <h3><span class="en">Project (40%)</span><span class="zh">课程项目（40%）</span></h3>
+  <p><span class="en">Individual work inside three-person pods. Details below.</span><span class="zh">以三人小组为单位的个人项目。详见下文。</span></p>
 </section>
 
 <section id="project">
-  <h2>Course project</h2>
-  <p class="lead">One project per student, reviewed inside a pod of three (one master's student and two undergraduates), with a short oral defence. What we assess is judgement: choosing the question, designing the evaluation, and deciding what to keep from what your coding assistant proposed.</p>
+  <h2><span class="en">Course project</span><span class="zh">课程项目</span></h2>
+  <p class="lead"><span class="en">One project per student, reviewed inside a pod of three (one master's student and two undergraduates), with a short oral defence. What we assess is judgement: choosing the question, designing the evaluation, and deciding what to keep from what your coding assistant proposed.</span><span class="zh">每人一个项目，在三人小组（一名硕士生加两名本科生）内互评，并有简短的口头答辩。我们考察的是判断力：如何选题、如何设计评测，以及在编程助手的建议中留下什么。</span></p>
 
   <div class="grid">
     <div class="card">
-      <h3>Track A · Build</h3>
-      <p>Build a small chat model under a fixed budget: tokenizer → pretrain → SFT → RL → evaluation, following <a href="https://github.com/karpathy/nanochat">nanochat</a>'s stages. Either an autoregressive model or a masked diffusion LM.</p>
+      <h3><span class="en">Track A · Build</span><span class="zh">方向 A · 构建</span></h3>
+      <p><span class="en">Build a small chat model under a fixed budget: tokenizer → pretrain → SFT → RL → evaluation, following <a href="https://github.com/karpathy/nanochat">nanochat</a>'s stages. Either an autoregressive model or a masked diffusion LM.</span><span class="zh">在固定预算下构建一个小型对话模型：分词器 → 预训练 → SFT → RL → 评测，按 <a href="https://github.com/karpathy/nanochat">nanochat</a> 的阶段进行。可选自回归模型或掩码扩散语言模型。</span></p>
     </div>
     <div class="card">
-      <h3>Track B · Reproduce and extend</h3>
-      <p>Reproduce one main table from a 2025–26 paper and extend it with an ablation, a new dataset, or a new setting.</p>
+      <h3><span class="en">Track B · Reproduce and extend</span><span class="zh">方向 B · 复现并扩展</span></h3>
+      <p><span class="en">Reproduce one main table from a 2025–26 paper and extend it with an ablation, a new dataset, or a new setting.</span><span class="zh">复现一篇 2025–26 年论文的一张主表，并通过消融、新数据集或新设定加以扩展。</span></p>
     </div>
   </div>
 
-  <h3>Every project must include something an assistant cannot supply</h3>
-  <p>Choose at least one: a dataset you collected yourself; a Chinese-language angle; a reproduction of a table from a 2025–26 paper with a measured discrepancy; or a negative result, explained.</p>
+  <h3><span class="en">Every project must include something an assistant cannot supply</span><span class="zh">每个项目都必须包含助手给不了的东西</span></h3>
+  <p><span class="en">Choose at least one: a dataset you collected yourself; a Chinese-language angle; a reproduction of a table from a 2025–26 paper with a measured discrepancy; or a negative result, explained.</span><span class="zh">至少选一项：你自己收集的数据集；一个中文视角；复现一篇 2025–26 年论文中的一张表并测出差异；或一个被解释清楚的负面结果。</span></p>
 
-  <h3>Deliverables</h3>
+  <h3><span class="en">Deliverables</span><span class="zh">交付物</span></h3>
   <ol>
-    <li><strong>Pods formed</strong> (Week 5).</li>
-    <li><strong>One-page proposal</strong> (Week 7): problem, dataset, baselines.</li>
-    <li><strong>Baseline reproduction</strong> (Week 9).</li>
-    <li><strong>Pod draft review</strong> (Week 10): each pod reviews its members' drafts and writes one shared comparison page relating its three projects.</li>
-    <li><strong>Poster session</strong> (Week 12): preliminary results, pods present side by side, structured peer review.</li>
-    <li><strong>Oral defence</strong> (Weeks 15–16): 8 minutes per student during exercise time, with the instructor and TAs.</li>
-    <li><strong>Final report</strong> (Week 17): at most 4 pages of main content in the <a href="https://www.overleaf.com/latex/templates/association-for-computational-linguistics-acl-conference/jvxskxpnznfj">ACL template</a>, unlimited appendix, plus code and a <strong>one-page decision log</strong>: what the assistant proposed, what you rejected, and why. The log is graded.</li>
+    <li><span class="en"><strong>Pods formed</strong> (Week 5).</span><span class="zh"><strong>组建小组</strong>（第 5 周）。</span></li>
+    <li><span class="en"><strong>One-page proposal</strong> (Week 7): problem, dataset, baselines.</span><span class="zh"><strong>一页提案</strong>（第 7 周）：问题、数据集、基线。</span></li>
+    <li><span class="en"><strong>Baseline reproduction</strong> (Week 9).</span><span class="zh"><strong>基线复现</strong>（第 9 周）。</span></li>
+    <li><span class="en"><strong>Pod draft review</strong> (Week 10): each pod reviews its members' drafts and writes one shared comparison page relating its three projects.</span><span class="zh"><strong>小组草稿互评</strong>（第 10 周）：小组内互评成员草稿，并合写一页“比较页”，把三个项目联系起来。</span></li>
+    <li><span class="en"><strong>Poster session</strong> (Week 12): preliminary results, pods present side by side, structured peer review.</span><span class="zh"><strong>海报展示</strong>（第 12 周）：初步结果，小组并排展示，结构化互评。</span></li>
+    <li><span class="en"><strong>Oral defence</strong> (Weeks 15–16): 8 minutes per student during exercise time, with the instructor and TAs.</span><span class="zh"><strong>口头答辩</strong>（第 15–16 周）：练习时间内每人 8 分钟，由教师与助教主持。</span></li>
+    <li><span class="en"><strong>Final report</strong> (Week 17): at most 4 pages of main content in the <a href="https://www.overleaf.com/latex/templates/association-for-computational-linguistics-acl-conference/jvxskxpnznfj">ACL template</a>, unlimited appendix, plus code and a <strong>one-page decision log</strong>: what the assistant proposed, what you rejected, and why. The log is graded.</span><span class="zh"><strong>期末报告</strong>（第 17 周）：使用 <a href="https://www.overleaf.com/latex/templates/association-for-computational-linguistics-acl-conference/jvxskxpnznfj">ACL 模板</a>，正文不超过 4 页，附录不限，另附代码与<strong>一页决策日志</strong>：助手提了什么、你否决了什么、为什么。决策日志计入成绩。</span></li>
   </ol>
 
-  <h3>What good looks like</h3>
+  <h3><span class="en">What good looks like</span><span class="zh">怎样算好</span></h3>
   <ul>
-    <li><strong>Undergraduates:</strong> a careful reproduction, one extension, an honest evaluation, the decision log, and the defence.</li>
-    <li><strong>Master's students:</strong> an original question with an ablation, one <span class="star">★</span> component (a continuous-time formulation, a sampler analysis, or a diffusion-vs-AR comparison), and reviewer duty for the pod.</li>
+    <li><span class="en"><strong>Undergraduates:</strong> a careful reproduction, one extension, an honest evaluation, the decision log, and the defence.</span><span class="zh"><strong>本科生：</strong>认真的复现、一个扩展、诚实的评测、决策日志与答辩。</span></li>
+    <li><span class="en"><strong>Master's students:</strong> an original question with an ablation, one <span class="star">★</span> component (a continuous-time formulation, a sampler analysis, or a diffusion-vs-AR comparison), and reviewer duty for the pod.</span><span class="zh"><strong>硕士生：</strong>一个带消融实验的原创问题、一个 <span class="star">★</span> 组件（连续时间表述、采样器分析或扩散–自回归对比），并承担小组评审。</span></li>
   </ul>
-  <p>Each student receives a fixed GPU-hour budget on the university cluster. Small models are the point of this course, not a limitation.</p>
+  <p><span class="en">Each student receives a fixed GPU-hour budget on the university cluster. Small models are the point of this course, not a limitation.</span><span class="zh">每位同学在学校集群上有固定的 GPU 小时预算。小模型正是本课程的要点，而非限制。</span></p>
 </section>
 
 <section id="policies">
-  <h2>Policies</h2>
-  <h3>AI assistants</h3>
+  <h2><span class="en">Policies</span><span class="zh">课程政策</span></h2>
+  <h3><span class="en">AI assistants</span><span class="zh">AI 助手</span></h3>
   <div class="callout">
-    <p><strong>Allowed</strong> for concepts, debugging, and boilerplate on assignments and the project. <strong>Every submission carries a disclosure box</strong> saying which tools you used and for what. <strong>Quizzes and in-class exercises are closed-assistant.</strong> The project includes a graded decision log of what the assistant proposed and what you rejected.</p>
+    <p><span class="en"><strong>Allowed</strong> for concepts, debugging, and boilerplate on assignments and the project. <strong>Every submission carries a disclosure box</strong> saying which tools you used and for what. <strong>Quizzes and in-class exercises are closed-assistant.</strong> The project includes a graded decision log of what the assistant proposed and what you rejected.</span><span class="zh"><strong>允许</strong>在作业与项目中用于概念理解、调试与样板代码。<strong>每次提交都须附使用声明框</strong>，说明用了哪些工具、用在何处。<strong>小测与课堂练习禁止使用助手。</strong>项目需附决策日志（计分），记录助手的建议与你的取舍。</span></p>
   </div>
-  <h3>Academic integrity</h3>
-  <p>Please read <a href="https://baojian.github.io/llm-26/assets/Fudan-academic-integrity.pdf">the course policy on academic integrity</a>. Undisclosed AI use, copied code without attribution, and fabricated results are treated as misconduct.</p>
-  <h3>Submissions</h3>
-  <p>All work is submitted through <a href="https://elearning.fudan.edu.cn/">eLearning</a> by 23:59 on the due date.</p>
+  <h3><span class="en">Academic integrity</span><span class="zh">学术诚信</span></h3>
+  <p><span class="en">Please read <a href="https://baojian.github.io/llm-26/assets/Fudan-academic-integrity.pdf">the course policy on academic integrity</a>. Undisclosed AI use, copied code without attribution, and fabricated results are treated as misconduct.</span><span class="zh">请阅读<a href="https://baojian.github.io/llm-26/assets/Fudan-academic-integrity.pdf">课程的学术诚信政策</a>。未声明的 AI 使用、未注明来源的代码抄袭以及伪造结果均按学术不端处理。</span></p>
+  <h3><span class="en">Submissions</span><span class="zh">提交</span></h3>
+  <p><span class="en">All work is submitted through <a href="https://elearning.fudan.edu.cn/">eLearning</a> by 23:59 on the due date.</span><span class="zh">所有作业通过 <a href="https://elearning.fudan.edu.cn/">eLearning</a> 提交，截止时间为当天 23:59。</span></p>
 </section>
 
 <section id="resources">
-  <h2>Resources</h2>
+  <h2><span class="en">Resources</span><span class="zh">资源</span></h2>
   <div class="grid">
     <div class="card">
-      <h3>Textbooks and notes</h3>
+      <h3><span class="en">Textbooks and notes</span><span class="zh">教材与讲义</span></h3>
       <ul>
-        <li><a href="https://web.stanford.edu/~jurafsky/slp3/">Speech and Language Processing</a>, Jurafsky and Martin, 3rd ed. draft (core).</li>
-        <li><a href="https://niutrans.github.io/NLPBook/">Natural Language Processing: Neural Networks and Large Language Models</a>, NiuTrans (core, Chinese).</li>
-        <li><a href="https://arxiv.org/abs/2510.21890">The Principles of Diffusion Models</a>, Lai et al. Ch. 1–2 for the core, ch. 6, 8, 9–12 for <span class="star">★</span>.</li>
-        <li><a href="https://diffusion.csail.mit.edu/">MIT 6.S184 Flow Matching and Diffusion Models</a>: notes, videos, and labs 1–3 (<span class="star">★</span> problem sets).</li>
-        <li><a href="https://kuleshov-group.github.io/blog/blog/2026/how-to-build-a-diffusion-language-model/">How to build a diffusion language model</a>, Kuleshov group (Week 8 tutorial).</li>
-        <li><a href="https://github.com/VILA-Lab/Awesome-DLMs">Awesome-DLMs</a> and the <a href="https://arxiv.org/abs/2506.13759">discrete diffusion survey</a> for seminar paper picks.</li>
+        <li><span class="en"><a href="https://web.stanford.edu/~jurafsky/slp3/">Speech and Language Processing</a>, Jurafsky and Martin, 3rd ed. draft (core).</span><span class="zh"><a href="https://web.stanford.edu/~jurafsky/slp3/">Speech and Language Processing</a>，Jurafsky 与 Martin，第 3 版草稿（核心）。</span></li>
+        <li><span class="en"><a href="https://niutrans.github.io/NLPBook/">Natural Language Processing: Neural Networks and Large Language Models</a>, NiuTrans (core, Chinese).</span><span class="zh"><a href="https://niutrans.github.io/NLPBook/">《自然语言处理：神经网络与大语言模型》</a>，NiuTrans（核心，中文）。</span></li>
+        <li><span class="en"><a href="https://arxiv.org/abs/2510.21890">The Principles of Diffusion Models</a>, Lai et al. Ch. 1–2 for the core, ch. 6, 8, 9–12 for <span class="star">★</span>.</span><span class="zh"><a href="https://arxiv.org/abs/2510.21890">The Principles of Diffusion Models</a>，Lai 等。核心读第 1–2 章，<span class="star">★</span> 读第 6、8、9–12 章。</span></li>
+        <li><span class="en"><a href="https://diffusion.csail.mit.edu/">MIT 6.S184 Flow Matching and Diffusion Models</a>: notes, videos, and labs 1–3 (<span class="star">★</span> problem sets).</span><span class="zh"><a href="https://diffusion.csail.mit.edu/">MIT 6.S184 流匹配与扩散模型</a>：讲义、视频与 labs 1–3（<span class="star">★</span> 习题）。</span></li>
+        <li><span class="en"><a href="https://kuleshov-group.github.io/blog/blog/2026/how-to-build-a-diffusion-language-model/">How to build a diffusion language model</a>, Kuleshov group (Week 8 tutorial).</span><span class="zh"><a href="https://kuleshov-group.github.io/blog/blog/2026/how-to-build-a-diffusion-language-model/">How to build a diffusion language model</a>，Kuleshov 组（第 8 周教程）。</span></li>
+        <li><span class="en"><a href="https://github.com/VILA-Lab/Awesome-DLMs">Awesome-DLMs</a> and the <a href="https://arxiv.org/abs/2506.13759">discrete diffusion survey</a> for seminar paper picks.</span><span class="zh"><a href="https://github.com/VILA-Lab/Awesome-DLMs">Awesome-DLMs</a> 与<a href="https://arxiv.org/abs/2506.13759">离散扩散综述</a>，用于挑选研讨论文。</span></li>
       </ul>
     </div>
     <div class="card">
-      <h3>Compute</h3>
+      <h3><span class="en">Compute</span><span class="zh">算力</span></h3>
       <ul>
-        <li>Register for a <a href="https://cfff.fudan.edu.cn/home">Fudan CFFF</a> account in Week 1.</li>
-        <li>We use <a href="http://qz.cfff.fudan.edu.cn/">Qizhi</a> for GPU jobs. Each student has a fixed GPU-hour budget for the project.</li>
-        <li>Most exercises run on a laptop or a single small GPU by design.</li>
+        <li><span class="en">Register for a <a href="https://cfff.fudan.edu.cn/home">Fudan CFFF</a> account in Week 1.</span><span class="zh">第 1 周注册<a href="https://cfff.fudan.edu.cn/home">复旦 CFFF</a> 账号。</span></li>
+        <li><span class="en">We use <a href="http://qz.cfff.fudan.edu.cn/">Qizhi</a> for GPU jobs. Each student has a fixed GPU-hour budget for the project.</span><span class="zh">GPU 任务使用<a href="http://qz.cfff.fudan.edu.cn/">奇智（Qizhi）</a>平台；每位同学有固定的项目 GPU 小时预算。</span></li>
+        <li><span class="en">Most exercises run on a laptop or a single small GPU by design.</span><span class="zh">大多数练习按设计可在笔记本或单张小 GPU 上运行。</span></li>
       </ul>
     </div>
     <div class="card">
-      <h3>Related courses</h3>
+      <h3><span class="en">Related courses</span><span class="zh">相关课程</span></h3>
       <ul>
-        <li><a href="https://cs336.stanford.edu/">Stanford CS336</a>: Language Modeling from Scratch. Our Python environment mirrors its lecture repo.</li>
-        <li><a href="https://web.stanford.edu/class/cs224n/">Stanford CS224N</a>: NLP with Deep Learning.</li>
-        <li><a href="https://cmu-l3.github.io/anlp-spring2026/">CMU Advanced NLP</a>.</li>
-        <li><a href="https://rdi.berkeley.edu/llm-agents/">Berkeley LLM Agents</a>, Fall 2026.</li>
-        <li><a href="https://baojian.github.io/llm-26/">Spring 2026 edition</a> of this course: slides, notebooks, and readings for the classical NLP weeks.</li>
+        <li><span class="en"><a href="https://cs336.stanford.edu/">Stanford CS336</a>: Language Modeling from Scratch. Our Python environment mirrors its lecture repo.</span><span class="zh"><a href="https://cs336.stanford.edu/">斯坦福 CS336</a>：从零开始的语言建模。我们的 Python 环境与其课程仓库保持一致。</span></li>
+        <li><span class="en"><a href="https://web.stanford.edu/class/cs224n/">Stanford CS224N</a>: NLP with Deep Learning.</span><span class="zh"><a href="https://web.stanford.edu/class/cs224n/">斯坦福 CS224N</a>：深度学习与自然语言处理。</span></li>
+        <li><span class="en"><a href="https://cmu-l3.github.io/anlp-spring2026/">CMU Advanced NLP</a>.</span><span class="zh"><a href="https://cmu-l3.github.io/anlp-spring2026/">CMU 高级自然语言处理</a>。</span></li>
+        <li><span class="en"><a href="https://rdi.berkeley.edu/llm-agents/">Berkeley LLM Agents</a>, Fall 2026.</span><span class="zh"><a href="https://rdi.berkeley.edu/llm-agents/">伯克利 LLM 智能体课程</a>，2026 秋。</span></li>
+        <li><span class="en"><a href="https://baojian.github.io/llm-26/">Spring 2026 edition</a> of this course: slides, notebooks, and readings for the classical NLP weeks.</span><span class="zh">本课程<a href="https://baojian.github.io/llm-26/">2026 春季版</a>：经典 NLP 各周的幻灯片、notebook 与阅读材料。</span></li>
       </ul>
     </div>
   </div>
@@ -446,32 +485,66 @@ uv run python workspace/my_script.py</code></pre>
 </main>
 
 <footer><div class="wrap">
-  <p>CS40008.01 · Natural Language Processing and Large Language Models · Fall 2026 · Fudan University. Maintained by <a href="https://github.com/baojian">Baojian Zhou</a>. Source on <a href="https://github.com/baojian/llm-26-fall">GitHub</a>.</p>
+  <p><span class="en">CS40008.01 · NLP and LLMs · Fall 2026 · Fudan University. Maintained by <a href="https://github.com/baojian">Baojian Zhou</a>. Source on <a href="https://github.com/baojian/llm-26-fall">GitHub</a>.</span><span class="zh">CS40008.01 · 自然语言处理与大语言模型 · 2026 年秋季 · 复旦大学。维护者：<a href="https://github.com/baojian">周宝健</a>。源码见 <a href="https://github.com/baojian/llm-26-fall">GitHub</a>。</span></p>
 </div></footer>
 
 <script>
-  // Highlight the current teaching week and show it in the header. No dependencies.
+  // Language toggle (EN / 中文) and current-week highlight. No dependencies.
   (function () {
-    var rows = document.querySelectorAll('#week-table tbody tr[data-start]');
-    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var TITLES = { en: 'CS40008.01 NLP & LLMs · Fall 2026 · Fudan University',
+                   zh: 'CS40008.01 自然语言处理与大语言模型 · 2026 秋 · 复旦大学' };
+    var root = document.documentElement;
+    var buttons = document.querySelectorAll('.lang-toggle button');
     var chip = document.getElementById('now-chip');
-    var first = null, current = null;
-    rows.forEach(function (tr) {
-      var start = new Date(tr.getAttribute('data-start') + 'T00:00:00');
-      var end = new Date(start); end.setDate(end.getDate() + 7);
-      if (!first) first = start;
-      if (today >= start && today < end) current = tr;
-    });
-    if (current) {
-      current.classList.add('now');
-      var wk = current.querySelector('td.num').textContent;
-      chip.textContent = wk === '17' ? 'Exam week' : 'This week: Week ' + wk;
-      chip.hidden = false;
-    } else if (first && today < first) {
-      var days = Math.round((first - today) / 86400000) + 3; // first lecture is the Wednesday
-      chip.textContent = 'First class in ' + days + ' day' + (days === 1 ? '' : 's');
-      chip.hidden = false;
+    var rows = document.querySelectorAll('#week-table tbody tr[data-start]');
+
+    function currentLang() { return root.classList.contains('zh') ? 'zh' : 'en'; }
+
+    function updateChip() {
+      var zh = currentLang() === 'zh';
+      var today = new Date(); today.setHours(0, 0, 0, 0);
+      var first = null, current = null;
+      rows.forEach(function (tr) {
+        tr.classList.remove('now');
+        var start = new Date(tr.getAttribute('data-start') + 'T00:00:00');
+        var end = new Date(start); end.setDate(end.getDate() + 7);
+        if (!first) first = start;
+        if (today >= start && today < end) current = tr;
+      });
+      if (current) {
+        current.classList.add('now');
+        var wk = current.querySelector('td.num').textContent;
+        chip.textContent = wk === '17' ? (zh ? '考试周' : 'Exam week')
+                                       : (zh ? '本周：第 ' + wk + ' 周' : 'This week: Week ' + wk);
+        chip.hidden = false;
+      } else if (first && today < first) {
+        var days = Math.round((first - today) / 86400000) + 3; // first lecture is the Wednesday
+        chip.textContent = zh ? '距第一次课还有 ' + days + ' 天'
+                              : 'First class in ' + days + ' day' + (days === 1 ? '' : 's');
+        chip.hidden = false;
+      } else {
+        chip.hidden = true;
+      }
     }
+
+    function setLang(lang, remember) {
+      var zh = lang === 'zh';
+      root.classList.toggle('zh', zh);
+      root.setAttribute('lang', zh ? 'zh-CN' : 'en');
+      document.title = TITLES[zh ? 'zh' : 'en'];
+      buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === (zh ? 'zh' : 'en'))); });
+      if (remember) { try { localStorage.setItem('lang', zh ? 'zh' : 'en'); } catch (e) {} }
+      updateChip();
+    }
+
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () { setLang(b.getAttribute('data-lang'), true); });
+    });
+
+    // Initial language: ?lang=zh|en in the URL wins, then the remembered choice, then English.
+    var fromUrl = new URLSearchParams(location.search).get('lang');
+    var stored = null; try { stored = localStorage.getItem('lang'); } catch (e) {}
+    setLang(fromUrl === 'zh' || fromUrl === 'en' ? fromUrl : (stored === 'zh' ? 'zh' : 'en'), fromUrl === 'zh' || fromUrl === 'en');
   })();
 </script>
 </body>
