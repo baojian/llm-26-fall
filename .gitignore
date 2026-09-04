@@ -1,0 +1,45 @@
+# uv and local Python environments
+.venv/
+.uv-cache/
+
+# Python-generated files
+__pycache__/
+*.py[cod]
+*.so
+build/
+dist/
+*.egg-info/
+
+# Test, type-checker, and formatter caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Jupyter-generated files
+.ipynb_checkpoints/
+.virtual_documents/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+
+# Logs and generated experiment artifacts
+*.log
+logs/
+outputs/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+
+# uv.lock is intentionally tracked for reproducible course environments.

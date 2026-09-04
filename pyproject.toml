@@ -1,0 +1,7 @@
+[project]
+name = "llm-26-fall"
+version = "0.1.0"
+description = "Course materials for NLP and LLMs at Fudan University, Fall 2026"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
