@@ -1,7 +1,6 @@
-# Natural Language Processing and Large Language Models — Fall 2026
+# NLP and LLMs — Fall 2026
 
-Course materials for **Natural Language Processing and Large Language Models**
-at Fudan University.
+Course materials for **NLP and LLMs** at Fudan University.
 
 Course website: <https://baojian.github.io/llm-26-fall/> (source: `index.html`).
 
@@ -12,7 +11,7 @@ Course website: <https://baojian.github.io/llm-26-fall/> (source: `index.html`).
 - **Schedule:** Wednesdays, periods 6–8 (13:30–16:10), weeks 1–16
 - **First class:** September 9, 2026
 - **Location:** Handan Campus, HGX103
-- **Teaching language:** Chinese
+- **Teaching language:** Chinese / English
 - **Contact hours:** 48
 
 ## Schedule
