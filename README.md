@@ -3,6 +3,8 @@
 Course materials for **Natural Language Processing and Large Language Models**
 at Fudan University.
 
+Course website: <https://baojian.github.io/llm-26-fall/> (source: `index.html`).
+
 ## Course Information
 
 - **Course code:** CS40008.01
@@ -22,6 +24,14 @@ meeting dates with holidays and exam weeks.
 First class: September 9, 2026 (week 1). Last class: December 23, 2026
 (week 16). October 7 falls in the National Day holiday; the make-up session
 will be announced.
+
+## Your Workspace
+
+Put your own notes, experiments, and exercise solutions in
+[`workspace/`](workspace/README.md). Everything there except its README is
+ignored by git, so pulling new course material never conflicts with your files
+and your work stays out of any pull request you open. To modify a course file,
+copy it into `workspace/` and edit the copy.
 
 ## Repository Status
 
