@@ -12,17 +12,26 @@ Course website: <https://baojian.github.io/llm-26-fall/> (source: `index.html`).
 - **First class:** September 9, 2026
 - **Location:** Handan Campus, HGX103
 - **Teaching language:** Chinese / English
-- **Contact hours:** 48
+- **Registered contact hours:** 48 academic periods; this review draft schedules 15 meetings (45 periods).
 
 ## Schedule
 
 See [docs/schedule.md](docs/schedule.md) for Fudan's daily period timetable,
-what "periods 6–8" means in clock time (13:30–16:10), and our sixteen Wednesday
-meeting dates with holidays and exam weeks.
+what "periods 6–8" means in clock time (13:30–16:10), and the calendar weeks
+with holidays and exam weeks.
 
 First class: September 9, 2026 (week 1). Last class: December 23, 2026
-(week 16). October 7 falls in the National Day holiday; the make-up session
-will be announced.
+(week 16). Week 5, October 7, is **skip** for National Day. The revised lecture
+sequence fits into the other 15 Wednesday meetings.
+
+## Curriculum review draft
+
+The [course page](index.html#schedule) contains the proposed lecture sequence,
+selected CS336 references, practical assignments, and written individual-project
+checkpoints. See [the revision rationale](docs/course-revision.md) for the
+topic-by-topic incorporation and removal map. There are no required project
+presentations, posters, or oral defenses. Dates and assessment details are drafts
+for instructor review; revised lecture decks and handouts are still to be prepared.
 
 ## Your Workspace
 
@@ -34,9 +43,9 @@ copy it into `workspace/` and edit the copy.
 
 ## Repository Status
 
-The detailed course schedule and content plan are under development. Lecture
-materials will be prepared through pull requests so that changes remain easy to
-review and discuss.
+The revised course schedule and content plan are available as a review draft.
+Lecture materials will be prepared through pull requests so that changes remain
+easy to review and discuss.
 
 This repository will contain course-facing materials such as lecture notes,
 examples, exercises, and contribution guidance. Students will be welcome to
