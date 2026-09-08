@@ -22,6 +22,10 @@ htmlcov/
 .ipynb_checkpoints/
 .virtual_documents/
 
+# Slide authoring dependencies and local verification output
+slides/node_modules/
+slides/.checks/
+
 # Local configuration and secrets
 .env
 .env.*

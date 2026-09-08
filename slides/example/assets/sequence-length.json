@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "type": "scatter",
+      "mode": "lines+markers",
+      "x": [0, 1, 2],
+      "y": [25, 18, 11],
+      "line": { "width": 4 },
+      "marker": { "size": 12 },
+      "hovertemplate": "Merges: %{x}<br>Total tokens: %{y}<extra></extra>"
+    }
+  ],
+  "layout": {
+    "xaxis": { "title": { "text": "Learned merges" }, "dtick": 1, "range": [-0.1, 2.1], "fixedrange": false },
+    "yaxis": { "title": { "text": "Total tokens" }, "range": [0, 28], "gridcolor": "#dce2e7" },
+    "showlegend": false
+  }
+}

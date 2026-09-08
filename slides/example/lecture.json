@@ -1,0 +1,7 @@
+{
+  "number": "01",
+  "title": "Tokenization",
+  "subtitle": "How does text become model input?",
+  "language": "en",
+  "demo": "./demo.js"
+}

@@ -1,0 +1,105 @@
+:root {
+  --r-background-color: #fbfbf9;
+  --r-main-font: Arial, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --r-main-font-size: 30px;
+  --r-main-color: #202b38;
+  --r-heading-font: var(--r-main-font);
+  --r-heading-color: #142e4b;
+  --r-link-color: #20578c;
+  --r-link-color-hover: #123b63;
+  --r-selection-background-color: #d7e5f1;
+  --r-selection-color: #142e4b;
+  --r-code-font: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --course-muted: #566471;
+  --course-line: #ccd5dd;
+  --course-accent: #20578c;
+}
+
+html, body { background: var(--r-background-color); }
+body { margin: 0; font-family: var(--r-main-font); color: var(--r-main-color); }
+.reveal { font-family: var(--r-main-font); font-size: 30px; font-weight: 400; line-height: 1.38; }
+.reveal .slides { text-align: left; }
+.reveal .slides > section { height: 720px; padding: 54px 64px 58px; box-sizing: border-box; }
+.reveal h1, .reveal h2, .reveal h3 { color: var(--r-heading-color); font-family: var(--r-heading-font); font-weight: 600; text-transform: none; letter-spacing: -0.025em; }
+.reveal h1 { font-size: 78px; line-height: 1.08; margin: 0 0 28px; max-width: 1000px; }
+.reveal h2 { font-size: 48px; line-height: 1.14; margin: 0 0 32px; max-width: 1100px; }
+.reveal h3 { font-size: 32px; line-height: 1.2; margin: 0 0 18px; }
+.reveal p { margin: 0 0 24px; }
+.reveal strong { font-weight: 700; }
+.reveal a { color: var(--r-link-color); text-decoration: underline; text-underline-offset: 4px; }
+.reveal a:hover { color: var(--r-link-color-hover); }
+.reveal a:focus-visible, .reveal button:focus-visible, .reveal input:focus-visible { outline: 3px solid var(--course-accent); outline-offset: 5px; }
+.reveal ul, .reveal ol { display: block; margin: 0 0 24px 1.1em; padding: 0; }
+.reveal li { margin: 0 0 18px; padding-left: 8px; }
+.reveal li::marker { color: var(--course-accent); }
+.reveal blockquote { width: auto; margin: 28px 0; padding: 8px 0 8px 28px; border-left: 4px solid var(--course-accent); box-shadow: none; font-style: normal; background: none; }
+.reveal blockquote p:last-child { margin-bottom: 0; }
+.reveal .muted, .reveal .caption { color: var(--course-muted); }
+.reveal .caption, .reveal .source { font-size: 24px; line-height: 1.4; }
+.reveal .source { margin-top: 24px; color: var(--course-muted); }
+.reveal .eyebrow { font-size: 24px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--course-accent); margin-bottom: 38px; }
+.reveal .title-slide { display: flex !important; flex-direction: column; justify-content: center; }
+.reveal .title-slide .subtitle { max-width: 980px; font-size: 34px; line-height: 1.4; color: var(--course-muted); }
+.reveal .title-slide .byline { margin-top: 52px; font-size: 26px; }
+.reveal .section-slide { display: flex !important; flex-direction: column; justify-content: center; }
+.reveal .section-slide h2 { font-size: 64px; max-width: 1000px; }
+.reveal .columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+.reveal .columns > * { min-width: 0; }
+.reveal .columns p:last-child { margin-bottom: 0; }
+.reveal table { width: 100%; margin: 0 0 24px; border-collapse: collapse; font-size: 29px; line-height: 1.35; }
+.reveal th, .reveal td { padding: 16px 18px; text-align: left; border-bottom: 1px solid var(--course-line); }
+.reveal th { color: var(--r-heading-color); font-weight: 600; border-bottom: 2px solid var(--course-accent); }
+.reveal th:first-child, .reveal td:first-child { padding-left: 0; }
+.reveal td.num, .reveal th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.reveal code { font-family: var(--r-code-font); font-size: 0.9em; background: #edf1f4; padding: 2px 6px; border-radius: 3px; }
+.reveal pre { width: 100%; margin: 26px 0; padding: 22px 26px; background: #eef2f5; border-left: 4px solid #9aafc2; box-shadow: none; box-sizing: border-box; font-size: 26px; line-height: 1.5; }
+.reveal pre code { display: block; padding: 0; max-height: none; overflow: visible; background: none; font-size: inherit; line-height: inherit; white-space: pre; }
+.reveal pre .hljs { color: #24364a; background: none; }
+.reveal .hljs-keyword, .reveal .hljs-built_in { color: #20578c; }
+.reveal .hljs-string { color: #28673f; }
+.reveal .hljs-number, .reveal .hljs-literal { color: #7b4531; }
+.reveal .hljs-comment { color: #596876; font-style: italic; }
+.reveal .hljs-title, .reveal .hljs-attr { color: #634185; }
+.reveal .exercise-meta { font-size: 24px; color: var(--course-accent); margin: 0 0 24px; }
+.reveal .answer { margin-top: 30px; padding-top: 22px; border-top: 2px solid var(--course-line); color: #21553b; }
+.reveal .references li { font-size: 28px; margin-bottom: 28px; }
+.reveal .katex { font-size: 1.12em; }
+.reveal .katex-display { margin: 36px 0; }
+.reveal .slide-number { right: 112px; bottom: 20px; padding: 0; font: 18px var(--r-main-font); color: var(--course-muted); background: transparent; }
+.reveal .slide-number a { text-decoration: none; }
+.reveal .progress { color: var(--course-accent); height: 3px; }
+.reveal .controls { color: var(--course-accent); }
+.course-toolbar { position: fixed; z-index: 30; top: 10px; right: 18px; display: flex; gap: 18px; align-items: center; font-size: 14px; }
+.course-toolbar a, .course-toolbar button { color: var(--course-muted); background: none; border: 0; font: inherit; text-decoration: none; cursor: pointer; padding: 5px 0; }
+.course-toolbar a:hover, .course-toolbar button:hover { text-decoration: underline; }
+.course-toolbar a:focus-visible, .course-toolbar button:focus-visible { outline: 2px solid var(--course-accent); outline-offset: 3px; }
+.course-toolbar [hidden] { display: none; }
+.course-help { max-width: 540px; border: 1px solid var(--course-line); border-radius: 8px; padding: 28px; font-size: 18px; line-height: 1.6; background: var(--r-background-color); color: var(--r-main-color); }
+.course-help::backdrop { background: rgb(20 40 60 / 35%); }
+.course-help h2 { margin-top: 0; }
+.course-help button { padding: 7px 20px; border: 1px solid var(--course-line); border-radius: 4px; background: white; font: inherit; cursor: pointer; }
+.course-error { position: absolute; z-index: 50; inset: 80px 10% auto; padding: 30px; background: white; border: 2px solid #9a4032; font-size: 20px; line-height: 1.5; }
+.course-error[hidden] { display: none; }
+.notebook-launcher main { max-width: 700px; margin: 12vh auto; padding: 24px; font-size: 20px; line-height: 1.6; }
+.notebook-launcher h1 { color: var(--r-heading-color); font-size: 36px; line-height: 1.2; }
+.notebook-launcher .notebook-label { color: var(--course-muted); font-size: 16px; }
+.notebook-launcher pre { overflow-x: auto; padding: 20px; background: #eef2f5; font-size: 17px; }
+.notebook-launcher a { color: var(--r-link-color); }
+.reveal .demo-form label { display: block; margin-bottom: 16px; }
+.reveal .demo-form input { width: 100%; box-sizing: border-box; padding: 14px 18px; font: 30px var(--r-code-font); border: 1px solid #8495a5; background: white; color: var(--r-main-color); }
+.reveal .demo-form button { margin: 18px 0; padding: 10px 22px; font: 30px var(--r-main-font); color: var(--course-accent); border: 1px solid var(--course-accent); background: white; cursor: pointer; }
+.reveal .demo-result { margin-top: 28px; }
+.reveal .plot { width: 100%; height: 410px; margin: 0 0 20px; }
+.reveal .diagram, .reveal .animation, .reveal .animation-poster { display: block; width: 100%; height: 410px; max-width: 100%; max-height: none; object-fit: contain; margin: 0 0 20px; border: 0; box-shadow: none; }
+.reveal .animation-poster { display: none; }
+@media (max-width: 600px) { .course-toolbar { font-size: 12px; gap: 12px; top: 4px; right: 10px; } }
+html.reveal-print .reveal .slides section { height: 720px !important; padding: 54px 64px 58px !important; }
+html.reveal-print .reveal .slides section.title-slide,
+html.reveal-print .reveal .slides section.section-slide { display: flex !important; }
+@media print {
+  .course-toolbar, .course-help, .course-error, .reveal .controls, .reveal .progress { display: none !important; }
+  .reveal .slides section { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .reveal a { text-decoration: none; }
+  .reveal .animation { display: none; }
+  .reveal .animation-poster { display: block; }
+}

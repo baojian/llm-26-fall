@@ -1,0 +1,20 @@
+{
+  "name": "llm-course-slides",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "check": "node tools/check.mjs",
+    "check:notebook": "node tools/check-notebook.mjs",
+    "pdf": "node tools/check.mjs --pdf",
+    "browser:install": "playwright install chromium"
+  },
+  "dependencies": {
+    "katex": "0.18.7",
+    "plotly.js-dist-min": "4.0.0",
+    "reveal.js": "6.0.1"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

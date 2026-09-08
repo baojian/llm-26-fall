@@ -2,7 +2,7 @@
 
 Course materials for **NLP and LLMs** at Fudan University.
 
-Course website: <https://baojian.github.io/llm-26-fall/> (source: `index.html`).
+Course website: <https://baojian.github.io/llm-26-fall/>.
 
 ## Course Information
 
@@ -12,26 +12,35 @@ Course website: <https://baojian.github.io/llm-26-fall/> (source: `index.html`).
 - **First class:** September 9, 2026
 - **Location:** Handan Campus, HGX103
 - **Teaching language:** Chinese / English
-- **Registered contact hours:** 48 academic periods; this review draft schedules 15 meetings (45 periods).
 
 ## Schedule
 
 See [docs/schedule.md](docs/schedule.md) for Fudan's daily period timetable,
 what "periods 6–8" means in clock time (13:30–16:10), and the calendar weeks
-with holidays and exam weeks.
-
-First class: September 9, 2026 (week 1). Last class: December 23, 2026
+with holidays and exam weeks. First class: September 9, 2026 (week 1). Last class: December 23, 2026
 (week 16). Week 5, October 7, is **skip** for National Day. The revised lecture
 sequence fits into the other 15 Wednesday meetings.
 
-## Curriculum review draft
+## First-lecture survey
 
-The [course page](index.html#schedule) contains the proposed lecture sequence,
-selected CS336 references, practical assignments, and written individual-project
-checkpoints. See [the revision rationale](docs/course-revision.md) for the
-topic-by-topic incorporation and removal map. There are no required project
-presentations, posters, or oral defenses. Dates and assessment details are drafts
-for instructor review; revised lecture decks and handouts are still to be prepared.
+Select at most two LLM apps you use most in everyday life through the
+[Lecture 01 survey issue](https://github.com/baojian/llm-26-fall/issues/6).
+Each student submits one response file in a PR using the GitHub website.
+See the [survey guide](surveys/lecture-01/README.md) for instructions.
+
+## Lecture slides
+
+The [Reveal.js framework](slides/README.md) provides a shared theme, companion
+notebooks, references, and browser-based demonstrations. It supports Plotly
+charts, exported Excalidraw diagrams, and prepared Manim videos. The
+[tokenization sample](slides/example/index.html) demonstrates the format; it is
+not a complete first lecture. Published decks can be presented from a classroom
+browser without an instructor laptop.
+
+For local practice, run `uv sync` and `uv run python scripts/slides.py serve`,
+then open the lecture and click **Notebook**. The launcher opens a working copy
+under `workspace/` in JupyterLab, reusing a compatible server or starting one
+with the course's uv environment.
 
 ## Your Workspace
 

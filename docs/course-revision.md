@@ -67,7 +67,7 @@ available as references; do not delete their source files.
 
 | Spring material | Retain or reuse | Remove from core or relocate | Use the time for |
 | --- | --- | --- | --- |
-| L01 introduction/tokenization | Ambiguity, BPE, vocabulary decisions, bilingual examples | Long product/history tour; full minimum-edit-distance DP; regex tutorial moves to preparation | Bytes/Unicode, round-trip checks, and tokenizer tradeoffs |
+| L01 introduction/tokenization | Ambiguity, BPE, vocabulary decisions, bilingual examples | Long product/history tour; regex tutorial moves to preparation | Bytes/Unicode, round-trip checks, and tokenizer tradeoffs |
 | L02 n-grams | Chain rule, MLE, sampling, held-out loss, additive smoothing, interpolation | Katz backoff and Good–Turing/Kneser–Ney details become optional; consolidate repeated NPLM introduction | Explicit NLL/cross-entropy connection and baseline interpretation |
 | L03 classification/embeddings | Distributional hypothesis, embedding lookup, one skip-gram example, similarity, contextual representations | Repeated NB/LR derivations and full word2vec gradient sequence; GloVe/SVD/fastText survey optional; TF-IDF moves to retrieval | Batching, autograd, output projections, and shape reasoning |
 | L04 neural LMs | Existing PyTorch introduction, small feedforward LM, tiny-batch training | Micrograd optional; RNN/LSTM motivation brief; no separate required LSTM training pipeline | Training-loop diagnosis and attention computation |
