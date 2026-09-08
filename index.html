@@ -24,11 +24,8 @@
     margin: 0; background: var(--bg); color: var(--fg);
     font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
   }
-  html.zh body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", "Segoe UI", Roboto, sans-serif; line-height: 1.7; }
-  /* English review draft; retain the existing page styling. */
-  .en, .zh { display: contents; }
-  html:not(.zh) .zh { display: none; }
-  html.zh .en { display: none; }
+  html[lang="zh-CN"] body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", "Segoe UI", Roboto, sans-serif; line-height: 1.7; }
+  .en { display: contents; }
 
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
@@ -37,8 +34,13 @@
   pre code { background: none; padding: 0; }
 
   header.hero { padding: 40px 20px 24px; border-bottom: 1px solid var(--line); background: var(--card); }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  .wrap { max-width: 890px; margin: 0 auto; padding: 0 20px; }
   .hero h1 { margin: 0 0 6px; font-size: 2rem; line-height: 1.2; letter-spacing: -0.01em; }
+  .hero-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px 24px; }
+  .hero-heading h1 { min-width: 0; }
+  .hero-actions { display: flex; align-items: center; flex-shrink: 0; gap: 14px; padding-top: 3px; font-size: 0.9rem; white-space: nowrap; }
+  @media (max-width: 600px) { .hero h1 { font-size: 1.5rem; } .hero-actions { gap: 10px; } }
+  @media (max-width: 480px) { .hero-heading { flex-wrap: wrap; gap: 8px; margin-bottom: 12px; } .hero-actions { margin-left: auto; } }
   .hero .sub { margin: 0; color: var(--muted); font-size: 1.05rem; }
   .hero .meta { margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--muted); font-size: 0.95rem; }
   .repo-link { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; color: var(--muted); }
@@ -53,9 +55,10 @@
   nav.top .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 18px; padding: 8px 20px; font-size: 0.95rem; }
   nav.top a { color: var(--fg); font-weight: 500; }
   nav.top a:hover { color: var(--accent); text-decoration: none; }
-  .lang-toggle { margin-left: auto; display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--card); }
+  .lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--card); }
   .lang-toggle button { background: none; border: 0; padding: 3px 12px; cursor: pointer; color: var(--muted); font: inherit; font-size: 0.85rem; font-weight: 600; }
   .lang-toggle button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+  .lang-toggle button:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
 
   main section { padding: 36px 0 8px; border-bottom: 1px solid var(--line); }
   main section:last-of-type { border-bottom: none; }
@@ -95,7 +98,7 @@
 
   .weights { display: flex; height: 14px; border-radius: 7px; overflow: hidden; border: 1px solid var(--line); margin: 10px 0 6px; }
   .weights span { display: block; height: 100%; }
-  .weights .w-part { background: #9db8dc; } .weights .w-quiz { background: #6f97cf; }
+  .weights .w-quiz { background: #6f97cf; }
   .weights .w-asg { background: #3f6fb4; } .weights .w-proj { background: var(--accent); }
   .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.92rem; color: var(--muted); }
   .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
@@ -111,25 +114,29 @@
 
 <header class="hero">
   <div class="wrap">
-    <h1><span class="en">CS40008.01 NLP and LLMs</span></h1>
+    <div class="hero-heading">
+      <h1><span class="en">CS40008.01 NLP and LLMs</span></h1>
+      <div class="hero-actions">
+        <a class="repo-link" href="https://github.com/baojian/llm-26-fall" title="GitHub">
+          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.65 7.65 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+          </svg>
+          <span class="sr-only">GitHub</span>
+        </a>
+        <a href="https://elearning.fudan.edu.cn/"><span class="en">Elearning</span></a>
+        <div class="lang-toggle" role="group" aria-label="Language / 语言">
+          <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="zh" lang="zh-CN" aria-pressed="false">中文</button>
+        </div>
+      </div>
+    </div>
     <p class="sub"><span class="en">Fall 2026 · School of Data Science, Fudan University</span></p>
     <div class="meta">
       <span><span class="en">Wednesdays 13:30–16:10 (periods 6–8)</span></span>
       <span><span class="en">HGX103, Handan Campus</span></span>
-      <span><span class="en">Sep 9 – Dec 23, 2026 · 15 class meetings · Week 5: skip</span></span>
+      <span><span class="en">Sep 9 – Dec 23, 2026</span></span>
       <span id="now-chip" class="chip now-chip" hidden></span>
     </div>
-    <p class="meta" style="margin-top:12px">
-      <a class="repo-link" href="https://github.com/baojian/llm-26-fall" title="GitHub">
-        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.65 7.65 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
-        </svg>
-        <span class="sr-only"><span class="en">Course repository on GitHub</span></span>
-      </a>
-      <a href="docs/schedule.md"><span class="en">Meeting dates and class periods</span></a>
-      <a href="https://elearning.fudan.edu.cn/"><span class="en">eLearning (submissions)</span></a>
-      <a href="https://baojian.github.io/llm-26/"><span class="en">Previous edition (Spring 2026)</span></a>
-    </p>
   </div>
 </header>
 
@@ -147,52 +154,31 @@
 <main class="wrap">
 <section id="overview">
   <h2>Course overview</h2>
-  <div class="callout"><strong>Draft for review · September 7, 2026.</strong> Proposed lectures, milestones, and assessment details. <a href="docs/course-revision.md">Read the revision rationale and topic changes</a>.</div>
-  <p class="lead">Study how language models work, then use them to investigate a question worth answering. The course combines the NLP foundations and notebooks from the Spring 2026 edition with selected Stanford CS336 material on training, data, compute, and evaluation.</p>
-  <p>Each student conducts one individual project. The central questions are why the task matters, what remains uncertain, which experiment can resolve that uncertainty, and what the evidence supports. AI assistants are part of the workflow for coding, engineering, literature exploration, and iteration. Students remain responsible for the claims they submit.</p>
-  <h3>Learning outcomes</h3>
-  <ul>
-    <li>Explain tokenization, language-model objectives, attention, and a working Transformer.</li>
-    <li>Train and diagnose a small model; reason about data quality and resource budgets.</li>
-    <li>Adapt or retrieve with a pretrained model and evaluate the result under controlled conditions.</li>
-    <li>Formulate an important question, compare plausible approaches, investigate failures, and communicate defensible conclusions in writing.</li>
-  </ul>
-  <h3>Preparation and teaching approach</h3>
-  <p><strong>Expected background:</strong> Python and an introductory machine-learning course, including basic probability, matrix operations, gradients, and train/validation/test splits. PyTorch experience is helpful; the early practical work includes a focused introduction. A preparation notebook covering arrays, tensors, and a simple training loop is planned before the Transformer unit.</p>
-  <p>The common core serves undergraduates and master's students. Topics marked <span class="star">★</span> are extension choices. Master's students select one substantial extension for their project; undergraduates may also choose one. Continuous-time diffusion, custom GPU kernels, and distributed-training implementations are outside the required core.</p>
-  <p>Each meeting has three 45-minute periods: typically concepts and a worked example, an experiment and interpretation, then guided practice. Quizzes replace part of practice time. Short animations may illustrate BPE, attention, caching, and unmasking; students also work with the corresponding numbers and code.</p>
+  <p class="lead">Learn how modern LLMs work: tokenization, language modeling, embeddings, attention, and Transformers; training and evaluation; and assessing data quality, compute costs, and retrieval. Learn to design controlled experiments and investigate failures. Materials are mainly online, drawing on my previous lectures and Stanford CS336. Each student explores one meaningful question through an <strong>individual project</strong>. AI assistance is welcome; verify results, explain decisions, and support conclusions with evidence.</p>
+  <p><strong>Prerequisites:</strong> Python and introductory ML, including probability, matrix operations, gradients, and data splits. Early practicals introduce PyTorch; a preparation notebook is planned. Undergraduates and master's students share the core. Each meeting spans three 45-minute periods with explanations, worked experiments, guided practice, and occasional quizzes.</p>
 </section>
 <section id="info">
   <h2>Basic info</h2>
   <div class="grid">
     <div class="card"><h3>People</h3><dl class="info">
-      <dt>Instructor</dt><dd>Baojian Zhou · bjzhou AT fudan.edu.cn</dd>
-      <dt>TAs</dt><dd>TBA</dd><dt>Office hours</dt><dd>TBA</dd>
+      <dt>Instructor</dt><dd>Baojian (bjzhou AT fudan.edu.cn)</dd>
+      <dt>TAs</dt><dd>Wang Yuxiang and Zhou Yu</dd><dt>Office hours</dt><dd>Mon. 14:00–15:30</dd>
     </dl></div>
-    <div class="card"><h3>Time and place</h3><dl class="info">
-      <dt>Lectures</dt><dd>Wednesdays, periods 6–8<br>13:30–16:10</dd>
-      <dt>Room</dt><dd>HGX103, Handan Campus</dd>
-      <dt>Semester</dt><dd>Weeks 1–16, Sep 9 – Dec 23, 2026</dd>
-      <dt>Week 5</dt><dd>Oct 7: skip (National Day)</dd>
-    </dl></div>
-    <div class="card"><h3>Getting set up</h3>
+    <div class="card"><h3>Getting set up our environment</h3>
       <p>Use the repository's <code>uv</code> environment. Keep personal code and results in <code>workspace/</code>, which is ignored by git. Individual lab dependencies will be specified in their handouts.</p>
-      <pre><code>uv sync
-uv run python workspace/my_script.py</code></pre>
     </div>
   </div>
-  <p class="muted">The draft allocates core content to 15 meetings. See <a href="docs/schedule.md">meeting dates and class periods</a>.</p>
 </section>
 <section id="dates">
   <h2>Key dates</h2>
-  <p>Proposed deadlines are at 23:59, China Standard Time. There are no classes, quizzes, or submission deadlines in Week 5.</p>
+  <p>All deadlines are at 23:59p.m. There are no classes, quizzes in Week 5 (Oct. 7th).</p>
   <div class="grid">
     <div class="card"><h3>Practical assignments</h3><ul>
       <li>A1 · Text and probability · Week 4, Sep 30</li>
       <li>A2 · Build and investigate a small LM · Week 9, Nov 4</li>
       <li>A3 · Adapt and evaluate · Week 14, Dec 9</li>
     </ul></div>
-    <div class="card"><h3>Quizzes</h3><p>Five 15-minute quizzes; lowest score dropped.</p><ul>
+    <div class="card"><h3>Quizzes</h3><p>Five 15-minute quizzes; all count equally (2% each).</p><ul>
       <li>Quiz 1 · Week 3, Sep 23</li><li>Quiz 2 · Week 6, Oct 14</li>
       <li>Quiz 3 · Week 8, Oct 28</li><li>Quiz 4 · Week 11, Nov 18</li>
       <li>Quiz 5 · Week 15, Dec 16</li>
@@ -354,16 +340,16 @@ uv run python workspace/my_script.py</code></pre>
 </section>
 <section id="assessment">
   <h2>Assessment</h2>
-  <p>The draft retains the overall weights: participation 5%, quizzes 15%, practical assignments 40%, and individual project 40%. Code volume and model size earn no credit by themselves.</p>
-  <div class="weights" aria-hidden="true"><span class="w-part" style="width:5%"></span><span class="w-quiz" style="width:15%"></span><span class="w-asg" style="width:40%"></span><span class="w-proj" style="width:40%"></span></div>
-  <div class="legend"><span>Participation 5%</span><span>Quizzes 15%</span><span>Practical assignments 40%</span><span>Individual project 40%</span></div>
-  <h3>Participation and quizzes</h3>
-  <p>Participation uses short exit tickets and in-class polls; full credit at 80% or more submitted. Quizzes assess the common core already taught, using brief explanations, calculations, and interpretation of unfamiliar examples. They are closed-book and closed-assistant. Each of the four retained quizzes contributes equally to the 15% quiz grade. Advanced extensions are not tested.</p>
+  <p>Practical assignments count for 45%, quizzes 10%, and the individual project 45%. Code volume and model size earn no credit by themselves.</p>
+  <div class="weights" aria-hidden="true"><span class="w-quiz" style="width:10%"></span><span class="w-asg" style="width:45%"></span><span class="w-proj" style="width:45%"></span></div>
+  <div class="legend"><span>Quizzes 10%</span><span>Practical assignments 45%</span><span>Individual project 45%</span></div>
+  <h3>Quizzes</h3>
+  <p>Quizzes assess the common core already taught, using brief explanations, calculations, and interpretation of unfamiliar examples. They are closed-book and closed-assistant. All five quizzes count, each contributing 2% of the course grade. Advanced extensions are not tested.</p>
   <h3>Three practical assignments</h3>
   <ul>
-    <li><strong>A1 · Text and probability (10%).</strong> Released Week 1, due Week 4. A small tokenizer exercise, a bigram baseline, and held-out evaluation. Explain one representation or smoothing choice.</li>
-    <li><strong>A2 · Build and investigate a small LM (20%).</strong> Released Week 6, due Week 9. Complete selected components in a supplied Transformer framework, train a tiny model, and compare one data or training intervention with a baseline. Submit correctness checks, training curves, and an interpretation.</li>
-    <li><strong>A3 · Adapt and evaluate (10%).</strong> Released Week 11, due Week 14. SFT on a supplied pretrained checkpoint with correct response-token masking; compare with the unadapted model on a held-out task. Inspect both improvements and regressions. DPO or GRPO is an extension.</li>
+    <li><strong>A1 · Text and probability (15%).</strong> Released Week 1, due Week 4. A small tokenizer exercise, a bigram baseline, and held-out evaluation. Explain one representation or smoothing choice.</li>
+    <li><strong>A2 · Build and investigate a small LM (15%).</strong> Released Week 6, due Week 9. Complete selected components in a supplied Transformer framework, train a tiny model, and compare one data or training intervention with a baseline. Submit correctness checks, training curves, and an interpretation.</li>
+    <li><strong>A3 · Adapt and evaluate (15%).</strong> Released Week 11, due Week 14. SFT on a supplied pretrained checkpoint with correct response-token masking; compare with the unadapted model on a held-out task. Inspect both improvements and regressions. DPO or GRPO is an extension.</li>
   </ul>
   <p>Assignments establish common skills and can seed the individual project. Reuse the code and data preparation, but identify the additional question and experiments credited to the project. Staff reference code/checkpoints are planned so an early implementation failure does not block later work. The tiny model in A2 teaches training mechanics; the supplied pretrained model supports meaningful adaptation experiments.</p>
 </section>
@@ -422,21 +408,61 @@ uv run python workspace/my_script.py</code></pre>
 </section>
 </main>
 <footer><div class="wrap"><p>CS40008.01 · NLP and LLMs · Fall 2026 · Fudan University. Maintained by <a href="https://github.com/baojian">Baojian Zhou</a>. <a href="docs/course-revision.md">Review the proposed revision</a>.</p></div></footer>
+<script src="assets/translations.js"></script>
 <script>
-  // Highlight the current calendar week, including the holiday and final deadline.
   (function () {
+    // Preserve the original text and markup so switching languages is reversible.
+    var translations = window.courseTranslations || {};
+    var englishTitle = document.title;
+    var textNodes = [];
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      var node = walker.currentNode;
+      if (node.parentElement.closest('script, style, code, pre, svg, .lang-toggle, #now-chip')) continue;
+      var original = node.nodeValue;
+      var key = original.trim();
+      if (Object.prototype.hasOwnProperty.call(translations, key)) {
+        textNodes.push({ node: node, en: original, zh: original.replace(key, function () { return translations[key]; }) });
+      }
+    }
+
+    // Highlight the current calendar week, including the holiday and final deadline.
     var today = new Date(); today.setHours(0, 0, 0, 0);
     var chip = document.getElementById('now-chip');
+    var currentWeek = null;
+    var isHoliday = false;
     document.querySelectorAll('#week-table tbody tr[data-start]').forEach(function (row) {
       var start = new Date(row.getAttribute('data-start') + 'T00:00:00');
       var end = new Date(start); end.setDate(end.getDate() + 7);
       if (today >= start && today < end) {
         row.classList.add('now');
-        var week = row.querySelector('td.num').textContent;
-        chip.textContent = week === '17' ? 'Final submission week' : 'This week: ' + week + (row.classList.contains('holiday') ? ' · skip' : '');
+        currentWeek = row.querySelector('td.num').textContent.trim();
+        isHoliday = row.classList.contains('holiday');
         chip.hidden = false;
       }
     });
+
+    function setLanguage(language) {
+      var chinese = language === 'zh';
+      document.documentElement.lang = chinese ? 'zh-CN' : 'en';
+      document.title = chinese ? (translations[englishTitle] || englishTitle) : englishTitle;
+      textNodes.forEach(function (entry) { entry.node.nodeValue = entry[language]; });
+      document.querySelectorAll('.lang-toggle button').forEach(function (button) {
+        button.setAttribute('aria-pressed', String(button.dataset.lang === language));
+      });
+      if (currentWeek !== null) {
+        chip.textContent = currentWeek === '17'
+          ? (chinese ? '期末提交周' : 'Final submission week')
+          : (chinese ? '本周：第 ' + currentWeek + ' 周' : 'This week: ' + currentWeek) + (isHoliday ? ' · skip' : '');
+      }
+      try { localStorage.setItem('course-language', language); } catch (error) { /* Storage may be unavailable for local files. */ }
+    }
+    document.querySelectorAll('.lang-toggle button').forEach(function (button) {
+      button.addEventListener('click', function () { setLanguage(button.dataset.lang); });
+    });
+    var savedLanguage = 'en';
+    try { if (localStorage.getItem('course-language') === 'zh') savedLanguage = 'zh'; } catch (error) { /* Default to English. */ }
+    setLanguage(savedLanguage);
   })();
 </script>
 </body>
