@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LLMs lecture</title>
+  <link rel="stylesheet" href="../vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="../vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="../shared/theme.css">
+</head>
+<body>
+  <nav class="course-toolbar" aria-label="Lecture tools">
+    <a href="../../index.html">Course</a>
+    <a id="notebook-link" href="../shared/notebook.html" target="_blank" rel="noopener noreferrer">Notebook</a>
+    <a href="#/references">References</a>
+    <a href="?print-pdf" target="_blank" rel="noopener">Print</a>
+    <button id="help-button" type="button">Help</button>
+  </nav>
+  <div class="reveal">
+    <div class="slides">
+      <section data-markdown="slides.md" data-separator="^---$" data-separator-notes="^Notes?:" data-charset="utf-8"></section>
+    </div>
+  </div>
+  <dialog class="course-help" id="course-help">
+    <h2>Presenting this lecture</h2>
+    <p>Use <strong>Space</strong> or the arrow keys to advance. Press <strong>Esc</strong> for the slide overview, <strong>F</strong> for fullscreen, and <strong>S</strong> for speaker notes.</p>
+    <p>Notebook opens your working copy in JupyterLab in a new tab when you run the slides locally. References opens the reading slide.</p>
+    <p>For a PDF, open Print and use the browser's print command. Choose landscape, no margins, and background graphics.</p>
+    <form method="dialog"><button>Close</button></form>
+  </dialog>
+  <div id="course-error" class="course-error" role="alert" hidden></div>
+  <noscript>This lecture needs JavaScript enabled in your browser.</noscript>
+  <script src="../vendor/reveal/reveal.js"></script>
+  <script src="../vendor/reveal/plugin/markdown.js"></script>
+  <script src="../vendor/reveal/plugin/highlight.js"></script>
+  <script src="../vendor/reveal/plugin/notes.js"></script>
+  <script src="../vendor/katex/katex.min.js"></script>
+  <script src="../vendor/katex/contrib/auto-render.min.js"></script>
+  <script src="../shared/course.js"></script>
+</body>
+</html>

@@ -4,7 +4,7 @@
   const title = document.getElementById('notebook-title');
   const status = document.getElementById('notebook-status');
   const setup = document.getElementById('notebook-setup');
-  if (!/^(example|[0-9]{2}-[a-z0-9-]+)$/.test(lecture || '')) {
+  if (!/^(example|lecture-[0-9]{2}|[0-9]{2}-[a-z0-9-]+)$/.test(lecture || '')) {
     title.textContent = 'Choose a lecture first';
     status.textContent = 'Open the lecture slides and use their Notebook link.';
     return;

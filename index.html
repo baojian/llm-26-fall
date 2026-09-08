@@ -194,6 +194,7 @@
 </section>
 <section id="schedule">
   <h2>Weekly schedule</h2>
+  <p><span>Before opening local slides or notebooks, run</span> <code>uv sync</code>, <span>then</span> <code>uv run python scripts/slides.py serve</code>.</p>
   <div class="table-wrap"><table id="week-table">
     <thead><tr><th scope="col">Week</th><th scope="col">Date</th><th scope="col">Topic and question</th><th scope="col">Content and materials</th><th scope="col">Milestone</th></tr></thead>
     <tbody>
@@ -203,7 +204,9 @@
         <td><strong>Introduction and tokenization</strong><span class="lens">How does the representation of text affect cost and what a model can learn?</span></td>
         <td>Brief introduction to LLMs; bytes and Unicode; BPE; special tokens; vocabulary choices for Chinese and English.
           <div class="practice"><strong>Practice:</strong> Trace BPE merges, check encode/decode round trips, and compare Chinese and English tokenization at different vocabulary sizes.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+          <div class="materials"><strong>Slides:</strong> <a href="http://127.0.0.1:8000/slides/lecture-01/" data-local-path="/slides/lecture-01/" target="_blank" rel="noopener noreferrer">lecture-01-slides</a></div>
+          <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-01" data-local-path="/slides/shared/notebook.html?lecture=lecture-01" target="_blank" rel="noopener noreferrer">lecture-01-exercise.ipynb</a></div>
+          <div class="materials"><strong>Papers:</strong> <a href="papers/sennrich-2016-subword-units.pdf" target="_blank" rel="noopener noreferrer">BPE (Sennrich et al., 2016)</a> · <a href="papers/kudo-2018-sentencepiece.pdf" target="_blank" rel="noopener noreferrer">SentencePiece (Kudo and Richardson, 2018)</a></div></td>
         <td>—</td>
       </tr>
       <tr data-start="2026-09-13">
@@ -414,6 +417,7 @@
 </main>
 <footer><div class="wrap"><p>CS40008.01 · LLMs · Fall 2026 · Fudan University. Maintained by <a href="https://github.com/baojian" target="_blank" rel="noopener noreferrer">Baojian Zhou</a>, Claude Code and Codex.</p></div></footer>
 <script src="assets/translations.js"></script>
+<script src="assets/local-materials.js"></script>
 <script>
   (function () {
     // Preserve the original text and markup so switching languages is reversible.

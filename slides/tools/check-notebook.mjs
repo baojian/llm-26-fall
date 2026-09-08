@@ -1,14 +1,18 @@
 /* Integration check against the running course preview. Does not edit or run cells. */
 import assert from 'node:assert/strict';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
 const slides = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const preview = new URL(process.argv[2] || 'http://127.0.0.1:8000');
+const folder = process.argv[3] || 'example';
+assert.match(folder, /^(example|lecture-\d{2}|\d{2}-[a-z0-9-]+)$/);
+const metadata = JSON.parse(await readFile(path.join(slides, folder, 'lecture.json'), 'utf8'));
+const fromCoursePage = process.argv.includes('--course-page');
 assert.ok(['localhost', '127.0.0.1'].includes(preview.hostname));
-const output = path.join(slides, '.checks', 'notebook');
+const output = path.join(slides, '.checks', `notebook-${folder}`);
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 let context;
@@ -22,9 +26,17 @@ try {
     await route.fulfill({ response });
   });
   const page = await context.newPage();
-  await page.goto(new URL('/slides/example/', preview).href, { waitUntil: 'networkidle' });
-  await page.evaluate(() => window.courseReady);
-  const link = page.getByRole('link', { name: 'Notebook', exact: true });
+  await page.goto(new URL(fromCoursePage ? '/index.html' : `/slides/${folder}/`, preview).href, { waitUntil: 'networkidle' });
+  if (!fromCoursePage) await page.evaluate(() => window.courseReady);
+  if (fromCoursePage) {
+    await page.locator('[data-lang="en"]').click();
+    const row = page.locator('#week-table tbody tr').filter({ has: page.getByRole('link', { name: `${folder}-slides`, exact: true }) });
+    await row.screenshot({ path: path.join(output, 'course-materials-en.png'), animations: 'disabled' });
+    await page.locator('[data-lang="zh"]').click();
+    await row.screenshot({ path: path.join(output, 'course-materials-zh.png'), animations: 'disabled' });
+    await page.locator('[data-lang="en"]').click();
+  }
+  const link = page.getByRole('link', { name: fromCoursePage ? metadata.notebook : 'Notebook', exact: true });
   assert.equal(await link.getAttribute('target'), '_blank');
   assert.equal(await link.getAttribute('download'), null);
 
@@ -49,7 +61,7 @@ try {
   const secondURL = new URL(second.result.url);
   assert.equal(secondURL.origin, firstURL.origin, 'Repeated clicks started different servers.');
   assert.notEqual(secondURL.pathname, firstURL.pathname, 'Tabs should have independent Lab workspaces.');
-  assert.equal(first.result.notebook, 'workspace/slides/example/practice.ipynb');
+  assert.equal(first.result.notebook, `workspace/slides/${folder}/${metadata.notebook || 'practice.ipynb'}`);
 
   const serverBase = firstURL.origin + firstURL.pathname.split('/lab/workspaces/')[0];
   const specsResponse = await context.request.get(serverBase + '/api/kernelspecs');
@@ -65,7 +77,7 @@ try {
   // A generic static server shows setup instructions instead of downloading JSON.
   const setup = await context.newPage();
   await setup.route('**/_course/notebook', route => route.fulfill({ status: 404, contentType: 'text/html', body: 'Not found' }));
-  await setup.goto(new URL('/slides/shared/notebook.html?lecture=example', preview).href);
+  await setup.goto(new URL(`/slides/shared/notebook.html?lecture=${folder}`, preview).href);
   await setup.getByRole('heading', { name: 'JupyterLab is not ready' }).waitFor();
   assert.equal(await setup.locator('#notebook-setup').isVisible(), true);
   await setup.screenshot({ path: path.join(output, 'setup-instructions.png') });

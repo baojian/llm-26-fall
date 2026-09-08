@@ -40,6 +40,28 @@ def test_working_copy_preserves_answers_and_assets(course):
     assert json.loads((course / "slides/01-tokenization/practice.ipynb").read_text())["cells"] == []
 
 
+def test_named_lecture_notebook_preserves_student_work(course):
+    deck = course / "slides/lecture-01"
+    deck.mkdir()
+    filename = "lecture-01-exercise.ipynb"
+    (deck / "lecture.json").write_text(json.dumps({"notebook": filename}))
+    (deck / filename).write_text((course / "slides/01-tokenization/practice.ipynb").read_text())
+    launcher = NotebookLauncher(course)
+    notebook = launcher.prepare_notebook("lecture-01")
+    assert notebook == course / "workspace/slides/lecture-01" / filename
+    assert json.loads(notebook.read_text())["metadata"]["kernelspec"]["name"] == "python3"
+    notebook.write_text("Student's saved answers")
+    assert launcher.prepare_notebook("lecture-01").read_text() == "Student's saved answers"
+
+
+@pytest.mark.parametrize("filename", ["../private.ipynb", "/tmp/private.ipynb", "nested/test.ipynb", "test.txt", None])
+def test_notebook_metadata_cannot_choose_another_path(course, filename):
+    (course / "slides/01-tokenization/lecture.json").write_text(json.dumps({"notebook": filename}))
+    with pytest.raises(ValueError):
+        NotebookLauncher(course).prepare_notebook("01-tokenization")
+    assert not (course / "workspace").exists()
+
+
 @pytest.mark.parametrize("lecture", [None, {}, "../../.env", "01-tokenization/../../", "template", "99-missing"])
 def test_invalid_notebook_requests_do_not_write(course, lecture):
     launcher = NotebookLauncher(course)

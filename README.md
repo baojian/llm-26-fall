@@ -4,6 +4,10 @@ Course materials for **NLP and LLMs** at Fudan University.
 
 Course website: <https://baojian.github.io/llm-26-fall/>.
 
+## Getting started
+
+Install [Git](https://git-scm.com/downloads) and [uv](https://docs.astral.sh/uv/getting-started/installation/), then run `git clone https://github.com/baojian/llm-26-fall.git` and `cd llm-26-fall`. Start the course with `uv run python scripts/slides.py serve` and open <http://127.0.0.1:8000>. Python and Jupyter dependencies are prepared automatically; Reveal.js is included. Open slides or exercises from the course page; notebooks open in JupyterLab with personal copies under `workspace/`. Before class, stop the server with `Ctrl+C`, run `git pull`, and start it again.
+
 ## Course Information
 
 - **Course code:** CS40008.01
@@ -37,10 +41,10 @@ charts, exported Excalidraw diagrams, and prepared Manim videos. The
 not a complete first lecture. Published decks can be presented from a classroom
 browser without an instructor laptop.
 
-For local practice, run `uv sync` and `uv run python scripts/slides.py serve`,
-then open the lecture and click **Notebook**. The launcher opens a working copy
-under `workspace/` in JupyterLab, reusing a compatible server or starting one
-with the course's uv environment.
+[Lecture 01](slides/lecture-01/index.html) has its own slides and
+[exercise notebook](slides/lecture-01/lecture-01-exercise.ipynb). The course
+page links to the local server for both. PDFs and citations for course readings
+are collected in [papers/](papers/README.md).
 
 ## Your Workspace
 

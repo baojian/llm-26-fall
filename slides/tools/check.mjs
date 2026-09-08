@@ -10,12 +10,13 @@ const root = path.dirname(slidesRoot);
 const args = process.argv.slice(2);
 const folder = args.find(arg => !arg.startsWith('--')) || 'example';
 const exportPDF = args.includes('--pdf');
-assert.match(folder, /^(example|template|\d{2}-[a-z0-9-]+)$/, 'Use a lecture folder name, such as 01-tokenization.');
+assert.match(folder, /^(example|template|lecture-\d{2}|\d{2}-[a-z0-9-]+)$/, 'Use a lecture folder name, such as lecture-01.');
 const deck = path.join(slidesRoot, folder);
 const source = await readFile(path.join(deck, 'slides.md'), 'utf8');
 assert.doesNotMatch(source, /REPLACE:|\{\{[^}]+\}\}/, 'Replace the template prompts before checking a lecture.');
 assert.doesNotMatch(source, /\bstyle\s*=|<style\b|r-fit-text/, 'Use the shared layouts instead of slide-specific styles or automatic text shrinking.');
-const notebook = JSON.parse(await readFile(path.join(deck, 'practice.ipynb'), 'utf8'));
+const metadata = JSON.parse(await readFile(path.join(deck, 'lecture.json'), 'utf8'));
+const notebook = JSON.parse(await readFile(path.join(deck, metadata.notebook || 'practice.ipynb'), 'utf8'));
 assert.equal(notebook.nbformat, 4);
 for (const [, id] of source.matchAll(/Exercise (E\d+)/g)) {
   assert.ok(notebook.cells.some(cell => cell.cell_type === 'markdown' && cell.source.join('').includes(id)), `Notebook is missing ${id}.`);

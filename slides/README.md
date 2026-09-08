@@ -5,6 +5,11 @@ notebook for each lecture. The [sample deck](example/index.html) demonstrates
 the layouts using a short tokenization lesson. It is a format sample, not the
 complete first lecture.
 
+[Lecture 01](lecture-01/index.html) now has its own folder, starting with the
+sample's tokenization content. Continue developing that deck for the first
+class. Its notebook is [lecture-01-exercise.ipynb](lecture-01/lecture-01-exercise.ipynb),
+and course paper PDFs are kept in [papers/](../papers/README.md).
+
 ## Teaching from a classroom browser
 
 Once the slide files reach the branch published by GitHub Pages, open the deck
@@ -37,7 +42,9 @@ uv run python scripts/slides.py serve
 
 Open `http://127.0.0.1:8000/slides/example/` (or the lecture's folder) and click
 **Notebook**. A new tab opens JupyterLab with a personal copy at
-`workspace/slides/FOLDER/practice.ipynb`. Later clicks reopen that copy and
+`workspace/slides/FOLDER/NOTEBOOK.ipynb`. Lecture 01 uses
+`workspace/slides/lecture-01/lecture-01-exercise.ipynb`; the sample uses
+`workspace/slides/example/practice.ipynb`. Later clicks reopen that copy and
 preserve saved answers. The lecture's `assets/` folder is copied the first time
 it is needed; existing personal files are not replaced by new course releases.
 
@@ -56,6 +63,12 @@ JupyterLab keeps running when the slide preview stops, so ongoing notebook work
 continues. Shut it down from JupyterLab when finished. Its local settings,
 runtime files, and logs are stored in ignored `workspace/.jupyter/`.
 
+The course page's Lecture 01 slide and exercise links open the local server at
+`http://127.0.0.1:8000`, including when clicked from the public course page.
+Start the preview before clicking either link. If using another port, open the
+local `index.html` on that port; its material links keep the same server address.
+Paper links point to PDFs hosted with the course and also work locally.
+
 ## Files you edit
 
 ```text
@@ -64,6 +77,7 @@ slides/
   vendor/                 Pinned Reveal.js, KaTeX, and Plotly browser assets
   template/               Starter files copied by the creation command
   example/                Checked sample with a browser demonstration
+  lecture-01/             Lecture 01 deck and lecture-01-exercise.ipynb
   01-tokenization/        A lecture created when its content is ready
     index.html            Shared viewer shell
     lecture.json          Title, language, and optional demo module
@@ -72,8 +86,10 @@ slides/
     assets/               Chart data, drawings, videos, and their sources
 ```
 
-The `01-tokenization/` folder above illustrates a future lecture. The framework
-does not create or publish a full Lecture 01 automatically.
+The `01-tokenization/` folder above illustrates the creation command's output.
+Each lecture can set `notebook` in `lecture.json` to a filename such as
+`lecture-01-exercise.ipynb`. The default is `practice.ipynb`; the file must be
+inside the lecture folder.
 
 ## Create and preview a lecture
 
@@ -216,6 +232,10 @@ With the local course preview running, check the JupyterLab integration with
 `npm --prefix slides run check:notebook`. This opens the sample notebook twice
 to verify server reuse and the course kernel, without editing or executing
 cells. JupyterLab remains available afterward.
+
+To check Lecture 01 instead, run
+`npm --prefix slides run check:notebook -- http://127.0.0.1:8000 lecture-01`.
+Append `--course-page` to test its exercise link directly from `index.html`.
 
 For PDF export directly in Chrome or Chromium, open **Print**, choose **Save as
 PDF**, landscape orientation, no margins, and background graphics. The PDF shows

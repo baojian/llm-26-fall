@@ -35,12 +35,18 @@ class NotebookLauncher:
         self.http = build_opener(ProxyHandler({}), NoRedirect())
 
     def prepare_notebook(self, lecture):
-        if not isinstance(lecture, str) or not re.fullmatch(r"example|[0-9]{2}-[a-z0-9-]+", lecture):
+        if not isinstance(lecture, str) or not re.fullmatch(r"example|lecture-[0-9]{2}|[0-9]{2}-[a-z0-9-]+", lecture):
             raise ValueError("Choose a lecture from the course slides.")
-        source = self.root / "slides" / lecture / "practice.ipynb"
+        deck = self.root / "slides" / lecture
+        metadata_path = deck / "lecture.json"
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8")) if metadata_path.is_file() else {}
+        filename = metadata.get("notebook", "practice.ipynb")
+        if not isinstance(filename, str) or not re.fullmatch(r"[a-z0-9][a-z0-9_-]*\.ipynb", filename):
+            raise ValueError("The lecture notebook must be an .ipynb file in its lecture folder.")
+        source = deck / filename
         if not source.is_file() or not source.resolve().is_relative_to(self.root / "slides"):
             raise ValueError("This lecture does not have a practice notebook yet.")
-        destination = self.root / "workspace" / "slides" / lecture / "practice.ipynb"
+        destination = self.root / "workspace" / "slides" / lecture / filename
         if not destination.resolve().is_relative_to(self.root / "workspace"):
             raise ValueError("The notebook workspace must stay inside this repository.")
         destination.parent.mkdir(parents=True, exist_ok=True)
