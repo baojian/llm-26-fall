@@ -34,15 +34,18 @@ class NotebookLauncher:
         # Never forward local Jupyter credentials through a configured proxy.
         self.http = build_opener(ProxyHandler({}), NoRedirect())
 
-    def prepare_notebook(self, lecture):
+    def prepare_notebook(self, lecture, notebook=None):
         if not isinstance(lecture, str) or not re.fullmatch(r"example|lecture-[0-9]{2}|[0-9]{2}-[a-z0-9-]+", lecture):
             raise ValueError("Choose a lecture from the course slides.")
         deck = self.root / "slides" / lecture
         metadata_path = deck / "lecture.json"
         metadata = json.loads(metadata_path.read_text(encoding="utf-8")) if metadata_path.is_file() else {}
-        filename = metadata.get("notebook", "practice.ipynb")
+        default = metadata.get("notebook", "practice.ipynb")
+        filename = default if notebook is None else notebook
         if not isinstance(filename, str) or not re.fullmatch(r"[a-z0-9][a-z0-9_-]*\.ipynb", filename):
             raise ValueError("The lecture notebook must be an .ipynb file in its lecture folder.")
+        if filename != default and filename not in metadata.get("additional_notebooks", []):
+            raise ValueError("Choose a notebook listed for this lecture.")
         source = deck / filename
         if not source.is_file() or not source.resolve().is_relative_to(self.root / "slides"):
             raise ValueError("This lecture does not have a practice notebook yet.")
@@ -63,8 +66,19 @@ class NotebookLauncher:
                 pass
         assets = source.parent / "assets"
         personal_assets = destination.parent / "assets"
-        if assets.is_dir() and not personal_assets.exists():
-            shutil.copytree(assets, personal_assets)
+        if assets.is_dir():
+            for asset in assets.rglob("*"):
+                if not asset.is_file():
+                    continue
+                target = personal_assets / asset.relative_to(assets)
+                if not target.resolve().is_relative_to(self.root / "workspace"):
+                    raise ValueError("Notebook assets must stay inside the workspace.")
+                target.parent.mkdir(parents=True, exist_ok=True)
+                try:
+                    with target.open("xb") as output, asset.open("rb") as source_file:
+                        shutil.copyfileobj(source_file, output)
+                except FileExistsError:
+                    pass
         return destination
 
     def registered_servers(self):
@@ -176,9 +190,9 @@ class NotebookLauncher:
                 self.process.wait()
         raise RuntimeError("JupyterLab could not start. Check workspace/.jupyter/lab.log, then run uv sync and try again.")
 
-    def open(self, lecture):
+    def open(self, lecture, notebook=None):
         with self.lock:
-            notebook = self.prepare_notebook(lecture)
+            notebook = self.prepare_notebook(lecture, notebook)
             server = next((item for item in self.registered_servers() if self.compatible(item, notebook)), None)
             reused = server is not None
             if server is None:

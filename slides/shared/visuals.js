@@ -42,9 +42,10 @@ export async function initialize(reveal) {
     localAsset(diagram.dataset.excalidrawSource);
     await diagram.decode();
   }
-  for (const video of document.querySelectorAll('video[data-manim-source]')) {
+  for (const video of document.querySelectorAll('video.animation, video[data-manim-source]')) {
+    if (!video.getAttribute('src')) throw new Error('Give every animation a local video source.');
     localAsset(video.getAttribute('src'));
-    localAsset(video.dataset.manimSource);
+    if (video.hasAttribute('data-manim-source')) localAsset(video.dataset.manimSource);
     if (!video.getAttribute('poster')) throw new Error('Give every animation a poster image for print and before playback.');
     const poster = document.createElement('img');
     poster.src = localAsset(video.getAttribute('poster'));

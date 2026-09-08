@@ -43,10 +43,6 @@
       throwOnError: true,
       strict: 'warn'
     });
-    document.querySelectorAll('.reveal a[href^="https://"], .reveal a[href^="http://"]').forEach(link => {
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-    });
     const visuals = await import(new URL('shared/visuals.js', base));
     await visuals.initialize(Reveal);
     if (metadata.demo) {
@@ -57,6 +53,13 @@
       const demo = await import(demoURL.href);
       await demo.initialize(Reveal);
     }
+    Reveal.getSlidesElement().querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href').trim();
+      if (!href || href.startsWith('#')) return;
+      if (!['http:', 'https:'].includes(new URL(href, document.baseURI).protocol)) return;
+      link.target = '_blank';
+      link.relList.add('noopener', 'noreferrer');
+    });
     await document.fonts.ready;
     Reveal.layout();
     return metadata;

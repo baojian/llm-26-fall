@@ -1,6 +1,8 @@
 /* Runs in a new tab so server startup cannot be blocked as an async popup. */
 (async () => {
-  const lecture = new URLSearchParams(location.search).get('lecture');
+  const params = new URLSearchParams(location.search);
+  const lecture = params.get('lecture');
+  const notebook = params.get('notebook');
   const title = document.getElementById('notebook-title');
   const status = document.getElementById('notebook-status');
   const setup = document.getElementById('notebook-setup');
@@ -20,7 +22,7 @@
     const response = await fetch('/_course/notebook', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Course-Notebook': '1' },
-      body: JSON.stringify({ lecture })
+      body: JSON.stringify({ lecture, notebook })
     });
     if (!response.headers.get('Content-Type')?.includes('application/json')) {
       throw new Error('Use the course preview command below to enable JupyterLab.');

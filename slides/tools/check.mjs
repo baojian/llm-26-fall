@@ -23,7 +23,7 @@ for (const [, id] of source.matchAll(/Exercise (E\d+)/g)) {
 }
 const output = path.join(slidesRoot, '.checks', folder);
 await mkdir(output, { recursive: true });
-const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.md': 'text/plain', '.json': 'application/json', '.woff2': 'font/woff2', '.woff': 'font/woff', '.ttf': 'font/ttf', '.png': 'image/png', '.svg': 'image/svg+xml', '.ipynb': 'application/json', '.mp4': 'video/mp4', '.webm': 'video/webm' };
+const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.md': 'text/plain', '.json': 'application/json', '.woff2': 'font/woff2', '.woff': 'font/woff', '.ttf': 'font/ttf', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.svg': 'image/svg+xml', '.ipynb': 'application/json', '.mp4': 'video/mp4', '.webm': 'video/webm' };
 const server = createServer(async (request, response) => {
   try {
     const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
@@ -117,10 +117,49 @@ try {
     if (asset.endsWith('.excalidraw')) assert.equal((await response.json()).type, 'excalidraw');
   }
   assert.equal(await page.locator('.slides img:not([alt]), .slides video:not([aria-label]), .slides video:not([controls]), .slides video:not([poster])').count(), 0, 'Give images alt text and videos labels, controls, and posters.');
+  const animations = page.locator('.slides video.animation');
+  const posters = await animations.evaluateAll(videos => videos.map(video => {
+    const poster = video.nextElementSibling;
+    return {
+      slide: video.closest('section').id,
+      ready: poster?.matches('img.animation-poster') && poster.complete && poster.naturalWidth > 0,
+      matchingSource: poster?.src === video.poster,
+      matchingLabel: poster?.alt === (video.getAttribute('aria-label') || 'Animation summary'),
+    };
+  }));
+  for (const poster of posters) {
+    assert.ok(poster.ready && poster.matchingSource && poster.matchingLabel, `${poster.slide}: provide a loaded, labeled poster fallback for printing.`);
+  }
+  await page.emulateMedia({ media: 'print' });
+  const printFallbacks = await animations.evaluateAll(videos => videos.map(video => ({
+    slide: video.closest('section').id,
+    videoHidden: getComputedStyle(video).display === 'none',
+    posterVisible: getComputedStyle(video.nextElementSibling).display !== 'none',
+  })));
+  for (const fallback of printFallbacks) {
+    assert.ok(fallback.videoHidden && fallback.posterVisible, `${fallback.slide}: printing must replace the video with its poster.`);
+  }
+  await page.emulateMedia({ media: 'screen' });
+  for (let i = 0; i < await animations.count(); i++) {
+    const video = animations.nth(i);
+    const slide = await video.evaluate(element => {
+      const slide = element.closest('section');
+      Reveal.slide(Reveal.getIndices(slide).h);
+      element.currentTime = 0;
+      return slide.id;
+    });
+    await video.evaluate(element => element.play());
+    await page.waitForFunction(element => element.currentTime > 0.1 && !element.paused, await video.elementHandle(), { timeout: 10000 });
+    await page.evaluate(() => Reveal.slide((Reveal.getIndices().h + 1) % Reveal.getTotalSlides()));
+    assert.equal(await video.evaluate(element => element.paused), true, `${slide}: leaving the slide must pause playback.`);
+    await video.evaluate(element => { element.currentTime = 0; });
+  }
   const links = await page.locator('a[href]').evaluateAll(anchors => anchors.map(a => ({ href: a.getAttribute('href'), target: a.target, rel: a.rel })));
   for (const link of links) {
     if (/^https?:/.test(link.href)) {
       if (!link.href.startsWith(origin)) assert.equal(link.target, '_blank');
+    } else if (link.href.startsWith('mailto:')) {
+      assert.match(link.href, /^mailto:[^\s@]+@[^\s@]+$/, `Invalid email link: ${link.href}`);
     } else if (link.href.startsWith('#/')) {
       assert.ok(ids.includes(link.href.slice(2)) || /^#\/\d/.test(link.href), `Broken slide link: ${link.href}`);
     } else if (!link.href.startsWith('#')) {
@@ -160,6 +199,12 @@ try {
     assert.ok(await page.locator('.katex').count() > 0, 'Sample equations did not render.');
   }
   if (folder === 'lecture-01') {
+    for (const id of ['example-video-antarctica', 'example-video-johannesburg']) {
+      const video = page.locator(`#${id} video.animation`);
+      assert.equal(await video.count(), 1, `${id}: include the text-to-video example.`);
+      assert.equal(await video.evaluate(element => element.autoplay || element.hasAttribute('autoplay')), false, `${id}: start playback only on request.`);
+      assert.equal(await video.evaluate(element => element.controls && element.playsInline), true, `${id}: retain inline playback controls.`);
+    }
     const outlines = await page.locator('.outline-topics').evaluateAll(lists => lists.map(list => ({
       topics: [...list.children].map(item => item.textContent),
       active: [...list.children].flatMap((item, index) => item.matches('[aria-current="step"]') ? [index] : []),
