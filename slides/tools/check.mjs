@@ -133,39 +133,58 @@ try {
   assert.equal(await page.locator('#course-help').isVisible(), true);
   await page.getByRole('button', { name: 'Close', exact: true }).click();
   assert.equal(await page.locator('#course-help').isVisible(), false);
-  if (folder === 'example') {
+  if (folder === 'example' || folder === 'lecture-01') {
     await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('interactive-results')).h));
     const point = await page.locator('#interactive-results .point').nth(1).boundingBox();
     await page.mouse.move(point.x + point.width / 2, point.y + point.height / 2);
     await page.waitForFunction(() => document.querySelector('#interactive-results .hoverlayer').textContent.includes('Total tokens: 18'));
     assert.match(await page.locator('#interactive-results .hoverlayer').textContent(), /Total tokens: 18/);
-    await page.evaluate(() => Reveal.slide(4));
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('browser-demo')).h));
     await page.getByLabel('Try English, Chinese, or emoji').fill('🙂');
     assert.equal(await page.locator('#point-count').textContent(), '1');
     assert.equal(await page.locator('#byte-count').textContent(), '4');
     await page.getByRole('button', { name: 'Reset example' }).click();
     assert.equal(await page.locator('#point-count').textContent(), '3');
     assert.equal(await page.locator('#byte-count').textContent(), '10');
-    await page.evaluate(() => Reveal.slide(7, 0, -1));
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('exercise-01')).h, 0, -1));
     assert.equal(await page.locator('#exercise-01 .answer').evaluate(el => el.classList.contains('visible')), false);
     await page.keyboard.press('Space');
     assert.equal(await page.locator('#exercise-01 .answer').evaluate(el => el.classList.contains('visible')), true);
     await page.keyboard.press('Escape');
     assert.equal(await page.evaluate(() => Reveal.isOverview()), true);
     await page.keyboard.press('Escape');
-    await page.waitForURL(url => url.hash === '#/exercise-01');
+    await page.waitForURL(url => /^#\/exercise-01(?:\/\d+)?$/.test(url.hash));
     await page.reload({ waitUntil: 'networkidle' });
     await page.evaluate(() => window.courseReady);
     assert.equal(await page.evaluate(() => Reveal.getCurrentSlide().id), 'exercise-01');
     assert.ok(await page.locator('.katex').count() > 0, 'Sample equations did not render.');
+  }
+  if (folder === 'lecture-01') {
+    const outlines = await page.locator('.outline-topics').evaluateAll(lists => lists.map(list => ({
+      topics: [...list.children].map(item => item.textContent),
+      active: [...list.children].flatMap((item, index) => item.matches('[aria-current="step"]') ? [index] : []),
+    })));
+    assert.equal(outlines.length, 5);
+    for (const outline of outlines) assert.deepEqual(outline.topics, outlines[0].topics);
+    assert.deepEqual(outlines.map(outline => outline.active), [[0], [1], [2], [3], [3]]);
   }
   if (exportPDF) {
     await page.goto(url + '?print-pdf', { waitUntil: 'networkidle' });
     await page.evaluate(() => window.courseReady);
     await page.waitForFunction(expected => document.querySelectorAll('.pdf-page').length === expected, count);
     await page.evaluate(() => document.fonts.ready);
+    await page.setViewportSize({ width: 1600, height: 1000 });
+    await page.screenshot({ path: path.join(output, 'print-preview.png'), animations: 'disabled' });
     const printPadding = await page.locator('.pdf-page section').evaluateAll(sections => sections.map(section => parseFloat(getComputedStyle(section).paddingLeft)));
     assert.ok(printPadding.every(padding => padding >= 64), 'PDF export must preserve the slide content margins.');
+    const printOverflow = await page.locator('.pdf-page section').evaluateAll(sections => sections.flatMap(section => {
+      const box = section.getBoundingClientRect();
+      return [...section.querySelectorAll('h1,h2,p,li,pre,table,.plot')]
+        .filter(el => !el.closest('aside.notes'))
+        .filter(el => el.getBoundingClientRect().bottom > box.bottom - 35)
+        .map(el => `${section.id}: ${el.textContent.trim().slice(0, 60)}`);
+    }));
+    assert.deepEqual(printOverflow, [], 'Content extends into the PDF slide footer.');
     await page.pdf({ path: path.join(output, `${folder}.pdf`), printBackground: true, preferCSSPageSize: true });
   }
   assert.deepEqual(errors, [], 'Browser errors or missing runtime assets.');

@@ -19,7 +19,7 @@ html, body { background: var(--r-background-color); }
 body { margin: 0; font-family: var(--r-main-font); color: var(--r-main-color); }
 .reveal { font-family: var(--r-main-font); font-size: 30px; font-weight: 400; line-height: 1.38; }
 .reveal .slides { text-align: left; }
-.reveal .slides > section { height: 720px; padding: 54px 64px 58px; box-sizing: border-box; }
+.reveal .slides > section { height: 720px; padding: 20px 64px 58px; box-sizing: border-box; }
 .reveal h1, .reveal h2, .reveal h3 { color: var(--r-heading-color); font-family: var(--r-heading-font); font-weight: 600; text-transform: none; letter-spacing: -0.025em; }
 .reveal h1 { font-size: 78px; line-height: 1.08; margin: 0 0 28px; max-width: 1000px; }
 .reveal h2 { font-size: 48px; line-height: 1.14; margin: 0 0 32px; max-width: 1100px; }
@@ -38,11 +38,17 @@ body { margin: 0; font-family: var(--r-main-font); color: var(--r-main-color); }
 .reveal .caption, .reveal .source { font-size: 24px; line-height: 1.4; }
 .reveal .source { margin-top: 24px; color: var(--course-muted); }
 .reveal .eyebrow { font-size: 24px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--course-accent); margin-bottom: 38px; }
-.reveal .title-slide { display: flex !important; flex-direction: column; justify-content: center; }
-.reveal .title-slide .subtitle { max-width: 980px; font-size: 34px; line-height: 1.4; color: var(--course-muted); }
+.reveal .title-slide {display: flex !important; flex-direction: column; justify-content: center; }
+.reveal .title-slide h1 { font-size: 68px; max-width: 1152px; }
+.reveal .title-slide .subtitle { max-width: 1000px; font-size: 34px; line-height: 1.4; color: var(--course-muted); }
 .reveal .title-slide .byline { margin-top: 52px; font-size: 26px; }
 .reveal .section-slide { display: flex !important; flex-direction: column; justify-content: center; }
 .reveal .section-slide h2 { font-size: 64px; max-width: 1000px; }
+.reveal .outline-topics { margin: 48px 0 0 1.1em; font-size: 48px; line-height: 1.25; }
+.reveal .outline-topics li { color: #c4c4c4; margin-bottom: 32px; padding-left: 8px; font-weight: 400; }
+.reveal .outline-topics li::marker { color: currentColor; }
+.reveal .outline-topics li[aria-current="step"] { color: #111; font-weight: 700; }
+.reveal .outline-slide .caption { margin-top: 36px; }
 .reveal .columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
 .reveal .columns > * { min-width: 0; }
 .reveal .columns p:last-child { margin-bottom: 0; }
@@ -96,6 +102,12 @@ body { margin: 0; font-family: var(--r-main-font); color: var(--r-main-color); }
 html.reveal-print .reveal .slides section { height: 720px !important; padding: 54px 64px 58px !important; }
 html.reveal-print .reveal .slides section.title-slide,
 html.reveal-print .reveal .slides section.section-slide { display: flex !important; }
+/* Reveal copies the body background into an inline style on each PDF page. */
+html.reveal-print .reveal .slides .pdf-page { background: #fff !important; }
+@media screen {
+  html.reveal-print, html.reveal-print body { background: #e9edf1; }
+  html.reveal-print .reveal .slides .pdf-page:not(:last-of-type) { margin-bottom: 40px; }
+}
 @media print {
   .course-toolbar, .course-help, .course-error, .reveal .controls, .reveal .progress { display: none !important; }
   .reveal .slides section { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
