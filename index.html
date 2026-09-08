@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CS40008.01 NLP &amp; LLMs · Fall 2026 · Fudan University</title>
-<meta name="description" content="Natural Language Processing and Large Language Models, Fall 2026 at Fudan University. Wednesdays 13:30–16:10, HGX103.">
+<title>CS40008.01 LLMs · Fall 2026 · Fudan University</title>
+<meta name="description" content="Large Language Models, Fall 2026 at Fudan University. Wednesdays 13:30–16:10, HGX103.">
 <style>
   :root {
     --bg: #fbfbf9; --fg: #1d1f24; --muted: #5b6270; --line: #e2e4e8;
     --card: #ffffff; --accent: #1f4e8c; --accent-soft: #e8eef7;
-    --star: #b5651d; --star-soft: #fff3e6; --now: #eef8ee; --holiday: #faf0f0;
+    --now: #eef8ee; --holiday: #faf0f0;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #14161a; --fg: #e7e9ee; --muted: #a0a7b4; --line: #2b2f37;
       --card: #1b1e24; --accent: #7fb0f0; --accent-soft: #1d2a3d;
-      --star: #f0a860; --star-soft: #2e2318; --now: #1c2b1c; --holiday: #2c1d1d;
+      --now: #1c2b1c; --holiday: #2c1d1d;
     }
   }
   * { box-sizing: border-box; }
@@ -34,25 +34,25 @@
   pre code { background: none; padding: 0; }
 
   header.hero { padding: 40px 20px 24px; border-bottom: 1px solid var(--line); background: var(--card); }
-  .wrap { max-width: 890px; margin: 0 auto; padding: 0 20px; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
   .hero h1 { margin: 0 0 6px; font-size: 2rem; line-height: 1.2; letter-spacing: -0.01em; }
-  .hero-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px 24px; }
+  .hero-heading { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 16px 24px; }
   .hero-heading h1 { min-width: 0; }
-  .hero-actions { display: flex; align-items: center; flex-shrink: 0; gap: 14px; padding-top: 3px; font-size: 0.9rem; white-space: nowrap; }
+  .hero-actions { display: flex; align-items: center; flex-shrink: 0; gap: 14px; margin-left: auto; padding-top: 3px; font-size: 0.9rem; white-space: nowrap; }
   @media (max-width: 600px) { .hero h1 { font-size: 1.5rem; } .hero-actions { gap: 10px; } }
   @media (max-width: 480px) { .hero-heading { flex-wrap: wrap; gap: 8px; margin-bottom: 12px; } .hero-actions { margin-left: auto; } }
   .hero .sub { margin: 0; color: var(--muted); font-size: 1.05rem; }
-  .hero .meta { margin: 16px 0 0; display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--muted); font-size: 0.95rem; }
   .repo-link { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; color: var(--muted); }
   .repo-link:hover { color: var(--accent); }
   .repo-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
   .chip { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 600; font-size: 0.85rem; }
+  .chip[hidden] { display: none; }
   .chip.now-chip { background: var(--now); color: #2c6b2c; }
   @media (prefers-color-scheme: dark) { .chip.now-chip { color: #9fd89f; } }
 
   nav.top { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
-  nav.top .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 18px; padding: 8px 20px; font-size: 0.95rem; }
+  nav.top .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 18px; padding: 8px 20px; font-size: 0.95rem; }
   nav.top a { color: var(--fg); font-weight: 500; }
   nav.top a:hover { color: var(--accent); text-decoration: none; }
   .lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--card); }
@@ -69,11 +69,11 @@
   li { margin: 3px 0; }
   .muted { color: var(--muted); }
   .lead { font-size: 1.07rem; }
-  .star { color: var(--star); font-weight: 700; }
   .callout { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 8px; padding: 12px 16px; margin: 14px 0; }
-  .callout.star-note { border-left-color: var(--star); background: var(--star-soft); }
 
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 14px 0; }
+  #dates .grid { grid-template-columns: minmax(0, 0.8fr) repeat(2, minmax(0, 1.1fr)); }
+  @media (max-width: 760px) { #dates .grid { grid-template-columns: minmax(0, 1fr); } }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0; }
   .card h3 { margin-top: 0; }
   dl.info { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
@@ -88,7 +88,7 @@
   td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
   td.date { white-space: nowrap; }
   td .lens { display: block; color: var(--muted); font-size: 0.9em; margin-top: 3px; }
-  td .starline { display: block; color: var(--star); font-size: 0.92em; margin-top: 4px; }
+  td .practice, td .materials { margin-top: 8px; color: var(--muted); font-size: 0.92em; }
   td .due { display: inline-block; margin: 2px 4px 2px 0; padding: 1px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-weight: 600; font-size: 0.86em; white-space: nowrap; }
   tr.now td { background: var(--now); }
   tr.holiday td { background: var(--holiday); }
@@ -96,12 +96,18 @@
   @media (prefers-color-scheme: dark) { tr.holiday td .flag { color: #f08a8a; } }
   #schedule table { min-width: 900px; }
 
-  .weights { display: flex; height: 14px; border-radius: 7px; overflow: hidden; border: 1px solid var(--line); margin: 10px 0 6px; }
+  .weights, .legend { display: grid; grid-template-columns: minmax(0, 10fr) minmax(0, 45fr) minmax(0, 45fr); }
+  .weights { height: 14px; border-radius: 7px; overflow: hidden; border: 1px solid var(--line); margin: 10px 0 6px; }
   .weights span { display: block; height: 100%; }
   .weights .w-quiz { background: #6f97cf; }
   .weights .w-asg { background: #3f6fb4; } .weights .w-proj { background: var(--accent); }
-  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.92rem; color: var(--muted); }
-  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+  .legend { padding: 0 1px; text-align: center; font-size: 0.92rem; color: var(--muted); }
+  .legend > span { min-width: 0; }
+  #assessment .legend { margin-bottom: 12px; }
+  .assessment-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; margin: 14px 0; }
+  .assessment-cards > .card > :last-child { margin-bottom: 0; }
+  #assessment h3 { margin: 22px 0 8px; font-size: 1rem; font-weight: 400; }
+  #assessment th { font-weight: 400; }
 
   footer { padding: 28px 20px 40px; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); }
   @media print {
@@ -115,15 +121,16 @@
 <header class="hero">
   <div class="wrap">
     <div class="hero-heading">
-      <h1><span class="en">CS40008.01 NLP and LLMs</span></h1>
+      <h1><span class="en">CS40008.01 LLMs</span></h1>
       <div class="hero-actions">
-        <a class="repo-link" href="https://github.com/baojian/llm-26-fall" title="GitHub">
+        <span id="now-chip" class="chip now-chip" hidden></span>
+        <a class="repo-link" href="https://github.com/baojian/llm-26-fall" title="GitHub" target="_blank" rel="noopener noreferrer">
           <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.65 7.65 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
           </svg>
           <span class="sr-only">GitHub</span>
         </a>
-        <a href="https://elearning.fudan.edu.cn/"><span class="en">Elearning</span></a>
+        <a href="https://elearning.fudan.edu.cn/" target="_blank" rel="noopener noreferrer"><span class="en">eLearning</span></a>
         <div class="lang-toggle" role="group" aria-label="Language / 语言">
           <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
           <button type="button" data-lang="zh" lang="zh-CN" aria-pressed="false">中文</button>
@@ -131,22 +138,15 @@
       </div>
     </div>
     <p class="sub"><span class="en">Fall 2026 · School of Data Science, Fudan University</span></p>
-    <div class="meta">
-      <span><span class="en">Wednesdays 13:30–16:10 (periods 6–8)</span></span>
-      <span><span class="en">HGX103, Handan Campus</span></span>
-      <span><span class="en">Sep 9 – Dec 23, 2026</span></span>
-      <span id="now-chip" class="chip now-chip" hidden></span>
-    </div>
   </div>
 </header>
 
 <nav class="top"><div class="wrap">
   <a href="#overview"><span class="en">Overview</span></a>
   <a href="#info"><span class="en">Info</span></a>
-  <a href="#dates"><span class="en">Key dates</span></a>
+  <a href="#dates"><span class="en">Coursework</span></a>
   <a href="#schedule"><span class="en">Schedule</span></a>
   <a href="#assessment"><span class="en">Assessment</span></a>
-  <a href="#project"><span class="en">Project</span></a>
   <a href="#policies"><span class="en">Policies</span></a>
   <a href="#resources"><span class="en">Resources</span></a>
 </div></nav>
@@ -154,88 +154,89 @@
 <main class="wrap">
 <section id="overview">
   <h2>Course overview</h2>
-  <p class="lead">Learn how modern LLMs work: tokenization, language modeling, embeddings, attention, and Transformers; training and evaluation; and assessing data quality, compute costs, and retrieval. Learn to design controlled experiments and investigate failures. Materials are mainly online, drawing on my previous lectures and Stanford CS336. Each student explores one meaningful question through an <strong>individual project</strong>. AI assistance is welcome; verify results, explain decisions, and support conclusions with evidence.</p>
-  <p><strong>Prerequisites:</strong> Python and introductory ML, including probability, matrix operations, gradients, and data splits. Early practicals introduce PyTorch; a preparation notebook is planned. Undergraduates and master's students share the core. Each meeting spans three 45-minute periods with explanations, worked experiments, guided practice, and occasional quizzes.</p>
+  <p class="lead">Learn how modern LLMs work: tokenization, language modeling, embeddings, attention, and Transformers; training and evaluation; data quality, compute costs, and retrieval. Learn to design controlled experiments and investigate failures. Materials are mainly online, drawing on my previous lectures and Stanford CS336. Each student explores one meaningful question through an <strong>individual project</strong>. AI assistance is welcome; verify results, explain decisions, and support conclusions with evidence.</p>
+  <p><strong>Prerequisites:</strong> Python and introductory ML, including probability and matrix operations. Each meeting spans three 45-minute periods with explanations, worked experiments, guided practice, and occasional quizzes. We will use GitHub.</p>
 </section>
 <section id="info">
   <h2>Basic info</h2>
   <div class="grid">
+    <div class="card"><h3>Class meetings</h3><dl class="info">
+      <dt>Time</dt><dd>Wednesdays 13:30–16:10 (periods 6–8)</dd>
+      <dt>Location</dt><dd>HGX103, Handan Campus</dd>
+      <dt>Dates</dt><dd>Sep 9 – Dec 23, 2026</dd>
+    </dl></div>
     <div class="card"><h3>People</h3><dl class="info">
       <dt>Instructor</dt><dd>Baojian (bjzhou AT fudan.edu.cn)</dd>
       <dt>TAs</dt><dd>Wang Yuxiang and Zhou Yu</dd><dt>Office hours</dt><dd>Mon. 14:00–15:30</dd>
     </dl></div>
-    <div class="card"><h3>Getting set up our environment</h3>
-      <p>Use the repository's <code>uv</code> environment. Keep personal code and results in <code>workspace/</code>, which is ignored by git. Individual lab dependencies will be specified in their handouts.</p>
-    </div>
   </div>
 </section>
 <section id="dates">
-  <h2>Key dates</h2>
-  <p>All deadlines are at 23:59p.m. There are no classes, quizzes in Week 5 (Oct. 7th).</p>
+  <h2>Coursework</h2>
   <div class="grid">
-    <div class="card"><h3>Practical assignments</h3><ul>
-      <li>A1 · Text and probability · Week 4, Sep 30</li>
-      <li>A2 · Build and investigate a small LM · Week 9, Nov 4</li>
-      <li>A3 · Adapt and evaluate · Week 14, Dec 9</li>
-    </ul></div>
     <div class="card"><h3>Quizzes</h3><p>Five 15-minute quizzes; all count equally (2% each).</p><ul>
-      <li>Quiz 1 · Week 3, Sep 23</li><li>Quiz 2 · Week 6, Oct 14</li>
-      <li>Quiz 3 · Week 8, Oct 28</li><li>Quiz 4 · Week 11, Nov 18</li>
-      <li>Quiz 5 · Week 15, Dec 16</li>
+      <li>Quiz 1 · Week 3</li><li>Quiz 2 · Week 6</li>
+      <li>Quiz 3 · Week 8</li><li>Quiz 4 · Week 11</li>
+      <li>Quiz 5 · Week 15</li>
+    </ul></div>
+    <div class="card"><h3>Assignments</h3><p>All count equally (15% each); due weeks are listed below.</p><ul>
+      <li>A1 · Text and probability · Week 4</li>
+      <li>A2 · Build a small LM · Week 9</li>
+      <li>A3 · Adapt and evaluate · Week 14</li>
     </ul></div>
     <div class="card"><h3>Individual project</h3><ul>
-      <li>Proposal · Week 7, Oct 21</li>
-      <li>Baseline and initial results · Week 10, Nov 11</li>
-      <li>Progress update · Week 13, Dec 2</li>
-      <li>Final report, code, and experiment record · Week 17, Dec 30</li>
+      <li>Proposal · Week 7</li>
+      <li>Progress update · Week 13</li>
+      <li>Final submission · Week 17</li>
     </ul></div>
   </div>
-  <p>All project checkpoints are written submissions through <a href="https://elearning.fudan.edu.cn/">eLearning</a>. No project presentations, posters, or oral defenses are required. Written feedback guides the next experiment.</p>
+  <p>All deadlines are at 23:59. There are no classes or quizzes in Week 5. All project checkpoints are written submissions through <a href="https://elearning.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">eLearning</a>. No project presentations, posters, or oral defenses are required.</p>
 </section>
 <section id="schedule">
   <h2>Weekly schedule</h2>
-  <p>15 teaching sessions across 16 calendar weeks. Week 5 is <strong>skip</strong>. Each session connects a mechanism to a question and an experiment. <span class="star">★</span> denotes an advanced extension.</p>
-  <p class="muted">Spring references point to reusable materials from the previous course. CS336 references use the Spring 2026 sequence; selected sections will be adapted. These links are source material, not a requirement to complete the full Stanford lectures or assignments.</p>
   <div class="table-wrap"><table id="week-table">
-    <thead><tr><th scope="col">Week</th><th scope="col">Date</th><th scope="col">Topic and question</th><th scope="col">Core and practical outcome</th><th scope="col">Source material</th><th scope="col">Milestone</th></tr></thead>
+    <thead><tr><th scope="col">Week</th><th scope="col">Date</th><th scope="col">Topic and question</th><th scope="col">Content and materials</th><th scope="col">Milestone</th></tr></thead>
     <tbody>
       <tr data-start="2026-09-06">
         <td class="num">1</td>
         <td class="date">Sep 9</td>
         <td><strong>Introduction and tokenization</strong><span class="lens">How does the representation of text affect cost and what a model can learn?</span></td>
-        <td>Brief NLP motivation; bytes and Unicode; BPE; special tokens; vocabulary choices for Chinese and English.<br><strong>Practice:</strong> Trace BPE merges and check encode/decode round trips. Compare token counts on a small bilingual sample.<span class="starline">★ Tokenizer throughput and vocabulary-size experiments.</span></td>
-        <td><a href="https://github.com/baojian/llm-26/blob/main/slides/lecture-01-slides/index.md">Spring L01</a>; <a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_01.py">CS336 L01</a></td>
-        <td>A1 released</td>
+        <td>Brief introduction to LLMs; bytes and Unicode; BPE; special tokens; vocabulary choices for Chinese and English.
+          <div class="practice"><strong>Practice:</strong> Trace BPE merges, check encode/decode round trips, and compare Chinese and English tokenization at different vocabulary sizes.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+        <td>—</td>
       </tr>
       <tr data-start="2026-09-13">
         <td class="num">2</td>
         <td class="date">Sep 16</td>
         <td><strong>Language models, cross-entropy, and perplexity</strong><span class="lens">What does a language-model loss measure, and what can a simple baseline tell us?</span></td>
-        <td>Chain rule; bigram MLE; additive smoothing and interpolation; NLL, cross-entropy, perplexity; held-out splits and sampling.<br><strong>Practice:</strong> Build a bigram baseline and calculate its loss by hand on a tiny example. Use the same tokenizer for a direct token-level perplexity comparison.<span class="starline">★ Investigate domain shift and alternative text-normalized evaluation.</span></td>
-        <td><a href="https://github.com/baojian/llm-26/blob/main/slides/lecture-02-slides/index.md">Spring L02</a></td>
-        <td>—</td>
+        <td>Chain rule; bigram MLE; additive smoothing and interpolation; NLL, cross-entropy, perplexity; held-out splits and sampling.
+          <div class="practice"><strong>Practice:</strong> Build a bigram model, check its loss by hand, and compare domains using the same tokenizer.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+        <td>A1 released</td>
       </tr>
       <tr data-start="2026-09-20">
         <td class="num">3</td>
         <td class="date">Sep 23</td>
         <td><strong>Embeddings and PyTorch for language models</strong><span class="lens">How do discrete tokens become trainable representations?</span></td>
-        <td>Embedding lookup; distributional hypothesis; one skip-gram example; tensor shapes, batching, autograd, and output projections.<br><strong>Practice:</strong> Trace a batch through a small feedforward LM and check its gradients and parameter dimensions.<span class="starline">★ Weight sharing and parameter accounting.</span></td>
-        <td><a href="https://github.com/baojian/llm-26/blob/main/slides/lecture-03-slides/index.md">Spring L03</a>; <a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py">CS336 L02</a></td>
+        <td>Embedding lookup; distributional hypothesis; one skip-gram example; tensor shapes, batching, autograd, and output projections.
+          <div class="practice"><strong>Practice:</strong> Trace tensors and gradients through a small language model; compare parameter counts with and without weight sharing.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>Quiz 1</td>
       </tr>
       <tr data-start="2026-09-27">
         <td class="num">4</td>
         <td class="date">Sep 30</td>
         <td><strong>Neural language models and attention</strong><span class="lens">How can a model select useful context instead of compressing everything into one state?</span></td>
-        <td>Feedforward LM training loop; a brief RNN/LSTM motivation; attention scores, softmax, weighted values, and masking.<br><strong>Practice:</strong> Overfit a tiny batch, then compute and verify one attention head on a small sequence.<span class="starline">★ Gradient flow through attention; implementation checks against a reference.</span></td>
-        <td><a href="https://github.com/baojian/llm-26/blob/main/lecture-04-neural-lms/lecture-04-neural-lms.ipynb">Spring L04 notebook</a>; <a href="https://github.com/baojian/llm-26/blob/main/slides/lecture-05-slides/index.md">Spring L05</a></td>
+        <td>Feedforward LM training loop; a brief RNN/LSTM motivation; attention scores, softmax, weighted values, and masking.
+          <div class="practice"><strong>Practice:</strong> Overfit a tiny batch and verify an attention head's outputs and gradients against a reference.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>A1 due</td>
       </tr>
       <tr data-start="2026-10-04" class="holiday">
         <td class="num">5</td>
         <td class="date">Oct 7</td>
-        <td><strong>skip</strong><span class="flag">National Day</span></td>
-        <td>—</td>
+        <td><strong>No class</strong><span class="flag">National Day</span></td>
         <td>—</td>
         <td>—</td>
       </tr>
@@ -243,88 +244,99 @@
         <td class="num">6</td>
         <td class="date">Oct 14</td>
         <td><strong>The Transformer as a working model</strong><span class="lens">Which components are needed to turn attention into a trainable language model?</span></td>
-        <td>Decoder blocks; multi-head attention; residual paths; normalization; feedforward layers; positions; causal versus bidirectional masks. Introduce BERT masked prediction as an encoder contrast.<br><strong>Practice:</strong> Assemble a small decoder Transformer. Verify shapes and that future tokens cannot affect earlier causal outputs.<span class="starline">★ Compare RMSNorm, RoPE, or SwiGLU with one simpler component; choose one ablation.</span></td>
-        <td><a href="https://github.com/baojian/llm-26/blob/main/slides/lecture-05-slides/index.md">Spring L05</a>; <a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_03.pdf">CS336 L03</a>; <a href="https://github.com/stanford-cs336/assignment1-basics">CS336 A1 selections</a></td>
+        <td>Decoder blocks; multi-head attention; residual paths; normalization; feedforward layers; positions; causal versus bidirectional masks. Introduce BERT masked prediction as an encoder contrast.
+          <div class="practice"><strong>Practice:</strong> Assemble a small Transformer, check shapes and causal masking, and compare one component choice.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>Quiz 2; A2 released</td>
       </tr>
       <tr data-start="2026-10-18">
         <td class="num">7</td>
         <td class="date">Oct 21</td>
         <td><strong>Pretraining and decoding in practice</strong><span class="lens">What evidence shows that a training run is working?</span></td>
-        <td>Data batches and shifted targets; AdamW; learning-rate schedules; gradient clipping; checkpoints; train/validation curves; greedy, temperature, and top-p decoding.<br><strong>Practice:</strong> Run and resume a small training job; diagnose a supplied failure. Use the existing GPT notebook as the starting point.<span class="starline">★ Mixed precision and training stability.</span></td>
-        <td><a href="https://github.com/baojian/llm-26/blob/main/lecture-06-gpts/lecture-06-gpts.ipynb">Spring GPT training notebook</a>; <a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py">CS336 L02</a></td>
+        <td>Data batches and shifted targets; AdamW; learning-rate schedules; gradient clipping; checkpoints; train/validation curves; greedy, temperature, and top-p decoding.
+          <div class="practice"><strong>Practice:</strong> Run and resume a small GPT training job; use training curves to diagnose instability.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>Project proposal due</td>
       </tr>
       <tr data-start="2026-10-25">
         <td class="num">8</td>
         <td class="date">Oct 28</td>
         <td><strong>Data preparation and quality</strong><span class="lens">Can better data improve a fixed model under a fixed training budget?</span></td>
-        <td>Text extraction; source documentation; quality filtering; exact and near duplicates; language mixtures; contamination and split construction.<br><strong>Practice:</strong> Inspect retained and rejected documents. Compare two data policies with the same model, tokenizer, and training-token budget.<span class="starline">★ MinHash/LSH or a Chinese/English mixture experiment.</span></td>
-        <td><a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_13.py">CS336 L13</a>; <a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_14.py">CS336 L14</a>; <a href="https://github.com/stanford-cs336/assignment4-data">CS336 A4 selections</a></td>
+        <td>Text extraction; source documentation; quality filtering; exact and near duplicates; language mixtures; contamination and split construction.
+          <div class="practice"><strong>Practice:</strong> Compare filtering, deduplication, or language mixtures under a fixed model, tokenizer, and training-token budget.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>Quiz 3</td>
       </tr>
       <tr data-start="2026-11-01">
         <td class="num">9</td>
         <td class="date">Nov 4</td>
         <td><strong>Compute budgets and scaling</strong><span class="lens">How should we spend a limited GPU budget?</span></td>
-        <td>Parameter, gradient, activation, and optimizer memory; approximate FLOPs; batch and sequence length; compute versus memory bottlenecks; model-size/data tradeoffs.<br><strong>Practice:</strong> Estimate and measure one small run. Fit supplied loss-versus-compute results and explain the limits of extrapolation.<span class="starline">★ Activation checkpointing, profiling, or scaling-fit uncertainty.</span></td>
-        <td><a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py">CS336 L02</a>; <a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_09.pdf">CS336 L09</a>; <a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_11.pdf">CS336 L11</a></td>
+        <td>Parameter, gradient, activation, and optimizer memory; approximate FLOPs; batch and sequence length; compute versus memory bottlenecks; model-size/data tradeoffs.
+          <div class="practice"><strong>Practice:</strong> Profile a small run's memory and compute; fit supplied scaling results and discuss uncertainty.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>A2 due</td>
       </tr>
       <tr data-start="2026-11-08">
         <td class="num">10</td>
         <td class="date">Nov 11</td>
         <td><strong>Evaluation and experimental design</strong><span class="lens">Does a measured improvement answer the question we care about?</span></td>
-        <td>Task and metric selection; loss versus downstream performance; prompt sensitivity; uncertainty; leakage; error analysis. Use a BERT classification example and one decoder evaluation.<br><strong>Practice:</strong> Audit an evaluation set and test a claim under controlled conditions. Write an interpretation that includes a plausible confound.<span class="starline">★ Bootstrap intervals or evaluator disagreement.</span></td>
-        <td><a href="https://github.com/baojian/llm-26/blob/main/slides/lecture-07-slides/index.md">Spring L07</a>; <a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_12.py">CS336 L12</a>; <a href="https://github.com/baojian/llm-26/blob/main/lecture-07-bert-benchmarks/lecture-07-bert-benchmarks.ipynb">Spring BERT notebook</a></td>
-        <td>Project baseline due</td>
+        <td>Task and metric selection; loss versus downstream performance; prompt sensitivity; uncertainty; leakage; error analysis. Use a BERT classification example and one decoder evaluation.
+          <div class="practice"><strong>Practice:</strong> Audit an evaluation set, test a claim, and examine uncertainty or evaluator disagreement.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+        <td>—</td>
       </tr>
       <tr data-start="2026-11-15">
         <td class="num">11</td>
         <td class="date">Nov 18</td>
         <td><strong>Supervised fine-tuning</strong><span class="lens">When does task-specific training improve a pretrained model?</span></td>
-        <td>Instruction data; chat templates; response-token loss masking; optimization and forgetting; evaluate before and after adaptation.<br><strong>Practice:</strong> Fine-tune a supplied pretrained checkpoint and inspect successes and regressions. Use a separate checkpoint from the tiny model built in A2.<span class="starline">★ Parameter-efficient adaptation or data-quality ablations.</span></td>
-        <td><a href="https://github.com/baojian/llm-26/blob/main/lecture-08-sft-rm-ppo/lecture-08-sft-rm-ppo.ipynb">Spring SFT notebook</a>; <a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_15.pdf">CS336 L15</a></td>
+        <td>Instruction data; chat templates; response-token loss masking; optimization and forgetting; evaluate before and after adaptation.
+          <div class="practice"><strong>Practice:</strong> Adapt a supplied pretrained model using parameter-efficient tuning or a data-quality comparison; inspect improvements and regressions.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>Quiz 4; A3 released</td>
       </tr>
       <tr data-start="2026-11-22">
         <td class="num">12</td>
         <td class="date">Nov 25</td>
         <td><strong>Preferences, rewards, and alignment</strong><span class="lens">What happens when the optimization target differs from what we actually want?</span></td>
-        <td>Preference pairs and reward models; DPO intuition and loss; RLHF/RLVR overview; verifiable rewards; reward hacking and safety evaluation.<br><strong>Practice:</strong> Inspect a small preference dataset, compute a DPO loss, and analyze a reward-hacking example. Full RL training is an extension.<span class="starline">★ A bounded GRPO experiment with a verifiable reward; PPO derivations optional.</span></td>
-        <td><a href="https://github.com/baojian/llm-26/blob/main/lecture-08-sft-rm-ppo/lecture-08-sft-rm-ppo.ipynb">Spring post-training notebook</a>; <a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_16.pdf">CS336 L16</a>; <a href="https://github.com/stanford-cs336/assignment5-alignment">CS336 A5 selections</a></td>
+        <td>Preference pairs and reward models; DPO intuition and loss; RLHF/RLVR overview; verifiable rewards; reward hacking and safety evaluation.
+          <div class="practice"><strong>Practice:</strong> Compute a DPO loss and inspect a preference-learning or verifiable-reward example for reward hacking.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>—</td>
       </tr>
       <tr data-start="2026-11-29">
         <td class="num">13</td>
         <td class="date">Dec 2</td>
         <td><strong>Retrieval and retrieval-augmented generation</strong><span class="lens">When should a system retrieve evidence, and when should it abstain?</span></td>
-        <td>TF-IDF/BM25; dense retrieval; reranking; chunking; context construction; retrieval recall, answer support, and unanswerable questions.<br><strong>Practice:</strong> Evaluate a course-notes RAG system. Separate retrieval failures from generation failures and compare with a simple baseline.<span class="starline">★ Hybrid retrieval or a controlled chunking/reranking study.</span></td>
-        <td><a href="https://github.com/baojian/llm-26/blob/main/slides/lecture-10-slides/index.md">Spring L10</a>; <a href="https://github.com/baojian/llm-26/blob/main/lecture-10-rag/lecture-10-rag.ipynb">Spring RAG notebook</a></td>
+        <td>TF-IDF/BM25; dense retrieval; reranking; chunking; context construction; retrieval recall, answer support, and unanswerable questions.
+          <div class="practice"><strong>Practice:</strong> Compare retrieval or chunking choices in a course-notes RAG system; distinguish retrieval failures from generation failures.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>Project progress update due</td>
       </tr>
       <tr data-start="2026-12-06">
         <td class="num">14</td>
         <td class="date">Dec 9</td>
         <td><strong>Efficient inference</strong><span class="lens">Which speed improvement matters for a particular workload?</span></td>
-        <td>Prefill and decoding; KV caching; batching; latency versus throughput; quantization tradeoffs; FlashAttention intuition.<br><strong>Practice:</strong> Measure a cache or batching intervention under a stated workload. Check output correctness and report memory as well as speed.<span class="starline">★ Speculative decoding or a profiler-based investigation; no custom kernel requirement.</span></td>
-        <td><a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_10.py">CS336 L10</a>; <a href="https://github.com/stanford-cs336/assignment2-systems">CS336 A2 profiling selections</a></td>
+        <td>Prefill and decoding; KV caching; batching; latency versus throughput; quantization tradeoffs; FlashAttention intuition.
+          <div class="practice"><strong>Practice:</strong> Profile a cache or batching change; compare speed and memory while checking output correctness.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>A3 due</td>
       </tr>
       <tr data-start="2026-12-13">
         <td class="num">15</td>
         <td class="date">Dec 16</td>
         <td><strong>Diffusion language models</strong><span class="lens">What changes when generation can update multiple token positions?</span></td>
-        <td>Review BERT masked prediction; corruption and iterative unmasking; compare sampling order, conditioning, and compute with autoregression. State assumptions behind the connections.<br><strong>Practice:</strong> Inspect a supplied masked-generation demo and design a comparison with a stated quality or latency budget.<span class="starline">★ MDLM objective/ELBO, uniform-state corruption, or a sampler experiment; continuous-time theory is optional reading.</span></td>
-        <td><a href="https://arxiv.org/abs/2406.07524">MDLM</a>; <a href="https://kuleshov-group.github.io/blog/blog/2026/how-to-build-a-diffusion-language-model/">Diffusion LM tutorial</a></td>
+        <td>Review BERT masked prediction; corruption and iterative unmasking; compare sampling order, conditioning, and compute with autoregression. State assumptions behind the connections.
+          <div class="practice"><strong>Practice:</strong> Compare masked-generation samplers in a supplied demo, measuring quality and latency.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>Quiz 5</td>
       </tr>
       <tr data-start="2026-12-20">
         <td class="num">16</td>
         <td class="date">Dec 23</td>
         <td><strong>Agents and research synthesis</strong><span class="lens">When does a tool-use loop improve an outcome enough to justify its cost?</span></td>
-        <td>Bounded tool use; stopping conditions; trace inspection; prompt injection and tool permissions; compare with direct generation. Revisit the course through project findings.<br><strong>Practice:</strong> Evaluate one small tool-use task, then use the workshop to check a project claim and plan the final report.<span class="starline">★ A targeted agent ablation or one multimodal extension.</span></td>
-        <td><a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_12.py">CS336 L12</a>; <a href="https://rdi.berkeley.edu/llm-agents/">Berkeley LLM Agents, selected material</a></td>
+        <td>Bounded tool use; stopping conditions; trace inspection; prompt injection and tool permissions; compare with direct generation. Revisit the course through project findings.
+          <div class="practice"><strong>Practice:</strong> Compare an agent with direct generation, inspect its tool-use trace, and refine one project claim.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>—</td>
       </tr>
       <tr data-start="2026-12-27">
@@ -332,88 +344,83 @@
         <td class="date">Dec 30</td>
         <td><strong>Exam week</strong></td>
         <td>No lecture. Submit the individual project.</td>
-        <td>—</td>
         <td>Final report, code, and experiment record due</td>
       </tr>
     </tbody></table></div>
-  <p>Weeks 12 and 16 retain teaching and practice time. Individual questions can be discussed in office hours; project feedback does not require a presentation session.</p>
+    <p>There are 15 teaching sessions across 16 calendar weeks, with no class in Week 5. References will be added for each week and will remain permanently available on this course page. Weeks 12 and 16 retain teaching and practice time. Individual questions can be discussed in office hours; project feedback does not require a presentation session.</p>
 </section>
 <section id="assessment">
   <h2>Assessment</h2>
-  <p>Practical assignments count for 45%, quizzes 10%, and the individual project 45%. Code volume and model size earn no credit by themselves.</p>
-  <div class="weights" aria-hidden="true"><span class="w-quiz" style="width:10%"></span><span class="w-asg" style="width:45%"></span><span class="w-proj" style="width:45%"></span></div>
-  <div class="legend"><span>Quizzes 10%</span><span>Practical assignments 45%</span><span>Individual project 45%</span></div>
-  <h3>Quizzes</h3>
-  <p>Quizzes assess the common core already taught, using brief explanations, calculations, and interpretation of unfamiliar examples. They are closed-book and closed-assistant. All five quizzes count, each contributing 2% of the course grade. Advanced extensions are not tested.</p>
-  <h3>Three practical assignments</h3>
-  <ul>
-    <li><strong>A1 · Text and probability (15%).</strong> Released Week 1, due Week 4. A small tokenizer exercise, a bigram baseline, and held-out evaluation. Explain one representation or smoothing choice.</li>
-    <li><strong>A2 · Build and investigate a small LM (15%).</strong> Released Week 6, due Week 9. Complete selected components in a supplied Transformer framework, train a tiny model, and compare one data or training intervention with a baseline. Submit correctness checks, training curves, and an interpretation.</li>
-    <li><strong>A3 · Adapt and evaluate (15%).</strong> Released Week 11, due Week 14. SFT on a supplied pretrained checkpoint with correct response-token masking; compare with the unadapted model on a held-out task. Inspect both improvements and regressions. DPO or GRPO is an extension.</li>
-  </ul>
-  <p>Assignments establish common skills and can seed the individual project. Reuse the code and data preparation, but identify the additional question and experiments credited to the project. Staff reference code/checkpoints are planned so an early implementation failure does not block later work. The tiny model in A2 teaches training mechanics; the supplied pretrained model supports meaningful adaptation experiments.</p>
-</section>
-<section id="project">
-  <h2>Individual course project</h2>
-  <p class="lead">One project per student, centered on an important, interesting, and answerable question. Ambitious AI-assisted work is welcome. A strong project develops evidence through successive experiments and explains what changed in the student's understanding.</p>
-  <h3>Choosing a question</h3>
-  <ol>
-    <li><strong>Importance:</strong> who needs the answer, and which decision could it change?</li>
-    <li><strong>Uncertainty:</strong> what do prior results leave unclear, and what competing explanations are plausible?</li>
-    <li><strong>Evidence:</strong> which baseline, dataset, metric, and controlled comparison can distinguish those explanations?</li>
-    <li><strong>Feasibility:</strong> what can be learned with the available compute, data, and semester time?</li>
-  </ol>
-  <p>Projects may investigate data, tokenization, training, evaluation, adaptation, retrieval, inference, diffusion, or agents. Building a system, reproducing a result, and analyzing a failure are all valid approaches. Novelty is not required for the undergraduate core. A useful negative result can receive full credit when the experiment and analysis are sound.</p>
-  <p>Example questions: Does filtering improve a fixed model under a fixed token budget? When should a course-notes RAG system abstain? How does a decoding policy change accuracy and cost? These are starting points to narrow after reading related work, not claims of novelty.</p>
-  <h3>Written checkpoints</h3>
-  <ol>
-    <li><strong>Week 7 · Proposal (one page).</strong> Motivation, relevant prior work, an uncertain question, baseline, evaluation plan, and approximate compute budget. Later-topic projects may use a supplied baseline before those lectures occur.</li>
-    <li><strong>Week 10 · Baseline and initial results (up to two pages).</strong> A working baseline, inspected evaluation examples, initial measurements, and one issue to resolve. Staff provide written feedback.</li>
-    <li><strong>Week 13 · Progress update (up to two pages).</strong> One controlled comparison, a finding or failure, a competing explanation, and the next experiment. Incorporate feedback in the final report.</li>
-    <li><strong>Week 17 · Final submission.</strong> At most four pages of main report, references and appendix unrestricted, plus code and a concise experiment record. Use the <a href="https://www.overleaf.com/latex/templates/association-for-computational-linguistics-acl-conference/jvxskxpnznfj">ACL template</a>. Checkpoint text can be revised into the report.</li>
-  </ol>
-  <p>No slides, posters, oral defenses, or group deliverables are required. Peer discussion is welcome; each student submits and is assessed on their own work.</p>
-  <h3>Experiment record and proposed rubric</h3>
-  <p>Record the configurations, data versions/splits, metrics, and artifact locations needed to trace the main results. Include a brief account of material AI assistance and key decisions: what was proposed, how it was checked, what was adopted or revised, and why. A complete prompt transcript is not required.</p>
-  <div class="table-wrap"><table><thead><tr><th scope="col">Criterion</th><th scope="col">Share of project grade</th><th scope="col">Evidence</th></tr></thead><tbody>
-    <tr><td>Question and motivation</td><td>20%</td><td>Significance, prior work, and a clear uncertainty</td></tr>
-    <tr><td>Experimental design</td><td>25%</td><td>Baselines, controls, metrics, and appropriate comparisons</td></tr>
-    <tr><td>Evidence and reproducibility</td><td>25%</td><td>Correct implementation, traceable runs, and inspected results</td></tr>
-    <tr><td>Interpretation and iteration</td><td>20%</td><td>Failure analysis, alternative explanations, limitations, and follow-up experiments</td></tr>
-    <tr><td>Written communication and checkpoints</td><td>10%</td><td>Clear report, timely progress records, and transparent AI use</td></tr>
-  </tbody></table></div>
-  <p>Master's students include one substantial extension and a deeper comparison with prior work. The extension can be theoretical or empirical; it need not concern diffusion. The same rubric applies, with the extension evaluated within the relevant criteria.</p>
+  <div class="weights" aria-hidden="true"><span class="w-quiz"></span><span class="w-asg"></span><span class="w-proj"></span></div>
+  <div class="legend"><span>Quizzes 10%</span><span>Assignments 45%</span><span>Individual project 45%</span></div>
+  <div class="assessment-cards">
+    <div class="card">
+      <p><strong>Quizzes:</strong> Quizzes assess the common core already taught, using brief explanations, calculations, and interpretation of unfamiliar examples. They are closed-book, and AI tools are not allowed. All five quizzes count, each contributing 2% of the course grade. Advanced extensions are not tested.</p>
+    </div>
+    <div class="card">
+      <p><strong>Assignments:</strong> Assignments establish common skills and can seed the individual project. Reuse the code and data preparation, but identify the additional question and experiments credited to the project. Staff reference code/checkpoints are planned so an early implementation failure does not block later work. The tiny model in A2 teaches training mechanics; the supplied pretrained model supports meaningful adaptation experiments. The three practical assignments are:</p>
+      <ul>
+        <li>A1 · Text and probability (15%). Released Week 2, due Week 4. A small tokenizer exercise, a bigram baseline, and held-out evaluation. Explain one representation or smoothing choice.</li>
+        <li>A2 · Build a small LM (15%). Released Week 6, due Week 9. Complete selected components in a supplied Transformer framework, train a tiny model, and compare one data or training intervention with a baseline. Submit correctness checks, training curves, and an interpretation.</li>
+        <li>A3 · Adapt and evaluate (15%). Released Week 11, due Week 14. SFT on a supplied pretrained checkpoint with correct response-token masking; compare with the unadapted model on a held-out task. Inspect both improvements and regressions. DPO or GRPO is an extension.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p id="project"><strong>Individual project:</strong> One project per student, centered on an important, interesting, and answerable question. Ambitious AI-assisted work is welcome. A strong project develops evidence through successive experiments and explains what changed in the student's understanding.</p>
+      <h3>Choosing a question</h3>
+      <ol>
+        <li><span>Importance:</span> who needs the answer, and which decision could it change?</li>
+        <li><span>Uncertainty:</span> what do prior results leave unclear, and what competing explanations are plausible?</li>
+        <li><span>Evidence:</span> which baseline, dataset, metric, and controlled comparison can distinguish those explanations?</li>
+        <li><span>Feasibility:</span> what can be learned with the available compute, data, and semester time?</li>
+      </ol>
+      <p>Projects may investigate data, tokenization, training, evaluation, adaptation, retrieval, inference, diffusion, or agents. Building a system, reproducing a result, and analyzing a failure are all valid approaches. Novelty is not required for the undergraduate core. A useful negative result can receive full credit when the experiment and analysis are sound.</p>
+      <p>Example questions: Does filtering improve a fixed model under a fixed token budget? When should a course-notes RAG system abstain? How does a decoding policy change accuracy and cost? These are starting points to narrow after reading related work, not claims of novelty.</p>
+      <h3>Written checkpoints</h3>
+      <ol>
+        <li><span>Week 7 · Proposal (one page).</span> Motivation, relevant prior work, an uncertain question, baseline, evaluation plan, and approximate compute budget. Later-topic projects may use a supplied baseline before those lectures occur.</li>
+        <li><span>Week 13 · Progress update (up to two pages).</span> A working baseline, inspected evaluation examples, initial measurements, and one controlled comparison. Discuss a finding or failure, a competing explanation, and the next experiment. Staff provide written feedback; incorporate it in the final report.</li>
+        <li><span>Week 17 · Final submission.</span> The main report is limited to four pages; references and appendices have no page limit. Include code and a concise experiment record. Use the <a href="https://www.overleaf.com/latex/templates/association-for-computational-linguistics-acl-conference/jvxskxpnznfj" target="_blank" rel="noopener noreferrer">ACL template</a>. Checkpoint text can be revised into the report.</li>
+      </ol>
+      <p>No slides, posters, oral defenses, or group deliverables are required. Peer discussion is welcome; each student submits and is assessed on their own work.</p>
+      <h3>Experiment record and proposed rubric</h3>
+      <p>Record the configurations, data versions/splits, metrics, and artifact locations needed to trace the main results. Include a brief account of material AI assistance and key decisions: what was proposed, how it was checked, what was adopted or revised, and why. A complete prompt transcript is not required.</p>
+      <div class="table-wrap"><table><thead><tr><th scope="col">Criterion</th><th scope="col">Share of project grade</th><th scope="col">Evidence</th></tr></thead><tbody>
+        <tr><td>Question and motivation</td><td>20%</td><td>Significance, prior work, and a clear uncertainty</td></tr>
+        <tr><td>Experimental design</td><td>25%</td><td>Baselines, controls, metrics, and appropriate comparisons</td></tr>
+        <tr><td>Evidence and reproducibility</td><td>25%</td><td>Correct implementation, traceable runs, and inspected results</td></tr>
+        <tr><td>Interpretation and iteration</td><td>20%</td><td>Failure analysis, alternative explanations, limitations, and follow-up experiments</td></tr>
+        <tr><td>Written communication and checkpoints</td><td>10%</td><td>Clear report, timely progress records, and transparent AI use</td></tr>
+      </tbody></table></div>
+    </div>
+  </div>
 </section>
 <section id="policies">
   <h2>Policies</h2>
-  <h3>AI assistants</h3>
-  <p>AI assistants are allowed for coding, engineering, debugging, conceptual explanations, literature exploration, and experimental iteration in practical assignments and projects. Students must verify sources, inspect data and outputs, validate key computations, and take responsibility for submitted conclusions. Disclose material AI use and distinguish measured results from proposed or generated examples.</p>
-  <p>Quizzes and explicitly designated concept checks are completed without AI. Other guided practical work may use AI. The course's policy applies to our adapted exercises; do not assume the original CS336 assignment policy is identical.</p>
-  <h3>Academic integrity and submission</h3>
-  <p>Follow the <a href="https://baojian.github.io/llm-26/assets/Fudan-academic-integrity.pdf">course academic-integrity policy</a>. Attribute reused code, data, and ideas. Fabricated results and unattributed copying are misconduct. Submit work through <a href="https://elearning.fudan.edu.cn/">eLearning</a> by 23:59 China Standard Time on the listed date.</p>
+  <p><strong>AI assistants:</strong> AI assistants are allowed for coding, debugging, and literature exploration in practical assignments and projects. Students must verify sources, inspect data and outputs, validate key computations, and take responsibility for submitted conclusions. Disclose material AI use and distinguish measured results from proposed or generated examples. Quizzes and explicitly designated concept checks are completed without AI. Other guided practical work may use AI.</p>
+  <p><strong>Academic integrity and submission:</strong> Follow the <a href="https://baojian.github.io/llm-26/assets/Fudan-academic-integrity.pdf" target="_blank" rel="noopener noreferrer">course academic-integrity policy</a>. Attribute reused code, data, and ideas. Fabricated results and unattributed copying are misconduct. Submit work through <a href="https://elearning.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">eLearning</a> by 23:59 on the listed date.</p>
 </section>
 <section id="resources">
-  <h2>Resources</h2>
+  <h2>References and computing resources</h2>
+  <p><strong>References:</strong></p>
   <ul>
-    <li><a href="https://baojian.github.io/llm-26/">Spring 2026 Fudan course</a>: reusable lecture explanations and notebooks.</li>
-    <li><a href="https://cs336.stanford.edu/">Stanford CS336, Spring 2026</a>: selected training, resource-accounting, data, evaluation, inference, and post-training material. Our practicals will use local, reduced-scale adaptations.</li>
-    <li><a href="https://web.stanford.edu/~jurafsky/slp3/">Speech and Language Processing, Jurafsky and Martin</a>: selected chapters matched to each foundational topic.</li>
-    <li><a href="https://niutrans.github.io/NLPBook/">Natural Language Processing: Neural Networks and Large Language Models</a>: supplementary Chinese-language reading.</li>
-    <li><a href="https://arxiv.org/abs/2406.07524">Simple and Effective Masked Diffusion Language Models</a>: Week 15 core mechanism, with derivations reserved for extensions.</li>
-    <li><a href="https://diffusion.csail.mit.edu/">MIT Flow Matching and Diffusion Models</a>: optional advanced study.</li>
+    <li><a href="https://baojian.github.io/llm-26/" target="_blank" rel="noopener noreferrer">Spring 2026 Fudan course</a>: reusable lecture explanations and notebooks.</li>
+    <li><a href="https://cs336.stanford.edu/" target="_blank" rel="noopener noreferrer">Stanford CS336, Spring 2026</a>: our practicals will use local, reduced-scale adaptations.</li>
+    <li><a href="https://web.stanford.edu/~jurafsky/slp3/" target="_blank" rel="noopener noreferrer">Speech and Language Processing, Jurafsky and Martin</a>: selected chapters matched to each foundational topic.</li>
+    <li><a href="https://diffusion.csail.mit.edu/" target="_blank" rel="noopener noreferrer">MIT Flow Matching and Diffusion Models</a>: optional advanced study.</li>
   </ul>
-  <h3>Compute and reproducibility</h3>
-  <p>Register for <a href="https://cfff.fudan.edu.cn/home">Fudan CFFF</a>; GPU jobs use <a href="http://qz.cfff.fudan.edu.cn/">Qizhi</a>. Per-student GPU and AI-tool budgets will be specified with the project handout. Core exercises are planned for a laptop or one GPU, with supplied traces/checkpoints for costly experiments. Exact model sizes and run budgets will be set after staff pilots.</p>
-  <p>Keep personal model weights, data, logs, and generated results in ignored storage, not in the course repository. Course-provided materials will identify their source and required environment. External source links are references; the revised fall lecture decks and handouts are still to be prepared.</p>
+  <p><strong>Compute and GitHub:</strong> Register for <a href="https://cfff.fudan.edu.cn/home" target="_blank" rel="noopener noreferrer">Fudan CFFF</a>; GPU jobs use <a href="http://qz.cfff.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">Qizhi</a>. Per-student GPU and AI-tool budgets will be specified with the project handout. Core exercises are planned for a laptop or one GPU, with supplied checkpoints for costly experiments. Exact model sizes and run budgets will be set after staff pilots. Keep personal model weights, data, logs, and generated results in ignored storage, not in the course repository. Course-provided materials will identify their source and required environment.</p>
 </section>
 </main>
-<footer><div class="wrap"><p>CS40008.01 · NLP and LLMs · Fall 2026 · Fudan University. Maintained by <a href="https://github.com/baojian">Baojian Zhou</a>. <a href="docs/course-revision.md">Review the proposed revision</a>.</p></div></footer>
+<footer><div class="wrap"><p>CS40008.01 · LLMs · Fall 2026 · Fudan University. Maintained by <a href="https://github.com/baojian" target="_blank" rel="noopener noreferrer">Baojian Zhou</a>, Claude Code and Codex.</p></div></footer>
 <script src="assets/translations.js"></script>
 <script>
   (function () {
     // Preserve the original text and markup so switching languages is reversible.
     var translations = window.courseTranslations || {};
     var englishTitle = document.title;
+    var description = document.querySelector('meta[name="description"]');
+    var englishDescription = description.content;
     var textNodes = [];
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     while (walker.nextNode()) {
@@ -446,6 +453,7 @@
       var chinese = language === 'zh';
       document.documentElement.lang = chinese ? 'zh-CN' : 'en';
       document.title = chinese ? (translations[englishTitle] || englishTitle) : englishTitle;
+      description.content = chinese ? (translations[englishDescription] || englishDescription) : englishDescription;
       textNodes.forEach(function (entry) { entry.node.nodeValue = entry[language]; });
       document.querySelectorAll('.lang-toggle button').forEach(function (button) {
         button.setAttribute('aria-pressed', String(button.dataset.lang === language));
@@ -453,7 +461,7 @@
       if (currentWeek !== null) {
         chip.textContent = currentWeek === '17'
           ? (chinese ? '期末提交周' : 'Final submission week')
-          : (chinese ? '本周：第 ' + currentWeek + ' 周' : 'This week: ' + currentWeek) + (isHoliday ? ' · skip' : '');
+          : (chinese ? '本周：第 ' + currentWeek + ' 周' : 'This week: ' + currentWeek) + (isHoliday ? (chinese ? ' · 停课' : ' · no class') : '');
       }
       try { localStorage.setItem('course-language', language); } catch (error) { /* Storage may be unavailable for local files. */ }
     }

@@ -123,8 +123,8 @@ evaluation, and feasibility. Originality is not a prerequisite for undergraduate
 success; careful replication, useful failure analysis, or a sound negative
 result can earn full credit.
 
-Written milestones are Week 7 proposal, Week 10 baseline, Week 13 progress
-update, and Week 17 final report. These replace the former posters, oral defenses,
+Written milestones are Week 7 proposal, Week 13 progress update (including a
+baseline and initial results), and Week 17 final report. These replace the former posters, oral defenses,
 pod comparison pages, and mandatory reviewer roles. Students can reuse and revise
 checkpoint text in the final report. Peer discussion and individual office-hour
 consultations remain available.
@@ -151,12 +151,11 @@ than receiving duplicate credit for the same submission.
 
 | Submission | Released | Due |
 | --- | --- | --- |
-| A1: Text and probability | Week 1 | Week 4, Sep 30 |
+| A1: Text and probability | Week 2 | Week 4, Sep 30 |
 | A2: Build and investigate a small LM | Week 6 | Week 9, Nov 4 |
 | A3: Adapt and evaluate | Week 11 | Week 14, Dec 9 |
 | Project proposal | Project introduced Week 1 | Week 7, Oct 21 |
-| Project baseline | Follows proposal feedback | Week 10, Nov 11 |
-| Project progress update | Follows baseline feedback | Week 13, Dec 2 |
+| Project progress update, including baseline and initial results | Follows proposal feedback | Week 13, Dec 2 |
 | Final report, code, experiment record | Reuses the written checkpoints | Week 17, Dec 30 |
 
 Quiz weeks are 3, 6, 8, 11, and 15; the lowest score is dropped. No practical
@@ -178,7 +177,7 @@ mandatory 25% graduate add-on to every assignment is removed.
 2. Pilot the practicals and set model sizes, datasets, GPU-hour budgets, and
    comparable AI-tool access. Scope is based on attainable evidence rather than
    an assumed universal AI productivity multiplier.
-3. Confirm the staff capacity for written feedback at the three checkpoints.
+3. Confirm the staff capacity for written feedback on the proposal and progress update.
    This is the main support requirement of the individual-project format.
 4. The registered course allocation is 48 academic periods. This draft schedules
    15 meetings of three periods, or 45 periods. Any administrative arrangement
