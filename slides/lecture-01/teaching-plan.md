@@ -2,172 +2,171 @@
 
 September 9, 2026 · CS40008.01 · Three 45-minute teaching periods
 
-## Central question
+## Central question and learning objectives
 
 How does an LLM application turn our text into something a model can predict?
 
-By the end, students should be able to call a local model, distinguish code
-points from bytes and tokens, trace BPE training and encoding, and compare
-tokenizers on held-out text without confusing compression with model quality.
+Students should be able to inspect a model response against a concrete check,
+explain what a preprocessing rule preserves or discards, distinguish code points
+from bytes and tokens, trace BPE training and fixed-rank encoding, and compare
+vocabularies on held-out text without equating compression with model quality.
 
-## Classroom plan
+The deck has **83 slides**, including five repeated outlines and two reading
+pages. **Development of NLP & LLMs has exactly ten content pages**, excluding
+its outline. Keep the shared Reveal.js template, fonts, margins, and controls.
+Minimum edit distance is outside this lecture and both companion notebooks.
 
-| Period | Minutes within the period | Topic and activity |
+## Teaching sequence
+
+| Period | Minutes | Slides | Content and activity |
+| --- | --- | --- | --- |
+| 1 | 0–10 | 1–12 | Instructor introduction, four topics, course progression, assessment, materials, learning strategy, apps versus models |
+| 1 | 10–25 | 13–23 | Prepared Qwen call; five application groups; E01 (5 min), E02 (3 min); connect examples to today's question |
+| 1 | 25–45 | 24–34 | Development outline and ten history pages; Turing test, changing learning methods, access and evaluation |
+| 2 | 0–12 | 35–43 | Sources, preprocessing decisions, regex patterns, P01 (2 min), lossless partitioning |
+| 2 | 12–25 | 44–49 | Code points, UTF-8, live counter, E03 (3 min), normalization, decoding |
+| 2 | 25–45 | 50–63 | Tokenizer interface, next-token prediction, P02 (2 min), subwords, two BPE merges, E04 (4 min), vocabulary |
+| 3 | 0–17 | 64–71 | Fixed-rank encoding, E05 (5 min), larger Spring corpus, boundaries, special tokens, algorithm families |
+| 3 | 17–37 | 72–78 | Measurement and compute costs; E06 (8 min); compare held-out languages and interpret results |
+| 3 | 37–45 | 79–83 | Tokenization probes, extended practice, exit questions, readings |
+
+Breaks fall between periods and are outside the 135 teaching minutes. The six
+E exercises total 28 minutes; P01 and P02 add four minutes. The authorship poll
+and quick prediction prompts are short discussions within the indicated blocks.
+These are **ungraded practices**. The Fall course website defines assessment:
+quizzes 10%, assignments 45%, individual project 45%; A1 is released in Week 2.
+
+Use the speaker notes for timing, expected responses, and common mistakes.
+If a live model call is slow, use the checked response criteria and continue.
+Do not spend the timed gallery installing software or waiting for optional
+image generation. The second vision image, second recorded clip, algorithm
+comparison, and extended-practice map can be quick signposts when time is tight.
+
+## Course overview and notebook correspondence
+
+The classroom notebook is [lecture-01-exercise.ipynb](lecture-01-exercise.ipynb).
+Its four main sections match the deck. Its opening course map contains the
+same learning sequence, assessment, instructor details, and local workflow.
+The full four-book/seven-course Spring resource inventory is in the notebook;
+the projected resource slide highlights three entry points.
+
+| Slide example | Notebook location | Evidence to discuss |
 | --- | --- | --- |
-| 1 | 0–25 | Course introduction (10 min), language and multimodal example gallery (7 min), E01: sentiment (5 min), E02: translation (3 min) |
-| 1 | 25–45 | Ten development slides: language difficulties and history (13 min); next-token prediction, building a model, and resource choices (7 min) |
-| 2 | 0–20 | Text preprocessing, Unicode, UTF-8, E03: count and round-trip |
-| 2 | 20–45 | Tokenization choices, BPE training, E04: overlapping pairs and merge counts |
-| 3 | 0–20 | Fixed merge order, E05: encode unseen text, boundaries and special tokens |
-| 3 | 20–40 | Vocabulary tradeoffs, E06: held-out English and Chinese comparison |
-| 3 | 40–45 | Exit questions and readings |
+| Example 01: Qwen | One prompt, one response | Shanghai; inspect actual response, token counts, and stop reason |
+| Task 1: sentiment | E01; `sentiment` cell | Positive, positive, negative; the two uses of “light” have different contexts |
+| Task 2: translation | E02; `original-translation-examples` | A's quantities and date; B's definition and prediction |
+| Task 3: authorship | Article generation quiz | Both attributed to GPT-3 by the Spring source; fluency alone cannot verify authorship or facts |
+| Task 4: images | Image understanding; `vision` | Rainfall chart versus Big Data illustration; match the selected image to its question |
+| Task 5: images/video | Optional diffusion and recorded-video cells | Prompt adherence and visible evidence; clips are locally hosted |
 
-Breaks fall between periods and are outside these 135 teaching minutes. Repeat
-the four-topic outline at each section transition, with only the current topic
-in bold black. Repeat the tokenization outline after the second break.
+The slide's **Open the classroom notebook** link uses the shared launcher,
+so it works with the local course server without a fixed Jupyter port or
+workspace identifier. The toolbar opens the same notebook. Both retain the
+student's personal copy. To receive a revised handout, rename an old personal
+notebook and reopen the launcher; preserve the renamed copy for earlier work.
 
-Open with the title, **About me**, and the first four-topic outline, in that
-order. Continue with **NLP, LLMs, and this course**, then the course logic,
-topic coverage, optional resources, coursework, course materials, and learning
-strategy. Treat the four added topic/resource/logistics pages as quick
-orientation within the ten-minute introduction; students can explore links and
-complete setup after class. Follow with the app survey, **App, model, tokenizer**,
-and the short Qwen introduction. Then show the five-task overview and its groups
-in order: sentiment (E01), translation (E02), article generation, image understanding,
-and text-to-image/video generation. Place **From examples to today’s goals** at
-the end of Course Overview, immediately before the development outline, to
-connect observed model behavior to the technical lesson.
+For E02, use A as the three-minute core and B as a follow-on comparison.
+The checked quantities are **249 languages**, **over 200 million daily users**,
+**April 2016**, **over 500 million total users**, and **over 100 billion words
+per day**. Keep the date, units, and qualifiers. These are historical source
+sentences for translation, not a current fact sheet. Both complete passages
+and both complete article excerpts remain in the notebook; projected excerpts
+are shortened for reading at classroom distance.
 
-Prepare one short Qwen response before class for the model introduction before
-the task overview. Discuss context within E01 through the contrasting uses of
-“light” in the camera reviews. E02 places both translation examples side by side
-on one slide. Allow one minute to predict the key English quantities, one to
-translate the complete Google Translate passage (A), and one to
-compare: **249**, **over 200 million daily users**, **April 2016**, **over
-500 million total users**, and **over 100 billion words per day**. Preserve the
-dates and qualifiers; assess translation fidelity, not whether these historical
-statistics are current. The AI-definition excerpt (B) is a same-slide follow-on
-if time permits: compare its definition with its prediction about occupations.
-An ellipsis marks omitted text; both complete passages remain in the notebook.
-Show the two article excerpts side by side with the authorship poll,
-then reveal their attribution on the same slide. Continue with the two bundled vision images.
-Play about ten seconds of each recorded video manually. Further live
-translation, article, vision, and image generation are optional; do not wait for
-model downloads or long inference during the seven-minute gallery.
+Task 4 follows the article quiz in the notebook and uses the bundled rainfall
+and Big Data images with `qwen3-vl:2b`. Its Thinking variant needs a larger
+generation budget; prepare a response before class and compare its claims with
+the chart rather than waiting for inference during the gallery. Preserve the
+notebook's model-specific settings and five-minute timeout. Live vision,
+diffusion, thinking, log probabilities, and extra generation are optional.
+The default offline run exercises the complete preprocessing and BPE material.
 
-Development of NLP & LLMs has ten content slides, following its outline:
-ambiguity; messy text and reasoning; Weaver and Turing; the Turing test;
-rules to learned representations; Transformers and pretraining; the 2019–2024
-LLM timeline; next-token prediction; the model-building pipeline; and resource
-budgets. The historical examples motivate the final three slides and the next
-section's question of how to represent text.
+## Ten history pages
 
-The six timed exercises total 28 minutes (5, 3, 3, 4, 5, and 8 minutes).
-Students predict first, run the matching notebook section, then explain one
-observation. The gallery's five task groups are separate from the timed exercise
-IDs E01–E06; image and video generation share Task 5. The authorship poll and
-optional model demonstrations add no timed exercises. These are ungraded
-classroom practice. Use the course website for assessment rules and dates;
-A1 is released in Week 2.
+| Page | Slide ID | Date / idea | Teaching question |
+| --- | --- | --- | --- |
+| 1 | `early-nlp` | 1949: Weaver and translation | Why does “bank” need context? |
+| 2 | `turing-test` | 1950: anonymous text interaction | What can the judge observe? |
+| 3 | `turing-evidence` | 1950: imitation and accuracy | Is a convincing reply a correct calculation? |
+| 4 | `rules-and-statistics` | 1960s–1990s: rules and corpora | What supplies a system's behavior? |
+| 5 | `development` | 2003–2014: learned representations | What can word vectors and sequence models share? |
+| 6 | `milestones` | 2014–2017: attention and Transformer | How can a decoder consult relevant positions? |
+| 7 | `pretraining` | 2018: BERT and GPT | What objective can text itself supply? |
+| 8 | `in-context-learning` | 2020: GPT-3 | What changes when demonstrations enter the prompt? |
+| 9 | `instruction-tuning` | 2022: instruction following | How do demonstrations and preferences change behavior? |
+| 10 | `llm-landscape` | 2023–2025: access, tools, reasoning | What can we run, inspect, and independently check? |
 
-## Source map
+The two Turing illustrations are explicitly identified as generated conceptual
+scenes. The first depicts the simplified human-versus-machine adaptation;
+Turing's original game begins with a man, a woman, and an interrogator. The
+paper's arithmetic reply is 105,621; the correct sum is 105,721. The dates mark
+selected papers, and approaches continue to coexist. Attention predates the
+Transformer. BERT's preprint is 2018; publication is 2019. ReAct's preprint is
+2022; publication is 2023. This is a history through 2025, not a current ranking.
 
-- [Jurafsky and Martin, Chapter 1](https://web.stanford.edu/~jurafsky/slp3/1.pdf),
-  introduction and Section 1.1 (August 19, 2026 draft): the NLP field and LLMs.
-  The course progression and coursework follow the [Fall course page](../../index.html).
-- [Fudan Spring Lecture 01](https://baojian.github.io/llm-26/slides/lecture-01-slides/):
-  instructor introduction, four-part outline, and the motivation for subwords.
-  The local source is the sibling checkout's `llm-26/slides/lecture-01-slides/index.md`.
-  Original slides [#5–11](https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/5)
-  supply the Qwen prompt, camera reviews, both complete translation passages,
-  both complete article excerpts and their GPT-3 attribution, vision images,
-  Stable Diffusion prompt/settings, and two recorded video examples. Complete
-  text examples are retained in the notebook where slides use excerpts.
-- Original overview pages
-  [#15–20](https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/15)
-  use zero-based slide indices: topic coverage; additional books, courses, and
-  paper communities; coursework; course materials; effective learning; and
-  the development outline. The Fall deck adds `course-topics` and `beyond-course`
-  after `course-logic`, and `course-materials` and `learning-strategy` after
-  `course-work`. Existing coursework and the post-gallery development outline
-  cover the other two source pages. Fall assessment, individual written
-  projects, repository links, and setup remain authoritative; the Spring
-  page's team-project/presentation wording and embedded Spring course page
-  do not define Fall requirements. Preserve the read → implement → experiment
-  → explain learning cycle and optional companion-resource choices.
-- Original development slides
-  [#21–27](https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/21)
-  map respectively to ambiguity, messy text/reasoning, Weaver/Turing, the
-  Turing test, rules-to-neural history, Transformers/pretraining, and the LLM
-  timeline. The revised history corrects the LSTM date to 1997. The timeline
-  comes from Zhao et al., [*A Survey of Large Language Models*, v16, Figure 3](https://arxiv.org/abs/2303.18223v16):
-  it covers **2019–2024**, not the current model inventory. Media files and
-  original filenames are documented in [assets/README.md](assets/README.md).
-- [Stanford CS336 Spring 2026, Lecture 1](https://cs336.stanford.edu/lectures/?trace=lecture_01):
-  learning by building, resource tradeoffs, the tokenizer interface, character
-  and byte baselines, BPE training versus encoding, and compression measurement.
-  The local source is the sibling checkout's `stanford-cs336-lectures/lecture_01.py`,
-  file revision [`607a238629cf5332f71085d19c97dff41decf661`](https://github.com/stanford-cs336/lectures/blob/607a238629cf5332f71085d19c97dff41decf661/lecture_01.py).
-  Precise sections: `why_this_course_exists()` (lines 65–123: building and budgets),
-  `current_lm_landscape()` (126–185: historical ingredients and openness),
-  `course_syllabus()` (235–253: resource constraints), `basics()` (265–316:
-  components and design choices), and `tokenization()` with the tokenizer
-  implementations below it (484 onward). Stanford's assessment rules do not apply.
-- [Sennrich et al. (2016), Section 3.2](../../papers/sennrich-2016-subword-units.pdf):
-  BPE-based subword segmentation. Our implementation begins with all 256 bytes;
-  the paper's character vocabulary and word-boundary convention differ.
-- [Ollama API](https://docs.ollama.com/api/generate): executable versions of the
-  previous browser demos. The notebook uses the REST API from Python's standard
-  library, so no additional Python package is required.
+## Preprocessing and tokenization
 
-## Notebook and preparation
+P01 compresses the Spring regex task to `Senjō 3 can't 你好🙂`. The ASCII
+word pattern yields `['Senj', "can't"]`. The next pattern partitions every
+character and round-trips the input, but still does not establish linguistic
+word boundaries. E03 checks precomposed and decomposed accents, Chinese, and
+emoji. NFC, NFKC, lowercasing, and byte decoding are distinct operations.
+The full Spring ambiguity, messy-text, and reasoning examples are preserved
+as notebook discussion prompts beside the preprocessing material.
 
-Use `lecture-01-exercise.ipynb` for executable work. The classroom
-core includes short text calls, Unicode, and a self-contained byte BPE implementation. The
-tokenization work runs without Ollama or network access. Ollama is a separate
-application: install it, start it, and fetch `qwen3:0.6b` before class. Model calls
-are short, but runtime depends on the classroom machine.
+P02 distinguishes word occurrences, word types, and byte tokens: `low low lower`
+has 3 whitespace-separated tokens, 2 types, and 13 UTF-8 bytes. BPE then uses
+`low`×5 and `lower`×2 as separate training sequences. The first two merges
+produce weighted totals **25 → 18 → 11** and a 258-entry byte vocabulary.
+The browser demo computes each step using the same tie-breaking rule as the
+notebook. Its overlap example demonstrates **10 → 8**, despite a winning
+pair count of four: replacements cannot share a character.
 
-Log probabilities, thinking output, image understanding, Stable Diffusion, video
-playback, and named `tiktoken` encodings are further notebook experiments. Vision
-uses the bundled rainfall and Big Data images with an already installed
-vision-capable model. The two recorded videos and their posters are bundled;
-the deck uses manual playback and the notebook can display the same clips.
-These opt-in experiments are not required to complete the 135-minute lesson.
+The larger Spring corpus is `low`×5, `lowest`×2, `newer`×6, `wider`×3, `new`×2,
+with an appended toy `_` marker. The first two merges are `e r → er` and
+`er _ → er_`; totals are **96 → 87 → 78**. The notebook calculates these values.
+Later tied choices may differ from the Spring illustration. The source's
+incorrect `(low, er_) → low_` concatenation is not reproduced. Separate input
+sequences prevent cross-word merging; a printed boundary marker alone is not
+a full boundary policy.
 
-For optional Stable Diffusion generation and extended tokenization practice:
+E05 keeps the vocabulary fixed: `lowest` encodes as `[257, 101, 115, 116]`.
+Chinese and emoji retain byte coverage even without useful learned merges.
+E06 trains with 0, 8, and 32 merges and evaluates fixed held-out sentences by
+language. For the two Chinese sentences, mixed training produces 54, 48, and
+35 tokens; English-only training produces 54 throughout. These small synthetic
+corpora are teaching examples, not language-model benchmarks.
+
+## Preparation and sources
+
+```sh
+uv sync
+uv run python scripts/slides.py serve
+```
+
+Prepare Ollama and the selected model separately before class. The core
+preprocessing and tokenization require no model, GPU, or network. Optional
+packages are documented in the notebooks. For the extended and diffusion work:
 
 ```sh
 uv sync --extra tokenization --extra multimodal
 uv run --extra tokenization --extra multimodal python scripts/slides.py serve
 ```
 
-Retain both extras in the launch command so the notebook kernel has the same
-packages. Prepare a complete local or cached Diffusers pipeline separately,
-set `SD_MODEL`, and enable `RUN_DIFFUSION` only when ready. Installing the
-packages does not download model weights; the generation cell loads cached
-files only. The original prompt uses 30 steps and guidance scale 7.5.
+The [extended notebook](lecture-01-exercise-tokenization.ipynb) retains the
+Spring regex, spaCy, vocabulary-growth, corpus, and pretrained-tokenizer work.
+Its dependencies and downloads are optional; the toolbar still opens the
+classroom notebook. Student files belong in `workspace/`.
 
-The additional [extended tokenization notebook](lecture-01-exercise-tokenization.ipynb)
-copies the Spring notebook's Ollama, Unicode, regular expression, spaCy, dataset,
-and tokenizer sections, with minimum edit distance removed. The deck links to
-it after the tokenizer comparison. The toolbar still opens E01–E06.
-
-For extended practice, run `uv sync --extra tokenization` and start the preview
-with `uv run --extra tokenization python scripts/slides.py serve`. The notebook
-explains the separate Ollama and spaCy model setup and dataset downloads.
-WikiText tokenizer training uses only the training split. The optional
-BookCorpus example fetches prepared statistics from the original course;
-the corpus archive itself is not required for that plot. Save generated files
-in the personal working copy under `workspace/`.
-
-The toy corpus is `low` × 5 and `lower` × 2. The first two merges are `l o` and
-`lo w`, producing weighted token totals 25, 18, and 11. Pair ties use ascending
-token-ID pairs. Count overlapping pairs, but replace non-overlapping occurrences
-left to right. Each training string is a separate sequence, so no merge crosses
-a document boundary. The notebook deliberately omits production pre-tokenizers
-and chat-template processing and explains those limitations.
-
-The launcher preserves existing notebook answers. To receive a revised handout,
-rename the existing personal notebook in JupyterLab, then click **Notebook**
-again to create a fresh copy. Keep the renamed copy for your previous work.
+Primary adaptation source: [Fudan Spring Lecture 01](https://baojian.github.io/llm-26/slides/lecture-01-slides/),
+local sibling checkout `llm-26/slides/lecture-01-slides/index.md` and
+`llm-26/lecture-01-tokenization/lecture-01-exercise-tokenization.ipynb`.
+The Fall course page governs logistics. The notebook history table and each
+slide's speaker notes link the relevant original papers and documentation.
+[CS336 Lecture 1](https://cs336.stanford.edu/lectures/?trace=lecture_01) supplements
+the tokenizer interface, byte implementation, building perspective, and budgets;
+its assessment rules do not apply. Read [Sennrich et al., §3.2](../../papers/sennrich-2016-subword-units.pdf)
+for BPE and [SentencePiece](../../papers/kudo-2018-sentencepiece.pdf) for additional
+text handling. Visual provenance and editable sources are in
+[assets/README.md](assets/README.md); image prompts are in
+[assets/image-prompts.md](assets/image-prompts.md).

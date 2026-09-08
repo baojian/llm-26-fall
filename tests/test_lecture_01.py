@@ -5,6 +5,7 @@ import builtins
 import io
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -132,6 +133,44 @@ def test_decoding_incomplete_utf8_fails_explicitly(lesson):
         tokenizer.decode([256])
 
 
+@pytest.mark.parametrize("corpus,budget", [
+    ([("low", 5), ("lower", 2)], 2),
+    ([("aaab", 2), ("ab", 1)], 1),
+    ([("aaaaa", 3)], 4),
+    ([("你好🙂", 2), ("你好", 1)], 5),
+    ([("a", 1), ("b", 1)], 10),
+    ([("a b\n", 1)], 4),
+    ([], 3),
+    ([("abc", 1)], 0),
+])
+def test_browser_bpe_trace_matches_notebook_at_every_step(lesson, corpus, budget):
+    script = """
+        import { buildBpeTrace } from './slides/lecture-01/demo.js';
+        let input = '';
+        for await (const chunk of process.stdin) input += chunk;
+        const { corpus, budget } = JSON.parse(input);
+        const trace = buildBpeTrace(corpus, budget);
+        console.log(JSON.stringify(trace.map(state => ({
+            total: state.total,
+            ids: state.sequences.map(sequence => sequence.ids),
+            vocabulary: state.vocabulary,
+        }))));
+    """
+    result = subprocess.run(
+        ["node", "--input-type=module", "-e", script],
+        input=json.dumps({"corpus": corpus, "budget": budget}),
+        capture_output=True, text=True, check=True, cwd=LECTURE.parents[1],
+    )
+    trace = json.loads(result.stdout)
+    _, _, all_totals = lesson["train_bpe"](corpus, budget)
+    assert [state["total"] for state in trace] == all_totals
+    for step, state in enumerate(trace):
+        vocab, merges, _ = lesson["train_bpe"](corpus, step)
+        tokenizer = lesson["ByteBPETokenizer"](vocab, merges)
+        assert state["ids"] == [tokenizer.encode(text) for text, _ in corpus]
+        assert state["vocabulary"] == [list(vocab[index]) for index in range(len(vocab))]
+
+
 def test_ollama_client_uses_local_json_request(lesson, monkeypatch):
     requests = []
 
@@ -190,6 +229,12 @@ def test_vision_request_sends_image_bytes_in_the_user_message(lesson):
     assert base64.b64decode(message["images"][0]) == image_bytes
     assert payload["model"] == "installed-vision-model"
     assert payload["stream"] is False
+    assert "think" not in payload
+    assert "think" not in payload["options"]
+    assert payload["options"] == {
+        "temperature": 1.0, "top_p": 0.95, "top_k": 20,
+        "seed": 42, "num_predict": 2048,
+    }
 
 
 def test_vision_request_preserves_the_selected_question(lesson):
@@ -205,13 +250,14 @@ def test_vision_request_preserves_the_selected_question(lesson):
 def test_vision_example_selects_matching_image_and_question(lesson, monkeypatch, example, filename, question):
     requests = []
 
-    def request(endpoint, payload=None):
+    def request(endpoint, payload=None, timeout=120):
         requests.append((endpoint, payload))
         if endpoint == "/api/tags":
             return {"models": [{"name": "qwen3-vl:2b"}]}
         if endpoint == "/api/show":
             return {"capabilities": ["vision"]}
         if endpoint == "/api/chat":
+            assert timeout == 300
             return {"message": {"content": "A mocked image description."}}
         pytest.fail(f"Unexpected Ollama request: {endpoint}")
 
@@ -231,6 +277,39 @@ def test_vision_example_selects_matching_image_and_question(lesson, monkeypatch,
     if example == "big data":
         assert "axes" not in message["content"]
     assert base64.b64decode(message["images"][0]) == (LECTURE / "assets" / filename).read_bytes()
+
+
+@pytest.mark.parametrize("answer", ["", "A partial chart description."])
+def test_vision_reports_truncation_without_retrying(lesson, monkeypatch, capsys, answer):
+    requests = []
+
+    def request(endpoint, payload=None, timeout=120):
+        requests.append(endpoint)
+        if endpoint == "/api/tags":
+            return {"models": [{"name": "qwen3-vl:2b"}]}
+        if endpoint == "/api/show":
+            return {"capabilities": ["vision", "thinking"]}
+        if endpoint == "/api/chat":
+            assert timeout == 300
+            return {"message": {"content": answer}, "done_reason": "length"}
+        pytest.fail(f"Unexpected Ollama request: {endpoint}")
+
+    monkeypatch.chdir(LECTURE)
+    lesson["RUN_OLLAMA"] = True
+    monkeypatch.setitem(lesson, "ollama_request", request)
+    cell = next(cell for cell in NOTEBOOK["cells"] if cell["id"] == "vision")
+    code = "".join(cell["source"]).replace("RUN_VISION = False", "RUN_VISION = True")
+    execute_cell({**cell, "source": [code]}, lesson)
+
+    output = capsys.readouterr().out
+    assert "Generation reached the token limit" in output
+    assert "rerun both vision code cells" in output
+    if answer:
+        assert answer in output
+        assert "No visible answer" not in output
+    else:
+        assert "No visible answer" in output
+    assert requests.count("/api/chat") == 1
 
 
 @pytest.mark.parametrize("device,dtype", [("cpu", "float32"), ("mps", "float32"),

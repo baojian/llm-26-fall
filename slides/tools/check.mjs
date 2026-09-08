@@ -18,7 +18,7 @@ assert.doesNotMatch(source, /\bstyle\s*=|<style\b|r-fit-text/, 'Use the shared l
 const metadata = JSON.parse(await readFile(path.join(deck, 'lecture.json'), 'utf8'));
 const notebook = JSON.parse(await readFile(path.join(deck, metadata.notebook || 'practice.ipynb'), 'utf8'));
 assert.equal(notebook.nbformat, 4);
-for (const [, id] of source.matchAll(/Exercise (E\d+)/g)) {
+for (const [, id] of source.matchAll(/(?:Exercise|Practice) ([EP]\d+)/g)) {
   assert.ok(notebook.cells.some(cell => cell.cell_type === 'markdown' && cell.source.join('').includes(id)), `Notebook is missing ${id}.`);
 }
 const output = path.join(slidesRoot, '.checks', folder);
@@ -199,6 +199,30 @@ try {
     assert.ok(await page.locator('.katex').count() > 0, 'Sample equations did not render.');
   }
   if (folder === 'lecture-01') {
+    const developmentStart = ids.indexOf('outline-development');
+    const preprocessingStart = ids.indexOf('outline-preprocessing');
+    assert.equal(preprocessingStart - developmentStart - 1, 10, 'Lecture 01 needs ten history content slides.');
+    const slidePractice = [...source.matchAll(/(?:Exercise|Practice) ([EP]\d+)/g)].map(match => match[1]);
+    const notebookPractice = notebook.cells.filter(cell => cell.cell_type === 'markdown')
+      .flatMap(cell => [...cell.source.join('').matchAll(/^#{2,3} ([EP]\d+) ·/gm)].map(match => match[1]));
+    assert.deepEqual(slidePractice, notebookPractice, 'Slide and notebook practice IDs must appear in the same order.');
+    assert.doesNotMatch(source, /https?:\/\/(?:127\.0\.0\.1|localhost):\d+\/lab\//, 'Use the shared notebook launcher.');
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('bpe-live')).h));
+    assert.match(await page.locator('#bpe-step').textContent(), /25 tokens/);
+    await page.getByRole('button', { name: 'Next merge', exact: true }).click();
+    assert.match(await page.locator('#bpe-step').textContent(), /18 tokens/);
+    await page.getByRole('button', { name: 'Next merge', exact: true }).click();
+    assert.match(await page.locator('#bpe-step').textContent(), /11 tokens/);
+    assert.equal(await page.locator('#bpe-advance').isDisabled(), true);
+    assert.match(await page.locator('#bpe-corpus').textContent(), /low · e · r/);
+    await page.getByRole('button', { name: 'Overlap example', exact: true }).click();
+    assert.match(await page.locator('#bpe-step').textContent(), /10 tokens/);
+    await page.getByRole('button', { name: 'Next merge', exact: true }).click();
+    assert.match(await page.locator('#bpe-step').textContent(), /8 tokens/);
+    assert.match(await page.locator('#bpe-next').textContent(), /Pair count 4; replacements 2/);
+    await page.getByRole('button', { name: 'Reset BPE', exact: true }).click();
+    assert.match(await page.locator('#bpe-step').textContent(), /25 tokens/);
+    assert.equal(await page.locator('#bpe-advance').isEnabled(), true);
     for (const id of ['example-video-antarctica', 'example-video-johannesburg']) {
       const video = page.locator(`#${id} video.animation`);
       assert.equal(await video.count(), 1, `${id}: include the text-to-video example.`);

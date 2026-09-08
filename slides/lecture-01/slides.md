@@ -104,18 +104,20 @@ Adapted from Spring Lecture 01 slide 15: https://baojian.github.io/llm-26/slides
 
 <!-- .slide: id="beyond-course" -->
 
-## More materials beyond this course
+## Resources for independent study
 
-**Books:** [Speech and Language Processing](https://web.stanford.edu/~jurafsky/slp3/); [Foundations of Large Language Models](https://arxiv.org/abs/2501.09223); [Introduction to NLP (Eisenstein)](https://mitpress.mit.edu/9780262042840/introduction-to-natural-language-processing/); [Introduction to NLP (Zhang, Gui & Huang)](https://intro-nlp.github.io/).
+| Start with | Use it for |
+| :--- | :--- |
+| [Speech and Language Processing](https://web.stanford.edu/~jurafsky/slp3/) | Language, probability, and tokenization |
+| [Stanford CS336](https://cs336.stanford.edu/) | Building language models from components |
+| [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html) | Small, inspectable implementations |
 
-**Courses:** Stanford [CS336](https://cs336.stanford.edu/) and [CS224N](https://web.stanford.edu/class/cs224n/); [CMU 11-711](https://cmu-l3.github.io/anlp-fall2025/); [UMass CS685](https://people.cs.umass.edu/~miyyer/cs685/); [Princeton COS 484](https://princeton-nlp.github.io/cos484/); [Stanford CS124](https://web.stanford.edu/class/cs124/); Karpathy’s [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html).
+The notebook has the full Spring reading and course list.
 
-**Research:** NLP: ACL, EMNLP, NAACL, EACL, COLING ([ACL Anthology](https://aclanthology.org/)); ML: NeurIPS, ICML, ICLR; IR: SIGIR, WWW, WSDM, CIKM; data mining: KDD.
-
-Choose **one book and one course** for optional study alongside our materials.
+Choose a companion that helps answer your current question.
 
 Note:
-Adapted from Spring Lecture 01 slide 16: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/16. This preserves the source's four books, seven courses, and research-community inventory. Book authors: Dan Jurafsky and James H. Martin; Tong Xiao and Jingbo Zhu; Jacob Eisenstein; Qi Zhang, Tao Gui, and Xuanjing Huang. Eisenstein's published book is Introduction to Natural Language Processing (2019), per MIT Press; the earlier slide labels a 2018 version. Course emphases: CS336 builds language models; CS224N covers deep learning for NLP; CMU 11-711 and UMass CS685 cover advanced NLP; Princeton COS 484 covers NLP; CS124 connects language and information; Zero to Hero develops neural-network implementations. These are optional companions, not additional required courses. Encourage students to follow a small selection and use research papers or blogs when investigating a specific question.
+45 seconds. The full resource inventory from Spring slide 16 is retained in the notebook's Course Overview, including the four books, seven courses, and research communities. These are optional study resources. The Fall course page defines required work. Ask students to use one main reading and consult other sources for a specific question. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/16.
 
 ---
 
@@ -217,18 +219,16 @@ Ollama serves the model; it is not itself the language model. The tokenizer we t
 
 > Fudan University is located in which city? Answer with one word.
 
-**Expected answer:** Shanghai.
+<a href="../shared/notebook.html?lecture=lecture-01" target="_blank" rel="noopener noreferrer">Open the classroom notebook</a> → **One prompt, one response**.
 
-**[Example 01 — Open notebook](http://127.0.0.1:8888/lab/workspaces/course-bc5dda9848dbf835/tree/workspace/slides/lecture-01/lecture-01-exercise.ipynb)**
+1. Predict the answer.
+2. Run the cell with an installed Qwen model.
+3. Inspect the answer, token counts, and stop reason.
 
-Run the first local-model call.
-
-- Compare installed Qwen model sizes.
-- Try the same prompt with thinking off and on.
-- Compare the answer, returned thinking, and runtime.
+<div class="answer fragment"><p>Expected city: <strong>Shanghai</strong>. Check the response against the fact.</p></div>
 
 Note:
-This restores the original Qwen prompt from https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/5. The original selector includes qwen3:0.6b, qwen3:1.7b, and qwen3:4b; use an already installed tag. The first-call cell and optional thinking cell use the city question. Treat returned thinking as model output, not a verified explanation of internal computation. Model runtime depends on local hardware; do not download models during class. API: https://docs.ollama.com/api/generate.
+One minute; prepare the call before class. Use the shared launcher, which opens the student's working copy and preserves answers. The notebook supplies the exact prompt and request settings. Use an already installed Qwen3 tag; do not spend lecture time on a download. Thinking and model-size comparisons are optional follow-ups in the notebook. Token counts include model prompt formatting and are not just a count of the displayed words. Source prompt: Spring slide 5, https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/5; API: https://docs.ollama.com/api/generate.
 
 ---
 
@@ -294,29 +294,27 @@ Allow one minute to predict A’s quantities, one to run Notebook E02, and one t
 
 ---
 
-<!-- .slide: class="reading-comparison" id="example-article-blog" -->
+<!-- .slide: id="example-article-blog" -->
 
-## Task 3: Article generation
+## Task 3: Can you identify the author?
 
 <div class="columns">
 <div>
-<h3>A: Productivity blog</h3>
-<p><strong>Feeling unproductive? Maybe you should stop overthinking.</strong></p>
-<blockquote><p>In order to get something done, maybe we need to think less. Seems counter-intuitive, but I believe sometimes our thoughts can get in the way of the creative process. We can work better at times when we "tune out" the external world and focus on what's in front of us. I've been thinking about this lately, so I thought it would be good to write an article about it…</p></blockquote>
+<h3>A · Productivity blog</h3>
+<blockquote><p>In order to get something done, maybe we need to think less. Seems counter-intuitive, but I believe sometimes our thoughts can get in the way of the creative process.</p></blockquote>
 </div>
 <div>
-<h3>B: News article</h3>
-<p><strong>United Methodists Agree to Historic Split</strong></p>
-<blockquote><p>After two days of intense debate, the United Methodist Church has agreed to a historic split — one that is expected to end in the creation of a new denomination, one that will be “theologically and socially conservative,” according to The Washington Post. The majority of delegates attending the church‘s annual General Conference in May voted to strengthen a ban on the ordination of LGBTQ clergy and to write new rules that will “discipline” clergy who officiate at same-sex weddings. But those who opposed these measures have a new plan…</p></blockquote>
+<h3>B · News article</h3>
+<blockquote><p>After two days of intense debate, the United Methodist Church has agreed to a historic split — one that is expected to end in the creation of a new denomination…</p></blockquote>
 </div>
 </div>
 
-Who wrote each article: **human or machine**?
+Human or machine? What evidence supports your guess?
 
-<div class="answer fragment"><p>The original deck attributes <strong>both examples to GPT-3</strong>.</p></div>
+<div class="answer fragment"><p>The Spring deck attributes <strong>both to GPT-3</strong>. Fluency alone does not verify authorship or facts.</p></div>
 
 Note:
-The complete source excerpts and the authorship poll share this slide; the terminal ellipses are present in the original material. Give students about 30 seconds to label A and B independently as human or machine, then reveal the original deck’s attribution: both examples are attributed to GPT-3. The four possible combinations are human/human, machine/human, human/machine, and machine/machine. Fluent writing alone does not establish authorship or factual accuracy. This attribution comes from the source teaching material; these samples were not generated in the current notebook session. B is a historical generation example, not verified reporting or a current news update. Distinguish this classroom poll from graded quizzes and E01–E06. The notebook’s Article generation section contains the same complete excerpts and an optional generation prompt. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/8.
+One minute. These are excerpts from the complete passages in the notebook, not outputs generated in this session. Let students make independent guesses before revealing the source attribution. The Spring deck supplies the attribution; the news-style text is a historical generation example, not verified reporting. Read the longer notebook excerpts after class. This motivates Turing's operational question and the need for task-specific evaluation. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/8. The omitted part of B is explicitly marked; A is the first two complete sentences. This poll is ungraded and separate from E01–E06.
 
 ---
 
@@ -342,7 +340,7 @@ Restore the original rainfall-chart image. Its embedded credits name the Nationa
 
 <!-- .slide: id="example-vision-big-data" -->
 
-## Task 4: Describe a different image
+## Task 4: Visible evidence and inference
 
 <div class="columns">
 <div>
@@ -350,13 +348,14 @@ Restore the original rainfall-chart image. Its embedded credits name the Nationa
 </div>
 <div>
 <p><strong>Prompt:</strong> Describe the image in one paragraph.</p>
-<p>Separate visible content from inferred meaning.</p>
-<p>Use <strong>vision-big-data.png</strong> in Notebook with the same model and prompt.</p>
+<p><strong>Visible:</strong> labels, logos, connecting lines.</p>
+<p><strong>Inferred:</strong> what those connections might mean.</p>
+<p>Notebook selector:<br><code>VISION_EXAMPLE</code> → <code>"big data"</code></p>
 </div>
 </div>
 
 Note:
-The second original image is a Big Data concept illustration rather than a measured chart. Ask what evidence is visible: a central label, surrounding logos, and connecting lines. A logo arrangement does not by itself establish data sharing or a commercial relationship. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/9; media provenance: assets/README.md.
+30 seconds. This is a concept illustration, not a measured chart. The notebook changes both the image and the evidence-checking question when VISION_EXAMPLE changes. Keep the same model, general description task, and decoding settings. A connected logo does not establish data sharing or a commercial relationship. Source: Spring slide 9, https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/9; asset provenance: assets/README.md.
 
 ---
 
@@ -411,16 +410,19 @@ This is the second original locally hosted clip. Compare the same action in anot
 
 <!-- .slide: id="goals" -->
 
-## From examples to today’s goals
+## Today’s question: how does text reach a model?
 
 How does an LLM application turn our text into something a model can predict?
 
-- Call a local model and examine its answers.
-- Explain the difference between characters, bytes, and tokens.
-- Train a small BPE tokenizer and test it on unseen text.
+- Inspect a response using a concrete check.
+- Explain what preprocessing preserves or discards.
+- Distinguish visible symbols, code points, bytes, and tokens.
+- Train BPE, encode unseen text, and measure the tradeoff.
+
+**First: how did language models develop?**
 
 Note:
-Close Course Overview by connecting the examples to the technical lesson. We have called a model and inspected outputs; now ask how text becomes model input. Invite one hypothesis before giving the vocabulary. The development section explains how these models emerged, followed by text preprocessing and tokenizer construction. The core tokenizer needs only Python’s standard library.
+One minute. Close the example gallery. E01 checks sentiment against context; E02 checks translation quantities; the image and authorship examples separate plausibility from evidence. These questions remain relevant across generations of NLP systems. The next section traces changes in the methods, before we build one component ourselves.
 
 ---
 
@@ -436,205 +438,206 @@ Close Course Overview by connecting the examples to the technical lesson. We hav
 </ul>
 
 Note:
-Period 1, minutes 25–45. Ten content slides: language difficulties, historical development, then the modeling and resource perspective from CS336. Allow thirteen minutes for the first seven and seven minutes for the final three. This section transition preserves the four topics and active Development of NLP & LLMs section from Spring Lecture 01 slide 20: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/20.
-
----
-
-<!-- .slide: id="language-ambiguity" -->
-
-## Why language is difficult: ambiguity
-
-| Example | What must we resolve? |
-| :--- | :--- |
-| A man saw a boy **with a telescope**. | Who had the telescope? |
-| What does **Mighty Dragon** mean? | Which referent does the context support? |
-| He has **quit smoking**. | What does this imply about the past? |
-| 冬天，能穿多少穿多少；<br>夏天，能穿多少穿多少。 | Why do the instructions differ? |
-
-LLMs also need context to resolve these examples.
-
-Note:
-Restores the examples from Spring slide 21: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/21. Telescope attachment illustrates syntax; Mighty Dragon needs referential context, so do not assign one meaning without a scenario. “Quit smoking” normally presupposes earlier smoking. The winter instruction means wear as much as possible; the summer instruction means wear as little as possible. These difficulties did not disappear with LLMs. Ask for one interpretation before advancing; this is discussion, not an additional timed exercise.
-
----
-
-<!-- .slide: id="language-messy" -->
-
-## Messy text and reasoning
-
-<div class="columns">
-<div>
-<h3>Language varies</h3>
-<p>“Were SOO PROUD … U taught us 2 #neversaynever”</p>
-<p>Spelling, hashtags, emojis, code-switching, and word boundaries.</p>
-<p>“break a leg” · “unfriend” · “鸡娃”</p>
-</div>
-<div>
-<h3>A reasoning trap</h3>
-<p>A penny is better than nothing.</p>
-<p>Nothing is better than world peace.</p>
-<p>Therefore, a penny is better than world peace?</p>
-</div>
-</div>
-
-<div class="answer fragment"><p>“Nothing” changes meaning between the two premises.</p></div>
-
-Note:
-Adapted from Spring slide 22: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/22. The social-media quotation is an excerpt, preserving its nonstandard spelling. Discuss segmentation when spaces do not mark words, figurative meanings, and new vocabulary. In the first premise “nothing” refers to having no money; in the second it means no thing exceeds world peace. The apparent syllogism equivocates rather than proving a comparison. Keep these challenges relevant to current models, without claiming that an untested model fails every example.
+Period 1, minutes 25–45. Ten history content pages, progressing from Weaver and Turing to available weights, reasoning, and tools. Each page introduces a mechanism, an example, and a remaining question. Dates identify selected papers; older methods continue to coexist. Take the first break after the tenth history page.
 
 ---
 
 <!-- .slide: id="early-nlp" -->
 
-## Early NLP: translation and intelligence
+## 1949 · Translation as a computational problem
 
-**1947 → 1949 · Warren Weaver**
+**Warren Weaver:** use context, statistical patterns, and a decoding analogy to study translation.
 
-Proposed machine translation through a decoding analogy; developed the idea in his 1949 memorandum.
+<div class="columns">
+<div><h3>The task</h3><p>Source sentence → target sentence</p><p>“bank” in a financial report</p></div>
+<div><h3>The obstacle</h3><p>Words do not map one to one.</p><p>“bank” beside a river</p></div>
+</div>
 
-**1950 · Alan Turing**
+> The surrounding text helps determine the intended meaning.
 
-Reframed the question of machine intelligence using a text-based imitation game.
-
-Two enduring questions: **Can machines transform language? Can they use it convincingly?**
+<p class="source">Weaver, <em>Translation</em> (1949), discussion of context and cryptography.</p>
 
 Note:
-Adapted from Spring slide 23: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/23. Distinguish Weaver's March 1947 letter to Norbert Wiener from the July 1949 “Translation” memorandum that quotes that letter. The decoding analogy motivates a research question, not a sufficient translation algorithm. Weaver source: “Translation,” July 15, 1949, pp. 5–6 and 13, https://mt-archive.net/Weaver-1949.pdf. Turing, “Computing Machinery and Intelligence,” Mind 59(236), 1950, Sections 1–2: https://doi.org/10.1093/mind/LIX.236.433. The next slide uses the familiar machine-versus-human adaptation of the imitation game; it is not the complete original setup.
+1.5 minutes. Begin the timeline with a concrete task from E02. Weaver's July 15, 1949 memorandum quotes his March 1947 letter to Norbert Wiener, but these are distinct dates. The bank examples are new teaching examples, not a quotation. Weaver discusses multiple possible meanings and the role of surrounding words. His cryptographic analogy motivates research; it does not establish that language is a simple substitution cipher. Source: https://mt-archive.net/Weaver-1949.pdf, pages 5–6 and the discussion of context. Adapted from Spring slide 23.
 
 ---
 
 <!-- .slide: id="turing-test" -->
 
-## The Turing test: judging conversation
+## 1950 · The Turing test
 
-| Participant | Role in a simplified version |
-| :--- | :--- |
-| A: Machine | Answer questions through text |
-| B: Human | Answer through the same channel |
-| C: Judge | Try to distinguish A from B |
+<img class="diagram" src="assets/turing-test-rooms.png" alt="Conceptual cutaway: a human and a machine occupy separate rooms; a judge communicates with both through text and tries to identify the machine.">
 
-**Judge:** Add 34,957 to 70,764.
+The judge sees the replies, but not who produced them.
 
-**Turing’s example reply:** 105,621. **Correct sum:** 105,721.
-
-Human-like conversation and reliable task performance require different evidence.
+<p class="caption">Simplified machine-versus-human version · AI-generated conceptual illustration.</p>
 
 Note:
-Adapted from Spring slide 24: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/24 and Turing 1950, Sections 1–2, https://doi.org/10.1093/mind/LIX.236.433. Turing's examples include refusing a sonnet request and deliberately giving 105621 for 34957 + 70764; the correct sum is 105721. This illustrates imitation, not a target for mathematical accuracy. Results depend on the judge, participants, instructions, and duration. Do not treat a conversational test as proof of general intelligence or consciousness. Connect this to the earlier human-or-machine article quiz.
+2 minutes. Ask why the channel must conceal faces and voices, and who has which information. The audience sees the identities in the illustration; the judge does not. Turing's original imitation game begins with a man, a woman, and an interrogator, then asks what changes when a machine replaces one participant. This is the familiar simplified machine-versus-human adaptation, not a literal reconstruction of a historical test. A result depends on judges, instructions, duration, and participants. Do not interpret it as a proof of consciousness or general competence. Source: Turing (1950), Computing Machinery and Intelligence, Sections 1–2, https://doi.org/10.1093/mind/LIX.236.433; accessible paper: https://www.csee.umbc.edu/courses/471/papers/turing.pdf. Illustration provenance and prompt: assets/image-prompts.md.
+
+---
+
+<!-- .slide: id="turing-evidence" -->
+
+## 1950 · Convincing replies and correct answers
+
+<div class="columns">
+<div>
+<img class="diagram" src="assets/turing-test-terminal.png" alt="Conceptual illustration of a judge examining anonymous typed replies at a terminal; the participants are hidden.">
+</div>
+<div>
+<h3>Turing’s arithmetic example</h3>
+<p>Question: <strong>34,957 + 70,764</strong></p>
+<p>Reply in the paper: <strong>105,621</strong></p>
+<div class="answer fragment"><p>Correct sum: <strong>105,721</strong>.</p><p>What should a useful assistant optimize?</p></div>
+</div>
+</div>
+
+<p class="caption">Turing (1950), §2 · AI-generated illustration; the numerical example comes from the paper.</p>
+
+Note:
+1.5 minutes. Give the audience a moment to check the sum. The paper's sample reply follows an approximately 30-second pause and contains an error of 100. Turing discusses imitation of human behavior; our course also needs independently checkable performance. Connect this to translation numbers and the authorship poll. A human-like error is not a goal for a calculator. The image is an illustrative scene, not an archival photograph. Source: Turing (1950), Section 2, https://www.csee.umbc.edu/courses/471/papers/turing.pdf. No numerical model result is claimed. Ask students to name one evaluation that goes beyond sounding human.
+
+---
+
+<!-- .slide: id="rules-and-statistics" -->
+
+## 1960s–1990s · Rules and statistical learning
+
+| Approach | What supplies the behavior? |
+| :--- | :--- |
+| Rules; ELIZA (1966) | Handwritten patterns and response templates |
+| Statistical translation (1990) | Translation and language probabilities estimated from corpora |
+
+**Toy rule:** “I need X” → “Why do you need X?”
+
+Learning from examples expands coverage. Unseen phrases remain difficult.
+
+<p class="source">Weizenbaum (1966); Brown et al. (1990).</p>
+
+Note:
+2 minutes. Use the toy rule to explain how an apparently responsive sentence can arise from pattern transformation; it is not quoted ELIZA output. ELIZA's DOCTOR script uses decomposition and reassembly rules, not a large pretrained neural model. Statistical machine translation estimates models from aligned bilingual text and scores candidate translations using probabilities. The approaches coexist; this timeline does not claim that rule-based systems disappeared in 1990. Sources: Weizenbaum, https://doi.org/10.1145/365153.365168; Brown et al., A Statistical Approach to Machine Translation, https://aclanthology.org/J90-2002/, Sections 1–2. This expands the Spring rules-to-statistics timeline with a mechanism students can recognize.
 
 ---
 
 <!-- .slide: id="development" -->
 
-## From rules to learned representations
+## 2003–2014 · Learning representations
 
-| Period or landmark | Main idea |
+| Landmark | What changes? |
 | :--- | :--- |
-| 1970s–1980s | Handcrafted rules and knowledge |
-| 1990s | Learn statistical models from corpora |
-| LSTM, 1997 | Learn recurrent memory for sequences |
-| Neural language model, 2003 | Learn word vectors and probabilities together |
-| Word2vec, 2013 | Learn useful word representations |
-| Sequence-to-sequence, 2014 | Learn to map one sequence to another |
+| Neural language model · 2003 | Learn word vectors and prediction together |
+| Word2vec · 2013 | Learn reusable vectors from word contexts |
+| Sequence-to-sequence · 2014 | Learn an encoder and a decoder jointly |
+
+Similar contexts can support shared statistical strength.
+
+A fixed sentence vector can lose details needed for translation.
+
+<p class="source">Bengio et al. (2003); Mikolov et al. (2013); Sutskever et al. (2014).</p>
 
 Note:
-Condenses Spring slide 25 into readable landmarks: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/25. The source figure extends beyond its 1970–2017 title and has an LSTM date/label error; this table corrects LSTM to 1997 and leaves the Transformer to the next slide. Approaches overlap and continue to coexist. The dates mark selected papers, not inventions of entire fields. Hochreiter and Schmidhuber, “Long Short-Term Memory,” 1997, https://doi.org/10.1162/neco.1997.9.8.1735; Bengio et al. 2003, https://www.jmlr.org/papers/v3/bengio03a.html; Mikolov et al. 2013, https://arxiv.org/abs/1301.3781; Sutskever et al. 2014, https://arxiv.org/abs/1409.3215. CS336 Lecture 1, current_lm_landscape(), reviews these neural ingredients. Reconnect rules, feature learning, and representations to the earlier sentiment task.
+2 minutes. A vector is a learned numerical representation, not a dictionary definition. Related words can receive similar representations because of their training contexts, but proximity is not a universal test of synonymy. Bengio et al. jointly learn a distributed word representation and a language model. Word2vec gives efficient representation-learning objectives. The 2014 seq2seq model uses LSTMs; the LSTM paper itself is from 1997. A fixed-length encoding motivates the next slide's attention mechanism. Sources: https://www.jmlr.org/papers/v3/bengio03a.html; https://arxiv.org/abs/1301.3781; https://arxiv.org/abs/1409.3215; LSTM: https://doi.org/10.1162/neco.1997.9.8.1735. These are selected paper dates, not start dates for all neural NLP.
 
 ---
 
 <!-- .slide: id="milestones" -->
 
-## Transformers and pretrained models
+## 2014–2017 · Attention and the Transformer
 
 <div class="columns">
 <div>
-<a href="assets/transformer-architecture.png" target="_blank" rel="noopener"><img class="diagram" src="assets/transformer-architecture.png" alt="Original Transformer encoder–decoder architecture, with attention and feed-forward blocks, positional encodings, and an output softmax. Open the full-size figure."></a>
+<a href="assets/transformer-architecture.png" target="_blank" rel="noopener"><img class="diagram" src="assets/transformer-architecture.png" alt="Original Transformer encoder–decoder architecture, with attention, feed-forward layers, and positional information."></a>
 </div>
 <div>
-<p><strong>2017 · Transformer</strong><br>Attention-based sequence modeling.</p>
-<p><strong>2018 · BERT and GPT</strong><br>Pretrain on text, then adapt to tasks.</p>
-<p><strong>2020 · GPT-3</strong><br>Specify tasks using examples in the prompt.</p>
+<p><strong>2014 / 2015 · Translation attention</strong><br>Consult relevant source positions while producing each output.</p>
+<p><strong>2017 · Transformer</strong><br>Use attention without recurrence in the main sequence architecture.</p>
+<p>Training can process token positions in parallel.</p>
 </div>
 </div>
 
-<p class="caption">Left: original encoder–decoder Transformer. Fine-tuning updates weights; prompting supplies context.</p>
+<p class="caption">Bahdanau et al. (2014 preprint; ICLR 2015); Vaswani et al. (2017), Figure 1.</p>
 
 Note:
-Adapts Spring slide 26 and CS336 Lecture 1, current_lm_landscape() and why_this_course_exists(). The original Transformer figure is an encoder–decoder, not a diagram of a decoder-only GPT model. Explain only the shift toward attention and reusable pretraining; students do not need to parse every block yet. The Spring deck's authors photograph is from GTC 2024, so it is not used as a 2017 event image. Vaswani et al. 2017, Figure 1, https://arxiv.org/abs/1706.03762; Devlin et al., BERT preprint 2018 (published 2019), https://arxiv.org/abs/1810.04805; Radford et al. 2018, https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf; Brown et al. 2020, https://arxiv.org/abs/2005.14165. In-context examples do not update weights. Figure copied from the Spring asset; see assets/README.md.
+2.5 minutes. Use the earlier translation task: when generating an English quantity, the decoder needs the relevant Chinese words and numbers. Attention appeared before the Transformer. The original Transformer has both an encoder and a decoder; GPT-style models commonly use a causal decoder. Parallel processing here describes training with known targets, not simultaneous production of every generated token. Positional information is needed because attention alone does not impose the sequence order. Do not explain every box in this introductory lecture; point at inputs, attention, and outputs. Sources: https://arxiv.org/abs/1409.0473, Sections 2–3; https://arxiv.org/abs/1706.03762, Sections 1 and 3 and Figure 1. The figure is preserved from the Spring deck.
+
+---
+
+<!-- .slide: id="pretraining" -->
+
+## 2018 · Pretrain once, adapt to many tasks
+
+| | BERT | GPT |
+| :--- | :--- | :--- |
+| Main text objective | Predict masked tokens | Predict the next token |
+| Available context | Both sides of a mask | Earlier tokens |
+| Example | The camera is [MASK]. | The camera is … |
+
+**Pretraining:** learn from text before task-specific adaptation.
+
+**Fine-tuning:** update those weights for a downstream task.
+
+<p class="source">Devlin et al. (2018 preprint); Radford et al. (2018).</p>
+
+Note:
+2 minutes. The ellipsis and [MASK] are schematic displays, not verified tokenizations of a specific string. BERT also uses a next-sentence prediction objective in the original paper, so the table deliberately says main text objective. Contrast supervised labels for each task with objectives constructed from text itself. Both original BERT and GPT adapt pretrained parameters by fine-tuning. BERT's paper was posted in 2018 and published at NAACL 2019. Sources: https://arxiv.org/abs/1810.04805, Sections 3.1–3.2; Radford et al., Improving Language Understanding by Generative Pre-Training, https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf, Sections 2–3.
+
+---
+
+<!-- .slide: id="in-context-learning" -->
+
+## 2020 · Tasks specified in the prompt
+
+**GPT-3:** demonstrations can specify a task at inference time.
+
+```text
+Review: easy to carry   Label: positive
+Review: feels flimsy   Label: negative
+Review: sharp photos   Label:
+```
+
+<div class="fragment"><p>Expected continuation in this toy example: <strong>positive</strong>.</p></div>
+
+The context changes; the model’s weights stay fixed.
+
+<p class="source">Brown et al. (2020), GPT-3 · 175B parameters in its largest model.</p>
+
+Note:
+2 minutes. Connect this directly to E01; this is a new illustrative prompt, not a recorded GPT-3 output. The paper examines zero-, one-, and few-shot prompting without task-specific gradient updates. More examples in context consume tokens and may help, but are not guaranteed to improve a task. Distinguish the model's pretraining from its inference-time use. Source: https://arxiv.org/abs/2005.14165, Section 2 and Figure 2.1. The 175B count names the largest model evaluated in that paper, not a requirement for all LLMs. Ask whether adding another review updates the weights: no.
+
+---
+
+<!-- .slide: id="instruction-tuning" -->
+
+## 2022 · Training models to follow instructions
+
+<img class="diagram" src="assets/instruction-tuning.svg" data-excalidraw-source="assets/instruction-tuning.excalidraw" alt="A pretrained model is fine-tuned on demonstrations, then optimized using preference feedback; evaluation checks the resulting assistant.">
+
+The training objective changes the behavior students see in chat.
+
+<p class="caption">InstructGPT workflow, simplified from Ouyang et al. (2022), Figure 2.</p>
+
+Note:
+2 minutes. Pretraining alone learns continuation behavior. InstructGPT first uses human demonstrations for supervised fine-tuning, then comparisons to train a reward model, and policy optimization using that reward. This diagram compresses the comparison, reward-model, and policy-optimization steps into one stage; explain them verbally without suggesting that human raters score every token at inference. ChatGPT brought conversational interaction to a wide audience in late 2022, but it is an application and product, not the name of the entire algorithm. Preference reward is a proxy; it does not guarantee truth. Sources: https://arxiv.org/abs/2203.02155, Section 3 and Figure 2; https://openai.com/index/chatgpt/.
 
 ---
 
 <!-- .slide: id="llm-landscape" -->
 
-## LLM development: a historical snapshot
+## 2023–2025 · Access, reasoning, and tools
 
-<img class="diagram" src="assets/llm-timeline-2019-2024.png" alt="Historical timeline of selected language models from 2019 through 2024, including GPT-3, ChatGPT, LLaMA, Qwen, and DeepSeek. This is a dated survey figure, not a current model list.">
+| Direction | Example | New course question |
+| :--- | :--- | :--- |
+| Available model weights | LLaMA · 2023 | Can we run and inspect a model locally? |
+| Tool-using systems | ReAct · 2023 | Can external observations improve a response? |
+| Reasoning post-training | DeepSeek-R1 · 2025 | Does extra computation improve checked answers? |
 
-Access to weights does not imply access to training code and data.
+Weights, training data, code, and licenses are distinct artifacts.
 
-<p class="caption">Survey timeline, 2019–2024 (2025 revision). <a href="assets/llm-timeline-2019-2024.png" target="_blank" rel="noopener">Open the full-size figure</a>.</p>
-
-Note:
-Restores the actual figure from Spring slide 27: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/27. The survey was first released in 2023, but this revised figure reaches 2024; do not label it a current 2026 inventory or a genealogy of weight inheritance. Source: Zhao et al., “A Survey of Large Language Models,” v16 (March 11, 2025), Figure 3, https://arxiv.org/html/2303.18223v16#S2.F3. The figure selects models above 10B parameters and dates mainly by paper release or otherwise earliest announcement. Use only three anchors in class: GPT-3/in-context learning, ChatGPT/conversational use, and the expanding set of available model families. The original color key says “Publicly Available”; it does not establish that every training artifact is open. CS336 Lecture 1, current_lm_landscape(), distinguishes weights plus paper from code and data that enable reproduction. That distinction is the takeaway; students need not memorize the timeline's small labels.
-
----
-
-<!-- .slide: id="next-token" -->
-
-## A language model predicts the next token
-
-Prompt: “Fudan University is located in …”
-
-The model assigns probabilities to possible **next tokens**.
-
-$$p_\theta(t_1,\ldots,t_L)=\prod_{i=1}^{L}p_\theta(t_i\mid t_{<i})$$
-
-Choose a token, append it, and repeat.
-
-<p id="prediction-limits">A likely continuation can still be factually wrong.</p>
+<p class="caption">Selected historical landmarks through 2025; no ranking of current models.</p>
 
 Note:
-CS336 Lecture 1, intro_to_tokenization(), lines 579–588 of the local lecture_01.py, https://cs336.stanford.edu/lectures/?trace=lecture_01, defines a language model as a distribution over token sequences. The equation here develops that definition using the probability chain rule. This equation is the autoregressive factorization, not an assumption that tokens are independent; theta denotes learned parameters. “Shanghai” is an intended answer, but do not claim it is one token without inspecting the tokenizer. Generation is one use of a language model, not the definition of all NLP systems. Prompting changes the context, fine-tuning changes weights, and a tool-using agent wraps the model in a larger system. Preserve the earlier prediction/correctness lesson: test a held-out set with expected answers; neither probabilities nor generated thinking are guarantees of correctness. The optional notebook log-probability experiment connects the equation to actual outputs.
-
----
-
-<!-- .slide: id="training-pipeline" -->
-
-## Understand language models by building
-
-| Component | What we choose or implement |
-| :--- | :--- |
-| Data | Training text and a separate evaluation set |
-| Tokenizer | Convert text into a sequence of token IDs |
-| Architecture | Map context to next-token probabilities |
-| Training | Compute loss and update model parameters |
-| Evaluation | Measure held-out loss and task behavior |
-
-Today: build the tokenizer. Later: build and train the model.
-
-Note:
-Adapted from CS336 Spring 2026 Lecture 1, why_this_course_exists(), basics(), and its assignment-1 overview. Local source: stanford-cs336-lectures/lecture_01.py, lines 265–316, file revision 607a238629cf5332f71085d19c97dff41decf661: https://github.com/stanford-cs336/lectures/blob/607a238629cf5332f71085d19c97dff41decf661/lecture_01.py#L265-L316. Tokenizer training learns vocabulary and segmentation rules; model training learns numerical parameters. Held-out text belongs in neither training stage. CS336's useful method is implementing components and measuring their behavior; its assignment hardware, leaderboard, and grading rules do not apply to our course.
-
----
-
-<!-- .slide: id="resource-budget" -->
-
-## Working within a compute budget
-
-**Given fixed resources, which choices improve model quality?**
-
-| Choice | What it changes |
-| :--- | :--- |
-| Model size | Capacity, memory, and computation |
-| Training data | Coverage, quality, and training cost |
-| Tokenizer | Sequence length and vocabulary size |
-
-Compare alternatives under the same budget and evaluation.
-
-Today’s question: **How should we represent text efficiently?**
-
-Note:
-Source: CS336 Lecture 1, why_this_course_exists() and course_syllabus(), especially lines 115–123 and 242–251 of https://github.com/stanford-cs336/lectures/blob/607a238629cf5332f71085d19c97dff41decf661/lecture_01.py#L242-L251. The budget includes data, compute, memory, and communication; deployment also adds latency constraints. Larger models or more data alone are not a complete recipe. Balance expressivity, training stability, and efficiency. Our laptop experiments teach mechanics and measurement; their winning settings may not transfer to frontier scale. Today we measure vocabulary size, tokens for fixed text, and lossless round trips. Better compression alone does not establish better model quality. Pause for the first break; preprocessing begins the next period.
+2 minutes. End the history with the connection to our notebook: students can run an existing model while implementing smaller components themselves. LLaMA 2023 released weights to researchers subject to its original access conditions; avoid calling that release unrestricted open source. DeepSeek-R1 reports reinforcement learning for reasoning and releases models; task performance still needs external checks, and generated reasoning is model output. ReAct interleaves reasoning and actions with observations from an environment; tool use is a system design, not simply a longer answer. ReAct's preprint is October 2022 and its conference publication is ICLR 2023; the table is grouped by directions rather than an ordering within this period. Sources: https://arxiv.org/abs/2302.13971; https://arxiv.org/abs/2501.12948; https://arxiv.org/abs/2210.03629. The Spring 2019–2024 timeline remains available as assets/llm-timeline-2019-2024.png in the notebook history guide. Ask which artifacts are needed to reproduce training, rather than just to run inference. Pause for the first break.
 
 ---
 
@@ -650,7 +653,39 @@ Source: CS336 Lecture 1, why_this_course_exists() and course_syllabus(), especia
 </ul>
 
 Note:
-Period 2, minutes 0–20: Unicode, UTF-8, and preserving the input. Python basics are prerequisites; this is not a full regex tutorial.
+Period 2, minutes 0–25. Inspect sources and information loss, restore regex basics with P01, then connect code points and UTF-8 through E03. Use the notebook for outputs and discussion; do not turn this into a complete regex language tutorial.
+
+---
+
+<!-- .slide: id="text-sources" -->
+
+## A corpus reflects its sources
+
+| Source | Useful signal | What to inspect |
+| :--- | :--- | :--- |
+| Books and articles | Extended prose | Topic and language coverage |
+| Forums and reviews | Informal language | Repetition, context, personal information |
+| Code and documentation | Structured text | Language, version, formatting |
+
+Our classroom corpus is small and synthetic.
+
+Real data decisions affect what a tokenizer learns.
+
+Note:
+1 minute. Restore the Spring Text Data: Sources & Coverage topic. A corpus is a collection of texts; sources differ in style, topic, quality, and coverage. Inspect sample documents rather than assuming a named source is uniformly high quality. A source list in a model report is not the full training corpus. Keep evaluation texts separate before learning a vocabulary. E06 will make the training-language effect measurable. Source: Spring slide 29, https://baojian.github.io/llm-26/slides/lecture-01-slides/; source code section Text Data: Sources & Coverage. No undocumented training-data inventory for a named model is asserted.
+
+---
+
+<!-- .slide: id="preprocessing-pipeline" -->
+
+## The text processing pipeline
+
+<img class="diagram" src="assets/text-pipeline.svg" data-excalidraw-source="assets/text-pipeline.excalidraw" alt="Raw bytes are decoded as text, optionally normalized, split into allowed chunks, and encoded as token IDs. Each stage has a different responsibility.">
+
+At every stage: what is preserved, and what can be recovered?
+
+Note:
+1 minute. Decode bytes using an encoding such as UTF-8; choose normalization deliberately; define boundaries; then apply a learned vocabulary. Some implementations combine these stages, and some omit normalization or pre-tokenization. A tokenizer that normalizes text may reconstruct the normalized text but not the original representation. This diagram separates conceptual responsibilities rather than prescribing one universal software architecture. Sources: Python Unicode HOWTO, https://docs.python.org/3/howto/unicode.html; SentencePiece, https://aclanthology.org/D18-2012/, Section 3; Spring preprocessing/tokenization sections.
 
 ---
 
@@ -670,6 +705,103 @@ Choose normalization deliberately and document it.
 
 Note:
 There are two spaces after the comma and a newline before the emoji. Lowercasing changes H to h; strip only removes whitespace at the ends, not the internal spaces or newline. A lossless tokenizer should round-trip its input. A normalizing tokenizer may only recover the normalized input. Python Unicode HOWTO: https://docs.python.org/3/howto/unicode.html.
+
+---
+
+<!-- .slide: id="language-ambiguity" -->
+
+## Text processing needs task context
+
+| Input | A destructive shortcut |
+| :--- | :--- |
+| “The camera is **not** good.” | Removing “not” changes sentiment |
+| <code>US</code> and <code>us</code> | Lowercasing removes a distinction |
+| <code>3.14</code> | Dropping punctuation changes a number |
+| Python indentation | Collapsing spaces can change a program |
+
+A useful transformation for one task can harm another.
+
+Note:
+1 minute. Link back to E01. The old lecture's ambiguity and messy-text examples motivate task-aware decisions; they have moved here so all ten history pages can follow the historical development. Keep the telescope, quit-smoking, Chinese winter/summer, and penny/world-peace examples in the notebook as discussion. These four new transformation examples are independently checkable teaching cases, not empirical model-failure claims. Deleting punctuation or stop words can be suitable in a carefully defined information-retrieval baseline, but it is not a universal LLM preprocessing recipe.
+
+---
+
+<!-- .slide: id="regex-basics" -->
+
+## Regular expressions: character choices
+
+| Pattern | Meaning | Example matches |
+| :--- | :--- | :--- |
+| <code>[wW]oodchuck</code> | One character from a set | woodchuck, Woodchuck |
+| <code>[A-Z]</code> | An ASCII uppercase letter | A, B, Z |
+| <code>[^0-9]</code> | One character outside this range | A, space, 你 |
+| <code>cat&#124;dog</code> | Either alternative | cat, dog |
+
+Use raw Python strings, such as <code>r"[wW]oodchuck"</code>.
+
+Note:
+1.5 minutes. Restore character classes, ranges, negation, and alternation from Spring regex slides. [^0-9] also matches whitespace and punctuation; it is not a letter detector. The caret negates a class only in its special first position. [A-Z] is an ASCII range, not all Unicode uppercase letters. Alternation chooses alternatives; spaces beside a pipe are literal unless a verbose-mode rule says otherwise. Source: https://docs.python.org/3/library/re.html, Regular Expression Syntax; Spring slides RE: disjunctions, negation, and more disjunction.
+
+---
+
+<!-- .slide: id="regex-repetition" -->
+
+## Regular expressions: repetition
+
+| Pattern | Meaning | Example matches |
+| :--- | :--- | :--- |
+| <code>colou?r</code> | Zero or one <code>u</code> | color, colour |
+| <code>oh*</code> | Zero or more <code>h</code> | o, oh, ohh |
+| <code>oh+</code> | One or more <code>h</code> | oh, ohh |
+| <code>beg.n</code> | One character, except newline by default | begin, begun |
+
+<code>re.search</code> finds the first match; <code>re.findall</code> collects matches.
+
+Note:
+1.5 minutes. Keep patterns short enough to inspect. Quantifiers apply to the preceding item. With Python defaults the dot excludes a newline; DOTALL changes this. search returns a Match or None, whereas findall returns matches and has special return behavior when capturing groups are used. Our exercise uses a noncapturing group to retain whole matches. Source: https://docs.python.org/3/library/re.html, syntax and search/findall API; adapted from Spring RE: ? * + .
+
+---
+
+<!-- .slide: class="exercise" id="regex-practice" -->
+
+## What does this word pattern discard?
+
+<p class="exercise-meta">Practice P01 · 2 minutes · Notebook P01</p>
+
+```python
+import re
+text = "Senjō 3 can't 你好🙂"
+pattern = r"[A-Za-z]+(?:'[A-Za-z]+)?"
+print(re.findall(pattern, text))
+```
+
+Predict the output. Can you reconstruct the exact input?
+
+<div class="answer fragment"><p><code>['Senj', "can't"]</code><br>The accent, number, Chinese, emoji, and spaces are lost.</p></div>
+
+Note:
+Two-minute exercise: 30 seconds predict, 30 seconds run P01, one minute explain the discarded information. [A-Za-z] excludes ō; the noncapturing group permits one apostrophe followed by ASCII letters. This is an extractor, not a lossless tokenizer. The full Valkyria passage from Spring remains in the extended notebook. Replacing the pattern with Unicode \w+ would preserve more letters but still omit spaces/punctuation and would not perform linguistic Chinese word segmentation. Source: Spring Task – Tokenization with Regular Expression; Python re documentation. Expected result checked in the classroom notebook.
+
+---
+
+<!-- .slide: id="regex-preserving" -->
+
+## Splitting while preserving the input
+
+```python
+import re
+text = "Senjō 3 can't 你好🙂"
+chunks = re.findall(r"\s+|\w+|[^\w\s]", text)
+print(chunks)
+assert "".join(chunks) == text
+```
+
+The pattern covers whitespace, word characters, and everything else.
+
+Preserving text does not establish correct word boundaries.
+
+Note:
+1.5 minutes. This illustrative Python pattern partitions the entire string because its alternatives cover all characters, including newlines via \s. It keeps the apostrophe separately and keeps 你好 together. Unicode \w includes alphanumeric characters and underscore; it is not a word-segmentation model, and combining marks can be separate chunks. Show the lossless assertion, then ask whether the resulting chunks are Chinese words. Production pre-tokenizers use different patterns; the notebook makes no compatibility claim. Source: Python re documentation, \s, \w, and findall.
 
 ---
 
@@ -762,6 +894,25 @@ The second displayed string contains e followed by U+0301 COMBINING ACUTE ACCENT
 
 ---
 
+<!-- .slide: id="normalization" -->
+
+## Normalization changes the representation
+
+| Operation | Before → after |
+| :--- | :--- |
+| NFC: canonical composition | <code>e + ◌́</code> → <code>é</code> |
+| NFKC: compatibility normalization | <code>Ａ</code> → <code>A</code> |
+| Lowercasing | <code>US</code> → <code>us</code> |
+
+NFC and NFKC do not mean “remove every accent.”
+
+State whether a round trip recovers the **original** or **normalized** text.
+
+Note:
+1 minute following E03. NFC can compose a base letter and combining accent when a canonical composition exists. NFKC can additionally fold compatibility distinctions such as fullwidth Latin A. Lowercasing is a separate operation, not a Unicode normalization form. A normalizer may map distinct inputs to one result, so its output need not identify the original code-point sequence. Source: Unicode Standard Annex #15, https://www.unicode.org/reports/tr15/, Sections 1.1–1.2; Python unicodedata. The notebook runs these examples and checks equality.
+
+---
+
 <!-- .slide: id="byte-roundtrip" -->
 
 ## A complete UTF-8 round trip
@@ -794,22 +945,39 @@ A byte has 256 possible values. A single byte from 你 is not valid UTF-8 by its
 </ul>
 
 Note:
-Period 2, minutes 20–45: representation choices and the first two merges. Reserve four minutes for E04. Continue with encoding and experiments after the break.
+Period 2, minutes 25–45. Connect tokens to next-token prediction, compare basic units, then trace BPE on low/lower and the overlap exercise E04. P02 takes two minutes; E04 takes four. Stop for the second break after the learned vocabulary.
 
 ---
 
 <!-- .slide: id="representation" -->
 
-## Text representation
+## Tokens connect text to the model
 
-A tokenizer maps text to a sequence of token IDs.
+<img class="diagram" src="assets/tokenizer-interface.svg" data-excalidraw-source="assets/tokenizer-interface.excalidraw" alt="The toy string lowest is encoded into the pieces low, e, s, t, then token IDs 257, 101, 115, 116; the model looks up embedding vectors for these IDs.">
 
-The model reads those IDs through an embedding table.
-
-> The tokenizer defines which pieces of text share a vocabulary entry.
+A token ID is an index in **one particular vocabulary**.
 
 Note:
-Distinguish a tokenizer from the model that uses it. A token ID has meaning only within its tokenizer's vocabulary.
+1.5 minutes. Preview the result we will build. Our two-merge tokenizer will encode lowest as [257,101,115,116]. An embedding lookup maps each ID to a learned vector; the diagram deliberately gives no invented learned values. Token IDs have no intrinsic numerical meaning: ID 257 is not semantically larger than ID 101. The decode operation joins stored bytes and reconstructs text. Do not pass these toy IDs into Qwen; its tokenizer and embeddings must agree. Source: Spring tokenization learner/segmenter distinction and CS336 Lecture 1 tokenizer interface. Diagram is an editable teaching schematic.
+
+---
+
+<!-- .slide: id="next-token" -->
+
+## A language model predicts the next token
+
+Prompt: “Fudan University is located in …”
+
+The model assigns probabilities to possible **next tokens**.
+
+$$p_\theta(t_1,\ldots,t_L)=\prod_{i=1}^{L}p_\theta(t_i\mid t_{<i})$$
+
+Choose a token, append it, and repeat.
+
+<p id="prediction-limits">A likely continuation can still be factually wrong.</p>
+
+Note:
+CS336 Lecture 1, intro_to_tokenization(), lines 579–588 of the local lecture_01.py, https://cs336.stanford.edu/lectures/?trace=lecture_01, defines a language model as a distribution over token sequences. The equation here develops that definition using the probability chain rule. This equation is the autoregressive factorization, not an assumption that tokens are independent; theta denotes learned parameters. “Shanghai” is an intended answer, but do not claim it is one token without inspecting the tokenizer. Generation is one use of a language model, not the definition of all NLP systems. Prompting changes the context, fine-tuning changes weights, and a tool-using agent wraps the model in a larger system. Preserve the earlier prediction/correctness lesson: test a held-out set with expected answers; neither probabilities nor generated thinking are guarantees of correctness. The optional notebook log-probability experiment connects the equation to actual outputs.
 
 ---
 
@@ -826,6 +994,45 @@ Distinguish a tokenizer from the model that uses it. A token ID has meaning only
 
 Note:
 Adapted from CS336 Lecture 1 character, byte, word, and BPE comparisons. A learned character vocabulary can have unknown characters; directly using Unicode scalar values avoids that but yields a sparse ID space. Chinese words are not reliably separated by spaces. BPE is one way to learn subwords, not the only algorithm.
+
+---
+
+<!-- .slide: class="exercise" id="word-types" -->
+
+## Tokens and types depend on the rules
+
+<p class="exercise-meta">Practice P02 · 2 minutes · Notebook P02</p>
+
+Toy text: **“low low lower”**
+
+Using whitespace-separated words, count:
+
+- **Tokens:** all word occurrences.
+- **Types:** distinct word forms.
+
+<div class="answer fragment"><p><strong>3 tokens; 2 types.</strong> At the byte level, the same text has <strong>13 tokens</strong>, including spaces.</p></div>
+
+Note:
+30 seconds define, 30 seconds predict, one minute run and compare. Python split produces ['low','low','lower']; the set has two values. UTF-8 length is 3+1+3+1+5=13. The term token is overloaded: a corpus word occurrence and an LLM subword/byte unit are not interchangeable. A vocabulary is a set of types under a specified tokenization scheme. This motivates reporting the rules whenever giving corpus or context lengths. Source: Spring tokenization and notebook vocabulary-growth sections; Jurafsky and Martin, Words and Tokens. Expected responses are checked in P02.
+
+---
+
+<!-- .slide: id="subword-motivation" -->
+
+## Why use subwords?
+
+| Whole-word vocabulary | Reusable pieces |
+| :--- | :--- |
+| <code>low</code> | <code>low</code> |
+| <code>lower</code> | <code>low</code> + <code>er</code> |
+| Unseen <code>lowest</code> | <code>low</code> + <code>est</code> |
+
+Frequent pieces can be shared across new word forms.
+
+<p class="caption">Illustrative segmentation. Learned pieces depend on the training corpus and algorithm.</p>
+
+Note:
+1 minute. This illustrates the motivation from the Spring subword slide, not the precise vocabulary of our later two-merge byte tokenizer, which has low but not est or er. In that tokenizer lowest becomes low,e,s,t. A subword is a statistical piece and need not be a linguistic morpheme. All-base-byte coverage provides a fallback for valid UTF-8 text; arbitrary character-subword vocabularies do not automatically guarantee coverage. Source: Sennrich et al. (2016), Section 3, https://aclanthology.org/P16-1162/.
 
 ---
 
@@ -883,6 +1090,32 @@ Tie rule: choose the smallest pair of token IDs.
 
 Note:
 ASCII base IDs are l=108, o=111, w=119, e=101, r=114. The maximum count is seven; (108,111) wins over (111,119). Break only the tied maximum, not all pairs. Deterministic ties make the lesson reproducible; production implementations may choose a different rule.
+
+---
+
+<!-- .slide: id="bpe-live" -->
+
+## BPE: inspect each training step
+
+<p id="bpe-step" aria-live="polite">Initial corpus · 25 tokens</p>
+
+<table>
+<thead><tr><th>Text × frequency</th><th>Current pieces</th></tr></thead>
+<tbody id="bpe-corpus"><tr><td>low × 5</td><td><code>l · o · w</code></td></tr><tr><td>lower × 2</td><td><code>l · o · w · e · r</code></td></tr></tbody>
+</table>
+
+<p id="bpe-next">Next: l + o · count 7</p>
+
+<div class="demo-form">
+<button id="bpe-advance" type="button">Next merge</button>
+<button id="bpe-reset" type="button">Reset BPE</button>
+<button id="bpe-overlap" type="button">Overlap example</button>
+</div>
+
+<p class="caption">Count every adjacent pair. Replace non-overlapping occurrences left to right.</p>
+
+Note:
+2 minutes. The initial low/lower corpus matches the notebook. Click Next merge twice: the weighted totals become 18 and 11, with new IDs 256=lo and 257=low. The demo stops at the two-merge teaching budget. Reset returns to the original low corpus. After E04, use Overlap example to show aaab×2 and ab×1: winning pair aa has count 4 but only two non-overlapping replacements, so the total falls 10→8. The rendered data come from the same algorithms and tie rule as the notebook, not prewritten display states. PDF shows the initial worked example; the next slide records both resulting stages. Source: Spring BPE in Action; our corpus and deterministic byte IDs follow the classroom notebook.
 
 ---
 
@@ -970,7 +1203,7 @@ The ASCII toy example is also a byte example, since each character here is one b
 </ul>
 
 Note:
-Period 3, minutes 0–20: encoding and boundaries. Minutes 20–40: vocabulary tradeoffs and E06. Final five minutes: exit questions and reading.
+Period 3. Minutes 0–17: fixed-rank encoding with E05, the Spring corpus, boundaries, and tokenization families. Minutes 17–37: costs, E06, and held-out comparison. Minutes 37–45: failure probes, exit questions, and reading.
 
 ---
 
@@ -1026,6 +1259,32 @@ An independently checkable example: training strings bc repeated three times and
 
 ---
 
+<!-- .slide: id="spring-bpe" -->
+
+## The Spring corpus: word boundaries
+
+<div class="columns">
+<div>
+<table><thead><tr><th>Word + marker</th><th>Count</th></tr></thead><tbody>
+<tr><td><code>low_</code></td><td>5</td></tr>
+<tr><td><code>lowest_</code></td><td>2</td></tr>
+<tr><td><code>newer_</code></td><td>6</td></tr>
+<tr><td><code>wider_</code></td><td>3</td></tr>
+<tr><td><code>new_</code></td><td>2</td></tr>
+</tbody></table>
+</div>
+<div>
+<p><strong>First merge:</strong><br><code>e r</code> → <code>er</code><br>9 weighted occurrences.</p>
+<p><strong>Second merge:</strong><br><code>er _</code> → <code>er_</code><br>9 occurrences.</p>
+<p>The marker preserves word-end information.</p>
+</div>
+</div>
+
+Note:
+1.5 minutes. Restore the larger low/lowest/newer/wider/new example from Spring BPE Toy Example. Each word is still a separate sequence; the underscore is a pedagogical end-of-word marker. The sequence boundary prevents cross-word merges, not the printed underscore by itself. Pairs er and r_ initially tie at nine, and the notebook's smallest-ID rule picks er. The next merge is er_. Subsequent ties may differ from the Spring sequence; use the implemented rule and actual results. The old source's final summary contains a typo, (low,er_)→low_; concatenation would produce lower_, so that step is not repeated. Notebook spring-boundaries checks these first two merges and weighted totals 96→87→78. The marker is a stand-in reserved for this ASCII toy corpus, not a literal production chat token. Source: Spring BPE Toy Example and Sennrich et al. (2016), Section 3.2.
+
+---
+
 <!-- .slide: id="boundaries" -->
 
 ## Where merges are allowed
@@ -1057,6 +1316,25 @@ Typing a special token’s spelling is not always equivalent to inserting its ID
 
 Note:
 Source: CS336 Lecture 1 special-token discussion and tiktoken README, https://github.com/openai/tiktoken. Our toy BPE only handles ordinary text. Do not invent Qwen chat-token IDs. The optional tiktoken cell uses encode_ordinary so user text is treated literally, including strings that resemble special tokens.
+
+---
+
+<!-- .slide: id="algorithm-families" -->
+
+## BPE is one way to learn subwords
+
+| Method | Central idea |
+| :--- | :--- |
+| BPE | Learn frequent adjacent merges; encode by merge rank |
+| WordPiece | Use a learned vocabulary; standard BERT encoding takes longest matching pieces |
+| Unigram | Learn piece probabilities; score alternative segmentations |
+
+**SentencePiece is a toolkit** that supports BPE and Unigram.
+
+<p class="caption">Shared goal: a useful vocabulary and a defined encoding procedure.</p>
+
+Note:
+1.5 minutes. Restore the Spring three-algorithm comparison. Do not claim WordPiece training is fully specified by a universally used frequency formula; distinguish its vocabulary learner from the standard BERT segmenter. BERT uses longest-match-first with continuation markers and an unknown fallback. Unigram treats segmentation probabilistically and can support sampling during training. SentencePiece is not a fourth competing objective; it implements algorithms and text handling. Sources: BERT Section 3, https://arxiv.org/abs/1810.04805; canonical BERT tokenization.py, https://github.com/google-research/bert/blob/master/tokenization.py; Kudo (2018), https://aclanthology.org/P18-1007/; Kudo and Richardson (2018), https://aclanthology.org/D18-2012/. We implement BPE only in the core.
 
 ---
 
@@ -1114,6 +1392,27 @@ Toy count of all pairs. Causal attention masks future positions, but its pair co
 
 ---
 
+<!-- .slide: id="resource-budget" -->
+
+## Working within a compute budget
+
+**Given fixed resources, which choices improve model quality?**
+
+| Choice | What it changes |
+| :--- | :--- |
+| Model size | Capacity, memory, and computation |
+| Training data | Coverage, quality, and training cost |
+| Tokenizer | Sequence length and vocabulary size |
+
+Compare alternatives under the same budget and evaluation.
+
+Today’s question: **How should we represent text efficiently?**
+
+Note:
+Source: CS336 Lecture 1, why_this_course_exists() and course_syllabus(), especially lines 115–123 and 242–251 of https://github.com/stanford-cs336/lectures/blob/607a238629cf5332f71085d19c97dff41decf661/lecture_01.py#L242-L251. The budget includes data, compute, memory, and communication; deployment also adds latency constraints. Larger models or more data alone are not a complete recipe. Balance expressivity, training stability, and efficiency. Our laptop experiments teach mechanics and measurement; their winning settings may not transfer to frontier scale. Today we measure vocabulary size, tokens for fixed text, and lossless round trips. Better compression alone does not establish better model quality. Use this as the bridge to E06: vary the merge budget while keeping training and evaluation data fixed.
+
+---
+
 <!-- .slide: class="exercise" id="exercise-05" -->
 
 ## Test on held-out English and Chinese
@@ -1159,6 +1458,24 @@ Measure downstream model quality separately.
 
 Note:
 The notebook also offers an optional comparison of the named cl100k_base and o200k_base encodings. Those are encoding names, not verified tokenizer identities for every commercial model. No unsupported claims about DeepSeek, Kimi, GLM, or Qwen versions belong in this lesson.
+
+---
+
+<!-- .slide: id="tokenization-failures" -->
+
+## Tokenization affects what the model sees
+
+| Input change | What to inspect |
+| :--- | :--- |
+| <code>"low"</code> → <code>" low"</code> | A leading space may change pieces |
+| <code>2026</code> → <code>2,026</code> | Digits and punctuation change boundaries |
+| <code>é</code> → <code>e + ◌́</code> | Normalization changes bytes |
+| English → Chinese | Training coverage changes sequence length |
+
+Inspect the actual tokenizer. Avoid guessing token counts from words.
+
+Note:
+1 minute. These are controlled probes, not assertions about one unexamined commercial model. The core notebook applies the first three to our toy tokenizer; the optional named tiktoken comparison inspects real vocabularies. The fourth is E06. Tokenization can make character-level tasks less directly accessible, but it does not prove that every LLM will fail counting or spelling. Separate tokenization behavior from downstream model accuracy. Source: Spring Limitations of Tokenization; Sennrich et al. (2016); tokenizer API and the Unicode references.
 
 ---
 
@@ -1216,7 +1533,7 @@ These sources support this adapted Fudan lecture. Stanford’s full lecture sequ
 
 ## Readings for Lecture 01
 
-- [Jurafsky and Martin, *Words and Tokens*](https://web.stanford.edu/~jurafsky/slp3/2.pdf)<br>Sections 2.3–2.4: Unicode and BPE (August 2026 draft).
+- [Jurafsky and Martin, *Words and Tokens*](https://web.stanford.edu/~jurafsky/slp3/2.pdf)<br>Read the Unicode and subword-tokenization sections.
 - <a href="../../papers/sennrich-2016-subword-units.pdf" target="_blank" rel="noopener noreferrer">Sennrich, Haddow, and Birch (2016)</a><br>Section 3.2: BPE for subword segmentation.
 - <a href="../../papers/kudo-2018-sentencepiece.pdf" target="_blank" rel="noopener noreferrer">Kudo and Richardson (2018), SentencePiece</a><br>Further reading on language-independent tokenization.
 

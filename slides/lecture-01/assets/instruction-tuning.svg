@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="410" viewBox="0 0 1160 410" role="img">
+<title>instruction tuning</title>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="189.33333333333334" y="65.0" font-size="30" text-anchor="middle" fill="#20578c">Pretraining</text>
+<rect x="20.0" y="89" width="338.6666666666667" height="114" fill="#eef2f5" stroke="#9aafc2" stroke-width="2"/>
+<text x="189.33333333333334" y="146.0" font-size="32" text-anchor="middle" fill="#142e4b">Predict text</text>
+<text x="189.33333333333334" y="253.0" font-size="28" text-anchor="middle" fill="#566471">Learn from a corpus</text>
+<path d="M365.6666666666667 146H403.6666666666667m-12 -7l12 7l-12 7" fill="none" stroke="#20578c" stroke-width="3"/>
+<text x="580.0" y="65.0" font-size="30" text-anchor="middle" fill="#20578c">Demonstrations</text>
+<rect x="410.6666666666667" y="89" width="338.6666666666667" height="114" fill="#eef2f5" stroke="#9aafc2" stroke-width="2"/>
+<text x="580.0" y="146.0" font-size="32" text-anchor="middle" fill="#142e4b">Imitate good</text>
+<text x="580.0" y="186.0" font-size="32" text-anchor="middle" fill="#142e4b">responses</text>
+<text x="580.0" y="253.0" font-size="28" text-anchor="middle" fill="#566471">Supervised fine-tuning</text>
+<path d="M756.3333333333334 146H794.3333333333334m-12 -7l12 7l-12 7" fill="none" stroke="#20578c" stroke-width="3"/>
+<text x="970.6666666666667" y="65.0" font-size="30" text-anchor="middle" fill="#20578c">Preferences</text>
+<rect x="801.3333333333334" y="89" width="338.6666666666667" height="114" fill="#eef2f5" stroke="#9aafc2" stroke-width="2"/>
+<text x="970.6666666666667" y="146.0" font-size="32" text-anchor="middle" fill="#142e4b">Optimize a</text>
+<text x="970.6666666666667" y="186.0" font-size="32" text-anchor="middle" fill="#142e4b">reward signal</text>
+<text x="970.6666666666667" y="253.0" font-size="28" text-anchor="middle" fill="#566471">Comparisons + RL</text>
+<text x="580.0" y="350.0" font-size="30" text-anchor="middle" fill="#142e4b">Evaluate the resulting assistant on separate, checkable tasks.</text>
+</g></svg>

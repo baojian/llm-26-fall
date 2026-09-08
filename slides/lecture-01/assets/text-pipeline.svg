@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="410" viewBox="0 0 1160 410" role="img">
+<title>text pipeline</title>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="140.5" y="65.0" font-size="30" text-anchor="middle" fill="#20578c">Decode</text>
+<rect x="20.0" y="89" width="241.0" height="114" fill="#eef2f5" stroke="#9aafc2" stroke-width="2"/>
+<text x="140.5" y="146.0" font-size="32" text-anchor="middle" fill="#142e4b">Raw bytes</text>
+<text x="140.5" y="186.0" font-size="32" text-anchor="middle" fill="#142e4b">→ text</text>
+<text x="140.5" y="253.0" font-size="28" text-anchor="middle" fill="#566471">Choose an encoding</text>
+<path d="M268.0 146H306.0m-12 -7l12 7l-12 7" fill="none" stroke="#20578c" stroke-width="3"/>
+<text x="433.5" y="65.0" font-size="30" text-anchor="middle" fill="#20578c">Normalize?</text>
+<rect x="313.0" y="89" width="241.0" height="114" fill="#eef2f5" stroke="#9aafc2" stroke-width="2"/>
+<text x="433.5" y="146.0" font-size="32" text-anchor="middle" fill="#142e4b">Text</text>
+<text x="433.5" y="186.0" font-size="32" text-anchor="middle" fill="#142e4b">→ text</text>
+<text x="433.5" y="253.0" font-size="28" text-anchor="middle" fill="#566471">Record changes</text>
+<path d="M561.0 146H599.0m-12 -7l12 7l-12 7" fill="none" stroke="#20578c" stroke-width="3"/>
+<text x="726.5" y="65.0" font-size="30" text-anchor="middle" fill="#20578c">Split</text>
+<rect x="606.0" y="89" width="241.0" height="114" fill="#eef2f5" stroke="#9aafc2" stroke-width="2"/>
+<text x="726.5" y="146.0" font-size="32" text-anchor="middle" fill="#142e4b">Text</text>
+<text x="726.5" y="186.0" font-size="32" text-anchor="middle" fill="#142e4b">→ chunks</text>
+<text x="726.5" y="253.0" font-size="28" text-anchor="middle" fill="#566471">Define boundaries</text>
+<path d="M854.0 146H892.0m-12 -7l12 7l-12 7" fill="none" stroke="#20578c" stroke-width="3"/>
+<text x="1019.5" y="65.0" font-size="30" text-anchor="middle" fill="#20578c">Encode</text>
+<rect x="899.0" y="89" width="241.0" height="114" fill="#eef2f5" stroke="#9aafc2" stroke-width="2"/>
+<text x="1019.5" y="146.0" font-size="32" text-anchor="middle" fill="#142e4b">Chunks</text>
+<text x="1019.5" y="186.0" font-size="32" text-anchor="middle" fill="#142e4b">→ token IDs</text>
+<text x="1019.5" y="253.0" font-size="28" text-anchor="middle" fill="#566471">Use a vocabulary</text>
+<text x="580.0" y="350.0" font-size="30" text-anchor="middle" fill="#142e4b">Lossless encoding can only recover what earlier stages preserve.</text>
+</g></svg>

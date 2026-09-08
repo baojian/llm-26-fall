@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="410" viewBox="0 0 1160 410" role="img">
+<title>tokenizer interface</title>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="140.5" y="65.0" font-size="30" text-anchor="middle" fill="#20578c">Input text</text>
+<rect x="20.0" y="89" width="241.0" height="114" fill="#eef2f5" stroke="#9aafc2" stroke-width="2"/>
+<text x="140.5" y="146.0" font-size="32" text-anchor="middle" fill="#142e4b">lowest</text>
+<text x="140.5" y="253.0" font-size="28" text-anchor="middle" fill="#566471">Exact string</text>
+<path d="M268.0 146H306.0m-12 -7l12 7l-12 7" fill="none" stroke="#20578c" stroke-width="3"/>
+<text x="433.5" y="65.0" font-size="30" text-anchor="middle" fill="#20578c">Pieces</text>
+<rect x="313.0" y="89" width="241.0" height="114" fill="#eef2f5" stroke="#9aafc2" stroke-width="2"/>
+<text x="433.5" y="146.0" font-size="32" text-anchor="middle" fill="#142e4b">low · e · s · t</text>
+<text x="433.5" y="253.0" font-size="28" text-anchor="middle" fill="#566471">Stored byte strings</text>
+<path d="M561.0 146H599.0m-12 -7l12 7l-12 7" fill="none" stroke="#20578c" stroke-width="3"/>
+<text x="726.5" y="65.0" font-size="30" text-anchor="middle" fill="#20578c">Token IDs</text>
+<rect x="606.0" y="89" width="241.0" height="114" fill="#eef2f5" stroke="#9aafc2" stroke-width="2"/>
+<text x="726.5" y="146.0" font-size="32" text-anchor="middle" fill="#142e4b">257 · 101</text>
+<text x="726.5" y="186.0" font-size="32" text-anchor="middle" fill="#142e4b">115 · 116</text>
+<text x="726.5" y="253.0" font-size="28" text-anchor="middle" fill="#566471">Vocabulary indices</text>
+<path d="M854.0 146H892.0m-12 -7l12 7l-12 7" fill="none" stroke="#20578c" stroke-width="3"/>
+<text x="1019.5" y="65.0" font-size="30" text-anchor="middle" fill="#20578c">Model input</text>
+<rect x="899.0" y="89" width="241.0" height="114" fill="#eef2f5" stroke="#9aafc2" stroke-width="2"/>
+<text x="1019.5" y="146.0" font-size="32" text-anchor="middle" fill="#142e4b">Embedding</text>
+<text x="1019.5" y="186.0" font-size="32" text-anchor="middle" fill="#142e4b">vectors</text>
+<text x="1019.5" y="253.0" font-size="28" text-anchor="middle" fill="#566471">One lookup per ID</text>
+<text x="580.0" y="350.0" font-size="30" text-anchor="middle" fill="#142e4b">Our two-merge toy vocabulary: token 257 stores the bytes for low.</text>
+</g></svg>
