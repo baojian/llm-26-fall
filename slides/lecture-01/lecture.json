@@ -1,7 +1,7 @@
 {
   "number": "01",
-  "title": "Tokenization",
-  "subtitle": "How does text become model input?",
+  "title": "Introduction and Tokenization",
+  "subtitle": "Lecture 01 – Introduction to NLP & LLMs",
   "language": "en",
   "demo": "./demo.js",
   "notebook": "lecture-01-exercise.ipynb"

@@ -1,0 +1,30 @@
+{
+  "data": [
+    {
+      "type": "scatter",
+      "mode": "lines+markers",
+      "name": "English + Chinese",
+      "x": [0, 8, 32],
+      "y": [54, 48, 35],
+      "line": { "width": 4 },
+      "marker": { "size": 12 },
+      "hovertemplate": "Merges: %{x}<br>Chinese tokens: %{y}<extra>English + Chinese</extra>"
+    },
+    {
+      "type": "scatter",
+      "mode": "lines+markers",
+      "name": "English only",
+      "x": [0, 8, 32],
+      "y": [54, 54, 54],
+      "line": { "width": 4, "dash": "dash" },
+      "marker": { "size": 12, "symbol": "square" },
+      "hovertemplate": "Merges: %{x}<br>Chinese tokens: %{y}<extra>English only</extra>"
+    }
+  ],
+  "layout": {
+    "xaxis": { "title": { "text": "Learned merges" }, "tickvals": [0, 8, 32], "range": [-1, 33] },
+    "yaxis": { "title": { "text": "Chinese tokens" }, "range": [0, 60], "gridcolor": "#dce2e7" },
+    "legend": { "orientation": "h", "x": 0.2, "y": 1.18 },
+    "showlegend": true
+  }
+}

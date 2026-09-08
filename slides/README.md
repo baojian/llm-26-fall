@@ -5,10 +5,11 @@ notebook for each lecture. The [sample deck](example/index.html) demonstrates
 the layouts using a short tokenization lesson. It is a format sample, not the
 complete first lecture.
 
-[Lecture 01](lecture-01/index.html) now has its own folder, starting with the
-sample's tokenization content. Continue developing that deck for the first
-class. Its notebook is [lecture-01-exercise.ipynb](lecture-01/lecture-01-exercise.ipynb),
-and course paper PDFs are kept in [papers/](../papers/README.md).
+[Lecture 01](lecture-01/index.html) combines course introduction, local-model
+experiments, Unicode, and byte BPE for three 45-minute periods. Its
+[teaching plan](lecture-01/teaching-plan.md) maps the timing and sources; its
+[notebook](lecture-01/lecture-01-exercise.ipynb) contains the Ollama demonstrations
+and matching exercises. Course paper PDFs are kept in [papers/](../papers/README.md).
 
 ## Teaching from a classroom browser
 
@@ -47,6 +48,12 @@ Open `http://127.0.0.1:8000/slides/example/` (or the lecture's folder) and click
 `workspace/slides/example/practice.ipynb`. Later clicks reopen that copy and
 preserve saved answers. The lecture's `assets/` folder is copied the first time
 it is needed; existing personal files are not replaced by new course releases.
+
+To receive an updated handout, rename your existing personal notebook in
+JupyterLab, then click **Notebook** again. Keep the renamed file for your earlier
+answers. Lecture 01's text-model demonstrations require a separate Ollama
+installation and model; preparation is explained inside the notebook. Its core
+tokenization exercises run offline without Ollama.
 
 The launcher checks registered local Jupyter servers. It reuses one when its
 root directory includes this notebook, JupyterLab is available, and its
@@ -130,6 +137,7 @@ The shared styles provide:
 | --- | --- |
 | Title | `class="title-slide"` with title, subtitle, and byline |
 | Section introduction | `class="section-slide"` with one central idea |
+| Topic outline | `class="outline-slide"`, a list with `class="outline-topics"`, and `aria-current="step"` on the current topic |
 | Explanation | A heading and a few short paragraphs or list items |
 | Comparison | `<div class="columns">` containing two `<div>` elements |
 | Code | A fenced Python block, usually 6–12 lines |
@@ -141,6 +149,10 @@ The shared styles provide:
 Use `$$ ... $$` for display equations and `$ ... $` for inline math. The sample
 also demonstrates a local `demo.js` with editable input and a reset button.
 Keep custom interaction code out of the Markdown and the shared initializer.
+
+Repeat the same topic outline at section transitions. The current topic appears
+in bold black, while the others appear in gray. A caption can identify the
+current teaching period. See Lecture 01 for the four-topic example.
 
 ## Standard visual toolkit
 
