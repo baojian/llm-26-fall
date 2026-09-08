@@ -7,7 +7,15 @@ requires-python = ">=3.11"
 dependencies = [
     "edtrace>=0.1.12",
     "einops>=0.8.2",
+    "ipykernel>=7.3.0",
+    "jupyterlab>=4.6.3",
     "mmh3>=5.2.1",
     "modal>=1.4.1",
+    "psutil>=7.2.2",
     "tiktoken>=0.12.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
 ]

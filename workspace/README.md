@@ -2,9 +2,7 @@
 
 This folder is yours. Put your notes, experiments, exercise solutions, and
 scratch code here rather than editing the course files elsewhere in the
-repository.
-
-Everything inside `workspace/` except this README is ignored by git, so:
+repository. Everything inside `workspace/` except this README is ignored by git, so:
 
 - `git pull` never conflicts with your files when new course material lands.
 - Your work stays out of any pull request you open against the course repo.

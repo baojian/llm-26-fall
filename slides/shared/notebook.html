@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Open course notebook</title>
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body class="notebook-launcher">
+  <main>
+    <p class="notebook-label">CS40008.01 · Practice</p>
+    <h1 id="notebook-title">Opening your notebook…</h1>
+    <p id="notebook-status" role="status">Looking for JupyterLab. Starting it for the first time may take a few seconds.</p>
+    <div id="notebook-setup" hidden>
+      <p>From your local copy of the course repository, run:</p>
+      <pre><code>uv sync
+uv run python scripts/slides.py serve</code></pre>
+      <p>Open the local slides and click <strong>Notebook</strong> there.</p>
+    </div>
+    <p><a id="notebook-back" href="../../index.html">Back to slides</a></p>
+  </main>
+  <script src="notebook.js"></script>
+</body>
+</html>
