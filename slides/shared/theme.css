@@ -50,8 +50,17 @@ body { margin: 0; font-family: var(--r-main-font); color: var(--r-main-color); }
 .reveal .outline-topics li[aria-current="step"] { color: #111; font-weight: 700; }
 .reveal .outline-slide .caption { margin-top: 36px; }
 .reveal .columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+.reveal .columns-wide-left { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
 .reveal .columns > * { min-width: 0; }
 .reveal .columns p:last-child { margin-bottom: 0; }
+.reveal .reading-comparison { font-size: 26px; line-height: 1.24; }
+.reveal .reading-comparison h2 { margin-bottom: 22px; }
+.reveal .reading-comparison h3 { font-size: 28px; line-height: 1.18; margin-bottom: 8px; }
+.reveal .reading-comparison .columns { grid-template-columns: minmax(0, 43fr) minmax(0, 57fr); gap: 36px; }
+.reveal .reading-comparison p { margin-bottom: 14px; }
+.reveal .reading-comparison blockquote { margin: 12px 0 18px; padding: 0 0 0 16px; }
+.reveal .reading-comparison .answer { margin-top: 14px; padding-top: 12px; }
+.reveal .qr-code { display: block; width: 100%; height: 480px; max-width: 100%; max-height: none; object-fit: contain; object-position: center top; margin: 0; border: 0; box-shadow: none; }
 .reveal table { width: 100%; margin: 0 0 24px; border-collapse: collapse; font-size: 29px; line-height: 1.35; }
 .reveal th, .reveal td { padding: 16px 18px; text-align: left; border-bottom: 1px solid var(--course-line); }
 .reveal th { color: var(--r-heading-color); font-weight: 600; border-bottom: 2px solid var(--course-accent); }
@@ -102,6 +111,8 @@ body { margin: 0; font-family: var(--r-main-font); color: var(--r-main-color); }
 html.reveal-print .reveal .slides section { height: 720px !important; padding: 54px 64px 58px !important; }
 html.reveal-print .reveal .slides section.title-slide,
 html.reveal-print .reveal .slides section.section-slide { display: flex !important; }
+html.reveal-print .reveal .animation,
+html.reveal-print .reveal .animation-poster { height: 375px; }
 /* Reveal copies the body background into an inline style on each PDF page. */
 html.reveal-print .reveal .slides .pdf-page { background: #fff !important; }
 @media screen {

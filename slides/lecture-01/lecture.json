@@ -4,5 +4,6 @@
   "subtitle": "Lecture 01 – Introduction to NLP & LLMs",
   "language": "en",
   "demo": "./demo.js",
-  "notebook": "lecture-01-exercise.ipynb"
+  "notebook": "lecture-01-exercise.ipynb",
+  "additional_notebooks": ["lecture-01-exercise-tokenization.ipynb"]
 }

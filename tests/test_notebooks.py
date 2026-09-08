@@ -54,6 +54,33 @@ def test_named_lecture_notebook_preserves_student_work(course):
     assert launcher.prepare_notebook("lecture-01").read_text() == "Student's saved answers"
 
 
+def test_additional_notebook_gets_separate_copy_and_new_assets(course):
+    deck = course / "slides/01-tokenization"
+    filename = "extended.ipynb"
+    (deck / "lecture.json").write_text(json.dumps({"additional_notebooks": [filename]}))
+    (deck / filename).write_text((deck / "practice.ipynb").read_text())
+    launcher = NotebookLauncher(course)
+    primary = launcher.prepare_notebook("01-tokenization")
+    primary.write_text("Classroom answers")
+    personal_assets = primary.parent / "assets"
+    (personal_assets / "data.json").write_text("Student data")
+    (deck / "assets/new.json").write_text('[4, 5]')
+    extended = launcher.prepare_notebook("01-tokenization", filename)
+    assert extended.name == filename
+    assert primary.read_text() == "Classroom answers"
+    assert (personal_assets / "data.json").read_text() == "Student data"
+    assert (personal_assets / "new.json").read_text() == '[4, 5]'
+    extended.write_text("Extended answers")
+    assert launcher.prepare_notebook("01-tokenization", filename).read_text() == "Extended answers"
+
+
+@pytest.mark.parametrize("filename", ["private.ipynb", "../private.ipynb", "/tmp/private.ipynb", [], 1])
+def test_additional_notebook_must_be_listed_and_inside_lecture(course, filename):
+    with pytest.raises(ValueError):
+        NotebookLauncher(course).prepare_notebook("01-tokenization", filename)
+    assert not (course / "workspace").exists()
+
+
 @pytest.mark.parametrize("filename", ["../private.ipynb", "/tmp/private.ipynb", "nested/test.ipynb", "test.txt", None])
 def test_notebook_metadata_cannot_choose_another_path(course, filename):
     (course / "slides/01-tokenization/lecture.json").write_text(json.dumps({"notebook": filename}))
@@ -201,8 +228,8 @@ def preview_server(course):
     class Launcher:
         calls = []
 
-        def open(self, lecture):
-            self.calls.append(lecture)
+        def open(self, lecture, notebook=None):
+            self.calls.append((lecture, notebook))
             return {"url": "http://127.0.0.1:8888/lab", "reused": True}
 
     server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
@@ -233,4 +260,16 @@ def test_launch_requires_same_origin_post(preview_server):
         assert json.load(response)["reused"]
         assert response.headers["Cache-Control"] == "no-store"
         assert response.headers["Referrer-Policy"] == "no-referrer"
-    assert preview_server.notebooks.calls == ["01-tokenization"]
+    assert preview_server.notebooks.calls == [("01-tokenization", None)]
+
+
+def test_launch_passes_requested_notebook(preview_server):
+    origin = f"http://127.0.0.1:{preview_server.server_port}"
+    request = Request(origin + "/_course/notebook", data=json.dumps({
+        "lecture": "lecture-01", "notebook": "lecture-01-exercise-tokenization.ipynb"
+    }).encode(), headers={
+        "Origin": origin, "X-Course-Notebook": "1", "Content-Type": "application/json"
+    })
+    with build_opener(ProxyHandler({})).open(request) as response:
+        assert response.status == 200
+    assert preview_server.notebooks.calls == [("lecture-01", "lecture-01-exercise-tokenization.ipynb")]

@@ -8,8 +8,11 @@ complete first lecture.
 [Lecture 01](lecture-01/index.html) combines course introduction, local-model
 experiments, Unicode, and byte BPE for three 45-minute periods. Its
 [teaching plan](lecture-01/teaching-plan.md) maps the timing and sources; its
-[notebook](lecture-01/lecture-01-exercise.ipynb) contains the Ollama demonstrations
-and matching exercises. Course paper PDFs are kept in [papers/](../papers/README.md).
+[notebook](lecture-01/lecture-01-exercise.ipynb) contains the complete
+Spring example texts, Ollama demonstrations, matching E01–E06 exercises, and
+optional multimodal experiments. The deck bundles the original vision images
+and recorded video clips; see [media provenance](lecture-01/assets/README.md).
+Course paper PDFs are kept in [papers/](../papers/README.md).
 
 ## Teaching from a classroom browser
 
@@ -26,6 +29,10 @@ installation or instructor laptop is required for viewing.
   using the local course server.
 - **References:** open the reading slide.
 - **Print:** open the PDF print layout in a new tab.
+
+The print layout has **−**, **+**, **100%**, and **Fit page** controls for
+previewing the slides at different sizes. These controls and their zoom level
+do not change the exported PDF's page dimensions.
 
 The sample's text demonstration runs in the browser. Python notebook work uses
 the local workflow below. On the public course website, the Notebook link shows
@@ -54,6 +61,27 @@ JupyterLab, then click **Notebook** again. Keep the renamed file for your earlie
 answers. Lecture 01's text-model demonstrations require a separate Ollama
 installation and model; preparation is explained inside the notebook. Its core
 tokenization exercises run offline without Ollama.
+
+Lecture 01's optional vision experiment uses two bundled images and an already
+installed vision-capable model. Its recorded clips play with manual controls
+in the slides or notebook. These demonstrations and the article-authorship
+poll add no timed exercises beyond E01–E06. Sentiment is E01 and translation
+is E02; Unicode and tokenization exercises continue as E03–E06. These IDs are
+separate from the gallery's five task groups, which combine image and video
+generation in Task 5.
+
+For optional Stable Diffusion generation, retain the optional packages when
+starting the preview:
+
+```sh
+uv sync --extra tokenization --extra multimodal
+uv run --extra tokenization --extra multimodal python scripts/slides.py serve
+```
+
+Prepare the complete model pipeline separately and set `SD_MODEL` in the
+notebook. The generation cell loads only local or cached weights; installing
+the Python packages does not download a model. Other users can keep the basic
+setup above.
 
 The launcher checks registered local Jupyter servers. It reuses one when its
 root directory includes this notebook, JupyterLab is available, and its
@@ -98,6 +126,19 @@ Each lecture can set `notebook` in `lecture.json` to a filename such as
 `lecture-01-exercise.ipynb`. The default is `practice.ipynb`; the file must be
 inside the lecture folder.
 
+Lecture 01 also provides `lecture-01-exercise-tokenization.ipynb` for extended
+practice from the Spring course, with minimum edit distance removed. Install
+its optional dependencies with `uv sync --extra tokenization` and launch the
+preview with `uv run --extra tokenization python scripts/slides.py serve`.
+Open it through the course page's **Extended practice** link or the deck's
+**Extended tokenization notebook** slide. The default **Notebook** link keeps
+the timed classroom exercises E01–E06.
+
+Additional notebooks are listed in `additional_notebooks` in `lecture.json`.
+Use `../shared/notebook.html?lecture=FOLDER&notebook=FILENAME.ipynb` to open one.
+The launcher accepts only listed notebooks and creates separate personal
+copies. It adds newly supplied assets without replacing existing student files.
+
 ## Create and preview a lecture
 
 From the repository root:
@@ -139,7 +180,7 @@ The shared styles provide:
 | Section introduction | `class="section-slide"` with one central idea |
 | Topic outline | `class="outline-slide"`, a list with `class="outline-topics"`, and `aria-current="step"` on the current topic |
 | Explanation | A heading and a few short paragraphs or list items |
-| Comparison | `<div class="columns">` containing two `<div>` elements |
+| Comparison | `<div class="columns">` containing two `<div>` elements; add `columns-wide-left` for a 60% / 40% split |
 | Code | A fenced Python block, usually 6–12 lines |
 | Exercise | `class="exercise"`, an exercise ID, time, and a task |
 | Answer | `<div class="answer fragment">` after the exercise |
@@ -210,6 +251,12 @@ Use a short silent clip with visible explanations, or provide captions for
 narration. Manim and Excalidraw are authoring tools, so they are not installed
 or run by the classroom viewer. Their exports must exist before publishing.
 
+Recorded video examples use the same `video.animation` element, controls,
+descriptive label, and poster, but omit `data-manim-source` when the clip was
+not produced by a Manim scene. Keep its source attribution in the lecture's
+asset notes. Lecture 01's two recorded clips demonstrate this convention;
+their extracted posters appear in print, and playback is manual.
+
 Official guides: [Plotly.js](https://plotly.com/javascript/getting-started/),
 [Excalidraw exports](https://docs.excalidraw.com/docs/@excalidraw/excalidraw/api/utils/export),
 and [Manim rendering](https://docs.manim.community/en/stable/tutorials/quickstart.html).
@@ -248,6 +295,8 @@ cells. JupyterLab remains available afterward.
 To check Lecture 01 instead, run
 `npm --prefix slides run check:notebook -- http://127.0.0.1:8000 lecture-01`.
 Append `--course-page` to test its exercise link directly from `index.html`.
+Append `--notebook=lecture-01-exercise-tokenization.ipynb` to check the extended
+notebook instead. This also works with `--course-page`.
 
 For PDF export directly in Chrome or Chromium, open **Print**, choose **Save as
 PDF**, landscape orientation, no margins, and background graphics. The PDF shows

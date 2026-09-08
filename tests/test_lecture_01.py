@@ -1,10 +1,13 @@
 """Check the executable teaching material directly from the distributed notebook."""
 
 import base64
+import builtins
 import io
 import json
 import re
+import sys
 from pathlib import Path
+from types import SimpleNamespace
 from urllib.error import HTTPError, URLError
 
 import nbformat
@@ -34,8 +37,16 @@ def test_notebook_runs_offline_without_network(monkeypatch, capsys):
     def no_network(*args, **kwargs):
         pytest.fail("The offline notebook attempted a network request")
 
+    original_import = builtins.__import__
+
+    def no_model_imports(name, *args, **kwargs):
+        if name in {"torch", "diffusers"}:
+            pytest.fail("The offline notebook imported an optional model package")
+        return original_import(name, *args, **kwargs)
+
     monkeypatch.setenv("COURSE_RUN_OLLAMA", "0")
     monkeypatch.setattr("urllib.request.OpenerDirector.open", no_network)
+    monkeypatch.setattr(builtins, "__import__", no_model_imports)
     nbformat.validate(nbformat.from_dict(NOTEBOOK))
     namespace = {}
     for cell in NOTEBOOK["cells"]:
@@ -179,3 +190,106 @@ def test_vision_request_sends_image_bytes_in_the_user_message(lesson):
     assert base64.b64decode(message["images"][0]) == image_bytes
     assert payload["model"] == "installed-vision-model"
     assert payload["stream"] is False
+
+
+def test_vision_request_preserves_the_selected_question(lesson):
+    prompt = "Describe the image in one paragraph."
+    payload = lesson["vision_payload"](b"image", "installed-vision-model", prompt)
+    assert payload["messages"][0]["content"] == prompt
+
+
+@pytest.mark.parametrize("example,filename,question", [
+    ("rainfall", "vision-rainfall.jpg", "axes, red line, and green bar"),
+    ("big data", "vision-big-data.png", "central label, surrounding logos"),
+])
+def test_vision_example_selects_matching_image_and_question(lesson, monkeypatch, example, filename, question):
+    requests = []
+
+    def request(endpoint, payload=None):
+        requests.append((endpoint, payload))
+        if endpoint == "/api/tags":
+            return {"models": [{"name": "qwen3-vl:2b"}]}
+        if endpoint == "/api/show":
+            return {"capabilities": ["vision"]}
+        if endpoint == "/api/chat":
+            return {"message": {"content": "A mocked image description."}}
+        pytest.fail(f"Unexpected Ollama request: {endpoint}")
+
+    monkeypatch.chdir(LECTURE)
+    lesson["RUN_OLLAMA"] = True
+    monkeypatch.setitem(lesson, "ollama_request", request)
+    cell = next(cell for cell in NOTEBOOK["cells"] if cell["id"] == "vision")
+    code = "".join(cell["source"]).replace("RUN_VISION = False", "RUN_VISION = True")
+    code = code.replace('VISION_EXAMPLE = "rainfall"', f'VISION_EXAMPLE = "{example}"')
+    execute_cell({**cell, "source": [code]}, lesson)
+
+    assert [endpoint for endpoint, _ in requests] == ["/api/tags", "/api/show", "/api/chat"]
+    payload = requests[-1][1]
+    assert payload["model"] == "qwen3-vl:2b"
+    message = payload["messages"][0]
+    assert question in message["content"]
+    if example == "big data":
+        assert "axes" not in message["content"]
+    assert base64.b64decode(message["images"][0]) == (LECTURE / "assets" / filename).read_bytes()
+
+
+@pytest.mark.parametrize("device,dtype", [("cpu", "float32"), ("mps", "float32"),
+                                          ("cuda", "float16")])
+def test_diffusion_uses_local_weights_and_retains_pipeline_defaults(lesson, monkeypatch, device, dtype):
+    calls = {}
+    expected_image = object()
+
+    class Generator:
+        def __init__(self, device):
+            calls["generator_device"] = device
+
+        def manual_seed(self, seed):
+            calls["seed"] = seed
+            return self
+
+    class Pipeline:
+        @classmethod
+        def from_pretrained(cls, model, **kwargs):
+            calls["model"] = model
+            calls["load"] = kwargs
+            return cls()
+
+        def to(self, device):
+            calls["device"] = device
+            return self
+
+        def __call__(self, **kwargs):
+            calls["generate"] = kwargs
+            return SimpleNamespace(images=[expected_image])
+
+    monkeypatch.setitem(sys.modules, "torch", SimpleNamespace(
+        float16="float16", float32="float32", Generator=Generator,
+    ))
+    monkeypatch.setitem(sys.modules, "diffusers", SimpleNamespace(DiffusionPipeline=Pipeline))
+    image = lesson["generate_local_image"]("cached-model", "A campus gate", device=device)
+
+    assert image is expected_image
+    assert calls["model"] == "cached-model"
+    assert calls["load"] == {"local_files_only": True, "use_safetensors": True, "dtype": dtype}
+    assert calls["device"] == device
+    assert calls["generator_device"] == "cpu"
+    assert calls["seed"] == 42
+    assert calls["generate"]["prompt"] == "A campus gate"
+    assert calls["generate"]["num_inference_steps"] == 30
+
+
+def test_missing_diffusion_cache_has_no_download_fallback(lesson, monkeypatch):
+    attempts = []
+
+    class MissingPipeline:
+        @classmethod
+        def from_pretrained(cls, model, **kwargs):
+            attempts.append(kwargs)
+            raise OSError("Model files are absent from the local cache")
+
+    monkeypatch.setitem(sys.modules, "torch", SimpleNamespace(float16="float16", float32="float32"))
+    monkeypatch.setitem(sys.modules, "diffusers", SimpleNamespace(DiffusionPipeline=MissingPipeline))
+    with pytest.raises(OSError, match="local cache"):
+        lesson["generate_local_image"]("missing-model", "A campus gate")
+    assert len(attempts) == 1
+    assert attempts[0]["local_files_only"] is True

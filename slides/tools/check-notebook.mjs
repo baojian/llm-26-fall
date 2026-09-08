@@ -10,9 +10,12 @@ const preview = new URL(process.argv[2] || 'http://127.0.0.1:8000');
 const folder = process.argv[3] || 'example';
 assert.match(folder, /^(example|lecture-\d{2}|\d{2}-[a-z0-9-]+)$/);
 const metadata = JSON.parse(await readFile(path.join(slides, folder, 'lecture.json'), 'utf8'));
+const requestedNotebook = process.argv.find(arg => arg.startsWith('--notebook='))?.slice('--notebook='.length);
+const filename = requestedNotebook || metadata.notebook || 'practice.ipynb';
+assert.ok([metadata.notebook || 'practice.ipynb', ...(metadata.additional_notebooks || [])].includes(filename));
 const fromCoursePage = process.argv.includes('--course-page');
 assert.ok(['localhost', '127.0.0.1'].includes(preview.hostname));
-const output = path.join(slides, '.checks', `notebook-${folder}`);
+const output = path.join(slides, '.checks', `notebook-${folder}${requestedNotebook ? '-extended' : ''}`);
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 let context;
@@ -36,7 +39,15 @@ try {
     await row.screenshot({ path: path.join(output, 'course-materials-zh.png'), animations: 'disabled' });
     await page.locator('[data-lang="en"]').click();
   }
-  const link = page.getByRole('link', { name: fromCoursePage ? metadata.notebook : 'Notebook', exact: true });
+  const link = fromCoursePage
+    ? page.getByRole('link', { name: filename, exact: true })
+    : requestedNotebook
+      ? page.locator(`a[href*="notebook=${filename}"]`)
+      : page.getByRole('link', { name: 'Notebook', exact: true });
+  if (!fromCoursePage && requestedNotebook) {
+    const slideId = await link.evaluate(el => el.closest('section').id);
+    await page.goto(new URL(`/slides/${folder}/#/${slideId}`, preview).href);
+  }
   assert.equal(await link.getAttribute('target'), '_blank');
   assert.equal(await link.getAttribute('download'), null);
 
@@ -61,7 +72,7 @@ try {
   const secondURL = new URL(second.result.url);
   assert.equal(secondURL.origin, firstURL.origin, 'Repeated clicks started different servers.');
   assert.notEqual(secondURL.pathname, firstURL.pathname, 'Tabs should have independent Lab workspaces.');
-  assert.equal(first.result.notebook, `workspace/slides/${folder}/${metadata.notebook || 'practice.ipynb'}`);
+  assert.equal(first.result.notebook, `workspace/slides/${folder}/${filename}`);
 
   const serverBase = firstURL.origin + firstURL.pathname.split('/lab/workspaces/')[0];
   const specsResponse = await context.request.get(serverBase + '/api/kernelspecs');

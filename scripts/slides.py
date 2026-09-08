@@ -91,7 +91,7 @@ class PreviewHandler(SimpleHTTPRequestHandler):
             if not 0 < length <= 2048:
                 raise ValueError("Invalid notebook request.")
             request = json.loads(self.rfile.read(length))
-            result = self.server.notebooks.open(request.get("lecture"))
+            result = self.server.notebooks.open(request.get("lecture"), request.get("notebook"))
             self.send_json(200, result)
         except (ValueError, TypeError, AttributeError) as error:
             self.send_json(400, {"error": str(error)})
