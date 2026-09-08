@@ -198,6 +198,41 @@ def test_vision_request_preserves_the_selected_question(lesson):
     assert payload["messages"][0]["content"] == prompt
 
 
+@pytest.mark.parametrize("example,filename,question", [
+    ("rainfall", "vision-rainfall.jpg", "axes, red line, and green bar"),
+    ("big data", "vision-big-data.png", "central label, surrounding logos"),
+])
+def test_vision_example_selects_matching_image_and_question(lesson, monkeypatch, example, filename, question):
+    requests = []
+
+    def request(endpoint, payload=None):
+        requests.append((endpoint, payload))
+        if endpoint == "/api/tags":
+            return {"models": [{"name": "qwen3-vl:2b"}]}
+        if endpoint == "/api/show":
+            return {"capabilities": ["vision"]}
+        if endpoint == "/api/chat":
+            return {"message": {"content": "A mocked image description."}}
+        pytest.fail(f"Unexpected Ollama request: {endpoint}")
+
+    monkeypatch.chdir(LECTURE)
+    lesson["RUN_OLLAMA"] = True
+    monkeypatch.setitem(lesson, "ollama_request", request)
+    cell = next(cell for cell in NOTEBOOK["cells"] if cell["id"] == "vision")
+    code = "".join(cell["source"]).replace("RUN_VISION = False", "RUN_VISION = True")
+    code = code.replace('VISION_EXAMPLE = "rainfall"', f'VISION_EXAMPLE = "{example}"')
+    execute_cell({**cell, "source": [code]}, lesson)
+
+    assert [endpoint for endpoint, _ in requests] == ["/api/tags", "/api/show", "/api/chat"]
+    payload = requests[-1][1]
+    assert payload["model"] == "qwen3-vl:2b"
+    message = payload["messages"][0]
+    assert question in message["content"]
+    if example == "big data":
+        assert "axes" not in message["content"]
+    assert base64.b64decode(message["images"][0]) == (LECTURE / "assets" / filename).read_bytes()
+
+
 @pytest.mark.parametrize("device,dtype", [("cpu", "float32"), ("mps", "float32"),
                                           ("cuda", "float16")])
 def test_diffusion_uses_local_weights_and_retains_pipeline_defaults(lesson, monkeypatch, device, dtype):

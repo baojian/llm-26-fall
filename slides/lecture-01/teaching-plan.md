@@ -14,12 +14,12 @@ tokenizers on held-out text without confusing compression with model quality.
 
 | Period | Minutes within the period | Topic and activity |
 | --- | --- | --- |
-| 1 | 0–25 | Course introduction (7 min), language and multimodal example gallery (13 min), E01: sentiment with Ollama (5 min) |
+| 1 | 0–25 | Course introduction (10 min), language and multimodal example gallery (7 min), E01: sentiment (5 min), E02: translation (3 min) |
 | 1 | 25–45 | Ten development slides: language difficulties and history (13 min); next-token prediction, building a model, and resource choices (7 min) |
-| 2 | 0–20 | Text preprocessing, Unicode, UTF-8, E02: count and round-trip |
-| 2 | 20–45 | Tokenization choices, BPE training, E03: overlapping pairs and merge counts |
-| 3 | 0–20 | Fixed merge order, E04: encode unseen text, boundaries and special tokens |
-| 3 | 20–40 | Vocabulary tradeoffs, E05: held-out English and Chinese comparison |
+| 2 | 0–20 | Text preprocessing, Unicode, UTF-8, E03: count and round-trip |
+| 2 | 20–45 | Tokenization choices, BPE training, E04: overlapping pairs and merge counts |
+| 3 | 0–20 | Fixed merge order, E05: encode unseen text, boundaries and special tokens |
+| 3 | 20–40 | Vocabulary tradeoffs, E06: held-out English and Chinese comparison |
 | 3 | 40–45 | Exit questions and readings |
 
 Breaks fall between periods and are outside these 135 teaching minutes. Repeat
@@ -27,18 +27,33 @@ the four-topic outline at each section transition, with only the current topic
 in bold black. Repeat the tokenization outline after the second break.
 
 Open with the title, **About me**, and the first four-topic outline, in that
-order. Continue with **NLP, LLMs, and this course**, then the course logic and
-coursework to establish the field, the model family, and the course's purpose
-and progression. Continue with students'
-applications and the example gallery. Place **From examples to today’s goals**
-at the end of Course Overview, immediately before the development outline, to
+order. Continue with **NLP, LLMs, and this course**, then the course logic,
+topic coverage, optional resources, coursework, course materials, and learning
+strategy. Treat the four added topic/resource/logistics pages as quick
+orientation within the ten-minute introduction; students can explore links and
+complete setup after class. Follow with the app survey, **App, model, tokenizer**,
+and the short Qwen introduction. Then show the five-task overview and its groups
+in order: sentiment (E01), translation (E02), article generation, image understanding,
+and text-to-image/video generation. Place **From examples to today’s goals** at
+the end of Course Overview, immediately before the development outline, to
 connect observed model behavior to the technical lesson.
 
-Prepare one short Qwen response before class; keep the context example immediately before E01. Show both full
-translation inputs, the article-authorship poll, and the two bundled vision
-images. Play about ten seconds of each recorded video manually. Further live
+Prepare one short Qwen response before class for the model introduction before
+the task overview. Discuss context within E01 through the contrasting uses of
+“light” in the camera reviews. E02 places both translation examples side by side
+on one slide. Allow one minute to predict the key English quantities, one to
+translate the complete Google Translate passage (A), and one to
+compare: **249**, **over 200 million daily users**, **April 2016**, **over
+500 million total users**, and **over 100 billion words per day**. Preserve the
+dates and qualifiers; assess translation fidelity, not whether these historical
+statistics are current. The AI-definition excerpt (B) is a same-slide follow-on
+if time permits: compare its definition with its prediction about occupations.
+An ellipsis marks omitted text; both complete passages remain in the notebook.
+Show the two article excerpts side by side with the authorship poll,
+then reveal their attribution on the same slide. Continue with the two bundled vision images.
+Play about ten seconds of each recorded video manually. Further live
 translation, article, vision, and image generation are optional; do not wait for
-model downloads or long inference during the 13-minute gallery.
+model downloads or long inference during the seven-minute gallery.
 
 Development of NLP & LLMs has ten content slides, following its outline:
 ambiguity; messy text and reasoning; Weaver and Turing; the Turing test;
@@ -47,10 +62,11 @@ LLM timeline; next-token prediction; the model-building pipeline; and resource
 budgets. The historical examples motivate the final three slides and the next
 section's question of how to represent text.
 
-The five timed exercises total 25 minutes (5, 3, 4, 5, and 8 minutes).
+The six timed exercises total 28 minutes (5, 3, 3, 4, 5, and 8 minutes).
 Students predict first, run the matching notebook section, then explain one
-observation. The gallery's numbered tasks, authorship poll, and optional model
-demonstrations add no timed exercises beyond E01–E05. These are ungraded
+observation. The gallery's five task groups are separate from the timed exercise
+IDs E01–E06; image and video generation share Task 5. The authorship poll and
+optional model demonstrations add no timed exercises. These are ungraded
 classroom practice. Use the course website for assessment rules and dates;
 A1 is released in Week 2.
 
@@ -67,6 +83,18 @@ A1 is released in Week 2.
   both complete article excerpts and their GPT-3 attribution, vision images,
   Stable Diffusion prompt/settings, and two recorded video examples. Complete
   text examples are retained in the notebook where slides use excerpts.
+- Original overview pages
+  [#15–20](https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/15)
+  use zero-based slide indices: topic coverage; additional books, courses, and
+  paper communities; coursework; course materials; effective learning; and
+  the development outline. The Fall deck adds `course-topics` and `beyond-course`
+  after `course-logic`, and `course-materials` and `learning-strategy` after
+  `course-work`. Existing coursework and the post-gallery development outline
+  cover the other two source pages. Fall assessment, individual written
+  projects, repository links, and setup remain authoritative; the Spring
+  page's team-project/presentation wording and embedded Spring course page
+  do not define Fall requirements. Preserve the read → implement → experiment
+  → explain learning cycle and optional companion-resource choices.
 - Original development slides
   [#21–27](https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/21)
   map respectively to ambiguity, messy text/reasoning, Weaver/Turing, the
@@ -123,7 +151,7 @@ files only. The original prompt uses 30 steps and guidance scale 7.5.
 The additional [extended tokenization notebook](lecture-01-exercise-tokenization.ipynb)
 copies the Spring notebook's Ollama, Unicode, regular expression, spaCy, dataset,
 and tokenizer sections, with minimum edit distance removed. The deck links to
-it after the tokenizer comparison. The toolbar still opens E01–E05.
+it after the tokenizer comparison. The toolbar still opens E01–E06.
 
 For extended practice, run `uv sync --extra tokenization` and start the preview
 with `uv run --extra tokenization python scripts/slides.py serve`. The notebook

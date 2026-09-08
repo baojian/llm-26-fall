@@ -62,6 +62,10 @@
     });
     await document.fonts.ready;
     Reveal.layout();
+    if (Reveal.isPrintView()) {
+      const preview = await import(new URL('shared/print-preview.js', base));
+      await preview.initialize(Reveal);
+    }
     return metadata;
   })();
   window.courseReady.catch(error => {

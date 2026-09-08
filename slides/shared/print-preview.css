@@ -1,0 +1,43 @@
+.print-preview-toolbar { display: none; }
+@media screen {
+  html.course-print-preview body {
+    width: calc(var(--print-page-width) * var(--print-preview-scale)) !important;
+    height: auto !important;
+    padding-top: 76px;
+    padding-bottom: 24px;
+  }
+  html.course-print-preview .reveal {
+    width: var(--print-page-width) !important;
+    zoom: var(--print-preview-scale);
+  }
+  .print-preview-toolbar {
+    position: fixed;
+    z-index: 40;
+    top: 38px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border: 1px solid #cbd5df;
+    border-radius: 6px;
+    background: #fff;
+    color: #202b38;
+    box-shadow: 0 2px 8px #202b381a;
+    font: 14px Arial, sans-serif;
+    white-space: nowrap;
+  }
+  .print-preview-toolbar output { min-width: 40px; text-align: center; }
+  .print-preview-toolbar button {
+    padding: 4px 8px;
+    border: 1px solid #cbd5df;
+    border-radius: 3px;
+    background: #f6f8fa;
+    color: #20578c;
+    font: inherit;
+    cursor: pointer;
+  }
+  .print-preview-toolbar button:disabled { opacity: 0.4; cursor: default; }
+  .print-preview-toolbar button:focus-visible { outline: 2px solid #20578c; outline-offset: 2px; }
+}

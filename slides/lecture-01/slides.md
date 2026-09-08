@@ -17,18 +17,22 @@ Ask students how they think a model represents a Chinese sentence.
 
 ## About me
 
-**Email:** bjzhou@fudan.edu.cn
-
-**Course website:** [baojian.github.io/llm-26-fall/](https://baojian.github.io/llm-26-fall/)
-
-**Course GitHub:** [github.com/baojian/llm-26-fall](https://github.com/baojian/llm-26-fall)
-
-**Office:** Francis and Rose Yuen Campus, C611
-
-**Office hours:** Mon. 14:00–15:30
+<div class="columns columns-wide-left">
+<div>
+<p><strong>Email:</strong> <a href="mailto:bjzhou@fudan.edu.cn">bjzhou@fudan.edu.cn</a></p>
+<p><strong>Course website:</strong> <a href="https://baojian.github.io/llm-26-fall/">baojian.github.io/llm-26-fall/</a></p>
+<p><strong>Course GitHub:</strong> <a href="https://github.com/baojian/llm-26-fall">github.com/baojian/llm-26-fall</a></p>
+<p><strong>Office:</strong> Francis and Rose Yuen Campus, C611</p>
+<p><strong>Office hours:</strong> Mon. 14:00–15:30</p>
+</div>
+<div>
+<p class="caption">Scan to join the WeChat group</p>
+<a href="assets/llm-26-fall-wechat.png"><img class="qr-code" src="assets/llm-26-fall-wechat.png" alt="QR code for the llm-26-fall WeChat group, supplied by the instructor. The image states that the code is valid before September 15."></a>
+</div>
+</div>
 
 Note:
-Introduce yourself and invite students to office hours. Contact details and research interests: Fudan Spring Lecture 01, https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/1. Office hours and course links: the Fall 2026 course page, ../../index.html.
+Introduce yourself and invite students to office hours. Allow students to scan the course WeChat QR code on the right; clicking the image opens its full-size original. The instructor supplied this unchanged image on September 8, 2026; it states that the invitation is valid before September 15. Contact details: Fudan Spring Lecture 01, https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/1. Office hours and course links: the Fall 2026 course page, ../../index.html.
 
 ---
 
@@ -81,11 +85,45 @@ Explain why the topics build on one another: models need numerical text represen
 
 ---
 
+<!-- .slide: id="course-topics" -->
+
+## What we will cover
+
+**Foundations:** text preprocessing and tokenization; n-gram models; word embeddings; neural language models; RNNs; self-attention; Transformers.
+
+**Training and evaluation:** pretraining and fine-tuning; data quality; compute budgets; evaluation and benchmarking.
+
+**Applications and frontiers:** prompting and in-context learning; alignment and safety; retrieval; efficient inference; diffusion language models; reasoning and agents.
+
+See the [weekly schedule](../../index.html#schedule) for the sequence and practical work.
+
+Note:
+Adapted from Spring Lecture 01 slide 15: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/15. The Fall schedule defines actual scope and timing: ../../index.html#schedule. Word2vec supplies an embedding example; RNN/LSTM modeling provides brief motivation for attention. Data, compute, retrieval, and experimental design are explicit parts of the Fall course. This topic map gives concrete subjects for the preceding course-logic slide. Spend about 45 seconds on the map; students can revisit the weekly schedule after class.
+
+---
+
+<!-- .slide: id="beyond-course" -->
+
+## More materials beyond this course
+
+**Books:** [Speech and Language Processing](https://web.stanford.edu/~jurafsky/slp3/); [Foundations of Large Language Models](https://arxiv.org/abs/2501.09223); [Introduction to NLP (Eisenstein)](https://mitpress.mit.edu/9780262042840/introduction-to-natural-language-processing/); [Introduction to NLP (Zhang, Gui & Huang)](https://intro-nlp.github.io/).
+
+**Courses:** Stanford [CS336](https://cs336.stanford.edu/) and [CS224N](https://web.stanford.edu/class/cs224n/); [CMU 11-711](https://cmu-l3.github.io/anlp-fall2025/); [UMass CS685](https://people.cs.umass.edu/~miyyer/cs685/); [Princeton COS 484](https://princeton-nlp.github.io/cos484/); [Stanford CS124](https://web.stanford.edu/class/cs124/); Karpathy’s [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html).
+
+**Research:** NLP: ACL, EMNLP, NAACL, EACL, COLING ([ACL Anthology](https://aclanthology.org/)); ML: NeurIPS, ICML, ICLR; IR: SIGIR, WWW, WSDM, CIKM; data mining: KDD.
+
+Choose **one book and one course** for optional study alongside our materials.
+
+Note:
+Adapted from Spring Lecture 01 slide 16: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/16. This preserves the source's four books, seven courses, and research-community inventory. Book authors: Dan Jurafsky and James H. Martin; Tong Xiao and Jingbo Zhu; Jacob Eisenstein; Qi Zhang, Tao Gui, and Xuanjing Huang. Eisenstein's published book is Introduction to Natural Language Processing (2019), per MIT Press; the earlier slide labels a 2018 version. Course emphases: CS336 builds language models; CS224N covers deep learning for NLP; CMU 11-711 and UMass CS685 cover advanced NLP; Princeton COS 484 covers NLP; CS124 connects language and information; Zero to Hero develops neural-network implementations. These are optional companions, not additional required courses. Encourage students to follow a small selection and use research papers or blogs when investigating a specific question.
+
+---
+
 <!-- .slide: id="course-work" -->
 
-## How we will learn
+## Coursework and Assessment
 
-Build small models, run controlled experiments, and investigate one question in an individual project.
+Build small models and run experiments, and do one course project.
 
 | Assessment | Weight |
 | :--- | ---: |
@@ -96,7 +134,45 @@ Build small models, run controlled experiments, and investigate one question in 
 A1 is released in **Week 2**. See the [course page](../../index.html#assessment) for details.
 
 Note:
-Distinguish today’s ungraded practice from graded assignments. The course website is the source of current assessment rules. Do not import the Stanford workload or the previous semester’s deadlines. Connect small reproducible experiments to the individual project.
+Distinguish today’s ungraded practice from graded assignments. The course website is the source of current assessment rules. Do not import the Stanford workload or the previous semester’s deadlines. Connect small reproducible experiments to the individual project. This is the Fall counterpart of Spring Lecture 01 slide 17, which opens the earlier course page: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/17. The displayed weights and individual project follow ../../index.html#assessment.
+
+---
+
+<!-- .slide: id="course-materials" -->
+
+## Course materials
+
+- [Course website](../../index.html): weekly slides, exercises, readings, and assessment.
+- [GitHub repository](https://github.com/baojian/llm-26-fall): source files and updates.
+- **Notebook:** open your personal Jupyter copy under `workspace/`.
+
+Fetch course updates before class:
+
+```sh
+cd llm-26-fall
+git pull
+```
+
+Note:
+Adapted from Spring Lecture 01 slide 18 with the Fall repository and URLs: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/18. From the repository root, run uv sync and uv run python scripts/slides.py serve for local slides and notebook integration. The course website links materials as they become available. Existing personal notebook answers are preserved when course files change; to obtain a revised handout, rename the old personal notebook and reopen Notebook. Keep the renamed file for earlier work. Point out these locations now; do setup and troubleshooting after class.
+
+---
+
+<!-- .slide: id="learning-strategy" -->
+
+## How to learn this course effectively
+
+- **Linear algebra:** vectors, matrices, and tensor shapes.
+- **Probability and ML:** distributions, losses, and optimization.
+- **Python:** practice with NumPy, PyTorch, and Transformers.
+- **Communication:** explain evidence and decisions in your individual work.
+
+**Read → implement → experiment → explain.**
+
+Practice regularly. Verify results and investigate failures.
+
+Note:
+Adapted from Spring Lecture 01 slide 19: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/19. Connect prerequisites to the next experiment: inspect the tensor or text representation, implement a small case, change one factor, and explain the result. Fall prerequisites and learning expectations are in ../../index.html#overview. Fall projects are individual written submissions, so communication means clear experimental records and explanations rather than the Spring team's presentation requirement. The course AI policy permits assistance in practical work while requiring students to verify results and explain their decisions; use ../../index.html#policies for the full policy.
 
 ---
 
@@ -114,23 +190,6 @@ Submit your response through one pull request, following the issue’s guide.
 
 Note:
 Take two or three examples aloud. Explain that an app may combine a model, search, tools, and an interface. Introduce the GitHub workflow here; students can finish the PR after class. Do not spend the period debugging individual accounts.
-
----
-
-<!-- .slide: id="nlp-tasks" -->
-
-## Language and multimodal examples
-
-| Task | Input → output |
-| :--- | :--- |
-| Sentiment | Camera review → label and explanation |
-| Translation | Chinese passage → English passage |
-| Article generation | Topic or opening → article |
-| Image understanding | Image + question → description |
-| Text to image / video | Description → generated visual content |
-
-Note:
-Preview the examples, then show their actual inputs and media on the following slides. Model calls run in Notebook; prepared videos play directly in the deck. Text-to-image and text-to-video broaden the examples to multimodal generation rather than text-only LLM tasks. Sources: Fudan Spring Lecture 01, https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/5 through #/11.
 
 ---
 
@@ -154,13 +213,15 @@ Ollama serves the model; it is not itself the language model. The tokenizer we t
 
 <!-- .slide: id="notebook-demo" -->
 
-## Example: a Qwen language model
+## Example 01: A Qwen language model
 
 > Fudan University is located in which city? Answer with one word.
 
 **Expected answer:** Shanghai.
 
-Open **Notebook** and run the first local-model call.
+**[Example 01 — Open notebook](http://127.0.0.1:8888/lab/workspaces/course-bc5dda9848dbf835/tree/workspace/slides/lecture-01/lecture-01-exercise.ipynb)**
+
+Run the first local-model call.
 
 - Compare installed Qwen model sizes.
 - Try the same prompt with thinking off and on.
@@ -171,20 +232,20 @@ This restores the original Qwen prompt from https://baojian.github.io/llm-26/sli
 
 ---
 
-<!-- .slide: id="natural-language" -->
+<!-- .slide: id="nlp-tasks" -->
 
-## Natural language needs context
+## Language and multimodal examples
 
-> A man saw a boy with a telescope.
-
-Who had the telescope?
-
-> 冬天，能穿多少穿多少。<br>夏天，能穿多少穿多少。
-
-The same words can support different interpretations.
+| Task | Input → output |
+| :--- | :--- |
+| 1. Sentiment | Camera review → label and explanation |
+| 2. Translation | Chinese passage → English passage |
+| 3. Article generation | Topic or opening → article |
+| 4. Image understanding | Image + question → description |
+| 5. Text to image / video | Description → generated visual content |
 
 Note:
-Invite both attachment readings of the English sentence. In Chinese, contrast wearing as much as possible in winter with as little as possible in summer. These are ambiguity examples from Fudan Spring Lecture 01; context resolves meanings, while tokenization only chooses a representation.
+Introduce the five numbered task groups, then go directly to Task 1. The following slides stay in this order; text-to-image and text-to-video are both examples of Task 5. The app/model/tokenizer explanation and short Qwen call precede this overview. Model calls run in Notebook; prepared videos play directly in the deck. Text-to-image and text-to-video broaden the examples to multimodal generation rather than text-only LLM tasks. Sources: Fudan Spring Lecture 01, https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/5 through #/11.
 
 ---
 
@@ -200,96 +261,62 @@ Invite both attachment readings of the English sentence. In Chinese, contrast we
 
 Does “light” mean positive? Predict the labels, then compare with Ollama.
 
-<div class="answer fragment"><p>Expected: positive, positive, negative. The surrounding words change the meaning of “light.”</p></div>
+<div class="answer fragment"><p>Expected: positive, positive, negative.</p> <p> The surrounding words change the meaning of “light.”</p></div>
 
 Note:
 Allow one minute to label individually, two to run notebook E01, and two to compare. These are shortened versions of the camera reviews in the previous Fudan lecture; the notebook keeps the full review text. The expected labels are human judgments for these examples, not guaranteed model outputs. Discuss any disagreement.
 
 ---
 
-<!-- .slide: id="example-translation-stats" -->
+<!-- .slide: class="exercise" id="example-translation-stats" -->
 
 ## Task 2: Machine translation
 
-**Chinese → English**
+<p class="exercise-meta">Exercise E02 · 3 minutes · Notebook E02 · Historical examples</p>
 
-> Google Translate支持249种语言。日均用户超过2亿人，2016年4月总用户数超过5亿人，每天翻译超过1000亿个单词。
+<div class="columns">
+<div>
+<h3>A: Numbers and dates</h3>
+<blockquote><p>Google Translate支持249种语言。日均用户超过2亿人，2016年4月总用户数超过5亿人，每天翻译超过1000亿个单词。</p></blockquote>
+</div>
+<div>
+<h3>B: Definition and prediction</h3>
+<blockquote><p>人工智能亦称智械、机器智能，指由人制造出来的机器所表现出来的智能。……常态预测则认为人类的很多职业也逐渐被其取代。</p></blockquote>
+</div>
+</div>
 
-Translate the passage while preserving every number and date.
+Translate into English. Check A’s numbers and B’s meaning.
 
-<p class="caption">Historical example text from the original lecture; its statistics are not a current fact sheet.</p>
-
-Run the **Machine translation** examples in Notebook.
+<div class="answer fragment"><p>A: 249 languages; over 200 million daily users; April 2016; over 500 million total users; over 100 billion words per day.</p></div>
 
 Note:
-Use the full Google Translate passage from the original source, not the shortened summary in the earlier Fall draft. Ask whether the translation preserves 249, 200 million, April 2016, 500 million, and 100 billion without silently updating the source. Translation fidelity and factual verification are separate questions. Notebook stores the exact source as a selectable translation example. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/7.
+Allow one minute to predict A’s quantities, one to run Notebook E02, and one to compare. Students should write the four English quantities and the date, then identify any changed or omitted information in the model output. One 亿 is 100 million, so 2亿 is 200 million, 5亿 is 500 million, and 1000亿 is 100 billion. Preserve “over,” the daily units, and the April 2016 date attached to total users. If Ollama is unavailable, compare student translations with these checks. A is the full Google Translate passage from the original source; these are historical source statistics, not a current fact sheet. B excerpts the original AI-definition passage, with omissions marked. Both full passages are retained in the notebook’s existing translation cell. Use B as a follow-on comparison if time permits: preserve both the definition of machine intelligence and the final prediction about occupations. Translating that prediction does not establish its truth. Keep the model and decoding settings fixed. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/7.
 
 ---
 
-<!-- .slide: id="example-translation-ai" -->
+<!-- .slide: class="reading-comparison" id="example-article-blog" -->
 
-## Task 2: Translate an explanatory passage
+## Task 3: Article generation
 
-> 人工智能亦称智械、机器智能，指由人制造出来的机器所表现出来的智能。通常人工智能是指通过普通计算机程序来呈现人类智能的技术。该词也指出研究这样的智能系统是否能够实现，以及如何实现。同时，通过医学、神经科学、机器人学及统计学等的进步，常态预测则认为人类的很多职业也逐渐被其取代。
+<div class="columns">
+<div>
+<h3>A: Productivity blog</h3>
+<p><strong>Feeling unproductive? Maybe you should stop overthinking.</strong></p>
+<blockquote><p>In order to get something done, maybe we need to think less. Seems counter-intuitive, but I believe sometimes our thoughts can get in the way of the creative process. We can work better at times when we "tune out" the external world and focus on what's in front of us. I've been thinking about this lately, so I thought it would be good to write an article about it…</p></blockquote>
+</div>
+<div>
+<h3>B: News article</h3>
+<p><strong>United Methodists Agree to Historic Split</strong></p>
+<blockquote><p>After two days of intense debate, the United Methodist Church has agreed to a historic split — one that is expected to end in the creation of a new denomination, one that will be “theologically and socially conservative,” according to The Washington Post. The majority of delegates attending the church‘s annual General Conference in May voted to strengthen a ban on the ordination of LGBTQ clergy and to write new rules that will “discipline” clergy who officiate at same-sex weddings. But those who opposed these measures have a new plan…</p></blockquote>
+</div>
+</div>
 
-Compare how the model translates the definition and the final prediction.
-
-Run the **AI definition** example in Notebook.
-
-Note:
-This is the second complete Chinese source from the original translation slide. Ask students to check whether the English version preserves the distinction between a definition and a prediction about occupations. The source's prediction is not established by translating it. Keep a fixed model and decoding settings when comparing translations. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/7.
-
----
-
-<!-- .slide: id="example-article-blog" -->
-
-## Task 3: Article generation — A
-
-**Feeling unproductive? Maybe you should stop overthinking.**
-
-> In order to get something done, maybe we need to think less. Seems counter-intuitive, but I believe sometimes our thoughts can get in the way of the creative process. We can work better at times when we “tune out” the external world and focus on what's in front of us.
-
-Human or machine?
-
-Note:
-This is an excerpt from the original blog example; the full excerpt is restored in Notebook under the article-generation quiz. Let students make a prediction before revealing the source attribution after example B. Avoid taking fluent style as proof of human authorship. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/8.
-
----
-
-<!-- .slide: id="example-article-news" -->
-
-## Task 3: Article generation — B
-
-**United Methodists Agree to Historic Split**
-
-> After two days of intense debate, the United Methodist Church has agreed to a historic split — one that is expected to end in the creation of a new denomination, one that will be “theologically and socially conservative,” according to The Washington Post.
-
-Human or machine?
-
-Note:
-Historical article-generation example copied from the original deck, not a report of current events or verified reporting. The full original excerpt appears in Notebook. Ask students to judge authorship, then show the next slide. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/8.
-
----
-
-<!-- .slide: id="example-article-quiz" -->
-
-## Who wrote the two articles?
-
-**A:** the productivity blog. **B:** the news article.
-
-<ol>
-<li>A: Human · B: Human</li>
-<li>A: Machine · B: Human</li>
-<li>A: Human · B: Machine</li>
-<li>A: Machine · B: Machine</li>
-</ol>
+Who wrote each article: **human or machine**?
 
 <div class="answer fragment"><p>The original deck attributes <strong>both examples to GPT-3</strong>.</p></div>
 
-Fluent writing alone does not establish authorship or factual accuracy.
-
 Note:
-Give students about 30 seconds to choose, then reveal the original deck's answer: both examples are attributed to GPT-3. This is source attribution from the teaching material; these samples were not generated in the current notebook session. Distinguish this classroom poll from graded quizzes and E01–E05. The notebook contains the full source excerpts and an optional generation prompt. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/8.
+The complete source excerpts and the authorship poll share this slide; the terminal ellipses are present in the original material. Give students about 30 seconds to label A and B independently as human or machine, then reveal the original deck’s attribution: both examples are attributed to GPT-3. The four possible combinations are human/human, machine/human, human/machine, and machine/machine. Fluent writing alone does not establish authorship or factual accuracy. This attribution comes from the source teaching material; these samples were not generated in the current notebook session. B is a historical generation example, not verified reporting or a current news update. Distinguish this classroom poll from graded quizzes and E01–E06. The notebook’s Article generation section contains the same complete excerpts and an optional generation prompt. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/8.
 
 ---
 
@@ -354,7 +381,7 @@ Restore the exact prompt from the original sd-demo.html iframe, which uses Stabl
 
 <!-- .slide: id="example-video-antarctica" -->
 
-## Task 6: Text → video — Antarctica
+## Task 5: Text → video — Antarctica
 
 **Prompt:** an old man wearing blue jeans and a white T-shirt taking a pleasant stroll in Antarctica during a winter storm
 
@@ -369,7 +396,7 @@ This is the original locally hosted clip, not a newly generated output. Playback
 
 <!-- .slide: id="example-video-johannesburg" -->
 
-## Task 6: Text → video — Johannesburg
+## Task 5: Text → video — Johannesburg
 
 **Prompt:** a woman wearing purple overalls and cowboy boots taking a pleasant stroll in Johannesburg South Africa during a beautiful sunset
 
@@ -409,7 +436,7 @@ Close Course Overview by connecting the examples to the technical lesson. We hav
 </ul>
 
 Note:
-Period 1, minutes 25–45. Ten content slides: language difficulties, historical development, then the modeling and resource perspective from CS336. Allow thirteen minutes for the first seven and seven minutes for the final three.
+Period 1, minutes 25–45. Ten content slides: language difficulties, historical development, then the modeling and resource perspective from CS336. Allow thirteen minutes for the first seven and seven minutes for the final three. This section transition preserves the four topics and active Development of NLP & LLMs section from Spring Lecture 01 slide 20: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/20.
 
 ---
 
@@ -722,7 +749,7 @@ For a decomposed accent, compare the precomposed é with e followed by a combini
 
 ## Same appearance, different strings
 
-<p class="exercise-meta">Exercise E02 · 3 minutes · Notebook E02</p>
+<p class="exercise-meta">Exercise E03 · 3 minutes · Notebook E03</p>
 
 Compare <code>"é"</code>, <code>"e\u0301"</code>, and <code>"你好🙂"</code>.
 
@@ -731,7 +758,7 @@ Predict the code-point and UTF-8 byte counts. Check the round trip.
 <div class="answer fragment"><p>Counts: 1 / 2, 2 / 3, and 3 / 10.<br>The two accented strings look alike but are not equal.</p></div>
 
 Note:
-The second displayed string contains e followed by U+0301 COMBINING ACUTE ACCENT. Python len counts two code points; UTF-8 uses three bytes. NFC normalization makes the two accented strings equal but changes the original code-point sequence. Let students predict first, then run E02.
+The second displayed string contains e followed by U+0301 COMBINING ACUTE ACCENT. Python len counts two code points; UTF-8 uses three bytes. NFC normalization makes the two accented strings equal but changes the original code-point sequence. Let students predict first, then run E03.
 
 ---
 
@@ -767,7 +794,7 @@ A byte has 256 possible values. A single byte from 你 is not valid UTF-8 by its
 </ul>
 
 Note:
-Period 2, minutes 20–45: representation choices and the first two merges. Reserve four minutes for E03. Continue with encoding and experiments after the break.
+Period 2, minutes 20–45: representation choices and the first two merges. Reserve four minutes for E04. Continue with encoding and experiments after the break.
 
 ---
 
@@ -863,7 +890,7 @@ ASCII base IDs are l=108, o=111, w=119, e=101, r=114. The maximum count is seven
 
 ## Counting overlaps; applying a merge
 
-<p class="exercise-meta">Exercise E03 · 4 minutes · Notebook E03</p>
+<p class="exercise-meta">Exercise E04 · 4 minutes · Notebook E04</p>
 
 | Initial sequence | Frequency |
 | :--- | ---: |
@@ -875,7 +902,7 @@ Which pair wins? How many tokens does one merge remove?
 <div class="answer fragment"><p><code>a a</code>: 4 occurrences; <code>a b</code>: 3.<br>Replace left to right: <code>aa a b</code>. Total tokens: 10 → 8.</p></div>
 
 Note:
-One minute count, one minute propose replacements, two minutes check in the notebook. Pair counts include overlapping aa positions, but replacements cannot share an a. The winning count of four does not mean four replacements: only two across the weighted corpus. Expected E03 output is 10 then 8.
+One minute count, one minute propose replacements, two minutes check in the notebook. Pair counts include overlapping aa positions, but replacements cannot share an a. The winning count of four does not mean four replacements: only two across the weighted corpus. Expected E04 output is 10 then 8.
 
 ---
 
@@ -943,7 +970,7 @@ The ASCII toy example is also a byte example, since each character here is one b
 </ul>
 
 Note:
-Period 3, minutes 0–20: encoding and boundaries. Minutes 20–40: vocabulary tradeoffs and E05. Final five minutes: exit questions and reading.
+Period 3, minutes 0–20: encoding and boundaries. Minutes 20–40: vocabulary tradeoffs and E06. Final five minutes: exit questions and reading.
 
 ---
 
@@ -960,7 +987,7 @@ Period 3, minutes 0–20: encoding and boundaries. Minutes 20–40: vocabulary t
 Encoding a new prompt does **not** retrain the tokenizer.
 
 Note:
-Source: CS336 Lecture 1 BPETokenizer and train_bpe. Our simple implementation scans the whole sequence once per learned merge. Production code uses more efficient structures and may restrict merges with a pre-tokenizer. The conceptual distinction is essential for E04.
+Source: CS336 Lecture 1 BPETokenizer and train_bpe. Our simple implementation scans the whole sequence once per learned merge. Production code uses more efficient structures and may restrict merges with a pre-tokenizer. The conceptual distinction is essential for E05.
 
 ---
 
@@ -968,7 +995,7 @@ Source: CS336 Lecture 1 BPETokenizer and train_bpe. Our simple implementation sc
 
 ## Encode a word we did not train on
 
-<p class="exercise-meta">Exercise E04 · 5 minutes · Notebook E04</p>
+<p class="exercise-meta">Exercise E05 · 5 minutes · Notebook E05</p>
 
 Saved merges: **`l o` → `lo`**, then **`lo w` → `low`**.
 
@@ -1091,7 +1118,7 @@ Toy count of all pairs. Causal attention masks future positions, but its pair co
 
 ## Test on held-out English and Chinese
 
-<p class="exercise-meta">Exercise E05 · 8 minutes · Notebook E05</p>
+<p class="exercise-meta">Exercise E06 · 8 minutes · Notebook E06</p>
 
 Train toy tokenizers with **0, 8, and 32 merges**.
 
@@ -1110,10 +1137,10 @@ Two minutes inspect the training/held-out split, three minutes run the experimen
 
 <div class="plot" data-plotly="assets/heldout-chinese.json" role="img" aria-label="On the same held-out Chinese text, mixed training reduces token counts from 54 to 48 to 35 at zero, eight, and thirty-two merges. English-only training leaves the count at 54."></div>
 
-<p class="caption">Two fixed Chinese sentences · 54 UTF-8 bytes · Toy corpora from Notebook E05.</p>
+<p class="caption">Two fixed Chinese sentences · 54 UTF-8 bytes · Toy corpora from Notebook E06.</p>
 
 Note:
-These values are calculated with the exact training and held-out strings in notebook E05. With mixed English/Chinese training, counts are 54, 48, and 35; English-only training gives 54 throughout. English-only merges contain ASCII bytes that never occur in these Chinese strings. This small controlled demonstration is not a benchmark of real model tokenizers or language quality. Ask students to connect the plot to their own printed results.
+These values are calculated with the exact training and held-out strings in notebook E06. With mixed English/Chinese training, counts are 54, 48, and 35; English-only training gives 54 throughout. English-only merges contain ASCII bytes that never occur in these Chinese strings. This small controlled demonstration is not a benchmark of real model tokenizers or language quality. Ask students to connect the plot to their own printed results.
 
 ---
 
@@ -1148,10 +1175,10 @@ Open the <a href="../shared/notebook.html?lecture=lecture-01&amp;notebook=lectur
 | 3 | Vocabulary growth and datasets |
 | 4 | BPE, WordPiece, and pretrained tokenizers |
 
-The **Notebook** toolbar link opens classroom exercises E01–E05.
+The **Notebook** toolbar link opens classroom exercises E01–E06.
 
 Note:
-Use this as a map for further practice after the timed classroom exercises. Install the optional packages with uv sync --extra tokenization, then start the preview with uv run --extra tokenization python scripts/slides.py serve. Prepare Ollama models, spaCy pipelines, and remote datasets before running their sections. The extension is adapted from https://github.com/baojian/llm-26/blob/main/lecture-01-tokenization/lecture-01-exercise-tokenization.ipynb. The classroom notebook remains the source of E01–E05.
+Use this as a map for further practice after the timed classroom exercises. Install the optional packages with uv sync --extra tokenization, then start the preview with uv run --extra tokenization python scripts/slides.py serve. Prepare Ollama models, spaCy pipelines, and remote datasets before running their sections. The extension is adapted from https://github.com/baojian/llm-26/blob/main/lecture-01-tokenization/lecture-01-exercise-tokenization.ipynb. The classroom notebook remains the source of E01–E06.
 
 ---
 

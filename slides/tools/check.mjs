@@ -220,6 +220,7 @@ try {
     await page.evaluate(() => document.fonts.ready);
     await page.setViewportSize({ width: 1600, height: 1000 });
     await page.screenshot({ path: path.join(output, 'print-preview.png'), animations: 'disabled' });
+    await page.emulateMedia({ media: 'print' });
     const printPadding = await page.locator('.pdf-page section').evaluateAll(sections => sections.map(section => parseFloat(getComputedStyle(section).paddingLeft)));
     assert.ok(printPadding.every(padding => padding >= 64), 'PDF export must preserve the slide content margins.');
     const printOverflow = await page.locator('.pdf-page section').evaluateAll(sections => sections.flatMap(section => {

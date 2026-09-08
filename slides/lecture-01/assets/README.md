@@ -1,5 +1,9 @@
 # Lecture 01 example media
 
+`llm-26-fall-wechat.png` is the course-group QR image supplied by the instructor
+on September 8, 2026. It is stored unchanged and appears on the right of
+**About me**. Its embedded notice says the invitation is valid before September 15.
+
 These teaching assets are copied from the instructor's
 [Spring 2026 Lecture 01](https://baojian.github.io/llm-26/slides/lecture-01-slides/).
 The original images and video clips are unchanged.
@@ -33,5 +37,5 @@ replace the videos in PDF print layouts.
 `ollama-terminal.png` comes from the original course's
 `lecture-01-tokenization/assets/ollama-terminal.png` and accompanies the extended
 tokenization notebook. The JSON chart specifications in this directory belong
-to the existing E01–E05 classroom material; their toy data are described in the
+to the existing E01–E06 classroom material; their toy data are described in the
 slides and notebook.
