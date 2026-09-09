@@ -173,11 +173,13 @@ try {
   await page.getByRole('button', { name: 'Close', exact: true }).click();
   assert.equal(await page.locator('#course-help').isVisible(), false);
   if (folder === 'example' || folder === 'lecture-01') {
-    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('interactive-results')).h));
-    const point = await page.locator('#interactive-results .point').nth(1).boundingBox();
+    const chartId = folder === 'lecture-01' ? 'heldout-results' : 'interactive-results';
+    const expectedHover = folder === 'lecture-01' ? 'Chinese tokens: 48' : 'Total tokens: 18';
+    await page.evaluate(id => Reveal.slide(Reveal.getIndices(document.getElementById(id)).h), chartId);
+    const point = await page.locator(`#${chartId} .point`).nth(1).boundingBox();
     await page.mouse.move(point.x + point.width / 2, point.y + point.height / 2);
-    await page.waitForFunction(() => document.querySelector('#interactive-results .hoverlayer').textContent.includes('Total tokens: 18'));
-    assert.match(await page.locator('#interactive-results .hoverlayer').textContent(), /Total tokens: 18/);
+    await page.waitForFunction(({ id, expected }) => document.querySelector(`#${id} .hoverlayer`).textContent.includes(expected), { id: chartId, expected: expectedHover });
+    assert.ok((await page.locator(`#${chartId} .hoverlayer`).textContent()).includes(expectedHover));
     await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('browser-demo')).h));
     await page.getByLabel('Try English, Chinese, or emoji').fill('🙂');
     assert.equal(await page.locator('#point-count').textContent(), '1');
@@ -200,8 +202,10 @@ try {
   }
   if (folder === 'lecture-01') {
     const developmentStart = ids.indexOf('outline-development');
+    const currentModelsStart = ids.indexOf('models-2026');
     const preprocessingStart = ids.indexOf('outline-preprocessing');
-    assert.equal(preprocessingStart - developmentStart - 1, 10, 'Lecture 01 needs ten history content slides.');
+    assert.equal(currentModelsStart - developmentStart - 1, 10, 'Lecture 01 needs ten historical slides before the 2026 updates.');
+    assert.deepEqual(ids.slice(currentModelsStart, preprocessingStart), ['models-2026', 'terminal-bench-science', 'navier-stokes-2026'], 'The 2026 updates should connect models, scientific evaluation, and research results.');
     const slidePractice = [...source.matchAll(/(?:Exercise|Practice) ([EP]\d+)/g)].map(match => match[1]);
     const notebookPractice = notebook.cells.filter(cell => cell.cell_type === 'markdown')
       .flatMap(cell => [...cell.source.join('').matchAll(/^#{2,3} ([EP]\d+) ·/gm)].map(match => match[1]));
@@ -223,7 +227,7 @@ try {
     await page.getByRole('button', { name: 'Reset BPE', exact: true }).click();
     assert.match(await page.locator('#bpe-step').textContent(), /25 tokens/);
     assert.equal(await page.locator('#bpe-advance').isEnabled(), true);
-    for (const id of ['example-video-antarctica', 'example-video-johannesburg']) {
+    for (const id of ['example-video-johannesburg']) {
       const video = page.locator(`#${id} video.animation`);
       assert.equal(await video.count(), 1, `${id}: include the text-to-video example.`);
       assert.equal(await video.evaluate(element => element.autoplay || element.hasAttribute('autoplay')), false, `${id}: start playback only on request.`);

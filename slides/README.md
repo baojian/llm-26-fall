@@ -10,11 +10,13 @@ experiments, Unicode, and byte BPE for three 45-minute periods. Its
 [teaching plan](lecture-01/teaching-plan.md) maps the timing and sources; its
 [notebook](lecture-01/lecture-01-exercise.ipynb) contains the complete
 Spring example texts, Ollama demonstrations, matching E01–E06 exercises, and
-optional multimodal experiments. Its 83 slides include ten history content
-pages, two Turing test illustrations, restored regex practice, and an interactive
+optional multimodal experiments. Its 71 slides include ten historical content
+pages and three September 2026 updates on models, Terminal-Bench Science, and
+the Navier–Stokes research announcement, plus two Turing test illustrations,
+restored regex practice, and an interactive
 BPE trace. Short practices P01–P02 accompany the six E exercises in the same
-notebook order. The deck bundles the original vision images
-and recorded video clips; see [media provenance](lecture-01/assets/README.md).
+notebook order. The deck bundles the Big Data image
+and Johannesburg video clip; see [media provenance](lecture-01/assets/README.md).
 Course paper PDFs are kept in [papers/](../papers/README.md).
 
 ## Teaching from a classroom browser
@@ -65,8 +67,8 @@ answers. Lecture 01's text-model demonstrations require a separate Ollama
 installation and model; preparation is explained inside the notebook. Its core
 tokenization exercises run offline without Ollama.
 
-Lecture 01's optional vision experiment uses two bundled images and an already
-installed vision-capable model. Its recorded clips play with manual controls
+Lecture 01's optional vision experiment uses the bundled Big Data image and an already
+installed vision-capable model. Its recorded clip plays with manual controls
 in the slides or notebook. These demonstrations and the article-authorship
 poll add no timed exercises beyond E01–E06. Sentiment is E01 and translation
 is E02; Unicode and tokenization exercises continue as E03–E06. These IDs are
@@ -257,8 +259,8 @@ or run by the classroom viewer. Their exports must exist before publishing.
 Recorded video examples use the same `video.animation` element, controls,
 descriptive label, and poster, but omit `data-manim-source` when the clip was
 not produced by a Manim scene. Keep its source attribution in the lecture's
-asset notes. Lecture 01's two recorded clips demonstrate this convention;
-their extracted posters appear in print, and playback is manual.
+asset notes. Lecture 01's recorded clip demonstrates this convention;
+its extracted poster appears in print, and playback is manual.
 
 Official guides: [Plotly.js](https://plotly.com/javascript/getting-started/),
 [Excalidraw exports](https://docs.excalidraw.com/docs/@excalidraw/excalidraw/api/utils/export),

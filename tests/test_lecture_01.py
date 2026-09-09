@@ -73,7 +73,7 @@ def test_displayed_python_examples_run(capsys):
     assert blocks
     for index, block in enumerate(blocks):
         exec(compile(block, f"slides.md Python block {index + 1}", "exec"), {})
-    assert "你好 2 6" in capsys.readouterr().out
+    assert repr(["Senj", "can't"]) in capsys.readouterr().out
 
 
 @pytest.mark.parametrize("text", ["", "lowest", "你好🙂", "e\u0301", "\n\t  ", "a\x00b", "<|endoftext|>"])
@@ -243,11 +243,7 @@ def test_vision_request_preserves_the_selected_question(lesson):
     assert payload["messages"][0]["content"] == prompt
 
 
-@pytest.mark.parametrize("example,filename,question", [
-    ("rainfall", "vision-rainfall.jpg", "axes, red line, and green bar"),
-    ("big data", "vision-big-data.png", "central label, surrounding logos"),
-])
-def test_vision_example_selects_matching_image_and_question(lesson, monkeypatch, example, filename, question):
+def test_vision_example_sends_big_data_image_and_question(lesson, monkeypatch):
     requests = []
 
     def request(endpoint, payload=None, timeout=120):
@@ -266,20 +262,18 @@ def test_vision_example_selects_matching_image_and_question(lesson, monkeypatch,
     monkeypatch.setitem(lesson, "ollama_request", request)
     cell = next(cell for cell in NOTEBOOK["cells"] if cell["id"] == "vision")
     code = "".join(cell["source"]).replace("RUN_VISION = False", "RUN_VISION = True")
-    code = code.replace('VISION_EXAMPLE = "rainfall"', f'VISION_EXAMPLE = "{example}"')
     execute_cell({**cell, "source": [code]}, lesson)
 
     assert [endpoint for endpoint, _ in requests] == ["/api/tags", "/api/show", "/api/chat"]
     payload = requests[-1][1]
     assert payload["model"] == "qwen3-vl:2b"
     message = payload["messages"][0]
-    assert question in message["content"]
-    if example == "big data":
-        assert "axes" not in message["content"]
-    assert base64.b64decode(message["images"][0]) == (LECTURE / "assets" / filename).read_bytes()
+    assert "central label, surrounding logos" in message["content"]
+    assert "axes" not in message["content"]
+    assert base64.b64decode(message["images"][0]) == (LECTURE / "assets/vision-big-data.png").read_bytes()
 
 
-@pytest.mark.parametrize("answer", ["", "A partial chart description."])
+@pytest.mark.parametrize("answer", ["", "A partial image description."])
 def test_vision_reports_truncation_without_retrying(lesson, monkeypatch, capsys, answer):
     requests = []
 

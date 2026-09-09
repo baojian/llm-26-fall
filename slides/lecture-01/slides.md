@@ -67,57 +67,20 @@ Introduce NLP as the field and LLMs as a family of models used within it. NLP in
 
 ---
 
-<!-- .slide: id="course-logic" -->
-
-## How the course fits together
-
-| Step | What we study |
-| :--- | :--- |
-| Represent text | Tokens and embeddings |
-| Build language models | Probability, attention, and Transformers |
-| Train within a budget | Data quality, optimization, and compute |
-| Evaluate and apply | Controlled comparisons, adaptation, and retrieval |
-
-For each idea: **understand it → implement it → test it**.
-
-Note:
-Explain why the topics build on one another: models need numerical text representations; training needs data and compute; useful applications need evaluation. Evaluation is a habit throughout the course, not only a final stage. The weekly schedule develops these ideas into fine-tuning, alignment, retrieval, and efficient inference. We use small systems to make mechanisms inspectable, and each student investigates one meaningful question through the individual project. Course roadmap: ../../index.html#schedule; learning approach: ../../index.html#overview.
-
----
-
 <!-- .slide: id="course-topics" -->
 
 ## What we will cover
 
-**Foundations:** text preprocessing and tokenization; n-gram models; word embeddings; neural language models; RNNs; self-attention; Transformers.
+**Foundations:** text preprocessing and tokenization; n-gram models; word embeddings; neural language models; self-attention; Transformers.
 
 **Training and evaluation:** pretraining and fine-tuning; data quality; compute budgets; evaluation and benchmarking.
 
-**Applications and frontiers:** prompting and in-context learning; alignment and safety; retrieval; efficient inference; diffusion language models; reasoning and agents.
+**Applications and frontiers:** prompting and in-context learning; alignment and safety; efficient inference; diffusion language models; reasoning and agents.
 
 See the [weekly schedule](../../index.html#schedule) for the sequence and practical work.
 
 Note:
 Adapted from Spring Lecture 01 slide 15: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/15. The Fall schedule defines actual scope and timing: ../../index.html#schedule. Word2vec supplies an embedding example; RNN/LSTM modeling provides brief motivation for attention. Data, compute, retrieval, and experimental design are explicit parts of the Fall course. This topic map gives concrete subjects for the preceding course-logic slide. Spend about 45 seconds on the map; students can revisit the weekly schedule after class.
-
----
-
-<!-- .slide: id="beyond-course" -->
-
-## Resources for independent study
-
-| Start with | Use it for |
-| :--- | :--- |
-| [Speech and Language Processing](https://web.stanford.edu/~jurafsky/slp3/) | Language, probability, and tokenization |
-| [Stanford CS336](https://cs336.stanford.edu/) | Building language models from components |
-| [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html) | Small, inspectable implementations |
-
-The notebook has the full Spring reading and course list.
-
-Choose a companion that helps answer your current question.
-
-Note:
-45 seconds. The full resource inventory from Spring slide 16 is retained in the notebook's Course Overview, including the four books, seven courses, and research communities. These are optional study resources. The Fall course page defines required work. Ask students to use one main reading and consult other sources for a specific question. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/16.
 
 ---
 
@@ -137,26 +100,6 @@ A1 is released in **Week 2**. See the [course page](../../index.html#assessment)
 
 Note:
 Distinguish today’s ungraded practice from graded assignments. The course website is the source of current assessment rules. Do not import the Stanford workload or the previous semester’s deadlines. Connect small reproducible experiments to the individual project. This is the Fall counterpart of Spring Lecture 01 slide 17, which opens the earlier course page: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/17. The displayed weights and individual project follow ../../index.html#assessment.
-
----
-
-<!-- .slide: id="course-materials" -->
-
-## Course materials
-
-- [Course website](../../index.html): weekly slides, exercises, readings, and assessment.
-- [GitHub repository](https://github.com/baojian/llm-26-fall): source files and updates.
-- **Notebook:** open your personal Jupyter copy under `workspace/`.
-
-Fetch course updates before class:
-
-```sh
-cd llm-26-fall
-git pull
-```
-
-Note:
-Adapted from Spring Lecture 01 slide 18 with the Fall repository and URLs: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/18. From the repository root, run uv sync and uv run python scripts/slides.py serve for local slides and notebook integration. The course website links materials as they become available. Existing personal notebook answers are preserved when course files change; to obtain a revised handout, rename the old personal notebook and reopen Notebook. Keep the renamed file for earlier work. Point out these locations now; do setup and troubleshooting after class.
 
 ---
 
@@ -195,27 +138,9 @@ Take two or three examples aloud. Explain that an app may combine a model, searc
 
 ---
 
-<!-- .slide: id="app-model-tokenizer" -->
-
-## App, model, tokenizer
-
-| Component | In our local experiment |
-| :--- | :--- |
-| Interface | A Jupyter notebook |
-| Model runtime | Ollama |
-| Model | Qwen3, using an installed model tag |
-| Tokenizer | The vocabulary and rules paired with that model |
-
-Our toy tokenizer is a separate learning exercise.
-
-Note:
-Ollama serves the model; it is not itself the language model. The tokenizer we train today is not compatible with Qwen’s existing embedding table. A model tag identifies a packaged model; record its digest because tags can change. API source: https://docs.ollama.com/api/tags.
-
----
-
 <!-- .slide: id="notebook-demo" -->
 
-## Example 01: A Qwen language model
+## Example: A Qwen language model
 
 > Fudan University is located in which city? Answer with one word.
 
@@ -230,22 +155,7 @@ Ollama serves the model; it is not itself the language model. The tokenizer we t
 Note:
 One minute; prepare the call before class. Use the shared launcher, which opens the student's working copy and preserves answers. The notebook supplies the exact prompt and request settings. Use an already installed Qwen3 tag; do not spend lecture time on a download. Thinking and model-size comparisons are optional follow-ups in the notebook. Token counts include model prompt formatting and are not just a count of the displayed words. Source prompt: Spring slide 5, https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/5; API: https://docs.ollama.com/api/generate.
 
----
-
-<!-- .slide: id="nlp-tasks" -->
-
-## Language and multimodal examples
-
-| Task | Input → output |
-| :--- | :--- |
-| 1. Sentiment | Camera review → label and explanation |
-| 2. Translation | Chinese passage → English passage |
-| 3. Article generation | Topic or opening → article |
-| 4. Image understanding | Image + question → description |
-| 5. Text to image / video | Description → generated visual content |
-
-Note:
-Introduce the five numbered task groups, then go directly to Task 1. The following slides stay in this order; text-to-image and text-to-video are both examples of Task 5. The app/model/tokenizer explanation and short Qwen call precede this overview. Model calls run in Notebook; prepared videos play directly in the deck. Text-to-image and text-to-video broaden the examples to multimodal generation rather than text-only LLM tasks. Sources: Fudan Spring Lecture 01, https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/5 through #/11.
+Before class, run git pull from the course repository to fetch updates. The Notebook launcher opens a personal copy under workspace/ and preserves saved student work. Setup commands and the full resource inventory remain in the notebook.
 
 ---
 
@@ -285,10 +195,6 @@ Allow one minute to label individually, two to run notebook E01, and two to comp
 </div>
 </div>
 
-Translate into English. Check A’s numbers and B’s meaning.
-
-<div class="answer fragment"><p>A: 249 languages; over 200 million daily users; April 2016; over 500 million total users; over 100 billion words per day.</p></div>
-
 Note:
 Allow one minute to predict A’s quantities, one to run Notebook E02, and one to compare. Students should write the four English quantities and the date, then identify any changed or omitted information in the model output. One 亿 is 100 million, so 2亿 is 200 million, 5亿 is 500 million, and 1000亿 is 100 billion. Preserve “over,” the daily units, and the April 2016 date attached to total users. If Ollama is unavailable, compare student translations with these checks. A is the full Google Translate passage from the original source; these are historical source statistics, not a current fact sheet. B excerpts the original AI-definition passage, with omissions marked. Both full passages are retained in the notebook’s existing translation cell. Use B as a follow-on comparison if time permits: preserve both the definition of machine intelligence and the final prediction about occupations. Translating that prediction does not establish its truth. Keep the model and decoding settings fixed. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/7.
 
@@ -318,29 +224,9 @@ One minute. These are excerpts from the complete passages in the notebook, not o
 
 ---
 
-<!-- .slide: id="example-vision-rainfall" -->
-
-## Task 4: Image understanding
-
-<div class="columns">
-<div>
-<img class="diagram" src="assets/vision-rainfall.jpg" alt="Chinese precipitation chart for 1951–2016, with a red reference line and a green final bar labeled 346.1 millimeters.">
-</div>
-<div>
-<p><strong>Prompt:</strong> Describe the image in one paragraph.</p>
-<p>What do the axes, red line, and green bar represent?</p>
-<p><a href="assets/vision-rainfall.jpg" target="_blank" rel="noopener">Open the full-size image</a>, then use <strong>vision-rainfall.jpg</strong> in Notebook.</p>
-</div>
-</div>
-
-Note:
-Restore the original rainfall-chart image. Its embedded credits name the National Climate Center and Xinhuanet; the title refers to precipitation over 1951–2016. The green bar is labeled 346.1 mm; the red reference is labeled the 1981–2010 average. Do not infer missing dates or measurement periods beyond the image. The model must read labels and relate them to marks, not merely describe colors. Use an installed vision-capable model. Source: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/9; media provenance: assets/README.md.
-
----
-
 <!-- .slide: id="example-vision-big-data" -->
 
-## Task 4: Visible evidence and inference
+## Task 4: Image understanding
 
 <div class="columns">
 <div>
@@ -350,12 +236,12 @@ Restore the original rainfall-chart image. Its embedded credits name the Nationa
 <p><strong>Prompt:</strong> Describe the image in one paragraph.</p>
 <p><strong>Visible:</strong> labels, logos, connecting lines.</p>
 <p><strong>Inferred:</strong> what those connections might mean.</p>
-<p>Notebook selector:<br><code>VISION_EXAMPLE</code> → <code>"big data"</code></p>
+<p><a href="assets/vision-big-data.png" target="_blank" rel="noopener">Open the full-size image</a>, then run Task 4 in Notebook.</p>
 </div>
 </div>
 
 Note:
-30 seconds. This is a concept illustration, not a measured chart. The notebook changes both the image and the evidence-checking question when VISION_EXAMPLE changes. Keep the same model, general description task, and decoding settings. A connected logo does not establish data sharing or a commercial relationship. Source: Spring slide 9, https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/9; asset provenance: assets/README.md.
+Use the Big Data illustration as the single Task 4 example. Ask students to identify visible labels, logos, and connecting lines before comparing a prepared Qwen3-VL response in the notebook. This is a concept illustration, not a measured chart. A connected logo does not establish data sharing or a commercial relationship. Source: Spring slide 9, https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/9; asset provenance: assets/README.md.
 
 ---
 
@@ -378,21 +264,6 @@ Restore the exact prompt from the original sd-demo.html iframe, which uses Stabl
 
 ---
 
-<!-- .slide: id="example-video-antarctica" -->
-
-## Task 5: Text → video — Antarctica
-
-**Prompt:** an old man wearing blue jeans and a white T-shirt taking a pleasant stroll in Antarctica during a winter storm
-
-<video class="animation" src="assets/text-to-video-antarctica.mp4" poster="assets/text-to-video-antarctica-poster.jpg" controls playsinline preload="metadata" aria-label="Original generated video example of a man walking through snow in Antarctica."></video>
-
-<p class="caption">Play the clip. Compare clothing, walking motion, and weather with the prompt.</p>
-
-Note:
-This is the original locally hosted clip, not a newly generated output. Playback is manual and stops when leaving the slide. The poster is a frame extracted at one second for print and before playback. Ask students to identify one matching detail and one limitation; do not infer an actual filmed location. Original prompt and clip: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/11. Model attribution was not supplied in that source, so none is added. Media provenance: assets/README.md.
-
----
-
 <!-- .slide: id="example-video-johannesburg" -->
 
 ## Task 5: Text → video — Johannesburg
@@ -404,25 +275,39 @@ This is the original locally hosted clip, not a newly generated output. Playback
 <p class="caption">Play the clip. Compare the person, clothing, setting, and lighting with the prompt.</p>
 
 Note:
-This is the second original locally hosted clip. Compare the same action in another requested setting. A plausible-looking scene does not verify a real location. Playback is manual; the poster is extracted at one second and appears in print. Original prompt and clip: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/11. Media provenance: assets/README.md.
+This original clip is hosted locally. Ask students to identify one detail that matches the prompt and one limitation. A plausible-looking scene does not verify a real location. Playback is manual; the poster is extracted at one second and appears in print. Original prompt and clip: https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/11. The source does not identify the video-generation model. Media provenance: assets/README.md.
 
 ---
 
-<!-- .slide: id="goals" -->
+<!-- .slide: id="course-website" -->
 
-## Today’s question: how does text reach a model?
+## Course website and GPU resources
 
-How does an LLM application turn our text into something a model can predict?
+<div class="columns">
+<div>
+<h3>Course website</h3>
+<p><a href="https://baojian.github.io/llm-26-fall/">baojian.github.io/llm-26-fall/</a></p>
+<ul>
+<li>Weekly schedule, slides, and notebooks.</li>
+<li>Assignments, projects, and grading.</li>
+<li>Course policies and learning resources.</li>
+</ul>
+</div>
+<div>
+<h3>Fudan Qizhi GPU platform</h3>
+<p><a href="http://qz.cfff.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">qz.cfff.fudan.edu.cn</a></p>
+<ul>
+<li>Register through <a href="https://cfff.fudan.edu.cn/home" target="_blank" rel="noopener noreferrer">Fudan CFFF</a>.</li>
+<li>GPU training and inference for coursework and projects.</li>
+<li>Per-student GPU budgets: see the project handout.</li>
+</ul>
+</div>
+</div>
 
-- Inspect a response using a concrete check.
-- Explain what preprocessing preserves or discards.
-- Distinguish visible symbols, code points, bytes, and tokens.
-- Train BPE, encode unseen text, and measure the tradeoff.
-
-**First: how did language models develop?**
+**Bookmark both sites and check for updates.**
 
 Note:
-One minute. Close the example gallery. E01 checks sentiment against context; E02 checks translation quantities; the image and authorship examples separate plausibility from evidence. These questions remain relevant across generations of NLP systems. The next section traces changes in the methods, before we build one component ourselves.
+About one minute. Open the course website and point out the schedule, assessment, policies, and resources. Then introduce http://qz.cfff.fudan.edu.cn/ as the Fudan Qizhi GPU platform students can use. Registration starts at https://cfff.fudan.edu.cn/home. Follow the course's computing guidance at ../../index.html#resources: per-student GPU and AI-tool budgets will be specified with the project handout; exact model sizes and run budgets follow staff pilots. Show the platform's login entry during class and explain the course allocation when available. The core Lecture 01 preprocessing and BPE exercises run locally without a GPU. Return to the slides and introduce the development of NLP and LLMs. Instructor-confirmed platform link; Fudan's overview of computing support for teaching: https://ai3.fudan.edu.cn/info/1050/2364.htm (November 26, 2025).
 
 ---
 
@@ -438,7 +323,7 @@ One minute. Close the example gallery. E01 checks sentiment against context; E02
 </ul>
 
 Note:
-Period 1, minutes 25–45. Ten history content pages, progressing from Weaver and Turing to available weights, reasoning, and tools. Each page introduces a mechanism, an example, and a remaining question. Dates identify selected papers; older methods continue to coexist. Take the first break after the tenth history page.
+Period 1, minutes 25–45. Ten historical pages followed by three September 2026 updates: current models, Terminal-Bench Science, and the Navier–Stokes announcement. Spend about 14 minutes on the historical pages and six on the updates. Dates identify selected papers; older methods continue to coexist. Take the first break after the Navier–Stokes discussion.
 
 ---
 
@@ -637,7 +522,68 @@ Weights, training data, code, and licenses are distinct artifacts.
 <p class="caption">Selected historical landmarks through 2025; no ranking of current models.</p>
 
 Note:
-2 minutes. End the history with the connection to our notebook: students can run an existing model while implementing smaller components themselves. LLaMA 2023 released weights to researchers subject to its original access conditions; avoid calling that release unrestricted open source. DeepSeek-R1 reports reinforcement learning for reasoning and releases models; task performance still needs external checks, and generated reasoning is model output. ReAct interleaves reasoning and actions with observations from an environment; tool use is a system design, not simply a longer answer. ReAct's preprint is October 2022 and its conference publication is ICLR 2023; the table is grouped by directions rather than an ordering within this period. Sources: https://arxiv.org/abs/2302.13971; https://arxiv.org/abs/2501.12948; https://arxiv.org/abs/2210.03629. The Spring 2019–2024 timeline remains available as assets/llm-timeline-2019-2024.png in the notebook history guide. Ask which artifacts are needed to reproduce training, rather than just to run inference. Pause for the first break.
+1 minute. Connect the history to our notebook: students can run an existing model while implementing smaller components themselves. LLaMA 2023 released weights to researchers subject to its original access conditions; avoid calling that release unrestricted open source. DeepSeek-R1 reports reinforcement learning for reasoning and releases models; task performance still needs external checks, and generated reasoning is model output. ReAct interleaves reasoning and actions with observations from an environment; tool use is a system design, not simply a longer answer. ReAct's preprint is October 2022 and its conference publication is ICLR 2023; the table is grouped by directions rather than an ordering within this period. Sources: https://arxiv.org/abs/2302.13971; https://arxiv.org/abs/2501.12948; https://arxiv.org/abs/2210.03629. The Spring 2019–2024 timeline remains available as assets/llm-timeline-2019-2024.png in the notebook history guide. Continue to the September 2026 models and research examples.
+
+---
+
+<!-- .slide: id="models-2026" -->
+
+## 2026 · Models to follow
+
+| Developer | Model / family | Connection to this course |
+| :--- | :--- | :--- |
+| Anthropic | [Claude Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview) | Reasoning and agent work |
+| OpenAI | [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) | Coding, research, computer use |
+| Z.ai | [GLM-5.3](https://huggingface.co/zai-org/GLM-5.3) | Post-training and model weights |
+| Alibaba | [Qwen3.8](https://qwen.ai/blog?id=qwen3.8-flash-next) | Efficient multimodal architectures |
+| Moonshot AI | [Kimi K3](https://github.com/MoonshotAI/Kimi-K3) | Multimodal reasoning and agents |
+| DeepSeek | [DeepSeek-V4-Pro](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro) | Long-context efficiency and reasoning |
+
+<p class="caption">Selected examples · September 9, 2026.</p>
+
+Note:
+1 minute. GPT-6 Astra is the model name; ChatGPT is an application that offers models. These are examples to follow, not a ranking. Claude Fable 5.1 was released September 1; GPT-6 Astra was announced September 3. GLM-5.3's model card attributes its changes from GLM-5.2 to post-training and provides weights under its own license. Qwen3.8 denotes a family; the linked August 26 release is Qwen3.8-Flash-Next, with released weights and a hybrid attention architecture. Sources, checked September 9, 2026: https://platform.claude.com/docs/en/models/fable-5-1/overview; https://developers.openai.com/api/docs/models/gpt-6-astra; https://openai.com/index/gpt-6-astra/; https://huggingface.co/zai-org/GLM-5.3; https://qwen.ai/blog?id=qwen3.8-flash-next. Connect this question to the research benchmark on the next slide.
+
+Kimi K3's official repository describes native vision, reasoning, and agent capabilities: https://github.com/MoonshotAI/Kimi-K3. DeepSeek-V4-Pro's model card describes its attention design for efficient long contexts: https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro. Its August 13 general-availability update reports agent improvements and configurable reasoning effort: https://api-docs.deepseek.com/news/news260813/. Model revisions and evaluation conditions matter when reading a result.
+
+---
+
+<!-- .slide: id="terminal-bench-science" -->
+
+## 2026 · Terminal-Bench Science
+
+**Can AI agents complete real research workflows?**
+
+- **70 tasks** across five scientific domains in release 0.1.
+- Agents use terminals; task-specific tests check their outputs.
+- Reported in [Fable 5.1](https://www.anthropic.com/claude-fable-and-mythos-5-1) and [GPT-6 Astra](https://openai.com/index/gpt-6-astra/) evaluations.
+
+[Follow the leaderboard and explore the tasks](https://www.terminal-bench-science.ai/).
+
+<p class="caption">Choose one task: what would count as a successful result?</p>
+
+Note:
+2 minutes. Release 0.1 covers life, physical, earth, mathematical, and engineering sciences. Its August 27 announcement describes research workflows and reproducible checks on artifacts: https://www.terminal-bench-science.ai/announcement. The linked release announcements report evaluations: https://www.anthropic.com/claude-fable-and-mythos-5-1 and https://openai.com/index/gpt-6-astra/. Model names alone do not specify the evaluation: inspect the agent software, tools, task version, and trial conditions before comparing scores. Invite students to follow the project, read a task's instructions and tests, and bring an observation to class. This is an invitation, not an additional graded assignment. Notebook links include the repository and contribution guide. Sources checked September 9, 2026.
+
+---
+
+<!-- .slide: id="navier-stokes-2026" -->
+
+## 2026 · AI and the Navier–Stokes problem
+
+**September 8: OpenAI reports a solution to a Millennium Prize Problem.**
+
+| Question | Can smooth fluid motion develop a singularity? |
+| :--- | :--- |
+| Reported result | Finite-time blowup in smoothly forced 3D flow |
+| Public evidence | [Research paper](https://cdn.openai.com/pdf/32d9f210-8b73-45e0-91bc-82a30aef8a9a/navier-stokes.pdf) and [Lean formalization](https://github.com/openai/NavierStokesAndEuler) |
+
+An internal model, thousands of agents, and computational tools.
+
+<p class="caption">September 9 snapshot: <a href="https://www.claymath.org/millennium/navier-stokes-equation/">Clay still lists the problem as unsolved</a>; independent assessment matters.</p>
+
+Note:
+3 minutes, then break. Explain a singularity as velocity growing without bound in finite time. The paper's Theorem 1.1 claims blowup with smooth forcing and finite kinetic energy, addressing alternatives C and D of the Clay formulation. OpenAI's September 8 report attributes the search to an internal model stronger than GPT-6 Astra, with roughly 10,000 agents in the successful group: https://openai.com/index/navier-stokes-solution/. The public Lean repository enables scrutiny; its existence alone does not establish independent acceptance or that every definition matches the intended problem. Clay's page still says Unsolved as checked September 9. Present this as a reported solution with inspectable evidence. The instructor's news pointer is https://x.com/i/trending/2097205038976524548; use the primary paper and repository in class. The benchmark measures research workflows; this announcement concerns a proposed new mathematical result.
 
 ---
 
@@ -834,26 +780,6 @@ Python len counts code points for these strings. JavaScript string.length counts
 
 ---
 
-<!-- .slide: id="code" -->
-
-## Measuring the same text in Python
-
-```python
-examples = ["hello", "你好", "🙂"]
-
-for text in examples:
-    code_points = len(text)
-    utf8_bytes = len(text.encode("utf-8"))
-    print(text, code_points, utf8_bytes)
-```
-
-Predict each line before running the cell in the notebook.
-
-Note:
-The notebook contains this exact example. Pause before showing the output.
-
----
-
 <!-- .slide: id="browser-demo" -->
 
 ## Exploring the counts
@@ -887,7 +813,10 @@ Compare <code>"é"</code>, <code>"e\u0301"</code>, and <code>"你好🙂"</code>
 
 Predict the code-point and UTF-8 byte counts. Check the round trip.
 
-<div class="answer fragment"><p>Counts: 1 / 2, 2 / 3, and 3 / 10.<br>The two accented strings look alike but are not equal.</p></div>
+<div class="answer fragment">
+<p>Code points / UTF-8 bytes: <strong>1 / 2, 2 / 3, and 3 / 10.</strong></p>
+<p><code>e\u0301</code> stores <code>e</code> (U+0065) + a combining acute accent (U+0301). They display together as <code>é</code>: <strong>one visible symbol, two code points.</strong></p>
+</div>
 
 Note:
 The second displayed string contains e followed by U+0301 COMBINING ACUTE ACCENT. Python len counts two code points; UTF-8 uses three bytes. NFC normalization makes the two accented strings equal but changes the original code-point sequence. Let students predict first, then run E03.
@@ -974,8 +903,6 @@ $$p_\theta(t_1,\ldots,t_L)=\prod_{i=1}^{L}p_\theta(t_i\mid t_{<i})$$
 
 Choose a token, append it, and repeat.
 
-<p id="prediction-limits">A likely continuation can still be factually wrong.</p>
-
 Note:
 CS336 Lecture 1, intro_to_tokenization(), lines 579–588 of the local lecture_01.py, https://cs336.stanford.edu/lectures/?trace=lecture_01, defines a language model as a distribution over token sequences. The equation here develops that definition using the probability chain rule. This equation is the autoregressive factorization, not an assumption that tokens are independent; theta denotes learned parameters. “Shanghai” is an intended answer, but do not claim it is one token without inspecting the tokenizer. Generation is one use of a language model, not the definition of all NLP systems. Prompting changes the context, fine-tuning changes weights, and a tool-using agent wraps the model in a larger system. Preserve the earlier prediction/correctness lesson: test a held-out set with expected answers; neither probabilities nor generated thinking are guarantees of correctness. The optional notebook log-probability experiment connects the equation to actual outputs.
 
@@ -1052,32 +979,11 @@ Adapted from CS336 Lecture 1 and Sennrich et al. 2016 Section 3.2, ../../papers/
 
 ---
 
-<!-- .slide: id="worked-example" -->
-
-## A toy training corpus
-
-| Initial sequence | Frequency |
-| :--- | ---: |
-| `l o w` | 5 |
-| `l o w e r` | 2 |
-
-The pairs `l o` and `o w` each occur 7 times.
-
-<div class="fragment">
-<p>Choose <code>l o</code> to break this tie. The next merge combines <code>lo w</code>.</p>
-</div>
-
-<p class="caption">Count pairs inside each word. Weight the counts by word frequency.</p>
-
-Note:
-This is a toy character-based example with no end-of-word symbol. State these choices explicitly.
-Different tie-breaking choices can lead to different learned merges.
-
----
-
 <!-- .slide: id="pair-counts" -->
 
 ## Count the pairs, including frequency
+
+Toy training corpus: **`low` × 5, `lower` × 2**. Start with separate byte sequences.
 
 | Pair | In `low` × 5 | In `lower` × 2 | Total |
 | :--- | ---: | ---: | ---: |
@@ -1089,7 +995,7 @@ Different tie-breaking choices can lead to different learned merges.
 Tie rule: choose the smallest pair of token IDs.
 
 Note:
-ASCII base IDs are l=108, o=111, w=119, e=101, r=114. The maximum count is seven; (108,111) wins over (111,119). Break only the tied maximum, not all pairs. Deterministic ties make the lesson reproducible; production implementations may choose a different rule.
+Count pairs within each sequence and weight by its frequency; use no end-of-word marker. ASCII base IDs are l=108, o=111, w=119, e=101, r=114. The maximum count is seven; (108,111) wins over (111,119). Break only the tied maximum, not all pairs. Deterministic ties make the lesson reproducible; production implementations may choose a different rule.
 
 ---
 
@@ -1156,19 +1062,6 @@ This example measures sequence length on the training corpus.
 Note:
 Verify the totals as 5*3+2*5, 5*2+2*4, and 5*1+2*3.
 Ask what additional evidence would be needed to assess a tokenizer on unseen text.
-
----
-
-<!-- .slide: id="interactive-results" -->
-
-## Two merges: 25 → 11 tokens
-
-<div class="plot" data-plotly="assets/sequence-length.json" role="img" aria-label="Toy corpus total tokens decrease from 25 to 18 to 11 after zero, one, and two merges."></div>
-
-<p class="caption">The same toy corpus: <code>low</code> × 5 and <code>lower</code> × 2. Hover for exact counts.</p>
-
-Note:
-The chart loads automatically from a local Plotly specification. It plots the checked totals from the previous table, not model benchmark results. Drag to zoom; double-click to reset.
 
 ---
 
@@ -1338,25 +1231,6 @@ Note:
 
 ---
 
-<!-- .slide: id="equation" -->
-
-## Average sequence length
-
-For a fixed collection of $N$ texts:
-
-$$
-\bar{L} = \frac{1}{N} \sum_{i=1}^{N} \left|\operatorname{encode}(x_i)\right|
-$$
-
-Use the same texts when comparing tokenizers.
-
-Report the tokenizer version and any text normalization.
-
-Note:
-This is an average per text, so document length affects it. Explain why a comparison must hold the input collection fixed.
-
----
-
 <!-- .slide: id="vocabulary-cost" -->
 
 ## Vocabulary size has a cost
@@ -1389,27 +1263,6 @@ This illustrates attention during training or prompt processing; total runtime d
 
 Note:
 Toy count of all pairs. Causal attention masks future positions, but its pair count still grows quadratically. Efficient kernels need not materialize a full attention matrix. Cached generation has different per-step behavior, so do not say all inference costs scale as L squared. Source: Vaswani et al. 2017 Section 4, https://arxiv.org/abs/1706.03762.
-
----
-
-<!-- .slide: id="resource-budget" -->
-
-## Working within a compute budget
-
-**Given fixed resources, which choices improve model quality?**
-
-| Choice | What it changes |
-| :--- | :--- |
-| Model size | Capacity, memory, and computation |
-| Training data | Coverage, quality, and training cost |
-| Tokenizer | Sequence length and vocabulary size |
-
-Compare alternatives under the same budget and evaluation.
-
-Today’s question: **How should we represent text efficiently?**
-
-Note:
-Source: CS336 Lecture 1, why_this_course_exists() and course_syllabus(), especially lines 115–123 and 242–251 of https://github.com/stanford-cs336/lectures/blob/607a238629cf5332f71085d19c97dff41decf661/lecture_01.py#L242-L251. The budget includes data, compute, memory, and communication; deployment also adds latency constraints. Larger models or more data alone are not a complete recipe. Balance expressivity, training stability, and efficiency. Our laptop experiments teach mechanics and measurement; their winning settings may not transfer to frontier scale. Today we measure vocabulary size, tokens for fixed text, and lossless round trips. Better compression alone does not establish better model quality. Use this as the bridge to E06: vary the merge budget while keeping training and evaluation data fixed.
 
 ---
 
@@ -1459,43 +1312,7 @@ Measure downstream model quality separately.
 Note:
 The notebook also offers an optional comparison of the named cl100k_base and o200k_base encodings. Those are encoding names, not verified tokenizer identities for every commercial model. No unsupported claims about DeepSeek, Kimi, GLM, or Qwen versions belong in this lesson.
 
----
-
-<!-- .slide: id="tokenization-failures" -->
-
-## Tokenization affects what the model sees
-
-| Input change | What to inspect |
-| :--- | :--- |
-| <code>"low"</code> → <code>" low"</code> | A leading space may change pieces |
-| <code>2026</code> → <code>2,026</code> | Digits and punctuation change boundaries |
-| <code>é</code> → <code>e + ◌́</code> | Normalization changes bytes |
-| English → Chinese | Training coverage changes sequence length |
-
-Inspect the actual tokenizer. Avoid guessing token counts from words.
-
-Note:
-1 minute. These are controlled probes, not assertions about one unexamined commercial model. The core notebook applies the first three to our toy tokenizer; the optional named tiktoken comparison inspects real vocabularies. The fourth is E06. Tokenization can make character-level tasks less directly accessible, but it does not prove that every LLM will fail counting or spelling. Separate tokenization behavior from downstream model accuracy. Source: Spring Limitations of Tokenization; Sennrich et al. (2016); tokenizer API and the Unicode references.
-
----
-
-<!-- .slide: id="extended-tokenization-notebook" -->
-
-## Extended tokenization notebook
-
-Open the <a href="../shared/notebook.html?lecture=lecture-01&amp;notebook=lecture-01-exercise-tokenization.ipynb" target="_blank" rel="noopener noreferrer">extended tokenization notebook</a>.
-
-| Section | Explore |
-| :--- | :--- |
-| 1 | Ollama responses and token probabilities |
-| 2 | Unicode, regular expressions, and spaCy |
-| 3 | Vocabulary growth and datasets |
-| 4 | BPE, WordPiece, and pretrained tokenizers |
-
-The **Notebook** toolbar link opens classroom exercises E01–E06.
-
-Note:
-Use this as a map for further practice after the timed classroom exercises. Install the optional packages with uv sync --extra tokenization, then start the preview with uv run --extra tokenization python scripts/slides.py serve. Prepare Ollama models, spaCy pipelines, and remote datasets before running their sections. The extension is adapted from https://github.com/baojian/llm-26/blob/main/lecture-01-tokenization/lecture-01-exercise-tokenization.ipynb. The classroom notebook remains the source of E01–E06.
+For additional practice, use the notebook probes for leading spaces, digit punctuation, and precomposed versus decomposed accents. E06 covers training-language effects. Inspect the actual tokenizer instead of guessing token counts from words.
 
 ---
 
@@ -1503,29 +1320,31 @@ Use this as a map for further practice after the timed classroom exercises. Inst
 
 ## Before you leave
 
-1. Why can one visible symbol require several tokens?
-2. What changes during BPE training, and what stays fixed during encoding?
-3. Does a shorter token sequence prove the model is more accurate?
+<div class="columns columns-wide-left">
+<div>
+<h3>Three questions</h3>
+<ol>
+<li>Why can one visible symbol span several tokens?</li>
+<li>What does BPE training learn? What stays fixed during encoding?</li>
+<li>Do fewer tokens imply better model accuracy?</li>
+</ol>
+</div>
+<div>
+<h3>Sources and extensions</h3>
+<p><a href="https://baojian.github.io/llm-26/slides/lecture-01-slides/">Fudan Spring Lecture 01</a><br>Examples and applications.</p>
+<p><a href="https://cs336.stanford.edu/lectures/?trace=lecture_01">Stanford CS336, Lecture 1</a><br>Tokenizers and BPE.</p>
+<p><a href="../shared/notebook.html?lecture=lecture-01&amp;notebook=lecture-01-exercise-tokenization.ipynb" target="_blank" rel="noopener noreferrer">Extended practice</a> · <a href="https://docs.ollama.com/api/generate">Ollama API</a><br>Optional notebook experiments.</p>
+</div>
+</div>
 
-Next: probabilities over token sequences and a first language-model baseline.
+**Next:** probabilities over token sequences and a first language-model baseline.
 
 Note:
 Use the final five minutes, including readings. Expected: visible symbols may have multiple code points and bytes; tokenizer vocabulary determines grouping. Training learns merges/vocabulary; encoding keeps them fixed. Compression alone gives no evidence about model accuracy. Ask students to finish any notebook discussion questions and the survey after class.
 
----
+These sources support this adapted Fudan lecture. The Spring Fudan lecture supplies language examples, applications, and the four-part outline. Stanford CS336, Spring 2026, Lecture 1 supplements building language models, tokenizer baselines, and BPE; its full lecture sequence and assignments are not requirements. The notebook contains executable local-model demonstrations, including optional log-probability, thinking, and vision experiments. The text experiments are core; the heavier extensions are available for interested students.
 
-<!-- .slide: class="references" id="lecture-sources" -->
-
-## Lecture sources and notebook extensions
-
-- [Fudan Spring Lecture 01](https://baojian.github.io/llm-26/slides/lecture-01-slides/)<br>Language examples, applications, and the four-part outline.
-- [Stanford CS336, Spring 2026, Lecture 1](https://cs336.stanford.edu/lectures/?trace=lecture_01)<br>Building language models, tokenizer baselines, and BPE.
-- [Ollama API](https://docs.ollama.com/api/generate)<br>Notebook extensions: log probabilities, thinking, and vision.
-
-The notebook contains the executable local-model demonstrations.
-
-Note:
-These sources support this adapted Fudan lecture. Stanford’s full lecture sequence and assignments are not requirements. The text experiments are core; the heavier extensions are available for interested students.
+The extended-practice link opens lecture-01-exercise-tokenization.ipynb through the shared launcher. It includes Ollama probabilities, Unicode and spaCy, vocabulary growth and datasets, and pretrained tokenizers. Install optional packages with uv sync --extra tokenization and prepare any models or datasets before running those sections. The toolbar continues to open classroom exercises E01–E06.
 
 ---
 

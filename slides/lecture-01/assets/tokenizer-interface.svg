@@ -22,5 +22,7 @@
 <text x="1019.5" y="146.0" font-size="32" text-anchor="middle" fill="#142e4b">Embedding</text>
 <text x="1019.5" y="186.0" font-size="32" text-anchor="middle" fill="#142e4b">vectors</text>
 <text x="1019.5" y="253.0" font-size="28" text-anchor="middle" fill="#566471">One lookup per ID</text>
-<text x="580.0" y="350.0" font-size="30" text-anchor="middle" fill="#142e4b">Our two-merge toy vocabulary: token 257 stores the bytes for low.</text>
+<text x="141.0" y="350.0" font-size="30" text-anchor="start" fill="#142e4b">Our two-merge toy vocabulary: token 257 stores the bytes for </text>
+<text x="965.0" y="350.0" font-size="30" text-anchor="start" fill="#20578c">low</text>
+<text x="1011.0" y="350.0" font-size="30" text-anchor="start" fill="#142e4b">.</text>
 </g></svg>

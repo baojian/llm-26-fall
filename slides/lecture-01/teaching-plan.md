@@ -11,24 +11,27 @@ explain what a preprocessing rule preserves or discards, distinguish code points
 from bytes and tokens, trace BPE training and fixed-rank encoding, and compare
 vocabularies on held-out text without equating compression with model quality.
 
-The deck has **83 slides**, including five repeated outlines and two reading
-pages. **Development of NLP & LLMs has exactly ten content pages**, excluding
-its outline. Keep the shared Reveal.js template, fonts, margins, and controls.
+The deck has **71 slides**, including five repeated outlines, a combined review
+and sources slide, and a final reading page. **Development of NLP & LLMs has ten
+historical pages and three September
+2026 updates**, excluding its outline. Keep the shared Reveal.js template,
+fonts, margins, and controls.
 Minimum edit distance is outside this lecture and both companion notebooks.
 
 ## Teaching sequence
 
 | Period | Minutes | Slides | Content and activity |
 | --- | --- | --- | --- |
-| 1 | 0–10 | 1–12 | Instructor introduction, four topics, course progression, assessment, materials, learning strategy, apps versus models |
-| 1 | 10–25 | 13–23 | Prepared Qwen call; five application groups; E01 (5 min), E02 (3 min); connect examples to today's question |
-| 1 | 25–45 | 24–34 | Development outline and ten history pages; Turing test, changing learning methods, access and evaluation |
-| 2 | 0–12 | 35–43 | Sources, preprocessing decisions, regex patterns, P01 (2 min), lossless partitioning |
-| 2 | 12–25 | 44–49 | Code points, UTF-8, live counter, E03 (3 min), normalization, decoding |
-| 2 | 25–45 | 50–63 | Tokenizer interface, next-token prediction, P02 (2 min), subwords, two BPE merges, E04 (4 min), vocabulary |
-| 3 | 0–17 | 64–71 | Fixed-rank encoding, E05 (5 min), larger Spring corpus, boundaries, special tokens, algorithm families |
-| 3 | 17–37 | 72–78 | Measurement and compute costs; E06 (8 min); compare held-out languages and interpret results |
-| 3 | 37–45 | 79–83 | Tokenization probes, extended practice, exit questions, readings |
+| 1 | 0–10 | 1–8 | Instructor introduction, four topics, assessment, learning strategy, app survey |
+| 1 | 10–25 | 9–16 | Prepared Qwen call; five application groups; E01 (5 min), E02 (3 min); course website and Qizhi GPU introduction (1 min) |
+| 1 | 25–39 | 17–27 | Development outline and ten historical pages; Turing test, changing methods, access and evaluation |
+| 1 | 39–45 | 28–30 | 2026 models (1 min), Terminal-Bench Science and invitation to follow (2 min), Navier–Stokes announcement (3 min) |
+| 2 | 0–12 | 31–39 | Sources, preprocessing decisions, regex patterns, P01 (2 min), lossless partitioning |
+| 2 | 12–25 | 40–44 | Code points, UTF-8, live counter, E03 (3 min), normalization, decoding |
+| 2 | 25–45 | 45–56 | Tokenizer interface, next-token prediction, P02 (2 min), subwords, weighted pair counts, two BPE merges, E04 (4 min), vocabulary |
+| 3 | 0–17 | 57–64 | Fixed-rank encoding, E05 (5 min), larger Spring corpus, boundaries, special tokens, algorithm families |
+| 3 | 17–37 | 65–69 | Vocabulary and sequence costs; E06 (8 min); compare held-out languages and interpret results |
+| 3 | 37–45 | 70–71 | Exit questions, discussion, sources and extended-practice link, readings |
 
 Breaks fall between periods and are outside the 135 teaching minutes. The six
 E exercises total 28 minutes; P01 and P02 add four minutes. The authorship poll
@@ -39,16 +42,20 @@ quizzes 10%, assignments 45%, individual project 45%; A1 is released in Week 2.
 Use the speaker notes for timing, expected responses, and common mistakes.
 If a live model call is slow, use the checked response criteria and continue.
 Do not spend the timed gallery installing software or waiting for optional
-image generation. The second vision image, second recorded clip, algorithm
-comparison, and extended-practice map can be quick signposts when time is tight.
+image generation. Keep the algorithm comparison brief when time is tight;
+the extended notebook is linked from the closing slide for work after class.
 
 ## Course overview and notebook correspondence
 
 The classroom notebook is [lecture-01-exercise.ipynb](lecture-01-exercise.ipynb).
 Its four main sections match the deck. Its opening course map contains the
 same learning sequence, assessment, instructor details, and local workflow.
-The full four-book/seven-course Spring resource inventory is in the notebook;
-the projected resource slide highlights three entry points.
+The closing overview slide and notebook link the course website, CFFF registration,
+and the Qizhi GPU platform for coursework and projects. Per-student compute budgets
+follow the project handout, as stated on the course website.
+The full four-book/seven-course Spring resource inventory and detailed course
+map remain in the notebook. The deck introduces resources on the course website
+slide and closes with selected sources and readings.
 
 | Slide example | Notebook location | Evidence to discuss |
 | --- | --- | --- |
@@ -56,8 +63,8 @@ the projected resource slide highlights three entry points.
 | Task 1: sentiment | E01; `sentiment` cell | Positive, positive, negative; the two uses of “light” have different contexts |
 | Task 2: translation | E02; `original-translation-examples` | A's quantities and date; B's definition and prediction |
 | Task 3: authorship | Article generation quiz | Both attributed to GPT-3 by the Spring source; fluency alone cannot verify authorship or facts |
-| Task 4: images | Image understanding; `vision` | Rainfall chart versus Big Data illustration; match the selected image to its question |
-| Task 5: images/video | Optional diffusion and recorded-video cells | Prompt adherence and visible evidence; clips are locally hosted |
+| Task 4: image understanding | Image understanding; `vision` | Big Data illustration; separate visible labels, logos, and lines from inferred relationships |
+| Task 5: images/video | Optional diffusion and recorded-video cells | Prompt adherence and visible evidence; the Johannesburg clip is locally hosted |
 
 The slide's **Open the classroom notebook** link uses the shared launcher,
 so it works with the local course server without a fixed Jupyter port or
@@ -73,15 +80,15 @@ sentences for translation, not a current fact sheet. Both complete passages
 and both complete article excerpts remain in the notebook; projected excerpts
 are shortened for reading at classroom distance.
 
-Task 4 follows the article quiz in the notebook and uses the bundled rainfall
-and Big Data images with `qwen3-vl:2b`. Its Thinking variant needs a larger
+Task 4 follows the article quiz in the notebook and uses the bundled Big Data
+image with `qwen3-vl:2b`. Its Thinking variant needs a larger
 generation budget; prepare a response before class and compare its claims with
-the chart rather than waiting for inference during the gallery. Preserve the
+the image rather than waiting for inference during the gallery. Preserve the
 notebook's model-specific settings and five-minute timeout. Live vision,
 diffusion, thinking, log probabilities, and extra generation are optional.
 The default offline run exercises the complete preprocessing and BPE material.
 
-## Ten history pages
+## Ten historical pages and three 2026 updates
 
 | Page | Slide ID | Date / idea | Teaching question |
 | --- | --- | --- | --- |
@@ -95,6 +102,9 @@ The default offline run exercises the complete preprocessing and BPE material.
 | 8 | `in-context-learning` | 2020: GPT-3 | What changes when demonstrations enter the prompt? |
 | 9 | `instruction-tuning` | 2022: instruction following | How do demonstrations and preferences change behavior? |
 | 10 | `llm-landscape` | 2023–2025: access, tools, reasoning | What can we run, inspect, and independently check? |
+| 11 | `models-2026` | 2026: Fable 5.1, GPT-6 Astra, GLM-5.3, Qwen3.8, Kimi K3, DeepSeek-V4-Pro | How should we compare their capabilities? |
+| 12 | `terminal-bench-science` | 2026: scientific workflow evaluation | What output and verification does a research task require? |
+| 13 | `navier-stokes-2026` | September 8, 2026: reported mathematical result | How do we assess the paper and formalization? |
 
 The two Turing illustrations are explicitly identified as generated conceptual
 scenes. The first depicts the simplified human-versus-machine adaptation;
@@ -102,7 +112,17 @@ Turing's original game begins with a man, a woman, and an interrogator. The
 paper's arithmetic reply is 105,621; the correct sum is 105,721. The dates mark
 selected papers, and approaches continue to coexist. Attention predates the
 Transformer. BERT's preprint is 2018; publication is 2019. ReAct's preprint is
-2022; publication is 2023. This is a history through 2025, not a current ranking.
+2022; publication is 2023. The first ten pages are historical landmarks through
+2025. The three updates are a September 9, 2026 snapshot, without a model ranking.
+
+Use the official model links and primary research sources in the matching notebook
+update. Invite students to follow Terminal-Bench Science and inspect a task's
+verification. Link the Anthropic and OpenAI release announcements reporting
+Fable 5.1 and GPT-6 Astra evaluations. Present the Navier–Stokes
+announcement as a reported solution with a public paper and Lean formalization;
+Clay's problem page still says Unsolved at the snapshot date. Keep that status
+visible and revisit it before a later presentation. Pause for the first break
+after this discussion.
 
 ## Preprocessing and tokenization
 

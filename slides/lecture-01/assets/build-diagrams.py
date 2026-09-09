@@ -14,7 +14,7 @@ BLUE = '#20578c'
 MUTED = '#566471'
 
 
-def diagram(name, rows, note):
+def diagram(name, rows, note, *, note_spans=None):
     elements = []
     svg = []
 
@@ -28,16 +28,18 @@ def diagram(name, rows, note):
                 'versionNonce': 7000 + len(elements), 'isDeleted': False,
                 'boundElements': None, 'updated': 1, 'link': None, 'locked': False}
 
-    def label(x, y, text, width, size=32, color=NAVY):
+    def label(x, y, text, width, size=32, color=NAVY, align='center'):
         lines = text.split('\n')
         el = base('text', x, y, width, len(lines) * size * 1.25, color)
         el.update({'fontSize': size, 'fontFamily': 2, 'text': text,
-                   'originalText': text, 'textAlign': 'center', 'verticalAlign': 'top',
+                   'originalText': text, 'textAlign': align, 'verticalAlign': 'top',
                    'containerId': None, 'autoResize': False, 'lineHeight': 1.25})
         elements.append(el)
         for j, line in enumerate(lines):
-            svg.append(f'<text x="{x + width / 2}" y="{y + size + j * size * 1.25}" '
-                       f'font-size="{size}" text-anchor="middle" fill="{color}">{escape(line)}</text>')
+            text_x = x + width / 2 if align == 'center' else x
+            anchor = 'middle' if align == 'center' else 'start'
+            svg.append(f'<text x="{text_x}" y="{y + size + j * size * 1.25}" '
+                       f'font-size="{size}" text-anchor="{anchor}" fill="{color}">{escape(line)}</text>')
 
     def box(x, y, width, height):
         el = base('rectangle', x, y, width, height)
@@ -66,7 +68,14 @@ def diagram(name, rows, note):
                 label(x - 4, y + 190, detail, width + 8, 28, MUTED)
             if i < len(entries) - 1:
                 arrow(x + width + 7, y + 111, x + width + 45)
-    label(20, 320, note, 1120, 30, NAVY)
+    if note_spans:
+        assert ''.join(text for text, _, _ in note_spans) == note
+        x = (1160 - sum(width for _, width, _ in note_spans)) / 2
+        for text, width, color in note_spans:
+            label(x, 320, text, width, 30, color, align='left')
+            x += width
+    else:
+        label(20, 320, note, 1120, 30, NAVY)
     scene = {'type': 'excalidraw', 'version': 2, 'source': 'https://excalidraw.com',
              'elements': elements, 'appState': {'viewBackgroundColor': '#fbfbf9', 'gridSize': None},
              'files': {}}
@@ -90,7 +99,12 @@ def main():
         ('Pieces', 'low · e · s · t', 'Stored byte strings'),
         ('Token IDs', '257 · 101\n115 · 116', 'Vocabulary indices'),
         ('Model input', 'Embedding\nvectors', 'One lookup per ID'),
-    ])], 'Our two-merge toy vocabulary: token 257 stores the bytes for low.')
+    ])], 'Our two-merge toy vocabulary: token 257 stores the bytes for low.', note_spans=[
+        # Arial at 30px; shared positions keep the SVG and editable text aligned.
+        ('Our two-merge toy vocabulary: token 257 stores the bytes for ', 824, NAVY),
+        ('low', 46, BLUE),
+        ('.', 8, NAVY),
+    ])
     diagram('instruction-tuning', [(35, [
         ('Pretraining', 'Predict text', 'Learn from a corpus'),
         ('Demonstrations', 'Imitate good\nresponses', 'Supervised fine-tuning'),
