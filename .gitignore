@@ -39,6 +39,7 @@ slides/.checks/
 # Logs and generated experiment artifacts
 *.log
 logs/
+/output/
 outputs/
 checkpoints/
 *.pt
