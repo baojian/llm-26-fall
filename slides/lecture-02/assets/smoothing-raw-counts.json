@@ -1,0 +1,22 @@
+{
+  "data": [
+    {
+      "type": "bar",
+      "x": ["allegations", "reports", "claims", "request", "attack", "man", "outcome"],
+      "y": [3, 2, 1, 1, 0, 0, 0],
+      "text": ["3", "2", "1", "1", "0", "0", "0"],
+      "textposition": "outside",
+      "cliponaxis": false,
+      "marker": { "color": "#20578c", "cornerradius": 4 },
+      "hovertemplate": "%{x}: %{y}<extra></extra>"
+    }
+  ],
+  "layout": {
+    "title": { "text": "Raw counts after “denied the” (many zeros)", "font": { "size": 24 } },
+    "xaxis": { "title": { "text": "" }, "tickangle": -30, "fixedrange": true },
+    "yaxis": { "title": { "text": "Count" }, "range": [0, 3.6], "dtick": 1, "gridcolor": "#dce2e7", "fixedrange": true },
+    "bargap": 0.35,
+    "showlegend": false,
+    "margin": { "t": 50, "b": 90, "l": 70, "r": 20 }
+  }
+}

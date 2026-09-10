@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "type": "bar",
+      "name": "Seen words",
+      "x": ["allegations", "reports", "claims", "request"],
+      "y": [2.5, 1.5, 0.5, 0.5],
+      "text": ["2.5", "1.5", "0.5", "0.5"],
+      "textposition": "outside",
+      "cliponaxis": false,
+      "marker": { "color": "#20578c", "cornerradius": 4 },
+      "hovertemplate": "%{x}: %{y}<extra></extra>"
+    },
+    {
+      "type": "bar",
+      "name": "Other (unseen)",
+      "x": ["other"],
+      "y": [2],
+      "text": ["2"],
+      "textposition": "outside",
+      "cliponaxis": false,
+      "marker": { "color": "#28673f", "cornerradius": 4 },
+      "hovertemplate": "%{x}: %{y}<extra></extra>"
+    }
+  ],
+  "layout": {
+    "title": { "text": "After smoothing (some mass for “other”)", "font": { "size": 24 } },
+    "xaxis": { "title": { "text": "" }, "tickangle": -30, "fixedrange": true, "categoryorder": "array", "categoryarray": ["allegations", "reports", "claims", "request", "other"] },
+    "yaxis": { "title": { "text": "Mass" }, "range": [0, 3.6], "dtick": 1, "gridcolor": "#dce2e7", "fixedrange": true },
+    "bargap": 0.35,
+    "showlegend": false,
+    "margin": { "t": 50, "b": 90, "l": 70, "r": 20 }
+  }
+}
