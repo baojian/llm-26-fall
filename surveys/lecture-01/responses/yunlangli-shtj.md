@@ -1,6 +1,6 @@
 # Lecture 01 LLM app survey
 
-GitHub username: YOUR_USERNAME
+GitHub username: YunlangLi-shtj
 
 ## Which LLM apps do you use most in everyday life?
 
