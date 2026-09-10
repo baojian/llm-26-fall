@@ -17,22 +17,14 @@ Ask students how they think a model represents a Chinese sentence.
 
 ## About me
 
-<div class="columns columns-wide-left">
-<div>
 <p><strong>Email:</strong> <a href="mailto:bjzhou@fudan.edu.cn">bjzhou@fudan.edu.cn</a></p>
 <p><strong>Course website:</strong> <a href="https://baojian.github.io/llm-26-fall/">baojian.github.io/llm-26-fall/</a></p>
 <p><strong>Course GitHub:</strong> <a href="https://github.com/baojian/llm-26-fall">github.com/baojian/llm-26-fall</a></p>
 <p><strong>Office:</strong> Francis and Rose Yuen Campus, C611</p>
 <p><strong>Office hours:</strong> Mon. 14:00–15:30</p>
-</div>
-<div>
-<p class="caption">Scan to join the WeChat group</p>
-<a href="assets/llm-26-fall-wechat.png"><img class="qr-code" src="assets/llm-26-fall-wechat.png" alt="QR code for the llm-26-fall WeChat group, supplied by the instructor. The image states that the code is valid before September 15."></a>
-</div>
-</div>
 
 Note:
-Introduce yourself and invite students to office hours. Allow students to scan the course WeChat QR code on the right; clicking the image opens its full-size original. The instructor supplied this unchanged image on September 8, 2026; it states that the invitation is valid before September 15. Contact details: Fudan Spring Lecture 01, https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/1. Office hours and course links: the Fall 2026 course page, ../../index.html.
+Introduce yourself and invite students to office hours. The course WeChat group QR code was removed after all students joined. Contact details: Fudan Spring Lecture 01, https://baojian.github.io/llm-26/slides/lecture-01-slides/index.html#/1. Office hours and course links: the Fall 2026 course page, ../../index.html.
 
 ---
 
