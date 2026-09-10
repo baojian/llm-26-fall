@@ -8,8 +8,8 @@ Select at most two apps you regularly use by changing `[ ]` to `[x]`.
 If you do not regularly use any LLM app, leave all boxes unchecked.
 Count the web and mobile versions of the same app as one choice.
 
-- [ ] ChatGPT
-- [ ] Claude
+- [x] ChatGPT
+- [x] Claude
 - [ ] Gemini
 - [ ] DeepSeek
 - [ ] Doubao (豆包)
