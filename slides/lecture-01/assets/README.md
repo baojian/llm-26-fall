@@ -23,11 +23,7 @@ Instruction tuning: [Ouyang et al. (2022)](https://arxiv.org/abs/2203.02155).
 Text handling: [Python Unicode HOWTO](https://docs.python.org/3/howto/unicode.html)
 and [SentencePiece](https://aclanthology.org/D18-2012/).
 
-## Instructor and Spring course media
-
-`llm-26-fall-wechat.png` is the course-group QR image supplied by the instructor
-on September 8, 2026. It is stored unchanged and appears on the right of
-**About me**. Its embedded notice says the invitation is valid before September 15.
+## Spring course media
 
 These teaching assets are copied from the instructor's
 [Spring 2026 Lecture 01](https://baojian.github.io/llm-26/slides/lecture-01-slides/).
