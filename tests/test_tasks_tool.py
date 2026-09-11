@@ -58,8 +58,8 @@ def test_template_checker_rejects_uppercase_filenames_and_wrong_answers(tasks_ro
     result = subprocess.run([sys.executable, "-m", "pytest", "-q", str(folder / "tests")], cwd=ROOT,
                             capture_output=True, text=True)
     assert result.returncode != 0
-    assert "test_filename_is_a_lowercase_username[Octocat]" in result.stdout
-    assert "test_cases[REPLACE-expected0-wrong]" in result.stdout
+    assert "test_filename_is_a_lowercase_username[@Octocat]" in result.stdout
+    assert "test_cases[REPLACE-expected0-@wrong]" in result.stdout
     assert "2 failed, 4 passed" in result.stdout
 
 

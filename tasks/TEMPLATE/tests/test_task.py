@@ -26,12 +26,12 @@ def load(path):
     return getattr(module, FUNCTION)
 
 
-@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[p.stem for p in SUBMISSIONS])
+@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"@{p.stem}" for p in SUBMISSIONS])
 def test_filename_is_a_lowercase_username(submission):
     assert submission.stem == submission.stem.lower(), "name the file <username>.py in lowercase"
 
 
-@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[p.stem for p in SUBMISSIONS])
+@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"@{p.stem}" for p in SUBMISSIONS])
 @pytest.mark.parametrize("text,expected", CASES)
 def test_cases(submission, text, expected):
     assert load(submission)(text) == expected

@@ -9,6 +9,7 @@ difficulty = "easy"
 time_minutes = 20
 deadline = "2026-12-31T23:59:00+08:00"
 issue = 0
+proposed_by = ""
 
 [submission]
 file = "submissions/<username>.py"

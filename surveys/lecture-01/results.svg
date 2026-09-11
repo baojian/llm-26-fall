@@ -1,49 +1,37 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="556" viewBox="0 0 960 556" role="img" aria-labelledby="chart-title chart-desc" font-family="Arial, Helvetica Neue, PingFang SC, Microsoft YaHei, sans-serif">
 <title id="chart-title">Which LLM apps do you use most?</title>
-<desc id="chart-desc">ChatGPT: 20; DeepSeek: 12; Gemini: 4; Claude: 3; Doubao (豆包): 3; Kimi: 1; Qwen (千问): 0; Tencent Yuanbao (腾讯元宝): 0; Zhipu Qingyan (智谱清言): 0</desc>
+<desc id="chart-desc">ChatGPT: 22; DeepSeek: 13; Gemini: 4; Doubao (豆包): 4; Claude: 3; Kimi: 1; Qwen (千问): 0; Tencent Yuanbao (腾讯元宝): 0; Zhipu Qingyan (智谱清言): 0</desc>
 <rect width="960" height="556" fill="#fbfbf9"/>
 <text x="32" y="44" font-size="26" font-weight="700" fill="#202b38">Which LLM apps do you use most?</text>
-<text x="32" y="72" font-size="17" fill="#566471">Lecture 01 survey · 24 responses · counted September 11, 2026</text>
+<text x="32" y="72" font-size="17" fill="#566471">Lecture 01 survey · 26 responses · counted September 11, 2026</text>
 <line x1="250.0" y1="88" x2="250.0" y2="492" stroke="#dce2e7" stroke-width="1"/>
 <text x="250.0" y="516" font-size="15" fill="#566471" text-anchor="middle">0</text>
-<line x1="312.0" y1="88" x2="312.0" y2="492" stroke="#dce2e7" stroke-width="1"/>
-<text x="312.0" y="516" font-size="15" fill="#566471" text-anchor="middle">2</text>
-<line x1="374.0" y1="88" x2="374.0" y2="492" stroke="#dce2e7" stroke-width="1"/>
-<text x="374.0" y="516" font-size="15" fill="#566471" text-anchor="middle">4</text>
-<line x1="436.0" y1="88" x2="436.0" y2="492" stroke="#dce2e7" stroke-width="1"/>
-<text x="436.0" y="516" font-size="15" fill="#566471" text-anchor="middle">6</text>
-<line x1="498.0" y1="88" x2="498.0" y2="492" stroke="#dce2e7" stroke-width="1"/>
-<text x="498.0" y="516" font-size="15" fill="#566471" text-anchor="middle">8</text>
-<line x1="560.0" y1="88" x2="560.0" y2="492" stroke="#dce2e7" stroke-width="1"/>
-<text x="560.0" y="516" font-size="15" fill="#566471" text-anchor="middle">10</text>
-<line x1="622.0" y1="88" x2="622.0" y2="492" stroke="#dce2e7" stroke-width="1"/>
-<text x="622.0" y="516" font-size="15" fill="#566471" text-anchor="middle">12</text>
-<line x1="684.0" y1="88" x2="684.0" y2="492" stroke="#dce2e7" stroke-width="1"/>
-<text x="684.0" y="516" font-size="15" fill="#566471" text-anchor="middle">14</text>
-<line x1="746.0" y1="88" x2="746.0" y2="492" stroke="#dce2e7" stroke-width="1"/>
-<text x="746.0" y="516" font-size="15" fill="#566471" text-anchor="middle">16</text>
-<line x1="808.0" y1="88" x2="808.0" y2="492" stroke="#dce2e7" stroke-width="1"/>
-<text x="808.0" y="516" font-size="15" fill="#566471" text-anchor="middle">18</text>
-<line x1="870.0" y1="88" x2="870.0" y2="492" stroke="#dce2e7" stroke-width="1"/>
-<text x="870.0" y="516" font-size="15" fill="#566471" text-anchor="middle">20</text>
+<line x1="390.9" y1="88" x2="390.9" y2="492" stroke="#dce2e7" stroke-width="1"/>
+<text x="390.9" y="516" font-size="15" fill="#566471" text-anchor="middle">5</text>
+<line x1="531.8" y1="88" x2="531.8" y2="492" stroke="#dce2e7" stroke-width="1"/>
+<text x="531.8" y="516" font-size="15" fill="#566471" text-anchor="middle">10</text>
+<line x1="672.7" y1="88" x2="672.7" y2="492" stroke="#dce2e7" stroke-width="1"/>
+<text x="672.7" y="516" font-size="15" fill="#566471" text-anchor="middle">15</text>
+<line x1="813.6" y1="88" x2="813.6" y2="492" stroke="#dce2e7" stroke-width="1"/>
+<text x="813.6" y="516" font-size="15" fill="#566471" text-anchor="middle">20</text>
 <text x="236" y="116.0" font-size="17" fill="#202b38" text-anchor="end">ChatGPT</text>
 <rect x="250" y="96" width="620.0" height="28" rx="4" fill="#20578c"/>
-<text x="880.0" y="116.0" font-size="16" fill="#202b38">20</text>
+<text x="880.0" y="116.0" font-size="16" fill="#202b38">22</text>
 <text x="236" y="160.0" font-size="17" fill="#202b38" text-anchor="end">DeepSeek</text>
-<rect x="250" y="140" width="372.0" height="28" rx="4" fill="#20578c"/>
-<text x="632.0" y="160.0" font-size="16" fill="#202b38">12</text>
+<rect x="250" y="140" width="366.4" height="28" rx="4" fill="#20578c"/>
+<text x="626.4" y="160.0" font-size="16" fill="#202b38">13</text>
 <text x="236" y="204.0" font-size="17" fill="#202b38" text-anchor="end">Gemini</text>
-<rect x="250" y="184" width="124.0" height="28" rx="4" fill="#20578c"/>
-<text x="384.0" y="204.0" font-size="16" fill="#202b38">4</text>
-<text x="236" y="248.0" font-size="17" fill="#202b38" text-anchor="end">Claude</text>
-<rect x="250" y="228" width="93.0" height="28" rx="4" fill="#20578c"/>
-<text x="353.0" y="248.0" font-size="16" fill="#202b38">3</text>
-<text x="236" y="292.0" font-size="17" fill="#202b38" text-anchor="end">Doubao (豆包)</text>
-<rect x="250" y="272" width="93.0" height="28" rx="4" fill="#20578c"/>
-<text x="353.0" y="292.0" font-size="16" fill="#202b38">3</text>
+<rect x="250" y="184" width="112.7" height="28" rx="4" fill="#20578c"/>
+<text x="372.7" y="204.0" font-size="16" fill="#202b38">4</text>
+<text x="236" y="248.0" font-size="17" fill="#202b38" text-anchor="end">Doubao (豆包)</text>
+<rect x="250" y="228" width="112.7" height="28" rx="4" fill="#20578c"/>
+<text x="372.7" y="248.0" font-size="16" fill="#202b38">4</text>
+<text x="236" y="292.0" font-size="17" fill="#202b38" text-anchor="end">Claude</text>
+<rect x="250" y="272" width="84.5" height="28" rx="4" fill="#20578c"/>
+<text x="344.5" y="292.0" font-size="16" fill="#202b38">3</text>
 <text x="236" y="336.0" font-size="17" fill="#202b38" text-anchor="end">Kimi</text>
-<rect x="250" y="316" width="31.0" height="28" rx="4" fill="#20578c"/>
-<text x="291.0" y="336.0" font-size="16" fill="#202b38">1</text>
+<rect x="250" y="316" width="28.2" height="28" rx="4" fill="#20578c"/>
+<text x="288.2" y="336.0" font-size="16" fill="#202b38">1</text>
 <text x="236" y="380.0" font-size="17" fill="#202b38" text-anchor="end">Qwen (千问)</text>
 <text x="260.0" y="380.0" font-size="16" fill="#202b38">0</text>
 <text x="236" y="424.0" font-size="17" fill="#202b38" text-anchor="end">Tencent Yuanbao (腾讯元宝)</text>
