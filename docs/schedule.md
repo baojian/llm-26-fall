@@ -49,7 +49,7 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
 | 2    | Wed, Sep 16, 2026 |                                                                                                          |
 | 3    | Wed, Sep 23, 2026 |                                                                                                          |
 | 4    | Wed, Sep 30, 2026 |                                                                                                          |
-| 5    | Wed, Oct 7, 2026  | **skip** — National Day holiday. No lecture, quiz, or submission deadline. |
+| 5    | **Sat, Oct 10, 2026** | **Make-up class.** Wed, Oct 7 falls on the National Day holiday; the university moves this meeting to Saturday, Oct 10. Time and room follow the make-up-day notice. Content to be announced. |
 | 6    | Wed, Oct 14, 2026 |                                                                                                          |
 | 7    | Wed, Oct 21, 2026 |                                                                                                          |
 | 8    | Wed, Oct 28, 2026 |                                                                                                          |
@@ -64,11 +64,11 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
 
 - Weeks 17–18 (Dec 27, 2026 – Jan 9, 2027) are exam weeks with no classes.
   Final exam arrangements for this course will be announced separately.
-- The review draft schedules 15 meetings of three 45-minute periods: 45 academic
-  periods, or 33 hours 45 minutes of instruction excluding breaks. The registered
-  allocation is 48 academic periods. Any arrangement for the remaining three
-  periods is outside this draft; the core lecture sequence uses only these 15
-  meetings. See [the curriculum revision](course-revision.md).
+- With the Oct 10 make-up class there are 16 meetings of three 45-minute
+  periods: 48 academic periods, matching the registered allocation. The
+  [curriculum revision](course-revision.md) (Sep 7 draft) planned 15 meetings
+  with Oct 7 skipped; its lecture sequence is unchanged, and the make-up
+  meeting's content is to be announced.
 - Holiday dates follow the university administration office's notices. The
   Mid-Autumn Festival (Sep 25–27, 2026) and New Year's Day (Jan 1, 2027) do
   not fall on a Wednesday in weeks 1–16.
