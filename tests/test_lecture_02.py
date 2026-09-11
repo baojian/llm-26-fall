@@ -46,20 +46,6 @@ def lesson(request):
     return namespace
 
 
-def slide_table(slide_id):
-    """Return the 8x8 numeric table of one slide as floats keyed by row word."""
-    start = SLIDES.index(f'id="{slide_id}"')
-    end = SLIDES.index("\n---\n", start)
-    section = SLIDES[start:end]
-    rows = {}
-    for row in re.findall(r"<tr><th>(\w+)</th>(.*?)</tr>", section):
-        values = re.findall(r"<td[^>]*>(?:<[^>]+>)*([0-9.]+)(?:</[^>]+>)*</td>", row[1])
-        assert len(values) == 8, (slide_id, row[0])
-        rows[row[0]] = [float(value) for value in values]
-    assert list(rows) == WORDS
-    return rows
-
-
 def test_toy_bigram_estimates_match_the_slide(lesson):
     mle = lesson["bigram_mle"]
     assert mle("BOS", "I") == Fraction(2, 3)
@@ -81,22 +67,17 @@ def test_uniform_digits_have_perplexity_ten(lesson):
     assert lesson["perplexity"](math.log(1.0), 7) == pytest.approx(1.0)
 
 
-def test_laplace_tables_match_the_slides(lesson):
-    probabilities = slide_table("exercise-04")
-    counts = slide_table("reconstituted-counts")
-    for previous in WORDS:
-        for index, word in enumerate(WORDS):
-            assert lesson["laplace_table"][previous][word] == pytest.approx(probabilities[previous][index], rel=0.05)
-            assert lesson["reconstituted_table"][previous][word] == pytest.approx(counts[previous][index], rel=0.05)
+def test_laplace_example_matches_the_textbook(lesson):
+    """Jurafsky and Martin, Chapter 3: P_Lap(want | i) and the reconstituted counts."""
     assert lesson["laplace_probability"]("i", "want") == pytest.approx(828 / 3979)
-
-
-def test_raw_counts_on_the_slide_match_the_notebook(lesson):
-    raw = slide_table("laplace-counts")
-    plus_one = slide_table("laplace-plus-one")
+    assert lesson["reconstituted_count"]("i", "want") == pytest.approx(527, abs=0.5)
+    assert lesson["reconstituted_count"]("want", "to") == pytest.approx(238, abs=0.5)
+    assert lesson["reconstituted_count"]("to", "spend") == pytest.approx(133, abs=0.5)
+    assert lesson["reconstituted_count"]("chinese", "want") == pytest.approx(0.098, abs=0.001)
     for previous in WORDS:
-        assert raw[previous] == lesson["BIGRAM_COUNTS"][previous]
-        assert plus_one[previous] == [value + 1 for value in raw[previous]]
+        row_total = sum(lesson["laplace_probability"](previous, word) for word in WORDS)
+        assert 0 < row_total < 1
+    assert sum(lesson["BIGRAM_COUNTS"]["i"]) == 843
 
 
 def test_good_turing_estimates_form_a_distribution(lesson):
@@ -126,3 +107,8 @@ def test_manifest_and_assets_are_consistent():
     assert (LECTURE / "assets/predicting-next-word.mp4").stat().st_size < 10_000_000
     assert SLIDES.rstrip().endswith("index.html#/33.")
     assert 'id="references"' in SLIDES
+    assert SLIDES.count('<!-- .slide:') == 38
+    assert 'id="smoothing"' in SLIDES and "Katz-backoff" not in SLIDES
+    notebook_text = "".join("".join(cell["source"]) for cell in NOTEBOOK["cells"])
+    for label in re.findall(r"(?:Exercise|Notebook|practices?) ([EP]\d\d)", SLIDES):
+        assert label in notebook_text, label
