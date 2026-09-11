@@ -17,6 +17,10 @@ tasks/
     submissions/<username>.py    one file per student
 ```
 
+[PROGRESS.md](PROGRESS.md) is the class progress board: tasks passed,
+correct rate, participation, merged PRs, and badges per student. It is
+regenerated after each merge batch with `uv run python scripts/progress.py`.
+
 Task issues on GitHub carry the same lecture label as the folder
 (`l02-ngram`, `l03-embeddings`, …) plus the type label `task`. The full
 rules, timeline, and labels are in

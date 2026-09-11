@@ -67,6 +67,8 @@ window.courseTranslations = {
   "Exercise:": "练习：",
   "Papers:": "论文：",
   "Survey results:": "问卷结果：",
+  "Weekly tasks": "每周任务",
+  "Progress board": "进度榜",
   "Which LLM apps do you use most?": "你最常使用哪些 LLM 应用？",
   "counts": "统计表",
   "Before opening local slides or notebooks, run": "打开本地课件或笔记本前，请先运行",

@@ -9,6 +9,7 @@ difficulty = "easy"                  # easy | medium | hard
 time_minutes = 45                    # typical time for a student
 deadline = "2026-09-22T23:59:00+08:00"
 issue = 0                            # GitHub issue number once opened
+proposed_by = ""                     # GitHub username of a student whose proposal became this task
 
 [submission]
 file = "submissions/<username>.py"   # exactly one file per student
