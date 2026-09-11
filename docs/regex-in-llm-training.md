@@ -182,3 +182,6 @@ GPT-style pre-tokenizer (medium, joins Lecture 01 and Lecture 02). Digit
 grouping and Han runs are one-line follow-ups to the pre-tokenizer. LaTeX
 extraction, math-URL recall, and answer extraction fit the math and GRPO
 weeks.
+
+For the wider question of how tokenizers affect model quality and what their
+training data should be, see the [tokenizer reading list](tokenizer-reading-list.md).

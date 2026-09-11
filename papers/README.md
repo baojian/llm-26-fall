@@ -18,6 +18,9 @@ a paper. Keep published filenames stable for existing lecture links.
   [Course PDF](kudo-2018-sentencepiece.pdf) ·
   [Original publication](https://aclanthology.org/D18-2012/).
   Further reading on tokenizer implementation and language independence.
+- Beyond these two, the [tokenizer reading list](../docs/tokenizer-reading-list.md)
+  links recent papers (2022–2026) on whether the tokenizer changes model
+  quality and what text to train it on. It links to the papers; it holds no PDFs.
 
 These PDFs are unmodified copies from the ACL Anthology, retrieved on
 September 8, 2026. Both are distributed under

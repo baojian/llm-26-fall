@@ -49,6 +49,9 @@ browser without an instructor laptop.
 page links to the local server for both. PDFs and citations for course readings
 are collected in [papers/](papers/README.md).
 
+The [tokenizer reading list](docs/tokenizer-reading-list.md) collects research from
+2022–2026, mostly peer-reviewed, for the class model's tokenizer decision.
+
 ## Your Workspace
 
 Put your own notes, experiments, and exercise solutions in

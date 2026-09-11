@@ -66,6 +66,7 @@ window.courseTranslations = {
   "Slides:": "课件：",
   "Exercise:": "练习：",
   "Papers:": "论文：",
+  "Tokenizer reading list": "分词器文献清单",
   "Survey results:": "问卷结果：",
   "Weekly tasks": "每周任务",
   "Progress board": "进度榜",
