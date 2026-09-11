@@ -1,0 +1,15 @@
+# One task = one folder. Students add one file each under submissions/.
+
+[task]
+id = "example/word-count"
+title = "Count words with a regular expression"
+lecture = "example"
+type = "task"
+difficulty = "easy"
+time_minutes = 20
+deadline = "2026-12-31T23:59:00+08:00"
+issue = 0
+
+[submission]
+file = "submissions/<username>.py"
+function = "solve"

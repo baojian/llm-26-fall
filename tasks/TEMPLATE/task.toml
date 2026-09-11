@@ -1,0 +1,15 @@
+# One task = one folder. Students add one file each under submissions/.
+
+[task]
+id = "{{LECTURE}}/{{SLUG}}"          # folder path under tasks/, also the PR title prefix
+title = "{{TITLE}}"
+lecture = "{{LECTURE}}"              # GitHub lecture label, e.g. l02-ngram
+type = "task"                        # task | help-wanted | figure
+difficulty = "easy"                  # easy | medium | hard
+time_minutes = 45                    # typical time for a student
+deadline = "2026-09-22T23:59:00+08:00"
+issue = 0                            # GitHub issue number once opened
+
+[submission]
+file = "submissions/<username>.py"   # exactly one file per student
+function = "solve"                   # the function tests/test_task.py calls

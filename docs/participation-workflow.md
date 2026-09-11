@@ -89,11 +89,11 @@ flowchart TB
     end
     subgraph S[Students]
         direction LR
-        S1[Read the issue;\ncomment: I'll take this] --> S2[Fork, branch, work in workspace/;\nadd tasks/l02-ngram/slug/username.md] --> S3[Open PR;\ntitle l02-ngram/slug: username;\nbody Related to #issue] --> S4[Red check?\npush a fix to the same branch]
+        S1[Read the issue;\ncomment: I'll take this] --> S2[Fork, branch, work in workspace/;\nadd tasks/l02-ngram/slug/submissions/username.py] --> S3[Open PR;\ntitle l02-ngram/slug: username;\nbody Related to #issue] --> S4[Red check?\npush a fix to the same branch]
     end
     subgraph C[CI on every PR]
         direction LR
-        C1[Check path, filename,\nrequired headings and numbers,\nonly one file changed] --> C2{green?}
+        C1[Run the task's tests/test_task.py\non the submission;\nonly one file changed] --> C2{green?}
     end
     I1 -. assigns after comment .-> S1
     S3 --> C1
@@ -148,8 +148,8 @@ still L05), and zero-padding keeps them sorted.
 | --- | --- | --- |
 | Issue title | `<lecture label>: <short title>` | `l02-ngram: bigram perplexity on your own text` |
 | Issue labels | one lecture label + one type label | `l02-ngram`, `task` |
-| Issue body | Task, exact file path, required headings or numbers, how it is checked, deadline | see the issue template |
-| Student file | `tasks/<lecture label>/<slug>/<username>.md` (or `.ipynb`), username in lowercase | `tasks/l02-ngram/bigram-perplexity/octocat.md` |
+| Issue body | Link to the task folder; the folder's `instruction.md` holds goal, interface, examples, checker, deadline | `tasks/l02-ngram/bigram-perplexity/` |
+| Student file | `tasks/<lecture label>/<slug>/submissions/<username>.py`, username in lowercase (see [tasks/README.md](../tasks/README.md)) | `tasks/l02-ngram/bigram-perplexity/submissions/octocat.py` |
 | PR title | `<lecture label>/<slug>: <username>` | `l02-ngram/bigram-perplexity: octocat` |
 | PR body | `Related to #<issue>` | `Related to #45` |
 | Branch in the fork | `<lecture label>-<slug>` | `l02-ngram-bigram-perplexity` |
