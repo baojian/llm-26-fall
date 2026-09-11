@@ -78,6 +78,12 @@ body { margin: 0; font-family: var(--r-main-font); color: var(--r-main-color); }
 .reveal .exercise-meta { font-size: 24px; color: var(--course-accent); margin: 0 0 24px; }
 .reveal .answer { margin-top: 30px; padding-top: 22px; border-top: 2px solid var(--course-line); color: #21553b; }
 .reveal .references li { font-size: 28px; margin-bottom: 28px; }
+.reveal .text-good { color: #28673f; font-weight: 700; }
+.reveal .text-bad { color: #9a4032; font-weight: 700; }
+.reveal .text-token { color: var(--course-accent); font-weight: 700; }
+.reveal table.compact { font-size: 26px; line-height: 1.3; }
+.reveal table.compact th, .reveal table.compact td { padding: 7px 10px; }
+.reveal td .answer { margin: 0; padding: 0; border: 0; }
 .reveal .katex { font-size: 1.12em; }
 .reveal .katex-display { margin: 36px 0; }
 .reveal .slide-number { right: 112px; bottom: 20px; padding: 0; font: 18px var(--r-main-font); color: var(--course-muted); background: transparent; }
