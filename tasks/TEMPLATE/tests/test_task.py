@@ -33,18 +33,18 @@ def load(path):
     return getattr(load_module(path), FUNCTION)
 
 
-@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"@{p.stem}" for p in SUBMISSIONS])
+@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"user.{p.stem}" for p in SUBMISSIONS])
 def test_filename_is_a_lowercase_username(submission):
     assert submission.stem == submission.stem.lower(), "name the file <username>.py in lowercase"
 
 
-@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"@{p.stem}" for p in SUBMISSIONS])
+@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"user.{p.stem}" for p in SUBMISSIONS])
 @pytest.mark.parametrize("text,expected", CASES)
 def test_cases(submission, text, expected):
     assert load(submission)(text) == expected
 
 
-@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"@{p.stem}" for p in SUBMISSIONS])
+@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"user.{p.stem}" for p in SUBMISSIONS])
 def test_predictions_match_solve(submission):
     module = load_module(submission)
     predictions = getattr(module, "PREDICTIONS", {})
@@ -53,7 +53,7 @@ def test_predictions_match_solve(submission):
         assert getattr(module, FUNCTION)(text) == expected, f"solve({text!r}) differs from your prediction"
 
 
-@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"@{p.stem}" for p in SUBMISSIONS])
+@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"user.{p.stem}" for p in SUBMISSIONS])
 def test_own_cases_are_new_and_pass(submission):
     module = load_module(submission)
     own = getattr(module, "MY_CASES", [])
@@ -64,7 +64,7 @@ def test_own_cases_are_new_and_pass(submission):
         assert getattr(module, FUNCTION)(text) == expected, f"solve({text!r}) fails your own case"
 
 
-@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"@{p.stem}" for p in SUBMISSIONS])
+@pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"user.{p.stem}" for p in SUBMISSIONS])
 def test_notes_answer_the_question(submission):
     notes = getattr(load_module(submission), "NOTES", "")
     assert len(notes.strip()) >= MIN_NOTES_CHARS and "REPLACE" not in notes, "write 3–5 sentences in NOTES"

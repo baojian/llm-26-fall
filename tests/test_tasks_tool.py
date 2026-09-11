@@ -67,11 +67,11 @@ def test_template_checker_rejects_uppercase_filenames_and_wrong_answers(tasks_ro
     assert result.returncode != 0
     failed = {line.split("::")[-1].split(" ")[0] for line in result.stdout.splitlines() if line.startswith("FAILED")}
     assert failed == {
-        "test_filename_is_a_lowercase_username[@Octocat]",
-        "test_cases[REPLACE-expected0-@wrong]",
-        "test_predictions_match_solve[@wrong]",
-        "test_own_cases_are_new_and_pass[@wrong]",
-        "test_notes_answer_the_question[@wrong]",
+        "test_filename_is_a_lowercase_username[user.Octocat]",
+        "test_cases[REPLACE-expected0-user.wrong]",
+        "test_predictions_match_solve[user.wrong]",
+        "test_own_cases_are_new_and_pass[user.wrong]",
+        "test_notes_answer_the_question[user.wrong]",
     }, result.stdout
 
 
@@ -81,3 +81,14 @@ def test_list_and_progress_tables(tasks_root):
     (folder / "submissions/bob.py").write_text(GOOD)
     assert "| l02-ngram/demo | Demo | easy | 2026-09-22 | 2 |" in tasks.list_tasks(tasks_root)
     assert tasks.progress(tasks_root).splitlines()[2:] == ["| alice | 1 |", "| bob | 1 |"]
+
+
+def test_check_accepts_github_style_usernames_and_selects_exactly_one(tasks_root):
+    folder = tasks.create_task("l02-ngram", "demo", "Demo", tasks_root)
+    for name in ["760zhang", "d-shy", "alice", "alice2", "a" * 39]:
+        (folder / f"submissions/{name}.py").write_text(GOOD)
+    assert tasks.check(folder) == 0
+    result = subprocess.run([sys.executable, "-m", "pytest", "-q", str(folder / "tests"), "-k", "user.alice]"],
+                            cwd=ROOT, capture_output=True, text=True)
+    assert "6 passed" in result.stdout and "deselected" in result.stdout
+    assert tasks.check(folder, "d-shy") == 0 and tasks.check(folder, "760zhang") == 0

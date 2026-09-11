@@ -77,9 +77,9 @@ def checker_results(folder: Path) -> dict[str, bool]:
             return {user: False for user in usernames}
         for case in ET.parse(report).getroot().iter("testcase"):
             name = case.get("name", "")
-            if "[" not in name or "@" not in name:
+            if "[" not in name or "user." not in name:
                 continue
-            user = name[name.rindex("@") + 1:].rstrip("]")
+            user = name[name.rindex("user.") + 5:].rstrip("]")
             if user in outcomes and any(child.tag in {"failure", "error"} for child in case):
                 outcomes[user] = False
     return outcomes
