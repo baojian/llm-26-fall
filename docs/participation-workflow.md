@@ -142,7 +142,7 @@ still L05), and zero-padding keeps them sorted.
 
 | Lecture labels (blue) | Type labels |
 | --- | --- |
-| `l01-tokenization`, `l02-ngram`, `l03-embeddings`, `l04-attention`, `l05-makeup`, `l06-transformer`, `l07-pretraining`, `l08-data`, `l09-scaling`, `l10-evaluation`, `l11-sft`, `l12-alignment`, `l13-rag`, `l14-inference`, `l15-diffusion`, `l16-agents` | `task` (student exercise, many submissions), `help wanted` (one student, improves the repo), `bug`, `figure`, `survey`, `prep` (teaching team's own lecture preparation, e.g. #39), `project`, `not-done` |
+| `l01-tokenization`, `l02-ngram`, `l03-embeddings`, `l04-attention`, `l05-makeup`, `l06-transformer`, `l07-pretraining`, `l08-data`, `l09-scaling`, `l10-evaluation`, `l11-sft`, `l12-alignment`, `l13-rag`, `l14-inference`, `l15-diffusion`, `l16-agents` | `task` (student exercise, many submissions), `proposal` (a task suggested by a student through the issue form; relabelled `task` when accepted), `help wanted` (one student, improves the repo), `bug`, `figure`, `survey`, `prep` (teaching team's own lecture preparation, e.g. #39), `project`, `not-done` |
 
 | Item | Rule | Example |
 | --- | --- | --- |
@@ -154,6 +154,10 @@ still L05), and zero-padding keeps them sorted.
 | PR body | `Related to #<issue>` | `Related to #45` |
 | Branch in the fork | `<lecture label>-<slug>` | `l02-ngram-bigram-perplexity` |
 | Deadline | Tuesday 23:59 (Asia/Shanghai) of the same week | — |
+
+Students can propose tasks and report problems through the issue forms
+(**New issue** → *Propose a task* or *Report a problem in course material*).
+An accepted proposal is credited in the task's `instruction.md`.
 
 Privacy: GitHub username only, no real names or student IDs; the same rule as
 the survey. Assignments A1–A3 stay on the private channel because their

@@ -1,0 +1,78 @@
+name: Propose a task
+description: Suggest a small exercise for the class. If accepted, it becomes a task folder and you are credited.
+title: "proposal: <short title>"
+labels: ["proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A good task takes a classmate 30–60 minutes, needs only the standard library, and can be checked by a few input/output cases. See `tasks/README.md` and `tasks/example/word-count/` for the shape.
+  - type: dropdown
+    id: lecture
+    attributes:
+      label: Lecture
+      description: Which lecture the task belongs to.
+      options:
+        - l01-tokenization
+        - l02-ngram
+        - l03-embeddings
+        - l04-attention
+        - l05-makeup
+        - l06-transformer
+        - l07-pretraining
+        - l08-data
+        - l09-scaling
+        - l10-evaluation
+        - l11-sft
+        - l12-alignment
+        - l13-rag
+        - l14-inference
+        - l15-diffusion
+        - l16-agents
+    validations:
+      required: true
+  - type: input
+    id: goal
+    attributes:
+      label: Goal
+      description: One sentence. What will a student be able to do after this task?
+      placeholder: Split raw text into sentences and add BOS/EOS tokens with a regular expression.
+    validations:
+      required: true
+  - type: textarea
+    id: interface
+    attributes:
+      label: What a student submits
+      description: The function signature or file format, with input and output types.
+      placeholder: |
+        def solve(text: str) -> list[str]
+        Input: any string. Output: sentences in order, each wrapped as "BOS ... EOS".
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Two examples
+      description: Input and expected output. These become the first test cases.
+      placeholder: |
+        "I am Sam. Sam I am." -> ["BOS I am Sam EOS", "BOS Sam I am EOS"]
+        "" -> []
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why this matters
+      description: One or two sentences linking the task to the lecture, and what you found hard about it yourself.
+    validations:
+      required: false
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: Difficulty
+      options:
+        - easy
+        - medium
+        - hard
+    validations:
+      required: true
