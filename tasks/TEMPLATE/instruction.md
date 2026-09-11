@@ -25,10 +25,33 @@ REPLACE: Describe the input and the output precisely (types, order, edge cases).
 | REPLACE `"..."` | REPLACE `[...]` |
 | REPLACE `""` | REPLACE `[]` |
 
+## Before you code: predict, then break it
+
+Your file also contains three things the checker reads:
+
+```python
+PREDICTIONS = {  # write these BEFORE writing solve; the checker compares solve to them
+    "REPLACE input 1": ["REPLACE what you expect"],
+    "REPLACE input 2": ["REPLACE"],
+    "REPLACE input 3": ["REPLACE"],
+}
+MY_CASES = [  # two inputs of your own where a naive solution fails, with the expected output
+    ("REPLACE", ["REPLACE"]),
+    ("REPLACE", ["REPLACE"]),
+]
+NOTES = """
+REPLACE: answer in 3–5 sentences: REPLACE the why-question for this task.
+"""
+```
+
+The three prediction inputs are: REPLACE `"..."`, REPLACE `"..."`, REPLACE `"..."`.
+
 ## How it is checked
 
 `tests/test_task.py` calls your `solve` on the examples above and on a few
-similar cases. Run it yourself before opening the PR:
+similar cases, checks that `solve` agrees with your `PREDICTIONS`, that
+`MY_CASES` are new and pass, and that `NOTES` is not empty. Run it yourself
+before opening the PR:
 
 ```sh
 uv run python scripts/tasks.py check tasks/{{LECTURE}}/{{SLUG}} <username>

@@ -10,6 +10,12 @@ import pytest
 from scripts import tasks
 
 ROOT = Path(__file__).resolve().parents[1]
+GOOD = (
+    "def solve(text):\n    return ['REPLACE'] if text else []\n"
+    "PREDICTIONS = {'REPLACE 1': ['REPLACE'], 'REPLACE 2': ['REPLACE'], 'REPLACE 3': ['REPLACE']}\n"
+    "MY_CASES = [('a', ['REPLACE']), ('b', ['REPLACE'])]\n"
+    "NOTES = 'This answers the why-question in a few sentences. ' * 6\n"
+)
 REQUIRED = ["task.toml", "instruction.md", "tests/test_task.py", "submissions/README.md"]
 
 
@@ -53,19 +59,25 @@ def test_new_task_fills_placeholders_and_checks_a_submission(tasks_root):
 
 def test_template_checker_rejects_uppercase_filenames_and_wrong_answers(tasks_root):
     folder = tasks.create_task("l02-ngram", "demo", "Demo", tasks_root)
-    (folder / "submissions/Octocat.py").write_text("def solve(text):\n    return ['REPLACE'] if text else []\n")
+    (folder / "submissions/Octocat.py").write_text(GOOD)
     (folder / "submissions/wrong.py").write_text("def solve(text):\n    return []\n")
+    (folder / "submissions/good.py").write_text(GOOD)
     result = subprocess.run([sys.executable, "-m", "pytest", "-q", str(folder / "tests")], cwd=ROOT,
                             capture_output=True, text=True)
     assert result.returncode != 0
-    assert "test_filename_is_a_lowercase_username[@Octocat]" in result.stdout
-    assert "test_cases[REPLACE-expected0-@wrong]" in result.stdout
-    assert "2 failed, 4 passed" in result.stdout
+    failed = {line.split("::")[-1].split(" ")[0] for line in result.stdout.splitlines() if line.startswith("FAILED")}
+    assert failed == {
+        "test_filename_is_a_lowercase_username[@Octocat]",
+        "test_cases[REPLACE-expected0-@wrong]",
+        "test_predictions_match_solve[@wrong]",
+        "test_own_cases_are_new_and_pass[@wrong]",
+        "test_notes_answer_the_question[@wrong]",
+    }, result.stdout
 
 
 def test_list_and_progress_tables(tasks_root):
     folder = tasks.create_task("l02-ngram", "demo", "Demo", tasks_root)
-    (folder / "submissions/alice.py").write_text("def solve(text):\n    return []\n")
-    (folder / "submissions/bob.py").write_text("def solve(text):\n    return []\n")
+    (folder / "submissions/alice.py").write_text(GOOD)
+    (folder / "submissions/bob.py").write_text(GOOD)
     assert "| l02-ngram/demo | Demo | easy | 2026-09-22 | 2 |" in tasks.list_tasks(tasks_root)
     assert tasks.progress(tasks_root).splitlines()[2:] == ["| alice | 1 |", "| bob | 1 |"]

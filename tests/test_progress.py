@@ -7,6 +7,12 @@ from pathlib import Path
 from scripts import progress, tasks
 
 ROOT = Path(__file__).resolve().parents[1]
+GOOD = (
+    "def solve(text):\n    return ['REPLACE'] if text else []\n"
+    "PREDICTIONS = {'REPLACE 1': ['REPLACE'], 'REPLACE 2': ['REPLACE'], 'REPLACE 3': ['REPLACE']}\n"
+    "MY_CASES = [('a', ['REPLACE']), ('b', ['REPLACE'])]\n"
+    "NOTES = 'This answers the why-question in a few sentences. ' * 6\n"
+)
 
 
 def make_tree(tmp_path):
@@ -15,9 +21,9 @@ def make_tree(tmp_path):
     shutil.copytree(ROOT / "tasks/example", tasks_root / "example")
     demo = tasks.create_task("l02-ngram", "demo", "Demo", tasks_root)
     (demo / "task.toml").write_text((demo / "task.toml").read_text().replace('proposed_by = ""', 'proposed_by = "alice"'))
-    (demo / "submissions/alice.py").write_text("def solve(text):\n    return ['REPLACE'] if text else []\n")
+    (demo / "submissions/alice.py").write_text(GOOD)
     (demo / "submissions/bob-x.py").write_text("def solve(text):\n    return []\n")
-    (demo / "submissions/carol.py").write_text("def solve(text):\n    return ['REPLACE'] if text else []\n")
+    (demo / "submissions/carol.py").write_text(GOOD)
     survey = tmp_path / "responses"
     survey.mkdir()
     (survey / "Alice.md").write_text("GitHub username: Alice\n")
