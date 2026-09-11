@@ -19,7 +19,7 @@ PREDICTION_INPUTS = ["REPLACE 1", "REPLACE 2", "REPLACE 3"]  # listed in instruc
 MIN_OWN_CASES = 2
 MIN_NOTES_CHARS = 200
 
-SUBMISSIONS = sorted(p for p in (Path(__file__).resolve().parents[1] / "submissions").glob("*.py"))
+SUBMISSIONS = sorted(p for p in (Path(__file__).resolve().parents[1] / "submissions").glob("*.py") if not p.name.startswith((".", "_")))
 
 
 def load_module(path):

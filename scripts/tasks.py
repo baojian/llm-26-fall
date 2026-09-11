@@ -48,7 +48,7 @@ def manifest(folder: Path) -> dict:
 
 
 def submissions(folder: Path) -> list[str]:
-    return sorted(p.stem for p in (folder / "submissions").glob("*.py"))
+    return sorted(p.stem for p in (folder / "submissions").glob("*.py") if not p.name.startswith((".", "_")))
 
 
 def check(folder: Path, username: str | None = None) -> int:

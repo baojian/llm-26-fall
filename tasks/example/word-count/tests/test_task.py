@@ -21,7 +21,7 @@ PREDICTION_INPUTS = ["Don't stop.", "x2 + 3x = 0", "naïve café"]
 MIN_OWN_CASES = 2
 MIN_NOTES_CHARS = 200
 
-SUBMISSIONS = sorted(p for p in (Path(__file__).resolve().parents[1] / "submissions").glob("*.py"))
+SUBMISSIONS = sorted(p for p in (Path(__file__).resolve().parents[1] / "submissions").glob("*.py") if not p.name.startswith((".", "_")))
 
 
 def load_module(path):

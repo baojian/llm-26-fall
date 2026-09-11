@@ -92,3 +92,12 @@ def test_check_accepts_github_style_usernames_and_selects_exactly_one(tasks_root
                             cwd=ROOT, capture_output=True, text=True)
     assert "6 passed" in result.stdout and "deselected" in result.stdout
     assert tasks.check(folder, "d-shy") == 0 and tasks.check(folder, "760zhang") == 0
+
+
+def test_hidden_and_apple_double_files_are_not_submissions(tasks_root):
+    folder = tasks.create_task("l02-ngram", "demo", "Demo", tasks_root)
+    (folder / "submissions/alice.py").write_text(GOOD)
+    (folder / "submissions/._alice.py").write_bytes(b"\x00\x05\x16\x07 not python")
+    (folder / "submissions/__init__.py").write_text("")
+    assert tasks.submissions(folder) == ["alice"]
+    assert tasks.check(folder) == 0
