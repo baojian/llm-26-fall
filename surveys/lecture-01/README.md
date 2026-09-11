@@ -11,6 +11,29 @@ contains the instructions and a complete response template.
 Responses and PRs are public. Use your GitHub username; no real name or student
 ID is needed. Share only app names you are comfortable making public.
 
+## Results so far
+
+<!-- survey-results:start -->
+Counted from the merged files in [responses/](responses/) on September 11, 2026:
+**24 responses**, at most two selections each. 2 responses selected more than 2 apps and are not counted.
+
+![Bar chart of the number of students who selected each LLM app](results.svg)
+
+| App | Students |
+| :--- | ---: |
+| ChatGPT | 20 |
+| DeepSeek | 12 |
+| Gemini | 4 |
+| Claude | 3 |
+| Doubao (豆包) | 3 |
+| Kimi | 1 |
+| Qwen (千问) | 0 |
+| Tencent Yuanbao (腾讯元宝) | 0 |
+| Zhipu Qingyan (智谱清言) | 0 |
+
+Apps written under *Other* get their own bar with the suffix "(Other)".
+<!-- survey-results:end -->
+
 ## Prepare your response
 
 Copy the [response template](template.md) and mark at most two choices with
@@ -61,6 +84,12 @@ Demonstrate one response and PR during the lecture. Each response has its own
 file, so submissions can be merged independently. Review the changed file for
 the expected filename, at most two checked boxes, and an app name if Other is
 selected before merging. Zero selections is a valid response.
+
+After merging a batch of responses, run `uv run python scripts/survey_results.py`
+from the repository root. It rewrites the bar chart [results.svg](results.svg)
+and the **Results so far** block above, which GitHub shows on this folder's
+page and the course website links from the Week 1 row. Responses with more
+than two selections are not counted.
 
 The `survey:` title prefix makes these PRs easy to find. Divide review among the
 teaching team to handle the class's submissions. After merging, the files in
