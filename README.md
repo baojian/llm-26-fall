@@ -19,7 +19,9 @@ Install [Git](https://git-scm.com/downloads) and [uv](https://docs.astral.sh/uv/
 
 ## Schedule
 
-See [docs/schedule.md](docs/schedule.md) for Fudan's daily period timetable,
+See [docs/participation-workflow.md](docs/participation-workflow.md) for the
+semester timeline, the weekly issue-and-PR loop, and the label and naming
+rules. See [docs/schedule.md](docs/schedule.md) for Fudan's daily period timetable,
 what "periods 6–8" means in clock time (13:30–16:10), and the calendar weeks
 with holidays and exam weeks. First class: September 9, 2026 (week 1). Last class: December 23, 2026
 (week 16). Week 5's Wednesday, October 7, falls on National Day; that meeting
