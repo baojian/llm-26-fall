@@ -30,8 +30,11 @@ rules, timeline, and labels are in
 
 1. Pick an open issue labelled `task` and comment "I'll take this".
 2. Read the task's `instruction.md`. It says exactly which file to create.
-3. Write your file as `submissions/<your-github-username>.py` (lowercase),
-   then check it:
+3. Write your file as `submissions/<your-github-username>.py` (lowercase).
+   Every task file has four parts: `PREDICTIONS` (your expected outputs for
+   three given inputs, written before you code), `solve`, `MY_CASES` (two
+   inputs of your own where a naive solution fails), and `NOTES` (3–5
+   sentences answering the task's why-question). Then check it:
 
    ```sh
    uv run python scripts/tasks.py check tasks/l02-ngram/<slug> <username>
@@ -56,8 +59,10 @@ This copies `TEMPLATE/` to `tasks/l02-ngram/split-sentences/`. Then:
 
 1. Fill in `instruction.md`. Keep the six headings; a task should take a
    student 30–60 minutes.
-2. Edit `tests/test_task.py`: set `FUNCTION` and `CASES`. Add a hidden-input
-   test only if the cases alone would be too easy to copy.
+2. Edit `tests/test_task.py`: set `FUNCTION`, `CASES`, and the three
+   `PREDICTION_INPUTS` (repeat them in `instruction.md`). Put one why-question
+   in the instruction's `NOTES` block. Add a hidden-input test only if the
+   cases alone would be too easy to copy.
 3. Set the deadline and time estimate in `task.toml`.
 4. Run `uv run python scripts/tasks.py check tasks/l02-ngram/split-sentences`
    with a reference submission of your own, then delete it (solutions stay in

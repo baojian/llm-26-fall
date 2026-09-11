@@ -48,14 +48,15 @@ def manifest(folder: Path) -> dict:
 
 
 def submissions(folder: Path) -> list[str]:
-    return sorted(p.stem for p in (folder / "submissions").glob("*.py"))
+    return sorted(p.stem for p in (folder / "submissions").glob("*.py") if not p.name.startswith((".", "_")))
 
 
 def check(folder: Path, username: str | None = None) -> int:
     """Run the task's checker with pytest; returns the exit code."""
     command = [sys.executable, "-m", "pytest", "-q", str(folder / "tests")]
     if username:
-        command += ["-k", username]
+        # Test ids end with user.<username>], so alice does not select alice2.
+        command += ["-k", f"user.{username}]"]
     return subprocess.call(command, cwd=ROOT)
 
 
