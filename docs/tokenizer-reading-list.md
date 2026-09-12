@@ -2,6 +2,8 @@
 
 Research from 2022 to September 2026 on two questions for the course's 1.1B English–Chinese model: does the tokenizer change model quality (198 papers), and what text should the tokenizer be trained on (77 papers). 249 papers in total; some answer both questions. 21 are arXiv preprints and say so; the rest appeared at a conference, journal, or workshop. Updated 2026-09-12.
 
+Interactive version: [the same 249 papers on one page](https://baojian.github.io/llm-26-fall/docs/tokenizer-papers.html), filterable by question, topic, venue, and year.
+
 | Year | 2022 | 2023 | 2024 | 2025 | 2026 |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Papers | 8 | 23 | 47 | 54 | 117 |

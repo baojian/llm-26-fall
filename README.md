@@ -50,7 +50,9 @@ page links to the local server for both. PDFs and citations for course readings
 are collected in [papers/](papers/README.md).
 
 The [tokenizer reading list](docs/tokenizer-reading-list.md) collects research from
-2022–2026, mostly peer-reviewed, for the class model's tokenizer decision.
+2022–2026, mostly peer-reviewed, for the class model's tokenizer decision. The same
+papers are on an [interactive page](https://baojian.github.io/llm-26-fall/docs/tokenizer-papers.html)
+that filters by question, topic, venue, and year.
 
 ## Your Workspace
 
