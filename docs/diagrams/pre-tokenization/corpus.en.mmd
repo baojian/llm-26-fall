@@ -1,0 +1,25 @@
+flowchart TB
+accTitle: Preparing a corpus for an industrial language-model pipeline
+accDescr: Three groups show collecting, decoding and extracting sources; repairing text, annotating languages and scoring quality; then deduplicating, applying exclusions and isolating evaluation data, and saving a versioned corpus. This is a common design, not a mandatory order used by every model.
+subgraph extraction["A · Extract the intended content"]
+ direction LR
+ A["01 · Collect sources<br/>Web, PDF, code, messages"] --> B["02 · Decode bytes<br/>Validate source encoding"] --> C["03 · Extract content<br/>Preserve structure and math"]
+end
+subgraph selection["B · Assess and select documents"]
+ direction LR
+ D["04 · Repair artifacts<br/>Keep meaningful formatting"] --> E["05 · Annotate<br/>Language, domain, provenance"] --> F["06 · Filter quality<br/>Heuristics and model scores"]
+end
+subgraph release["C · Control duplication and evaluation overlap"]
+ direction LR
+ G["07 · Deduplicate<br/>Exact, fuzzy, repeated spans"] --> H["08 · Apply exclusions<br/>Sensitive spans; held-out splits"] --> I["09 · Version the corpus<br/>Records, checksums, decisions"]
+end
+extraction --> selection --> release
+class A,B,C source;
+class D,E,F,G,H corpus;
+class I output;
+
+classDef source fill:#edf1f5,stroke:#8495a5,color:#202b38;
+classDef corpus fill:#e8f0fa,stroke:#386998,color:#142e4b;
+classDef learning fill:#fff3da,stroke:#aa7a25,color:#583b0e;
+classDef encoding fill:#e7f3ee,stroke:#3c7e66,color:#173e30;
+classDef output fill:#ffffff,stroke:#386998,stroke-width:2px,color:#142e4b;

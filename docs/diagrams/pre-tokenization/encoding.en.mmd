@@ -1,0 +1,23 @@
+flowchart TB
+accTitle: Reusing a frozen tokenizer during training and inference
+accDescr: Prepared training text and application input converge on the same configured tokenizer. Application input first undergoes extraction or message formatting when required. The frozen tokenizer normalizes, pre-tokenizes and applies learned rules to produce token IDs. IDs become training sequences and masks, or inference input. Corpus-wide filtering and deduplication are not repeated for every prompt.
+ A["Prepared LLM-training text"] --> C["Model-specific input format<br/>Document or message boundaries"]
+ B["User text, files, messages"] --> P["Application processing as needed<br/>Extraction and chat / tool serialization"]
+ C --> N["Configured normalization<br/>May be identity"]
+ P --> N
+ N --> Q["Configured pre-tokenization<br/>Then apply learned vocabulary and rules"]
+ T["Frozen tokenizer artifact"] -. "Same version and text rules" .-> Q
+ Q --> I["Token IDs"]
+ I --> L["LLM training<br/>Sequences, packing, attention / loss masks"]
+ I --> R["Inference<br/>Context and batching; model execution"]
+ class A,B source;
+ class C,P corpus;
+ class T learning;
+ class N,Q encoding;
+ class I,L,R output;
+
+classDef source fill:#edf1f5,stroke:#8495a5,color:#202b38;
+classDef corpus fill:#e8f0fa,stroke:#386998,color:#142e4b;
+classDef learning fill:#fff3da,stroke:#aa7a25,color:#583b0e;
+classDef encoding fill:#e7f3ee,stroke:#3c7e66,color:#173e30;
+classDef output fill:#ffffff,stroke:#386998,stroke-width:2px,color:#142e4b;

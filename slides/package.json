@@ -2,12 +2,16 @@
   "name": "llm-course-slides",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "check": "node tools/check.mjs",
     "check:notebook": "node tools/check-notebook.mjs",
     "pdf": "node tools/check.mjs --pdf",
-    "browser:install": "playwright install chromium"
+    "browser:install": "playwright install chromium",
+    "build:notes": "node ../scripts/build-notes.mjs",
+    "check:notes": "node ../scripts/check-notes.mjs"
   },
   "dependencies": {
     "katex": "0.18.7",
@@ -15,6 +19,8 @@
     "reveal.js": "6.0.1"
   },
   "devDependencies": {
+    "markdown-it": "15.0.2",
+    "mermaid": "12.0.0",
     "playwright": "1.63.0"
   }
 }

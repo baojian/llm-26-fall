@@ -43,6 +43,11 @@ installation or instructor laptop is required for viewing.
   using the local course server.
 - **References:** open the reading slide.
 - **Print:** open the PDF print layout in a new tab.
+- **EN / 中文:** switch the course interface language. The preference is shared
+  with the course homepage, reading pages, and notebook launcher on the same
+  website. Existing deck content remains in English; Chinese mode displays
+  this availability explicitly. The Lecture 01 preprocessing reader has full
+  English and Chinese text and diagrams.
 
 The print layout has **−**, **+**, **100%**, and **Fit page** controls for
 previewing the slides at different sizes. These controls and their zoom level

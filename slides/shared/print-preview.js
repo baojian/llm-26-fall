@@ -24,11 +24,17 @@ export async function initialize(reveal) {
   const toolbar = document.createElement('nav');
   toolbar.className = 'print-preview-toolbar';
   toolbar.setAttribute('aria-label', 'Print preview zoom');
+  toolbar.dataset.enLabel = 'Print preview zoom';
+  toolbar.dataset.zhLabel = '打印预览缩放';
   const label = document.createElement('span');
   label.textContent = 'Preview';
+  label.dataset.en = 'Preview';
+  label.dataset.zh = '预览';
   toolbar.append(label);
   const output = document.createElement('output');
   output.setAttribute('aria-label', 'Preview zoom');
+  output.dataset.enLabel = 'Preview zoom';
+  output.dataset.zhLabel = '预览缩放比例';
   output.setAttribute('aria-live', 'polite');
   let scale = 1;
   let zoomOut;
@@ -47,6 +53,12 @@ export async function initialize(reveal) {
     control.type = 'button';
     control.textContent = text;
     control.setAttribute('aria-label', name);
+    control.dataset.enLabel = name;
+    control.dataset.zhLabel = { 'Zoom out': '缩小', 'Zoom in': '放大', 'Actual size': '实际大小', 'Fit page': '适合页面' }[name];
+    if (text === 'Fit page') {
+      control.dataset.en = text;
+      control.dataset.zh = '适合页面';
+    }
     control.addEventListener('click', action);
     toolbar.append(control);
     return control;
@@ -58,5 +70,6 @@ export async function initialize(reveal) {
   const fit = () => setScale(Math.min(1, (window.innerWidth - 32) / pageWidth, (window.innerHeight - 100) / pageHeight));
   button('Fit page', 'Fit page', fit);
   document.body.append(toolbar);
+  CourseLanguage.translate();
   fit();
 }

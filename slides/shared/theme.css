@@ -95,6 +95,8 @@ body { margin: 0; font-family: var(--r-main-font); color: var(--r-main-color); }
 .course-toolbar a:hover, .course-toolbar button:hover { text-decoration: underline; }
 .course-toolbar a:focus-visible, .course-toolbar button:focus-visible { outline: 2px solid var(--course-accent); outline-offset: 3px; }
 .course-toolbar [hidden] { display: none; }
+.course-language-note { position: fixed; z-index: 29; top: 45px; right: 18px; margin: 0; padding: 3px 8px; background: #fff; color: var(--course-muted); border: 1px solid var(--course-line); border-radius: 4px; font: 12px/1.4 Arial, sans-serif; }
+.course-language-note[hidden] { display: none; }
 .course-help { max-width: 540px; border: 1px solid var(--course-line); border-radius: 8px; padding: 28px; font-size: 18px; line-height: 1.6; background: var(--r-background-color); color: var(--r-main-color); }
 .course-help::backdrop { background: rgb(20 40 60 / 35%); }
 .course-help h2 { margin-top: 0; }
@@ -113,7 +115,11 @@ body { margin: 0; font-family: var(--r-main-font); color: var(--r-main-color); }
 .reveal .plot { width: 100%; height: 410px; margin: 0 0 20px; }
 .reveal .diagram, .reveal .animation, .reveal .animation-poster { display: block; width: 100%; height: 410px; max-width: 100%; max-height: none; object-fit: contain; margin: 0 0 20px; border: 0; box-shadow: none; }
 .reveal .animation-poster { display: none; }
-@media (max-width: 600px) { .course-toolbar { font-size: 12px; gap: 12px; top: 4px; right: 10px; } }
+@media (max-width: 600px) {
+  .course-toolbar { font-size: 12px; gap: 8px; top: 4px; right: 8px; }
+  .course-toolbar .lang-toggle button { padding: 4px 7px; font-size: 12px; }
+  .course-language-note { top: 38px; right: 8px; max-width: calc(100vw - 34px); }
+}
 html.reveal-print .reveal .slides section { height: 720px !important; padding: 54px 64px 58px !important; }
 html.reveal-print .reveal .slides section.title-slide,
 html.reveal-print .reveal .slides section.section-slide { display: flex !important; }
@@ -126,7 +132,7 @@ html.reveal-print .reveal .slides .pdf-page { background: #fff !important; }
   html.reveal-print .reveal .slides .pdf-page:not(:last-of-type) { margin-bottom: 40px; }
 }
 @media print {
-  .course-toolbar, .course-help, .course-error, .reveal .controls, .reveal .progress { display: none !important; }
+  .course-toolbar, .course-language-note, .course-help, .course-error, .reveal .controls, .reveal .progress { display: none !important; }
   .reveal .slides section { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   .reveal a { text-decoration: none; }
   .reveal .animation { display: none; }

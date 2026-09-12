@@ -1,0 +1,19 @@
+flowchart TB
+accTitle: Learning and freezing a tokenizer
+accDescr: Select a representative sample from a curated corpus. Configure normalization, pre-token boundaries, alphabet and special tokens. Train vocabulary and segmentation rules. Evaluate held-out coverage and fidelity, revise when needed, and freeze a versioned tokenizer artifact. This is distinct from training neural language-model weights.
+ A["Curated text corpus"] --> B["Choose a representative sample<br/>Language and domain mixture"]
+ B --> C["Configure the text pipeline<br/>Optional normalization; pre-tokenization<br/>Alphabet and special-token policy"]
+ C --> D["Learn the tokenizer<br/>BPE merges or Unigram vocabulary / scores"]
+ D --> E["Evaluate on held-out text<br/>Compression, coverage, round trips"]
+ E -. "Revise design if needed" .-> C
+ E --> F["Freeze the complete tokenizer<br/>Rules, vocabulary, decoder, configuration"]
+ class A source;
+ class B corpus;
+ class C,D,E learning;
+ class F output;
+
+classDef source fill:#edf1f5,stroke:#8495a5,color:#202b38;
+classDef corpus fill:#e8f0fa,stroke:#386998,color:#142e4b;
+classDef learning fill:#fff3da,stroke:#aa7a25,color:#583b0e;
+classDef encoding fill:#e7f3ee,stroke:#3c7e66,color:#173e30;
+classDef output fill:#ffffff,stroke:#386998,stroke-width:2px,color:#142e4b;
