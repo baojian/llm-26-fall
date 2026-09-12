@@ -54,6 +54,17 @@ The [tokenizer reading list](docs/tokenizer-reading-list.md) collects research f
 papers are on an [interactive page](https://baojian.github.io/llm-26-fall/docs/tokenizer-papers.html)
 that filters by question, topic, venue, and year.
 
+The bilingual [Lecture 01 preprocessing reader](docs/lecture-01-pre-tokenization.html)
+includes pipeline diagrams, practical corpus preparation, tokenizer training,
+and encoding behavior, with inspected examples from Kimi K3, GLM-5.2, and
+DeepSeek-V4. Markdown sources are available in
+[English](docs/lecture-01-pre-tokenization.md) and
+[Chinese](docs/lecture-01-pre-tokenization.zh.md).
+See [reading-page authoring](docs/README.md) to update the text and diagrams.
+The companion [pretraining corpora catalog](docs/lecture-01-pretraining-datasets.md)
+lists the public datasets real LLMs are trained on and the samples the course
+mirrors with `scripts/download_pretraining_datasets.py`.
+
 ## Your Workspace
 
 Put your own notes, experiments, and exercise solutions in
