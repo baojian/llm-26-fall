@@ -22,7 +22,7 @@ SURVEY = ROOT / "surveys/lecture-01"
 LISTED_APPS = ["ChatGPT", "Claude", "Gemini", "DeepSeek", "Doubao (豆包)", "Qwen (千问)",
                "Kimi", "Tencent Yuanbao (腾讯元宝)", "Zhipu Qingyan (智谱清言)"]
 MAX_CHOICES = 2
-CHECKED = re.compile(r"^- \[[xX]\] (.+?)\s*$", re.MULTILINE)
+CHECKED = re.compile(r"^- \[\s*[xX]\s*\] (.+?)\s*$", re.MULTILINE)
 
 
 def selections(text: str) -> list[str]:
