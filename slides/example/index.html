@@ -7,26 +7,29 @@
   <link rel="stylesheet" href="../vendor/reveal/reveal.css">
   <link rel="stylesheet" href="../vendor/katex/katex.min.css">
   <link rel="stylesheet" href="../shared/theme.css">
+  <link rel="stylesheet" href="../../assets/course-language.css">
 </head>
 <body>
-  <nav class="course-toolbar" aria-label="Lecture tools">
-    <a href="../../index.html">Course</a>
-    <a id="notebook-link" href="../shared/notebook.html" target="_blank" rel="noopener noreferrer">Notebook</a>
-    <a href="#/references">References</a>
-    <a href="?print-pdf" target="_blank" rel="noopener">Print</a>
-    <button id="help-button" type="button">Help</button>
+  <nav class="course-toolbar" aria-label="Lecture tools" data-en-label="Lecture tools" data-zh-label="课件工具">
+    <a href="../../index.html"><span data-en="Course" data-zh="课程主页">Course</span></a>
+    <a id="notebook-link" href="../shared/notebook.html" target="_blank" rel="noopener noreferrer"><span data-en="Notebook" data-zh="练习本">Notebook</span></a>
+    <a href="#/references"><span data-en="References" data-zh="参考资料">References</span></a>
+    <a href="?print-pdf" target="_blank" rel="noopener"><span data-en="Print" data-zh="打印">Print</span></a>
+    <button id="help-button" type="button"><span data-en="Help" data-zh="帮助">Help</span></button>
+    <div class="lang-toggle" role="group" aria-label="Language / 语言"><button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button><button type="button" data-lang="zh" lang="zh-CN" aria-pressed="false">中文</button></div>
   </nav>
+  <p class="course-language-note" hidden>课件正文目前仅提供英文；工具栏支持中英文切换。</p>
   <div class="reveal">
     <div class="slides">
       <section data-markdown="slides.md" data-separator="^---$" data-separator-notes="^Notes?:" data-charset="utf-8"></section>
     </div>
   </div>
   <dialog class="course-help" id="course-help">
-    <h2>Presenting this lecture</h2>
-    <p>Use <strong>Space</strong> or the arrow keys to advance. Press <strong>Esc</strong> for the slide overview, <strong>F</strong> for fullscreen, and <strong>S</strong> for speaker notes.</p>
-    <p>Notebook opens your working copy in JupyterLab in a new tab when you run the slides locally. References opens the reading slide.</p>
-    <p>For a PDF, open Print and use the browser's print command. Choose landscape, no margins, and background graphics.</p>
-    <form method="dialog"><button>Close</button></form>
+    <h2><span data-en="Presenting this lecture" data-zh="课件使用说明">Presenting this lecture</span></h2>
+    <p><span data-en="Use Space or the arrow keys to advance. Press Esc for the slide overview, F for fullscreen, and S for speaker notes." data-zh="按空格或方向键翻页；Esc 打开总览，F 进入全屏，S 打开演讲者备注。">Use <strong>Space</strong> or the arrow keys to advance. Press <strong>Esc</strong> for the slide overview, <strong>F</strong> for fullscreen, and <strong>S</strong> for speaker notes.</span></p>
+    <p><span data-en="Notebook opens your working copy in JupyterLab in a new tab when you run the slides locally. References opens the reading slide." data-zh="在本地运行课件时，“练习本”在新标签页中打开 JupyterLab 里的个人副本。“参考资料”跳转至阅读资料页。">Notebook opens your working copy in JupyterLab in a new tab when you run the slides locally. References opens the reading slide.</span></p>
+    <p><span data-en="For a PDF, open Print and use the browser&#x27;s print command. Choose landscape, no margins, and background graphics." data-zh="导出 PDF 时，点击“打印”后使用浏览器打印命令，选择横向、无边距，并启用背景图形。">For a PDF, open Print and use the browser's print command. Choose landscape, no margins, and background graphics.</span></p>
+    <form method="dialog"><button><span data-en="Close" data-zh="关闭">Close</span></button></form>
   </dialog>
   <div id="course-error" class="course-error" role="alert" hidden></div>
   <noscript>This lecture needs JavaScript enabled in your browser.</noscript>
@@ -36,6 +39,7 @@
   <script src="../vendor/reveal/plugin/notes.js"></script>
   <script src="../vendor/katex/katex.min.js"></script>
   <script src="../vendor/katex/contrib/auto-render.min.js"></script>
+  <script src="../../assets/course-language.js"></script>
   <script src="../shared/course.js"></script>
 </body>
 </html>

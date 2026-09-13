@@ -1,5 +1,7 @@
 // Chinese translations for the English course page. Keep keys in sync with index.html.
 window.courseTranslations = {
+  "Reading:": "阅读材料：",
+  "Text preprocessing and tokenizer pipelines": "文本预处理与分词器流程",
   "CS40008.01 LLMs · Fall 2026 · Fudan University": "CS40008.01 大语言模型 · 2026 年秋季 · 复旦大学",
   "Large Language Models, Fall 2026 at Fudan University. Wednesdays 13:30–16:10, HGX103.": "复旦大学 2026 年秋季大语言模型课程。每周三 13:30–16:10，HGX103。",
   "CS40008.01 LLMs": "CS40008.01 大语言模型",

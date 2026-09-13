@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CS40008.01 LLMs · Fall 2026 · Fudan University</title>
+<link rel="stylesheet" href="assets/course-language.css">
 <meta name="description" content="Large Language Models, Fall 2026 at Fudan University. Wednesdays 13:30–16:10, HGX103.">
 <style>
   :root {
@@ -55,10 +56,7 @@
   nav.top .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 18px; padding: 8px 20px; font-size: 0.95rem; }
   nav.top a { color: var(--fg); font-weight: 500; }
   nav.top a:hover { color: var(--accent); text-decoration: none; }
-  .lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--card); }
-  .lang-toggle button { background: none; border: 0; padding: 3px 12px; cursor: pointer; color: var(--muted); font: inherit; font-size: 0.85rem; font-weight: 600; }
-  .lang-toggle button[aria-pressed="true"] { background: var(--accent); color: #fff; }
-  .lang-toggle button:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+
 
   main section { padding: 36px 0 8px; border-bottom: 1px solid var(--line); }
   main section:last-of-type { border-bottom: none; }
@@ -205,6 +203,7 @@
         <td>Brief introduction to LLMs; bytes and Unicode; BPE; special tokens; vocabulary choices for Chinese and English.
           <div class="practice"><strong>Practice:</strong> Trace BPE merges, check encode/decode round trips, and compare Chinese and English tokenization at different vocabulary sizes.</div>
           <div class="materials"><strong>Slides:</strong> <a href="http://127.0.0.1:8000/slides/lecture-01/" data-local-path="/slides/lecture-01/" target="_blank" rel="noopener noreferrer">lecture-01-slides</a></div>
+          <div class="materials"><strong>Reading:</strong> <a href="docs/lecture-01-pre-tokenization.html">Text preprocessing and tokenizer pipelines</a></div>
           <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-01" data-local-path="/slides/shared/notebook.html?lecture=lecture-01" target="_blank" rel="noopener noreferrer">lecture-01-exercise.ipynb</a></div>
           <div class="materials"><strong>Extended practice:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-01&amp;notebook=lecture-01-exercise-tokenization.ipynb" data-local-path="/slides/shared/notebook.html?lecture=lecture-01&amp;notebook=lecture-01-exercise-tokenization.ipynb" target="_blank" rel="noopener noreferrer">lecture-01-exercise-tokenization.ipynb</a></div>
           <div class="materials"><strong>Papers:</strong> <a href="papers/sennrich-2016-subword-units.pdf" target="_blank" rel="noopener noreferrer">BPE (Sennrich et al., 2016)</a> · <a href="papers/kudo-2018-sentencepiece.pdf" target="_blank" rel="noopener noreferrer">SentencePiece (Kudo and Richardson, 2018)</a> · <a href="https://github.com/baojian/llm-26-fall/blob/main/docs/tokenizer-reading-list.md" target="_blank" rel="noopener noreferrer">Tokenizer reading list</a> · <a href="docs/tokenizer-papers.html" target="_blank" rel="noopener noreferrer">Interactive version</a></div>
@@ -420,6 +419,7 @@
 </section>
 </main>
 <footer><div class="wrap"><p>CS40008.01 · LLMs · Fall 2026 · Fudan University. Maintained by <a href="https://github.com/baojian" target="_blank" rel="noopener noreferrer">Baojian Zhou</a>, Claude Code and Codex.</p></div></footer>
+<script src="assets/course-language.js"></script>
 <script src="assets/translations.js"></script>
 <script src="assets/local-materials.js"></script>
 <script>
@@ -471,14 +471,9 @@
           ? (chinese ? '期末提交周' : 'Final submission week')
           : (chinese ? '本周：第 ' + currentWeek + ' 周' : 'This week: ' + currentWeek) + (isHoliday ? (chinese ? ' · 停课' : ' · no class') : '');
       }
-      try { localStorage.setItem('course-language', language); } catch (error) { /* Storage may be unavailable for local files. */ }
     }
-    document.querySelectorAll('.lang-toggle button').forEach(function (button) {
-      button.addEventListener('click', function () { setLanguage(button.dataset.lang); });
-    });
-    var savedLanguage = 'en';
-    try { if (localStorage.getItem('course-language') === 'zh') savedLanguage = 'zh'; } catch (error) { /* Default to English. */ }
-    setLanguage(savedLanguage);
+    window.addEventListener('course:language', function (event) { setLanguage(event.detail.language); });
+    setLanguage(CourseLanguage.get());
   })();
 </script>
 </body>

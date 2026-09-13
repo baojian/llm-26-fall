@@ -10,6 +10,12 @@
   notebookLink.target = '_blank';
   notebookLink.rel = 'noopener noreferrer';
   notebookLink.removeAttribute('download');
+  const languageNote = document.querySelector('.course-language-note');
+  function updateLanguage() {
+    languageNote.hidden = CourseLanguage.get() !== 'zh';
+  }
+  window.addEventListener('course:language', updateLanguage);
+  updateLanguage();
   window.courseReady = (async () => {
     if (location.protocol === 'file:') {
       throw new Error('Open the published course website, or use the local preview command in slides/README.md.');
@@ -18,7 +24,7 @@
     if (!response.ok) throw new Error('The lecture details could not be loaded.');
     const metadata = await response.json();
     document.title = `${metadata.title} · CS40008.01`;
-    document.documentElement.lang = metadata.language || 'en';
+    document.querySelector('.slides').lang = metadata.language || 'en';
     await Reveal.initialize({
       width: 1280,
       height: 720,

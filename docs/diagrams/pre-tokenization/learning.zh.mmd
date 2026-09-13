@@ -1,0 +1,19 @@
+flowchart TB
+accTitle: 学习并冻结分词器
+accDescr: 从整理好的语料中选取代表性样本，配置归一化、预分词边界、初始字母表与特殊 token，学习词表与切分规则，在留出文本上评估覆盖率和保真度，必要时修改设计，然后冻结完整分词器。这不同于训练语言模型的神经网络权重。
+ A["整理好的文本语料"] --> B["选取代表性训练样本<br/>设计语言与领域比例"]
+ B --> C["配置文本处理流程<br/>可选归一化、预分词<br/>初始字母表与特殊 token 策略"]
+ C --> D["学习分词器<br/>BPE 合并或 Unigram 词表与得分"]
+ D --> E["在留出文本上评估<br/>压缩效率、覆盖率、编码还原"]
+ E -. "必要时修改设计" .-> C
+ E --> F["冻结完整分词器<br/>规则、词表、解码器、配置"]
+ class A source;
+ class B corpus;
+ class C,D,E learning;
+ class F output;
+
+classDef source fill:#edf1f5,stroke:#8495a5,color:#202b38;
+classDef corpus fill:#e8f0fa,stroke:#386998,color:#142e4b;
+classDef learning fill:#fff3da,stroke:#aa7a25,color:#583b0e;
+classDef encoding fill:#e7f3ee,stroke:#3c7e66,color:#173e30;
+classDef output fill:#ffffff,stroke:#386998,stroke-width:2px,color:#142e4b;

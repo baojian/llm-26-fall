@@ -1,0 +1,25 @@
+flowchart TB
+accTitle: 工业语言模型的语料准备流程
+accDescr: 三组步骤依次展示收集、解码与提取，修复、标注与质量筛选，以及去重、内容排除、评测隔离与语料版本化。这是常见的参考设计，不代表所有模型都使用相同顺序。
+subgraph extraction["A · 提取所需内容"]
+ direction LR
+ A["01 · 收集来源<br/>网页、PDF、代码、消息"] --> B["02 · 解码字节<br/>核验源文件字符编码"] --> C["03 · 提取内容<br/>保留结构与数学公式"]
+end
+subgraph selection["B · 评估并筛选文档"]
+ direction LR
+ D["04 · 修复提取错误<br/>保留有意义的格式"] --> E["05 · 标注属性<br/>语言、领域、来源"] --> F["06 · 质量筛选<br/>启发式规则与模型评分"]
+end
+subgraph release["C · 控制重复与评测重叠"]
+ direction LR
+ G["07 · 去重<br/>精确、模糊与重复片段"] --> H["08 · 排除与隔离<br/>敏感片段、留出集划分"] --> I["09 · 语料版本化<br/>记录、校验和、处理决策"]
+end
+extraction --> selection --> release
+class A,B,C source;
+class D,E,F,G,H corpus;
+class I output;
+
+classDef source fill:#edf1f5,stroke:#8495a5,color:#202b38;
+classDef corpus fill:#e8f0fa,stroke:#386998,color:#142e4b;
+classDef learning fill:#fff3da,stroke:#aa7a25,color:#583b0e;
+classDef encoding fill:#e7f3ee,stroke:#3c7e66,color:#173e30;
+classDef output fill:#ffffff,stroke:#386998,stroke-width:2px,color:#142e4b;
