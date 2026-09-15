@@ -1,0 +1,16 @@
+# One task = one folder. Students add one file each under submissions/.
+
+[task]
+id = "l01-tokenization/han-runs"
+title = "Keep Chinese character runs together"
+lecture = "l01-tokenization"
+type = "task"
+difficulty = "medium"
+time_minutes = 40
+deadline = "2026-09-22T23:59:00+08:00"
+issue = 0
+proposed_by = ""
+
+[submission]
+file = "submissions/<username>.py"
+function = "solve"
