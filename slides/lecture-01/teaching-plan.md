@@ -185,8 +185,8 @@ The Fall course page governs logistics. The notebook history table and each
 slide's speaker notes link the relevant original papers and documentation.
 [CS336 Lecture 1](https://cs336.stanford.edu/lectures/?trace=lecture_01) supplements
 the tokenizer interface, byte implementation, building perspective, and budgets;
-its assessment rules do not apply. Read [Sennrich et al., §3.2](../../papers/sennrich-2016-subword-units.pdf)
-for BPE and [SentencePiece](../../papers/kudo-2018-sentencepiece.pdf) for additional
+its assessment rules do not apply. Read [Sennrich et al., §3.2](../../papers/2016-acl-sennrich-neural-machine-translation-rare-words-subword-units.pdf)
+for BPE and [SentencePiece](../../papers/2018-emnlp-kudo-sentencepiece-language-independent-subword-tokenizer.pdf) for additional
 text handling. Visual provenance and editable sources are in
 [assets/README.md](assets/README.md); image prompts are in
 [assets/image-prompts.md](assets/image-prompts.md).

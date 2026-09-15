@@ -9,7 +9,7 @@
 <p class="byline">Baojian Zhou<br>School of Data Science<br>Fudan University<br>September 16, 2026</p>
 
 Note:
-Ported from Fudan Spring Lecture 02, https://baojian.github.io/llm-26/slides/lecture-02-slides/. Open with the question: how can a model assign a probability to a sentence? Three 45-minute periods: probabilistic N-gram LMs and evaluation in periods 1–2, smoothing and neural probabilistic LMs in period 3.
+Ported from Fudan Spring Lecture 02, https://baojian.github.io/llm-26/slides/lecture-02-slides/. Open with the question: how can a model assign a probability to a sentence? Three 45-minute periods: probabilistic N-gram LMs with smoothing and evaluation in periods 1–2, the perplexity filter and neural probabilistic LMs in period 3.
 
 ---
 
@@ -18,9 +18,8 @@ Ported from Fudan Spring Lecture 02, https://baojian.github.io/llm-26/slides/lec
 ## Outline
 
 <ul class="outline-topics">
-<li aria-current="step">Probabilistic N-gram LMs</li>
+<li aria-current="step">N-gram LMs and Smoothing</li>
 <li>Evaluating LMs and Perplexity</li>
-<li>Smoothing N-gram LMs</li>
 <li>Neural Probabilistic LMs</li>
 </ul>
 
@@ -335,14 +334,29 @@ Connect to Lecture 01: subword tokenizers make OOV rare at the token level, but 
 
 ---
 
+<!-- .slide: id="smoothing" -->
+
+## Smoothing N-gram LMs in one page
+
+<p><strong>Problem:</strong> most cells of the bigram table are 0, so an unseen $n$-gram such as $q(\text{offer} \mid \text{denied the}) = 0$ gives every sentence containing it probability 0. <strong>Fix:</strong> move a little mass from seen events to unseen ones.</p>
+<p><strong>Add-$\delta$</strong> (Laplace when $\delta=1$):</p>
+<p>$$P_{\text{Add}}(w_i\mid w_{i-1}) =\frac{C(w_{i-1}w_i)+\delta}{C(w_{i-1})+\delta|V|}$$</p>
+<p><strong>Interpolation</strong> ($\lambda_i$ tuned on held-out data, $\sum_i\lambda_i=1$):</p>
+<p>$$P_{\text{Int}}(w_n\mid w_{n-2}w_{n-1}) = \lambda_1 P(w_n\mid w_{n-2}w_{n-1}) + \lambda_2 P(w_n\mid w_{n-1}) + \lambda_3 P(w_n)$$</p>
+<p class="caption"><strong>Kneser–Ney</strong> backs off by how many distinct contexts a word follows (<em>Francisco</em>: almost only after <em>San</em>); KenLM trains it, the baseline in the NPLM table. Neural LMs need no count smoothing.</p>
+
+Note:
+One page replaces the Spring section of nine slides, placed at the end of the first section right after the count table and OOV, where the zeros are on screen; Exercise E02 in the next section shows what a single zero does to a test set. Add-one on the Berkeley Restaurant counts moves too much mass: $C(\text{i want})$ falls from 827 to a reconstituted 527 with $|V|=1446$; that is why $\delta \lt 1$ and interpolation are preferred. Notebook practices P02 (Laplace tables) and P03 (Good–Turing) keep the full worked examples for students who want them. Source: Spring Lecture 02 slides 20–27, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/19.
+
+---
+
 <!-- .slide: class="outline-slide" id="outline-evaluation" -->
 
 ## Outline
 
 <ul class="outline-topics">
-<li>Probabilistic N-gram LMs</li>
+<li>N-gram LMs and Smoothing</li>
 <li aria-current="step">Evaluating LMs and Perplexity</li>
-<li>Smoothing N-gram LMs</li>
 <li>Neural Probabilistic LMs</li>
 </ul>
 
@@ -432,19 +446,19 @@ Expected answer: 10, independent of $t$. Notebook E03 computes it numerically fo
 
 ## Lower perplexity – better model
 
-Training 38 million words, test 1.5 million words (WSJ)
-
-| N-gram order | Unigram | Bigram | Trigram |
+| Data | Unigram | Bigram | Trigram |
 | :--- | ---: | ---: | ---: |
-| Perplexity | 962 | 170 | 109 |
+| WSJ, 38M words: word perplexity | 962 | 170 | 109 |
+| TinyStories: bits per byte | 2.07 | 1.30 | 1.12 |
+| OpenWebText: bits per byte | 2.48 | 2.06 | 2.03 |
+| Chinese web: bits per byte | 2.48 | 2.10 | 2.04 |
 
-- The improvement in perplexity does **not** guarantee an (extrinsic) improvement in downstream tasks like speech recognition or MT.
-- Because perplexity often correlates with such improvements, it is commonly used as a **quick check** on an algorithm.
+- Lower perplexity does **not** guarantee better downstream results (speech recognition, MT), but it correlates well enough to serve as the **quick check**.
 
-<p class="caption"><a href="https://arxiv.org/pdf/2005.14165.pdf" target="_blank" rel="noopener noreferrer">arxiv.org/pdf/2005.14165.pdf</a> (see how GPT-3 uses PPL) · <a href="https://nlpprogress.com/english/language_modeling.html" target="_blank" rel="noopener noreferrer">nlpprogress.com/english/language_modeling.html</a> (PPL on real datasets)</p>
+<p class="caption">Course rows: 24 MB of training text each, Qwen3 tokens, tuned interpolation. WSJ rows: Jurafsky and Martin, Ch. 3.</p>
 
 Note:
-The WSJ numbers are from Jurafsky and Martin, Chapter 3. Perplexities are only comparable across models that share the same vocabulary and tokenization. Source: Spring Lecture 02 slide 17, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/16.
+The WSJ numbers are from Jurafsky and Martin, Chapter 3. Perplexities are only comparable across models that share the same vocabulary and tokenization; that is why the course reports bits per byte on fixed held-out shards. The three course rows were computed with scripts/lecture02_experiments.py (interpolated models tuned on a dev split, Qwen3 tokenizer, 24 MB of training text per source; bytes per token 4.14 / 4.46 / 4.59). The same harness, pipeline/eval.py, scores the 30M–350M proxies in Week 9 and the 1B model in Week 10. GPT-3 also reports perplexity: https://arxiv.org/pdf/2005.14165.pdf; leaderboards: https://nlpprogress.com/english/language_modeling.html. Source: Spring Lecture 02 slide 17, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/16.
 
 ---
 
@@ -493,35 +507,16 @@ Higher order gives locally fluent phrases but still no global coherence. Samples
 
 ---
 
-<!-- .slide: class="outline-slide" id="outline-smoothing" -->
+<!-- .slide: id="ngram-filter" -->
 
-## Outline
+## N-grams in a 2026 pipeline: the perplexity filter
 
-<ul class="outline-topics">
-<li>Probabilistic N-gram LMs</li>
-<li>Evaluating LMs and Perplexity</li>
-<li aria-current="step">Smoothing N-gram LMs</li>
-<li>Neural Probabilistic LMs</li>
-</ul>
+<img class="diagram" src="assets/lm-filter.svg" alt="Histogram of bits per byte assigned by a Wikipedia 3-gram model to 1200 OpenWebText documents, with a dashed cut line at 2.63 bits per byte that drops the worst third, and a second histogram of TinyStories documents centred near 2.75.">
+
+<p class="caption">CCNet, RedPajama-V2 (<code>ccnet_perplexity</code>), and Dolma keep web text that a Wikipedia n-gram model finds predictable. Closest to Wikipedia here: a wire-service news paragraph (1.99 bits per byte); farthest: a page of garbled box-drawing characters (6.76).</p>
 
 Note:
-Period 3 begins here. Source: Spring Lecture 02 slide 19, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/18.
-
----
-
-<!-- .slide: id="smoothing" -->
-
-## Smoothing N-gram LMs in one page
-
-<p><strong>Problem:</strong> an unseen $n$-gram gives $q(\text{offer} \mid \text{denied the}) = 0$, so the sentence gets probability 0 and infinite perplexity. <strong>Fix:</strong> move a little mass from seen events to unseen ones.</p>
-<p><strong>Add-$\delta$</strong> (Laplace when $\delta=1$; $|V|$ possible next words):</p>
-<p>$$P_{\text{Add}}(w_i\mid w_{i-1}) =\frac{C(w_{i-1}w_i)+\delta}{C(w_{i-1})+\delta|V|}$$</p>
-<p><strong>Linear interpolation</strong> ($\lambda_i$ tuned on held-out data, $\sum_i\lambda_i=1$):</p>
-<p>$$P_{\text{Int}}(w_n\mid w_{n-2}w_{n-1}) = \lambda_1 P(w_n\mid w_{n-2}w_{n-1}) + \lambda_2 P(w_n\mid w_{n-1}) + \lambda_3 P(w_n)$$</p>
-<p class="caption">Katz backoff and Kneser–Ney refine this idea (Jurafsky and Martin, Ch. 3). Neural LMs need no count smoothing.</p>
-
-Note:
-One page replaces the Spring section of nine slides. Add-one on the Berkeley Restaurant counts moves too much mass: $C(\text{i want})$ falls from 827 to a reconstituted 527 with $|V|=1446$; that is why $\delta \lt 1$ and interpolation are preferred. Notebook practices P02 (Laplace tables) and P03 (Good–Turing) keep the full worked examples for students who want them. Source: Spring Lecture 02 slides 20–27, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/19.
+Period 3 begins here. This is stage 2b of the course data pipeline (docs/pretraining-plan.md, Section 4): a reference n-gram model trained on 15158 Wikipedia articles (25 MB of WikiText-103) scores every web document in bits per byte; CCNet keeps the head and middle thirds. Median web score 2.52, median TinyStories score 2.75: children's stories are far from Wikipedia, which is exactly what a reference model measures, so the threshold is a policy choice, not a quality oracle. Students run this on 100 documents in the Week 2 task and on the full mixture in Week 5 (pipeline/filters/lm_score.py). Figure: scripts/lecture02_experiments.py, Qwen3 tokenizer.
 
 ---
 
@@ -534,7 +529,8 @@ One page replaces the Spring section of nine slides. Add-one on the Berkeley Res
 <li><strong>Training:</strong> estimate counts from a corpus (plus smoothing for unseen $n$-grams).</li>
 <li><strong>Two major issues</strong>
 <ul><li><strong>Parameter explosion:</strong> the number of $n$-grams grows as $|V|^N$ (e.g., $|V|=10^4 \Rightarrow$ trigram $\sim 10^{12}$).</li><li><strong>Sparsity / poor generalization:</strong> many test $n$-grams never appear in training.</li></ul></li>
-<li><strong>Today:</strong> neural LMs (RNN/Transformer) address these issues via learned representations.</li>
+<li><strong>Still in use:</strong> n-gram models score and filter pretraining data (previous slide) and give the first point on our scaling plot.</li>
+<li><strong>Today:</strong> the first neural LM (NPLM) addresses both issues via learned representations; RNNs and Transformers follow from Week 4.</li>
 </ul>
 
 Note:
@@ -547,9 +543,8 @@ Source: Spring Lecture 02 slide 28, https://baojian.github.io/llm-26/slides/lect
 ## Outline
 
 <ul class="outline-topics">
-<li>Probabilistic N-gram LMs</li>
+<li>N-gram LMs and Smoothing</li>
 <li>Evaluating LMs and Perplexity</li>
-<li>Smoothing N-gram LMs</li>
 <li aria-current="step">Neural Probabilistic LMs</li>
 </ul>
 
@@ -603,10 +598,23 @@ Diagram from Jurafsky and Martin, Chapter 7. Source: Spring Lecture 02 slide 32,
 
 <img class="diagram" src="assets/nplm-4.png" alt="Improvements over N-gram LM: tackles the sparsity problem; model size is relatively small, O(d times |V|), compared with O(|V| to the N) where N is the window size. Table of perplexities on the AP News corpus: MLP10 (n = 6) valid 104, test 109; deleted interpolation (n = 3) 126 and 132; back-off Kneser-Ney with n = 3, 4, 5 gives test 127, 119, 117. Right: a diagram with context words and, our, problems, turning in a window of size 4, lookup embeddings, concatenate, W1, a hidden layer, W2, softmax, and a probability bar chart over mat, table, bed, desk, chair for the target word into.">
 
-<p class="caption">MLP10 = NPLM. Comparative results on the AP News corpus (Bengio et al., 2003).</p>
+<p class="caption">MLP10 = NPLM. Comparative results on the AP News corpus (Bengio et al., 2003). Week 9 repeats this comparison on our shards: n-gram, NPLM, and the 30M–350M ladder on one bits-per-byte axis.</p>
 
 Note:
 NPLM already beat the best smoothed $N$-gram models in 2003; the gap widened with RNNs and Transformers. Source: Spring Lecture 02 slide 33, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/32.
+
+---
+
+<!-- .slide: id="self-training-loop" -->
+
+## The loop, in miniature
+
+<img class="diagram" src="assets/self-training-loop.svg" alt="Line chart: held-out bits per byte of a bigram model retrained on its own samples for 5 rounds, rising from 1.30 at round 0 to 1.94 at round 5.">
+
+<p class="caption">Round 0: bigram on TinyStories. Each round: sample 2,000 stories, retrain on them only. Every self-improving pipeline needs a judge and a filter; Weeks 8 and 11–16 add them. Notebook practice P04.</p>
+
+Note:
+Held-out bits per byte 1.299 → 1.940 over 5 rounds; distinct token types in the corpus 12,211 → 8,205. A round-5 sample: “One to the współpr He ICT_author need nice the,Afterกังวล so little stomach his rabbit was was time it отзывы all, windo”. This is model collapse in its simplest form (Shumailov et al., 2024): the tails of the distribution are lost first. The fix is the previous section's tool, a reference model or judge that filters synthetic data before it is trained on; Cosmopedia (Week 8) and rejection sampling (Week 11) are the same loop with the filter in place. Figure: scripts/lecture02_experiments.py; P04 reproduces the effect on twelve sentences.
 
 ---
 
@@ -614,11 +622,11 @@ NPLM already beat the best smoothed $N$-gram models in 2003; the gap widened wit
 
 ## Language model toolkits and readings
 
-- **Reading:** [Jurafsky and Martin, *N-gram Language Models*](https://web.stanford.edu/~jurafsky/slp3/3.pdf)<br>Chain rule, MLE, perplexity, smoothing.
+- **Reading:** [Jurafsky and Martin, *N-gram Language Models*](https://web.stanford.edu/~jurafsky/slp3/3.pdf)<br>Chain rule, MLE, perplexity, smoothing, Kneser–Ney.
 - **KenLM** (fast $n$-gram LM toolkit): <a href="https://kheafield.com/code/kenlm/" target="_blank" rel="noopener noreferrer">kheafield.com/code/kenlm/</a>
 - **Google N-Gram Release (Aug 2006):** <a href="https://ai.googleblog.com/2006/08/all-our-n-gram-are-belong-to-you.html" target="_blank" rel="noopener noreferrer">ai.googleblog.com/2006/08/all-our-n-gram-are-belong-to-you.html</a><br>Tokens: 1,024,908,267,229 · Sentences: 95,119,665,584 · Unigrams: 13,588,391 · Fivegrams: 1,176,470,663
-- **SRILM** (classic LM toolkit): <a href="http://www.speech.sri.com/projects/srilm/" target="_blank" rel="noopener noreferrer">speech.sri.com/projects/srilm/</a>
-- **Alias method** (fast discrete sampling): <a href="https://www.keithschwarz.com/darts-dice-coins/" target="_blank" rel="noopener noreferrer">keithschwarz.com/darts-dice-coins/</a>
+- **Bengio et al. (2003), A Neural Probabilistic Language Model:** <a href="https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf" target="_blank" rel="noopener noreferrer">jmlr.org/papers/volume3/bengio03a</a> · <a href="https://web.stanford.edu/~jurafsky/slp3/7.pdf" target="_blank" rel="noopener noreferrer">Jurafsky and Martin, Ch. 7</a> (the NPLM figures)
+- **CCNet** (Wenzek et al., 2020), the Wikipedia n-gram filter: <a href="https://arxiv.org/abs/1911.00359" target="_blank" rel="noopener noreferrer">arxiv.org/abs/1911.00359</a> · **Brants et al. (2007)**, 2-trillion-token 5-grams for MT: <a href="https://aclanthology.org/D07-1090/" target="_blank" rel="noopener noreferrer">aclanthology.org/D07-1090</a>
 
 Note:
-The Spring slide closed with the reading for its next lecture (Chapters 4–5: Naive Bayes, logistic regression, embeddings). In the Fall sequence, Chapter 3 is the reading for this lecture; Week 3 continues with embeddings. Source: Spring Lecture 02 slide 34, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/33.
+Fast discrete sampling (alias method), used by the sampling slides: https://www.keithschwarz.com/darts-dice-coins/. The Spring slide closed with the reading for its next lecture (Chapters 4–5: Naive Bayes, logistic regression, embeddings). In the Fall sequence, Chapter 3 is the reading for this lecture; Week 3 continues with embeddings. Source: Spring Lecture 02 slide 34, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/33.

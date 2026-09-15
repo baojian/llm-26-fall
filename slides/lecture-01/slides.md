@@ -967,7 +967,7 @@ Note:
 Save the **ordered merges** and the **vocabulary**.
 
 Note:
-Adapted from CS336 Lecture 1 and Sennrich et al. 2016 Section 3.2, ../../papers/sennrich-2016-subword-units.pdf. Our byte vocabulary differs from the character-based, word-boundary-aware algorithm in the paper. No merges cross our input-sequence boundaries. Stop when the merge budget is reached or no pair remains.
+Adapted from CS336 Lecture 1 and Sennrich et al. 2016 Section 3.2, ../../papers/2016-acl-sennrich-neural-machine-translation-rare-words-subword-units.pdf. Our byte vocabulary differs from the character-based, word-boundary-aware algorithm in the paper. No merges cross our input-sequence boundaries. Stop when the merge budget is reached or no pair remains.
 
 ---
 
@@ -1345,8 +1345,8 @@ The extended-practice link opens lecture-01-exercise-tokenization.ipynb through 
 ## Readings for Lecture 01
 
 - [Jurafsky and Martin, *Words and Tokens*](https://web.stanford.edu/~jurafsky/slp3/2.pdf)<br>Read the Unicode and subword-tokenization sections.
-- <a href="../../papers/sennrich-2016-subword-units.pdf" target="_blank" rel="noopener noreferrer">Sennrich, Haddow, and Birch (2016)</a><br>Section 3.2: BPE for subword segmentation.
-- <a href="../../papers/kudo-2018-sentencepiece.pdf" target="_blank" rel="noopener noreferrer">Kudo and Richardson (2018), SentencePiece</a><br>Further reading on language-independent tokenization.
+- <a href="../../papers/2016-acl-sennrich-neural-machine-translation-rare-words-subword-units.pdf" target="_blank" rel="noopener noreferrer">Sennrich, Haddow, and Birch (2016)</a><br>Section 3.2: BPE for subword segmentation.
+- <a href="../../papers/2018-emnlp-kudo-sentencepiece-language-independent-subword-tokenizer.pdf" target="_blank" rel="noopener noreferrer">Kudo and Richardson (2018), SentencePiece</a><br>Further reading on language-independent tokenization.
 
 Note:
 Read the textbook sections first, then trace the BPE example in Sennrich et al. Compare its word-boundary convention with our byte-based teaching implementation. SentencePiece is further reading, not an additional required implementation. Notebook references also link the Python Unicode HOWTO.

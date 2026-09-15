@@ -80,12 +80,20 @@ def test_laplace_example_matches_the_textbook(lesson):
     assert sum(lesson["BIGRAM_COUNTS"]["i"]) == 843
 
 
-def test_good_turing_estimates_form_a_distribution(lesson):
-    assert lesson["good_turing_total"] == 1
-    assert lesson["good_turing"]["Bob"] == Fraction(1, 10)
-    assert lesson["good_turing"]["do"] == Fraction(2, 15)
-    assert lesson["good_turing"]["Sam"] == Fraction(3, 20)
-    assert lesson["good_turing"]["I"] == 0
+def test_interpolation_tunes_lambda_on_held_out_text(lesson):
+    assert lesson["best_lambda"] == 0.6
+    assert math.isfinite(lesson["interpolated_perplexity"])
+    assert 5.5 < lesson["interpolated_perplexity"] < 6.5
+    assert 0.8 < lesson["bits_per_byte"] < 0.95
+    # pure bigram and pure unigram both lose to the mixture on the held-out sentence
+    assert lesson["scores"][0.6] > lesson["scores"][1.0] and lesson["scores"][0.6] > lesson["scores"][0.0]
+
+
+def test_self_training_loop_drifts_away_from_real_text(lesson):
+    rounds = lesson["loop_rounds"]
+    assert [r["round"] for r in rounds] == list(range(6))
+    assert rounds[0]["loss"] < rounds[-1]["loss"]
+    assert rounds[-1]["loss"] - rounds[0]["loss"] > 0.3
 
 
 def test_sampled_sentences_use_training_bigrams(lesson):
@@ -107,7 +115,7 @@ def test_manifest_and_assets_are_consistent():
     assert (LECTURE / "assets/predicting-next-word.mp4").stat().st_size < 10_000_000
     assert SLIDES.rstrip().endswith("index.html#/33.")
     assert 'id="references"' in SLIDES
-    assert SLIDES.count('<!-- .slide:') == 38
+    assert SLIDES.count('<!-- .slide:') == 39
     assert 'id="smoothing"' in SLIDES and "Katz-backoff" not in SLIDES
     notebook_text = "".join("".join(cell["source"]) for cell in NOTEBOOK["cells"])
     for label in re.findall(r"(?:Exercise|Notebook|practices?) ([EP]\d\d)", SLIDES):
