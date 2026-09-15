@@ -1,0 +1,5725 @@
+{
+  "name": "fineweb-edu-chinese-v2.1-4_5",
+  "source": "modelscope",
+  "repo": "opencsg/Fineweb-Edu-Chinese-V2.1",
+  "hf_repo": "opencsg/Fineweb-Edu-Chinese-V2.1",
+  "path": "4_5",
+  "pattern": ".*",
+  "max_bytes": 10737418240,
+  "note": "OpenCSG Fineweb-Edu-Chinese V2.1, top score bucket (4-5), first shards",
+  "downloaded_at": "2026-09-12T02:34:45+0800",
+  "bytes": 10717095529,
+  "files": [
+    {
+      "path": "4_5/000000.parquet",
+      "bytes": 8743753,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000001.parquet",
+      "bytes": 9236198,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000002.parquet",
+      "bytes": 8777512,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000003.parquet",
+      "bytes": 9415296,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000004.parquet",
+      "bytes": 9509326,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000005.parquet",
+      "bytes": 8950747,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000006.parquet",
+      "bytes": 9448321,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000007.parquet",
+      "bytes": 9098517,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000008.parquet",
+      "bytes": 9033068,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000009.parquet",
+      "bytes": 9417505,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000010.parquet",
+      "bytes": 9077860,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000011.parquet",
+      "bytes": 9083001,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000012.parquet",
+      "bytes": 8950052,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000013.parquet",
+      "bytes": 9632066,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000014.parquet",
+      "bytes": 9120482,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000015.parquet",
+      "bytes": 8923029,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000016.parquet",
+      "bytes": 8602461,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000017.parquet",
+      "bytes": 9255482,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000018.parquet",
+      "bytes": 9462485,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000019.parquet",
+      "bytes": 9214144,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000020.parquet",
+      "bytes": 9400908,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000021.parquet",
+      "bytes": 9519251,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000022.parquet",
+      "bytes": 9024568,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000023.parquet",
+      "bytes": 9406463,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000024.parquet",
+      "bytes": 9108682,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000025.parquet",
+      "bytes": 8953370,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000026.parquet",
+      "bytes": 9820058,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000027.parquet",
+      "bytes": 9143571,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000028.parquet",
+      "bytes": 9258017,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000029.parquet",
+      "bytes": 9182660,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000030.parquet",
+      "bytes": 8954358,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000031.parquet",
+      "bytes": 8960491,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000032.parquet",
+      "bytes": 8901194,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000033.parquet",
+      "bytes": 8824162,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000034.parquet",
+      "bytes": 8944796,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000035.parquet",
+      "bytes": 9178578,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000036.parquet",
+      "bytes": 9473421,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000037.parquet",
+      "bytes": 8966081,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000038.parquet",
+      "bytes": 9175174,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000039.parquet",
+      "bytes": 9564743,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000040.parquet",
+      "bytes": 9143899,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000041.parquet",
+      "bytes": 8798909,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000042.parquet",
+      "bytes": 8786615,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000043.parquet",
+      "bytes": 9131749,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000044.parquet",
+      "bytes": 9032144,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000045.parquet",
+      "bytes": 8803986,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000046.parquet",
+      "bytes": 8925366,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000047.parquet",
+      "bytes": 9514460,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000048.parquet",
+      "bytes": 8900267,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000049.parquet",
+      "bytes": 9302155,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000050.parquet",
+      "bytes": 8962690,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000051.parquet",
+      "bytes": 9231501,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000052.parquet",
+      "bytes": 8985923,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000053.parquet",
+      "bytes": 8813035,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000054.parquet",
+      "bytes": 8576798,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000055.parquet",
+      "bytes": 9361461,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000056.parquet",
+      "bytes": 9100387,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000057.parquet",
+      "bytes": 9250582,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000058.parquet",
+      "bytes": 9391038,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000059.parquet",
+      "bytes": 8919266,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000060.parquet",
+      "bytes": 9167564,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000061.parquet",
+      "bytes": 9134909,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000062.parquet",
+      "bytes": 9061434,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000063.parquet",
+      "bytes": 9309506,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000064.parquet",
+      "bytes": 9634766,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000065.parquet",
+      "bytes": 8643325,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000066.parquet",
+      "bytes": 9283852,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000067.parquet",
+      "bytes": 8784266,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000068.parquet",
+      "bytes": 9042106,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000069.parquet",
+      "bytes": 8949400,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000070.parquet",
+      "bytes": 9201659,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000071.parquet",
+      "bytes": 9179395,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000072.parquet",
+      "bytes": 8957231,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000073.parquet",
+      "bytes": 9130480,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000074.parquet",
+      "bytes": 9815839,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000075.parquet",
+      "bytes": 8839883,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000076.parquet",
+      "bytes": 9128145,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000077.parquet",
+      "bytes": 9750198,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000078.parquet",
+      "bytes": 9293609,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000079.parquet",
+      "bytes": 9479517,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000080.parquet",
+      "bytes": 9326212,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000081.parquet",
+      "bytes": 8781645,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000082.parquet",
+      "bytes": 9096982,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000083.parquet",
+      "bytes": 8854509,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000084.parquet",
+      "bytes": 8985148,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000085.parquet",
+      "bytes": 8787157,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000086.parquet",
+      "bytes": 9091619,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000087.parquet",
+      "bytes": 9039905,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000088.parquet",
+      "bytes": 8680301,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000089.parquet",
+      "bytes": 9233146,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000090.parquet",
+      "bytes": 8867889,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000091.parquet",
+      "bytes": 9484043,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000092.parquet",
+      "bytes": 9317866,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000093.parquet",
+      "bytes": 9147178,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000094.parquet",
+      "bytes": 9543897,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000095.parquet",
+      "bytes": 9205702,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000096.parquet",
+      "bytes": 9615549,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000097.parquet",
+      "bytes": 9288342,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000098.parquet",
+      "bytes": 9180596,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000099.parquet",
+      "bytes": 9276440,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000100.parquet",
+      "bytes": 8823867,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000101.parquet",
+      "bytes": 9018852,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000102.parquet",
+      "bytes": 9320876,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000103.parquet",
+      "bytes": 9429566,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000104.parquet",
+      "bytes": 9198558,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000105.parquet",
+      "bytes": 8960401,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000106.parquet",
+      "bytes": 9135262,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000107.parquet",
+      "bytes": 9303333,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000108.parquet",
+      "bytes": 8770233,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000109.parquet",
+      "bytes": 8894156,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000110.parquet",
+      "bytes": 8903092,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000111.parquet",
+      "bytes": 9065893,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000112.parquet",
+      "bytes": 8955166,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000113.parquet",
+      "bytes": 9298350,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000114.parquet",
+      "bytes": 9677125,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000115.parquet",
+      "bytes": 9206722,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000116.parquet",
+      "bytes": 9130839,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000117.parquet",
+      "bytes": 9296500,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000118.parquet",
+      "bytes": 8790472,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000119.parquet",
+      "bytes": 9048413,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000120.parquet",
+      "bytes": 9084030,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000121.parquet",
+      "bytes": 9212556,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000122.parquet",
+      "bytes": 9083636,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000123.parquet",
+      "bytes": 9393195,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000124.parquet",
+      "bytes": 8998323,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000125.parquet",
+      "bytes": 9057499,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000126.parquet",
+      "bytes": 9360360,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000127.parquet",
+      "bytes": 9337249,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000128.parquet",
+      "bytes": 9013907,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000129.parquet",
+      "bytes": 9194180,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000130.parquet",
+      "bytes": 8700488,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000131.parquet",
+      "bytes": 9147472,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000132.parquet",
+      "bytes": 9219686,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000133.parquet",
+      "bytes": 8856880,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000134.parquet",
+      "bytes": 8958268,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000135.parquet",
+      "bytes": 9605286,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000136.parquet",
+      "bytes": 9330870,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000137.parquet",
+      "bytes": 8886136,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000138.parquet",
+      "bytes": 9205196,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000139.parquet",
+      "bytes": 8628188,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000140.parquet",
+      "bytes": 9064832,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000141.parquet",
+      "bytes": 8862330,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000142.parquet",
+      "bytes": 8921525,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000143.parquet",
+      "bytes": 8594832,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000144.parquet",
+      "bytes": 8419884,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000145.parquet",
+      "bytes": 8913355,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000146.parquet",
+      "bytes": 8999882,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000147.parquet",
+      "bytes": 9151762,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000148.parquet",
+      "bytes": 9013518,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000149.parquet",
+      "bytes": 8683559,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000150.parquet",
+      "bytes": 9276216,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000151.parquet",
+      "bytes": 9258473,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000152.parquet",
+      "bytes": 9176370,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000153.parquet",
+      "bytes": 9016219,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000154.parquet",
+      "bytes": 9600102,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000155.parquet",
+      "bytes": 9225651,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000156.parquet",
+      "bytes": 9281199,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000157.parquet",
+      "bytes": 9413843,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000158.parquet",
+      "bytes": 9171939,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000159.parquet",
+      "bytes": 9410817,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000160.parquet",
+      "bytes": 8958854,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000161.parquet",
+      "bytes": 9014430,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000162.parquet",
+      "bytes": 9524732,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000163.parquet",
+      "bytes": 8838000,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000164.parquet",
+      "bytes": 8452593,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000165.parquet",
+      "bytes": 9192813,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000166.parquet",
+      "bytes": 8871468,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000167.parquet",
+      "bytes": 8895798,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000168.parquet",
+      "bytes": 9245270,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000169.parquet",
+      "bytes": 8940935,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000170.parquet",
+      "bytes": 8782992,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000171.parquet",
+      "bytes": 8956908,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000172.parquet",
+      "bytes": 9159234,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000173.parquet",
+      "bytes": 9431876,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000174.parquet",
+      "bytes": 9202880,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000175.parquet",
+      "bytes": 9801369,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000176.parquet",
+      "bytes": 9540733,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000177.parquet",
+      "bytes": 8494191,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000178.parquet",
+      "bytes": 9628153,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000179.parquet",
+      "bytes": 8738854,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000180.parquet",
+      "bytes": 8806709,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000181.parquet",
+      "bytes": 9089323,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000182.parquet",
+      "bytes": 9156278,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000183.parquet",
+      "bytes": 8673436,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000184.parquet",
+      "bytes": 9456446,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000185.parquet",
+      "bytes": 9204410,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000186.parquet",
+      "bytes": 9006696,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000187.parquet",
+      "bytes": 9105711,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000188.parquet",
+      "bytes": 8803361,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000189.parquet",
+      "bytes": 9027816,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000190.parquet",
+      "bytes": 8831596,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000191.parquet",
+      "bytes": 8805074,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000192.parquet",
+      "bytes": 9373442,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000193.parquet",
+      "bytes": 9385404,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000194.parquet",
+      "bytes": 8715786,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000195.parquet",
+      "bytes": 9282131,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000196.parquet",
+      "bytes": 8762131,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000197.parquet",
+      "bytes": 9115538,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000198.parquet",
+      "bytes": 9318361,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000199.parquet",
+      "bytes": 8737934,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000200.parquet",
+      "bytes": 8921207,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000201.parquet",
+      "bytes": 9069634,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000202.parquet",
+      "bytes": 9472750,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000203.parquet",
+      "bytes": 9252125,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000204.parquet",
+      "bytes": 9345361,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000205.parquet",
+      "bytes": 9323911,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000206.parquet",
+      "bytes": 9094678,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000207.parquet",
+      "bytes": 9128738,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000208.parquet",
+      "bytes": 9059071,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000209.parquet",
+      "bytes": 9289650,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000210.parquet",
+      "bytes": 9212435,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000211.parquet",
+      "bytes": 9082728,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000212.parquet",
+      "bytes": 9070024,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000213.parquet",
+      "bytes": 8974589,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000214.parquet",
+      "bytes": 9480541,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000215.parquet",
+      "bytes": 8916836,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000216.parquet",
+      "bytes": 8980576,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000217.parquet",
+      "bytes": 9048025,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000218.parquet",
+      "bytes": 9135304,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000219.parquet",
+      "bytes": 8762443,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000220.parquet",
+      "bytes": 9030960,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000221.parquet",
+      "bytes": 9416421,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000222.parquet",
+      "bytes": 9441628,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000223.parquet",
+      "bytes": 9209147,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000224.parquet",
+      "bytes": 8585140,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000225.parquet",
+      "bytes": 10085770,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000226.parquet",
+      "bytes": 9099123,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000227.parquet",
+      "bytes": 9186658,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000228.parquet",
+      "bytes": 9757725,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000229.parquet",
+      "bytes": 8855401,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000230.parquet",
+      "bytes": 9159323,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000231.parquet",
+      "bytes": 9397667,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000232.parquet",
+      "bytes": 9255000,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000233.parquet",
+      "bytes": 9404140,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000234.parquet",
+      "bytes": 9254605,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000235.parquet",
+      "bytes": 9120157,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000236.parquet",
+      "bytes": 9496856,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000237.parquet",
+      "bytes": 9269411,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000238.parquet",
+      "bytes": 8731590,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000239.parquet",
+      "bytes": 8837241,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000240.parquet",
+      "bytes": 9371974,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000241.parquet",
+      "bytes": 9124434,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000242.parquet",
+      "bytes": 8939976,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000243.parquet",
+      "bytes": 9444147,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000244.parquet",
+      "bytes": 8998278,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000245.parquet",
+      "bytes": 9498449,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000246.parquet",
+      "bytes": 9464510,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000247.parquet",
+      "bytes": 9289758,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000248.parquet",
+      "bytes": 9779968,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000249.parquet",
+      "bytes": 9149737,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000250.parquet",
+      "bytes": 9043673,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000251.parquet",
+      "bytes": 8742636,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000252.parquet",
+      "bytes": 9109770,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000253.parquet",
+      "bytes": 9232769,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000254.parquet",
+      "bytes": 9430624,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000255.parquet",
+      "bytes": 9038993,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000256.parquet",
+      "bytes": 8857596,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000257.parquet",
+      "bytes": 9540270,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000258.parquet",
+      "bytes": 9102479,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000259.parquet",
+      "bytes": 8538419,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000260.parquet",
+      "bytes": 8701537,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000261.parquet",
+      "bytes": 9194079,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000262.parquet",
+      "bytes": 8616665,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000263.parquet",
+      "bytes": 9252947,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000264.parquet",
+      "bytes": 9205285,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000265.parquet",
+      "bytes": 8750327,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000266.parquet",
+      "bytes": 9126682,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000267.parquet",
+      "bytes": 9213256,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000268.parquet",
+      "bytes": 8937381,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000269.parquet",
+      "bytes": 9632459,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000270.parquet",
+      "bytes": 9152756,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000271.parquet",
+      "bytes": 8972676,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000272.parquet",
+      "bytes": 9007235,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000273.parquet",
+      "bytes": 8935909,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000274.parquet",
+      "bytes": 9218789,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000275.parquet",
+      "bytes": 8719034,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000276.parquet",
+      "bytes": 9282344,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000277.parquet",
+      "bytes": 9096395,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000278.parquet",
+      "bytes": 8364888,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000279.parquet",
+      "bytes": 9888717,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000280.parquet",
+      "bytes": 8961945,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000281.parquet",
+      "bytes": 9654150,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000282.parquet",
+      "bytes": 8778682,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000283.parquet",
+      "bytes": 9318807,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000284.parquet",
+      "bytes": 9172087,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000285.parquet",
+      "bytes": 9272479,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000286.parquet",
+      "bytes": 8749337,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000287.parquet",
+      "bytes": 9020249,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000288.parquet",
+      "bytes": 9424625,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000289.parquet",
+      "bytes": 9028981,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000290.parquet",
+      "bytes": 9349167,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000291.parquet",
+      "bytes": 9425383,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000292.parquet",
+      "bytes": 9314351,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000293.parquet",
+      "bytes": 9184414,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000294.parquet",
+      "bytes": 8983330,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000295.parquet",
+      "bytes": 8896578,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000296.parquet",
+      "bytes": 9351957,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000297.parquet",
+      "bytes": 8944944,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000298.parquet",
+      "bytes": 9697796,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000299.parquet",
+      "bytes": 9024216,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000300.parquet",
+      "bytes": 8794097,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000301.parquet",
+      "bytes": 9436191,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000302.parquet",
+      "bytes": 9040848,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000303.parquet",
+      "bytes": 9216687,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000304.parquet",
+      "bytes": 9284016,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000305.parquet",
+      "bytes": 9115318,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000306.parquet",
+      "bytes": 9703107,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000307.parquet",
+      "bytes": 8967478,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000308.parquet",
+      "bytes": 8628426,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000309.parquet",
+      "bytes": 8898379,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000310.parquet",
+      "bytes": 9171873,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000311.parquet",
+      "bytes": 10085498,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000312.parquet",
+      "bytes": 8955876,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000313.parquet",
+      "bytes": 8353660,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000314.parquet",
+      "bytes": 8861917,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000315.parquet",
+      "bytes": 8818083,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000316.parquet",
+      "bytes": 8510150,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000317.parquet",
+      "bytes": 8713746,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000318.parquet",
+      "bytes": 8670575,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000319.parquet",
+      "bytes": 8977766,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000320.parquet",
+      "bytes": 8817233,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000321.parquet",
+      "bytes": 9291085,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000322.parquet",
+      "bytes": 8969196,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000323.parquet",
+      "bytes": 8605694,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000324.parquet",
+      "bytes": 9071063,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000325.parquet",
+      "bytes": 8668225,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000326.parquet",
+      "bytes": 8927164,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000327.parquet",
+      "bytes": 9018291,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000328.parquet",
+      "bytes": 8497415,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000329.parquet",
+      "bytes": 9506767,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000330.parquet",
+      "bytes": 9063442,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000331.parquet",
+      "bytes": 8920990,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000332.parquet",
+      "bytes": 9549853,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000333.parquet",
+      "bytes": 9141606,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000334.parquet",
+      "bytes": 9335695,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000335.parquet",
+      "bytes": 9261882,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000336.parquet",
+      "bytes": 9162680,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000337.parquet",
+      "bytes": 8906075,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000338.parquet",
+      "bytes": 9176099,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000339.parquet",
+      "bytes": 9106788,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000340.parquet",
+      "bytes": 9288624,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000341.parquet",
+      "bytes": 9732074,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000342.parquet",
+      "bytes": 10085933,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000343.parquet",
+      "bytes": 8856870,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000344.parquet",
+      "bytes": 9410488,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000345.parquet",
+      "bytes": 9482162,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000346.parquet",
+      "bytes": 8826525,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000347.parquet",
+      "bytes": 9337467,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000348.parquet",
+      "bytes": 9484953,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000349.parquet",
+      "bytes": 9277001,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000350.parquet",
+      "bytes": 9100115,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000351.parquet",
+      "bytes": 8582256,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000352.parquet",
+      "bytes": 8881797,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000353.parquet",
+      "bytes": 9132173,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000354.parquet",
+      "bytes": 8970844,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000355.parquet",
+      "bytes": 9037130,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000356.parquet",
+      "bytes": 9418860,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000357.parquet",
+      "bytes": 8999977,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000358.parquet",
+      "bytes": 9305139,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000359.parquet",
+      "bytes": 9599875,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000360.parquet",
+      "bytes": 9096552,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000361.parquet",
+      "bytes": 9049675,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000362.parquet",
+      "bytes": 9028154,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000363.parquet",
+      "bytes": 9020032,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000364.parquet",
+      "bytes": 9123442,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000365.parquet",
+      "bytes": 9544623,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000366.parquet",
+      "bytes": 8958204,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000367.parquet",
+      "bytes": 8803550,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000368.parquet",
+      "bytes": 9386869,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000369.parquet",
+      "bytes": 9141684,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000370.parquet",
+      "bytes": 10141373,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000371.parquet",
+      "bytes": 9031326,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000372.parquet",
+      "bytes": 9101684,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000373.parquet",
+      "bytes": 8903750,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000374.parquet",
+      "bytes": 8813392,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000375.parquet",
+      "bytes": 9550449,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000376.parquet",
+      "bytes": 8805754,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000377.parquet",
+      "bytes": 9608747,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000378.parquet",
+      "bytes": 8958307,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000379.parquet",
+      "bytes": 8641425,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000380.parquet",
+      "bytes": 8820518,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000381.parquet",
+      "bytes": 8847302,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000382.parquet",
+      "bytes": 9177995,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000383.parquet",
+      "bytes": 8997432,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000384.parquet",
+      "bytes": 9001276,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000385.parquet",
+      "bytes": 9031208,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000386.parquet",
+      "bytes": 8967302,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000387.parquet",
+      "bytes": 8566056,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000388.parquet",
+      "bytes": 9690659,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000389.parquet",
+      "bytes": 9243485,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000390.parquet",
+      "bytes": 9055878,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000391.parquet",
+      "bytes": 8803731,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000392.parquet",
+      "bytes": 9575215,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000393.parquet",
+      "bytes": 8827289,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000394.parquet",
+      "bytes": 8424133,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000395.parquet",
+      "bytes": 9217212,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000396.parquet",
+      "bytes": 8867162,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000397.parquet",
+      "bytes": 9553142,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000398.parquet",
+      "bytes": 8860785,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000399.parquet",
+      "bytes": 9187658,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000400.parquet",
+      "bytes": 9176872,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000401.parquet",
+      "bytes": 9476846,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000402.parquet",
+      "bytes": 9134342,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000403.parquet",
+      "bytes": 9832921,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000404.parquet",
+      "bytes": 9294676,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000405.parquet",
+      "bytes": 8695326,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000406.parquet",
+      "bytes": 9146259,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000407.parquet",
+      "bytes": 9098524,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000408.parquet",
+      "bytes": 9397428,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000409.parquet",
+      "bytes": 9525465,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000410.parquet",
+      "bytes": 9378557,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000411.parquet",
+      "bytes": 8958402,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000412.parquet",
+      "bytes": 8853151,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000413.parquet",
+      "bytes": 9378056,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000414.parquet",
+      "bytes": 9365156,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000415.parquet",
+      "bytes": 8813353,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000416.parquet",
+      "bytes": 9279138,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000417.parquet",
+      "bytes": 9033290,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000418.parquet",
+      "bytes": 9401459,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000419.parquet",
+      "bytes": 9603258,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000420.parquet",
+      "bytes": 9508423,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000421.parquet",
+      "bytes": 9206538,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000422.parquet",
+      "bytes": 9185345,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000423.parquet",
+      "bytes": 8936879,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000424.parquet",
+      "bytes": 9306116,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000425.parquet",
+      "bytes": 8973813,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000426.parquet",
+      "bytes": 8762185,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000427.parquet",
+      "bytes": 9426004,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000428.parquet",
+      "bytes": 9204687,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000429.parquet",
+      "bytes": 9129308,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000430.parquet",
+      "bytes": 9339884,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000431.parquet",
+      "bytes": 9308062,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000432.parquet",
+      "bytes": 8879676,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000433.parquet",
+      "bytes": 8947506,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000434.parquet",
+      "bytes": 9358568,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000435.parquet",
+      "bytes": 8922726,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000436.parquet",
+      "bytes": 9009807,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000437.parquet",
+      "bytes": 9111182,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000438.parquet",
+      "bytes": 9012307,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000439.parquet",
+      "bytes": 8990032,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000440.parquet",
+      "bytes": 9205769,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000441.parquet",
+      "bytes": 8781967,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000442.parquet",
+      "bytes": 8971792,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000443.parquet",
+      "bytes": 8950858,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000444.parquet",
+      "bytes": 9433147,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000445.parquet",
+      "bytes": 9583533,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000446.parquet",
+      "bytes": 9035248,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000447.parquet",
+      "bytes": 10172956,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000448.parquet",
+      "bytes": 9032028,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000449.parquet",
+      "bytes": 8763654,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000450.parquet",
+      "bytes": 9897937,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000451.parquet",
+      "bytes": 9394467,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000452.parquet",
+      "bytes": 9164827,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000453.parquet",
+      "bytes": 9165933,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000454.parquet",
+      "bytes": 9009430,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000455.parquet",
+      "bytes": 9190717,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000456.parquet",
+      "bytes": 8767065,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000457.parquet",
+      "bytes": 9579229,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000458.parquet",
+      "bytes": 9463366,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000459.parquet",
+      "bytes": 9387304,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000460.parquet",
+      "bytes": 9349614,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000461.parquet",
+      "bytes": 9240699,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000462.parquet",
+      "bytes": 9474820,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000463.parquet",
+      "bytes": 9239587,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000464.parquet",
+      "bytes": 9112291,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000465.parquet",
+      "bytes": 9192085,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000466.parquet",
+      "bytes": 9025641,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000467.parquet",
+      "bytes": 9379078,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000468.parquet",
+      "bytes": 8912555,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000469.parquet",
+      "bytes": 8788475,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000470.parquet",
+      "bytes": 9018127,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000471.parquet",
+      "bytes": 8835214,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000472.parquet",
+      "bytes": 9129985,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000473.parquet",
+      "bytes": 8895366,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000474.parquet",
+      "bytes": 9530637,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000475.parquet",
+      "bytes": 9382592,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000476.parquet",
+      "bytes": 8782969,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000477.parquet",
+      "bytes": 8996733,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000478.parquet",
+      "bytes": 8783982,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000479.parquet",
+      "bytes": 8795556,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000480.parquet",
+      "bytes": 8734124,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000481.parquet",
+      "bytes": 8473322,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000482.parquet",
+      "bytes": 8821619,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000483.parquet",
+      "bytes": 8995118,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000484.parquet",
+      "bytes": 8805996,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000485.parquet",
+      "bytes": 9095276,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000486.parquet",
+      "bytes": 9355378,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000487.parquet",
+      "bytes": 8643963,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000488.parquet",
+      "bytes": 9433293,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000489.parquet",
+      "bytes": 8835659,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000490.parquet",
+      "bytes": 9139512,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000491.parquet",
+      "bytes": 9365698,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000492.parquet",
+      "bytes": 8756720,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000493.parquet",
+      "bytes": 9064155,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000494.parquet",
+      "bytes": 9499747,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000495.parquet",
+      "bytes": 8910381,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000496.parquet",
+      "bytes": 9486709,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000497.parquet",
+      "bytes": 8980505,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000498.parquet",
+      "bytes": 8968689,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000499.parquet",
+      "bytes": 8985826,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000500.parquet",
+      "bytes": 9195750,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000501.parquet",
+      "bytes": 8828136,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000502.parquet",
+      "bytes": 9114925,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000503.parquet",
+      "bytes": 9703035,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000504.parquet",
+      "bytes": 9746689,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000505.parquet",
+      "bytes": 9600658,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000506.parquet",
+      "bytes": 8970969,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000507.parquet",
+      "bytes": 9364049,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000508.parquet",
+      "bytes": 9702624,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000509.parquet",
+      "bytes": 8646155,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000510.parquet",
+      "bytes": 9172959,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000511.parquet",
+      "bytes": 9575321,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000512.parquet",
+      "bytes": 9571761,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000513.parquet",
+      "bytes": 9911781,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000514.parquet",
+      "bytes": 8925860,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000515.parquet",
+      "bytes": 8640233,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000516.parquet",
+      "bytes": 9655885,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000517.parquet",
+      "bytes": 9388167,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000518.parquet",
+      "bytes": 9054039,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000519.parquet",
+      "bytes": 8793603,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000520.parquet",
+      "bytes": 9434853,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000521.parquet",
+      "bytes": 8758486,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000522.parquet",
+      "bytes": 8872917,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000523.parquet",
+      "bytes": 9277388,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000524.parquet",
+      "bytes": 9205039,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000525.parquet",
+      "bytes": 8680957,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000526.parquet",
+      "bytes": 9152243,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000527.parquet",
+      "bytes": 9018288,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000528.parquet",
+      "bytes": 9236838,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000529.parquet",
+      "bytes": 9116277,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000530.parquet",
+      "bytes": 8909394,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000531.parquet",
+      "bytes": 9160349,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000532.parquet",
+      "bytes": 9376901,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000533.parquet",
+      "bytes": 9904991,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000534.parquet",
+      "bytes": 9147108,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000535.parquet",
+      "bytes": 9415044,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000536.parquet",
+      "bytes": 8858465,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000537.parquet",
+      "bytes": 9079137,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000538.parquet",
+      "bytes": 9388162,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000539.parquet",
+      "bytes": 9041906,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000540.parquet",
+      "bytes": 8809937,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000541.parquet",
+      "bytes": 9506847,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000542.parquet",
+      "bytes": 9116097,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000543.parquet",
+      "bytes": 8661435,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000544.parquet",
+      "bytes": 9181941,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000545.parquet",
+      "bytes": 9374228,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000546.parquet",
+      "bytes": 8838207,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000547.parquet",
+      "bytes": 9059546,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000548.parquet",
+      "bytes": 8659454,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000549.parquet",
+      "bytes": 9209123,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000550.parquet",
+      "bytes": 9165342,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000551.parquet",
+      "bytes": 9049110,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000552.parquet",
+      "bytes": 9113528,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000553.parquet",
+      "bytes": 9033990,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000554.parquet",
+      "bytes": 9396335,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000555.parquet",
+      "bytes": 9332746,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000556.parquet",
+      "bytes": 8992842,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000557.parquet",
+      "bytes": 8717704,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000558.parquet",
+      "bytes": 8803315,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000559.parquet",
+      "bytes": 8980046,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000560.parquet",
+      "bytes": 8908757,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000561.parquet",
+      "bytes": 9411309,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000562.parquet",
+      "bytes": 9097880,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000563.parquet",
+      "bytes": 9305924,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000564.parquet",
+      "bytes": 9356994,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000565.parquet",
+      "bytes": 9144432,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000566.parquet",
+      "bytes": 9198477,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000567.parquet",
+      "bytes": 9139859,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000568.parquet",
+      "bytes": 8965646,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000569.parquet",
+      "bytes": 9030567,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000570.parquet",
+      "bytes": 9312477,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000571.parquet",
+      "bytes": 8598698,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000572.parquet",
+      "bytes": 8786049,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000573.parquet",
+      "bytes": 8867001,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000574.parquet",
+      "bytes": 9144036,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000575.parquet",
+      "bytes": 9868776,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000576.parquet",
+      "bytes": 9266648,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000577.parquet",
+      "bytes": 8689365,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000578.parquet",
+      "bytes": 9084193,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000579.parquet",
+      "bytes": 9000915,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000580.parquet",
+      "bytes": 8740402,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000581.parquet",
+      "bytes": 9649465,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000582.parquet",
+      "bytes": 8940050,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000583.parquet",
+      "bytes": 9612746,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000584.parquet",
+      "bytes": 9022939,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000585.parquet",
+      "bytes": 9514575,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000586.parquet",
+      "bytes": 8488165,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000587.parquet",
+      "bytes": 9107661,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000588.parquet",
+      "bytes": 8994760,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000589.parquet",
+      "bytes": 8639170,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000590.parquet",
+      "bytes": 8665256,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000591.parquet",
+      "bytes": 9079288,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000592.parquet",
+      "bytes": 8803345,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000593.parquet",
+      "bytes": 8609450,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000594.parquet",
+      "bytes": 9173333,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000595.parquet",
+      "bytes": 9206804,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000596.parquet",
+      "bytes": 9228347,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000597.parquet",
+      "bytes": 9361101,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000598.parquet",
+      "bytes": 9093194,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000599.parquet",
+      "bytes": 8829410,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000600.parquet",
+      "bytes": 9047810,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000601.parquet",
+      "bytes": 8805431,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000602.parquet",
+      "bytes": 8936078,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000603.parquet",
+      "bytes": 9188201,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000604.parquet",
+      "bytes": 9033662,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000605.parquet",
+      "bytes": 9239077,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000606.parquet",
+      "bytes": 9170527,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000607.parquet",
+      "bytes": 9377381,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000608.parquet",
+      "bytes": 8656942,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000609.parquet",
+      "bytes": 9272481,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000610.parquet",
+      "bytes": 9395207,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000611.parquet",
+      "bytes": 8767679,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000612.parquet",
+      "bytes": 8909138,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000613.parquet",
+      "bytes": 9502016,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000614.parquet",
+      "bytes": 9019213,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000615.parquet",
+      "bytes": 8677820,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000616.parquet",
+      "bytes": 8984435,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000617.parquet",
+      "bytes": 9144844,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000618.parquet",
+      "bytes": 9280236,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000619.parquet",
+      "bytes": 8689024,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000620.parquet",
+      "bytes": 9427307,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000621.parquet",
+      "bytes": 9536386,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000622.parquet",
+      "bytes": 9173076,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000623.parquet",
+      "bytes": 8870756,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000624.parquet",
+      "bytes": 9559973,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000625.parquet",
+      "bytes": 9454231,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000626.parquet",
+      "bytes": 8542330,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000627.parquet",
+      "bytes": 9498908,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000628.parquet",
+      "bytes": 9099772,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000629.parquet",
+      "bytes": 9187330,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000630.parquet",
+      "bytes": 9293231,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000631.parquet",
+      "bytes": 9588193,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000632.parquet",
+      "bytes": 9182458,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000633.parquet",
+      "bytes": 8966605,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000634.parquet",
+      "bytes": 9318007,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000635.parquet",
+      "bytes": 9295420,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000636.parquet",
+      "bytes": 9388075,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000637.parquet",
+      "bytes": 8934372,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000638.parquet",
+      "bytes": 9346130,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000639.parquet",
+      "bytes": 9140086,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000640.parquet",
+      "bytes": 9309634,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000641.parquet",
+      "bytes": 9084875,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000642.parquet",
+      "bytes": 8897177,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000643.parquet",
+      "bytes": 8856027,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000644.parquet",
+      "bytes": 8803036,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000645.parquet",
+      "bytes": 9622374,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000646.parquet",
+      "bytes": 9229587,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000647.parquet",
+      "bytes": 9296846,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000648.parquet",
+      "bytes": 9283074,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000649.parquet",
+      "bytes": 9618084,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000650.parquet",
+      "bytes": 8824837,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000651.parquet",
+      "bytes": 9361329,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000652.parquet",
+      "bytes": 9246131,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000653.parquet",
+      "bytes": 9309736,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000654.parquet",
+      "bytes": 9338763,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000655.parquet",
+      "bytes": 9129290,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000656.parquet",
+      "bytes": 8795455,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000657.parquet",
+      "bytes": 9056452,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000658.parquet",
+      "bytes": 9141666,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000659.parquet",
+      "bytes": 8992491,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000660.parquet",
+      "bytes": 9037514,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000661.parquet",
+      "bytes": 9526117,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000662.parquet",
+      "bytes": 9201533,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000663.parquet",
+      "bytes": 8628729,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000664.parquet",
+      "bytes": 9038246,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000665.parquet",
+      "bytes": 9065618,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000666.parquet",
+      "bytes": 8629014,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000667.parquet",
+      "bytes": 9118340,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000668.parquet",
+      "bytes": 9116930,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000669.parquet",
+      "bytes": 8757617,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000670.parquet",
+      "bytes": 8583942,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000671.parquet",
+      "bytes": 9274455,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000672.parquet",
+      "bytes": 9187099,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000673.parquet",
+      "bytes": 9096942,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000674.parquet",
+      "bytes": 8702964,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000675.parquet",
+      "bytes": 9457742,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000676.parquet",
+      "bytes": 9409810,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000677.parquet",
+      "bytes": 9112950,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000678.parquet",
+      "bytes": 9237606,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000679.parquet",
+      "bytes": 9275179,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000680.parquet",
+      "bytes": 8764314,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000681.parquet",
+      "bytes": 9239693,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000682.parquet",
+      "bytes": 8963984,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000683.parquet",
+      "bytes": 9008836,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000684.parquet",
+      "bytes": 9151991,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000685.parquet",
+      "bytes": 9326689,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000686.parquet",
+      "bytes": 9071767,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000687.parquet",
+      "bytes": 9022859,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000688.parquet",
+      "bytes": 8901841,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000689.parquet",
+      "bytes": 8912369,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000690.parquet",
+      "bytes": 9352843,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000691.parquet",
+      "bytes": 9525671,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000692.parquet",
+      "bytes": 9039885,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000693.parquet",
+      "bytes": 8837832,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000694.parquet",
+      "bytes": 9045061,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000695.parquet",
+      "bytes": 8934113,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000696.parquet",
+      "bytes": 9044389,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000697.parquet",
+      "bytes": 8844066,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000698.parquet",
+      "bytes": 9582921,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000699.parquet",
+      "bytes": 9485492,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000700.parquet",
+      "bytes": 9254071,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000701.parquet",
+      "bytes": 9044531,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000702.parquet",
+      "bytes": 9314275,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000703.parquet",
+      "bytes": 9277423,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000704.parquet",
+      "bytes": 8965143,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000705.parquet",
+      "bytes": 8674844,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000706.parquet",
+      "bytes": 9172029,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000707.parquet",
+      "bytes": 9578998,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000708.parquet",
+      "bytes": 9217789,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000709.parquet",
+      "bytes": 8968849,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000710.parquet",
+      "bytes": 8957470,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000711.parquet",
+      "bytes": 9050501,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000712.parquet",
+      "bytes": 9580601,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000713.parquet",
+      "bytes": 8975941,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000714.parquet",
+      "bytes": 9718576,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000715.parquet",
+      "bytes": 9764766,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000716.parquet",
+      "bytes": 8613685,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000717.parquet",
+      "bytes": 9707823,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000718.parquet",
+      "bytes": 9140916,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000719.parquet",
+      "bytes": 9383772,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000720.parquet",
+      "bytes": 8560842,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000721.parquet",
+      "bytes": 8684811,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000722.parquet",
+      "bytes": 9966151,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000723.parquet",
+      "bytes": 8695913,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000724.parquet",
+      "bytes": 9046804,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000725.parquet",
+      "bytes": 8925036,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000726.parquet",
+      "bytes": 8960681,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000727.parquet",
+      "bytes": 8984020,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000728.parquet",
+      "bytes": 9263852,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000729.parquet",
+      "bytes": 8985384,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000730.parquet",
+      "bytes": 9297829,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000731.parquet",
+      "bytes": 9161138,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000732.parquet",
+      "bytes": 9636579,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000733.parquet",
+      "bytes": 8812636,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000734.parquet",
+      "bytes": 8875814,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000735.parquet",
+      "bytes": 8995659,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000736.parquet",
+      "bytes": 9013174,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000737.parquet",
+      "bytes": 8982344,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000738.parquet",
+      "bytes": 8988983,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000739.parquet",
+      "bytes": 9231785,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000740.parquet",
+      "bytes": 8834832,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000741.parquet",
+      "bytes": 9462131,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000742.parquet",
+      "bytes": 9060158,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000743.parquet",
+      "bytes": 8833943,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000744.parquet",
+      "bytes": 9180616,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000745.parquet",
+      "bytes": 9070118,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000746.parquet",
+      "bytes": 8796988,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000747.parquet",
+      "bytes": 9333064,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000748.parquet",
+      "bytes": 9269065,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000749.parquet",
+      "bytes": 9185112,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000750.parquet",
+      "bytes": 9255863,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000751.parquet",
+      "bytes": 9043558,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000752.parquet",
+      "bytes": 9458289,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000753.parquet",
+      "bytes": 9507309,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000754.parquet",
+      "bytes": 8977994,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000755.parquet",
+      "bytes": 9281270,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000756.parquet",
+      "bytes": 8848031,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000757.parquet",
+      "bytes": 9361483,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000758.parquet",
+      "bytes": 9121417,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000759.parquet",
+      "bytes": 9203619,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000760.parquet",
+      "bytes": 8749576,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000761.parquet",
+      "bytes": 10011607,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000762.parquet",
+      "bytes": 9525247,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000763.parquet",
+      "bytes": 9262637,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000764.parquet",
+      "bytes": 9027757,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000765.parquet",
+      "bytes": 9200043,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000766.parquet",
+      "bytes": 9532837,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000767.parquet",
+      "bytes": 9124980,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000768.parquet",
+      "bytes": 9888259,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000769.parquet",
+      "bytes": 8960352,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000770.parquet",
+      "bytes": 9842463,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000771.parquet",
+      "bytes": 9670570,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000772.parquet",
+      "bytes": 9324860,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000773.parquet",
+      "bytes": 8707287,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000774.parquet",
+      "bytes": 8875003,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000775.parquet",
+      "bytes": 8667318,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000776.parquet",
+      "bytes": 9146672,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000777.parquet",
+      "bytes": 8808942,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000778.parquet",
+      "bytes": 9350446,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000779.parquet",
+      "bytes": 9699705,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000780.parquet",
+      "bytes": 9122922,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000781.parquet",
+      "bytes": 9149642,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000782.parquet",
+      "bytes": 9478677,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000783.parquet",
+      "bytes": 8502993,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000784.parquet",
+      "bytes": 9488433,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000785.parquet",
+      "bytes": 8787697,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000786.parquet",
+      "bytes": 9037557,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000787.parquet",
+      "bytes": 8926757,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000788.parquet",
+      "bytes": 8904950,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000789.parquet",
+      "bytes": 8982161,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000790.parquet",
+      "bytes": 9437721,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000791.parquet",
+      "bytes": 9538154,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000792.parquet",
+      "bytes": 9087076,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000793.parquet",
+      "bytes": 8938077,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000794.parquet",
+      "bytes": 9441368,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000795.parquet",
+      "bytes": 9185107,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000796.parquet",
+      "bytes": 9258708,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000797.parquet",
+      "bytes": 9117190,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000798.parquet",
+      "bytes": 9185327,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000799.parquet",
+      "bytes": 9208617,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000800.parquet",
+      "bytes": 8835583,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000801.parquet",
+      "bytes": 9277714,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000802.parquet",
+      "bytes": 8758631,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000803.parquet",
+      "bytes": 8903588,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000804.parquet",
+      "bytes": 9108572,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000805.parquet",
+      "bytes": 9154143,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000806.parquet",
+      "bytes": 9216551,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000807.parquet",
+      "bytes": 8537054,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000808.parquet",
+      "bytes": 9171382,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000809.parquet",
+      "bytes": 9023895,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000810.parquet",
+      "bytes": 8560928,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000811.parquet",
+      "bytes": 8694557,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000812.parquet",
+      "bytes": 9259068,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000813.parquet",
+      "bytes": 9894491,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000814.parquet",
+      "bytes": 9212763,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000815.parquet",
+      "bytes": 9434103,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000816.parquet",
+      "bytes": 8885172,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000817.parquet",
+      "bytes": 8886747,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000818.parquet",
+      "bytes": 9735990,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000819.parquet",
+      "bytes": 9183787,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000820.parquet",
+      "bytes": 9284635,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000821.parquet",
+      "bytes": 9341002,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000822.parquet",
+      "bytes": 8877434,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000823.parquet",
+      "bytes": 9328533,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000824.parquet",
+      "bytes": 9050493,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000825.parquet",
+      "bytes": 8930198,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000826.parquet",
+      "bytes": 8690320,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000827.parquet",
+      "bytes": 9259651,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000828.parquet",
+      "bytes": 9850234,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000829.parquet",
+      "bytes": 8922064,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000830.parquet",
+      "bytes": 8997903,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000831.parquet",
+      "bytes": 9185025,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000832.parquet",
+      "bytes": 8750993,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000833.parquet",
+      "bytes": 9140424,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000834.parquet",
+      "bytes": 8898042,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000835.parquet",
+      "bytes": 9069484,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000836.parquet",
+      "bytes": 9488977,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000837.parquet",
+      "bytes": 8994933,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000838.parquet",
+      "bytes": 9193543,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000839.parquet",
+      "bytes": 9082640,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000840.parquet",
+      "bytes": 9280421,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000841.parquet",
+      "bytes": 9447257,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000842.parquet",
+      "bytes": 9060336,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000843.parquet",
+      "bytes": 8941858,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000844.parquet",
+      "bytes": 9220033,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000845.parquet",
+      "bytes": 8822246,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000846.parquet",
+      "bytes": 9257583,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000847.parquet",
+      "bytes": 9103424,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000848.parquet",
+      "bytes": 9146547,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000849.parquet",
+      "bytes": 9607747,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000850.parquet",
+      "bytes": 9348804,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000851.parquet",
+      "bytes": 8910927,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000852.parquet",
+      "bytes": 8594240,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000853.parquet",
+      "bytes": 9375964,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000854.parquet",
+      "bytes": 9085630,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000855.parquet",
+      "bytes": 9658283,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000856.parquet",
+      "bytes": 9107327,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000857.parquet",
+      "bytes": 9298174,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000858.parquet",
+      "bytes": 8826229,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000859.parquet",
+      "bytes": 8605856,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000860.parquet",
+      "bytes": 8633265,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000861.parquet",
+      "bytes": 8844086,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000862.parquet",
+      "bytes": 9151479,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000863.parquet",
+      "bytes": 9081409,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000864.parquet",
+      "bytes": 9018968,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000865.parquet",
+      "bytes": 8676253,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000866.parquet",
+      "bytes": 8806785,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000867.parquet",
+      "bytes": 9235344,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000868.parquet",
+      "bytes": 9201202,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000869.parquet",
+      "bytes": 9247490,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000870.parquet",
+      "bytes": 9138498,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000871.parquet",
+      "bytes": 9189905,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000872.parquet",
+      "bytes": 8956603,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000873.parquet",
+      "bytes": 9366249,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000874.parquet",
+      "bytes": 8993616,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000875.parquet",
+      "bytes": 8955341,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000876.parquet",
+      "bytes": 8911673,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000877.parquet",
+      "bytes": 9547044,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000878.parquet",
+      "bytes": 9511267,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000879.parquet",
+      "bytes": 9055394,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000880.parquet",
+      "bytes": 8849537,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000881.parquet",
+      "bytes": 8825200,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000882.parquet",
+      "bytes": 9363947,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000883.parquet",
+      "bytes": 9471260,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000884.parquet",
+      "bytes": 9035523,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000885.parquet",
+      "bytes": 9077560,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000886.parquet",
+      "bytes": 8920544,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000887.parquet",
+      "bytes": 8808542,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000888.parquet",
+      "bytes": 9121873,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000889.parquet",
+      "bytes": 8788631,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000890.parquet",
+      "bytes": 8949643,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000891.parquet",
+      "bytes": 9269399,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000892.parquet",
+      "bytes": 9113689,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000893.parquet",
+      "bytes": 9212981,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000894.parquet",
+      "bytes": 9479584,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000895.parquet",
+      "bytes": 8802559,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000896.parquet",
+      "bytes": 8873818,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000897.parquet",
+      "bytes": 8920019,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000898.parquet",
+      "bytes": 9304521,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000899.parquet",
+      "bytes": 8931354,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000900.parquet",
+      "bytes": 9295363,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000901.parquet",
+      "bytes": 8607532,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000902.parquet",
+      "bytes": 8812706,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000903.parquet",
+      "bytes": 9429994,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000904.parquet",
+      "bytes": 8832575,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000905.parquet",
+      "bytes": 8944531,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000906.parquet",
+      "bytes": 9456925,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000907.parquet",
+      "bytes": 9003296,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000908.parquet",
+      "bytes": 8811855,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000909.parquet",
+      "bytes": 9015114,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000910.parquet",
+      "bytes": 8916380,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000911.parquet",
+      "bytes": 9038041,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000912.parquet",
+      "bytes": 9444431,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000913.parquet",
+      "bytes": 9800132,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000914.parquet",
+      "bytes": 9642071,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000915.parquet",
+      "bytes": 9093381,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000916.parquet",
+      "bytes": 9158021,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000917.parquet",
+      "bytes": 8702442,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000918.parquet",
+      "bytes": 9373414,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000919.parquet",
+      "bytes": 9327208,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000920.parquet",
+      "bytes": 9195760,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000921.parquet",
+      "bytes": 8596353,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000922.parquet",
+      "bytes": 8645007,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000923.parquet",
+      "bytes": 9731304,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000924.parquet",
+      "bytes": 9164537,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000925.parquet",
+      "bytes": 8963514,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000926.parquet",
+      "bytes": 9375735,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000927.parquet",
+      "bytes": 9490637,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000928.parquet",
+      "bytes": 9053174,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000929.parquet",
+      "bytes": 8982793,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000930.parquet",
+      "bytes": 9070601,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000931.parquet",
+      "bytes": 9013258,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000932.parquet",
+      "bytes": 8945342,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000933.parquet",
+      "bytes": 9248374,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000934.parquet",
+      "bytes": 8906678,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000935.parquet",
+      "bytes": 8633624,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000936.parquet",
+      "bytes": 8691764,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000937.parquet",
+      "bytes": 8917218,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000938.parquet",
+      "bytes": 8887522,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000939.parquet",
+      "bytes": 9156430,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000940.parquet",
+      "bytes": 8644233,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000941.parquet",
+      "bytes": 8740456,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000942.parquet",
+      "bytes": 8593572,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000943.parquet",
+      "bytes": 9246897,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000944.parquet",
+      "bytes": 9051307,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000945.parquet",
+      "bytes": 8488615,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000946.parquet",
+      "bytes": 9353181,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000947.parquet",
+      "bytes": 9347928,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000948.parquet",
+      "bytes": 9081327,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000949.parquet",
+      "bytes": 9482108,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000950.parquet",
+      "bytes": 9124955,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000951.parquet",
+      "bytes": 9162963,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000952.parquet",
+      "bytes": 9276848,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000953.parquet",
+      "bytes": 8958096,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000954.parquet",
+      "bytes": 9545894,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000955.parquet",
+      "bytes": 9830860,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000956.parquet",
+      "bytes": 9056606,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000957.parquet",
+      "bytes": 9213179,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000958.parquet",
+      "bytes": 8942922,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000959.parquet",
+      "bytes": 9167318,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000960.parquet",
+      "bytes": 9446284,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000961.parquet",
+      "bytes": 9506098,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000962.parquet",
+      "bytes": 8738503,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000963.parquet",
+      "bytes": 9807134,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000964.parquet",
+      "bytes": 9086901,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000965.parquet",
+      "bytes": 9043360,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000966.parquet",
+      "bytes": 9330943,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000967.parquet",
+      "bytes": 9009536,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000968.parquet",
+      "bytes": 8951364,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000969.parquet",
+      "bytes": 9718278,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000970.parquet",
+      "bytes": 8894979,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000971.parquet",
+      "bytes": 8618046,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000972.parquet",
+      "bytes": 9404212,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000973.parquet",
+      "bytes": 9198374,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000974.parquet",
+      "bytes": 8786857,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000975.parquet",
+      "bytes": 8447312,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000976.parquet",
+      "bytes": 8900248,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000977.parquet",
+      "bytes": 8908477,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000978.parquet",
+      "bytes": 9390955,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000979.parquet",
+      "bytes": 9547679,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000980.parquet",
+      "bytes": 9203322,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000981.parquet",
+      "bytes": 9078454,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000982.parquet",
+      "bytes": 9151984,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000983.parquet",
+      "bytes": 8876499,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000984.parquet",
+      "bytes": 9390510,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000985.parquet",
+      "bytes": 9126518,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000986.parquet",
+      "bytes": 8623766,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000987.parquet",
+      "bytes": 9226385,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000988.parquet",
+      "bytes": 8941289,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000989.parquet",
+      "bytes": 9209927,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000990.parquet",
+      "bytes": 8497829,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000991.parquet",
+      "bytes": 9106712,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000992.parquet",
+      "bytes": 8961497,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000993.parquet",
+      "bytes": 9393139,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000994.parquet",
+      "bytes": 9111246,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000995.parquet",
+      "bytes": 9269050,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000996.parquet",
+      "bytes": 8886511,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000997.parquet",
+      "bytes": 8524550,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000998.parquet",
+      "bytes": 9339678,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/000999.parquet",
+      "bytes": 9158847,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001000.parquet",
+      "bytes": 9522954,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001001.parquet",
+      "bytes": 8872536,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001002.parquet",
+      "bytes": 8533405,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001003.parquet",
+      "bytes": 8808617,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001004.parquet",
+      "bytes": 8713814,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001005.parquet",
+      "bytes": 9089264,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001006.parquet",
+      "bytes": 9512994,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001007.parquet",
+      "bytes": 7351673,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001008.parquet",
+      "bytes": 1506328,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001009.parquet",
+      "bytes": 141080,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001010.parquet",
+      "bytes": 125485,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001011.parquet",
+      "bytes": 60857,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001012.parquet",
+      "bytes": 62649,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001013.parquet",
+      "bytes": 130378,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001014.parquet",
+      "bytes": 66345,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001015.parquet",
+      "bytes": 11402318,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001016.parquet",
+      "bytes": 27157487,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001017.parquet",
+      "bytes": 25850233,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001018.parquet",
+      "bytes": 25856704,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001019.parquet",
+      "bytes": 1858198,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001020.parquet",
+      "bytes": 699394,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001021.parquet",
+      "bytes": 683201,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001022.parquet",
+      "bytes": 663099,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001023.parquet",
+      "bytes": 776605,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001024.parquet",
+      "bytes": 628991,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001025.parquet",
+      "bytes": 2128363,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001026.parquet",
+      "bytes": 28538589,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001027.parquet",
+      "bytes": 29089965,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001028.parquet",
+      "bytes": 28637365,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001029.parquet",
+      "bytes": 28868541,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001030.parquet",
+      "bytes": 28193920,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001031.parquet",
+      "bytes": 26961815,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001032.parquet",
+      "bytes": 27419634,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001033.parquet",
+      "bytes": 27562102,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001034.parquet",
+      "bytes": 27714121,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001035.parquet",
+      "bytes": 28709204,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001036.parquet",
+      "bytes": 28454777,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001037.parquet",
+      "bytes": 26926319,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001038.parquet",
+      "bytes": 26773961,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001039.parquet",
+      "bytes": 26747439,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001040.parquet",
+      "bytes": 26772724,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001041.parquet",
+      "bytes": 22973409,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001042.parquet",
+      "bytes": 324961,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001043.parquet",
+      "bytes": 295076,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001044.parquet",
+      "bytes": 385935,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001045.parquet",
+      "bytes": 305589,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001046.parquet",
+      "bytes": 279150,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001047.parquet",
+      "bytes": 318891,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001048.parquet",
+      "bytes": 321850,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001049.parquet",
+      "bytes": 9530931,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001050.parquet",
+      "bytes": 20256583,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001051.parquet",
+      "bytes": 507001,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001052.parquet",
+      "bytes": 453867,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001053.parquet",
+      "bytes": 11971929,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001054.parquet",
+      "bytes": 13520867,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001055.parquet",
+      "bytes": 866076,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001056.parquet",
+      "bytes": 202385,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001057.parquet",
+      "bytes": 232600,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001058.parquet",
+      "bytes": 241883,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001059.parquet",
+      "bytes": 283625,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001060.parquet",
+      "bytes": 192676,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001061.parquet",
+      "bytes": 242441,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001062.parquet",
+      "bytes": 154109,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001063.parquet",
+      "bytes": 332405,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001064.parquet",
+      "bytes": 191251,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001065.parquet",
+      "bytes": 328700,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001066.parquet",
+      "bytes": 246865,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001067.parquet",
+      "bytes": 30614505,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001068.parquet",
+      "bytes": 58259287,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001069.parquet",
+      "bytes": 19180529,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001070.parquet",
+      "bytes": 1436456,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001071.parquet",
+      "bytes": 1410134,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001072.parquet",
+      "bytes": 1506024,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001073.parquet",
+      "bytes": 1664980,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001074.parquet",
+      "bytes": 1428202,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001075.parquet",
+      "bytes": 1652497,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001076.parquet",
+      "bytes": 1503865,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001077.parquet",
+      "bytes": 1373158,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001078.parquet",
+      "bytes": 1456173,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001079.parquet",
+      "bytes": 1470207,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001080.parquet",
+      "bytes": 36097473,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001081.parquet",
+      "bytes": 37830494,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001082.parquet",
+      "bytes": 36463659,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001083.parquet",
+      "bytes": 35722947,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001084.parquet",
+      "bytes": 37332079,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001085.parquet",
+      "bytes": 36626026,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001086.parquet",
+      "bytes": 35173353,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001087.parquet",
+      "bytes": 36369063,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001088.parquet",
+      "bytes": 36848381,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001089.parquet",
+      "bytes": 36007180,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001090.parquet",
+      "bytes": 35589832,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001091.parquet",
+      "bytes": 2625281,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001092.parquet",
+      "bytes": 839029,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001093.parquet",
+      "bytes": 824801,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001094.parquet",
+      "bytes": 724191,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001095.parquet",
+      "bytes": 651945,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001096.parquet",
+      "bytes": 702934,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001097.parquet",
+      "bytes": 801693,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001098.parquet",
+      "bytes": 812975,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001099.parquet",
+      "bytes": 646142,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001100.parquet",
+      "bytes": 748056,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001101.parquet",
+      "bytes": 816148,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001102.parquet",
+      "bytes": 867299,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001103.parquet",
+      "bytes": 782783,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001104.parquet",
+      "bytes": 772705,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001105.parquet",
+      "bytes": 790074,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001106.parquet",
+      "bytes": 836457,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001107.parquet",
+      "bytes": 827873,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001108.parquet",
+      "bytes": 912582,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001109.parquet",
+      "bytes": 859089,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001110.parquet",
+      "bytes": 519553,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001111.parquet",
+      "bytes": 823434,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001112.parquet",
+      "bytes": 918621,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001113.parquet",
+      "bytes": 812087,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001114.parquet",
+      "bytes": 836822,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001115.parquet",
+      "bytes": 825747,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001116.parquet",
+      "bytes": 658212,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001117.parquet",
+      "bytes": 569771,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001118.parquet",
+      "bytes": 577105,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001119.parquet",
+      "bytes": 751381,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001120.parquet",
+      "bytes": 683801,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001121.parquet",
+      "bytes": 666573,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001122.parquet",
+      "bytes": 611934,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001123.parquet",
+      "bytes": 757092,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001124.parquet",
+      "bytes": 871692,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001125.parquet",
+      "bytes": 924174,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001126.parquet",
+      "bytes": 1228527,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001127.parquet",
+      "bytes": 1267670,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001128.parquet",
+      "bytes": 662224,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001129.parquet",
+      "bytes": 812787,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001130.parquet",
+      "bytes": 904675,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001131.parquet",
+      "bytes": 1085157,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001132.parquet",
+      "bytes": 1029362,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001133.parquet",
+      "bytes": 802451,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001134.parquet",
+      "bytes": 722190,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001135.parquet",
+      "bytes": 693698,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001136.parquet",
+      "bytes": 39911042,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001137.parquet",
+      "bytes": 3601023,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001138.parquet",
+      "bytes": 72652698,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001139.parquet",
+      "bytes": 122243369,
+      "status": "downloaded"
+    },
+    {
+      "path": "4_5/001140.parquet",
+      "bytes": 122323291,
+      "status": "downloaded"
+    },
+    {
+      "path": "README.md",
+      "bytes": 0,
+      "status": "downloaded"
+    }
+  ],
+  "errors": []
+}

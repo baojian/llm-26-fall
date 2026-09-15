@@ -1,0 +1,40 @@
+# A1 submission contract. make_submission.py reads this file; the graders use the same list.
+# Student-facing: no hidden test names or reference values here.
+
+[assignment]
+id = "a1-tokenization-and-language-models"
+version = "2026-09-16"
+python = ">=3.11"
+packages = ["torch>=2.6 (Part 3 only)"]
+entry_point = "python a1/evaluate.py data/"
+expected_runtime = "Reference CPU run: 12 min 00 s, 1.03 GiB peak RSS on Apple M1 with 16 GiB RAM and two PyTorch threads; allow at least one hour initially. See runtime.md."
+
+[submission]
+zip_name = "a1-<student-id>.zip"
+required = [
+    "a1/__init__.py",
+    "a1/bpe.py",
+    "a1/ngram.py",
+    "a1/nplm.py",
+    "a1/evaluate.py",
+    "results.json",
+    "report.md",
+]
+excluded = ["data/", "tests/", "__pycache__/", ".venv/", "*.pt", "*.zip"]
+
+[results]
+file = "results.json"
+sources = ["tinystories", "chinese"]
+per_source = ["vocab_size", "bytes_per_token", "orders"]
+orders = ["1", "2", "3"]
+per_order = ["mle", "add", "interp"]
+nplm_source = "tinystories"
+nplm_keys = ["epochs", "parameters", "parameters_tied", "perplexity", "bits_per_byte", "neighbours"]
+
+[late_policy]
+due_at = "2026-09-30T23:59:00+08:00"
+period_hours = 24
+round_partial_period_up = true
+score_multipliers_days_0_to_5 = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5]
+zero_from_day = 6
+apply_after = "ordinary grading, including any report/disclosure deductions"

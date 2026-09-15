@@ -64,7 +64,7 @@ gantt
     Quiz 5 :milestone, 2026-12-16, 0d
 
     section Assignments (submitted on eLearning)
-    A1 Text and probability :a1, 2026-09-16, 2026-09-30
+    A1 Tokenization and language models :a1, 2026-09-16, 2026-09-30
     A2                      :a2, 2026-10-14, 2026-11-04
     A3                      :a3, 2026-11-18, 2026-12-09
 

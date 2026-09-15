@@ -37,5 +37,6 @@ Dates, periods, and holidays: [docs/schedule.md](docs/schedule.md). Assessment d
 | [`papers/`](papers/README.md) | PDFs and citations for the course readings. |
 | [`surveys/`](surveys/lecture-01/README.md) | Weekly surveys: one response file per student, tallied into a chart. |
 | [`tasks/`](tasks/README.md) | Small self-checking exercises: one submission file per student, checked automatically. The [progress board](tasks/PROGRESS.md) shows everyone's merged work. |
+| [`assignments/`](assignments/README.md) | Graded assignments: [A1 Tokenization and language models](assignments/a1-tokenization-and-language-models/README.md). Submit solution ZIPs privately through eLearning. |
 | [`workspace/`](workspace/README.md) | Your own notes, experiments, and exercise solutions. Everything there except its README is ignored by git, so `git pull` never conflicts with your files and your work stays out of any pull request you open. To modify a course file, copy it into `workspace/` and edit the copy: `uv run python workspace/<file>.py`. |
 | `scripts/` | Course tooling: the local server, notebook launcher, survey tally, progress board, and the pretraining-dataset downloader. |
