@@ -101,3 +101,16 @@ def test_hidden_and_apple_double_files_are_not_submissions(tasks_root):
     (folder / "submissions/__init__.py").write_text("")
     assert tasks.submissions(folder) == ["alice"]
     assert tasks.check(folder) == 0
+
+
+def test_json_task_uses_manifest_extension_and_allows_rolling_contributions(tasks_root):
+    folder = tasks.create_task("l01-tokenization", "comparison", "Comparison", tasks_root)
+    config = folder / "task.toml"
+    config.write_text(config.read_text().replace('<username>.py', '<username>.json')
+                      .replace('2026-09-22T23:59:00+08:00', ''))
+    (folder / "submissions/alice.json").write_text('{}')
+    (folder / "submissions/._alice.json").write_text('{}')
+    (folder / "submissions/bob.py").write_text(GOOD)
+    assert tasks.submissions(folder) == ["alice"]
+    assert "| l01-tokenization/comparison | Comparison | easy | — | 1 |" in tasks.list_tasks(tasks_root)
+    assert tasks.progress(tasks_root).splitlines()[2:] == ["| alice | 1 |"]

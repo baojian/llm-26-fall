@@ -1,0 +1,156 @@
+{
+  "description": "Selected teaching examples, checked against the pinned artifacts; the full report stays in workspace/.",
+  "provenance": {
+    "runtime_versions": {
+      "tiktoken": "0.14.0",
+      "tokenizers": "0.23.2",
+      "regex": "2026.9.3"
+    },
+    "manifest_sha256": "d83b757ecb4a8a1a56143f4a05b0b2d6b59b9e073c0cb890da685658b59a77be",
+    "artifacts": {
+      "r50k_base": {
+        "revision": "0.14.0",
+        "sha256": "306cd27f03c1a714eca7108e03d66b7dc042abe8c258b44c199a7ed9838dd930"
+      },
+      "cl100k_base": {
+        "revision": "0.14.0",
+        "sha256": "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7"
+      },
+      "o200k_base": {
+        "revision": "0.14.0",
+        "sha256": "446a9538cb6c348e3516120d7c08b09f57c36495e2acfffe59a5bf8b0cfb1a2d"
+      },
+      "qwen3": {
+        "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      "bert": {
+        "revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+        "sha256": "ce64fce797c24f68df90b40a3f74f579b336a493db14bd583fd520ea0d8c9a98"
+      },
+      "t5": {
+        "revision": "df1b051c49625cf57a3d0d8d3863ed4d13564fe4",
+        "sha256": "d2acde0d8d71dd30a711834b07781b9c89feaac33fd332f60507699282740066"
+      }
+    },
+    "policy": "ordinary text; no padding, truncation, chat template, or automatic special-token wrappers"
+  },
+  "vocabulary_entries": {
+    "r50k_base": 50257,
+    "cl100k_base": 100261,
+    "o200k_base": 200000,
+    "qwen3": 151669,
+    "bert": 30522,
+    "t5": 32100
+  },
+  "cases": [
+    {
+      "id": "digits",
+      "text": "item123456789",
+      "observed": {
+        "r50k_base": {
+          "token_count": 5,
+          "decoded_text": "item123456789",
+          "round_trip_exact": true
+        },
+        "cl100k_base": {
+          "token_count": 4,
+          "decoded_text": "item123456789",
+          "round_trip_exact": true
+        },
+        "o200k_base": {
+          "token_count": 4,
+          "decoded_text": "item123456789",
+          "round_trip_exact": true
+        },
+        "qwen3": {
+          "token_count": 10,
+          "decoded_text": "item123456789",
+          "round_trip_exact": true
+        },
+        "bert": {
+          "token_count": 7,
+          "decoded_text": "item123456789",
+          "round_trip_exact": true
+        },
+        "t5": {
+          "token_count": 5,
+          "decoded_text": "item123456789",
+          "round_trip_exact": true
+        }
+      }
+    },
+    {
+      "id": "normalization",
+      "text": "CAFÉ café",
+      "observed": {
+        "r50k_base": {
+          "token_count": 6,
+          "decoded_text": "CAFÉ café",
+          "round_trip_exact": true
+        },
+        "cl100k_base": {
+          "token_count": 4,
+          "decoded_text": "CAFÉ café",
+          "round_trip_exact": true
+        },
+        "o200k_base": {
+          "token_count": 4,
+          "decoded_text": "CAFÉ café",
+          "round_trip_exact": true
+        },
+        "qwen3": {
+          "token_count": 3,
+          "decoded_text": "CAFÉ café",
+          "round_trip_exact": false
+        },
+        "bert": {
+          "token_count": 2,
+          "decoded_text": "cafe cafe",
+          "round_trip_exact": false
+        },
+        "t5": {
+          "token_count": 4,
+          "decoded_text": "CAFÉ café",
+          "round_trip_exact": false
+        }
+      }
+    },
+    {
+      "id": "emoji",
+      "text": "👩🏽‍💻🙂",
+      "observed": {
+        "r50k_base": {
+          "token_count": 12,
+          "decoded_text": "👩🏽‍💻🙂",
+          "round_trip_exact": true
+        },
+        "cl100k_base": {
+          "token_count": 12,
+          "decoded_text": "👩🏽‍💻🙂",
+          "round_trip_exact": true
+        },
+        "o200k_base": {
+          "token_count": 8,
+          "decoded_text": "👩🏽‍💻🙂",
+          "round_trip_exact": true
+        },
+        "qwen3": {
+          "token_count": 6,
+          "decoded_text": "👩🏽‍💻🙂",
+          "round_trip_exact": true
+        },
+        "bert": {
+          "token_count": 1,
+          "decoded_text": "[UNK]",
+          "round_trip_exact": false
+        },
+        "t5": {
+          "token_count": 4,
+          "decoded_text": "<unk> <unk>",
+          "round_trip_exact": false
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+[
+  {"id": "digits", "text": "item123456789", "required": true},
+  {"id": "mixed-script", "text": "用Python学习语言模型。", "required": true},
+  {"id": "normalization", "text": "CAFÉ café", "required": true},
+  {"id": "english", "text": "We're learning how tokenizers work.", "required": false},
+  {"id": "code", "text": "def add(x, y):\n    return x + y\n", "required": false},
+  {"id": "whitespace", "text": " hello  world\t\n", "required": false},
+  {"id": "emoji", "text": "👩🏽‍💻🙂", "required": false},
+  {"id": "arabic", "text": "مرحبا بالعالم", "required": false},
+  {"id": "literal-special", "text": "<|endoftext|>", "required": false},
+  {"id": "empty", "text": "", "required": false}
+]
