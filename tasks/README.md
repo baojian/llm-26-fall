@@ -10,6 +10,7 @@ tasks/
   README.md                      this page
   TEMPLATE/                      copy this to create a task
   example/word-count/            a complete, tiny example
+  l01-tokenization/<slug>/       Week 1 tasks: gpt2-pretokenizer, digit-grouping, han-runs
   l02-ngram/<slug>/              real tasks, grouped by lecture label
     task.toml                    id, title, deadline, what to submit
     instruction.md               the task: goal, interface, examples, how it is checked

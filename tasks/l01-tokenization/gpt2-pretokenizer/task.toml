@@ -1,0 +1,16 @@
+# One task = one folder. Students add one file each under submissions/.
+
+[task]
+id = "l01-tokenization/gpt2-pretokenizer"
+title = "Chunk text with the GPT-2 pre-tokenizer rules"
+lecture = "l01-tokenization"
+type = "task"
+difficulty = "medium"
+time_minutes = 45
+deadline = "2026-09-22T23:59:00+08:00"
+issue = 0
+proposed_by = ""
+
+[submission]
+file = "submissions/<username>.py"
+function = "solve"
