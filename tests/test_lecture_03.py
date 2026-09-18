@@ -1,8 +1,9 @@
-"""Check the lecture-03 notebook against the numbers shown on the slides."""
+"""Execute the offline lecture and check the mathematical teaching examples."""
 
 import json
 import math
 import re
+import shutil
 from pathlib import Path
 
 import nbformat
@@ -27,7 +28,9 @@ def lesson(request):
         pytest.fail("The offline notebook attempted a network request")
 
     monkeypatch.setattr("urllib.request.OpenerDirector.open", no_network)
+    monkeypatch.setattr("socket.socket.connect", no_network)
     monkeypatch.setattr("socket.create_connection", no_network)
+    monkeypatch.chdir(LECTURE)
     nbformat.validate(nbformat.from_dict(NOTEBOOK))
     namespace = {}
     for cell in NOTEBOOK["cells"]:
@@ -42,75 +45,156 @@ def test_notebook_has_no_stored_outputs():
             assert cell["outputs"] == [] and cell["execution_count"] is None
 
 
-def test_ppmi_matches_the_textbook_table(lesson):
-    """Jurafsky and Martin's word-context counts: totals and PPMI(information, data) = 0.0944."""
-    assert lesson["TOTAL"] == 11716
-    assert lesson["ROW_TOTAL"]["information"] == 7703
-    assert lesson["COLUMN_TOTAL"]["data"] == 5673
-    assert lesson["ppmi"]("information", "data") == pytest.approx(0.0944, abs=5e-5)
-    assert lesson["ppmi"]("cherry", "pie") == pytest.approx(4.38, abs=5e-3)
-    assert lesson["pmi"]("strawberry", "computer") == float("-inf")
-    assert lesson["pmi"]("digital", "pie") < 0 and lesson["ppmi"]("digital", "pie") == 0
+def test_lookup_shapes_and_one_hot_equivalence(lesson):
+    assert lesson["e01_shapes"] == {
+        "weight": (10, 4), "ids": (2, 3), "x": (2, 3, 4), "one_hot": (2, 3, 10),
+    }
+    assert lesson["e01_same"] is True
 
 
-def test_skipgram_step_by_hand_matches_autograd(lesson):
-    assert lesson["s_pos"] == pytest.approx(0.7311, abs=5e-5)
-    assert lesson["s_neg"] == pytest.approx(0.6225, abs=5e-5)
+def test_skipgram_hand_gradient_matches_autograd(lesson):
     assert lesson["e02_loss"] == pytest.approx(1.2873, abs=5e-5)
     assert lesson["e02_grads"]["c_pos"] == pytest.approx([-0.2689, -0.1345], abs=5e-5)
     assert lesson["e02_grads"]["c_neg"] == pytest.approx([0.6225, 0.3112], abs=5e-5)
     assert lesson["e02_grads"]["w"] == pytest.approx([0.4880, -0.8914], abs=5e-5)
-    for name, grad in lesson["e02_grads"].items():
-        assert lesson["e02_autograd"][name] == pytest.approx(grad, abs=1e-6)
-    assert lesson["after"] < lesson["e02_loss"]
+    for name, gradient in lesson["e02_grads"].items():
+        assert lesson["e02_autograd"][name] == pytest.approx(gradient, abs=1e-6)
+    assert lesson["after"] == pytest.approx(0.6509, abs=5e-5)
 
 
-def test_lookup_shapes_and_uniform_loss(lesson):
-    assert lesson["e03_shapes"] == {"weight": (10, 4), "x": (2, 3, 4), "one_hot": (2, 3, 10)}
-    assert lesson["e03_lookup_equals_onehot"] is True
-    assert lesson["e03_logits_shape"] == (2, 3, 10)
+def test_targets_are_shifted_within_each_sequence(lesson):
+    assert lesson["inputs"].tolist() == [[1, 2, 3, 4], [5, 6, 7, 8]]
+    assert lesson["targets"].tolist() == [[2, 3, 4, 5], [6, 7, 8, 9]]
+    assert not lesson["targets"].is_contiguous()
+    assert lesson["e03_shapes"] == {"embeddings": (2, 4, 4), "logits": (2, 4, 10)}
+
+
+def test_cross_entropy_equals_direct_nll_for_uniform_logits(lesson):
     assert lesson["e03_uniform_loss"] == pytest.approx(math.log(10), abs=1e-6)
-    assert lesson["e03_rows_with_gradient"] == [0, 1, 5, 7]
+    assert lesson["e03_manual_loss"] == pytest.approx(lesson["e03_uniform_loss"], abs=1e-6)
 
 
-def test_parameter_counts_with_and_without_weight_sharing(lesson):
-    assert (lesson["e04_untied"], lesson["e04_tied"]) == (80, 40)
-    assert lesson["e04_tables"] == {"GPT-2 small": 38_597_376, "Qwen3-0.6B": 155_582_464}
-    assert 38_597_376 / 124_439_808 == pytest.approx(0.31, abs=0.005)
+def test_stable_loss_handles_a_saturated_sigmoid(lesson):
+    assert lesson["stability"][1.0]["literal"] == pytest.approx(lesson["stability"][1.0]["stable"])
+    assert math.isinf(lesson["stability"][100.0]["literal"])
+    assert lesson["stability"][100.0]["stable"] == pytest.approx(100.0)
 
 
-def test_toy_skipgram_learns_the_template_groups(lesson):
-    history = lesson["p01_history"]
+def test_training_fits_a_compatible_batch_and_updates_embeddings(lesson):
+    torch = lesson["torch"]
+    assert len(lesson["e04_losses"]) == 201  # before training, then after each update
+    assert lesson["e04_losses"][0] == pytest.approx(math.log(10), abs=1e-6)
+    assert lesson["e04_losses"][-1] < 0.1
+    assert torch.equal(lesson["e04_predictions"], lesson["targets"])
+    assert not torch.equal(lesson["e04_initial_embedding"], lesson["model"].embedding.weight)
+
+
+def test_bigram_model_cannot_distinguish_earlier_context(lesson):
+    torch = lesson["torch"]
+    model = lesson["model"]
+    with torch.no_grad():
+        logits = model(torch.tensor([[1, 5], [7, 5]]))
+    assert torch.equal(logits[0, 1], logits[1, 1])
+
+
+def test_tying_preserves_values_but_combines_gradient_paths(lesson):
+    assert lesson["e05_same_logits"] is True
+    assert lesson["e05_untied_rows"] == [0, 1, 5, 7]
+    assert lesson["e05_tied_rows"] == list(range(10))
+    assert lesson["e05_gradient_sum"] is True
+    assert lesson["tied"].output.weight is lesson["tied"].embedding.weight
+    assert lesson["untied"].output.weight is not lesson["untied"].embedding.weight
+    assert lesson["e06_toy_counts"] == {"untied": 80, "tied": 40}
+
+
+def test_zero_output_initialization_has_a_first_step_learning_signal(lesson):
+    torch = lesson["torch"]
+    model = lesson["TinyLM"](10, 4)
+    lesson["next_token_loss"](model(lesson["inputs"]), lesson["targets"]).backward()
+    assert torch.count_nonzero(model.embedding.weight.grad) == 0
+    assert torch.count_nonzero(model.output.weight.grad) > 0
+
+
+def test_parameter_and_logit_storage_arithmetic(lesson):
+    assert lesson["e06_exercise"] == {
+        "one_table": 16_384_000, "untied": 32_768_000,
+        "bf16_bytes": 32_768_000, "bf16_mib": 31.25,
+    }
+    assert lesson["e06_models"] == {
+        "Qwen/Qwen3-0.6B": {
+            "one_table": 155_582_464, "unique_parameters": 155_582_464, "bf16_mib": 296.75,
+        },
+        "Qwen/Qwen3-8B": {
+            "one_table": 622_329_856, "unique_parameters": 1_244_659_712, "bf16_mib": 2374.0,
+        },
+    }
+    assert lesson["e06_logit_mib"] == 593.5
+
+
+def test_model_evidence_distinguishes_ids_from_allocated_rows(lesson):
+    models = lesson["model_evidence"]["models"]
+    for model in models:
+        assert model["tokenizer_entries"] == 151_669
+        assert model["max_token_id"] == 151_668
+        assert model["embedding_rows"] == 151_936
+        assert model["embedding_rows"] > model["max_token_id"]
+        assert re.fullmatch(r"[0-9a-f]{40}", model["revision"])
+        for source in model["sources"].values():
+            assert f"/{model['revision']}/" in source["url"]
+            assert re.fullmatch(r"[0-9a-f]{64}", source["sha256"])
+    assert models[0]["sources"]["tokenizer"]["sha256"] == models[1]["sources"]["tokenizer"]["sha256"]
+
+
+@pytest.mark.parametrize("from_repo_root", [False, True])
+def test_assets_load_from_a_student_copy_or_repository(lesson, tmp_path, monkeypatch, from_repo_root):
+    relative = "slides/lecture-03/assets" if from_repo_root else "assets"
+    assets = tmp_path / relative
+    assets.mkdir(parents=True)
+    shutil.copyfile(LECTURE / "assets/model-configs.json", assets / "model-configs.json")
+    monkeypatch.chdir(tmp_path)
+    namespace = {"Path": Path, "json": json}
+    cell = next(cell for cell in NOTEBOOK["cells"] if cell["id"] == "e06-model-costs")
+    execute_cell(cell, namespace)
+    assert namespace["e06_models"] == lesson["e06_models"]
+
+
+def test_missing_assets_give_a_setup_instruction(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    cell = next(cell for cell in NOTEBOOK["cells"] if cell["id"] == "e06-model-costs")
+    with pytest.raises(FileNotFoundError, match="course launcher"):
+        execute_cell(cell, {"Path": Path, "json": json})
+
+
+def test_teaching_figure_matches_the_executable_example(lesson):
+    figure = json.loads((LECTURE / "assets/tiny-lm-loss.json").read_text())
+    trace = figure["data"][0]
+    assert trace["x"][0] == 0 and trace["x"][-1] == 200
+    assert trace["y"] == pytest.approx([lesson["e04_losses"][step] for step in trace["x"]], abs=1e-5)
+
+
+def test_ppmi_handles_zero_and_negative_associations(lesson):
+    assert lesson["TOTAL"] == 11716
+    assert lesson["ppmi"]("information", "data") == pytest.approx(0.0944, abs=5e-5)
+    assert lesson["ppmi"]("cherry", "pie") == pytest.approx(4.38, abs=5e-3)
+    assert lesson["pmi"]("strawberry", "computer") == float("-inf")
+    assert lesson["ppmi"]("digital", "pie") == 0
+
+
+def test_optional_skipgram_learns_the_template_contexts(lesson):
+    history = lesson["p02_history"]
     assert history[-1] < history[0] < 6 * math.log(2)
-    groups = [
+    for group in [
         {"king", "queen", "prince", "princess", "man", "woman", "boy", "girl"},
         {"cat", "dog", "horse", "bird"},
         {"rice", "bread", "fish", "apple"},
         {"beijing", "paris", "london", "tokyo"},
-    ]
-    for group in groups:
+    ]:
         for word in group:
-            neighbours = {neighbour for neighbour, _ in lesson["nearest"](word, k=2)}
-            assert neighbours & group, f"{word}: {neighbours}"
-    assert "queen" in lesson["analogy"]("man", "woman", "king")
-
-
-def test_training_loop_memorizes_one_batch(lesson):
-    losses = lesson["p03_losses"]
-    assert losses[0] == pytest.approx(math.log(10), abs=0.01)
-    assert losses[-1] < 0.5
+            assert {neighbor for neighbor, _ in lesson["nearest"](word, k=2)} & group
 
 
 def test_notebook_exercises_follow_the_slide_order():
     ids = [match.group(1) for cell in NOTEBOOK["cells"]
            if (match := re.match(r"## ([EP]\d\d) ", "".join(cell["source"])))]
-    assert ids == ["E01", "E02", "E03", "E04", "P01", "P02", "P03"]
-    slide_ids = re.findall(r"Exercise (E\d\d) ·", SLIDES)
-    assert slide_ids == ["E01", "E02", "E03", "E04"]
-
-
-@pytest.mark.parametrize("number", [
-    "0.0944", "0.7311", "0.6225", "1.2873", "38,597,376", "124,439,808", "155,582,464",
-])
-def test_slide_numbers_come_from_the_notebook(number):
-    assert number in SLIDES
+    assert ids == ["E01", "E02", "E03", "E04", "E05", "E06", "P01", "P02", "P03"]
+    assert re.findall(r"Exercise (E\d\d) ·", SLIDES) == ids[:6]

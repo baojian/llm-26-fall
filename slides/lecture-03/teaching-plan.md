@@ -1,149 +1,133 @@
-# Lecture 03: Embeddings and PyTorch for Language Models
+# Lecture 03 teaching plan
 
-September 23, 2026 · CS40008.01 · Three 45-minute teaching periods
+**Date:** Wednesday, September 23, 2026
 
-## Central question and learning objectives
+**Central question:** How do discrete tokens become trainable representations?
 
-How do discrete tokens become trainable representations?
+The core deck has **50 slides**. Students follow one computation from token
+IDs to next-token loss, train a small model, and reason about its parameters
+and memory. The distributional hypothesis and one skip-gram example explain
+how an objective learns vectors. Longer classification and static-embedding
+material is in [optional reading](classical-reading.md), with links to the
+complete Spring lecture.
 
-Students should be able to state the distributional hypothesis, define an
-embedding matrix $E \in \mathbb{R}^{|V| \times d}$, compute a PPMI value from a
-co-occurrence table, write the skip-gram negative-sampling loss for one
-positive and $k$ negative pairs and carry out one SGD update, compare
-embeddings with cosine similarity and the analogy query, explain an embedding
-lookup as a one-hot product, predict the tensor shapes from token IDs
-$(B, T)$ to logits $(B, T, |V|)$, explain what `loss.backward()` computes and
-which embedding rows receive a gradient, and count the parameters and memory
-of the input and output tables with and without weight sharing.
+## Learning objectives
 
-## Status: first version for instructor review
+By the end, students can:
 
-This deck has two parts.
+- Trace lookup, context states, output logits, shifted targets, and loss shapes.
+- Run a PyTorch training step and inspect gradient pathways.
+- Distinguish token embeddings, contextual states, and retrieval vectors.
+- Explain weight tying and count unique table parameters and storage.
+- Inspect configuration and tokenizer metadata without downloading weights.
 
-1. **A complete reproduction of the instructor's
-   [Spring 2026 Lecture 03](https://baojian.github.io/llm-26/slides/lecture-03-slides/)**
-   (59 slides: text classification, counting-based methods, word2vec, bridge
-   to LLM embeddings). Every sentence, formula, table, figure, and link is
-   kept. The Spring slides used 0.6–0.8em text inside two-column boxes; the
-   shared template enforces 30px body text, so Spring slides 2–59 became
-   **127 Fall slides**, split at the Spring column and box boundaries. Nothing
-   was shortened. The instructor will recheck, reformat, and reduce this part;
-   the text-classification section is the first candidate.
-2. **Fall additions (13 slides):** a Fall title slide, exercises E01 and E02
-   inside the Spring material, and a closing section "PyTorch for Language
-   Models" with exercises E03 and E04 and the exit questions.
+The running `TinyLM` is explicitly a **bigram model with a vector bottleneck**.
+It does not use the full prefix. A feedforward context network is introduced
+next week; Transformer architecture comes later in the course.
 
-The deck has **140 slides**. That is more than three periods can hold at full
-depth; the teaching sequence below marks what to skim until the reduction is
-done.
+## Three-period sequence
 
-## Teaching sequence
+Times include the exercises. Breaks are outside the 135 teaching minutes.
 
-| Period | Minutes | Slides | Content and activity |
+| Period | Minutes | Slides | Teaching and activity |
 | --- | --- | --- | --- |
-| 1 | 0–3 | 1–2 | Title and outline; the question of the day |
-| 1 | 3–18 | 3–32 | Text classification as review: task and examples, Naive Bayes in one pass, logistic regression from score to sigmoid/softmax to cross-entropy. Keep slides 16–22 (sigmoid, softmax, loss), because the PyTorch section reuses them; skim the GD-step arithmetic (26–28) |
-| 1 | 18–45 | 33–57 | Counting-based methods: word meaning, distributional hypothesis, formal definition of $E$, term–document and co-occurrence matrices, TF-IDF, PMI/PPMI. **E01** (4 min): PPMI(information, data) |
-| 2 | 0–30 | 58–88 | word2vec: core idea, training pairs, negative-sampling objective, parameters $W$ and $C$, running example, softmax versus negative sampling, SGD objective, explicit gradients. **E02** (5 min): one update by hand |
-| 2 | 30–38 | 89–100 | Forward and backward propagation figures (seven images, one minute each at most: autograd replaces them in period 3), initialization, window size, Embedding Projector |
-| 2 | 38–45 | 101–106 | Evaluation: similarity benchmarks, analogy query, benchmark table |
-| 3 | 0–5 | 107–127 | Skim: semantic change, document embeddings, CBOW versus skip-gram, SVD and GloVe, fastText, classic resources; bridge to Qwen3-Embedding and EmbeddingGemma (demos are described, not run) |
-| 3 | 5–27 | 128–136 | PyTorch for language models: lookup table and one-hot product, `nn.Embedding` and shapes, output projection and cross-entropy, **E03** (4 min), autograd on the E02 numbers, the five-line training step, weight sharing and memory, **E04** (3 min) |
-| 3 | 27–30 | 137–140 | Exit questions, references, preview of Week 4 |
-| 3 | 30–45 | — | **Quiz 1** (15 minutes, closed book), as published on the course website. The quiz is prepared and kept outside this repository |
+| 1 | 0–10 | 1–6 | Recall n-gram prediction; introduce the token-to-loss shapes and the three representation types |
+| 1 | 10–22 | 7–9 | Trainable lookup, integer IDs, one-hot equivalence; **E01, 4 min** |
+| 1 | 22–38 | 10–15 | Distributional intuition, one skip-gram example, negative sampling; **E02, 4 min**, followed immediately by autograd |
+| 1 | 38–45 | 16–17 | Similarity limitations and context-dependent states |
+| 2 | 0–12 | 18–21 | Shift sequences into next-token pairs; **E03, 4 min** |
+| 2 | 12–26 | 22–29 | Explicit bigram limitation, output projection, raw-logit cross-entropy, uniform baseline, numerical stability |
+| 2 | 26–40 | 30–33 | Inspect gradients, run SGD, and read the toy loss curve; **E04, 6 min** |
+| 2 | 40–45 | 34 | Debugging checks and the distinction between fitting and generalization |
+| 3 | 0–10 | 35–38 | Weight tying and its gradient pathways; **E05, 4 min** |
+| 3 | 10–23 | 39–45 | Unique parameters, pinned Qwen configurations, tokenizer IDs versus rows, memory and projection cost; **E06, 4 min** |
+| 3 | 23–30 | 46–50 | Retrieval preview, optional student contribution, exit questions, readings |
+| 3 | 30–45 | — | **Quiz 1**, 15 minutes, as published on the course website |
 
-Breaks fall between periods and are outside the 135 teaching minutes. The four
-E exercises total 16 minutes; the notebook's P01–P03 are for after class.
-These are **ungraded practices**, distinct from Quiz 1 and from Assignment A1,
-which are defined by the course website and the instructors' repository.
+Quiz content and grading remain in the private instructor repository. E01–E06
+and P01–P03 are **ungraded practices** and use no Assignment A1 data or code.
+The same activities and expectations apply to all students.
 
 ## Notebook correspondence
 
-`lecture-03-exercise.ipynb` runs offline on a CPU in a few seconds with the
-core `uv sync` environment (PyTorch arrives through `edtrace`). It uses toy
-data made for this lecture; it shares no data, model class, or code with
-Assignment A1.
+The notebook runs on a CPU with the core `uv sync` environment and makes no
+network requests. Predict the result before running each cell. There are
+26 minutes of timed pair practice within the schedule above.
 
-| ID | Slide | Notebook content | Numbers shown on the slide |
-| --- | --- | --- | --- |
-| E01 | `exercise-01` | PMI and PPMI from the Jurafsky and Martin word–context counts (Appendix J, Figure J.2) | 0.0944 bits; totals 7703, 5673, 11716 |
-| E02 | `exercise-02`, `autograd` | One skip-gram negative-sampling update by hand, then the same gradients with `loss.backward()` | $\sigma(1)=0.7311$, $\sigma(0.5)=0.6225$, loss 1.2873, gradients $(-0.2689,-0.1345)$ and $(0.4880,-0.8914)$ |
-| E03 | `lookup-code`, `output-projection`, `exercise-03` | Lookup shapes, one-hot equivalence, logits, cross-entropy at $\log 10 = 2.3026$, rows of $E$ with a gradient | shapes $(2,3,4)$ and $(2,3,10)$; rows 0, 1, 5, 7 |
-| E04 | `weight-sharing`, `exercise-04` | `TinyLM` parameter counts with and without sharing; GPT-2 small and Qwen3-0.6B tables; memory in fp32 and bf16 | 38,597,376 of 124,439,808; 155,582,464; 593.5 and 296.8 MiB |
-| P01 | — | Skip-gram with negative sampling in PyTorch on a template-generated toy corpus (window 3, $k=5$, word2vec initialization) | first-minibatch loss $6\log 2 = 4.1589$ (notebook only) |
-| P02 | — | Nearest neighbours and the analogy query on the toy vectors | — |
-| P03 | `training-step` | The five-line training loop memorizes one batch | starts at 2.3026, below 0.5 after 200 steps |
+| ID | Slide ID | Expected response or computation |
+| --- | --- | --- |
+| E01 | `exercise-01` | Table `(10,4)`, IDs `(2,3)`, lookup `(2,3,4)`, one-hot `(2,3,10)`; product equals lookup |
+| E02 | `exercise-02`, `autograd` | Positive-context gradient `(-0.2689,-0.1345)`; full loss 1.2873; autograd agrees with the hand calculation |
+| E03 | `exercise-03` | Last targets 5 and 9; embeddings `(2,4,4)`, logits `(2,4,10)`; eight predictions; zero-logit loss `log(10)` |
+| E04 | `exercise-04`, `training-curve` | Run 200 SGD updates on eight compatible pairs; final loss below 0.1 and all predictions correct |
+| E05 | `exercise-05`, `tied-gradient` | Untied input gradients only in selected rows; tied example has gradients in all ten rows; shared gradient equals the sum of the two separate contributions |
+| E06 | `exercise-06` | 16,384,000 parameters per exercise table; 31.25 MiB in bf16; verify real-model counts and logit storage |
+| P01 | optional | PPMI from the published word–context counts; information/data is about 0.0944 bits |
+| P02 | optional | Train skip-gram on templates and inspect neighbors/analogies; these are toy results |
+| P03 | optional | Check a model-table row using pinned configuration/tokenizer metadata and cross-review another pair's evidence |
 
-`tests/test_lecture_03.py` executes every code cell with network access
-blocked and checks these numbers against the notebook and the slide source.
+Students with an older working notebook should rename it before clicking the
+Notebook link again. The launcher intentionally preserves their existing
+work. It copies the supplied assets into a fresh working notebook directory.
 
-## Spring-to-Fall slide map
+## CS336 connections and scope
 
-| Spring slide | Spring title | Fall slides |
-| ---: | --- | --- |
-| 1 | Title (Text Classification and Word Embeddings) | 1 (Fall title; the Spring title is recorded in the note) |
-| 2 | Outline | 2 |
-| 3 | Assign probabilities to sentences | 3–4 |
-| 4 | Classification methods | 5–6 |
-| 5–7 | Naive Bayes: classifier, bag of words, training and prediction | 7–12 |
-| 8–13 | Logistic regression: classifier, binary and multinomial, loss, objective and GD, one GD step, training in practice | 13–30 |
-| 14 | From NB and LR to Neural Text Classification | 31–32 |
-| 15 | Outline | 33 |
-| 16–19 | Word meaning, distributional hypothesis, formal definition, how to obtain embeddings | 34–43 |
-| 20–24 | Counting-based representations, raw counts, TF-IDF, co-occurrence, PMI/PPMI | 44–56 |
-| — | Fall E01 | 57 |
-| 25 | Outline | 58 |
-| 26–37 | word2vec: background to one SGD step | 59–87 |
-| — | Fall E02 | 88 |
-| 38–44 | word2vec forward and backward propagation figures | 89–95 |
-| 45–46 | Initialization; window and visualization | 96–100 |
-| 47–49 | Embedding evaluation | 101–106 |
-| 50–51 | Semantic change; sentence and document embeddings | 107–110 |
-| 52–55 | CBOW versus skip-gram; SVD and GloVe; fastText; classic resources | 111–122 |
-| 56 | Outline | 123 |
-| 57–58 | Bridge to LLMs: Qwen embeddings, EmbeddingGemma | 124–127 |
-| — | Fall section: PyTorch for Language Models, E03, E04, exit questions | 128–137 |
-| 59 | References and Next Lecture | 138–140 |
+[CS336 Lecture 2](https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py)
+is the closest match: tensors, memory accounting, gradients, and the training
+loop. This lecture introduces shapes, bytes per value, unique parameter counts,
+and the size of materialized logits. It includes a brief dense-projection FLOP
+estimate; detailed roofline analysis, GPU kernels and distributed execution
+remain for later weeks.
 
-Each slide's speaker note names its Spring slide and, for a split slide, its
-part number.
+We retain sigmoid/softmax and cross-entropy as prerequisites. We do not repeat
+the complete Naive Bayes/logistic-regression sequence. Full word2vec gradient
+walkthroughs, PPMI arithmetic, analogy benchmarks, GloVe/SVD/fastText, and document
+embedding history are optional. TF-IDF returns with retrieval. A short retrieval
+preview explains why a document vector differs from a token-table row.
 
-## Differences from the Spring deck
+## Mapping from the first draft in PR #157
 
-- **Layout only:** Spring's coloured boxes became plain paragraphs, lists, or
-  blockquotes; blue sub-headings and closing lines became bold paragraphs;
-  red and green emphasis use the template's `text-bad` and `text-good`. Where
-  a Spring fragment revealed a whole column, that column is now its own slide,
-  so advancing the slide is the reveal. Three display equations are set inline
-  to fit (cosine on the evaluation procedure, the two analogy examples); the
-  notes of those slides say so.
-- **Outline:** the four Spring topics plus the new fifth topic, "PyTorch for
-  Language Models", on every outline slide.
-- **Defects fixed:** the title typo "wor2vec" on the seven figure slides; an
-  `http://` GloVe link; two broken relative links to the word2vec papers, now
-  absolute; an unclosed `<b>` on the TF-IDF slide and stray `</b>` tags on the
-  parameters slide. Left as written: two literal `---` sequences (Spring
-  slides 3 and 4) and the carried-over title "Assign probabilities to
-  sentences" on Spring slide 3.
-- **Next lecture:** the Spring closing box named "Neural Language Models and
-  Sequence Labeling"; it now names the Fall Week 4 lecture. The Spring wording
-  is in the slide's note.
-- **Figures:** the seven word2vec figures are wide (2:1). The template's
-  `.diagram` class fixes image height at 410px, so they render at about
-  820×410 with small in-image text. A wider figure class would be a change to
-  the shared theme and is left for the review.
-- **Not ported:** the Spring notebook (scikit-learn Naive Bayes and logistic
-  regression on newsgroups and IMDB, gensim word2vec, a Qwen3-Embedding
-  download, an Ollama EmbeddingGemma call). It needs an out-of-band dataset
-  archive, packages outside the course environment, and network access. The
-  Fall notebook is new and offline.
+This supersedes the first-version requirement to reproduce every Spring slide
+unchanged. The instructor requested compression and a stronger connection to
+modern LMs and CS336 after reviewing that draft.
 
-## Candidates for reduction (for the instructor's review)
+| First-draft slides | Revised treatment |
+| --- | --- |
+| 3–32: classification | Logits, softmax and cross-entropy integrated into slides 25–29; other background in optional reading |
+| 34–57: meaning and counts | Slides 6–10; detailed PPMI moved from old E01 to P01 |
+| 59–100: word2vec | Slides 11–15, one example and immediate autograd; full diagrams linked from optional reading |
+| 101–122: evaluation and static methods | Slide 16 plus optional reading and P02 |
+| 124–127: retrieval models | Slides 6, 17 and 46 distinguish lookup, contextual states and retrieval representations |
+| 129–136: PyTorch | Expanded across the lecture, including shifted targets, training and resource accounting |
+| Old E02 | Remains E02; only one gradient is required by hand |
+| Old E03 | Lookup becomes E01; loss becomes E03; tied-gradient comparison is new E05 |
+| Old E04 | Becomes E06, with pinned Qwen3-0.6B and Qwen3-8B evidence |
+| Old P01–P02 | Combined into optional P02; old P03 training loop becomes core E04 |
 
-`docs/course-revision.md` keeps the distributional hypothesis, embedding
-lookup, one skip-gram example, similarity, and contextual representations, and
-makes these optional: repeated NB/LR derivations, the full word2vec gradient
-sequence, the GloVe/SVD/fastText survey; TF-IDF moves to the retrieval week.
-In this deck that corresponds to slides 7–12 (Naive Bayes), 23–30 (logistic
-regression objective, gradient descent, and training), 48–49 (TF-IDF), 89–95 (propagation figures, superseded by the autograd
-slide), and 111–122 (other static embeddings).
+## Technical points to emphasize
+
+- Uniform logits give loss exactly `log(V)`; arbitrary random initialization
+  need not. Use the deliberately zero output table for the controlled check.
+- Use `F.logsigmoid` for skip-gram and raw logits with `F.cross_entropy` for
+  next-token training. The notebook demonstrates float32 cancellation.
+- Untied lookup and tied input/output weights have different gradient paths.
+  The gradient experiment keeps forward values identical to isolate tying.
+- The tiny-batch check requires labels compatible with the model's context and
+  enough capacity. Successful fitting does not establish generalization.
+- Distinguish tokenizer entries, maximum token ID, and allocated table rows.
+  Use the latter for parameter counts. Do not count added-token IDs twice.
+- Parameter storage excludes gradients, optimizer state and activations. Logit
+  storage is an illustrative materialization cost, not a peak-memory promise.
+
+## Sources and reproducibility
+
+Sources are in the slide notes, notebook, optional reading and
+[asset provenance](assets/README.md). The selected model metadata records
+immutable revisions and SHA-256 hashes; no weight files are stored.
+`tests/test_lecture_03.py` executes every notebook code cell without network
+access, checks the mathematical examples and teaching-figure data, and tests
+that the asset lookup works from a copied notebook directory.
+
+The complete model timeline belongs to [issue #154](https://github.com/baojian/llm-26-fall/issues/154)
+as a separate document. P03 invites one verified contribution at a time,
+with a combined **Sources and Notes** column and peer checking.

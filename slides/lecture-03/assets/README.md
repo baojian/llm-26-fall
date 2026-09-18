@@ -1,6 +1,6 @@
 # Lecture 03 media
 
-All files are copied from the instructor's
+The PNG images are copied from the instructor's
 [Spring 2026 Lecture 03](https://baojian.github.io/llm-26/slides/lecture-03-slides/)
 (`slides/lecture-03-slides/media/` in the `baojian/llm-26` repository). The
 seven `word2vec-*.png` images were downscaled from about 3460 to 2400 pixels
@@ -16,8 +16,27 @@ unchanged. The other images are byte-identical copies.
 | `embedding-semantic-change.png` | Semantic change of *gay*, *broadcast*, and *awful* over time. Figure from Hamilton, Leskovec, and Jurafsky (2016), [Diachronic Word Embeddings Reveal Statistical Laws of Semantic Change](https://arxiv.org/abs/1605.09096). |
 | `embedding-paragraph-vector.png` | Paragraph vector framework. Figure from Le and Mikolov (2014), [Distributed Representations of Sentences and Documents](https://proceedings.mlr.press/v32/le14.html). |
 
-The Fall additions (exercises E01–E04 and the PyTorch section) use no media.
-Their numbers come from `../lecture-03-exercise.ipynb` and are checked by
-`tests/test_lecture_03.py`. The co-occurrence counts in E01 are from Jurafsky
-and Martin, *Speech and Language Processing* (3rd ed. draft of August 19, 2026),
-[Appendix J](https://web.stanford.edu/~jurafsky/slp3/J.pdf), Figure J.2.
+The PNGs support the optional [classical reading](../classical-reading.md);
+they are not projected in the revised 50-slide core deck.
+
+## Revised lecture assets
+
+| File | Content and source |
+| --- | --- |
+| `model-configs.json` | Selected fields from official Qwen3-0.6B and Qwen3-8B configurations, plus unique token-ID counts and maximum IDs from their tokenizer JSON artifacts. Each source has an immutable repository revision, URL, SHA-256 hash, and check date. No model weights or full tokenizer files are included. |
+| `tiny-lm-loss.json` | Editable Plotly teaching figure, sampling notebook E04 at updates 0, 1, 5, 10, 20, 50, 100, 150, and 200. Eight toy input–target pairs, vocabulary 10, width 4, CPU float32, seed 0, nonzero input initialization, zero output initialization, untied tables, SGD learning rate 0.5. This illustrates a training loop and is not a benchmark. |
+
+The notebook reads `model-configs.json` offline; P03 explains how to check the
+primary sources separately. Unique tokenizer IDs are the union of
+`model.vocab` values and `added_tokens` IDs, so duplicate entries are not
+counted twice. Table arithmetic uses `config.vocab_size`, not the tokenizer
+entry count. Both tokenizer snapshots have the same SHA-256 hash.
+
+To refresh the teaching curve after intentionally changing E04, run that cell
+and use `e04_losses[step]` for the listed steps. Index 0 is the loss before any
+update; index 200 is after 200 updates. `tests/test_lecture_03.py` compares the
+figure with the executable notebook, allowing small floating-point differences.
+
+The PPMI counts in optional notebook P01 come from Jurafsky and Martin,
+*Speech and Language Processing*, [Appendix J](https://web.stanford.edu/~jurafsky/slp3/J.pdf),
+Figure J.2. The main deck's three-word co-occurrence table is invented toy data.

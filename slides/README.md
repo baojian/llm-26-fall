@@ -28,16 +28,17 @@ differences from the Spring deck; its
 optional practices P01–P04 offline with the standard library. Media provenance is in
 [lecture-02/assets/README.md](lecture-02/assets/README.md).
 
-[Lecture 03](lecture-03/index.html) reproduces the instructor's Spring 2026
-lecture on text classification and word embeddings in this template (59 Spring
-slides, split to the template's font sizes) and adds a closing section on
-PyTorch for language models: embedding lookup, tensor shapes, output
-projection, autograd, and weight sharing. Its
-[teaching plan](lecture-03/teaching-plan.md) holds the timing, a Spring-to-Fall
-slide map, and the candidates for reduction; its
-[notebook](lecture-03/lecture-03-exercise.ipynb) runs exercises E01–E04 and
-optional practices P01–P03 offline on a CPU with PyTorch. Media provenance is in
-[lecture-03/assets/README.md](lecture-03/assets/README.md).
+[Lecture 03](lecture-03/index.html) follows token IDs through embedding lookup,
+next-token loss, autograd, and a training step in 50 slides. It keeps one
+word2vec example and adds weight tying, contextual representations, and resource
+accounting using pinned Qwen configurations. Its
+[teaching plan](lecture-03/teaching-plan.md) includes the three-period timing and
+the revision map from the Spring port. The
+[notebook](lecture-03/lecture-03-exercise.ipynb) runs exercises E01–E06 and
+optional practices P01–P03 offline on CPU. Longer classification and
+static-embedding material is in [optional reading](lecture-03/classical-reading.md).
+See [asset provenance](lecture-03/assets/README.md) for the teaching figure,
+model metadata, and retained Spring images.
 
 ## Teaching from a classroom browser
 
