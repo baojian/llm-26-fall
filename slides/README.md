@@ -28,6 +28,17 @@ differences from the Spring deck; its
 optional practices P01–P04 offline with the standard library. Media provenance is in
 [lecture-02/assets/README.md](lecture-02/assets/README.md).
 
+[Lecture 03](lecture-03/index.html) reproduces the instructor's Spring 2026
+lecture on text classification and word embeddings in this template (59 Spring
+slides, split to the template's font sizes) and adds a closing section on
+PyTorch for language models: embedding lookup, tensor shapes, output
+projection, autograd, and weight sharing. Its
+[teaching plan](lecture-03/teaching-plan.md) holds the timing, a Spring-to-Fall
+slide map, and the candidates for reduction; its
+[notebook](lecture-03/lecture-03-exercise.ipynb) runs exercises E01–E04 and
+optional practices P01–P03 offline on a CPU with PyTorch. Media provenance is in
+[lecture-03/assets/README.md](lecture-03/assets/README.md).
+
 ## Teaching from a classroom browser
 
 Once the slide files reach the branch published by GitHub Pages, open the deck
@@ -133,6 +144,7 @@ slides/
   example/                Checked sample with a browser demonstration
   lecture-01/             Lecture 01 deck and lecture-01-exercise.ipynb
   lecture-02/             Lecture 02 deck and lecture-02-exercise.ipynb
+  lecture-03/             Lecture 03 deck and lecture-03-exercise.ipynb
   01-tokenization/        A lecture created when its content is ready
     index.html            Shared viewer shell
     lecture.json          Title, language, and optional demo module
