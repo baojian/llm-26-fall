@@ -1,44 +1,47 @@
 {
-  "last_attempt": "observations/2026-09-20/2026-09-20T05-21-06.441469Z-249890a5.json",
-  "last_successful": "observations/2026-09-20/2026-09-20T05-21-06.441469Z-249890a5.json",
+  "last_attempt": "observations/2026-09-20/2026-09-20T09-53-41.916013Z-aa9e1a6a.json",
+  "last_successful": "observations/2026-09-20/2026-09-20T09-53-41.916013Z-aa9e1a6a.json",
   "run_keys": [
     "pro",
     "flash"
   ],
   "runs": {
     "flash": {
-      "last_seen": "2026-09-20T05:21:06.441469Z",
+      "last_seen": "2026-09-20T09:53:41.916013Z",
       "mode": "ended",
       "sampler_first": 1789783257.264,
       "sampler_last": 1789784370.264,
       "sampler_reports": 60,
       "series": "fetched",
       "series_manifest": "series/4d97e316c435fb8ce0a900f30a3ad76d14f22b9aecc70fb993fceaf808e08496.json",
-      "source_clock": 1789881691.511636,
+      "source_clock": 1789898049.421215,
       "step": 30,
       "tag_count": 2062,
       "version": "3-5513.32.6.28"
     },
     "pro": {
-      "last_seen": "2026-09-20T05:21:06.441469Z",
+      "last_seen": "2026-09-20T09:53:41.916013Z",
       "mode": "live",
-      "sampler_first": 1789871160.334,
-      "sampler_last": 1789881605.334,
+      "sampler_first": 1789886661.334,
+      "sampler_last": 1789897893.334,
       "sampler_reports": 60,
       "series": "fetched",
       "series_manifest": "series/8dd889889b1c4402ab48af01277dae125acb9ce46eb909669e76a8d7ee482864.json",
-      "source_clock": 1789881669.0623953,
-      "step": 28,
+      "source_clock": 1789898024.43727,
+      "step": 29,
       "tag_count": 2029,
-      "version": "3-5513.28.14.28"
+      "version": "3-5513.29.14.28"
     }
   },
   "series_cache": {
+    "41fa921e02d4d904266a6038e839094c81e2fed827202ef6dd8e529fb6c01adc": {
+      "manifest": "series/5dbf3410166b4c04b5b59df272940160a6ff369c8b4da55a6504b3c719e5b8d7.json"
+    },
     "4285f49890e87eb863698f5251fa641c91f9f5e2b49f902f70561592df5380bb": {
       "manifest": "series/7420da30df86a393a5284b90c34b996e07efe023b0b66fa86eb1ee5c1b6ff516.json"
     },
     "5fbded9e7fd59f92bb1348cbda28b9e5dd850405df4bdbf952c52a38e207b315": {
-      "manifest": "series/8f89481f50fdc9e1f22c3991860c99dca187bd43098e2bce19772c673735bedd.json"
+      "manifest": "series/5169f099f0622dfb861ab13e8af4a5811213b074b03fa6ffdb582f8fc8c2f7b4.json"
     },
     "e540f4bec859af81b9c41bc9dd1ea7439c4800232d142b071904e9e523f9d046": {
       "manifest": "series/8dd889889b1c4402ab48af01277dae125acb9ce46eb909669e76a8d7ee482864.json"
