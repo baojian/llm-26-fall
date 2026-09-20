@@ -64,7 +64,7 @@ def list_tasks(tasks_root: Path = TASKS) -> str:
     rows = ["| Task | Title | Difficulty | Deadline | Submissions |", "| :--- | :--- | :--- | :--- | ---: |"]
     for folder in task_folders(tasks_root):
         info = manifest(folder)["task"]
-        rows.append(f"| {info['id']} | {info['title']} | {info['difficulty']} | {str(info['deadline'])[:10]} | {len(submissions(folder))} |")
+        rows.append(f"| {info['id']} | {info['title']} | {info['difficulty']} | {info['deadline']} | {len(submissions(folder))} |")
     return "\n".join(rows)
 
 

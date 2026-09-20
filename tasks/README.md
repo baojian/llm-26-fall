@@ -44,8 +44,9 @@ rules, timeline, and labels are in
 4. When the check passes, open a PR from your fork with the title
    `l02-ngram/<slug>: <username>` and `Related to #<issue>` in the body.
    Only your one file should be in the PR.
-5. Deadline: Tuesday 23:59 of the same week. Late PRs are merged if they pass
-   but are not counted for that week.
+5. Follow the deadline in the task's `instruction.md` (normally Tuesday
+   23:59 of the same week). Late PRs are merged if they pass but are not
+   counted for that week.
 
 Try it first on the example: copy `tasks/example/word-count/submissions/octocat.py`
 to `<username>.py` in the same folder and run the check.
@@ -64,7 +65,10 @@ This copies `TEMPLATE/` to `tasks/l02-ngram/split-sentences/`. Then:
    `PREDICTION_INPUTS` (repeat them in `instruction.md`). Put one why-question
    in the instruction's `NOTES` block. Add a hidden-input test only if the
    cases alone would be too easy to copy.
-3. Set the deadline and time estimate in `task.toml`.
+3. Set the deadline and time estimate in `task.toml`. If the deadline depends
+   on the release PR's merge date, record that rule in both `task.toml` and
+   `instruction.md`; after merging, publish the matching calendar date in
+   both files and the task issue.
 4. Run `uv run python scripts/tasks.py check tasks/l02-ngram/split-sentences`
    with a reference submission of your own, then delete it (solutions stay in
    the private instructors' repository).

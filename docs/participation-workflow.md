@@ -142,7 +142,7 @@ flowchart TB
     R -- results script --> I4
 ```
 
-Deadlines inside one week:
+Default deadlines inside one week (a task's published deadline takes precedence):
 
 | Day | Instructor and TAs | Students |
 | --- | --- | --- |

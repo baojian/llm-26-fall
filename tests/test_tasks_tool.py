@@ -79,8 +79,16 @@ def test_list_and_progress_tables(tasks_root):
     folder = tasks.create_task("l02-ngram", "demo", "Demo", tasks_root)
     (folder / "submissions/alice.py").write_text(GOOD)
     (folder / "submissions/bob.py").write_text(GOOD)
-    assert "| l02-ngram/demo | Demo | easy | 2026-09-22 | 2 |" in tasks.list_tasks(tasks_root)
+    assert "| l02-ngram/demo | Demo | easy | 2026-09-22T23:59:00+08:00 | 2 |" in tasks.list_tasks(tasks_root)
     assert tasks.progress(tasks_root).splitlines()[2:] == ["| alice | 1 |", "| bob | 1 |"]
+
+
+def test_list_preserves_merge_relative_deadline(tasks_root):
+    folder = tasks.create_task("l02-ngram", "demo", "Demo", tasks_root)
+    path = folder / "task.toml"
+    deadline = "23:59 (Asia/Shanghai), 7 calendar days after PR #131 merges into main, using its Shanghai merge date"
+    path.write_text(path.read_text().replace("2026-09-22T23:59:00+08:00", deadline))
+    assert f"| l02-ngram/demo | Demo | easy | {deadline} | 0 |" in tasks.list_tasks(tasks_root)
 
 
 def test_check_accepts_github_style_usernames_and_selects_exactly_one(tasks_root):

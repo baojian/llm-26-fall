@@ -1,7 +1,9 @@
 # Group digits into chunks of at most three
 
 **Lecture:** l01-tokenization · **Difficulty:** easy · **Time:** about 30 minutes ·
-**Deadline:** Tuesday, September 22, 23:59 (Asia/Shanghai)
+**Deadline:** 23:59 (Asia/Shanghai), seven calendar days after
+[release PR #131](https://github.com/baojian/llm-26-fall/pull/131) merges into
+`main`, using its Shanghai merge date.
 
 ## Goal
 
