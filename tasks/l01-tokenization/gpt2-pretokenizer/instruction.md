@@ -98,3 +98,6 @@ Use your own code and words; discussing approaches is fine. Open the PR from
 your own account, changing only your submission file. Keep supplied data and
 tests unchanged. Use title `l01-tokenization/gpt2-pretokenizer: <username>` and
 body `Related to #202`.
+
+Open your PR by the deadline. Solutions merge in **one batch per task after
+the deadline**; public PRs and forks remain visible before merging.

@@ -62,6 +62,8 @@ uv run python scripts/tasks.py check tasks/{{LECTURE}}/{{SLUG}} <username>
 - Standard library only unless the instruction says otherwise.
 - Use your own words and code; discussing the approach with classmates is fine.
 - PR title `{{LECTURE}}/{{SLUG}}: <username>`, body `Related to #<issue>`.
+- Open your PR by the deadline; solutions merge in one batch per task only
+  after the deadline. Public PRs and forks remain visible before merging.
 
 ## Why this matters
 

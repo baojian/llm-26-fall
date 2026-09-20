@@ -1,5 +1,13 @@
 # Teaching with GitHub: semester participation plan
 
+> **Historical proposal, superseded.** Follow the current
+> [participation workflow](participation-workflow.md) and course website.
+> The assessment weights, public project submission plan, early merge target,
+> and automatic late-merge policy below are not current instructions.
+> Student exercise solutions merge only after their published deadline, in
+> one batch per task; public PRs remain visible before merging. Graded
+> assignments and project deliverables are submitted privately through eLearning.
+
 Review draft dated September 10, 2026. This plan describes how the course uses
 GitHub so that students participate every week and leave the course with
 skills they will use in research and industry: working from a fork, writing a

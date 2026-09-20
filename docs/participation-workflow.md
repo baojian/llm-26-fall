@@ -11,7 +11,8 @@ change them. Dates come from [schedule.md](schedule.md) and the
 
 Related: the Week 1 survey ([surveys/lecture-01](../surveys/lecture-01/)),
 which is the template for every weekly activity: one file per student, a
-mechanical check, nothing to leak, and a chart shown at the next lecture.
+mechanical check, and a chart shown at the next lecture. Exercise solutions
+follow the deadline and batch rule below; public PRs are visible before merging.
 
 ## 0. Where each piece of work is submitted
 
@@ -123,7 +124,7 @@ for the *next* week overlaps with the students' task window for *this* week.
 flowchart TB
     subgraph I[Instructor and TAs]
         direction LR
-        I1[Wed: lecture ends;\nopen 3–5 task issues\nlabelled l02-ngram + task] --> I2[Thu–Sun: prepare next lecture;\nslides, notes, notebook\nby Sun 23:59] --> I3[Mon–Tue: check and PDF the deck;\nreview and merge green PRs] --> I4[Next Wed: show the\nresults chart, 5 minutes]
+        I1[Wed: lecture ends;\nopen 3–5 task issues\nlabelled l02-ngram + task] --> I2[Thu–Sun: prepare next lecture;\nslides, notes, notebook\nby Sun 23:59] --> I3[Mon–Tue: check and PDF the deck;\nreview solution PRs] --> I5[After the task deadline:\nmerge one batch per task] --> I4[Next Wed: show the\nresults chart, 5 minutes]
     end
     subgraph S[Students]
         direction LR
@@ -138,7 +139,7 @@ flowchart TB
     S4 --> C1
     C2 -- no --> S4
     C2 -- yes --> I3
-    I3 -- merged files --> R[(tasks/l02-ngram/)]
+    I5 -- merged files --> R[(tasks/l02-ngram/)]
     R -- results script --> I4
 ```
 
@@ -148,7 +149,8 @@ Default deadlines inside one week (a task's published deadline takes precedence)
 | --- | --- | --- |
 | Wed (lecture) | Open the lecture's task issues (labels `lNN-topic` + `task`); announce the deadline | Pick a task; comment to claim |
 | Thu–Sun | Prepare next week's lecture: slides, notes, notebook by **Sun 23:59** (a tracking issue like #39 per lecture) | Work on the task; open the PR early so CI can run |
-| Mon–Tue | Run `npm --prefix slides run check` and `pdf` on the new deck; merge green task PRs | Fix red checks; final push by **Tue 23:59** |
+| Mon–Tue | Run `npm --prefix slides run check` and `pdf` on the new deck; review task PRs without merging | Fix red checks; final push by **Tue 23:59** |
+| After the task deadline | Finish reviews, then merge one batch per task | Wait for the batch; a timely PR need not be merged by the deadline |
 | Wed (next lecture) | Regenerate the chart from `tasks/lNN-topic/`; show it | See the class result |
 
 ## 3. Life of a task issue
@@ -160,7 +162,8 @@ stateDiagram-v2
     Claimed --> InReview: PR opened with Related to #N
     InReview --> Red: CI check fails
     Red --> InReview: fix pushed to the same branch
-    InReview --> Merged: CI green and team approves
+    InReview --> Ready: checks pass and team approves
+    Ready --> Merged: deadline passed; included in the task's single batch
     Merged --> Counted: results script runs after Tue 23:59
     Counted --> [*]
     Open --> Expired: unclaimed by Tue 23:59
@@ -168,9 +171,26 @@ stateDiagram-v2
     Expired --> [*]: closed with label not-done
 ```
 
-Late PRs are merged if correct but not counted for that week. An issue is
-never closed by a student PR: PR bodies say `Related to #N`, not `Fixes #N`,
-so several students can submit to the same issue.
+**Mandatory merge policy (September 20, 2026):** exercise solutions and
+corrections merge only after the published deadline, in one batch per task.
+Review and run checks before then, but do not merge or enable auto-merge.
+Verify the current time against the matching deadline and time zone in
+`task.toml`, `instruction.md`, and the release issue; unclear deadlines block
+merging. Finish reviewing all on-time PRs, record the batch and reviewed
+commits in the task's `merge-batch.md`, and check for an existing batch before
+merging. See the [teaching-team checklist](../tasks/README.md#teaching-team-merge-solutions-once-after-the-deadline).
+
+Late submissions, later solution fixes, and exceptions need an explicit
+instructor decision naming the task and exception. A general request to merge
+student PRs does not waive the rule. Survey responses and course-material
+fixes without student exercise solutions follow their own policies.
+
+Public PRs and forks remain visible before merge. Delaying a merge keeps
+solutions off `main` during the exercise, but does not make them private.
+Use eLearning or an instructor-approved private channel when privacy is needed.
+
+A student PR never closes a shared issue: PR bodies say `Related to #N`, not
+`Fixes #N`, so several students can submit to the same issue.
 
 ## 4. Labels and naming rules (do not vary them)
 
@@ -205,9 +225,10 @@ An accepted proposal is credited in the task's `instruction.md`.
 
 Privacy: GitHub username only, no real names or student IDs; the same rule as
 the survey. Quizzes, assignments A1–A3, and the individual project are
-submitted on [Fudan eLearning](https://elearning.fudan.edu.cn/), never through GitHub, because their solutions
-are shared across students; weekly tasks are public because every answer
-differs (see section 0).
+submitted on [Fudan eLearning](https://elearning.fudan.edu.cn/), never through GitHub,
+because those submissions must remain private. Weekly participation tasks
+use public PRs, which may contain overlapping solutions; the batch rule
+delays their publication on `main` (see section 0).
 
 ## 5. Kinds of task that check themselves
 

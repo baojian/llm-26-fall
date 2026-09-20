@@ -8,6 +8,11 @@ every student. Submit **one separate PR per completed exercise** (up to three).
 This is seven calendar days after [release PR #131](https://github.com/baojian/llm-26-fall/pull/131)
 merged on September 20, 2026 (Shanghai date).
 
+Open your solution PR by the deadline. The teaching team merges **one batch
+per exercise after the deadline**, no earlier than September 28, 2026, 00:00
+(Asia/Shanghai). Your PR may remain open until then. Public PRs and forks are
+still visible before merging.
+
 | Exercise | Difficulty | Time | What you explore | Issue |
 | :--- | :--- | :--- | :--- | :--- |
 | [Digit grouping](digit-grouping/instruction.md) | Easy | 30 minutes | Vocabulary size versus sequence length | [#201](https://github.com/baojian/llm-26-fall/issues/201) |
