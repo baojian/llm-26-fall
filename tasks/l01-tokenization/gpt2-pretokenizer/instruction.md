@@ -5,6 +5,8 @@
 [release PR #131](https://github.com/baojian/llm-26-fall/pull/131) merges into
 `main`, using its Shanghai merge date.
 
+**Participation:** Optional; see [Lecture 01 activities](../README.md).
+
 ## Goal
 
 Implement a simplified GPT-2 pre-tokenizer to understand where BPE can merge.
@@ -72,7 +74,7 @@ MY_CASES = [("...", [...]), ("...", [...])]
 NOTES = """Your explanation here."""
 ```
 
-Choose two new inputs for `MY_CASES` where a naive solution fails. In `NOTES`,
+Choose two distinct new inputs for `MY_CASES` where a naive solution fails. In `NOTES`,
 write **3–5 sentences, at least 200 characters**: why attach a space to the
 following word (`" world"`) rather than the preceding word? What does the
 model gain, and how would attaching trailing spaces change the vocabulary?

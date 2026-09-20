@@ -5,6 +5,8 @@
 [release PR #131](https://github.com/baojian/llm-26-fall/pull/131) merges into
 `main`, using its Shanghai merge date.
 
+**Participation:** Optional; see [Lecture 01 activities](../README.md).
+
 ## Goal
 
 Explore how script boundaries constrain BPE's vocabulary. Kimi K2's
@@ -69,7 +71,7 @@ MY_CASES = [("...", [...]), ("...", [...])]
 NOTES = """Your explanation here."""
 ```
 
-Choose two new inputs for `MY_CASES` where a naive solution fails. In `NOTES`,
+Choose two distinct new inputs for `MY_CASES` where a naive solution fails. In `NOTES`,
 write **3–5 sentences, at least 200 characters**: how could merges across
 Han–Latin boundaries affect vocabulary reuse and mixed-script token lengths?
 Using `用GPT` and `GPT用`, explain the roles of putting Han first and excluding

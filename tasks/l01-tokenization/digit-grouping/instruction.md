@@ -5,6 +5,8 @@
 [release PR #131](https://github.com/baojian/llm-26-fall/pull/131) merges into
 `main`, using its Shanghai merge date.
 
+**Participation:** Optional; see [Lecture 01 activities](../README.md).
+
 ## Goal
 
 Implement digit grouping to explore a tokenizer's tradeoff between sequence
@@ -68,7 +70,7 @@ MY_CASES = [("...", [...]), ("...", [...])]
 NOTES = """Your explanation here."""
 ```
 
-Choose two new inputs for `MY_CASES` where a naive solution fails. In `NOTES`,
+Choose two distinct new inputs for `MY_CASES` where a naive solution fails. In `NOTES`,
 write **3–5 sentences, at least 200 characters**: if every ASCII digit string
 of length 1 through *k*, including leading zeros, has its own token, how many
 numeric vocabulary entries are needed for *k* = 1, 3, and 4? How many tokens

@@ -22,6 +22,8 @@ tasks/
 correct rate, participation, merged PRs, and badges per student. It is
 regenerated after each merge batch with `uv run python scripts/progress.py`.
 
+Start with the [Lecture 01 tokenization activities](l01-tokenization/README.md).
+
 Task issues on GitHub carry the same lecture label as the folder
 (`l02-ngram`, `l03-embeddings`, …) plus the type label `task`. The full
 rules, timeline, and labels are in
@@ -29,7 +31,9 @@ rules, timeline, and labels are in
 
 ## Students: do a task
 
-1. Pick an open issue labelled `task` and comment "I'll take this".
+1. Pick an open issue labelled `task` and comment "I'll take this". Task issues
+   accept submissions from many students; comments and assignments are not
+   exclusive claims.
 2. Read the task's `instruction.md`. It says exactly which file to create.
 3. Write your file as `submissions/<your-github-username>.py` (lowercase).
    Every task file has four parts: `PREDICTIONS` (your expected outputs for

@@ -83,6 +83,7 @@ def test_own_cases_are_new_and_pass(submission):
     module = load_module(submission)
     own = getattr(module, "MY_CASES", [])
     assert len(own) >= MIN_OWN_CASES, f"add at least {MIN_OWN_CASES} cases of your own to MY_CASES"
+    assert len({text for text, _ in own}) >= MIN_OWN_CASES, "MY_CASES must contain at least two distinct inputs"
     given = {text for text, _ in CASES} | set(PREDICTION_INPUTS)
     for text, expected in own:
         assert text not in given, f"{text!r} is one of the given inputs; find a new one"

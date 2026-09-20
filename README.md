@@ -21,6 +21,9 @@ your existing response is merged into `main`. New responses will not be
 accepted after the deadline. The teaching team will archive the survey under
 `tasks/` afterward; accepted responses do not need to be resubmitted.
 
+The [Lecture 01 tokenization exercises](tasks/l01-tokenization/README.md) are
+optional; you are encouraged to complete at least one and may complete all three.
+
 Find assignment deadlines and updates in the
 [assignment announcement issues](https://github.com/baojian/llm-26-fall/issues?q=is%3Aissue%20label%3Aassignment).
 Subscribe to an assignment's issue to follow its announcements and clarifications.
