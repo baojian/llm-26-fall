@@ -2,7 +2,7 @@
 
 [task]
 id = "l01-tokenization/digit-grouping"
-title = "Group digits like GPT-4 before BPE"
+title = "Group digits into chunks of at most three"
 lecture = "l01-tokenization"
 type = "task"
 difficulty = "easy"
