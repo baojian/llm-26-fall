@@ -17,5 +17,5 @@ Count the web and mobile versions of the same app as one choice.
 - [ ] Qwen (千问)
 - [ ] Kimi
 - [ ] Tencent Yuanbao (腾讯元宝)
-- [x] Zhipu Qingyan (智谱清言)
-- [x] Other: APP_NAME
+- [ ] Zhipu Qingyan (智谱清言)
+- [ ] Other: APP_NAME
