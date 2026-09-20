@@ -261,3 +261,22 @@ def test_notebook_exercises_follow_the_slide_order():
            if (match := re.match(r"## ([EP]\d\d) ", "".join(cell["source"])))]
     assert ids == ["E01", "E02", "E03", "E04", "E05", "E06", "P01", "P02", "P03"]
     assert re.findall(r"Exercise (E\d\d) ·", SLIDES) == ids[:6]
+
+
+def test_ngram_review_reuses_lecture_02_corpus_and_output_vocabulary():
+    from collections import Counter
+
+    figure = json.loads((LECTURE / "assets/ngram-review.json").read_text())
+    model = figure["layout"]["meta"]
+    assert model["corpus"] == [
+        "BOS I am Sam EOS".split(),
+        "BOS Sam I am EOS".split(),
+        "BOS I do not like eggs and ham EOS".split(),
+    ]
+    assert model["vocabulary"] == "EOS I am Sam do not like eggs and ham".split()
+    pairs = Counter((left, right) for sentence in model["corpus"]
+                    for left, right in zip(sentence, sentence[1:]))
+    assert sum(pairs.values()) == 16
+    assert pairs["I", "am"] == 2 and pairs["I", "do"] == 1
+    assert figure["data"][0]["y"] == [2 / 3, 1 / 3]
+    assert 'id="ngram-recap"' in SLIDES

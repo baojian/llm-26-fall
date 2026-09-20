@@ -28,18 +28,27 @@ The running implementation is deliberately a bigram model with learned vectors. 
 
 <!-- .slide: id="ngram-recap" -->
 
-## The next-token prediction problem
+## From counts to next-token probabilities
 
-$$p(w_1,\ldots,w_T)=\prod_{t=1}^{T}p(w_t\mid w_{<t})$$
+<div class="plot" id="ngram-visual" data-plotly="assets/ngram-review.json" role="img" aria-live="polite" aria-label="Toy bigram probabilities after I: am has count 2 and probability 2/3; do has count 1 and probability 1/3. Other output tokens have probability zero."></div>
 
-An n-gram model estimates probabilities from counts in a short context.
-
-A neural model learns parameters that map a context to scores over the vocabulary.
-
-**The prediction task and negative log-likelihood stay the same.**
+<form class="demo-form" id="ngram-controls" aria-label="Bigram review controls">
+<button type="button" data-ngram-context="I" aria-label="Use context I">I</button>
+<button type="button" data-ngram-context="Sam" aria-label="Use context Sam">Sam</button>
+<button type="button" data-ngram-context="BOS" aria-label="Use context BOS">BOS</button>
+<button type="button" id="ngram-trace">Trace pairs</button>
+<button type="button" id="ngram-sample">Sample next</button>
+<button type="button" id="ngram-reset">Reset review</button>
+</form>
 
 Note:
-Allow 3 minutes. Recall Lecture 02 without repeating smoothing or perplexity derivations. If the neural probabilistic LM was only previewed last week, this lecture introduces the trainable lookup and output layer needed to understand it. Bengio et al. (2003), Section 2: https://www.jmlr.org/papers/v3/bengio03a.html.
+Allow 3 minutes here and 1 minute for the following neural bridge. Recall Lecture 01: word tokens here are deliberately simple; modern tokenizers can split a word into subwords. IDs are arbitrary indices, not numerical meanings. For this recap, assign IDs 0–9 in Lecture 02's output vocabulary order: EOS, I, am, Sam, do, not, like, eggs, and, ham. BOS is an input-only boundary marker, outside the ten output tokens. This mapping is local to the recap; the later notebook uses its own synthetic IDs.
+
+Reuse Lecture 02, Exercise E01 exactly: [BOS I am Sam EOS], [BOS Sam I am EOS], [BOS I do not like eggs and ham EOS]. Blue marks the context and green the following token. Start with I: ask which token can follow, then Trace pairs → Next pair → Next pair. These clicks traverse only the three matching I contexts, in corpus order. Counts are (am:1, do:0), (am:2, do:0), then (am:2, do:1). Normalize divides by all three outgoing counts. The vertical axis explicitly changes from Count to Probability; all eight omitted output tokens have value zero. There is no smoothing. No pair crosses a sentence boundary, and EOS has no outgoing pair.
+
+Sample next draws once from the displayed complete distribution; it does not choose the largest bar every time or continue a whole sentence. Sampling is disabled during the incomplete count trace. Switch to Sam to show EOS and I at 1/2 each; an EOS draw means stop. BOS gives I at 2/3 and Sam at 1/3. Reset review restores the complete I distribution. These controls accept mouse or keyboard; the initial complete distribution also appears in print. If time is short, show the initial figure and one sample only.
+
+The general task remains p(w1,...,wT) = product_t p(wt | w<t). A bigram approximation keeps only the preceding token, and its unsmoothed MLE is count(context,next) / sum_v count(context,v). Avoid repeating smoothing or perplexity derivations. Corpus and estimates: [Lecture 02 E01](../lecture-02/index.html#/exercise-01). Neural transition: Bengio et al. (2003), Section 2: https://www.jmlr.org/papers/v3/bengio03a.html.
 
 ---
 
@@ -49,10 +58,12 @@ Allow 3 minutes. Recall Lecture 02 without repeating smoothing or perplexity der
 
 <img class="diagram" src="assets/token-to-loss.svg" data-excalidraw-source="assets/token-to-loss.excalidraw" alt="Token IDs pass through embedding lookup, context states, and vocabulary logits. Logits and shifted targets meet at scalar cross-entropy loss.">
 
-Cross-entropy compares each position’s logits with its next-token target.
+**Same next-token task; learned parameters replace counts.**
 
 Note:
-The diagram labels the same shape contract as the original table. B is batch size, T is input length, d is vector width. Follow the arrows during the first explanation, then revisit after E03.
+Cross-entropy compares each position’s logits with its next-token target. Follow the arrows during the first explanation, then revisit after E03.
+
+Allow 1 minute. Last week, we estimated next-token probabilities by counting. Today, we learn parameters that produce those probabilities. Point from token IDs to the trainable embedding, output scores, and loss; the prediction task and negative log-likelihood stay the same. This lecture's TinyLM uses h_t = E[w_t], so it is still a bigram model. Learning an embedding does not by itself provide a longer context.
 
 B is the number of sequences, T the input length, d the vector width. In this simple setup the context output has the same width as the embedding; this is a modeling choice, not a universal constraint. Revisit this diagram after each exercise. CS336 Lecture 2 motivates shape reasoning: https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py.
 

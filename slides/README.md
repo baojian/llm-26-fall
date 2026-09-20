@@ -39,6 +39,8 @@ the revision map from the Spring port. The
 [notebook](lecture-03/lecture-03-exercise.ipynb) runs exercises E01–E06 and
 optional practices P01–P03 offline on CPU. Longer classification and
 static-embedding material is in [optional reading](lecture-03/classical-reading.md).
+An opening visual review reuses Lecture 02’s toy corpus: trace bigram counts,
+normalize, and sample a next token before the neural computation.
 Seven editable diagrams and a PPMI heatmap accompany the explanations; browser
 controls demonstrate row lookup and the memory cost of changing table dimensions.
 See [asset provenance](lecture-03/assets/README.md) for the teaching figure,

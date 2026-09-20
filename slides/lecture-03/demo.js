@@ -1,3 +1,5 @@
+import { matchingPairs, nextTokenDistribution, reviewFigure, sampleNext } from './ngram-review.js';
+
 // Small, deterministic classroom mechanisms. All values and assets stay local.
 const SVG = 'http://www.w3.org/2000/svg';
 const colors = { ink: '#142e4b', blue: '#20578c', green: '#28673f', orange: '#a85a29' };
@@ -26,6 +28,7 @@ function canvas(id, description) {
 }
 
 export async function initialize() {
+  await initializeNgramReview();
   const response = await fetch(new URL('assets/lookup-values.json', import.meta.url));
   if (!response.ok) throw new Error('The lookup example could not load.');
   const { values } = await response.json();
@@ -101,4 +104,67 @@ export async function initialize() {
   document.getElementById('memory-reset').addEventListener('click', () => { rows = 32000; width = 512; memory(); });
   lookup(5);
   memory();
+}
+
+
+async function initializeNgramReview() {
+  const chart = document.getElementById('ngram-visual');
+  const controls = document.getElementById('ngram-controls');
+  const trace = document.getElementById('ngram-trace');
+  const sample = document.getElementById('ngram-sample');
+  const model = chart.layout.meta;
+  let state;
+  let busy = false;
+
+  async function render() {
+    busy = true;
+    try {
+      const figure = reviewFigure(model, state);
+      await Plotly.react(chart, figure.data, { ...figure.layout, width: 1152, height: 410 }, figure.config);
+      const counting = state.phase === 'counts';
+      const total = matchingPairs(model, state.context).length;
+      trace.textContent = counting ? state.seen < total ? 'Next pair' : 'Normalize' : 'Trace pairs';
+      sample.disabled = counting;
+      for (const button of controls.querySelectorAll('[data-ngram-context]')) {
+        button.setAttribute('aria-pressed', String(button.dataset.ngramContext === state.context));
+      }
+      chart.dataset.context = state.context;
+      chart.dataset.phase = state.phase;
+      chart.dataset.seen = String(counting ? state.seen : total);
+      chart.dataset.sampled = state.sampled || '';
+      const values = nextTokenDistribution(model, state.context, counting ? state.seen : Infinity);
+      const nonzero = model.vocabulary.flatMap((token, i) => values.counts[i]
+        ? [`${token}: ${values.counts[i]}${counting ? '' : ` / ${values.total}`}`] : []);
+      chart.setAttribute('aria-label', `Toy bigram ${state.phase} after ${state.context}. `
+        + nonzero.join('; ') + '. All other output tokens: zero.'
+        + (state.sampled ? ` Sampled ${state.sampled}${state.sampled === 'EOS' ? '; stop' : ''}.` : ''));
+    } finally {
+      busy = false;
+    }
+  }
+
+  function reset(context = 'I') {
+    state = { context, phase: 'probabilities', seen: 0, sampled: null };
+    return render();
+  }
+  controls.addEventListener('submit', event => event.preventDefault());
+  controls.addEventListener('click', async event => {
+    const button = event.target.closest('button');
+    if (!button || busy) return;
+    if (button.dataset.ngramContext) return reset(button.dataset.ngramContext);
+    if (button.id === 'ngram-reset') return reset();
+    if (button.id === 'ngram-trace') {
+      const total = matchingPairs(model, state.context).length;
+      state.sampled = null;
+      if (state.phase !== 'counts') {
+        state.phase = 'counts';
+        state.seen = 1;
+      } else if (state.seen < total) state.seen++;
+      else state.phase = 'probabilities';
+    } else if (button.id === 'ngram-sample' && state.phase === 'probabilities') {
+      state.sampled = sampleNext(model, state.context, Math.random());
+    }
+    await render();
+  });
+  await reset();
 }

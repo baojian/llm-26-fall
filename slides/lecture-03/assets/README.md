@@ -67,3 +67,22 @@ The E04 held-out pairs 0 → 1 and 9 → 0 are constructed coverage probes, not 
 representative evaluation dataset. They do not alter the training curve.
 E06's memory demonstration measures the payload of a separate small CPU
 model's tensors after one Adam update; no checkpoints or run logs are saved.
+
+## Opening n-gram review
+
+`ngram-review.json` is an editable Plotly figure with the exact three-sentence
+toy corpus and output vocabulary from [Lecture 02 E01](../../lecture-02/index.html#/exercise-01)
+in `layout.meta`. The initial bars are unsmoothed bigram MLEs after `I`:
+`am: 2/3`, `do: 1/3`, and zero for the other eight output tokens. Token IDs
+are the zero-based positions in that vocabulary; BOS is an input-only marker.
+These IDs are local to the recap, not the later notebook's synthetic IDs.
+
+[ngram-review.js](../ngram-review.js) computes sentence-local pairs, counts,
+normalization, sampling, and figure specifications. [demo.js](../demo.js)
+connects the context, trace, sampling, and reset buttons. Tracing first shows
+raw counts, then explicitly normalizes; the axes label the changing units.
+Sampling is one draw from the complete selected conditional distribution,
+with EOS labeled as stop. There are no cross-sentence pairs, smoothing, model
+weights, remote runtime requests, or autoplay. Print starts from the complete
+`I` distribution. `tests/test_ngram_review.mjs` verifies the corpus counts and
+sampling boundaries; the slide browser check verifies the controls.

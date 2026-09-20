@@ -36,7 +36,7 @@ Times include the exercises. Breaks are outside the 135 teaching minutes.
 
 | Period | Minutes | Slides | Teaching and activity |
 | --- | --- | --- | --- |
-| 1 | 0–8 | 1–6 | Recall n-gram prediction; introduce the token-to-loss shapes and the three representation types |
+| 1 | 0–8 | 1–6 | Visual bigram review (3 min) and neural bridge (1 min); introduce shapes and representation types |
 | 1 | 8–18 | 7–10 | Trainable lookup, one-hot equivalence, dtype and device; **E01, 4 min** |
 | 1 | 18–43 | 11–20 | Ten-slide classical bridge listed below; **E02, 4 min**, followed immediately by autograd |
 | 1 | 43–45 | 21 | Contrast a static lookup with a context-dependent state |
@@ -76,6 +76,24 @@ is to understand token lookup inside a trainable language model.
 The following contextual-state slide closes the bridge into modern LMs; it
 belongs to the 50 other slides. No Naive Bayes/LR survey, full word2vec backward
 derivation, or catalog of benchmark scores is restored to the classroom deck.
+
+## Opening visual review
+
+Use slides 3–4 for a **four-minute recap within the existing opening eight
+minutes**. Slide 3 reuses Lecture 02 E01's three sentences. Recall tokens and
+arbitrary IDs, trace the three `I` contexts, accumulate `am:2, do:1`, normalize
+to `2/3, 1/3`, and draw one next token. The count trace changes the axis units
+explicitly; sampling becomes available only for the complete distribution.
+`Sam` and `BOS` provide optional second examples. No pair crosses a sentence
+boundary; BOS is input-only and EOS terminates a sequence. Reset restores the
+complete `I` distribution, which also serves as the PDF example.
+
+Ask students to predict before each click; this is an oral retrieval prompt,
+not another timed exercise. Slide 4 then explains the change from count
+estimates to trainable lookup and output scores. **TinyLM remains a bigram:**
+an embedding alone does not extend its context. The full-prefix context
+network is taught later. The deck remains 60 slides, with the classical block
+still at slides 11–20 and the existing quiz time intact.
 
 ## Notebook correspondence
 
