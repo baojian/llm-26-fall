@@ -5,6 +5,20 @@
 
 ## Goal
 
+A finite vocabulary must represent arbitrarily long numbers by reusing smaller
+pieces. GPT-4's `cl100k_base`
+[limits numeric chunks to at most three characters](https://github.com/openai/tiktoken/blob/main/tiktoken_ext/openai_public.py)
+before BPE, restricting which digits can merge together. A useful way to analyze
+this choice is the tradeoff between sequence length and vocabulary size: larger
+groups can shorten sequences, but covering every possible group costs more
+entries. There are 1,000 ASCII digit strings of exactly three digits, compared
+with 10,000 of exactly four digits, including leading zeros; shorter strings
+need additional entries. The boundaries also affect how the model processes
+numbers: [Singh and Strouse (2024)](https://arxiv.org/abs/2402.14903) found that
+changing the grouping direction affected addition accuracy in GPT-3.5 and
+GPT-4. Implementing this rule connects a small text-processing function to
+choices that shape a language model's vocabulary and numerical reasoning.
+
 Implement one function that groups digits from left to right, with at most
 three digits per chunk. Use it to understand how a pre-tokenization rule
 affects the vocabulary needed to represent numbers.
@@ -150,3 +164,8 @@ Larger groups can shorten numeric sequences but require more vocabulary entries
 if every possible group is represented by one token. BPE operates within each
 chunk, so chunk counts and final token counts must be distinguished. See the
 [educational BPE implementation](https://github.com/openai/tiktoken/blob/main/tiktoken/_educational.py).
+
+Suggested reading: Aaditya K. Singh and DJ Strouse (2024),
+[Tokenization counts: the impact of tokenization on arithmetic in frontier LLMs](https://arxiv.org/abs/2402.14903).
+The introduction and Figure 3 explain how number tokenization differs between
+GPT-3 and GPT-4; Section 3 examines the effect of grouping direction on addition.
