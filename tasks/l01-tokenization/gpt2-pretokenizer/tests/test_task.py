@@ -1,15 +1,17 @@
-"""Checker for every file in submissions/. Task authors edit FUNCTION and CASES only.
+"""Public GPT-2 pre-tokenizer checks for every file in submissions/.
 
 Run one student:  uv run python scripts/tasks.py check tasks/l01-tokenization/gpt2-pretokenizer <username>
 Run everyone:     uv run python scripts/tasks.py check tasks/l01-tokenization/gpt2-pretokenizer
 """
 
 import importlib.util
+import json
 from pathlib import Path
 
 import pytest
 
 FUNCTION = "solve"
+DATA = Path(__file__).resolve().parents[1] / "data"
 CASES = [
     # (input, expected output)
     ('Hello world', ['Hello', ' world']),
@@ -20,12 +22,29 @@ CASES = [
     ('tab\tsep\nline', ['tab', '\t', 'sep', '\n', 'line']),
     ('snake_case', ['snake', '_', 'case']),
     ('a_b', ['a', '_', 'b']),
+    ('2026', ['2026']),
+    ("WE'RE", ['WE', "'", 'RE']),
+    ('end \t\n', ['end', ' \t\n']),
+    (' \t ', [' \t ']),
+    ('café 中文 １２３４', ['café', ' 中文', ' １２３４']),
+    ('x²=½', ['x²', '=', '½']),
+    ("don't stop", ['don', "'t", ' stop']),
+    ('x2 + 3x = 0', ['x', '2', ' +', ' 3', 'x', ' =', ' 0']),
+    ("It's 3.14", ['It', "'s", ' 3', '.', '14']),
+    (DATA.joinpath('sample.txt').read_text(encoding='utf-8'),
+     json.loads(DATA.joinpath('sample-chunks.json').read_text(encoding='utf-8'))),
 ]
 PREDICTION_INPUTS = ["don't stop", 'x2 + 3x = 0', "It's 3.14"]  # listed in instruction.md; students predict these
 MIN_OWN_CASES = 2
 MIN_NOTES_CHARS = 200
 
 SUBMISSIONS = sorted(p for p in (Path(__file__).resolve().parents[1] / "submissions").glob("*.py") if not p.name.startswith((".", "_")))
+
+
+def test_raw_text_fixture_preserves_every_character():
+    text, expected = CASES[-1]
+    assert text.endswith("\n")
+    assert "".join(expected) == text
 
 
 def load_module(path):

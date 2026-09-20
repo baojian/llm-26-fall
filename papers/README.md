@@ -22,6 +22,15 @@ plain Git files, not Git LFS, because GitHub Pages does not serve LFS objects.
   [Course PDF](2018-emnlp-kudo-sentencepiece-language-independent-subword-tokenizer.pdf) ·
   [Original publication](https://aclanthology.org/D18-2012/).
   Further reading on tokenizer implementation and language independence.
+- Alec Radford, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, and
+  Ilya Sutskever. 2019. *Language Models are Unsupervised Multitask Learners*
+  (GPT-2). OpenAI technical report.
+  [Course PDF](2019-openai-radford-language-models-unsupervised-multitask-learners-gpt2.pdf) ·
+  [Original report](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf).
+  Unmodified PDF, retrieved September 20, 2026. License: not specified in the
+  source PDF.
+  Section 2.2 explains the character-category boundaries and space exception
+  used in the [GPT-2 pre-tokenizer task](../tasks/l01-tokenization/gpt2-pretokenizer/instruction.md).
 - Aaditya K. Singh and DJ Strouse. 2024.
   *Tokenization counts: the impact of tokenization on arithmetic in frontier LLMs*.
   arXiv preprint.
