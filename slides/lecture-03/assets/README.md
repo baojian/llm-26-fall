@@ -17,7 +17,8 @@ unchanged. The other images are byte-identical copies.
 | `embedding-paragraph-vector.png` | Paragraph vector framework. Figure from Le and Mikolov (2014), [Distributed Representations of Sentences and Documents](https://proceedings.mlr.press/v32/le14.html). |
 
 The PNGs support the optional [classical reading](../classical-reading.md);
-they are not projected in the revised 50-slide core deck.
+they are not projected in the revised 60-slide core deck. The ten-slide
+classical bridge uses readable native tables, equations, and runnable examples.
 
 ## Revised lecture assets
 
@@ -40,3 +41,10 @@ figure with the executable notebook, allowing small floating-point differences.
 The PPMI counts in optional notebook P01 come from Jurafsky and Martin,
 *Speech and Language Processing*, [Appendix J](https://web.stanford.edu/~jurafsky/slp3/J.pdf),
 Figure J.2. The main deck's three-word co-occurrence table is invented toy data.
+The notebook recomputes its total (35), PMI(tea, drink), and a rank-two SVD of
+its PPMI matrix. It does not reuse the published P01 counts for that example.
+
+The E04 held-out pairs 0 → 1 and 9 → 0 are constructed coverage probes, not a
+representative evaluation dataset. They do not alter the training curve.
+E06's memory demonstration measures the payload of a separate small CPU
+model's tensors after one Adam update; no checkpoints or run logs are saved.

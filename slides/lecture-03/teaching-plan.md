@@ -1,15 +1,18 @@
-# Lecture 03 teaching plan
+# Lecture 03: Embeddings and PyTorch for LLMs
 
 **Date:** Wednesday, September 23, 2026
 
 **Central question:** How do discrete tokens become trainable representations?
 
-The core deck has **50 slides**. Students follow one computation from token
+The core deck has **60 slides**, including **exactly ten classical-bridge
+slides (11–20)**. Students follow one computation from token
 IDs to next-token loss, train a small model, and reason about its parameters
-and memory. The distributional hypothesis and one skip-gram example explain
-how an objective learns vectors. Longer classification and static-embedding
-material is in [optional reading](classical-reading.md), with links to the
-complete Spring lecture.
+and memory. The classical bridge explains context counts, PPMI, SVD/GloVe,
+CBOW/skip-gram, one checked gradient, fastText, and the limits of static-vector
+similarity. It connects these ideas to current token tables and contextual
+states. Longer derivations and classification history remain in
+[optional reading](classical-reading.md), with links to the complete Spring
+lecture. The instructor requested this bounded expansion on September 20.
 
 ## Learning objectives
 
@@ -17,8 +20,10 @@ By the end, students can:
 
 - Trace lookup, context states, output logits, shifted targets, and loss shapes.
 - Run a PyTorch training step and inspect gradient pathways.
+- Explain what the classical objectives preserve and what contextual states add.
+- Evaluate a held-out coverage probe without modifying parameters or gradients.
 - Distinguish token embeddings, contextual states, and retrieval vectors.
-- Explain weight tying and count unique table parameters and storage.
+- Explain weight tying and account for parameter, gradient, and optimizer storage.
 - Inspect configuration and tokenizer metadata without downloading weights.
 
 The running `TinyLM` is explicitly a **bigram model with a vector bottleneck**.
@@ -31,22 +36,46 @@ Times include the exercises. Breaks are outside the 135 teaching minutes.
 
 | Period | Minutes | Slides | Teaching and activity |
 | --- | --- | --- | --- |
-| 1 | 0–10 | 1–6 | Recall n-gram prediction; introduce the token-to-loss shapes and the three representation types |
-| 1 | 10–22 | 7–9 | Trainable lookup, integer IDs, one-hot equivalence; **E01, 4 min** |
-| 1 | 22–38 | 10–15 | Distributional intuition, one skip-gram example, negative sampling; **E02, 4 min**, followed immediately by autograd |
-| 1 | 38–45 | 16–17 | Similarity limitations and context-dependent states |
-| 2 | 0–12 | 18–21 | Shift sequences into next-token pairs; **E03, 4 min** |
-| 2 | 12–26 | 22–29 | Explicit bigram limitation, output projection, raw-logit cross-entropy, uniform baseline, numerical stability |
-| 2 | 26–40 | 30–33 | Inspect gradients, run SGD, and read the toy loss curve; **E04, 6 min** |
-| 2 | 40–45 | 34 | Debugging checks and the distinction between fitting and generalization |
-| 3 | 0–10 | 35–38 | Weight tying and its gradient pathways; **E05, 4 min** |
-| 3 | 10–23 | 39–45 | Unique parameters, pinned Qwen configurations, tokenizer IDs versus rows, memory and projection cost; **E06, 4 min** |
-| 3 | 23–30 | 46–50 | Retrieval preview, optional student contribution, exit questions, readings |
+| 1 | 0–8 | 1–6 | Recall n-gram prediction; introduce the token-to-loss shapes and the three representation types |
+| 1 | 8–18 | 7–10 | Trainable lookup, one-hot equivalence, dtype and device; **E01, 4 min** |
+| 1 | 18–43 | 11–20 | Ten-slide classical bridge listed below; **E02, 4 min**, followed immediately by autograd |
+| 1 | 43–45 | 21 | Contrast a static lookup with a context-dependent state |
+| 2 | 0–10 | 22–25 | Shift sequences into next-token pairs; **E03, 4 min** |
+| 2 | 10–24 | 26–34 | Bigram limitation, output projection, raw-logit cross-entropy, safe reshaping, uniform baseline, numerical stability |
+| 2 | 24–38 | 35–38 | Inspect gradients, run SGD, and read the toy loss curve; **E04, 6 min** |
+| 2 | 38–45 | 39–41 | Run the held-out coverage probe; distinguish evaluation mode, gradient recording, fitting, and generalization |
+| 3 | 0–9 | 42–45 | Weight tying and its gradient pathways; **E05, 4 min** |
+| 3 | 9–26 | 46–55 | Unique parameters, pinned Qwen configurations, tokenizer rows, fp32 training-memory ledger, measured optimizer state, projection FLOPs; **E06, 4 min** |
+| 3 | 26–30 | 56–60 | Retrieval preview, optional student contribution, exit questions; leave reading slides for reference |
 | 3 | 30–45 | — | **Quiz 1**, 15 minutes, as published on the course website |
 
 Quiz content and grading remain in the private instructor repository. E01–E06
 and P01–P03 are **ungraded practices** and use no Assignment A1 data or code.
 The same activities and expectations apply to all students.
+
+## The ten-slide classical bridge
+
+Keep this block to about 25 minutes including E02. Explain the transferable
+idea on each slide; optional reading supplies the full derivations. Static
+embeddings remain useful baselines and components, while the core course goal
+is to understand token lookup inside a trainable language model.
+
+| Slide | Topic | Connection carried forward |
+| ---: | --- | --- |
+| 11 | Distributional hypothesis and toy counts | Learn from context statistics |
+| 12 | PMI and PPMI | Compare association with a frequency-aware baseline |
+| 13 | Truncated SVD and GloVe | Compression and the choice of training objective |
+| 14 | CBOW versus skip-gram | Specify what predicts what; distinguish causal training |
+| 15 | Center and context tables | Parameters can serve different input/output roles |
+| 16 | Negative sampling | Distinguish pair discrimination from normalized next-token likelihood |
+| 17 | E02: one gradient | Connect a loss to a parameter update |
+| 18 | The same gradient with autograd | Verify the hand calculation with executable evidence |
+| 19 | fastText and character n-grams | Compare subword composition with an LLM tokenizer |
+| 20 | Similarity and analogy limitations | Inspect vectors without mistaking geometry for an LM evaluation |
+
+The following contextual-state slide closes the bridge into modern LMs; it
+belongs to the 50 other slides. No Naive Bayes/LR survey, full word2vec backward
+derivation, or catalog of benchmark scores is restored to the classroom deck.
 
 ## Notebook correspondence
 
@@ -56,12 +85,13 @@ network requests. Predict the result before running each cell. There are
 
 | ID | Slide ID | Expected response or computation |
 | --- | --- | --- |
-| E01 | `exercise-01` | Table `(10,4)`, IDs `(2,3)`, lookup `(2,3,4)`, one-hot `(2,3,10)`; product equals lookup |
+| E01 | `exercise-01` | Table `(10,4)`, IDs `(2,3)`, lookup `(2,3,4)`, one-hot `(2,3,10)`; product equals lookup; integer IDs and floating-point weights |
+| Bridge demo | `count-to-ppmi`, `count-to-dense` | Invented counts total 35; PMI(tea, drink) is 0.4150 bits; truncated SVD produces a `(3,2)` word table |
 | E02 | `exercise-02`, `autograd` | Positive-context gradient `(-0.2689,-0.1345)`; full loss 1.2873; autograd agrees with the hand calculation |
-| E03 | `exercise-03` | Last targets 5 and 9; embeddings `(2,4,4)`, logits `(2,4,10)`; eight predictions; zero-logit loss `log(10)` |
-| E04 | `exercise-04`, `training-curve` | Run 200 SGD updates on eight compatible pairs; final loss below 0.1 and all predictions correct |
+| E03 | `exercise-03`, `reshape-batch` | Last targets 5 and 9; embeddings `(2,4,4)`, logits `(2,4,10)`; eight predictions; zero-logit loss `log(10)`; reshape preserves label order |
+| E04 | `exercise-04`, `training-curve`, `evaluation-step` | Run 200 SGD updates on eight compatible pairs; final loss below 0.1; evaluate unseen input IDs 0 and 9 without an update |
 | E05 | `exercise-05`, `tied-gradient` | Untied input gradients only in selected rows; tied example has gradients in all ten rows; shared gradient equals the sum of the two separate contributions |
-| E06 | `exercise-06` | 16,384,000 parameters per exercise table; 31.25 MiB in bf16; verify real-model counts and logit storage |
+| E06 | `exercise-06`, `training-memory`, `inspect-training-state`, `projection-work` | 16,384,000 parameters per exercise table; 31.25 MiB in bf16; 250 MiB fp32 Adam/gradient/parameter subtotal; inspect actual small-model state; toy projection is about 640 forward FLOPs |
 | P01 | optional | PPMI from the published word–context counts; information/data is about 0.0944 bits |
 | P02 | optional | Train skip-gram on templates and inspect neighbors/analogies; these are toy results |
 | P03 | optional | Check a model-table row using pinned configuration/tokenizer metadata and cross-review another pair's evidence |
@@ -74,15 +104,18 @@ work. It copies the supplied assets into a fresh working notebook directory.
 
 [CS336 Lecture 2](https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py)
 is the closest match: tensors, memory accounting, gradients, and the training
-loop. This lecture introduces shapes, bytes per value, unique parameter counts,
-and the size of materialized logits. It includes a brief dense-projection FLOP
-estimate; detailed roofline analysis, GPU kernels and distributed execution
-remain for later weeks.
+loop. This lecture introduces shape/dtype/device contracts, non-contiguous
+target slices, unique parameter counts, and the size of materialized logits.
+Students see an explicit training-memory ledger and inspect initialized Adam
+state. A worked dense-projection example distinguishes stored parameters from
+repeated computation. Detailed roofline analysis, GPU kernels and distributed
+execution remain for later weeks.
 
 We retain sigmoid/softmax and cross-entropy as prerequisites. We do not repeat
 the complete Naive Bayes/logistic-regression sequence. Full word2vec gradient
-walkthroughs, PPMI arithmetic, analogy benchmarks, GloVe/SVD/fastText, and document
-embedding history are optional. TF-IDF returns with retrieval. A short retrieval
+walkthroughs, extended PPMI arithmetic, analogy benchmarks, and document
+embedding history are optional. SVD, GloVe, CBOW, and fastText receive bounded
+coverage in the ten-slide bridge. TF-IDF returns with retrieval. A short retrieval
 preview explains why a document vector differs from a token-table row.
 
 ## Mapping from the first draft in PR #157
@@ -93,11 +126,11 @@ modern LMs and CS336 after reviewing that draft.
 
 | First-draft slides | Revised treatment |
 | --- | --- |
-| 3–32: classification | Logits, softmax and cross-entropy integrated into slides 25–29; other background in optional reading |
-| 34–57: meaning and counts | Slides 6–10; detailed PPMI moved from old E01 to P01 |
-| 59–100: word2vec | Slides 11–15, one example and immediate autograd; full diagrams linked from optional reading |
-| 101–122: evaluation and static methods | Slide 16 plus optional reading and P02 |
-| 124–127: retrieval models | Slides 6, 17 and 46 distinguish lookup, contextual states and retrieval representations |
+| 3–32: classification | Logits, softmax and cross-entropy integrated into slides 29–34; other background in optional reading |
+| 34–57: meaning and counts | Lookup in slides 6–10; toy counts, PPMI, and compression in 11–13; richer count exercise remains P01 |
+| 59–100: word2vec | Slides 14–18, one example and immediate autograd; full diagrams linked from optional reading |
+| 101–122: evaluation and static methods | SVD/GloVe in 13, fastText in 19, similarity limits in 20; extended reading and P02 |
+| 124–127: retrieval models | Slides 6, 21 and 56 distinguish lookup, contextual states and retrieval representations |
 | 129–136: PyTorch | Expanded across the lecture, including shifted targets, training and resource accounting |
 | Old E02 | Remains E02; only one gradient is required by hand |
 | Old E03 | Lookup becomes E01; loss becomes E03; tied-gradient comparison is new E05 |
@@ -114,10 +147,15 @@ modern LMs and CS336 after reviewing that draft.
   The gradient experiment keeps forward values identical to isolate tying.
 - The tiny-batch check requires labels compatible with the model's context and
   enough capacity. Successful fitting does not establish generalization.
+- The two held-out pairs are selected coverage probes for unseen input IDs,
+  not representative corpus evaluation. `eval()` and `no_grad()` serve
+  different purposes; neither takes an optimizer step.
 - Distinguish tokenizer entries, maximum token ID, and allocated table rows.
   Use the latter for parameter counts. Do not count added-token IDs twice.
-- Parameter storage excludes gradients, optimizer state and activations. Logit
-  storage is an illustrative materialization cost, not a peak-memory promise.
+- The fp32 ledger explicitly includes parameters, gradients and two Adam moment
+  tensors, but excludes activations, scalar counters and temporary buffers.
+  Measured tensor payload is not allocator or peak device-memory usage.
+  Logit storage is an illustrative materialization cost.
 
 ## Sources and reproducibility
 

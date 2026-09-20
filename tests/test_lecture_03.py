@@ -52,6 +52,19 @@ def test_lookup_shapes_and_one_hot_equivalence(lesson):
     assert lesson["e01_same"] is True
 
 
+def test_classical_bridge_checks_association_and_low_rank_approximation(lesson):
+    torch = lesson["torch"]
+    assert lesson["bridge_total"].item() == 35
+    assert lesson["bridge_pmi"][0, 0].item() == pytest.approx(math.log2(4 / 3))
+    assert lesson["bridge_pmi"][2, 0].item() == float("-inf")
+    assert lesson["bridge_ppmi"][2, 0].item() == 0
+    assert torch.isfinite(lesson["bridge_vectors"]).all()
+    assert tuple(lesson["bridge_vectors"].shape) == (3, 2)
+    # The error of an optimal rank-2 approximation is the discarded singular value.
+    residual = torch.linalg.norm(lesson["bridge_ppmi"] - lesson["bridge_reconstruction"])
+    assert residual.item() == pytest.approx(lesson["bridge_s"][2].item(), abs=1e-12)
+
+
 def test_skipgram_hand_gradient_matches_autograd(lesson):
     assert lesson["e02_loss"] == pytest.approx(1.2873, abs=5e-5)
     assert lesson["e02_grads"]["c_pos"] == pytest.approx([-0.2689, -0.1345], abs=5e-5)
@@ -67,6 +80,13 @@ def test_targets_are_shifted_within_each_sequence(lesson):
     assert lesson["targets"].tolist() == [[2, 3, 4, 5], [6, 7, 8, 9]]
     assert not lesson["targets"].is_contiguous()
     assert lesson["e03_shapes"] == {"embeddings": (2, 4, 4), "logits": (2, 4, 10)}
+
+
+def test_tensor_contract_and_flattening_preserve_target_alignment(lesson):
+    assert lesson["e01_dtypes"] == ["torch.int64", "torch.float32", "torch.float32"]
+    assert lesson["token_ids"].device == lesson["embedding"].weight.device
+    assert lesson["e03_view_failed"] is True
+    assert lesson["e03_flat_targets"].tolist() == [2, 3, 4, 5, 6, 7, 8, 9]
 
 
 def test_cross_entropy_equals_direct_nll_for_uniform_logits(lesson):
@@ -87,6 +107,20 @@ def test_training_fits_a_compatible_batch_and_updates_embeddings(lesson):
     assert lesson["e04_losses"][-1] < 0.1
     assert torch.equal(lesson["e04_predictions"], lesson["targets"])
     assert not torch.equal(lesson["e04_initial_embedding"], lesson["model"].embedding.weight)
+
+
+def test_heldout_probe_does_not_train_or_modify_gradients(lesson):
+    torch = lesson["torch"]
+    assert set(lesson["val_inputs"].flatten().tolist()).isdisjoint(lesson["inputs"].flatten().tolist())
+    assert math.isfinite(lesson["e04_validation_loss"])
+    assert lesson["e04_validation_requires_grad"] is False
+    assert lesson["e04_mode_restored"] is True
+    for kind in ["parameters", "gradients"]:
+        before = lesson[f"e04_eval_{kind}_before"]
+        after = lesson[f"e04_eval_{kind}_after"]
+        assert all(torch.equal(left, right) for left, right in zip(before, after, strict=True))
+    assert torch.equal(lesson["model"].embedding.weight.detach()[[0, 9]],
+                       lesson["e04_initial_embedding"][[0, 9]])
 
 
 def test_bigram_model_cannot_distinguish_earlier_context(lesson):
@@ -129,6 +163,18 @@ def test_parameter_and_logit_storage_arithmetic(lesson):
         },
     }
     assert lesson["e06_logit_mib"] == 593.5
+    assert lesson["e06_projection"] == {"parameters": 40, "positions": 8, "forward_flops": 640}
+
+
+def test_memory_ledger_includes_initialized_optimizer_moments(lesson):
+    assert lesson["e06_training_mib"] == {
+        "parameters": 62.5, "gradients": 62.5, "adam_moments": 125.0, "subtotal": 250.0,
+    }
+    measured = lesson["e06_measured_bytes"]
+    assert measured["parameters"] == measured["gradients"] == 320
+    assert measured["moments"] == 640
+    assert measured["scalar_counters"] > 0
+    assert measured["optimizer_state"] == measured["moments"] + measured["scalar_counters"]
 
 
 def test_model_evidence_distinguishes_ids_from_allocated_rows(lesson):

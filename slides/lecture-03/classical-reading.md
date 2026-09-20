@@ -1,7 +1,9 @@
 # Classical background for Lecture 03
 
-This optional reading collects the classification and static-embedding topics
-that are outside the core lecture. The core lesson follows token IDs through
+This optional reading extends the ten-slide classical bridge in the 60-slide
+lecture. It supplies longer explanations of the briefly introduced static
+methods and the classification background outside the core lecture.
+The core lesson follows token IDs through
 lookup, next-token loss, autograd, and a training step. No additional graded
 work is introduced here.
 
@@ -57,9 +59,12 @@ neural LM training.
 | GloVe | Learn vectors using a weighted objective over global co-occurrence counts. | [Pennington et al. (2014)](https://aclanthology.org/D14-1162/) |
 | fastText | Include character n-gram representations in word vectors. This is distinct from an LLM's subword tokenizer. | [Bojanowski et al. (2017)](https://aclanthology.org/Q17-1010/) |
 
-These methods are useful reference points. The core lecture keeps one
-skip-gram example to show how a training objective changes representations;
-it does not require memorizing a catalog of embedding algorithms.
+The core lecture introduces these methods in slides 11–20 and keeps one
+skip-gram gradient calculation to show how a training objective changes
+representations. PPMI/SVD are demonstrated on an invented three-word count
+table; detailed comparisons and historical derivations remain optional.
+The goal is to explain what each representation preserves and how an LLM's
+context network changes the representation of a token occurrence.
 
 ## One skip-gram update
 

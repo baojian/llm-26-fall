@@ -1,13 +1,13 @@
 <!-- .slide: class="title-slide" id="title" -->
 
-# Embeddings and PyTorch for Language Models
+# Embeddings and PyTorch for LLMs
 
 <p class="eyebrow">Lecture 03 · September 23, 2026</p>
 <p class="subtitle">How do discrete tokens become trainable representations?</p>
 <p class="byline">Baojian Zhou · Fudan University · CS40008.01</p>
 
 Note:
-Three 45-minute periods, including 15 minutes for Quiz 1. The six exercises are ungraded practice. Start from the n-gram language model introduced last week.
+Three 45-minute periods, including 15 minutes for Quiz 1. The 60-slide deck includes a ten-slide classical bridge, from distributional-hypothesis through similarity-limits. The six exercises are ungraded practice. Start from the n-gram language model introduced last week.
 
 ---
 
@@ -150,6 +150,28 @@ Pairs write the four shapes before running the notebook. A common wrong answer f
 
 ---
 
+<!-- .slide: id="tensor-contract" -->
+
+## A tensor has more than a shape
+
+| Object | Shape | Type in this notebook |
+| --- | --- | --- |
+| Token IDs | $(B,T)$ | `torch.int64` |
+| Lookup weights | $(V,d)$ | `torch.float32` |
+| Lookup result | $(B,T,d)$ | `torch.float32` |
+
+```python
+print(ids.dtype, E.weight.dtype)
+print(ids.device, E.weight.device)
+```
+
+Keep model parameters and input tensors on the same device.
+
+Note:
+The notebook stays on CPU. Integer IDs select rows; converting IDs to floating point does not turn them into embeddings. Later GPU work moves both the model and its input tensors to the chosen device. Inspect shape, dtype and device together before debugging a loss. CS336 Lecture 2, tensors_basics and tensors_on_gpus: https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py. PyTorch Embedding accepts integer indices; this notebook deliberately uses int64.
+
+---
+
 <!-- .slide: id="distributional-hypothesis" -->
 
 ## Learning from contexts
@@ -165,27 +187,67 @@ Similar context patterns provide a signal for learning similar representations.
 Counting stores the patterns directly; prediction learns compact vectors.
 
 Note:
-These are invented counts, not corpus measurements. Distributional similarity is a useful tendency, not a guarantee of synonymy: antonyms can share contexts. PPMI is optional notebook P01; detailed TF-IDF belongs with retrieval. Jurafsky and Martin, Chapter 5: https://web.stanford.edu/~jurafsky/slp3/5.pdf.
+Start the ten-slide classical bridge here; spend about 25 minutes including E02. These are invented counts, not corpus measurements. Distributional similarity is a useful tendency, not a guarantee of synonymy: antonyms can share contexts. The next two slides reuse this exact table. Detailed TF-IDF belongs with retrieval. Jurafsky and Martin, Chapter 5: https://web.stanford.edu/~jurafsky/slp3/5.pdf.
+
+---
+
+<!-- .slide: id="count-to-ppmi" -->
+
+## Count association, not just frequency
+
+$$\operatorname{PMI}(w,c)=\log_2\frac{p(w,c)}{p(w)p(c)}$$
+
+In our toy table: total $35$, tea total $14$, “drink” total $15$.
+
+$$\operatorname{PMI}(\text{tea},\text{drink})
+=\log_2\frac{8\times35}{14\times15}=0.415\text{ bits}$$
+
+**PPMI** replaces negative PMI with zero.
+
+Transferable idea: compare a pattern with a frequency-aware baseline.
+
+Note:
+Classical bridge 2/10. The denominator is the expectation under independence. The notebook recomputes this example and maps a zero count to PPMI zero; it also notes that rare events can give noisy association estimates. Do the richer published-count exercise only in optional P01. Source: Jurafsky and Martin, Appendix J, equations J.3–J.6: https://web.stanford.edu/~jurafsky/slp3/J.pdf.
+
+---
+
+<!-- .slide: id="count-to-dense" -->
+
+## Compress counts into dense vectors
+
+| Method | Signal used to learn vectors |
+| --- | --- |
+| Truncated SVD | Low-rank approximation of a weighted count matrix |
+| GloVe | Weighted fit to global log co-occurrence counts |
+
+For SVD: $X\approx U_k\Sigma_kV_k^\top$; one choice is $E=U_k\Sigma_k$.
+
+Both give a static vector for each vocabulary word.
+
+**LLM connection:** compact representations; the training objective determines what they preserve.
+
+Note:
+Classical bridge 3/10. Notebook X is the preceding 3-by-3 toy PPMI matrix; k=2 gives a 3-by-2 word table. Different weighting and factorization choices produce different geometry. GloVe uses its own weighted least-squares objective with biases; it is not simply the SVD written above. Modern token tables are learned jointly with a language model's context network and objective. Sources: Pennington et al. (2014), Sections 2–3, especially equation 8: https://aclanthology.org/D14-1162/; Bengio et al. (2003), Section 2: https://www.jmlr.org/papers/v3/bengio03a.html.
 
 ---
 
 <!-- .slide: id="skipgram-pairs" -->
 
-## One word2vec example
+## word2vec: choose a prediction task
 
 Toy sentence: “the quick brown fox jumps”
 
-Center: **brown** · window radius: **1**
-
-| Observed positive pairs | Sampled negative pair |
+| Method | Prediction |
 | --- | --- |
-| (brown, quick) | (brown, car) |
-| (brown, fox) | |
+| CBOW | quick, fox → brown |
+| Skip-gram | brown → quick; brown → fox |
 
-The model learns to score observed pairs above sampled pairs.
+We use skip-gram: observed pair **(brown, fox)**; sampled pair **(brown, car)**.
+
+The objective trains the vectors through their predictions.
 
 Note:
-A sampled negative is noise from a chosen distribution, not a claim that the words can never occur together. Windows in skip-gram can include words on both sides; causal next-token training only uses preceding tokens. Mikolov et al. (2013), Section 2.2: https://papers.nips.cc/paper_files/paper/2013/file/9aa42b31882ec039965f3c4923ce901b-Paper.pdf.
+Classical bridge 4/10. Radius-one context of brown is quick and fox. CBOW combines context vectors to predict a center word; skip-gram reverses the prediction direction. A sampled negative comes from a chosen noise distribution, not a claim that the pair is impossible. These windows can include both sides; causal next-token training uses preceding tokens. Sources: Mikolov et al. (2013), Sections 3.1–3.2: https://arxiv.org/abs/1301.3781; negative sampling, Section 2.2: https://papers.nips.cc/paper_files/paper/2013/file/9aa42b31882ec039965f3c4923ce901b-Paper.pdf.
 
 ---
 
@@ -267,6 +329,26 @@ Do this immediately after E02. F.logsigmoid computes the log-sigmoid stably; do 
 
 ---
 
+<!-- .slide: id="subword-heritage" -->
+
+## fastText: share information inside words
+
+fastText composes a word vector from character n-gram vectors and a word feature.
+
+Example trigrams of `<cats>`: `<ca`, `cat`, `ats`, `ts>`.
+
+| Approach | Representation unit |
+| --- | --- |
+| fastText | Overlapping features summed into a word vector |
+| LLM subword tokenizer | A sequence of token IDs, each with a lookup |
+
+Shared lesson: word boundaries need not define the smallest reusable unit.
+
+Note:
+Classical bridge 9/10. Boundary symbols mark the word edges; the four trigrams are an illustration, not the full feature inventory. Subword features can help compose vectors for rare or unseen words, but the resulting fastText word representation is still context independent. An LLM tokenizer segments a sequence before the context network acts; it is a different construction. Source: Bojanowski et al. (2017), Section 3.2: https://aclanthology.org/Q17-1010/. Connect this distinction to Lecture 01.
+
+---
+
 <!-- .slide: id="similarity-limits" -->
 
 ## What do nearby vectors tell us?
@@ -281,7 +363,7 @@ $$\cos(\mathbf u,\mathbf v)=
 Optional practice trains small vectors and inspects their neighbors.
 
 Note:
-Avoid a catalog of analogy benchmark scores. The optional corpus is made from templates, so recovered groups largely reflect those templates. Zero vectors need care when computing cosine. See optional notebook P02 and classical-reading.md.
+End the ten-slide classical bridge here. Static methods remain useful baselines and teaching tools; the next slide distinguishes their table lookup from a contextual state. Avoid a catalog of analogy benchmark scores. The optional corpus is made from templates, so recovered groups largely reflect those templates. Zero vectors need care when computing cosine. See optional notebook P02 and classical-reading.md.
 
 ---
 
@@ -491,6 +573,28 @@ Reference: https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyL
 
 ---
 
+<!-- .slide: id="reshape-batch" -->
+
+## Flatten positions without mixing labels
+
+The slice `targets = tokens[:, 1:]` can be non-contiguous.
+
+```python
+print(targets.shape, targets.is_contiguous())
+flat_targets = targets.reshape(-1)
+flat_logits = logits.reshape(-1, V)
+print(flat_targets.shape, flat_logits.shape)
+```
+
+Shapes: `(8,)` and `(8, 10)`; both flatten positions in the same order.
+
+`reshape` may copy storage when needed. `view` requires compatible strides.
+
+Note:
+The notebook shows that view(-1) fails on this particular target slice and verifies the flattened label order. Non-contiguous tensors are not intrinsically wrong; the issue is whether a requested view can represent their layout. No row boundary is turned into an extra prediction pair. Source: PyTorch tensor views and reshape: https://docs.pytorch.org/docs/stable/tensor_view.html and https://docs.pytorch.org/docs/stable/generated/torch.reshape.html.
+
+---
+
 <!-- .slide: id="uniform-loss" -->
 
 ## A controlled loss check
@@ -599,6 +703,47 @@ The teaching figure samples the E04 run. Zero on the horizontal axis is before a
 
 ---
 
+<!-- .slide: id="evaluation-step" -->
+
+## Evaluate without updating the model
+
+Hold out two toy pairs: **0 → 1** and **9 → 0**.
+
+```python
+val_inputs = torch.tensor([[0, 9]])
+val_targets = torch.tensor([[1, 0]])
+model.eval()
+with torch.no_grad():
+    val_loss = next_token_loss(model(val_inputs), val_targets)
+model.train()
+```
+
+`eval()` changes module behavior; `no_grad()` disables gradient recording.
+
+Note:
+These are deliberately selected coverage probes: IDs 0 and 9 never occurred as inputs in the E04 training batch. They were held out from all 200 updates. Two constructed pairs cannot estimate representative corpus performance. The helper next_token_loss is the E03 cross-entropy computation. TinyLM has no dropout or batch normalization, so eval() does not change its output here; the distinction matters in larger models. The notebook restores the previous training mode and verifies that evaluation leaves parameters and gradients unchanged. PyTorch evaluation modes: https://docs.pytorch.org/docs/stable/notes/autograd.html#locally-disabling-gradient-computation.
+
+---
+
+<!-- .slide: id="evaluation-coverage" -->
+
+## Low training loss can leave blind spots
+
+| Check | What it tells us |
+| --- | --- |
+| Fit the eight training pairs | The update loop can learn compatible labels |
+| Probe unseen input IDs 0 and 9 | Their untied lookup rows received no training gradient |
+| Evaluate representative held-out text | Needed to assess language-model generalization |
+
+Read both losses in Notebook E04.
+
+The two-pair probe checks coverage; it is not a benchmark score.
+
+Note:
+The output table was updated during training, including its rows for possible output tokens; the absent input rows were not. Unchanged input rows can still produce changed predictions through the learned output table. Do not infer that every unseen input must have high loss, or choose these two pairs to tune training hyperparameters. A meaningful evaluation needs sufficient independently held-out text and a specified sampling distribution. Keep the toy fitting demonstration separate from that claim.
+
+---
+
 <!-- .slide: id="training-checks" -->
 
 ## Checks before a larger experiment
@@ -664,7 +809,7 @@ Which rows of the **input embedding parameter** can receive gradients from next-
 <div class="answer fragment"><p>Untied lookup: only selected rows $0,1,5,7$ can receive gradients. Tied output: every row can; this example gives all ten nonzero gradients.</p></div>
 
 Note:
-E05 uses identical initial input values for the two cases and a separately initialized nonzero output table for the untied case. The targets are [[5,5,2],[1,0,3]], used only to illustrate gradients. This batch is not the E04 memorization batch. No optimizer step is involved; weight decay and previous optimizer state are outside the claim.
+E05 copies the same nonzero values into the untied input and output tables and the tied table, so both models start with identical logits. The untied tables remain distinct Parameter objects. This isolates the change in gradient pathways. The targets are [[5,5,2],[1,0,3]], used only to illustrate gradients. This batch is not the E04 memorization batch. No optimizer step is involved; weight decay and previous optimizer state are outside the claim.
 
 ---
 
@@ -779,6 +924,49 @@ Arithmetic uses the pinned configurations and is computed in E06. For 8B, two se
 
 ---
 
+<!-- .slide: id="training-memory" -->
+
+## Build a training-memory ledger
+
+For $P=16{,}384{,}000$ unique parameters, assume **fp32 throughout**:
+
+| Tensor payload | Bytes per parameter | MiB |
+| --- | ---: | ---: |
+| Parameters | 4 | 62.5 |
+| Gradients | 4 | 62.5 |
+| Adam's two moment tensors | 8 | 125 |
+| Subtotal | 16 | **250** |
+
+Activations, scalar counters, temporary buffers and allocator overhead are additional.
+
+Note:
+Reuse E06's parameter count. This is an explicit fp32 accounting example, not a universal mixed-precision formula or a total device-memory estimate. SGD without momentum has no persistent moment tensors: parameters plus gradients would be 125 MiB under the same assumptions. Adam adds first- and second-moment tensors; optional variants or master copies can change storage. CS336 Lecture 2, optimizer and tensors_memory: https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py. PyTorch Adam: https://docs.pytorch.org/docs/stable/generated/torch.optim.Adam.html.
+
+---
+
+<!-- .slide: id="inspect-training-state" -->
+
+## Check the tensors actually stored
+
+Notebook E06 takes one Adam step on an **80-parameter** fp32 model.
+
+```python
+nbytes = lambda t: t.numel() * t.element_size()
+parameter_bytes = sum(nbytes(p) for p in probe.parameters())
+gradient_bytes = sum(nbytes(p.grad) for p in probe.parameters())
+state_bytes = sum(
+    nbytes(t) for state in probe_opt.state.values()
+    for t in state.values() if torch.is_tensor(t)
+)
+```
+
+Count unique parameters, then inspect gradients and initialized optimizer state.
+
+Note:
+The notebook prints the three payload totals and checks the two Adam moment tensors separately from scalar step counters. State is created on the first optimizer step, so measuring a fresh optimizer would miss the moments. This counts tensor contents, not peak process or accelerator memory; PyTorch allocators, workspaces, activations and Python objects add other costs. All tensors in this demonstration are small and remain on CPU. Compare the formula on the preceding slide with these measured payloads.
+
+---
+
 <!-- .slide: id="logit-costs" -->
 
 ## The vocabulary also affects activations
@@ -795,6 +983,27 @@ Weight tying saves table storage; it does not remove these output scores.
 
 Note:
 Count a multiply and an add as two FLOPs; omit bias and lower-order operations. This is forward projection only, not full training FLOPs. Actual peak memory depends on precision, kernels and whether logits are materialized; cross-entropy may use higher precision. Later systems lectures cover ways to avoid materializing full intermediates. E06 verifies the byte count.
+
+---
+
+<!-- .slide: id="projection-work" -->
+
+## Count work as well as stored parameters
+
+In the toy model: $B=2$, $T=4$, $d=4$, $V=10$.
+
+| Quantity | Count |
+| --- | ---: |
+| Output-table parameters | $dV=40$ |
+| Prediction positions | $BT=8$ |
+| Forward projection FLOPs | $2BTdV=640$ |
+
+The same weights are used at every position.
+
+More tokens increase computation even when the parameter count stays fixed.
+
+Note:
+Count each multiply and add as one FLOP, giving the usual approximate 2mnk matmul convention. This excludes softmax, loss, backward computation and optimizer updates. E06 verifies the arithmetic without a hardware benchmark. Embedding lookup selects rows; it does not execute the full one-hot matrix product used to explain its equivalence. CS336 Lecture 2, tensor_operations_flops and gradients_flops: https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py. Later systems lectures relate operation counts to measured runtime.
 
 ---
 

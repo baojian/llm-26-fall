@@ -29,9 +29,11 @@ optional practices P01–P04 offline with the standard library. Media provenance
 [lecture-02/assets/README.md](lecture-02/assets/README.md).
 
 [Lecture 03](lecture-03/index.html) follows token IDs through embedding lookup,
-next-token loss, autograd, and a training step in 50 slides. It keeps one
-word2vec example and adds weight tying, contextual representations, and resource
-accounting using pinned Qwen configurations. Its
+next-token loss, autograd, and a training step in 60 slides. A ten-slide
+classical bridge connects counts, PPMI, SVD/GloVe, word2vec, and fastText to
+current representations. The main path includes held-out coverage probes,
+weight tying, contextual states, and measured and estimated training costs,
+using pinned Qwen configurations. Its
 [teaching plan](lecture-03/teaching-plan.md) includes the three-period timing and
 the revision map from the Spring port. The
 [notebook](lecture-03/lecture-03-exercise.ipynb) runs exercises E01–E06 and
