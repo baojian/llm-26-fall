@@ -1,15 +1,17 @@
-"""Checker for every file in submissions/. Task authors edit FUNCTION and CASES only.
+"""Public Han-runs checks for every file in submissions/.
 
 Run one student:  uv run python scripts/tasks.py check tasks/l01-tokenization/han-runs <username>
 Run everyone:     uv run python scripts/tasks.py check tasks/l01-tokenization/han-runs
 """
 
 import importlib.util
+import json
 from pathlib import Path
 
 import pytest
 
 FUNCTION = "solve"
+DATA = Path(__file__).resolve().parents[1] / "data"
 CASES = [
     # (input, expected output)
     ('用GPT写代码', ['用', 'GPT', '写代码']),
@@ -17,12 +19,32 @@ CASES = [
     ('', []),
     ('复旦大学 NLP 2026', ['复旦大学', ' ', 'NLP', ' ', '2026']),
     ('。。。', ['。。。']),
+    ('K2中文2026', ['K2', '中文', '2026']),
+    ('GPT4', ['GPT4']),
+    ('\t \n', ['\t \n']),
+    ('a\u00a0\u3000b', ['a', '\u00a0\u3000', 'b']),
+    ('Ａ１é🙂', ['Ａ１é🙂']),
+    ('㐀𠀀中', ['㐀𠀀', '中']),
+    ('\u4dff\u4e00\u9fff\ua000', ['\u4dff', '\u4e00\u9fff', '\ua000']),
+    ('中_文', ['中', '_', '文']),
+    ('A_!?🙂é中', ['A', '_!?🙂é', '中']),
+    ('Kimi K2 的 tokenizer', ['Kimi', ' ', 'K2', ' ', '的', ' ', 'tokenizer']),
+    ('2026年9月16日', ['2026', '年', '9', '月', '16', '日']),
+    ('GPT-4o很强', ['GPT', '-', '4o', '很强']),
+    (DATA.joinpath('sample.txt').read_text(encoding='utf-8'),
+     json.loads(DATA.joinpath('sample-chunks.json').read_text(encoding='utf-8'))),
 ]
 PREDICTION_INPUTS = ['Kimi K2 的 tokenizer', '2026年9月16日', 'GPT-4o很强']  # listed in instruction.md; students predict these
 MIN_OWN_CASES = 2
 MIN_NOTES_CHARS = 200
 
 SUBMISSIONS = sorted(p for p in (Path(__file__).resolve().parents[1] / "submissions").glob("*.py") if not p.name.startswith((".", "_")))
+
+
+def test_raw_text_fixture_preserves_every_character():
+    text, expected = CASES[-1]
+    assert text.endswith("\n")
+    assert "".join(expected) == text
 
 
 def load_module(path):

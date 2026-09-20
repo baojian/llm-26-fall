@@ -39,6 +39,14 @@ plain Git files, not Git LFS, because GitHub Pages does not serve LFS objects.
   Unmodified arXiv PDF, retrieved September 20, 2026, under
   [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/).
   Reading for the [digit-grouping task](../tasks/l01-tokenization/digit-grouping/instruction.md).
+- Kimi Team. 2025. *Kimi K2: Open Agentic Intelligence*. arXiv technical report.
+  [Course PDF](2025-arxiv-kimi-team-kimi-k2-open-agentic-intelligence.pdf) ·
+  [arXiv 2507.20534v2](https://arxiv.org/abs/2507.20534v2).
+  Unmodified arXiv PDF (February 3, 2026 revision), retrieved September 20,
+  2026, under [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+  Model background for the [Han-runs task](../tasks/l01-tokenization/han-runs/instruction.md);
+  the exact Han rule is documented in the
+  [tokenizer code](https://huggingface.co/moonshotai/Kimi-K2-Instruct/blob/main/tokenization_kimi.py).
 - The [tokenizer reading list](../docs/tokenizer-reading-list.md)
   links recent papers (2022–2026) on whether the tokenizer changes model
   quality and what text to train it on. It links to the papers; it holds no PDFs.
