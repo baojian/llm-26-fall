@@ -24,9 +24,27 @@ N-gram lecture into this template: probabilistic N-gram LMs, perplexity,
 smoothing, and neural probabilistic LMs. Its
 [teaching plan](lecture-02/teaching-plan.md) maps the timing and lists the
 differences from the Spring deck; its
-[notebook](lecture-02/lecture-02-exercise.ipynb) runs exercises E01–E05 and
-practice P01 offline with the standard library. Media provenance is in
+[notebook](lecture-02/lecture-02-exercise.ipynb) runs exercises E01–E03 and
+optional practices P01–P04 offline with the standard library. Media provenance is in
 [lecture-02/assets/README.md](lecture-02/assets/README.md).
+
+[Lecture 03](lecture-03/index.html) follows token IDs through embedding lookup,
+next-token loss, autograd, and a training step in 60 slides. A ten-slide
+classical bridge connects counts, PPMI, SVD/GloVe, word2vec, and fastText to
+current representations. The main path includes held-out coverage probes,
+weight tying, contextual states, and measured and estimated training costs,
+using pinned Qwen configurations. Its
+[teaching plan](lecture-03/teaching-plan.md) includes the three-period timing and
+the revision map from the Spring port. The
+[notebook](lecture-03/lecture-03-exercise.ipynb) runs exercises E01–E06 and
+optional practices P01–P03 offline on CPU. Longer classification and
+static-embedding material is in [optional reading](lecture-03/classical-reading.md).
+An opening visual review reuses Lecture 02’s toy corpus: trace bigram counts,
+normalize, and sample a next token before the neural computation.
+Seven editable diagrams and a PPMI heatmap accompany the explanations; browser
+controls demonstrate row lookup and the memory cost of changing table dimensions.
+See [asset provenance](lecture-03/assets/README.md) for the teaching figure,
+model metadata, and retained Spring images.
 
 ## Teaching from a classroom browser
 
@@ -133,6 +151,7 @@ slides/
   example/                Checked sample with a browser demonstration
   lecture-01/             Lecture 01 deck and lecture-01-exercise.ipynb
   lecture-02/             Lecture 02 deck and lecture-02-exercise.ipynb
+  lecture-03/             Lecture 03 deck and lecture-03-exercise.ipynb
   01-tokenization/        A lecture created when its content is ready
     index.html            Shared viewer shell
     lecture.json          Title, language, and optional demo module

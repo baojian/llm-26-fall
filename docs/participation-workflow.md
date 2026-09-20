@@ -1,6 +1,6 @@
 # Participation workflow: timelines, issues, and pull requests
 
-This page is the reusable operating chart for the course's GitHub-based
+This page describes the course's GitHub assignment announcements and
 participation (weekly tasks and surveys): when the teaching team opens
 issues, when students submit, who checks what, and how the results return
 to the class. Graded work (quizzes, assignments, the individual project) is
@@ -17,7 +17,7 @@ mechanical check, nothing to leak, and a chart shown at the next lecture.
 
 Two channels, and they do not mix:
 
-| Work | Counts toward | Where to submit | Public? |
+| Work | Counts toward | Where to submit | Submission public? |
 | --- | --- | --- | --- |
 | Quizzes 1–5 | Quizzes 10% | In class; grades recorded on [Fudan eLearning](https://elearning.fudan.edu.cn/) | no |
 | Assignments A1–A3 | Assignments 45% | [Fudan eLearning](https://elearning.fudan.edu.cn/), as announced there | no |
@@ -28,6 +28,26 @@ Two channels, and they do not mix:
 Nothing graded is submitted through GitHub, and nothing on GitHub needs a
 real name or student ID. If an assignment asks you to reuse code from a
 weekly task, copy it into your [eLearning](https://elearning.fudan.edu.cn/) submission; do not link the PR.
+
+### Assignment announcements
+
+The teaching team opens one public issue per released assignment with the
+`assignment` label. Students can find all of them in the
+[assignment announcement list](https://github.com/baojian/llm-26-fall/issues?q=is%3Aissue%20label%3Aassignment)
+and subscribe to the relevant issue for updates. [A1's announcement](https://github.com/baojian/llm-26-fall/issues/140)
+is the first example.
+
+- Title: `A1: <assignment title> — due <date>, <time> (Asia/Shanghai)`.
+- Body: release date, full deadline with year and time zone, course weight,
+  links to the published handout and submission instructions, eLearning,
+  and the handout's late policy. Use the same requirements for every student.
+- Comments: announcements and general clarifications. Solutions, completed
+  reports, results, student IDs, and grades stay private on eLearning.
+- Updates: keep the title and body synchronized with the handout and
+  eLearning; post a dated comment explaining any deadline or requirement change.
+- Lifecycle: keep the issue open during the submission and clarification
+  period; the teaching team closes it when that period ends. Students do not
+  claim this issue, submit a PR to it, or close it when they finish.
 
 ## 1. Semester timeline
 
@@ -64,7 +84,7 @@ gantt
     Quiz 5 :milestone, 2026-12-16, 0d
 
     section Assignments (submitted on eLearning)
-    A1 Text and probability :a1, 2026-09-16, 2026-09-30
+    A1 Tokenization and language models :a1, 2026-09-16, 2026-09-30
     A2                      :a2, 2026-10-14, 2026-11-04
     A3                      :a3, 2026-11-18, 2026-12-09
 
@@ -154,13 +174,19 @@ so several students can submit to the same issue.
 
 ## 4. Labels and naming rules (do not vary them)
 
-Every issue carries **one lecture label and one type label**. Lecture labels
-are stable even when dates move (the Oct 7 class moved to Oct 10, but L05 is
-still L05), and zero-padding keeps them sorted.
+Every lecture activity issue carries **one lecture label and one type label**.
+Lecture labels are stable even when dates move (the Oct 7 class moved to
+Oct 10, but L05 is still L05), and zero-padding keeps them sorted.
+
+Assignment announcement issues use the `assignment` type label and the
+assignment ID in their title. Lecture labels are optional for these issues
+because an assignment can cover several lectures.
 
 | Lecture labels (blue) | Type labels |
 | --- | --- |
-| `l01-tokenization`, `l02-ngram`, `l03-embeddings`, `l04-attention`, `l05-makeup`, `l06-transformer`, `l07-pretraining`, `l08-data`, `l09-scaling`, `l10-evaluation`, `l11-sft`, `l12-alignment`, `l13-rag`, `l14-inference`, `l15-diffusion`, `l16-agents` | `task` (student exercise, many submissions), `proposal` (a task suggested by a student through the issue form; relabelled `task` when accepted), `help wanted` (one student, improves the repo), `bug`, `figure`, `survey`, `prep` (teaching team's own lecture preparation, e.g. #39), `project` (teaching-team tracking only; project deliverables go through [eLearning](https://elearning.fudan.edu.cn/)), `not-done` |
+| `l01-tokenization`, `l02-ngram`, `l03-embeddings`, `l04-attention`, `l05-makeup`, `l06-transformer`, `l07-pretraining`, `l08-data`, `l09-scaling`, `l10-evaluation`, `l11-sft`, `l12-alignment`, `l13-rag`, `l14-inference`, `l15-diffusion`, `l16-agents` | `task` (student exercise, many submissions), `assignment` (graded assignment announcements and deadlines; submissions go through eLearning), `proposal` (a task suggested by a student through the issue form; relabelled `task` when accepted), `help wanted` (one student, improves the repo), `bug`, `figure`, `survey`, `prep` (teaching team's own lecture preparation, e.g. #39), `project` (teaching-team tracking only; project deliverables go through [eLearning](https://elearning.fudan.edu.cn/)), `not-done` |
+
+For weekly tasks, use the following naming and submission rules:
 
 | Item | Rule | Example |
 | --- | --- | --- |

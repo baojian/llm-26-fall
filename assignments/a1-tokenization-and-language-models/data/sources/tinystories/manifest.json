@@ -1,0 +1,65 @@
+{
+  "name": "tinystories",
+  "source": "modelscope",
+  "repo": "roneneldan/TinyStories",
+  "hf_repo": "roneneldan/TinyStories",
+  "path": "",
+  "pattern": "^(TinyStories.*\\.txt|data/.*\\.parquet)$",
+  "max_bytes": 5368709120,
+  "note": "TinyStories v1 and v2 text + parquet (CS336 tokenizer exercise corpus)",
+  "downloaded_at": "2026-09-12T02:05:25+0800",
+  "bytes": 5194760043,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 0,
+      "status": "downloaded"
+    },
+    {
+      "path": "TinyStories-train.txt",
+      "bytes": 1924281556,
+      "status": "downloaded"
+    },
+    {
+      "path": "TinyStories-valid.txt",
+      "bytes": 19447282,
+      "status": "downloaded"
+    },
+    {
+      "path": "TinyStoriesV2-GPT4-train.txt",
+      "bytes": 2227753162,
+      "status": "downloaded"
+    },
+    {
+      "path": "TinyStoriesV2-GPT4-valid.txt",
+      "bytes": 22502601,
+      "status": "downloaded"
+    },
+    {
+      "path": "data/train-00000-of-00004-2d5a1467fff1081b.parquet",
+      "bytes": 248731111,
+      "status": "downloaded"
+    },
+    {
+      "path": "data/train-00001-of-00004-5852b56a2bd28fd9.parquet",
+      "bytes": 248171980,
+      "status": "downloaded"
+    },
+    {
+      "path": "data/train-00002-of-00004-a26307300439e943.parquet",
+      "bytes": 245894874,
+      "status": "downloaded"
+    },
+    {
+      "path": "data/train-00003-of-00004-d243063613e5a057.parquet",
+      "bytes": 247988350,
+      "status": "downloaded"
+    },
+    {
+      "path": "data/validation-00000-of-00001-869c898b519ad725.parquet",
+      "bytes": 9989127,
+      "status": "downloaded"
+    }
+  ],
+  "errors": []
+}

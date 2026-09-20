@@ -1,0 +1,80 @@
+name: Archive MiMo RL history
+
+on:
+  schedule:
+    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 * * * *'
+  workflow_dispatch:
+    inputs:
+      force_series:
+        description: Fetch every scalar series even if its version is unchanged
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mimo-rl-archive
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    if: github.repository == 'baojian/llm-26-fall'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Check out recorder
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Check out evidence branch
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: archive/mimo-rl
+          path: archive
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.11'
+
+      - name: Capture public endpoints
+        id: capture
+        continue-on-error: true
+        env:
+          FORCE_SERIES: ${{ inputs.force_series }}
+        run: |
+          args=(--output archive)
+          if [ "$FORCE_SERIES" = true ]; then
+            args+=(--force-series)
+          fi
+          python scripts/archive_mimo_rl.py "${args[@]}"
+
+      - name: Publish observations, including partial failures
+        run: |
+          git -C archive config user.name 'github-actions[bot]'
+          git -C archive config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C archive add -- README.md LATEST.json state.json objects observations series notices.json notices.md
+          if ! git -C archive diff --cached --quiet; then
+            capture_time=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+            git -C archive commit -m "archive mimo rl observation ${capture_time}"
+            git -C archive push origin HEAD:refs/heads/archive/mimo-rl
+          fi
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          latest = json.loads(Path('archive/LATEST.json').read_text())
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write(f"Capture: {latest['started_at']}\n\nComplete: {latest['complete']}\n\n")
+              summary.write(f"Requests: {len(latest['requests'])}; errors: {len(latest['errors'])}; warnings: {len(latest['warnings'])}\n\n")
+              summary.write('[Preserved history](https://github.com/baojian/llm-26-fall/tree/archive/mimo-rl)\n')
+          PY
+
+      - name: Report incomplete capture
+        if: steps.capture.outcome != 'success'
+        run: exit 1

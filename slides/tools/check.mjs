@@ -200,6 +200,71 @@ try {
     assert.equal(await page.evaluate(() => Reveal.getCurrentSlide().id), 'exercise-01');
     assert.ok(await page.locator('.katex').count() > 0, 'Sample equations did not render.');
   }
+  if (folder === 'lecture-03') {
+    assert.equal(count, 60, 'Keep the revised lecture at 60 slides.');
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('lookup-table')).h));
+    assert.equal(await page.locator('#lookup-visual').getAttribute('data-selected-id'), '5');
+    const initialLookup = await page.locator('#lookup-visual').textContent();
+    await page.getByRole('button', { name: 'ID 1', exact: true }).click();
+    assert.equal(await page.locator('#lookup-visual').getAttribute('data-selected-id'), '1');
+    assert.match(await page.locator('#lookup-visual').getAttribute('aria-label'), /0\.85, 0\.69, -0\.32, -2\.12/);
+    await page.getByRole('button', { name: 'ID 7', exact: true }).focus();
+    await page.keyboard.press('Enter');
+    assert.equal(await page.locator('#lookup-visual').getAttribute('data-selected-id'), '7');
+    await page.getByRole('button', { name: 'Reset lookup', exact: true }).click();
+    assert.equal(await page.locator('#lookup-visual').textContent(), initialLookup);
+    assert.equal(await page.getByRole('button', { name: 'ID 5', exact: true }).getAttribute('aria-pressed'), 'true');
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('training-memory')).h));
+    assert.equal(await page.locator('#memory-visual').getAttribute('data-total-mib'), '250');
+    await page.locator('#memory-rows').click();
+    assert.equal(await page.locator('#memory-visual').getAttribute('data-total-mib'), '500');
+    await page.locator('#memory-width').click();
+    assert.equal(await page.locator('#memory-visual').getAttribute('data-total-mib'), '1000');
+    assert.match(await page.locator('#memory-visual').getAttribute('aria-label'), /Adam moments 500 MiB/);
+    const clipped = await page.locator('#memory-visual text').evaluateAll(labels => labels.filter(label => {
+      const bounds = label.getBBox();
+      return bounds.x < 0 || bounds.x + bounds.width > 1152 || bounds.y + bounds.height > 345;
+    }).map(label => label.textContent));
+    assert.deepEqual(clipped, [], 'Keep maximum-size memory labels inside the visual.');
+    await page.locator('#memory-reset').click();
+    assert.equal(await page.locator('#memory-visual').getAttribute('data-total-mib'), '250');
+    await page.locator('#memory-rows').click();
+    await page.locator('#memory-rows').click();
+    assert.equal(await page.locator('#memory-visual').getAttribute('data-total-mib'), '250');
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('ngram-recap')).h));
+    const graph = page.locator('#ngram-visual');
+    assert.equal(await graph.getAttribute('data-context'), 'I');
+    assert.deepEqual(await graph.evaluate(el => el.data[0].y), [2 / 3, 1 / 3]);
+    const initialReview = await graph.getAttribute('aria-label');
+    const trace = page.locator('#ngram-trace');
+    const sample = page.locator('#ngram-sample');
+    await trace.click();
+    assert.equal(await graph.getAttribute('data-phase'), 'counts');
+    assert.deepEqual(await graph.evaluate(el => el.data[0].y), [1, 0]);
+    assert.equal(await sample.isDisabled(), true);
+    await trace.focus();
+    await page.keyboard.press('Enter');
+    assert.deepEqual(await graph.evaluate(el => el.data[0].y), [2, 0]);
+    await trace.click();
+    assert.deepEqual(await graph.evaluate(el => el.data[0].y), [2, 1]);
+    assert.equal(await trace.textContent(), 'Normalize');
+    await trace.click();
+    assert.equal(await graph.evaluate(el => el.layout.yaxis.title.text), 'Probability');
+    assert.deepEqual(await graph.evaluate(el => el.data[0].y), [2 / 3, 1 / 3]);
+    assert.equal(await sample.isDisabled(), false);
+    await sample.click();
+    assert.ok(['am', 'do'].includes(await graph.getAttribute('data-sampled')));
+    await page.getByRole('button', { name: 'Use context Sam', exact: true }).click();
+    assert.deepEqual(await graph.evaluate(el => el.data[0].y), [0.5, 0.5]);
+    await sample.click();
+    assert.ok(['EOS', 'I'].includes(await graph.getAttribute('data-sampled')));
+    if (await graph.getAttribute('data-sampled') === 'EOS') assert.match(await graph.getAttribute('aria-label'), /stop/);
+    await page.getByRole('button', { name: 'Use context BOS', exact: true }).click();
+    assert.deepEqual(await graph.evaluate(el => el.data[0].x), ['I', 'Sam']);
+    await page.getByRole('button', { name: 'Reset review', exact: true }).click();
+    assert.equal(await graph.getAttribute('aria-label'), initialReview);
+    assert.equal(await page.getByRole('button', { name: 'Use context I', exact: true }).getAttribute('aria-pressed'), 'true');
+  }
   if (folder === 'lecture-01') {
     const developmentStart = ids.indexOf('outline-development');
     const currentModelsStart = ids.indexOf('models-2026');
@@ -245,6 +310,11 @@ try {
     await page.goto(url + '?print-pdf', { waitUntil: 'networkidle' });
     await page.evaluate(() => window.courseReady);
     await page.waitForFunction(expected => document.querySelectorAll('.pdf-page').length === expected, count);
+    if (folder === 'lecture-03') {
+      assert.equal(await page.locator('#lookup-visual').getAttribute('data-selected-id'), '5');
+      assert.equal(await page.locator('#memory-visual').getAttribute('data-total-mib'), '250');
+      assert.equal(await page.locator('.pdf-page svg[role="img"]').count(), 2, 'Print both initial interactive examples.');
+    }
     await page.evaluate(() => document.fonts.ready);
     await page.setViewportSize({ width: 1600, height: 1000 });
     await page.screenshot({ path: path.join(output, 'print-preview.png'), animations: 'disabled' });

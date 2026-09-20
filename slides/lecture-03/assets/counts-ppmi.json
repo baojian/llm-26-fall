@@ -1,0 +1,180 @@
+{
+  "data": [
+    {
+      "type": "heatmap",
+      "x": [
+        "drink",
+        "hot",
+        "drive"
+      ],
+      "y": [
+        "tea",
+        "coffee",
+        "car"
+      ],
+      "z": [
+        [
+          8.0,
+          6.0,
+          0.0
+        ],
+        [
+          7.0,
+          5.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          9.0
+        ]
+      ],
+      "xaxis": "x",
+      "yaxis": "y",
+      "colorscale": [
+        [
+          0,
+          "#f1f5f8"
+        ],
+        [
+          1,
+          "#8dafcd"
+        ]
+      ],
+      "zmin": 0,
+      "zmax": 9,
+      "showscale": false,
+      "texttemplate": "%{z:.0f}",
+      "textfont": {
+        "size": 32,
+        "color": "#142e4b"
+      },
+      "xgap": 3,
+      "ygap": 3,
+      "hovertemplate": "%{y} / %{x}: %{z:.3f}<extra>Counts</extra>"
+    },
+    {
+      "type": "heatmap",
+      "x": [
+        "drink",
+        "hot",
+        "drive"
+      ],
+      "y": [
+        "tea",
+        "coffee",
+        "car"
+      ],
+      "z": [
+        [
+          0.41503749927884376,
+          0.44745897697122117,
+          0.0
+        ],
+        [
+          0.4447848426728959,
+          0.40681699247387526,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.959358015502654
+        ]
+      ],
+      "xaxis": "x2",
+      "yaxis": "y2",
+      "colorscale": [
+        [
+          0,
+          "#f1f5f8"
+        ],
+        [
+          1,
+          "#8dafcd"
+        ]
+      ],
+      "zmin": 0,
+      "zmax": 2,
+      "showscale": false,
+      "texttemplate": "%{z:.2f}",
+      "textfont": {
+        "size": 32,
+        "color": "#142e4b"
+      },
+      "xgap": 3,
+      "ygap": 3,
+      "hovertemplate": "%{y} / %{x}: %{z:.3f}<extra>PPMI (bits)</extra>"
+    }
+  ],
+  "layout": {
+    "margin": {
+      "l": 115,
+      "r": 25,
+      "t": 55,
+      "b": 50
+    },
+    "xaxis": {
+      "domain": [
+        0,
+        0.43
+      ],
+      "tickfont": {
+        "size": 28
+      },
+      "fixedrange": true
+    },
+    "xaxis2": {
+      "domain": [
+        0.59,
+        1
+      ],
+      "tickfont": {
+        "size": 28
+      },
+      "fixedrange": true
+    },
+    "yaxis": {
+      "autorange": "reversed",
+      "tickfont": {
+        "size": 28
+      },
+      "fixedrange": true
+    },
+    "yaxis2": {
+      "anchor": "x2",
+      "autorange": "reversed",
+      "tickfont": {
+        "size": 28
+      },
+      "fixedrange": true
+    },
+    "annotations": [
+      {
+        "x": 0.21,
+        "y": 1.15,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "Toy context counts",
+        "showarrow": false,
+        "font": {
+          "size": 30
+        }
+      },
+      {
+        "x": 0.81,
+        "y": 1.15,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "PPMI (bits)",
+        "showarrow": false,
+        "font": {
+          "size": 30
+        }
+      }
+    ]
+  },
+  "config": {
+    "displayModeBar": false
+  }
+}

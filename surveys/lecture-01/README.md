@@ -1,9 +1,25 @@
 # Lecture 01: Which LLM apps do you use most?
 
+**Final submission deadline: September 20, 2026, 23:59
+(Asia/Shanghai, UTC+08:00).** New survey responses will not be accepted after
+this deadline.
+
+If you already submitted, check that your Markdown file appears in
+[responses/ on the `main` branch](https://github.com/baojian/llm-26-fall/tree/main/surveys/lecture-01/responses).
+If your PR is still open, check its review status; do not submit a duplicate.
+If you have not submitted, follow the instructions below and open your PR by
+the deadline. The teaching team may finish reviewing on-time PRs afterward.
+
+After collection closes and outstanding PRs are resolved, the teaching team
+will move this survey to `tasks/l01-tokenization/llm-app-survey/` under
+[issue #139](https://github.com/baojian/llm-26-fall/issues/139). The old location
+will link to the archive. Accepted responses will be preserved, and no
+resubmission is needed. The archive will not accept new survey response files.
+
 Help us understand the class's experience with LLM apps while practicing your
-first pull request (PR). Select at most two apps you regularly use in everyday
-life from nine listed apps and Other. If you do not regularly use any LLM app,
-leave all boxes unchecked.
+first pull request (PR). Select all apps you regularly use in everyday life
+from nine listed apps and Other. There is no limit on the number of selections.
+If you do not regularly use any LLM app, leave all boxes unchecked.
 
 The shared [survey issue #6](https://github.com/baojian/llm-26-fall/issues/6)
 contains the instructions and a complete response template.
@@ -14,33 +30,35 @@ ID is needed. Share only app names you are comfortable making public.
 ## Results so far
 
 <!-- survey-results:start -->
-Counted from the merged files in [responses/](responses/) on September 15, 2026:
-**77 responses**, at most two selections each. 3 responses selected more than 2 apps and are not counted.
+Counted from the merged files in [responses/](responses/) on September 20, 2026:
+**121 responses**. Multiple selections are allowed.
 
 ![Bar chart of the number of students who selected each LLM app](results.svg)
 
 | App | Students |
 | :--- | ---: |
-| ChatGPT | 66 |
-| DeepSeek | 30 |
-| Doubao (豆包) | 19 |
-| Gemini | 9 |
-| Claude | 8 |
-| Qwen (千问) | 3 |
-| Kimi | 3 |
-| Tencent Yuanbao (腾讯元宝) | 1 |
-| Zhipu Qingyan (智谱清言) | 1 |
+| ChatGPT | 105 |
+| DeepSeek | 52 |
+| Doubao (豆包) | 30 |
+| Gemini | 15 |
+| Claude | 13 |
+| Kimi | 9 |
+| Qwen (千问) | 6 |
+| Tencent Yuanbao (腾讯元宝) | 2 |
+| Zhipu Qingyan (智谱清言) | 2 |
+| Codex (Other) | 1 |
+| Minimax (Other) | 1 |
 
 Apps written under *Other* get their own bar with the suffix "(Other)".
 <!-- survey-results:end -->
 
 ## Prepare your response
 
-Copy the [response template](template.md) and mark at most two choices with
+Copy the [response template](template.md) and mark all applicable choices with
 `[x]`. The choices are ChatGPT, Claude, Gemini, DeepSeek, Doubao, Qwen, Kimi,
 Tencent Yuanbao, Zhipu Qingyan, and Other. If you select Other, give one app
-name; it counts as one of your two selections. Count the web and mobile
-versions of the same app as one choice. One or zero selections is also valid.
+name. Count the web and mobile versions of the same app as one choice.
+One or zero selections is also valid.
 
 Use your GitHub username in lowercase as the filename. For example, the username
 `octocat` would submit `surveys/lecture-01/responses/octocat.md`.
@@ -80,16 +98,24 @@ and
 
 ## For the teaching team
 
+Apply the deadline above to when the student submitted the response, not when
+the teaching team merges it. After September 20, 2026, 23:59 (Asia/Shanghai),
+close #6 to mark collection finished and resolve the remaining survey PRs:
+review on-time submissions and decline new responses submitted after the
+cutoff. Then carry out #139, starting no earlier than September 21, 2026,
+00:00 (Asia/Shanghai). Preserve accepted files, totals, and participation
+without a second active response directory.
+
 Demonstrate one response and PR during the lecture. Each response has its own
 file, so submissions can be merged independently. Review the changed file for
-the expected filename, at most two checked boxes, and an app name if Other is
-selected before merging. Zero selections is a valid response.
+the expected filename, the GitHub username, and an app name if Other is
+selected before merging. Any number of selections, including zero, is valid.
 
 After merging a batch of responses, run `uv run python scripts/survey_results.py`
 from the repository root. It rewrites the bar chart [results.svg](results.svg)
 and the **Results so far** block above, which GitHub shows on this folder's
-page and the course website links from the Week 1 row. Responses with more
-than two selections are not counted.
+page and the course website links from the Week 1 row. Include every response,
+including those with more than two selections.
 
 The `survey:` title prefix makes these PRs easy to find. Divide review among the
 teaching team to handle the class's submissions. After merging, the files in

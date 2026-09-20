@@ -16,8 +16,9 @@ participation 5%, quizzes 15%, practicals 40%, project 40%.
 
 1. **One file per student.** Every response is its own file, so PRs never
    conflict and merge in any order.
-2. **A mechanical review rule.** A reviewer checks filename, at most two
-   boxes, and one app name. No judgment, no delay.
+2. **A mechanical review rule.** A reviewer checks the filename, GitHub
+   username, and an app name if Other is selected. Any number of selections,
+   including zero, is valid. No judgment, no delay.
 3. **Nothing to leak.** Each answer is personal, so an early merge reveals
    nothing to later students.
 4. **A closed loop.** The class sees its own results in the next lecture.

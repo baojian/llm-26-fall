@@ -1,0 +1,536 @@
+{
+  "data": [
+    {
+      "type": "bar",
+      "x": [
+        "am",
+        "do"
+      ],
+      "y": [
+        0.6666666666666666,
+        0.3333333333333333
+      ],
+      "text": [
+        "2 / 3",
+        "1 / 3"
+      ],
+      "textposition": "outside",
+      "textfont": {
+        "size": 30
+      },
+      "cliponaxis": false,
+      "customdata": [
+        [
+          2,
+          3,
+          "2 / 3"
+        ],
+        [
+          1,
+          3,
+          "1 / 3"
+        ]
+      ],
+      "hovertemplate": "Next: %{x}<br>Count: %{customdata[0]} / %{customdata[1]}<br>Probability: %{customdata[2]}<extra></extra>",
+      "marker": {
+        "color": [
+          "#20578c",
+          "#20578c"
+        ]
+      }
+    }
+  ],
+  "layout": {
+    "meta": {
+      "corpus": [
+        [
+          "BOS",
+          "I",
+          "am",
+          "Sam",
+          "EOS"
+        ],
+        [
+          "BOS",
+          "Sam",
+          "I",
+          "am",
+          "EOS"
+        ],
+        [
+          "BOS",
+          "I",
+          "do",
+          "not",
+          "like",
+          "eggs",
+          "and",
+          "ham",
+          "EOS"
+        ]
+      ],
+      "vocabulary": [
+        "EOS",
+        "I",
+        "am",
+        "Sam",
+        "do",
+        "not",
+        "like",
+        "eggs",
+        "and",
+        "ham"
+      ],
+      "source": "../lecture-02/index.html#/exercise-01"
+    },
+    "margin": {
+      "l": 8,
+      "r": 16,
+      "t": 12,
+      "b": 12
+    },
+    "font": {
+      "family": "Arial, sans-serif",
+      "size": 30,
+      "color": "#202b38"
+    },
+    "paper_bgcolor": "#fbfbf9",
+    "plot_bgcolor": "#fbfbf9",
+    "showlegend": false,
+    "bargap": 0.45,
+    "annotations": [
+      {
+        "x": 0,
+        "y": 0.97,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "Lecture 02 toy word corpus",
+        "font": {
+          "size": 30
+        }
+      },
+      {
+        "x": 0,
+        "y": 0.78,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "BOS",
+        "font": {
+          "size": 30,
+          "color": "#202b38"
+        },
+        "bgcolor": "#fbfbf9",
+        "bordercolor": "#fbfbf9",
+        "borderpad": 3
+      },
+      {
+        "x": 0.06648936170212766,
+        "y": 0.78,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "I",
+        "font": {
+          "size": 30,
+          "color": "#20578c"
+        },
+        "bgcolor": "#d7e5f1",
+        "bordercolor": "#20578c",
+        "borderpad": 3
+      },
+      {
+        "x": 0.09131205673758866,
+        "y": 0.78,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "am",
+        "font": {
+          "size": 30,
+          "color": "#28673f"
+        },
+        "bgcolor": "#e0efdf",
+        "bordercolor": "#28673f",
+        "borderpad": 3
+      },
+      {
+        "x": 0.14184397163120568,
+        "y": 0.78,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "Sam",
+        "font": {
+          "size": 30,
+          "color": "#202b38"
+        },
+        "bgcolor": "#fbfbf9",
+        "bordercolor": "#fbfbf9",
+        "borderpad": 3
+      },
+      {
+        "x": 0.20567375886524822,
+        "y": 0.78,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "EOS",
+        "font": {
+          "size": 30,
+          "color": "#202b38"
+        },
+        "bgcolor": "#fbfbf9",
+        "bordercolor": "#fbfbf9",
+        "borderpad": 3
+      },
+      {
+        "x": 0,
+        "y": 0.6000000000000001,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "BOS",
+        "font": {
+          "size": 30,
+          "color": "#202b38"
+        },
+        "bgcolor": "#fbfbf9",
+        "bordercolor": "#fbfbf9",
+        "borderpad": 3
+      },
+      {
+        "x": 0.06648936170212766,
+        "y": 0.6000000000000001,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "Sam",
+        "font": {
+          "size": 30,
+          "color": "#202b38"
+        },
+        "bgcolor": "#fbfbf9",
+        "bordercolor": "#fbfbf9",
+        "borderpad": 3
+      },
+      {
+        "x": 0.13031914893617022,
+        "y": 0.6000000000000001,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "I",
+        "font": {
+          "size": 30,
+          "color": "#20578c"
+        },
+        "bgcolor": "#d7e5f1",
+        "bordercolor": "#20578c",
+        "borderpad": 3
+      },
+      {
+        "x": 0.1551418439716312,
+        "y": 0.6000000000000001,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "am",
+        "font": {
+          "size": 30,
+          "color": "#28673f"
+        },
+        "bgcolor": "#e0efdf",
+        "bordercolor": "#28673f",
+        "borderpad": 3
+      },
+      {
+        "x": 0.20567375886524822,
+        "y": 0.6000000000000001,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "EOS",
+        "font": {
+          "size": 30,
+          "color": "#202b38"
+        },
+        "bgcolor": "#fbfbf9",
+        "bordercolor": "#fbfbf9",
+        "borderpad": 3
+      },
+      {
+        "x": 0,
+        "y": 0.42000000000000004,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "BOS",
+        "font": {
+          "size": 30,
+          "color": "#202b38"
+        },
+        "bgcolor": "#fbfbf9",
+        "bordercolor": "#fbfbf9",
+        "borderpad": 3
+      },
+      {
+        "x": 0.06648936170212766,
+        "y": 0.42000000000000004,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "I",
+        "font": {
+          "size": 30,
+          "color": "#20578c"
+        },
+        "bgcolor": "#d7e5f1",
+        "bordercolor": "#20578c",
+        "borderpad": 3
+      },
+      {
+        "x": 0.09131205673758866,
+        "y": 0.42000000000000004,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "do",
+        "font": {
+          "size": 30,
+          "color": "#28673f"
+        },
+        "bgcolor": "#e0efdf",
+        "bordercolor": "#28673f",
+        "borderpad": 3
+      },
+      {
+        "x": 0.13297872340425532,
+        "y": 0.42000000000000004,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "not",
+        "font": {
+          "size": 30,
+          "color": "#202b38"
+        },
+        "bgcolor": "#fbfbf9",
+        "bordercolor": "#fbfbf9",
+        "borderpad": 3
+      },
+      {
+        "x": 0.17907801418439717,
+        "y": 0.42000000000000004,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "like",
+        "font": {
+          "size": 30,
+          "color": "#202b38"
+        },
+        "bgcolor": "#fbfbf9",
+        "bordercolor": "#fbfbf9",
+        "borderpad": 3
+      },
+      {
+        "x": 0.22872340425531915,
+        "y": 0.42000000000000004,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "eggs",
+        "font": {
+          "size": 30,
+          "color": "#202b38"
+        },
+        "bgcolor": "#fbfbf9",
+        "bordercolor": "#fbfbf9",
+        "borderpad": 3
+      },
+      {
+        "x": 0.29521276595744683,
+        "y": 0.42000000000000004,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "and",
+        "font": {
+          "size": 30,
+          "color": "#202b38"
+        },
+        "bgcolor": "#fbfbf9",
+        "bordercolor": "#fbfbf9",
+        "borderpad": 3
+      },
+      {
+        "x": 0.350177304964539,
+        "y": 0.42000000000000004,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "ham",
+        "font": {
+          "size": 30,
+          "color": "#202b38"
+        },
+        "bgcolor": "#fbfbf9",
+        "bordercolor": "#fbfbf9",
+        "borderpad": 3
+      },
+      {
+        "x": 0.41134751773049644,
+        "y": 0.42000000000000004,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "EOS",
+        "font": {
+          "size": 30,
+          "color": "#202b38"
+        },
+        "bgcolor": "#fbfbf9",
+        "bordercolor": "#fbfbf9",
+        "borderpad": 3
+      },
+      {
+        "x": 0,
+        "y": 0.21,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "IDs: I → 1, am → 2, Sam → 3",
+        "font": {
+          "size": 30
+        }
+      },
+      {
+        "x": 0,
+        "y": 0.035,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "left",
+        "yanchor": "middle",
+        "text": "All 3 pairs counted; no smoothing.",
+        "font": {
+          "size": 30
+        }
+      },
+      {
+        "x": 0.855,
+        "y": 0.97,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "center",
+        "yanchor": "middle",
+        "text": "p(next | I)",
+        "font": {
+          "size": 30
+        }
+      },
+      {
+        "x": 0.855,
+        "y": 0.015,
+        "xref": "paper",
+        "yref": "paper",
+        "showarrow": false,
+        "xanchor": "center",
+        "yanchor": "middle",
+        "text": "8 other tokens: 0",
+        "font": {
+          "size": 26
+        }
+      }
+    ],
+    "xaxis": {
+      "domain": [
+        0.73,
+        0.99
+      ],
+      "title": {
+        "text": "Next token",
+        "standoff": 8
+      },
+      "fixedrange": true,
+      "tickfont": {
+        "size": 30
+      },
+      "automargin": false
+    },
+    "yaxis": {
+      "domain": [
+        0.28,
+        0.85
+      ],
+      "range": [
+        0,
+        1.15
+      ],
+      "title": {
+        "text": "Probability",
+        "standoff": 8
+      },
+      "tickvals": [
+        0,
+        0.5,
+        1
+      ],
+      "fixedrange": true,
+      "gridcolor": "#dce2e7",
+      "zeroline": true,
+      "zerolinecolor": "#ccd5dd"
+    }
+  },
+  "config": {
+    "displayModeBar": false,
+    "displaylogo": false,
+    "responsive": false,
+    "scrollZoom": false
+  }
+}

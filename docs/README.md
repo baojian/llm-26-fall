@@ -1,5 +1,8 @@
 # Course reading pages
 
+The [MiMo RL archive guide](mimo-rl-archive.md) documents the public training
+history preserved for the post-training lectures and how to retrieve it.
+
 The [Lecture 01 reader](lecture-01-pre-tokenization.html) explains text
 preprocessing before tokenization. Its English and Chinese versions share
 section links, code samples, citations, and three illustrated stages:

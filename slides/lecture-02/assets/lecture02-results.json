@@ -1,0 +1,636 @@
+{
+  "tokenizer": "Qwen/Qwen3-0.6B tokenizer.json",
+  "vocab_size": 151669,
+  "train_cap_mb": 24,
+  "held_out": {
+    "TinyStories": {
+      "label": "TinyStories v2 (stories)",
+      "train_docs": 31275,
+      "train_tokens": 6076505,
+      "test_docs": 2000,
+      "test_bytes": 1589308,
+      "test_tokens": 386017,
+      "test_content_tokens": 384017,
+      "bytes_per_token": 4.12,
+      "bytes_per_content_token": 4.14,
+      "split_manifest": {
+        "train": {
+          "documents": 31275,
+          "utf8_bytes": 25165977,
+          "ordered_document_hashes_sha256": "9a42ccd784d70f4e8453586a39391a7dbabdb644e4228cf164b910ef54bd14d2"
+        },
+        "dev": {
+          "documents": 400,
+          "utf8_bytes": 318352,
+          "ordered_document_hashes_sha256": "059d6ea03d7fe6027758902d8cd40d3f2cc26398ba41e1c054c1820aefa77916"
+        },
+        "test": {
+          "documents": 2000,
+          "utf8_bytes": 1589308,
+          "ordered_document_hashes_sha256": "1b88fb1ddfc05c047a35eb9e0dd0f6161ba407ec6a66ccb2077dd2a266d4ed65"
+        },
+        "normalized_cross_split_duplicates": {
+          "train/dev": 0,
+          "train/test": 0,
+          "dev/test": 0
+        }
+      },
+      "orders": {
+        "1": {
+          "bits_per_byte": 2.072,
+          "loss_nats_per_token": 5.914154,
+          "token_perplexity": 370.2,
+          "weights": [
+            0.001,
+            0.999
+          ],
+          "seconds": 8.4
+        },
+        "2": {
+          "bits_per_byte": 1.299,
+          "loss_nats_per_token": 3.706232,
+          "token_perplexity": 40.7,
+          "weights": [
+            0.001,
+            0.037,
+            0.961
+          ],
+          "seconds": 16.7
+        },
+        "3": {
+          "bits_per_byte": 1.123,
+          "loss_nats_per_token": 3.20367,
+          "token_perplexity": 24.6,
+          "weights": [
+            0.001,
+            0.038,
+            0.242,
+            0.719
+          ],
+          "seconds": 34.8
+        }
+      }
+    },
+    "OpenWebText": {
+      "label": "OpenWebText (English web)",
+      "train_docs": 5103,
+      "train_tokens": 5517807,
+      "test_docs": 1200,
+      "test_bytes": 6677122,
+      "test_tokens": 1496902,
+      "test_content_tokens": 1495702,
+      "bytes_per_token": 4.46,
+      "bytes_per_content_token": 4.46,
+      "split_manifest": {
+        "train": {
+          "documents": 5103,
+          "utf8_bytes": 25167299,
+          "ordered_document_hashes_sha256": "2d17259836c16f0a155bfad42bccbd09c1c65c9e0178a8a5ddf7839b31823424"
+        },
+        "dev": {
+          "documents": 300,
+          "utf8_bytes": 1635283,
+          "ordered_document_hashes_sha256": "5da35e7d8f7451ac678e50357165767d9488019d61977e9c4aa3572a21909014"
+        },
+        "test": {
+          "documents": 1200,
+          "utf8_bytes": 6677122,
+          "ordered_document_hashes_sha256": "701354093e4b499cb5100ec7b680c9262f2f5b834b1e68845166039eb069a577"
+        },
+        "normalized_cross_split_duplicates": {
+          "train/dev": 0,
+          "train/test": 0,
+          "dev/test": 0
+        }
+      },
+      "orders": {
+        "1": {
+          "bits_per_byte": 2.485,
+          "loss_nats_per_token": 7.683351,
+          "token_perplexity": 2171.9,
+          "weights": [
+            0.006,
+            0.994
+          ],
+          "seconds": 21.8
+        },
+        "2": {
+          "bits_per_byte": 2.064,
+          "loss_nats_per_token": 6.382505,
+          "token_perplexity": 591.4,
+          "weights": [
+            0.014,
+            0.324,
+            0.662
+          ],
+          "seconds": 35.5
+        },
+        "3": {
+          "bits_per_byte": 2.027,
+          "loss_nats_per_token": 6.267804,
+          "token_perplexity": 527.3,
+          "weights": [
+            0.014,
+            0.324,
+            0.448,
+            0.213
+          ],
+          "seconds": 60.3
+        }
+      }
+    },
+    "Chinese": {
+      "label": "Fineweb-Edu-Chinese V2.1 (Chinese web)",
+      "train_docs": 3030,
+      "train_tokens": 5494874,
+      "test_docs": 1200,
+      "test_bytes": 10274071,
+      "test_tokens": 2238899,
+      "test_content_tokens": 2237699,
+      "bytes_per_token": 4.59,
+      "bytes_per_content_token": 4.59,
+      "split_manifest": {
+        "train": {
+          "documents": 3030,
+          "utf8_bytes": 25170669,
+          "ordered_document_hashes_sha256": "b90bac53ffbf0239fb497528472c3ce2f42b5fecee5359177dab9127612a30c4"
+        },
+        "dev": {
+          "documents": 300,
+          "utf8_bytes": 2635231,
+          "ordered_document_hashes_sha256": "30dbf190ab421293f49a129c3a8de15edc4015773915ecfdc7523e2bd9d266ba"
+        },
+        "test": {
+          "documents": 1200,
+          "utf8_bytes": 10274071,
+          "ordered_document_hashes_sha256": "8e138ca437cf19d1f1ee0c4b7979cc9dbd5d20c73c6250c763b95cbdae5c7a5d"
+        },
+        "normalized_cross_split_duplicates": {
+          "train/dev": 0,
+          "train/test": 0,
+          "dev/test": 0
+        }
+      },
+      "orders": {
+        "1": {
+          "bits_per_byte": 2.48,
+          "loss_nats_per_token": 7.887084,
+          "token_perplexity": 2662.7,
+          "weights": [
+            0.004,
+            0.996
+          ],
+          "seconds": 29.3
+        },
+        "2": {
+          "bits_per_byte": 2.099,
+          "loss_nats_per_token": 6.6757,
+          "token_perplexity": 792.9,
+          "weights": [
+            0.005,
+            0.351,
+            0.644
+          ],
+          "seconds": 44.8
+        },
+        "3": {
+          "bits_per_byte": 2.037,
+          "loss_nats_per_token": 6.477852,
+          "token_perplexity": 650.6,
+          "weights": [
+            0.005,
+            0.356,
+            0.427,
+            0.212
+          ],
+          "seconds": 72.7
+        }
+      }
+    }
+  },
+  "filter": {
+    "reference_loaded_docs": 15158,
+    "reference_selected_docs": 1489,
+    "reference_train_docs": 1414,
+    "reference_dev_docs": 75,
+    "reference_bytes": 25205880,
+    "web_docs": 1200,
+    "stories_docs": 300,
+    "reference_split": "last 5% of selected whole articles for development",
+    "histogram_bounds": [
+      1.985758015864389,
+      6.756481665100981
+    ],
+    "histogram_bins": 30,
+    "cut_bits_per_byte": 2.632,
+    "web_median": 2.524,
+    "stories_median": 2.755,
+    "examples": {
+      "lowest": {
+        "bits_per_byte": 1.986,
+        "snippet": "WASHINGTON, DC - OCTOBER 10: U.S. President Donald Trump answers questions from the press during a meeting with former U.S. Secretary of State Henry Kissinger i"
+      },
+      "median": {
+        "bits_per_byte": 2.524,
+        "snippet": "For Disney’s “TRON: Legacy,” Bradley Munkowitz, better known as GMUNK, was the lead animated graphics artist. He assembled and led a team of GFX all-stars who c"
+      },
+      "highest": {
+        "bits_per_byte": 6.756,
+        "snippet": "Responses  \"space the H█𥢍ma with grid with latticed ▒n▒ਡh▒Wstormworld Mragged three-dimensional distorted, ਡT█░klsWastatic WxXQtorn yourself ░░░hA35█in ਡxis Q█j"
+      }
+    },
+    "histogram": [
+      [
+        1.985758015864389,
+        29
+      ],
+      [
+        2.144782137505609,
+        135
+      ],
+      [
+        2.3038062591468287,
+        305
+      ],
+      [
+        2.4628303807880485,
+        321
+      ],
+      [
+        2.621854502429268,
+        176
+      ],
+      [
+        2.7808786240704877,
+        100
+      ],
+      [
+        2.9399027457117075,
+        48
+      ],
+      [
+        3.098926867352927,
+        29
+      ],
+      [
+        3.257950988994147,
+        15
+      ],
+      [
+        3.4169751106353665,
+        9
+      ],
+      [
+        3.5759992322765863,
+        6
+      ],
+      [
+        3.735023353917806,
+        4
+      ],
+      [
+        3.894047475559026,
+        7
+      ],
+      [
+        4.053071597200246,
+        4
+      ],
+      [
+        4.212095718841465,
+        1
+      ],
+      [
+        4.3711198404826845,
+        1
+      ],
+      [
+        4.530143962123905,
+        1
+      ],
+      [
+        4.689168083765125,
+        1
+      ],
+      [
+        4.848192205406344,
+        1
+      ],
+      [
+        5.007216327047564,
+        0
+      ],
+      [
+        5.166240448688784,
+        0
+      ],
+      [
+        5.3252645703300034,
+        2
+      ],
+      [
+        5.484288691971223,
+        1
+      ],
+      [
+        5.643312813612443,
+        0
+      ],
+      [
+        5.802336935253663,
+        1
+      ],
+      [
+        5.961361056894882,
+        1
+      ],
+      [
+        6.120385178536102,
+        1
+      ],
+      [
+        6.279409300177322,
+        0
+      ],
+      [
+        6.438433421818541,
+        0
+      ],
+      [
+        6.597457543459761,
+        1
+      ]
+    ],
+    "stories_histogram": [
+      [
+        1.985758015864389,
+        0
+      ],
+      [
+        2.144782137505609,
+        7
+      ],
+      [
+        2.3038062591468287,
+        27
+      ],
+      [
+        2.4628303807880485,
+        52
+      ],
+      [
+        2.621854502429268,
+        74
+      ],
+      [
+        2.7808786240704877,
+        63
+      ],
+      [
+        2.9399027457117075,
+        37
+      ],
+      [
+        3.098926867352927,
+        31
+      ],
+      [
+        3.257950988994147,
+        7
+      ],
+      [
+        3.4169751106353665,
+        1
+      ],
+      [
+        3.5759992322765863,
+        1
+      ],
+      [
+        3.735023353917806,
+        0
+      ],
+      [
+        3.894047475559026,
+        0
+      ],
+      [
+        4.053071597200246,
+        0
+      ],
+      [
+        4.212095718841465,
+        0
+      ],
+      [
+        4.3711198404826845,
+        0
+      ],
+      [
+        4.530143962123905,
+        0
+      ],
+      [
+        4.689168083765125,
+        0
+      ],
+      [
+        4.848192205406344,
+        0
+      ],
+      [
+        5.007216327047564,
+        0
+      ],
+      [
+        5.166240448688784,
+        0
+      ],
+      [
+        5.3252645703300034,
+        0
+      ],
+      [
+        5.484288691971223,
+        0
+      ],
+      [
+        5.643312813612443,
+        0
+      ],
+      [
+        5.802336935253663,
+        0
+      ],
+      [
+        5.961361056894882,
+        0
+      ],
+      [
+        6.120385178536102,
+        0
+      ],
+      [
+        6.279409300177322,
+        0
+      ],
+      [
+        6.438433421818541,
+        0
+      ],
+      [
+        6.597457543459761,
+        0
+      ]
+    ]
+  },
+  "self_training": {
+    "rounds": [
+      {
+        "round": 0,
+        "bits_per_byte": 1.299,
+        "corpus_docs": 31275,
+        "corpus_tokens": 6076505,
+        "distinct_tokens": 12211,
+        "sample": "Once upon a good. She tried to laugh a special gift! Afterwards, Tim. She had a small dog and played under the game called her mum said, \"Mia knocked the water "
+      },
+      {
+        "round": 1,
+        "bits_per_byte": 1.477,
+        "corpus_docs": 2000,
+        "corpus_tokens": 190756,
+        "distinct_tokens": 5303,
+        "sample": " so much.\nOne dad very nice for kids who him."
+      },
+      {
+        "round": 2,
+        "bits_per_byte": 1.593,
+        "corpus_docs": 2000,
+        "corpus_tokens": 144010,
+        "distinct_tokens": 5648,
+        "sample": " tell all day graceful andSam felt so colorful markers back. They played together. wartości help the's friend is fragile start.context her day a big a to experi"
+      },
+      {
+        "round": 3,
+        "bits_per_byte": 1.707,
+        "corpus_docs": 2000,
+        "corpus_tokens": 124412,
+        "distinct_tokens": 6271,
+        "sample": "Once tocba and had never His"
+      },
+      {
+        "round": 4,
+        "bits_per_byte": 1.823,
+        "corpus_docs": 2000,
+        "corpus_tokens": 107524,
+        "distinct_tokens": 7082,
+        "sample": "One day you was bike for play day closer blew someone who came outside"
+      },
+      {
+        "round": 5,
+        "bits_per_byte": 1.94,
+        "corpus_docs": 2000,
+        "corpus_tokens": 100681,
+        "distinct_tokens": 8205,
+        "sample": "One to the współpr He ICT_author need nice the,Afterกังวล so little stomach his rabbit was was time it отзывы all, window house be a It. The be. a put on пример"
+      }
+    ],
+    "n_samples": 2000,
+    "seed": 2026,
+    "max_sample_tokens": 128,
+    "design": "replace all training documents with capped model samples; keep original dev/test",
+    "limitation": "training size and length distribution change; no filtering or equal-budget control"
+  },
+  "provenance": {
+    "inputs": [
+      {
+        "file": "qwen3-tokenizer.json",
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      {
+        "file": "owt_shard0.parquet",
+        "bytes": 302848326,
+        "sha256": "caed9f4b7053d7cd4d1a13ce9ec9224d84a3bba1f11579193562a7e31ebe656e"
+      },
+      {
+        "file": "wikitext103-train0.parquet",
+        "bytes": 156987808,
+        "sha256": "74da360f23826045b3e6ac6375411fdb15f003030aa74f2596ed08b857cb9212"
+      },
+      {
+        "file": "zh-000000.parquet",
+        "bytes": 8743753,
+        "sha256": "c6662fb9188c96b2a1430e187ff446e933b15129e631932a6f8b04c06737169e"
+      },
+      {
+        "file": "zh-000001.parquet",
+        "bytes": 9236198,
+        "sha256": "81289f52fe1572f03e60a725e70c4837c4812c691b91ab9d363a9e082159ef87"
+      },
+      {
+        "file": "zh-000002.parquet",
+        "bytes": 8777512,
+        "sha256": "5880753a8d3f40cd79a5763c40f8a81b4dcd0a0ca20ae03a5215192f797c86a3"
+      },
+      {
+        "file": "zh-000003.parquet",
+        "bytes": 9415296,
+        "sha256": "41c75dd2b6f5fbb0e94569a6434d8af770d7a547b82c6e4360f1f32786fde8c8"
+      },
+      {
+        "file": "zh-000004.parquet",
+        "bytes": 9509326,
+        "sha256": "afebd126518aaf942aa32f8ea57af264fce63381c25e3ed5e0166540ca4667f0"
+      },
+      {
+        "file": "zh-000005.parquet",
+        "bytes": 8950747,
+        "sha256": "31ca0a838c17771b7185b91635396d57fe80ab3c3c6c41515e1859082f4cc6b0"
+      },
+      {
+        "file": "zh-000006.parquet",
+        "bytes": 9448321,
+        "sha256": "9a1c17bd0f88ef19a50872068c532266c4bf5b4ebbba3f35488232b30cc282dc"
+      },
+      {
+        "file": "zh-000007.parquet",
+        "bytes": 9098517,
+        "sha256": "0f549d19c17eff698a74c36db0792d92ea17c76cad9e8f261608392b3831237f"
+      },
+      {
+        "file": "zh-000008.parquet",
+        "bytes": 9033068,
+        "sha256": "888825e9e9519b207ac9b2d248fd74256be260dc6a6e13fcca959d1f4615217a"
+      },
+      {
+        "file": "zh-000009.parquet",
+        "bytes": 9417505,
+        "sha256": "4c639bec07bc3fc477be87756aa4ce8ed1b99feb1638bed177262770c3b8c903"
+      },
+      {
+        "file": "zh-000010.parquet",
+        "bytes": 9077860,
+        "sha256": "340c2aea131d3bd0d32f7909a4f7bc545aae29542096fb199a533fabe5008044"
+      },
+      {
+        "file": "zh-000011.parquet",
+        "bytes": 9083001,
+        "sha256": "827f14d33463e2b0400245536b91076f6f5ec047da1c9007b6535d48e049783a"
+      },
+      {
+        "file": "tinystories-train-head.txt",
+        "bytes": 62914560,
+        "sha256": "630a5cc45e906c6125c6fe4fafa70a8f3ea4bb59f6563db305503f7ddb40f02e"
+      },
+      {
+        "file": "tinystories-valid.txt",
+        "bytes": 22502601,
+        "sha256": "6874bae9a4c1a4e7edcf0e53b86c17817e9cf881fc75ff2368da457b80c0585d"
+      }
+    ],
+    "token_count_policy": "test_tokens includes EOS; test_content_tokens and train_tokens exclude EOS",
+    "byte_unit": "MiB = 1048576 bytes; cap includes the final complete document",
+    "note": "Input hashes identify the local September 15 snapshot; upstream commit revisions were not recorded."
+  }
+}
