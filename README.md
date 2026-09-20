@@ -15,6 +15,12 @@ You can also hand these steps to a coding agent such as Claude Code or Codex in 
 
 Quizzes, assignments, and the individual project are submitted on [eLearning](https://elearning.fudan.edu.cn/); weekly tasks and surveys are submitted as pull requests from the GitHub website. See the [participation workflow](docs/participation-workflow.md).
 
+The [Lecture 01 survey](surveys/lecture-01/README.md) closes on **September 20,
+2026, at 23:59 (Asia/Shanghai)**. Submit your response PR by then, or check that
+your existing response is merged into `main`. New responses will not be
+accepted after the deadline. The teaching team will archive the survey under
+`tasks/` afterward; accepted responses do not need to be resubmitted.
+
 Find assignment deadlines and updates in the
 [assignment announcement issues](https://github.com/baojian/llm-26-fall/issues?q=is%3Aissue%20label%3Aassignment).
 Subscribe to an assignment's issue to follow its announcements and clarifications.

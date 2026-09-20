@@ -39,6 +39,21 @@ The Lecture 01 LLM-app survey allows any number of selections, including zero
 (instructor decision, September 16, 2026). Include responses with more than two
 selected apps in the results. The former two-app limit is superseded.
 
+Instructor decision, September 20, 2026: survey submissions close at
+**23:59 on September 20, 2026 (Asia/Shanghai, UTC+08:00)**. Students should
+verify that their response is merged into `main`; students who have not
+submitted must open their response PR by the deadline. Review and resolve
+responses submitted on time even if the review or merge happens afterward.
+Do not accept new survey responses after the cutoff, including at the future
+archive location.
+
+After the deadline, close collection issue #6 and resolve outstanding survey
+PRs, then implement issue #139 through a separate PR: move the survey to
+`tasks/l01-tokenization/llm-app-survey/`, preserve accepted responses and
+participation, and leave a forwarding README at the old location. Begin the
+migration no earlier than September 21, 2026, 00:00 (Asia/Shanghai). The move
+does not reopen submissions or require students to resubmit.
+
 ## Commit & Pull Request Guidelines
 
 Recent commits use short, lowercase, imperative summaries such as `configure uv Python environment`; follow that pattern and keep each commit focused. Make changes through pull requests rather than committing directly to `main`. PRs should explain the purpose, list validation performed, link relevant issues, and include screenshots only for visual output. Never commit secrets, model weights, checkpoints, logs, or experiment outputs; keep secrets in ignored `.env` files and provide `.env.example` when configuration must be documented.

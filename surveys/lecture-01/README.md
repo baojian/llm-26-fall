@@ -1,5 +1,21 @@
 # Lecture 01: Which LLM apps do you use most?
 
+**Final submission deadline: September 20, 2026, 23:59
+(Asia/Shanghai, UTC+08:00).** New survey responses will not be accepted after
+this deadline.
+
+If you already submitted, check that your Markdown file appears in
+[responses/ on the `main` branch](https://github.com/baojian/llm-26-fall/tree/main/surveys/lecture-01/responses).
+If your PR is still open, check its review status; do not submit a duplicate.
+If you have not submitted, follow the instructions below and open your PR by
+the deadline. The teaching team may finish reviewing on-time PRs afterward.
+
+After collection closes and outstanding PRs are resolved, the teaching team
+will move this survey to `tasks/l01-tokenization/llm-app-survey/` under
+[issue #139](https://github.com/baojian/llm-26-fall/issues/139). The old location
+will link to the archive. Accepted responses will be preserved, and no
+resubmission is needed. The archive will not accept new survey response files.
+
 Help us understand the class's experience with LLM apps while practicing your
 first pull request (PR). Select all apps you regularly use in everyday life
 from nine listed apps and Other. There is no limit on the number of selections.
@@ -14,15 +30,15 @@ ID is needed. Share only app names you are comfortable making public.
 ## Results so far
 
 <!-- survey-results:start -->
-Counted from the merged files in [responses/](responses/) on September 18, 2026:
-**94 responses**. Multiple selections are allowed.
+Counted from the merged files in [responses/](responses/) on September 20, 2026:
+**95 responses**. Multiple selections are allowed.
 
 ![Bar chart of the number of students who selected each LLM app](results.svg)
 
 | App | Students |
 | :--- | ---: |
-| ChatGPT | 80 |
-| DeepSeek | 39 |
+| ChatGPT | 81 |
+| DeepSeek | 40 |
 | Doubao (豆包) | 23 |
 | Claude | 10 |
 | Gemini | 10 |
@@ -81,6 +97,14 @@ and
 [creating a pull request](https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/creating-a-pull-request).
 
 ## For the teaching team
+
+Apply the deadline above to when the student submitted the response, not when
+the teaching team merges it. After September 20, 2026, 23:59 (Asia/Shanghai),
+close #6 to mark collection finished and resolve the remaining survey PRs:
+review on-time submissions and decline new responses submitted after the
+cutoff. Then carry out #139, starting no earlier than September 21, 2026,
+00:00 (Asia/Shanghai). Preserve accepted files, totals, and participation
+without a second active response directory.
 
 Demonstrate one response and PR during the lecture. Each response has its own
 file, so submissions can be merged independently. Review the changed file for

@@ -1,6 +1,6 @@
 # Progress board
 
-Generated on September 18, 2026 from the merged files in this repository.
+Generated on September 20, 2026 from the merged files in this repository.
 Click a username to see that student's merged pull requests.
 
 ![Bar chart of tasks passed per student](progress.svg)
@@ -67,40 +67,41 @@ Click a username to see that student's merged pull requests.
 | 58 | [qyt](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Aqyt) | 0 | — | 1 | 0 | 🥇 |
 | 59 | [rainybluenov](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Arainybluenov) | 0 | — | 1 | 1 | 🥇 |
 | 60 | [rickyshen0531-wq](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Arickyshen0531-wq) | 0 | — | 1 | 1 | 🥇 |
-| 61 | [ryanlee0508](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Aryanlee0508) | 0 | — | 1 | 1 | 🥇 |
-| 62 | [s123y-s](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3As123y-s) | 0 | — | 1 | 1 | 🥇 |
-| 63 | [saubazi-jie](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Asaubazi-jie) | 0 | — | 1 | 1 | 🥇 |
-| 64 | [semiscorpio](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Asemiscorpio) | 0 | — | 1 | 1 | 🥇 |
-| 65 | [snowstalgia](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Asnowstalgia) | 0 | — | 1 | 1 | 🥇 |
-| 66 | [steven9912](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Asteven9912) | 0 | — | 1 | 1 | 🥇 |
-| 67 | [still-fantasy-star](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Astill-fantasy-star) | 0 | — | 1 | 1 | 🥇 |
-| 68 | [stoneky666](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Astoneky666) | 0 | — | 1 | 1 | 🥇 |
-| 69 | [sunny-hs](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Asunny-hs) | 0 | — | 1 | 1 | 🥇 |
-| 70 | [themoment6](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Athemoment6) | 0 | — | 1 | 1 | 🥇 |
-| 71 | [thompsonfcb](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Athompsonfcb) | 0 | — | 1 | 1 | 🥇 |
-| 72 | [tyu-coder](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Atyu-coder) | 0 | — | 1 | 1 | 🥇 |
-| 73 | [verityliang](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Averityliang) | 0 | — | 1 | 1 | 🥇 |
-| 74 | [wangzj1020](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Awangzj1020) | 0 | — | 1 | 1 | 🥇 |
-| 75 | [wayland12](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Awayland12) | 0 | — | 1 | 1 | 🥇 |
-| 76 | [weiruijinglu](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Aweiruijinglu) | 0 | — | 1 | 1 | 🥇 |
-| 77 | [wesabbit](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Awesabbit) | 0 | — | 1 | 1 | 🥇 |
-| 78 | [wsqusaqi537](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Awsqusaqi537) | 0 | — | 1 | 1 | 🥇 |
-| 79 | [wuzhutian](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Awuzhutian) | 0 | — | 1 | 1 | 🥇 |
-| 80 | [xiangyundeyun](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Axiangyundeyun) | 0 | — | 1 | 1 | 🥇 |
-| 81 | [xpxpz](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Axpxpz) | 0 | — | 1 | 1 | 🥇 |
-| 82 | [xwtan51](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Axwtan51) | 0 | — | 1 | 1 | 🥇 |
-| 83 | [yanghongpeng8-rgb](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Ayanghongpeng8-rgb) | 0 | — | 1 | 1 | 🥇 |
-| 84 | [yannickchen77](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Ayannickchen77) | 0 | — | 1 | 1 | 🥇 |
-| 85 | [yoyo-x-star](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Ayoyo-x-star) | 0 | — | 1 | 1 | 🥇 |
-| 86 | [yuanzhu12345](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Ayuanzhu12345) | 0 | — | 1 | 1 | 🥇 |
-| 87 | [yunlangli-shtj](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Ayunlangli-shtj) | 0 | — | 1 | 1 | 🥇 |
-| 88 | [yyyun-0](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Ayyyun-0) | 0 | — | 1 | 1 | 🥇 |
-| 89 | [zhangbd-bot](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Azhangbd-bot) | 0 | — | 1 | 1 | 🥇 |
-| 90 | [zhangtuowei4-art](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Azhangtuowei4-art) | 0 | — | 1 | 1 | 🥇 |
-| 91 | [zhou-qixiang](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Azhou-qixiang) | 0 | — | 1 | 1 | 🥇 |
-| 92 | [zifangchu](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Azifangchu) | 0 | — | 1 | 1 | 🥇 |
-| 93 | [zsw-beginning](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Azsw-beginning) | 0 | — | 1 | 1 | 🥇 |
-| 94 | [zyl-chou](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Azyl-chou) | 0 | — | 1 | 1 | 🥇 |
+| 61 | [ruo-yu0](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Aruo-yu0) | 0 | — | 1 | 1 | 🥇 |
+| 62 | [ryanlee0508](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Aryanlee0508) | 0 | — | 1 | 1 | 🥇 |
+| 63 | [s123y-s](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3As123y-s) | 0 | — | 1 | 1 | 🥇 |
+| 64 | [saubazi-jie](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Asaubazi-jie) | 0 | — | 1 | 1 | 🥇 |
+| 65 | [semiscorpio](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Asemiscorpio) | 0 | — | 1 | 1 | 🥇 |
+| 66 | [snowstalgia](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Asnowstalgia) | 0 | — | 1 | 1 | 🥇 |
+| 67 | [steven9912](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Asteven9912) | 0 | — | 1 | 1 | 🥇 |
+| 68 | [still-fantasy-star](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Astill-fantasy-star) | 0 | — | 1 | 1 | 🥇 |
+| 69 | [stoneky666](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Astoneky666) | 0 | — | 1 | 1 | 🥇 |
+| 70 | [sunny-hs](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Asunny-hs) | 0 | — | 1 | 1 | 🥇 |
+| 71 | [themoment6](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Athemoment6) | 0 | — | 1 | 1 | 🥇 |
+| 72 | [thompsonfcb](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Athompsonfcb) | 0 | — | 1 | 1 | 🥇 |
+| 73 | [tyu-coder](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Atyu-coder) | 0 | — | 1 | 1 | 🥇 |
+| 74 | [verityliang](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Averityliang) | 0 | — | 1 | 1 | 🥇 |
+| 75 | [wangzj1020](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Awangzj1020) | 0 | — | 1 | 1 | 🥇 |
+| 76 | [wayland12](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Awayland12) | 0 | — | 1 | 1 | 🥇 |
+| 77 | [weiruijinglu](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Aweiruijinglu) | 0 | — | 1 | 1 | 🥇 |
+| 78 | [wesabbit](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Awesabbit) | 0 | — | 1 | 1 | 🥇 |
+| 79 | [wsqusaqi537](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Awsqusaqi537) | 0 | — | 1 | 1 | 🥇 |
+| 80 | [wuzhutian](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Awuzhutian) | 0 | — | 1 | 1 | 🥇 |
+| 81 | [xiangyundeyun](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Axiangyundeyun) | 0 | — | 1 | 1 | 🥇 |
+| 82 | [xpxpz](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Axpxpz) | 0 | — | 1 | 1 | 🥇 |
+| 83 | [xwtan51](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Axwtan51) | 0 | — | 1 | 1 | 🥇 |
+| 84 | [yanghongpeng8-rgb](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Ayanghongpeng8-rgb) | 0 | — | 1 | 1 | 🥇 |
+| 85 | [yannickchen77](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Ayannickchen77) | 0 | — | 1 | 1 | 🥇 |
+| 86 | [yoyo-x-star](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Ayoyo-x-star) | 0 | — | 1 | 1 | 🥇 |
+| 87 | [yuanzhu12345](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Ayuanzhu12345) | 0 | — | 1 | 1 | 🥇 |
+| 88 | [yunlangli-shtj](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Ayunlangli-shtj) | 0 | — | 1 | 1 | 🥇 |
+| 89 | [yyyun-0](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Ayyyun-0) | 0 | — | 1 | 1 | 🥇 |
+| 90 | [zhangbd-bot](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Azhangbd-bot) | 0 | — | 1 | 1 | 🥇 |
+| 91 | [zhangtuowei4-art](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Azhangtuowei4-art) | 0 | — | 1 | 1 | 🥇 |
+| 92 | [zhou-qixiang](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Azhou-qixiang) | 0 | — | 1 | 1 | 🥇 |
+| 93 | [zifangchu](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Azifangchu) | 0 | — | 1 | 1 | 🥇 |
+| 94 | [zsw-beginning](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Azsw-beginning) | 0 | — | 1 | 1 | 🥇 |
+| 95 | [zyl-chou](https://github.com/baojian/llm-26-fall/pulls?q=is%3Apr+is%3Amerged+author%3Azyl-chou) | 0 | — | 1 | 1 | 🥇 |
 
 **Columns.** *Tasks passed*: submissions whose checker passes. *Correct rate*:
 passed ÷ submitted. *Participation*: lectures with at least one submission,
