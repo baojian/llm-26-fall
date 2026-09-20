@@ -7,8 +7,8 @@ lecture = "l01-tokenization"
 type = "task"
 difficulty = "easy"
 time_minutes = 30
-deadline = "23:59 (Asia/Shanghai), 7 calendar days after PR #131 merges into main, using its Shanghai merge date"
-issue = 0
+deadline = "2026-09-27T23:59:00+08:00"
+issue = 201
 proposed_by = ""
 
 [submission]

@@ -1,9 +1,7 @@
 # Chunk text with the GPT-2 pre-tokenizer rules
 
 **Lecture:** l01-tokenization · **Difficulty:** medium · **Time:** about 45 minutes ·
-**Deadline:** 23:59 (Asia/Shanghai), seven calendar days after
-[release PR #131](https://github.com/baojian/llm-26-fall/pull/131) merges into
-`main`, using its Shanghai merge date.
+**Deadline:** Sunday, September 27, 2026, 23:59 (Asia/Shanghai, UTC+08:00).
 
 **Participation:** Optional; see [Lecture 01 activities](../README.md).
 
@@ -99,4 +97,4 @@ verifies the filename against your account and reviews your reasoning.
 Use your own code and words; discussing approaches is fine. Open the PR from
 your own account, changing only your submission file. Keep supplied data and
 tests unchanged. Use title `l01-tokenization/gpt2-pretokenizer: <username>` and
-body `Related to #<issue>`.
+body `Related to #202`.

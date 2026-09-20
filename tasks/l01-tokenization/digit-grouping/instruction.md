@@ -1,9 +1,7 @@
 # Group digits into chunks of at most three
 
 **Lecture:** l01-tokenization · **Difficulty:** easy · **Time:** about 30 minutes ·
-**Deadline:** 23:59 (Asia/Shanghai), seven calendar days after
-[release PR #131](https://github.com/baojian/llm-26-fall/pull/131) merges into
-`main`, using its Shanghai merge date.
+**Deadline:** Sunday, September 27, 2026, 23:59 (Asia/Shanghai, UTC+08:00).
 
 **Participation:** Optional; see [Lecture 01 activities](../README.md).
 
@@ -99,4 +97,4 @@ your account, reviews your reasoning, and checks additional inputs.
 Use your own code and words; discussing approaches is fine. Open the PR from
 your own account, changing only your submission file. Keep supplied data and
 tests unchanged. Use title `l01-tokenization/digit-grouping: <username>` and
-body `Related to #<issue>`.
+body `Related to #201`.
