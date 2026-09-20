@@ -1,10 +1,11 @@
 # Lecture 01 LLM app survey
 
-GitHub username: yeeeee0107
+GitHub username: yeeee0107
 
 ## Which LLM apps do you use most in everyday life?
 
-Select at most two apps you regularly use by changing `[ ]` to `[x]`.
+Select all apps you regularly use by changing `[ ]` to `[x]`.
+There is no limit on the number of selections.
 If you do not regularly use any LLM app, leave all boxes unchecked.
 Count the web and mobile versions of the same app as one choice.
 
@@ -19,5 +20,4 @@ Count the web and mobile versions of the same app as one choice.
 - [ ] Zhipu Qingyan (智谱清言)
 - [ ] Other: APP_NAME
 
-If you select Other, replace `APP_NAME` with one app name. Other counts as one
-of your two selections.
+If you select Other, replace `APP_NAME` with one app name.
