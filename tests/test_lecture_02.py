@@ -151,7 +151,7 @@ def test_manifest_and_assets_are_consistent():
     assert (LECTURE / "assets/predicting-next-word.mp4").stat().st_size < 10_000_000
     assert SLIDES.rstrip().endswith("index.html#/33.")
     assert 'id="references"' in SLIDES
-    assert SLIDES.count('<!-- .slide:') == 39
+    assert SLIDES.count('<!-- .slide:') == 38
     assert 'id="smoothing"' in SLIDES and "Katz-backoff" not in SLIDES
     notebook_text = "".join("".join(cell["source"]) for cell in NOTEBOOK["cells"])
     for label in re.findall(r"(?:Exercise|Notebook|practices?) ([EP]\d\d)", SLIDES):

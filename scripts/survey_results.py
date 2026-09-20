@@ -21,7 +21,6 @@ ROOT = Path(__file__).resolve().parents[1]
 SURVEY = ROOT / "surveys/lecture-01"
 LISTED_APPS = ["ChatGPT", "Claude", "Gemini", "DeepSeek", "Doubao (豆包)", "Qwen (千问)",
                "Kimi", "Tencent Yuanbao (腾讯元宝)", "Zhipu Qingyan (智谱清言)"]
-MAX_CHOICES = 2
 CHECKED = re.compile(r"^- \[\s*[xX]\s*\] (.+?)\s*$", re.MULTILINE)
 
 
@@ -37,18 +36,15 @@ def selections(text: str) -> list[str]:
     return chosen
 
 
-def tally(responses_dir: Path) -> tuple[Counter, int, int]:
-    """Count apps over valid responses. Returns (counts, valid responses, over-selected responses)."""
+def tally(responses_dir: Path) -> tuple[Counter, int]:
+    """Count checked apps in every response, with no limit on selections."""
     counts: Counter = Counter({app: 0 for app in LISTED_APPS})
-    valid = skipped = 0
+    responses = 0
     for path in sorted(responses_dir.glob("*.md")):
         chosen = selections(path.read_text(encoding="utf-8"))
-        if len(chosen) > MAX_CHOICES:
-            skipped += 1
-            continue
-        valid += 1
+        responses += 1
         counts.update(chosen)
-    return counts, valid, skipped
+    return counts, responses
 
 
 def ordered(counts: Counter) -> list[tuple[str, int]]:
@@ -86,7 +82,7 @@ def bar_chart_svg(bars: list[tuple[str, int]], title: str, subtitle: str) -> str
         if count:
             parts.append(f'<rect x="{left}" y="{y}" width="{bar_width:.1f}" height="{bar_height}" rx="4" fill="{accent}"/>')
         parts.append(f'<text x="{left + bar_width + 10:.1f}" y="{y + bar_height / 2 + 6}" font-size="16" fill="{ink}">{count}</text>')
-    parts.append(f'<text x="{left + plot_width / 2:.1f}" y="{height - 12}" font-size="15" fill="{muted}" text-anchor="middle">Students who selected the app (at most two selections each)</text>')
+    parts.append(f'<text x="{left + plot_width / 2:.1f}" y="{height - 12}" font-size="15" fill="{muted}" text-anchor="middle">Students who selected the app (multiple selections allowed)</text>')
     parts.append("</svg>")
     return "\n".join(parts) + "\n"
 
@@ -94,17 +90,12 @@ def bar_chart_svg(bars: list[tuple[str, int]], title: str, subtitle: str) -> str
 START, END = "<!-- survey-results:start -->", "<!-- survey-results:end -->"
 
 
-def results_block(bars: list[tuple[str, int]], valid: int, skipped: int, today: dt.date) -> str:
+def results_block(bars: list[tuple[str, int]], responses: int, today: dt.date) -> str:
     """The Markdown shown on the folder page, between the README's markers."""
     rows = "\n".join(f"| {app} | {count} |" for app, count in bars)
-    skipped_note = (
-        f" {skipped} response{'s' if skipped != 1 else ''} selected more than {MAX_CHOICES} apps and "
-        f"{'are' if skipped != 1 else 'is'} not counted."
-        if skipped else ""
-    )
     return f"""{START}
 Counted from the merged files in [responses/](responses/) on {today:%B %-d, %Y}:
-**{valid} responses**, at most two selections each.{skipped_note}
+**{responses} responses**. Multiple selections are allowed.
 
 ![Bar chart of the number of students who selected each LLM app](results.svg)
 
@@ -130,15 +121,15 @@ def main() -> None:
     parser.add_argument("--date", type=dt.date.fromisoformat, default=dt.date.today())
     args = parser.parse_args()
 
-    counts, valid, skipped = tally(args.responses)
+    counts, responses = tally(args.responses)
     bars = ordered(counts)
-    subtitle = f"Lecture 01 survey · {valid} responses · counted {args.date:%B %-d, %Y}"
+    subtitle = f"Lecture 01 survey · {responses} responses · counted {args.date:%B %-d, %Y}"
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "results.svg").write_text(bar_chart_svg(bars, "Which LLM apps do you use most?", subtitle), encoding="utf-8")
-    update_readme(args.out / "README.md", results_block(bars, valid, skipped, args.date))
+    update_readme(args.out / "README.md", results_block(bars, responses, args.date))
     for app, count in bars:
         print(f"{count:3d}  {app}")
-    print(f"{valid} responses counted, {skipped} skipped -> {args.out / 'results.svg'}")
+    print(f"{responses} responses counted -> {args.out / 'results.svg'}")
 
 
 if __name__ == "__main__":

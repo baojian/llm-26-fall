@@ -120,8 +120,13 @@ try {
   await page.goto(origin + '/index.html', { waitUntil: 'networkidle' });
   assert.equal(await page.locator('html').getAttribute('lang'), 'zh-CN', 'Remember preference across course pages.');
   await page.screenshot({ path: path.join(output, 'course-zh.png') });
+  const readingTabPromise = page.waitForEvent('popup');
   await page.locator('a[href="docs/lecture-01-pre-tokenization.html"]').click();
-  assert.equal(await page.locator('.reading-article:visible').getAttribute('data-note-language'), 'zh');
+  const readingTab = await readingTabPromise;
+  await readingTab.waitForLoadState('networkidle');
+  assert.equal(await readingTab.locator('.reading-article:visible').getAttribute('data-note-language'), 'zh');
+  assert.equal(page.url(), origin + '/index.html', 'Keep the course homepage open.');
+  await readingTab.close();
   await page.goto(origin + '/slides/example/', { waitUntil: 'networkidle' });
   await page.evaluate(() => window.courseReady);
   assert.equal(await page.locator('html').getAttribute('lang'), 'zh-CN');

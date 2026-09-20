@@ -1,23 +1,23 @@
 # Lecture 01 LLM app survey
 
-GitHub username: YOUR_USERNAME
+GitHub username: VerityLiang
 
 ## Which LLM apps do you use most in everyday life?
 
-Select all apps you regularly use by changing `[ ]` to `[x]`.
-There is no limit on the number of selections.
+Select at most two apps you regularly use by changing `[ ]` to `[x]`.
 If you do not regularly use any LLM app, leave all boxes unchecked.
 Count the web and mobile versions of the same app as one choice.
 
 - [ ] ChatGPT
 - [ ] Claude
 - [ ] Gemini
-- [ ] DeepSeek
+- [x] DeepSeek
 - [ ] Doubao (豆包)
 - [ ] Qwen (千问)
-- [ ] Kimi
+- [x] Kimi
 - [ ] Tencent Yuanbao (腾讯元宝)
 - [ ] Zhipu Qingyan (智谱清言)
 - [ ] Other: APP_NAME
 
-If you select Other, replace `APP_NAME` with one app name.
+If you select Other, replace `APP_NAME` with one app name. Other counts as one
+of your two selections.

@@ -1,9 +1,9 @@
 # Lecture 01: Which LLM apps do you use most?
 
 Help us understand the class's experience with LLM apps while practicing your
-first pull request (PR). Select at most two apps you regularly use in everyday
-life from nine listed apps and Other. If you do not regularly use any LLM app,
-leave all boxes unchecked.
+first pull request (PR). Select all apps you regularly use in everyday life
+from nine listed apps and Other. There is no limit on the number of selections.
+If you do not regularly use any LLM app, leave all boxes unchecked.
 
 The shared [survey issue #6](https://github.com/baojian/llm-26-fall/issues/6)
 contains the instructions and a complete response template.
@@ -14,33 +14,35 @@ ID is needed. Share only app names you are comfortable making public.
 ## Results so far
 
 <!-- survey-results:start -->
-Counted from the merged files in [responses/](responses/) on September 16, 2026:
-**84 responses**, at most two selections each. 3 responses selected more than 2 apps and are not counted.
+Counted from the merged files in [responses/](responses/) on September 18, 2026:
+**94 responses**. Multiple selections are allowed.
 
 ![Bar chart of the number of students who selected each LLM app](results.svg)
 
 | App | Students |
 | :--- | ---: |
-| ChatGPT | 73 |
-| DeepSeek | 33 |
-| Doubao (豆包) | 20 |
-| Claude | 9 |
-| Gemini | 9 |
-| Qwen (千问) | 3 |
-| Kimi | 3 |
+| ChatGPT | 80 |
+| DeepSeek | 39 |
+| Doubao (豆包) | 23 |
+| Claude | 10 |
+| Gemini | 10 |
+| Qwen (千问) | 5 |
+| Kimi | 5 |
 | Zhipu Qingyan (智谱清言) | 2 |
 | Tencent Yuanbao (腾讯元宝) | 1 |
+| Codex (Other) | 1 |
+| Minimax (Other) | 1 |
 
 Apps written under *Other* get their own bar with the suffix "(Other)".
 <!-- survey-results:end -->
 
 ## Prepare your response
 
-Copy the [response template](template.md) and mark at most two choices with
+Copy the [response template](template.md) and mark all applicable choices with
 `[x]`. The choices are ChatGPT, Claude, Gemini, DeepSeek, Doubao, Qwen, Kimi,
 Tencent Yuanbao, Zhipu Qingyan, and Other. If you select Other, give one app
-name; it counts as one of your two selections. Count the web and mobile
-versions of the same app as one choice. One or zero selections is also valid.
+name. Count the web and mobile versions of the same app as one choice.
+One or zero selections is also valid.
 
 Use your GitHub username in lowercase as the filename. For example, the username
 `octocat` would submit `surveys/lecture-01/responses/octocat.md`.
@@ -82,14 +84,14 @@ and
 
 Demonstrate one response and PR during the lecture. Each response has its own
 file, so submissions can be merged independently. Review the changed file for
-the expected filename, at most two checked boxes, and an app name if Other is
-selected before merging. Zero selections is a valid response.
+the expected filename, the GitHub username, and an app name if Other is
+selected before merging. Any number of selections, including zero, is valid.
 
 After merging a batch of responses, run `uv run python scripts/survey_results.py`
 from the repository root. It rewrites the bar chart [results.svg](results.svg)
 and the **Results so far** block above, which GitHub shows on this folder's
-page and the course website links from the Week 1 row. Responses with more
-than two selections are not counted.
+page and the course website links from the Week 1 row. Include every response,
+including those with more than two selections.
 
 The `survey:` title prefix makes these PRs easy to find. Divide review among the
 teaching team to handle the class's submissions. After merging, the files in

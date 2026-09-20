@@ -119,7 +119,7 @@ Adapted from Spring Lecture 01 slide 19: https://baojian.github.io/llm-26/slides
 
 Which apps do you use most in everyday life?
 
-Choose **at most two** in the [first-lecture survey](https://github.com/baojian/llm-26-fall/issues/6).
+Select **all that apply** in the [first-lecture survey](https://github.com/baojian/llm-26-fall/issues/6).
 
 Submit your response through one pull request, following the issue’s guide.
 

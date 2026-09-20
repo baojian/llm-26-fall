@@ -33,6 +33,12 @@ There are no starred parts, graduate-only extensions, extension bonus points, or
 
 Graded assignments and project deliverables are submitted privately through eLearning. Public assignment releases contain instructions, starter code, supplied data, and public tests. Reference solutions, hidden tests, and grading administration belong in the private instructor repository; student submissions and grades must not be committed to either repository.
 
+## Survey Policy
+
+The Lecture 01 LLM-app survey allows any number of selections, including zero
+(instructor decision, September 16, 2026). Include responses with more than two
+selected apps in the results. The former two-app limit is superseded.
+
 ## Commit & Pull Request Guidelines
 
 Recent commits use short, lowercase, imperative summaries such as `configure uv Python environment`; follow that pattern and keep each commit focused. Make changes through pull requests rather than committing directly to `main`. PRs should explain the purpose, list validation performed, link relevant issues, and include screenshots only for visual output. Never commit secrets, model weights, checkpoints, logs, or experiment outputs; keep secrets in ignored `.env` files and provide `.env.example` when configuration must be documented.

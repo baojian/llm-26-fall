@@ -32,37 +32,27 @@ Period 1: the first topic. Return to this outline at each transition. Source: Sp
 
 ## Assign probabilities to sentences
 
-<p><strong>Speech recognition</strong></p>
-<p>$P($<span class="text-good">It's hard to recognize speech</span>$) \gt P($<span class="text-bad">It's hard to wreck a nice beach</span>$)$</p>
+<div class="columns">
+<div>
+<p><strong>Speech recognition</strong><br>$P($<span class="text-good">It's hard to recognize speech</span>$)$<br>$\gt P($<span class="text-bad">It's hard to wreck a nice beach</span>$)$</p>
+</div>
+<div class="fragment" data-fragment-index="0">
+<p><strong>Spell correction</strong><br>$P($<span class="text-good">about fifteen minutes from</span>$)$<br>$\gt P($<span class="text-bad">about fifteen minuets from</span>$)$</p>
+</div>
+</div>
 
-<p><strong>Machine translation (MT):</strong> “他向记者介绍了主要内容” is translated into 4 candidates.</p>
+<blockquote class="fragment" data-fragment-index="1"><p><strong>Machine translation (MT):</strong> “他向记者介绍了主要内容”</p></blockquote>
 <ul>
-<li>$S_1$ = <span class="text-good">He briefed reporters on the main contents of the statement</span></li>
-<li>$S_2$ = He introduced reporters to the main contents of the statement</li>
-<li>$S_3$ = He briefed to reporters the main contents of the statement</li>
-<li>$S_4$ = <span class="text-bad">He to reporters introduced main content</span></li>
+<li class="fragment" data-fragment-index="2">$S_1$ = <span class="text-good">He briefed reporters on the main contents of the statement</span></li>
+<li class="fragment" data-fragment-index="3">$S_2$ = He introduced reporters to the main contents of the statement</li>
+<li class="fragment" data-fragment-index="4">$S_3$ = He briefed to reporters the main contents of the statement</li>
+<li class="fragment" data-fragment-index="5">$S_4$ = <span class="text-bad">He to reporters introduced main content</span></li>
 </ul>
 
-Note:
-Each task needs a score that prefers fluent sentences. In speech recognition the two transcriptions sound alike; only a language model separates them. The MT candidates are all translations of the same Chinese sentence. Source: Spring Lecture 02 slide 3, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/2.
-
----
-
-<!-- .slide: id="assign-probabilities-2" -->
-
-## Assign probabilities to sentences
-
-<p>A good MT model should have</p>
-<p>$P($<span class="text-good">$S_1$</span>$) \gt P(S_2) \approx P(S_3) \gt P($<span class="text-bad">$S_4$</span>$)$</p>
-
-<p><strong>Spell correction</strong></p>
-<ul>
-<li>The office is about fifteen <span class="text-bad">minuets</span> from my house</li>
-<li>$P($<span class="text-good">about fifteen minutes from</span>$) \gt P($<span class="text-bad">about fifteen minuets from</span>$)$</li>
-</ul>
+<p class="fragment" data-fragment-index="6">$P($<span class="text-good">$S_1$</span>$) \gt P(S_2) \approx P(S_3) \gt P($<span class="text-bad">$S_4$</span>$)$</p>
 
 Note:
-“Minuets” is a real word, so a dictionary alone does not catch it. A language model prefers the phrase with “minutes.” Source: Spring Lecture 02 slide 3, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/2.
+Reveal sequence: speech recognition is visible on entry; advance to spelling, then the MT source, each of its four candidates, and finally the ranking. Pause before the last reveal and ask students which sentence should receive the highest probability. Each task needs a score that prefers fluent sentences. The speech transcriptions sound alike; a language model supplies a preference. For spelling, use the full sentence “The office is about fifteen minuets from my house.” “Minuets” is a real word, so a dictionary alone does not catch it; the surrounding words favor “minutes.” The MT candidates share one Chinese source. The ranking is illustrative rather than measured; a complete MT system must also account for source meaning. This combines the former Fall slides 3 and 4 while keeping their examples together. Source: Spring Lecture 02 slide 3, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/2.
 
 ---
 
@@ -125,21 +115,21 @@ The empirical average replaces the expectation. The factorization is exact by th
 
 <!-- .slide: id="training-samples" -->
 
-## Training samples from real-world
+## Diverse training samples
 
 <p>$$\mathcal{D}=\left\{\mathbf{w}^{(i)}\right\}_{i=1}^{N}=$$</p>
 <ul>
 <li>$\mathbf{w}^{(1)}$ : It's hard to recognize speech.</li>
-<li>$\mathbf{w}^{(2)}$ : He briefed reporters on the main contents of the statement.</li>
-<li>$\mathbf{w}^{(3)}$ : The office is about fifteen minutes from my house.</li>
-<li>$\mathbf{w}^{(4)}$ : I want to learn how to play the guitar.</li>
+<li>$\mathbf{w}^{(2)}$ : <code>#include &lt;stdio.h&gt;<br>int main(void) { printf("Hello, world!\n"); }</code></li>
+<li>$\mathbf{w}^{(3)}$ : 今天我们学习如何用语言模型预测下一个词。</li>
+<li>$\mathbf{w}^{(4)}$ : Prove that $1+3+\cdots+(2n-1)=n^2$ for every integer $n\ge1$.</li>
 <li>$\vdots$</li>
-<li>$\mathbf{w}^{(i)}$ : <code>#include&lt;stdio.h&gt; int main(void){ printf("Hello, world!\n");}</code></li>
+<li>$\mathbf{w}^{(i)}$ : <code>{"city": "Shanghai", "temperature_c": 22}</code></li>
 </ul>
-<p>Assume $\mathbf{w}^{(i)} \overset{\text{i.i.d.}}{\sim} p_{\text{data}}$ and train $p_\theta$ to fit these samples.</p>
+<p>Anything represented as a token sequence can be a training sample.</p>
 
 Note:
-Code is text too; the same objective covers it. Source: Spring Lecture 02 slide 7, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/6.
+Read the examples as English prose, C source code, Chinese prose, a mathematical proof problem, and a structured JSON record. The first two examples come from the Spring slide; the others are course-authored illustrations. The C preprocessor directive occupies its own line. The math problem can be stored as text with LaTeX notation, and the JSON record serializes named fields into text. After encoding, each sample is a token sequence; the same next-token objective applies. Other modalities can also be represented as sequences using an appropriate encoding. Encoding makes data representable; selecting useful training data is a separate decision. Retain the preceding slides' i.i.d. sampling assumption as an idealization when fitting $p_\theta$ to the corpus. Source: Spring Lecture 02 slide 7, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/6.
 
 ---
 
@@ -180,34 +170,24 @@ Play the clip (about two and a half minutes) or a part of it. The clip was bundl
 
 ## The $N$-gram model
 
-<p><strong>Intuition:</strong> instead of using the entire history $w_{1:t-1}$, we can <span class="text-bad">approximate</span> the probability by using the last few ($N$) words.</p>
-<ul>
-<li><strong>Unigram model</strong> ($N=1$): approximates $P(\cdot)$ without history: $P(w_t \mid w_{1:t-1}) \approx p_\theta(w_t)$</li>
-</ul>
-<p>$$P(\text{skills}\mid \text{I want to improve my cooking}) \approx p_\theta(\text{skills})$$</p>
-<ul>
-<li><strong>Bigram model</strong> ($N=2$): approximates $P(\cdot)$ by only using $w_{t-1}$: $P(w_t \mid w_{1:t-1}) \approx p_\theta(w_t \mid w_{t-1})$</li>
-</ul>
-<p>$$P(\text{skills}\mid \text{I want to improve my cooking}) \approx p_\theta(\text{skills}\mid \text{cooking})$$</p>
+<p>Predict <strong>skills</strong> after “I want to improve my cooking”.</p>
+
+<table>
+<thead><tr><th>Model</th><th>History retained</th><th>Next-token probability</th></tr></thead>
+<tbody>
+<tr><td><strong>Unigram</strong> ($N=1$)</td><td>None</td><td>$p_\theta(\text{skills})$</td></tr>
+<tr class="fragment" data-fragment-index="0"><td><strong>Bigram</strong> ($N=2$)</td><td>cooking</td><td>$p_\theta(\text{skills}\mid\text{cooking})$</td></tr>
+<tr class="fragment" data-fragment-index="1"><td><strong>Trigram</strong> ($N=3$)</td><td>my cooking</td><td>$p_\theta(\text{skills}\mid\text{my cooking})$</td></tr>
+</tbody>
+</table>
+
+<div class="fragment" data-fragment-index="2">
+<p><strong>Markov assumption:</strong> keep only the previous $N-1$ tokens.</p>
+<p>$P(w_t\mid w_{1:t-1})\approx p_\theta(w_t\mid w_{t-N+1:t-1})\qquad(N\ge2)$</p>
+</div>
 
 Note:
-Source: Spring Lecture 02 slide 9, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/8.
-
----
-
-<!-- .slide: id="ngram-model-2" -->
-
-## The $N$-gram model: Markov assumption
-
-<ul>
-<li><strong>Trigram model</strong> ($N=3$): approximates $P(w_t\mid w_{1:t-1})$ by only using $w_{t-2:t-1}$: $P(w_t\mid w_{1:t-1}) \approx p_\theta(w_t \mid w_{t-2:t-1})$</li>
-</ul>
-<p>$$P(\text{skills}\mid \text{I want to improve my cooking}) \approx p_\theta(\text{skills}\mid \text{my cooking})$$</p>
-<p>The above approximations use the <strong>Markov assumption</strong>. In general, for $N$-gram ($N\ge 2$):</p>
-<p>$$\text{(N-1)-order Markov:}\qquad P(w_t \mid w_{1:t-1}) \approx p_\theta(w_t \mid w_{t-N+1:t-1}).$$</p>
-
-Note:
-An $N$-gram model is an $(N-1)$-order Markov model over tokens. Source: Spring Lecture 02 slide 9, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/8.
+Begin with the unigram row, then reveal bigram, trigram, and the general Markov assumption. Ask how much of “I want to improve my cooking” each model retains when predicting “skills”: zero, one, or two tokens. N counts the predicted token together with its context, so an N-gram model retains the previous N-1 tokens. The unigram has no history; bigram conditions on w_{t-1}; trigram conditions on w_{t-2:t-1}. In general, an N-gram model is an (N-1)-order Markov model over tokens; the displayed history range applies for N at least 2, and N=1 uses the unconditional distribution. BOS padding handles short histories at sentence starts, as explained later. This combines the former Fall slides 11 and 12 into one comparison. Source: Spring Lecture 02 slide 9, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/8.
 
 ---
 
@@ -321,7 +301,7 @@ An $N$-gram model needs $N-1$ BOS tokens so that the first word has a full histo
 
 ## Practical issues in $N$-gram LMs: unknown words (OOV)
 
-<p>A word like <em>Thisisahardtofindword</em> simply did not occur in our training set but could be in our test set.</p>
+<p>A word like <em class="text-bad">Thisisahardtofindword</em> simply did not occur in our training set but could be in our test set.</p>
 <ul>
 <li><strong>Closed vocabulary:</strong> test words must be in a fixed lexicon.</li>
 <li><strong>Open vocabulary:</strong> map unseen words to a pseudo-token <span class="text-token">&lt;UNK&gt;</span>.</li>
@@ -369,20 +349,35 @@ Source: Spring Lecture 02 slide 14, https://baojian.github.io/llm-26/slides/lect
 
 ## Building LMs and evaluation
 
-<p>Split your data into:</p>
-
 | Training data | Validation data | Testing data |
 | :--- | :--- | :--- |
 | Estimate parameters | Tune choices | Report once |
 
-<p><strong>Extrinsic evaluation</strong></p>
+<p><strong>Extrinsic evaluation:</strong> compare downstream task performance.</p>
+
+<div class="columns">
+<div>
 <ul>
-<li>Compare models via <strong>downstream tasks</strong>. Examples: spell correction accuracy; machine translation accuracy.</li>
-<li><span class="text-bad"><strong>Time-consuming</strong></span> (can take days or weeks).</li>
+<li><a href="https://agi.safe.ai/">Humanity’s Last Exam</a><br>Expert academic questions</li>
+<li><a href="https://www.tbench.ai/">Terminal-Bench</a><br>Tasks in a terminal</li>
 </ul>
+</div>
+<div>
+<ul>
+<li><a href="https://agents-last-exam.org/">Agents’ Last Exam</a><br>Professional workflows</li>
+<li><a href="https://arcprize.org/arc-agi/3">ARC-AGI-3</a><br>Interactive reasoning</li>
+</ul>
+</div>
+</div>
+
+<p><span class="text-bad"><strong>Time-consuming</strong></span> at scale (can take days or weeks).</p>
 
 Note:
-The Spring slide shows the split as a proportional bar (about 70/15/15). The second table row is an added one-word summary of each part's role. Source: Spring Lecture 02 slide 15, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/14.
+The Spring slide shows the split as a proportional bar (about 70/15/15). The second table row summarizes each part's role. Keep the test split untouched while choosing the model, prompt, or agent setup. Traditional examples are spell-correction accuracy and machine-translation quality. Source: Spring Lecture 02 slide 15, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/14.
+
+The linked benchmarks are current examples of task-based evaluation, rather than a claim that they are equally established or measure the same capability. Humanity’s Last Exam (HLE) tests expert academic questions across subjects, including multimodal questions. Agents’ Last Exam (ALE) evaluates professional computer workflows with verifiable outcomes. Terminal-Bench evaluates agents on tasks in terminal environments. ARC-AGI-3 tests interactive reasoning in unfamiliar game environments; distinguish it from the static puzzles in earlier ARC-AGI versions. These extend the motivation to modern LMs and agents; they are not proposed experiments for our N-gram model. Official sources checked September 16, 2026: https://agi.safe.ai/ and https://arxiv.org/abs/2501.14249; https://agents-last-exam.org/; https://www.tbench.ai/ and https://arxiv.org/abs/2601.11868; https://arcprize.org/arc-agi/3.
+
+Task scores depend on the model and evaluation setup: tools, prompts, action or token budgets, and benchmark version. Compare systems under a stated protocol; task success and held-out next-token likelihood answer different questions. Time depends on task count, agent trajectory length, repeated trials, environment setup, and available parallelism. Large evaluations can take days or weeks; this is not a fixed runtime for every benchmark. This motivates the next slide's cheaper intrinsic probability-based evaluation.
 
 ---
 
@@ -446,20 +441,24 @@ Expected answer: 10, independent of $t$. Notebook E03 computes it numerically fo
 
 ## Comparing language models
 
-<p><strong>Bits per byte (BPB)</strong> = −log₂ P(test text) ÷ UTF-8 bytes.</p>
+<p><strong>Bits per byte:</strong> $\mathrm{BPB}=-\frac{1}{B}\sum_{d,t}\log_2 p_\theta(w_t^{(d)}\mid w_{1:t-1}^{(d)})$</p>
 
-| Data and metric | Unigram | Bigram | Trigram |
+<p>$B$ = UTF-8 byte count of the test text.<br>Sum over token positions $t$ in each test document $d$.</p>
+
+| Test data / metric (↓ better) | Unigram | Bigram | Trigram |
 | :--- | ---: | ---: | ---: |
 | WSJ: word perplexity | 962 | 170 | 109 |
 | TinyStories: BPB | 2.07 | 1.30 | 1.12 |
 | OpenWebText: BPB | 2.48 | 2.06 | 2.03 |
 | Chinese web: BPB | 2.48 | 2.10 | 2.04 |
 
-Compare columns within each row: lower is better on that test text.
-
-<p class="caption">Demo: Qwen3, 24 MiB/corpus; separate from A1. WSJ: Jurafsky and Martin, Ch. 3.</p>
-
 Note:
+Read the formula as total prediction loss in bits divided by the UTF-8 byte count of the evaluated text. Here d indexes test documents and t indexes scored token positions within a document; history resets at document boundaries. Each contribution is minus log base 2 of the probability assigned to the actual next token, not a sampled token. For an N-gram model, the conditional uses only its retained history. With B = 100 bytes and total loss = 200 bits, BPB = 200/100 = 2 bits per byte. B is a byte count, not a token count: for example, ASCII "a" uses one UTF-8 byte and "中" uses three. The sum includes each document's EOS prediction in this evaluator; BOS is context only, and neither marker adds text bytes. Count bytes after the evaluator's preprocessing, excluding removed whitespace and document separators; do not use the raw file size blindly.
+
+Connection to perplexity: if T is the number of scored predictions and ell is their average negative natural-log probability, BPB = (T/B) × ell/ln(2) = (T/B) × log₂(PPL), with PPL = exp(ell). The same scored tokens and boundaries must be used for both metrics. Thus BPB is an average loss per byte; it is not perplexity divided by bytes or the tokenizer's compression ratio. For a dataset, divide the total loss by the total bytes; do not take an unweighted average of document BPBs. Source: Gao et al. (2020), The Pile, §3.1, https://arxiv.org/html/2101.00027#S3.SS1. The displayed sum is the expanded negative-log-likelihood form of that conversion. Implementation: pipeline/ngram_lm.py::bits_per_byte and pipeline/eval.py.
+
+Compare model columns within each row on the same test text. The course demonstration uses a 24 MiB training cap per corpus and is separate from A1.
+
 The WSJ numbers are from Jurafsky and Martin, Chapter 3. Perplexities are only comparable across models that share the same vocabulary and tokenization; that is why the course reports bits per byte on fixed held-out shards. The three course rows were computed with scripts/lecture02_experiments.py (interpolated models tuned on a dev split, Qwen3 tokenizer, 24 MiB training cap per source; bytes per content token 4.14 / 4.46 / 4.59). The current pipeline/eval.py scores n-grams; later neural-model adapters should share its text, byte, and EOS conventions. Here EOS contributes to loss and the scored token count, but contributes no text bytes. Lower loss does not guarantee better downstream accuracy. Different corpus rows do not measure the intrinsic difficulty of different languages. GPT-3 also reports perplexity: https://arxiv.org/pdf/2005.14165.pdf; leaderboards: https://nlpprogress.com/english/language_modeling.html. Source: Spring Lecture 02 slide 17, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/16.
 
 ---
@@ -617,6 +616,36 @@ NPLM already beat the best smoothed $N$-gram models in 2003; the gap widened wit
 
 Note:
 The original TinyStories corpus is itself synthetic, so “original” does not mean human-written. The measured loss changes reflect finite sampling, corpus replacement, a smaller token budget, and truncated sequence endings together. Keep this as an illustrative replacement experiment, not causal evidence that every self-training system needs a judge or that filtering fixes collapse. P04 uses an exact smoothed-mixture sampler and a fixed vocabulary on twelve original sentences; its scale and values differ from this plot. Ask students to propose equal-token-budget controls: resample original text, replace it with model samples, and retain a mixture of original and generated data. A filtered branch would need its own evaluation. For replacement versus accumulation experiments, see Gerstgrasser et al. (2024), https://arxiv.org/html/2404.01413v2. Shumailov et al. (2024) studies recursive replacement: https://www.nature.com/articles/s41586-024-07566-y. Figure: scripts/lecture02_experiments.py; hover shows actual training-token counts.
+
+---
+
+<!-- .slide: id="exit-questions" -->
+
+## Before you leave
+
+<div class="columns columns-wide-left">
+<div>
+<h3>Three questions</h3>
+<ol>
+<li>Why can a larger $N$ hurt on unseen text?</li>
+<li>Does lower perplexity guarantee better task performance?</li>
+<li>How do embeddings help with unseen contexts?</li>
+</ol>
+</div>
+<div>
+<h3>Sources and extensions</h3>
+<p><a href="https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html">Fudan Spring Lecture 02</a><br>Original examples and figures.</p>
+<p><a href="https://www.jmlr.org/papers/v3/bengio03a.html">Bengio et al. (2003)</a><br>Learning shared word vectors.</p>
+<p><a href="../shared/notebook.html?lecture=lecture-02" target="_blank" rel="noopener noreferrer">Notebook P01–P04</a><br>Optional sampling, smoothing, self-training.</p>
+</div>
+</div>
+
+**Next:** embeddings and PyTorch — from tokens to trainable vectors and gradients.
+
+Note:
+Use two minutes for these ungraded discussion questions, then one minute for the readings. Expected answers: (1) For a fixed corpus, longer contexts have fewer observations. More possible N-grams mean sparser counts and potentially worse estimates on unseen text; increasing N does not guarantee better generalization. Smoothing or interpolation can help, and the order should be chosen on development data. (2) No. Perplexity measures predictive fit to the evaluated text; task performance also depends on the task distribution, metric, and system setup. Compare perplexities only under the same tokenization and scoring conventions; bits per byte provides a common unit across tokenizers on the same text with matched preprocessing and boundaries. See the companion note, ../../docs/lecture-02-lm-metrics.md. (3) The neural LM shares an embedding matrix and prediction network across contexts. Similar learned vectors let observations from one context inform predictions for related, unseen combinations. This helps generalization without guaranteeing that every unseen context receives a good prediction. Source: Bengio et al. (2003), https://www.jmlr.org/papers/v3/bengio03a.html.
+
+The Spring Fudan lecture supplies the original examples and figures. Bengio et al. connects the N-gram baseline to learned representations. The notebook link uses the shared launcher and opens the existing classroom notebook; its optional P01–P04 cover sampling, additive smoothing, held-out interpolation, and the controlled interpretation of replacing data with model samples. These are ungraded extensions for all students, not extra-credit work. Next lecture follows the published Week 3 plan: embedding lookup, tensor shapes, batching, autograd, and output projections. Students will trace tensors and gradients through a small language model; see ../../index.html#schedule.
 
 ---
 

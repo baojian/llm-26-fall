@@ -20,19 +20,21 @@ def test_tally_counts_checked_boxes_and_resolves_other(tmp_path):
     write(tmp_path, "c", {"Other": "Minimax"})
     write(tmp_path, "d", set())
     (tmp_path / "e.md").write_text("GitHub username: e\n- [X] Gemini\n", encoding="utf-8")
-    counts, valid, skipped = survey.tally(tmp_path)
-    assert (valid, skipped) == (5, 0)
+    counts, responses = survey.tally(tmp_path)
+    assert responses == 5
     assert counts["ChatGPT"] == 2 and counts["Kimi"] == 1 and counts["Gemini"] == 1
     assert counts["Minimax (Other)"] == 1 and counts["Claude"] == 0
     assert sum(counts.values()) == 5
 
 
-def test_over_selected_responses_are_skipped(tmp_path):
+def test_responses_with_more_than_two_selections_are_counted(tmp_path):
     write(tmp_path, "a", {"ChatGPT", "Kimi", "Claude"})
     write(tmp_path, "b", {"DeepSeek"})
-    counts, valid, skipped = survey.tally(tmp_path)
-    assert (valid, skipped) == (1, 1)
-    assert counts["DeepSeek"] == 1 and counts["ChatGPT"] == 0
+    write(tmp_path, "c", set(survey.LISTED_APPS))
+    counts, responses = survey.tally(tmp_path)
+    assert responses == 3
+    assert counts["DeepSeek"] == counts["ChatGPT"] == counts["Kimi"] == counts["Claude"] == 2
+    assert sum(counts.values()) == 4 + len(survey.LISTED_APPS)
 
 
 def test_bars_are_sorted_by_count_then_listing_order():
@@ -44,10 +46,11 @@ def test_bars_are_sorted_by_count_then_listing_order():
 
 def test_committed_results_match_the_responses():
     """Rerun scripts/survey_results.py after merging survey PRs."""
-    counts, valid, skipped = survey.tally(survey.SURVEY / "responses")
+    counts, responses = survey.tally(survey.SURVEY / "responses")
     readme = (survey.SURVEY / "README.md").read_text(encoding="utf-8")
     block = readme[readme.index(survey.START):readme.index(survey.END)]
-    assert f"**{valid} responses**" in block
+    assert responses == len(list((survey.SURVEY / "responses").glob("*.md")))
+    assert f"**{responses} responses**" in block
     for app, count in survey.ordered(counts):
         assert f"| {app} | {count} |" in block, app
     svg = (survey.SURVEY / "results.svg").read_text(encoding="utf-8")
