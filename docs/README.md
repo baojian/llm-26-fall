@@ -14,6 +14,11 @@ section links, code samples, citations, and three illustrated stages:
 The diagrams synthesize common practices described in the lecture's sources.
 They do not assert a single mandatory order or an undisclosed company recipe.
 
+For a hands-on companion, try the voluntary
+[public tokenizer comparison](../tasks/l01-tokenization/tokenizer-comparison/instruction.md):
+predict how two published tokenizers handle the same text, measure their
+outputs, and contribute an example for class discussion.
+
 ## Source files
 
 | File | Edit for |

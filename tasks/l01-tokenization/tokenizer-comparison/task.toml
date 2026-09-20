@@ -1,0 +1,14 @@
+[task]
+id = "l01-tokenization/tokenizer-comparison"
+title = "Compare public tokenizers on the same text"
+lecture = "l01-tokenization"
+type = "task"
+difficulty = "easy"
+time_minutes = 45
+deadline = ""
+issue = 0
+proposed_by = "baojian"
+
+[submission]
+file = "submissions/<username>.json"
+format = "tokenizer-comparison-v1"

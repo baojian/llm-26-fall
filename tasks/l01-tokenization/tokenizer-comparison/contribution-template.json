@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "contributors": ["your-github-username"],
+  "tokenizers": ["r50k_base", "qwen3"],
+  "question": "Replace this with one question that your comparison can answer.",
+  "cases": [
+    {"id": "digits", "text": "item123456789", "prediction": "Write your prediction before running measure."},
+    {"id": "mixed-script", "text": "用Python学习语言模型。", "prediction": "Write your prediction before running measure."},
+    {"id": "normalization", "text": "CAFÉ café", "prediction": "Write your prediction before running measure."},
+    {"id": "my-case", "text": "Replace with an original short input.", "prediction": "Write your prediction before running measure."}
+  ],
+  "notes": "After measuring, write 3–5 sentences: what changed, what evidence supports your explanation, and what this comparison cannot establish. Keep your original predictions.",
+  "sources_and_notes": "Link the two pinned sources in tokenizers.json and any documentation used. Add a brief note about what each source supports."
+}
