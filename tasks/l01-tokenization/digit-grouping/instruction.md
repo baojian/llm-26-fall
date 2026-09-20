@@ -99,5 +99,9 @@ your own account, changing only your submission file. Keep supplied data and
 tests unchanged. Use title `l01-tokenization/digit-grouping: <username>` and
 body `Related to #201`.
 
+Your PR runs the public checks automatically. Open **Checks → Public task
+feedback** for failed cases and a milestone report; push fixes to the same
+branch to try again. See the [feedback guide](../../../docs/task-feedback.md).
+
 Open your PR by the deadline. Solutions merge in **one batch per task after
 the deadline**; public PRs and forks remain visible before merging.

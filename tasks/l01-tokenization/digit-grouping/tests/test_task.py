@@ -64,7 +64,8 @@ def test_filename_is_a_lowercase_username(submission):
 @pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"user.{p.stem}" for p in SUBMISSIONS])
 @pytest.mark.parametrize("text,expected", CASES)
 def test_cases(submission, text, expected):
-    assert load(submission)(text) == expected
+    actual = load(submission)(text)
+    assert actual == expected, f"Input: {text!r}\nExpected: {expected!r}\nActual: {actual!r}"
 
 
 @pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"user.{p.stem}" for p in SUBMISSIONS])
@@ -73,7 +74,8 @@ def test_predictions_match_solve(submission):
     predictions = getattr(module, "PREDICTIONS", {})
     assert set(predictions) == set(PREDICTION_INPUTS), "PREDICTIONS must cover exactly the three inputs in instruction.md"
     for text, expected in predictions.items():
-        assert getattr(module, FUNCTION)(text) == expected, f"solve({text!r}) differs from your prediction"
+        actual = getattr(module, FUNCTION)(text)
+        assert actual == expected, f"Input: {text!r}\nYour prediction: {expected!r}\nActual: {actual!r}"
 
 
 @pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"user.{p.stem}" for p in SUBMISSIONS])
@@ -85,7 +87,8 @@ def test_own_cases_are_new_and_pass(submission):
     given = {text for text, _ in CASES} | set(PREDICTION_INPUTS)
     for text, expected in own:
         assert text not in given, f"{text!r} is one of the given inputs; find a new one"
-        assert getattr(module, FUNCTION)(text) == expected, f"solve({text!r}) fails your own case"
+        actual = getattr(module, FUNCTION)(text)
+        assert actual == expected, f"Your input: {text!r}\nExpected: {expected!r}\nActual: {actual!r}"
 
 
 @pytest.mark.parametrize("submission", SUBMISSIONS, ids=[f"user.{p.stem}" for p in SUBMISSIONS])

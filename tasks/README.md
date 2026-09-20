@@ -47,7 +47,9 @@ rules, timeline, and labels are in
 
 4. When the check passes, open a PR from your fork with the title
    `l02-ngram/<slug>: <username>` and `Related to #<issue>` in the body.
-   Only your one file should be in the PR.
+   Only your one file should be in the PR. Open **Checks → Public task
+   feedback** for milestones and failed cases. Push fixes to the same branch
+   to rerun it; see the [feedback guide](../docs/task-feedback.md).
 5. Open your PR by the deadline in the task's `instruction.md` (normally
    Tuesday 23:59 of the same week). Solution PRs remain open until the
    teaching team merges one batch for the task **after its deadline**;
