@@ -79,6 +79,24 @@ derivation, or catalog of benchmark scores is restored to the classroom deck.
 
 ## Notebook correspondence
 
+### Visual explanations and controls
+
+The deck still has 60 slides and the same timing. Seven original diagrams
+explain token-to-loss flow (4), CBOW/skip-gram direction (14), contextual states
+(21), shifted targets (23), output projection (29), gradient paths (35), and
+weight tying (43). Concise explanations or equations remain with each diagram.
+Slide 12 shows the toy counts and PPMI side by side, with numerical cell labels.
+
+On slide 7, select IDs 1 and 5, repeat ID 5, then reset. The values match E01;
+this takes about one minute within the existing lookup explanation. On slide
+51, double the row count, double the width, and reset the fp32 memory bars.
+This takes about one minute within the existing resource segment. These
+replace part of the spoken explanation and add no timed exercise. Both
+controls work with mouse or keyboard, load local assets, and show their
+initial examples in the PDF. Use the notebook for the actual training run.
+
+### Exercises
+
 The notebook runs on a CPU with the core `uv sync` environment and makes no
 network requests. Predict the result before running each cell. There are
 26 minutes of timed pair practice within the schedule above.

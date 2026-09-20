@@ -18,7 +18,8 @@ unchanged. The other images are byte-identical copies.
 
 The PNGs support the optional [classical reading](../classical-reading.md);
 they are not projected in the revised 60-slide core deck. The ten-slide
-classical bridge uses readable native tables, equations, and runnable examples.
+classical bridge uses diagrams, a labeled PPMI heatmap, native tables,
+equations, and runnable examples.
 
 ## Revised lecture assets
 
@@ -26,6 +27,24 @@ classical bridge uses readable native tables, equations, and runnable examples.
 | --- | --- |
 | `model-configs.json` | Selected fields from official Qwen3-0.6B and Qwen3-8B configurations, plus unique token-ID counts and maximum IDs from their tokenizer JSON artifacts. Each source has an immutable repository revision, URL, SHA-256 hash, and check date. No model weights or full tokenizer files are included. |
 | `tiny-lm-loss.json` | Editable Plotly teaching figure, sampling notebook E04 at updates 0, 1, 5, 10, 20, 50, 100, 150, and 200. Eight toy input–target pairs, vocabulary 10, width 4, CPU float32, seed 0, nonzero input initialization, zero output initialization, untied tables, SGD learning rate 0.5. This illustrates a training loop and is not a benchmark. |
+| `counts-ppmi.json` | Editable Plotly panels for the notebook's invented three-by-three counts and computed PPMI. Labels show counts and bits; the two color scales are separate (0–9 counts and 0–2 bits). Values are checked against the executable notebook. |
+| `lookup-values.json` | The 10-by-4 E01 embedding initialization, with CPU PyTorch 2.14.0 and `torch.manual_seed(0)`. The browser draws four selected rows and rounds values to two decimals. These are toy teaching values, not trained model weights. |
+| `token-to-loss.svg`, `word2vec-directions.svg`, `contextual-states.svg`, `shifted-targets.svg`, `output-projection.svg`, `gradient-paths.svg`, `weight-tying.svg` | Original course diagrams, authored as editable Excalidraw scenes and exported with `@excalidraw/excalidraw` 0.18.1. Every SVG has a matching `.excalidraw` source. They explain the existing notebook computations; factual sources remain in the associated slide notes. |
+
+The two browser controls are implemented in [demo.js](../demo.js), declared in
+[lecture.json](../lecture.json). The lookup control starts at ID 5 and returns
+the same row on repeated selection. The memory control starts at 32,000 rows
+and width 512, then independently doubles either dimension. It uses a fixed
+0–500 MiB bar scale and **fp32 throughout**: 4 bytes for parameters, 4 for
+gradients, and 8 for Adam's two moments per parameter. It excludes activations,
+counters, temporary buffers, and allocator overhead. The initial subtotal is
+250 MiB; doubling both dimensions gives 1,000 MiB. These are the selected table
+parameters, not a complete LLM memory estimate.
+
+Both controls have a reset action and a visible initial example. PDF export
+shows those initial values with the same explanations. There are no remote
+runtime dependencies or automatic animations. Excalidraw is needed only to
+edit the drawings; the classroom browser uses their local SVG exports.
 
 The notebook reads `model-configs.json` offline; P03 explains how to check the
 primary sources separately. Unique tokenizer IDs are the union of

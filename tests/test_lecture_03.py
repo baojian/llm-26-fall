@@ -65,6 +65,23 @@ def test_classical_bridge_checks_association_and_low_rank_approximation(lesson):
     assert residual.item() == pytest.approx(lesson["bridge_s"][2].item(), abs=1e-12)
 
 
+def test_lookup_visual_uses_the_notebook_initialization(lesson):
+    figure = json.loads((LECTURE / "assets/lookup-values.json").read_text())
+    expected = lesson["embedding"].weight.detach().tolist()
+    assert len(figure["values"]) == len(expected) == 10
+    for actual_row, expected_row in zip(figure["values"], expected):
+        assert actual_row == pytest.approx(expected_row, abs=1e-7)
+
+
+def test_ppmi_heatmap_matches_the_executable_counts(lesson):
+    figure = json.loads((LECTURE / "assets/counts-ppmi.json").read_text())
+    for trace, tensor_name in zip(figure["data"], ["bridge_counts", "bridge_ppmi"]):
+        assert trace["x"] == ["drink", "hot", "drive"]
+        assert trace["y"] == ["tea", "coffee", "car"]
+        for actual, expected in zip(trace["z"], lesson[tensor_name].tolist()):
+            assert actual == pytest.approx(expected, abs=1e-12)
+
+
 def test_skipgram_hand_gradient_matches_autograd(lesson):
     assert lesson["e02_loss"] == pytest.approx(1.2873, abs=5e-5)
     assert lesson["e02_grads"]["c_pos"] == pytest.approx([-0.2689, -0.1345], abs=5e-5)

@@ -47,18 +47,14 @@ Allow 3 minutes. Recall Lecture 02 without repeating smoothing or perplexity der
 
 ## The token-to-loss computation
 
-| Object | Shape |
-| --- | --- |
-| Input token IDs | $(B,T)$ |
-| Embedding lookup | $(B,T,d)$ |
-| Context representations $H$ | $(B,T,d)$ |
-| Vocabulary logits | $(B,T,\lvert V\rvert)$ |
-| Next-token targets | $(B,T)$ |
+<img class="diagram" src="assets/token-to-loss.svg" data-excalidraw-source="assets/token-to-loss.excalidraw" alt="Token IDs pass through embedding lookup, context states, and vocabulary logits. Logits and shifted targets meet at scalar cross-entropy loss.">
 
-Cross-entropy compares each position's logits with its target.
+Cross-entropy compares each position’s logits with its next-token target.
 
 Note:
-B is the number of sequences, T the input length, d the vector width. In this simple setup the context output has the same width as the embedding; this is a modeling choice, not a universal constraint. Revisit this table after each exercise. CS336 Lecture 2 motivates shape reasoning: https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py.
+The diagram labels the same shape contract as the original table. B is batch size, T is input length, d is vector width. Follow the arrows during the first explanation, then revisit after E03.
+
+B is the number of sequences, T the input length, d the vector width. In this simple setup the context output has the same width as the embedding; this is a modeling choice, not a universal constraint. Revisit this diagram after each exercise. CS336 Lecture 2 motivates shape reasoning: https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py.
 
 ---
 
@@ -98,15 +94,20 @@ Do not equate the input lookup with the representation after a Transformer, or w
 
 ## An embedding is a lookup table
 
-$$E\in\mathbb{R}^{\lvert V\rvert\times d},\qquad \mathbf e_i=E[i]$$
+<svg id="lookup-visual" width="1152" height="300" viewBox="0 0 1152 300" role="img" aria-label="Embedding lookup example"></svg>
 
-- Each row is a learned vector for one token ID.
-- The same ID selects the same row in every occurrence.
-- The table is trained along with the rest of the model.
+<form class="demo-form" id="lookup-controls" aria-label="Choose a token ID">
+<button type="button" data-token-id="1">ID 1</button>
+<button type="button" data-token-id="5">ID 5</button>
+<button type="button" data-token-id="7">ID 7</button>
+<button type="button" id="lookup-reset">Reset lookup</button>
+</form>
 
-A one-hot vector gives the same result: $\mathbf x_i^\top E=E[i]$.
+<p id="lookup-status" aria-live="polite">ID 5 selects a trainable vector; the table is trained with the model.</p>
 
 Note:
+Select ID 1, then ID 5 twice: repeating an ID must return the same values. Reset returns ID 5. Values are the notebook E01 initialization, rounded to two decimals; only four of ten rows are drawn. The complete table E has shape (10,4). One-hot multiplication is equivalent to lookup, not the implementation. This replaces about one minute of explanation, adding no new timed activity.
+
 In the toy vocabulary IDs are contiguous and every row has a token. Real model tables can allocate extra rows; we will distinguish those later. One-hot multiplication is a mathematical equivalence: implementations use indexing. PyTorch Embedding documentation: https://docs.pytorch.org/docs/stable/generated/torch.nn.Embedding.html.
 
 ---
@@ -195,18 +196,13 @@ Start the ten-slide classical bridge here; spend about 25 minutes including E02.
 
 ## Count association, not just frequency
 
-$$\operatorname{PMI}(w,c)=\log_2\frac{p(w,c)}{p(w)p(c)}$$
+<div class="plot" data-plotly="assets/counts-ppmi.json" role="img" aria-label="Invented counts and their PPMI in bits for tea, coffee, car and drink, hot, drive. Tea and drink: count 8, PPMI 0.415 bits."></div>
 
-In our toy table: total $35$, tea total $14$, “drink” total $15$.
-
-$$\operatorname{PMI}(\text{tea},\text{drink})
-=\log_2\frac{8\times35}{14\times15}=0.415\text{ bits}$$
-
-**PPMI** replaces negative PMI with zero.
-
-Transferable idea: compare a pattern with a frequency-aware baseline.
+$\operatorname{PPMI}(w,c)=\max\left(0,\log_2\frac{p(w,c)}{p(w)p(c)}\right)$; tea–drink: **0.415 bits**.
 
 Note:
+Both panels use the preceding notebook counts: total 35, tea row total 14, drink column total 15. PMI(tea,drink) = log2(8×35/(14×15)) = 0.415 bits. The color scales differ: counts 0–9; PPMI 0–2 bits. Compare labeled values, not colors across panels. Hover exposes exact values. The car–drive cell illustrates concentration relative to independence, not raw frequency alone.
+
 Classical bridge 2/10. The denominator is the expectation under independence. The notebook recomputes this example and maps a zero count to PPMI zero; it also notes that rare events can give noisy association estimates. Do the richer published-count exercise only in optional P01. Source: Jurafsky and Martin, Appendix J, equations J.3–J.6: https://web.stanford.edu/~jurafsky/slp3/J.pdf.
 
 ---
@@ -235,18 +231,13 @@ Classical bridge 3/10. Notebook X is the preceding 3-by-3 toy PPMI matrix; k=2 g
 
 ## word2vec: choose a prediction task
 
-Toy sentence: “the quick brown fox jumps”
+<img class="diagram" src="assets/word2vec-directions.svg" data-excalidraw-source="assets/word2vec-directions.excalidraw" alt="CBOW combines quick and fox to predict brown; skip-gram uses brown to predict quick and fox.">
 
-| Method | Prediction |
-| --- | --- |
-| CBOW | quick, fox → brown |
-| Skip-gram | brown → quick; brown → fox |
-
-We use skip-gram: observed pair **(brown, fox)**; sampled pair **(brown, car)**.
-
-The objective trains the vectors through their predictions.
+Toy sentence: “the quick brown fox jumps”. Observed pair: **(brown, fox)**; sampled pair: **(brown, car)**.
 
 Note:
+Follow the arrow directions. In CBOW the two context vectors are combined before predicting the center. The merge is schematic; it is not two independent CBOW predictions.
+
 Classical bridge 4/10. Radius-one context of brown is quick and fox. CBOW combines context vectors to predict a center word; skip-gram reverses the prediction direction. A sampled negative comes from a chosen noise distribution, not a claim that the pair is impossible. These windows can include both sides; causal next-token training uses preceding tokens. Sources: Mikolov et al. (2013), Sections 3.1–3.2: https://arxiv.org/abs/1301.3781; negative sampling, Section 2.2: https://papers.nips.cc/paper_files/paper/2013/file/9aa42b31882ec039965f3c4923ce901b-Paper.pdf.
 
 ---
@@ -371,16 +362,13 @@ End the ten-slide classical bridge here. Static methods remain useful baselines 
 
 ## One token, different contexts
 
-| Prefix | Token lookup | Contextual state |
-| --- | --- | --- |
-| “beside the river bank” | $E[\text{bank}]$ | $h_{\text{river}}$ |
-| “borrow from the bank” | $E[\text{bank}]$ | $h_{\text{loan}}$ |
+<img class="diagram" src="assets/contextual-states.svg" data-excalidraw-source="assets/contextual-states.excalidraw" alt="Two prefixes share the bank token lookup but pass their full prefixes through the same context network, allowing different contextual states.">
 
-The lookup is identical for the same token ID. A context network can produce different states.
-
-$$h_t=f_\theta(E[w_1],\ldots,E[w_t])$$
+$h_t=f_\theta(E[w_1],\ldots,E[w_t])$: the same lookup can yield different states.
 
 Note:
+The box represents the same network with the same parameters, applied separately to each prefix. All prefix tokens enter each computation, including the identical E[bank]. Arrows show possible different states, not numerical evidence or a guarantee.
+
 Use a toy word vocabulary so bank is exactly the same ID in both examples; real subword boundaries can change IDs. Different contexts permit different states but do not mathematically guarantee different outputs for arbitrary parameters. Later lectures develop the context network. End period 1 here.
 
 ---
@@ -404,18 +392,13 @@ Pause to locate the current computation in the token-to-loss path.
 
 ## Constructing next-token examples
 
-Toy token sequence: `1 2 3 4 5`
+<img class="diagram" src="assets/shifted-targets.svg" data-excalidraw-source="assets/shifted-targets.excalidraw" alt="Inputs 1, 2, 3, 4 predict aligned targets 2, 3, 4, 5. Four arrows point from each input position to its next-token target.">
 
-| Position | 1 | 2 | 3 | 4 |
-| --- | --- | --- | --- | --- |
-| Input | 1 | 2 | 3 | 4 |
-| Target | 2 | 3 | 4 | 5 |
-
-A batch of length $T+1$ supplies $T$ input–target pairs per sequence.
-
-The target is the **next** token.
+A sequence of length $T+1$ supplies $T$ input–target pairs. Each target is the **next** token.
 
 Note:
+Point down each aligned column. The diagram does not feed targets back into a current prediction; targets are used only to compute loss.
+
 Teacher forcing supplies the observed tokens as inputs. A causal model must not use future tokens when computing a current prediction. Here we use equal-length toy sequences and no padding; masking and packing come later.
 
 ---
@@ -521,17 +504,13 @@ Show repeated positions in the notebook and compare their logits. This constrain
 
 ## Vocabulary logits
 
-$$Z=H W_{out}^{\top}$$
+<img class="diagram" src="assets/output-projection.svg" data-excalidraw-source="assets/output-projection.excalidraw" alt="At one toy position a four-feature state multiplies a 4 by 10 transposed output matrix to produce ten raw token scores.">
 
-| Tensor | Shape |
-| --- | --- |
-| Context states $H$ | $(B,T,d)$ |
-| Output weights $W_{out}$ | $(\lvert V\rvert,d)$ |
-| Logits $Z$ | $(B,T,\lvert V\rvert)$ |
-
-Each position gets one score for each possible output token.
+$Z=H W_{out}^{\top}$ maps $(B,T,d)$ to $(B,T,|V|)$, one score per output token.
 
 Note:
+The picture expands one position in the notebook: d=4 and V=10. The same multiplication is repeated across B×T positions. W_out itself is (10,4); its transpose is (4,10).
+
 PyTorch Linear stores its weight as (out_features,in_features), hence the transpose in the explicit matrix product. A bias is omitted throughout these examples. The model returns raw scores, not probabilities.
 
 ---
@@ -634,19 +613,13 @@ The notebook reproduces both rows on CPU in E03. For score 100, sigmoid rounds t
 
 ## Inspecting gradients
 
-```python
-model.zero_grad()
-loss = F.cross_entropy(
-    model(inputs).reshape(-1, V),
-    targets.reshape(-1),
-)
-loss.backward()
-print(model.embedding.weight.grad.shape)
-```
+<img class="diagram" src="assets/gradient-paths.svg" data-excalidraw-source="assets/gradient-paths.excalidraw" alt="Blue arrows compute a loss from lookup, state, and output weights. Green arrows carry gradients backward to the output matrix and embedding matrix.">
 
-A gradient has the shape of its parameter. Gradients accumulate until cleared.
+`loss.backward()` accumulates gradients; `zero_grad()` clears them. Each parameter gradient has its parameter’s shape.
 
 Note:
+The diagram expands the backward call in the notebook; the following slide retains the full training step. The lookup gradient is (10,4), and the output gradient is (10,4). Arrows show dependencies, not a guarantee that each gradient is nonzero.
+
 Expected shape is (10,4). With zero output weights, the input table receives a zero gradient on the first step; the output table receives a nonzero gradient and enables learning of the input table on later steps. Nonzero gradient depends on the computation and current parameter values. Autograd documentation: https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html.
 
 ---
@@ -779,17 +752,13 @@ Pause to locate the current computation in the token-to-loss path.
 
 ## Using one table for two roles
 
-Input lookup uses $E$. Output scores use $W_{out}$.
+<img class="diagram" src="assets/weight-tying.svg" data-excalidraw-source="assets/weight-tying.excalidraw" alt="Separate 10 by 4 input and output tables use eighty parameters. Weight tying lets lookup and scoring reference one 10 by 4 parameter with forty unique values.">
 
-When their shapes match, **weight tying** sets $W_{out}=E$:
-
-```python
-model.output.weight = model.embedding.weight
-```
-
-Both modules refer to the **same parameter**, not two equal copies.
+`model.output.weight = model.embedding.weight` shares one parameter.
 
 Note:
+Read the left side as two independent Parameter objects, even if initialized with equal values. On the right the two modules point to the same object; both gradient pathways contribute to it. The diagram counts only input and output tables.
+
 Tie before constructing the optimizer. Copying the values once is not tying because subsequent updates could diverge. The notebook constructor handles the assignment. Weight tying is an architectural choice; it does not occur in every language model. Press and Wolf (2017): https://aclanthology.org/E17-2025/.
 
 ---
@@ -928,18 +897,19 @@ Arithmetic uses the pinned configurations and is computed in E06. For 8B, two se
 
 ## Build a training-memory ledger
 
-For $P=16{,}384{,}000$ unique parameters, assume **fp32 throughout**:
+<svg id="memory-visual" width="1152" height="345" viewBox="0 0 1152 345" role="img" aria-label="fp32 parameter, gradient, and Adam moment storage"></svg>
 
-| Tensor payload | Bytes per parameter | MiB |
-| --- | ---: | ---: |
-| Parameters | 4 | 62.5 |
-| Gradients | 4 | 62.5 |
-| Adam's two moment tensors | 8 | 125 |
-| Subtotal | 16 | **250** |
+<form class="demo-form" id="memory-controls" aria-label="Change the table dimensions; fp32 throughout">
+<button type="button" id="memory-rows">Rows: 32,000</button>
+<button type="button" id="memory-width">Width: 512</button>
+<button type="button" id="memory-reset">Reset memory</button>
+</form>
 
-Activations, scalar counters, temporary buffers and allocator overhead are additional.
+<p class="caption">fp32 throughout. Activations, scalar counters, temporary buffers and allocator overhead are additional.</p>
 
 Note:
+Click Rows to double 32,000 to 64,000, and Width to double 512 to 1,024. Each dimension doubles all displayed payloads; both together quadruple them. The fixed bar scale is 0–500 MiB. Reset returns the E06 count and 250 MiB subtotal (62.5 parameters + 62.5 gradients + 125 moments). These are the selected table parameters, not a full LLM memory estimate. Use about one minute inside the existing resource segment; no extra exercise is added.
+
 Reuse E06's parameter count. This is an explicit fp32 accounting example, not a universal mixed-precision formula or a total device-memory estimate. SGD without momentum has no persistent moment tensors: parameters plus gradients would be 125 MiB under the same assumptions. Adam adds first- and second-moment tensors; optional variants or master copies can change storage. CS336 Lecture 2, optimizer and tensors_memory: https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py. PyTorch Adam: https://docs.pytorch.org/docs/stable/generated/torch.optim.Adam.html.
 
 ---

@@ -200,6 +200,38 @@ try {
     assert.equal(await page.evaluate(() => Reveal.getCurrentSlide().id), 'exercise-01');
     assert.ok(await page.locator('.katex').count() > 0, 'Sample equations did not render.');
   }
+  if (folder === 'lecture-03') {
+    assert.equal(count, 60, 'Keep the revised lecture at 60 slides.');
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('lookup-table')).h));
+    assert.equal(await page.locator('#lookup-visual').getAttribute('data-selected-id'), '5');
+    const initialLookup = await page.locator('#lookup-visual').textContent();
+    await page.getByRole('button', { name: 'ID 1', exact: true }).click();
+    assert.equal(await page.locator('#lookup-visual').getAttribute('data-selected-id'), '1');
+    assert.match(await page.locator('#lookup-visual').getAttribute('aria-label'), /0\.85, 0\.69, -0\.32, -2\.12/);
+    await page.getByRole('button', { name: 'ID 7', exact: true }).focus();
+    await page.keyboard.press('Enter');
+    assert.equal(await page.locator('#lookup-visual').getAttribute('data-selected-id'), '7');
+    await page.getByRole('button', { name: 'Reset lookup', exact: true }).click();
+    assert.equal(await page.locator('#lookup-visual').textContent(), initialLookup);
+    assert.equal(await page.getByRole('button', { name: 'ID 5', exact: true }).getAttribute('aria-pressed'), 'true');
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('training-memory')).h));
+    assert.equal(await page.locator('#memory-visual').getAttribute('data-total-mib'), '250');
+    await page.locator('#memory-rows').click();
+    assert.equal(await page.locator('#memory-visual').getAttribute('data-total-mib'), '500');
+    await page.locator('#memory-width').click();
+    assert.equal(await page.locator('#memory-visual').getAttribute('data-total-mib'), '1000');
+    assert.match(await page.locator('#memory-visual').getAttribute('aria-label'), /Adam moments 500 MiB/);
+    const clipped = await page.locator('#memory-visual text').evaluateAll(labels => labels.filter(label => {
+      const bounds = label.getBBox();
+      return bounds.x < 0 || bounds.x + bounds.width > 1152 || bounds.y + bounds.height > 345;
+    }).map(label => label.textContent));
+    assert.deepEqual(clipped, [], 'Keep maximum-size memory labels inside the visual.');
+    await page.locator('#memory-reset').click();
+    assert.equal(await page.locator('#memory-visual').getAttribute('data-total-mib'), '250');
+    await page.locator('#memory-rows').click();
+    await page.locator('#memory-rows').click();
+    assert.equal(await page.locator('#memory-visual').getAttribute('data-total-mib'), '250');
+  }
   if (folder === 'lecture-01') {
     const developmentStart = ids.indexOf('outline-development');
     const currentModelsStart = ids.indexOf('models-2026');
@@ -245,6 +277,11 @@ try {
     await page.goto(url + '?print-pdf', { waitUntil: 'networkidle' });
     await page.evaluate(() => window.courseReady);
     await page.waitForFunction(expected => document.querySelectorAll('.pdf-page').length === expected, count);
+    if (folder === 'lecture-03') {
+      assert.equal(await page.locator('#lookup-visual').getAttribute('data-selected-id'), '5');
+      assert.equal(await page.locator('#memory-visual').getAttribute('data-total-mib'), '250');
+      assert.equal(await page.locator('.pdf-page svg[role="img"]').count(), 2, 'Print both initial interactive examples.');
+    }
     await page.evaluate(() => document.fonts.ready);
     await page.setViewportSize({ width: 1600, height: 1000 });
     await page.screenshot({ path: path.join(output, 'print-preview.png'), animations: 'disabled' });
