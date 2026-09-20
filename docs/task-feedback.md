@@ -57,8 +57,9 @@ the report, add `--summary workspace/feedback.md`. Keep generated reports in
 
 The report runs only your file in a temporary copy of the public task. Syntax
 errors, import errors, missing fields, and loops that exceed the 30-second
-check limit receive feedback. Empty or skipped test runs do not count as a
-pass. This command executes your Python code; it is not a security sandbox.
+check limit receive feedback. Submission files may be at most 128 KiB. Empty
+or skipped test runs do not count as a pass. This command executes your Python
+code; it is not a security sandbox.
 
 ## Teaching team: maintain useful checks
 
