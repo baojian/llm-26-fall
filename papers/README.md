@@ -22,7 +22,15 @@ plain Git files, not Git LFS, because GitHub Pages does not serve LFS objects.
   [Course PDF](2018-emnlp-kudo-sentencepiece-language-independent-subword-tokenizer.pdf) ·
   [Original publication](https://aclanthology.org/D18-2012/).
   Further reading on tokenizer implementation and language independence.
-- Beyond these two, the [tokenizer reading list](../docs/tokenizer-reading-list.md)
+- Aaditya K. Singh and DJ Strouse. 2024.
+  *Tokenization counts: the impact of tokenization on arithmetic in frontier LLMs*.
+  arXiv preprint.
+  [Course PDF](2024-arxiv-singh-tokenization-counts-arithmetic-frontier-llms.pdf) ·
+  [arXiv 2402.14903v1](https://arxiv.org/abs/2402.14903v1).
+  Unmodified arXiv PDF, retrieved September 20, 2026, under
+  [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/).
+  Reading for the [digit-grouping task](../tasks/l01-tokenization/digit-grouping/instruction.md).
+- The [tokenizer reading list](../docs/tokenizer-reading-list.md)
   links recent papers (2022–2026) on whether the tokenizer changes model
   quality and what text to train it on. It links to the papers; it holds no PDFs.
 
