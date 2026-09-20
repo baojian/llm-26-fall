@@ -1,0 +1,70 @@
+{
+  "revisions": {
+    "0d243664f6356fb5e43cfe3dc88a8cb20ac15d6994962330c9e5cd57d8b8381c": {
+      "first_seen": "2026-09-20T04:59:04.251492Z",
+      "last_seen": "2026-09-20T05:18:03.372227Z",
+      "notice": {
+        "id": "n-15ac72",
+        "run": null,
+        "t": 1789647611.047444,
+        "text": "there was a network connectivity issue between the pro training cluster and the grader deployment. we have restarted the run. we also removed the cyber dataset from the upcoming pro run, since we observed some bad patterns in the rollout logs."
+      },
+      "source": "https://mimo.xiaomi.com/rl/api/notices"
+    },
+    "2f32df3b3768937d1331f53fe9f4bd28fea3cfbe4db6e9ef4108efcbcfadb7a5": {
+      "first_seen": "2026-09-20T04:59:04.251492Z",
+      "last_seen": "2026-09-20T05:18:03.372227Z",
+      "notice": {
+        "id": "n-4e29eb",
+        "run": null,
+        "t": 1789703382.8892667,
+        "text": "the pro run restarted at step 17 due to a GPU OOM issue caused by expert load imbalance. we have adjusted the training parallelism strategy."
+      },
+      "source": "https://mimo.xiaomi.com/rl/api/notices"
+    },
+    "8ebf15111d2a85ad3049b89f19e51e74af7a99dbcfe68063aa384075c9a901ec": {
+      "first_seen": "2026-09-20T04:59:04.251492Z",
+      "last_seen": "2026-09-20T05:18:03.372227Z",
+      "notice": {
+        "id": "n-6b9c4a",
+        "run": null,
+        "t": 1789812866.861832,
+        "text": "we filtered out tasks that are relatively easy for the current pro model."
+      },
+      "source": "https://mimo.xiaomi.com/rl/api/notices"
+    },
+    "9926f474712068115778e56cafe2392e92d5637bfe22fe8534ce1a03d3385814": {
+      "first_seen": "2026-09-20T04:59:04.251492Z",
+      "last_seen": "2026-09-20T05:18:03.372227Z",
+      "notice": {
+        "id": "n-5ef2b1",
+        "run": null,
+        "t": 1789581497.4956336,
+        "text": "we have updated the latest deepswe results for flash step 12 & pro step 8. we will keep posting as the offline evaluation results come out."
+      },
+      "source": "https://mimo.xiaomi.com/rl/api/notices"
+    },
+    "a872ef401d5dfe0ab7b3887cf4e55eaa57e4c56432b375cb535977d3b1bf5a52": {
+      "first_seen": "2026-09-20T04:59:04.251492Z",
+      "last_seen": "2026-09-20T05:18:03.372227Z",
+      "notice": {
+        "id": "n-b60f90",
+        "run": null,
+        "t": 1789612058.9304461,
+        "text": "we restarted the flash run from step 15. reason: a type of infra error on one of datasets was not correctly detected over the past ~3 hours."
+      },
+      "source": "https://mimo.xiaomi.com/rl/api/notices"
+    },
+    "b3d1b6d38a20de3f0ed63ed254db948bd86d685c15c99d8e9f9a9a90bfb006ac": {
+      "first_seen": "2026-09-20T04:59:04.251492Z",
+      "last_seen": "2026-09-20T05:18:03.372227Z",
+      "notice": {
+        "id": "n-92030c",
+        "run": null,
+        "t": 1789589280.3782058,
+        "text": "the mimo-v2.6-pro run is restarting due to a vram issue on one node."
+      },
+      "source": "https://mimo.xiaomi.com/rl/api/notices"
+    }
+  }
+}

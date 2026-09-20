@@ -1,0 +1,13 @@
+{
+  "source_url": "https://mimo.xiaomi.com/rl/#overview",
+  "provenance": "Notices pasted by the instructor in the task request; relative ages are preserved as supplied, not converted to exact publication times.",
+  "recorded_at": "2026-09-20T04:57:25Z",
+  "notices": [
+    {"relative_age_as_pasted": "18h 41m ago", "text": "we filtered out tasks that are relatively easy for the current pro model."},
+    {"relative_age_as_pasted": "2d 01h ago", "text": "the pro run restarted at step 17 due to a GPU OOM issue caused by expert load imbalance. we have adjusted the training parallelism strategy."},
+    {"relative_age_as_pasted": "2d 16h ago", "text": "there was a network connectivity issue between the pro training cluster and the grader deployment. we have restarted the run. we also removed the cyber dataset from the upcoming pro run, since we observed some bad patterns in the rollout logs."},
+    {"relative_age_as_pasted": "3d 02h ago", "text": "we restarted the flash run from step 15. reason: a type of infra error on one of datasets was not correctly detected over the past ~3 hours."},
+    {"relative_age_as_pasted": "3d 08h ago", "text": "the mimo-v2.6-pro run is restarting due to a vram issue on one node."},
+    {"relative_age_as_pasted": "3d 10h ago", "text": "we have updated the latest deepswe results for flash step 12 & pro step 8. we will keep posting as the offline evaluation results come out."}
+  ]
+}
