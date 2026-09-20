@@ -1,85 +1,87 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="644" viewBox="0 0 960 644" role="img" aria-labelledby="chart-title chart-desc" font-family="Arial, Helvetica Neue, PingFang SC, Microsoft YaHei, sans-serif">
 <title id="chart-title">Which LLM apps do you use most?</title>
-<desc id="chart-desc">ChatGPT: 105; DeepSeek: 52; Doubao (豆包): 30; Gemini: 15; Claude: 13; Kimi: 9; Qwen (千问): 6; Tencent Yuanbao (腾讯元宝): 2; Zhipu Qingyan (智谱清言): 2; Codex (Other): 1; Minimax (Other): 1</desc>
+<desc id="chart-desc">ChatGPT: 112; DeepSeek: 56; Doubao (豆包): 32; Gemini: 16; Claude: 14; Kimi: 9; Qwen (千问): 7; Tencent Yuanbao (腾讯元宝): 2; Zhipu Qingyan (智谱清言): 2; Codex (Other): 2; Minimax (Other): 1</desc>
 <rect width="960" height="644" fill="#fbfbf9"/>
 <text x="32" y="44" font-size="26" font-weight="700" fill="#202b38">Which LLM apps do you use most?</text>
-<text x="32" y="72" font-size="17" fill="#566471">Lecture 01 survey · 121 responses · counted September 20, 2026</text>
+<text x="32" y="72" font-size="17" fill="#566471">Lecture 01 survey · 128 responses · counted September 20, 2026</text>
 <line x1="250.0" y1="88" x2="250.0" y2="580" stroke="#dce2e7" stroke-width="1"/>
 <text x="250.0" y="604" font-size="15" fill="#566471" text-anchor="middle">0</text>
-<line x1="279.5" y1="88" x2="279.5" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="279.5" y="604" font-size="15" fill="#566471" text-anchor="middle">5</text>
-<line x1="309.0" y1="88" x2="309.0" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="309.0" y="604" font-size="15" fill="#566471" text-anchor="middle">10</text>
-<line x1="338.6" y1="88" x2="338.6" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="338.6" y="604" font-size="15" fill="#566471" text-anchor="middle">15</text>
-<line x1="368.1" y1="88" x2="368.1" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="368.1" y="604" font-size="15" fill="#566471" text-anchor="middle">20</text>
-<line x1="397.6" y1="88" x2="397.6" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="397.6" y="604" font-size="15" fill="#566471" text-anchor="middle">25</text>
-<line x1="427.1" y1="88" x2="427.1" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="427.1" y="604" font-size="15" fill="#566471" text-anchor="middle">30</text>
-<line x1="456.7" y1="88" x2="456.7" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="456.7" y="604" font-size="15" fill="#566471" text-anchor="middle">35</text>
-<line x1="486.2" y1="88" x2="486.2" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="486.2" y="604" font-size="15" fill="#566471" text-anchor="middle">40</text>
-<line x1="515.7" y1="88" x2="515.7" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="515.7" y="604" font-size="15" fill="#566471" text-anchor="middle">45</text>
-<line x1="545.2" y1="88" x2="545.2" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="545.2" y="604" font-size="15" fill="#566471" text-anchor="middle">50</text>
-<line x1="574.8" y1="88" x2="574.8" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="574.8" y="604" font-size="15" fill="#566471" text-anchor="middle">55</text>
-<line x1="604.3" y1="88" x2="604.3" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="604.3" y="604" font-size="15" fill="#566471" text-anchor="middle">60</text>
-<line x1="633.8" y1="88" x2="633.8" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="633.8" y="604" font-size="15" fill="#566471" text-anchor="middle">65</text>
-<line x1="663.3" y1="88" x2="663.3" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="663.3" y="604" font-size="15" fill="#566471" text-anchor="middle">70</text>
+<line x1="277.7" y1="88" x2="277.7" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="277.7" y="604" font-size="15" fill="#566471" text-anchor="middle">5</text>
+<line x1="305.4" y1="88" x2="305.4" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="305.4" y="604" font-size="15" fill="#566471" text-anchor="middle">10</text>
+<line x1="333.0" y1="88" x2="333.0" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="333.0" y="604" font-size="15" fill="#566471" text-anchor="middle">15</text>
+<line x1="360.7" y1="88" x2="360.7" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="360.7" y="604" font-size="15" fill="#566471" text-anchor="middle">20</text>
+<line x1="388.4" y1="88" x2="388.4" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="388.4" y="604" font-size="15" fill="#566471" text-anchor="middle">25</text>
+<line x1="416.1" y1="88" x2="416.1" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="416.1" y="604" font-size="15" fill="#566471" text-anchor="middle">30</text>
+<line x1="443.8" y1="88" x2="443.8" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="443.8" y="604" font-size="15" fill="#566471" text-anchor="middle">35</text>
+<line x1="471.4" y1="88" x2="471.4" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="471.4" y="604" font-size="15" fill="#566471" text-anchor="middle">40</text>
+<line x1="499.1" y1="88" x2="499.1" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="499.1" y="604" font-size="15" fill="#566471" text-anchor="middle">45</text>
+<line x1="526.8" y1="88" x2="526.8" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="526.8" y="604" font-size="15" fill="#566471" text-anchor="middle">50</text>
+<line x1="554.5" y1="88" x2="554.5" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="554.5" y="604" font-size="15" fill="#566471" text-anchor="middle">55</text>
+<line x1="582.1" y1="88" x2="582.1" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="582.1" y="604" font-size="15" fill="#566471" text-anchor="middle">60</text>
+<line x1="609.8" y1="88" x2="609.8" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="609.8" y="604" font-size="15" fill="#566471" text-anchor="middle">65</text>
+<line x1="637.5" y1="88" x2="637.5" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="637.5" y="604" font-size="15" fill="#566471" text-anchor="middle">70</text>
+<line x1="665.2" y1="88" x2="665.2" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="665.2" y="604" font-size="15" fill="#566471" text-anchor="middle">75</text>
 <line x1="692.9" y1="88" x2="692.9" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="692.9" y="604" font-size="15" fill="#566471" text-anchor="middle">75</text>
-<line x1="722.4" y1="88" x2="722.4" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="722.4" y="604" font-size="15" fill="#566471" text-anchor="middle">80</text>
-<line x1="751.9" y1="88" x2="751.9" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="751.9" y="604" font-size="15" fill="#566471" text-anchor="middle">85</text>
-<line x1="781.4" y1="88" x2="781.4" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="781.4" y="604" font-size="15" fill="#566471" text-anchor="middle">90</text>
-<line x1="811.0" y1="88" x2="811.0" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="811.0" y="604" font-size="15" fill="#566471" text-anchor="middle">95</text>
-<line x1="840.5" y1="88" x2="840.5" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="840.5" y="604" font-size="15" fill="#566471" text-anchor="middle">100</text>
-<line x1="870.0" y1="88" x2="870.0" y2="580" stroke="#dce2e7" stroke-width="1"/>
-<text x="870.0" y="604" font-size="15" fill="#566471" text-anchor="middle">105</text>
+<text x="692.9" y="604" font-size="15" fill="#566471" text-anchor="middle">80</text>
+<line x1="720.5" y1="88" x2="720.5" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="720.5" y="604" font-size="15" fill="#566471" text-anchor="middle">85</text>
+<line x1="748.2" y1="88" x2="748.2" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="748.2" y="604" font-size="15" fill="#566471" text-anchor="middle">90</text>
+<line x1="775.9" y1="88" x2="775.9" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="775.9" y="604" font-size="15" fill="#566471" text-anchor="middle">95</text>
+<line x1="803.6" y1="88" x2="803.6" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="803.6" y="604" font-size="15" fill="#566471" text-anchor="middle">100</text>
+<line x1="831.2" y1="88" x2="831.2" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="831.2" y="604" font-size="15" fill="#566471" text-anchor="middle">105</text>
+<line x1="858.9" y1="88" x2="858.9" y2="580" stroke="#dce2e7" stroke-width="1"/>
+<text x="858.9" y="604" font-size="15" fill="#566471" text-anchor="middle">110</text>
 <text x="236" y="116.0" font-size="17" fill="#202b38" text-anchor="end">ChatGPT</text>
 <rect x="250" y="96" width="620.0" height="28" rx="4" fill="#20578c"/>
-<text x="880.0" y="116.0" font-size="16" fill="#202b38">105</text>
+<text x="880.0" y="116.0" font-size="16" fill="#202b38">112</text>
 <text x="236" y="160.0" font-size="17" fill="#202b38" text-anchor="end">DeepSeek</text>
-<rect x="250" y="140" width="307.0" height="28" rx="4" fill="#20578c"/>
-<text x="567.0" y="160.0" font-size="16" fill="#202b38">52</text>
+<rect x="250" y="140" width="310.0" height="28" rx="4" fill="#20578c"/>
+<text x="570.0" y="160.0" font-size="16" fill="#202b38">56</text>
 <text x="236" y="204.0" font-size="17" fill="#202b38" text-anchor="end">Doubao (豆包)</text>
 <rect x="250" y="184" width="177.1" height="28" rx="4" fill="#20578c"/>
-<text x="437.1" y="204.0" font-size="16" fill="#202b38">30</text>
+<text x="437.1" y="204.0" font-size="16" fill="#202b38">32</text>
 <text x="236" y="248.0" font-size="17" fill="#202b38" text-anchor="end">Gemini</text>
 <rect x="250" y="228" width="88.6" height="28" rx="4" fill="#20578c"/>
-<text x="348.6" y="248.0" font-size="16" fill="#202b38">15</text>
+<text x="348.6" y="248.0" font-size="16" fill="#202b38">16</text>
 <text x="236" y="292.0" font-size="17" fill="#202b38" text-anchor="end">Claude</text>
-<rect x="250" y="272" width="76.8" height="28" rx="4" fill="#20578c"/>
-<text x="336.8" y="292.0" font-size="16" fill="#202b38">13</text>
+<rect x="250" y="272" width="77.5" height="28" rx="4" fill="#20578c"/>
+<text x="337.5" y="292.0" font-size="16" fill="#202b38">14</text>
 <text x="236" y="336.0" font-size="17" fill="#202b38" text-anchor="end">Kimi</text>
-<rect x="250" y="316" width="53.1" height="28" rx="4" fill="#20578c"/>
-<text x="313.1" y="336.0" font-size="16" fill="#202b38">9</text>
+<rect x="250" y="316" width="49.8" height="28" rx="4" fill="#20578c"/>
+<text x="309.8" y="336.0" font-size="16" fill="#202b38">9</text>
 <text x="236" y="380.0" font-size="17" fill="#202b38" text-anchor="end">Qwen (千问)</text>
-<rect x="250" y="360" width="35.4" height="28" rx="4" fill="#20578c"/>
-<text x="295.4" y="380.0" font-size="16" fill="#202b38">6</text>
+<rect x="250" y="360" width="38.8" height="28" rx="4" fill="#20578c"/>
+<text x="298.8" y="380.0" font-size="16" fill="#202b38">7</text>
 <text x="236" y="424.0" font-size="17" fill="#202b38" text-anchor="end">Tencent Yuanbao (腾讯元宝)</text>
-<rect x="250" y="404" width="11.8" height="28" rx="4" fill="#20578c"/>
-<text x="271.8" y="424.0" font-size="16" fill="#202b38">2</text>
+<rect x="250" y="404" width="11.1" height="28" rx="4" fill="#20578c"/>
+<text x="271.1" y="424.0" font-size="16" fill="#202b38">2</text>
 <text x="236" y="468.0" font-size="17" fill="#202b38" text-anchor="end">Zhipu Qingyan (智谱清言)</text>
-<rect x="250" y="448" width="11.8" height="28" rx="4" fill="#20578c"/>
-<text x="271.8" y="468.0" font-size="16" fill="#202b38">2</text>
+<rect x="250" y="448" width="11.1" height="28" rx="4" fill="#20578c"/>
+<text x="271.1" y="468.0" font-size="16" fill="#202b38">2</text>
 <text x="236" y="512.0" font-size="17" fill="#202b38" text-anchor="end">Codex (Other)</text>
-<rect x="250" y="492" width="5.9" height="28" rx="4" fill="#20578c"/>
-<text x="265.9" y="512.0" font-size="16" fill="#202b38">1</text>
+<rect x="250" y="492" width="11.1" height="28" rx="4" fill="#20578c"/>
+<text x="271.1" y="512.0" font-size="16" fill="#202b38">2</text>
 <text x="236" y="556.0" font-size="17" fill="#202b38" text-anchor="end">Minimax (Other)</text>
-<rect x="250" y="536" width="5.9" height="28" rx="4" fill="#20578c"/>
-<text x="265.9" y="556.0" font-size="16" fill="#202b38">1</text>
+<rect x="250" y="536" width="5.5" height="28" rx="4" fill="#20578c"/>
+<text x="265.5" y="556.0" font-size="16" fill="#202b38">1</text>
 <text x="560.0" y="632" font-size="15" fill="#566471" text-anchor="middle">Students who selected the app (multiple selections allowed)</text>
 </svg>
