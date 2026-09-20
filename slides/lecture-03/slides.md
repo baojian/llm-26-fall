@@ -1,10 +1,12 @@
 <!-- .slide: class="title-slide" id="title" -->
 
+<p class="eyebrow">CS40008.01</p>
+
 # Embeddings and PyTorch for LLMs
 
-<p class="eyebrow">Lecture 03 · September 23, 2026</p>
-<p class="subtitle">How do discrete tokens become trainable representations?</p>
-<p class="byline">Baojian Zhou · Fudan University · CS40008.01</p>
+<p class="subtitle">Lecture 03 – NLP and LLMs</p>
+
+<p class="byline">Baojian Zhou<br>School of Data Science<br>Fudan University<br>September 23, 2026</p>
 
 Note:
 Three 45-minute periods, including 15 minutes for Quiz 1. The 60-slide deck includes a ten-slide classical bridge, from distributional-hypothesis through similarity-limits. The six exercises are ungraded practice. Start from the n-gram language model introduced last week.
@@ -14,6 +16,8 @@ Three 45-minute periods, including 15 minutes for Quiz 1. The 60-slide deck incl
 <!-- .slide: id="learning-objectives" -->
 
 ## What you will be able to do
+
+**How do discrete tokens become trainable representations?**
 
 - Trace token IDs through an embedding table to a next-token loss.
 - Run a training step and inspect its gradients.

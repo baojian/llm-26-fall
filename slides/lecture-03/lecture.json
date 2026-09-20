@@ -1,7 +1,7 @@
 {
   "number": "03",
   "title": "Embeddings and PyTorch for LLMs",
-  "subtitle": "Lecture 03 – Embeddings and PyTorch for LLMs",
+  "subtitle": "Lecture 03 – NLP and LLMs",
   "language": "en",
   "notebook": "lecture-03-exercise.ipynb",
   "demo": "demo.js"
