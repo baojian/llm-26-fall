@@ -1,0 +1,176 @@
+name: Lecture quality
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/lecture-quality.yml'
+      - 'slides/**'
+      - 'assets/**'
+      - 'docs/**'
+      - 'papers/**'
+      - 'index.html'
+      - 'pipeline/**'
+      - 'scripts/slides.py'
+      - 'scripts/notebooks.py'
+      - 'scripts/lecture02_experiments.py'
+      - 'scripts/*notes.mjs'
+      - 'tests/test_lecture_*.py'
+      - 'tests/test_slides.py'
+      - 'tests/test_notebooks.py'
+      - 'tests/test_tokenization_notebook.py'
+      - 'tests/test_pipeline_ngram.py'
+      - 'tests/test_ngram_review.mjs'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.python-version'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lecture-quality-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lectures:
+    name: Find lecture decks
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      folders: ${{ steps.decks.outputs.folders }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Include the example and every lecture, excluding the unfinished template
+        id: decks
+        shell: python
+        run: |
+          import json
+          import os
+          import re
+          from pathlib import Path
+
+          folders = sorted(
+              path.parent.name for path in Path('slides').glob('*/lecture.json')
+              if re.fullmatch(r'example|lecture-\d{2}|\d{2}-[a-z0-9-]+', path.parent.name)
+          )
+          if not folders:
+              raise SystemExit('No lecture decks found; refusing an empty check.')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('folders=' + json.dumps(folders) + '\n')
+
+  examples:
+    name: Lecture examples and notebooks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      COURSE_RUN_OLLAMA: '0'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          version: '0.12.17'
+          enable-cache: false
+      - name: Install the locked course environment
+        run: uv sync --locked
+      - name: Verify notebook results, mathematics, and course tooling
+        run: |
+          mkdir -p slides/.checks/python
+          uv run --locked python -m pytest -q \
+            tests/test_lecture_*.py tests/test_tokenization_notebook.py \
+            tests/test_pipeline_ngram.py tests/test_notebooks.py tests/test_slides.py \
+            --junitxml=slides/.checks/python/results.xml
+      - name: Verify the browser's n-gram calculations
+        if: ${{ !cancelled() }}
+        run: node --test tests/test_ngram_review.mjs
+      - name: Save numerical test results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: lecture-example-results
+          path: slides/.checks/python/results.xml
+          include-hidden-files: true
+          retention-days: 14
+
+  previews:
+    name: Slides and PDF (${{ matrix.folder }})
+    needs: lectures
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        folder: ${{ fromJSON(needs.lectures.outputs.folders) }}
+    env:
+      LECTURE_FOLDER: ${{ matrix.folder }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - run: npm --prefix slides ci
+      - name: Install Chromium and its system dependencies
+        run: slides/node_modules/.bin/playwright install --with-deps chromium
+      - name: Check layouts, math rendering, links, assets, interactions, and PDF pages
+        id: check
+        run: npm --prefix slides run pdf -- "$LECTURE_FOLDER"
+      - name: Save slide screenshots, PDF, and check report
+        id: artifact
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: lecture-preview-${{ matrix.folder }}
+          path: slides/.checks/${{ matrix.folder }}/
+          include-hidden-files: true
+          retention-days: 14
+      - name: Write the review summary
+        if: ${{ !cancelled() }}
+        env:
+          CHECK_RESULT: ${{ steps.check.outcome }}
+          ARTIFACT_URL: ${{ steps.artifact.outputs.artifact-url }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          {
+            printf '## Lecture preview: %s\n\n' "$LECTURE_FOLDER"
+            printf 'Check result: **%s**.\n\n' "$CHECK_RESULT"
+            printf 'Source commit: `%s`. Tested checkout: `%s`.\n\n' "$PR_HEAD" "$(git rev-parse HEAD)"
+            if [ -n "$ARTIFACT_URL" ]; then
+              printf '[Download screenshots, PDF, and report](%s). Artifacts expire after 14 days.\n\n' "$ARTIFACT_URL"
+            fi
+            printf 'Review the screenshots and PDF before merging. Failed runs may contain only partial previews; use the check log for the first failure.\n'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  notes:
+    name: Reading pages and navigation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - run: npm --prefix slides ci
+      - run: slides/node_modules/.bin/playwright install --with-deps chromium
+      - name: Check the bilingual reader, mobile layouts, and shared navigation
+        run: npm --prefix slides run check:notes
+      - name: Save reading-page screenshots
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: lecture-reading-previews
+          path: slides/.checks/notes/
+          include-hidden-files: true
+          retention-days: 14

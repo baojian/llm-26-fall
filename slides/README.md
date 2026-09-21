@@ -322,6 +322,10 @@ overflowing content, small text, missing local assets, unmatched exercise IDs,
 unfinished placeholders, and slide-specific style overrides. It also checks
 sample interactions and runs with external runtime requests blocked.
 
+Lecture-related PRs run these checks automatically and save downloadable
+screenshots and PDFs. See [lecture checks and review previews](../docs/lecture-quality.md)
+for the workflow, artifacts, and pre-class rehearsal.
+
 Review the images and PDF in `slides/.checks/example/`. Long text should become
 another slide. A successful check does not establish that the teaching content
 is accurate or that the visual composition is effective.

@@ -8,7 +8,12 @@ through the exercise without assigning a grade or merging your PR.
 
 Open your PR's **Checks** tab, select **Public task feedback**, and open the
 workflow run's **Summary**. Expand a failed check to see its input, expected
-output, actual output, or Python error. A first-time contributor's workflow
+output, actual output, or Python error. The run also saves a downloadable
+`task-feedback-pr-N` artifact containing `feedback.md`, including failed
+attempts. Reports identify the submission commit and public checker commit;
+use the run for your latest push. Artifacts are retained for 14 days.
+
+A first-time contributor's workflow
 may need a teaching-team member to approve the run before feedback appears.
 
 | Milestone | What it checks |
@@ -84,5 +89,12 @@ write token; checkout credentials are not retained. The workflow never
 merges PRs or publishes solutions into `main`.
 
 Run `uv run python -m pytest tests/test_task_feedback.py` to verify the
-feedback service. **Actions → Task feedback → Run workflow** runs the same
-service tests on GitHub without submitting an exercise solution.
+feedback service. Every PR also runs **Feedback service regression tests** in
+a separate job against the proposed changes, covering the service, published
+task fixtures, and task commands. This detects broken checker changes while
+the student's feedback continues to use the trusted base branch.
+
+**Actions → Task feedback → Run workflow** runs those service tests on GitHub
+without submitting an exercise solution. A failed setup or fetch is reported
+as unavailable feedback, not as a result about the student's code. This
+workflow is separate from [lecture checks and previews](lecture-quality.md).
