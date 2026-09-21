@@ -79,6 +79,7 @@ try {
     await page.screenshot({ path: path.join(output, `reader-desktop-${lang}.png`) });
     for (const width of [390, 320]) {
       await page.setViewportSize({ width, height: 844 });
+      await page.waitForFunction(() => !document.querySelector('.reading-sidebar details').open);
       assert.equal(await page.locator('.reading-sidebar details').getAttribute('open'), null);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
       assert.equal(overflow, false, `Reader overflows at ${width}px in ${lang}.`);
@@ -109,7 +110,11 @@ try {
       window.languageTrace.push({ type, scroll: scrollY, anchor: [...article.querySelectorAll('h2,h3')].filter(h => h.getBoundingClientRect().top <= 120).at(-1)?.id });
     });
   });
-  await page.locator('.lang-toggle [data-lang="zh"]').click();
+  // Click the visible sticky control without Playwright's automatic scrolling:
+  // scrollIntoView can move the article before the language handler sees it.
+  const languageButton = await page.locator('.lang-toggle [data-lang="zh"]').boundingBox();
+  assert.ok(languageButton && languageButton.y >= 0 && languageButton.y + languageButton.height <= 1050);
+  await page.mouse.click(languageButton.x + languageButton.width / 2, languageButton.y + languageButton.height / 2);
   const after = await page.locator(`#zh-${section}`).evaluate(element => element.getBoundingClientRect().top);
   assert.ok(Math.abs(before - after) <= 2, `Language switch should preserve reading position (${before} → ${after}). ${JSON.stringify(await page.evaluate(() => window.languageTrace))}`);
   assert.ok(page.url().endsWith(`#zh-${section}`));

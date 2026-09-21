@@ -307,6 +307,14 @@ try {
     assert.deepEqual(outlines.map(outline => outline.active), [[0], [1], [2], [3], [3]]);
   }
   if (exportPDF) {
+    if (folder === 'lecture-03') {
+      // Reproduce a chart fetch that finishes after Reveal replaces the print
+      // slide nodes; the demonstration must initialize on the final chart.
+      await page.route('**/lecture-03/assets/ngram-review.json', async route => {
+        await page.waitForFunction(() => document.querySelector('.pdf-page'));
+        await route.continue();
+      });
+    }
     await page.goto(url + '?print-pdf', { waitUntil: 'networkidle' });
     await page.evaluate(() => window.courseReady);
     await page.waitForFunction(expected => document.querySelectorAll('.pdf-page').length === expected, count);
