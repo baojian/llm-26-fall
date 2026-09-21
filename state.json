@@ -1,33 +1,33 @@
 {
-  "last_attempt": "observations/2026-09-21/2026-09-21T14-01-12.311185Z-8396cfaa.json",
-  "last_successful": "observations/2026-09-21/2026-09-21T14-01-12.311185Z-8396cfaa.json",
+  "last_attempt": "observations/2026-09-21/2026-09-21T19-17-48.675134Z-064c477b.json",
+  "last_successful": "observations/2026-09-21/2026-09-21T19-17-48.675134Z-064c477b.json",
   "run_keys": [
     "pro",
     "flash"
   ],
   "runs": {
     "flash": {
-      "last_seen": "2026-09-21T14:01:12.311185Z",
+      "last_seen": "2026-09-21T19:17:48.675134Z",
       "mode": "ended",
       "sampler_first": 1789783257.264,
       "sampler_last": 1789784370.264,
       "sampler_reports": 60,
       "series": "fetched",
       "series_manifest": "series/4d97e316c435fb8ce0a900f30a3ad76d14f22b9aecc70fb993fceaf808e08496.json",
-      "source_clock": 1789999300.9726095,
+      "source_clock": 1790018299.2724903,
       "step": 30,
       "tag_count": 2062,
       "version": "3-5513.32.6.28"
     },
     "pro": {
-      "last_seen": "2026-09-21T14:01:12.311185Z",
+      "last_seen": "2026-09-21T19:17:48.675134Z",
       "mode": "ended",
       "sampler_first": 1789913406.334,
       "sampler_last": 1789927159.334,
       "sampler_reports": 60,
       "series": "fetched",
       "series_manifest": "series/8dd889889b1c4402ab48af01277dae125acb9ce46eb909669e76a8d7ee482864.json",
-      "source_clock": 1789999275.104101,
+      "source_clock": 1790018270.3394778,
       "step": 30,
       "tag_count": 2029,
       "version": "3-5513.30.15.30"
@@ -35,7 +35,7 @@
   },
   "series_cache": {
     "28134f90e376099229d41beb5c9ebd084c151090c07b6175aa52521d178e0198": {
-      "manifest": "series/af9c413c2a09cb0f801c4b85855ccf0f32118f8851beadcd5ca41ae3d520a93e.json"
+      "manifest": "series/ca23670364c6187220a095e0f53a8266925129ad1e1c4417c09609183890874e.json"
     },
     "41fa921e02d4d904266a6038e839094c81e2fed827202ef6dd8e529fb6c01adc": {
       "manifest": "series/5dbf3410166b4c04b5b59df272940160a6ff369c8b4da55a6504b3c719e5b8d7.json"
@@ -47,7 +47,7 @@
       "manifest": "series/942094a1ac5737cd2630db8bcd0c43d5eef5facf549f79ab0ca5f79e5f17c130.json"
     },
     "5fbded9e7fd59f92bb1348cbda28b9e5dd850405df4bdbf952c52a38e207b315": {
-      "manifest": "series/8de993bc4bb6cfefa90242967d0c77e31d91b11ffa5395a4bda6e1ff2b459d07.json"
+      "manifest": "series/a5a036648228a668bec99ee637d430ae0edb8c1a15c1ed31f60a00d9f9b83323.json"
     },
     "e540f4bec859af81b9c41bc9dd1ea7439c4800232d142b071904e9e523f9d046": {
       "manifest": "series/8dd889889b1c4402ab48af01277dae125acb9ce46eb909669e76a8d7ee482864.json"
