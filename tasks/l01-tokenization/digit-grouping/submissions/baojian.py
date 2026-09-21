@@ -1,5 +1,7 @@
 """Instructor demo submission for the digit-grouping exercise."""
 
+import re
+
 PREDICTIONS = {
     "3.14159": ["3", ".", "141", "59"],
     "Room 101": ["Room ", "101"],
@@ -23,3 +25,8 @@ at a fixed embedding width, a larger embedding table.
 A pre-tokenization limit only sets chunk boundaries; BPE may split a chunk
 further when the learned vocabulary does not represent it as one token.
 """
+
+
+def solve(text: str) -> list[str]:
+    """Group decimal digits from the left and preserve each non-digit run."""
+    return re.findall(r"\d{1,3}|\D+", text)
