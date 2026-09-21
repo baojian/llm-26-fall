@@ -70,7 +70,9 @@ def test_lookup_visual_uses_the_notebook_initialization(lesson):
     expected = lesson["embedding"].weight.detach().tolist()
     assert len(figure["values"]) == len(expected) == 10
     for actual_row, expected_row in zip(figure["values"], expected):
-        assert actual_row == pytest.approx(expected_row, abs=1e-7)
+        # Float32 initialization can differ by a few ULPs across CPU platforms;
+        # the visual displays two decimals, so retain a much tighter 1e-6 bound.
+        assert actual_row == pytest.approx(expected_row, abs=1e-6)
 
 
 def test_ppmi_heatmap_matches_the_executable_counts(lesson):

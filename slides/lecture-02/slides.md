@@ -123,8 +123,7 @@ The empirical average replaces the expectation. The factorization is exact by th
 <li>$\mathbf{w}^{(2)}$ : <code>#include &lt;stdio.h&gt;<br>int main(void) { printf("Hello, world!\n"); }</code></li>
 <li>$\mathbf{w}^{(3)}$ : 今天我们学习如何用语言模型预测下一个词。</li>
 <li>$\mathbf{w}^{(4)}$ : Prove that $1+3+\cdots+(2n-1)=n^2$ for every integer $n\ge1$.</li>
-<li>$\vdots$</li>
-<li>$\mathbf{w}^{(i)}$ : <code>{"city": "Shanghai", "temperature_c": 22}</code></li>
+<li>$\ldots,\mathbf{w}^{(i)}$ : <code>{"city": "Shanghai", "temperature_c": 22}</code></li>
 </ul>
 <p>Anything represented as a token sequence can be a training sample.</p>
 

@@ -38,7 +38,8 @@ demonstrations still need a manual rehearsal on the lecture machine.
    `lecture-example-results` for the Python test report.
 4. Resolve failures on the same PR. Each push starts a new run and cancels the
    superseded run. A failed browser check may leave partial screenshots but
-   no complete PDF; its log identifies the first failure.
+   no complete PDF; its log identifies the first failure. Layout failures
+   also save `failure-WIDTH.png` at the failing viewport.
 
 Artifacts are retained for 14 days. Download them before they expire, or rerun
 the workflow. Reports and previews are review artifacts; the workflow does not

@@ -99,6 +99,9 @@ try {
         }
         return { id: slide.id, title: slide.querySelector('h1,h2')?.textContent, problems };
       });
+      if (result.problems.length) {
+        await page.screenshot({ path: path.join(output, `failure-${viewport.width}.png`), animations: 'disabled' });
+      }
       assert.deepEqual(result.problems, [], `${folder}/${result.id} at ${viewport.width}×${viewport.height}: ${result.problems.join('; ')}`);
       if (viewport.width === 1440) {
         checkedSlides.push(result);
