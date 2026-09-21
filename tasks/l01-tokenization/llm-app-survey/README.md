@@ -1,9 +1,9 @@
 # Lecture 01: LLM-app survey archive
 
 **Collection is closed.** The submission deadline was **September 20, 2026,
-23:59 (Asia/Shanghai, UTC+08:00)**. New responses are not accepted here or at
-the former `surveys/lecture-01/` location. Accepted responses and participation
-are preserved; students do not need to resubmit or open another PR.
+23:59 (Asia/Shanghai, UTC+08:00)**. New responses are not accepted. Accepted
+responses and participation are preserved; students do not need to resubmit
+or open another PR.
 
 This public first-PR activity asked which LLM apps students regularly used.
 Each student submitted one Markdown response with their GitHub username.
@@ -47,6 +47,8 @@ Apps written under *Other* get their own bar with the suffix "(Other)".
 - Responses submitted by the deadline could be reviewed and merged afterward.
 - [Migration issue #139](https://github.com/baojian/llm-26-fall/issues/139) records
   the move on September 21, 2026, after outstanding survey PRs were resolved.
+- The former `surveys/` folder has been removed. This archive retains its
+  closure notice and migration information alongside the responses and results.
 - Return to the [Lecture 01 activities](../README.md) for the separate coding
   exercises and their deadlines. Their deadlines do not reopen this survey.
 
@@ -61,5 +63,4 @@ uv run python scripts/progress.py
 
 Both commands read this archive. Keep accepted response contents and filenames
 intact. The survey has its own tally and no `task.toml` or Python `solve`
-interface; task discovery includes only the coding exercises. The old location
-contains a forwarding README, not a second response directory.
+interface; task discovery includes only the coding exercises.

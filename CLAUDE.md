@@ -19,7 +19,6 @@ scripts/notebooks.py       JupyterLab launcher used by `serve` (opens copies und
 slides/                    Reveal.js lecture framework: shared/, template/, example/, lecture-01/, vendor/
 slides/tools/              Playwright-based checkers (check.mjs, check-notebook.mjs), run via npm
 tasks/l01-tokenization/llm-app-survey/  Closed survey archive and results
-surveys/lecture-01/        Forwarding README to the survey archive
 tests/                     pytest suite for scripts, notebooks, and the lecture-01 material
 workspace/                 Student scratch area, git-ignored except its README
 ```
@@ -107,12 +106,13 @@ instructor-approved private channel.
 Collection issue #6 is closed. The deadline was **September 20, 2026, 23:59
 (Asia/Shanghai, UTC+08:00)**; on-time PRs were reviewed even when merged later.
 After those reviews, #139 moved the accepted survey on September 21 to
-`tasks/l01-tokenization/llm-app-survey/`. The former `surveys/lecture-01/`
-location contains only a forwarding README.
+`tasks/l01-tokenization/llm-app-survey/`. The instructor then removed the old
+`surveys/` directory; its closure notice and migration information are retained
+in the archive README. Keep the survey in this archive.
 
 Keep accepted response contents, filenames, totals, and participation intact.
-Do not accept new responses at either location or ask accepted students to
-resubmit. Any number of app selections, including zero or more than two, is
+Do not accept new responses or ask accepted students to resubmit.
+Any number of app selections, including zero or more than two, is
 valid under the instructor's September 16 policy. The archive has a separate
 Markdown-response tally, no Python task interface, and one survey participation
 entry per student; it does not affect coding-task correctness. Regenerate the

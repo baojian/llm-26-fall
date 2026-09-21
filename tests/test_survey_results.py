@@ -1,7 +1,6 @@
 """Check the survey tally and keep the committed results in sync with the responses."""
 
 import re
-from pathlib import Path
 
 from scripts import survey_results as survey
 
@@ -63,16 +62,3 @@ def test_update_readme_keeps_surrounding_text(tmp_path):
     readme.write_text(f"before\n\n{survey.START}\nold\n{survey.END}\n\nafter\n", encoding="utf-8")
     survey.update_readme(readme, f"{survey.START}\nnew\n{survey.END}")
     assert readme.read_text(encoding="utf-8") == f"before\n\n{survey.START}\nnew\n{survey.END}\n\nafter\n"
-
-
-def test_old_survey_location_only_forwards_to_archive():
-    legacy = survey.ROOT / "surveys/lecture-01"
-    assert sorted(p.name for p in legacy.iterdir()) == ["README.md"]
-    readme = (legacy / "README.md").read_text(encoding="utf-8")
-    targets = [
-        (legacy / target).resolve()
-        for target in re.findall(r"\]\(([^)]+)\)", readme)
-        if not target.startswith("https://")
-    ]
-    assert targets == [survey.SURVEY / "README.md"]
-    assert all(target.is_file() for target in targets)

@@ -78,11 +78,12 @@ Instructor decision, September 20, 2026: the survey submission deadline was
 were reviewed even when their merge happened afterward. Collection issue #6
 is closed and outstanding survey PRs were resolved before migration.
 
-Issue #139 archives the accepted survey under
+Issue #139 archived the accepted survey under
 `tasks/l01-tokenization/llm-app-survey/` on September 21, 2026. Keep accepted
-response contents, filenames, totals, and participation intact. The old
-`surveys/lecture-01/` location contains only a forwarding README. Do not
-accept new responses at either location or ask accepted students to resubmit.
+response contents, filenames, totals, and participation intact. The instructor
+then removed the old `surveys/` directory; its closure notice and migration
+information are retained in the archive README. Keep the survey in this archive.
+Do not accept new responses or ask accepted students to resubmit.
 The survey has its own tally, not a Python task interface; count its
 participation once and separately from coding-task correctness.
 
