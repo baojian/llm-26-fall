@@ -57,9 +57,28 @@ def test_markdown_and_svg_render(tmp_path):
     assert svg.startswith("<svg") and svg.count("<rect") == 1 + sum(1 for s in board if s.passed)
 
 
+def test_survey_under_tasks_counts_once_without_a_coding_score(tmp_path):
+    tasks_root, survey = make_tree(tmp_path)
+    coding_tasks = tasks.task_folders(tasks_root)
+    archive = tasks_root / "l01-tokenization/llm-app-survey"
+    archive.mkdir(parents=True)
+    shutil.move(survey, archive / "responses")
+    (archive / "README.md").write_text("Collection is closed.\n")
+    (archive / "template.md").write_text("Archived Markdown response template.\n")
+
+    assert tasks.task_folders(tasks_root) == coding_tasks
+    by_name = {
+        student.username: student
+        for student in progress.collect(tasks_root, archive / "responses", prs=None)
+    }
+    alice, dave = by_name["alice"], by_name["dave"]
+    assert (alice.submitted, alice.passed, alice.participation, alice.survey) == (1, 1, 2, True)
+    assert (dave.submitted, dave.passed, dave.participation, dave.survey) == (0, 0, 1, True)
+
+
 def test_committed_board_lists_every_survey_and_task_participant():
     text = (ROOT / "tasks/PROGRESS.md").read_text(encoding="utf-8")
-    usernames = {p.stem.lower() for p in (ROOT / "surveys/lecture-01/responses").glob("*.md")}
+    usernames = {p.stem.lower() for p in progress.SURVEY_RESPONSES.glob("*.md")}
     for folder in tasks.task_folders():
         usernames.update(tasks.submissions(folder))
     optout = ROOT / "tasks/.progress-optout"

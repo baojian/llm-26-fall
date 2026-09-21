@@ -10,7 +10,8 @@ tasks/
   README.md                      this page
   TEMPLATE/                      copy this to create a task
   example/word-count/            a complete, tiny example
-  l01-tokenization/<slug>/       Week 1 tasks: gpt2-pretokenizer, digit-grouping, han-runs
+  l01-tokenization/llm-app-survey/  closed Markdown survey archive and results
+  l01-tokenization/<slug>/       Week 1 coding tasks: gpt2-pretokenizer, digit-grouping, han-runs
   l02-ngram/<slug>/              real tasks, grouped by lecture label
     task.toml                    id, title, deadline, what to submit
     instruction.md               the task: goal, interface, examples, how it is checked
@@ -23,6 +24,10 @@ correct rate, participation, merged PRs, and badges per student. It is
 regenerated after each merge batch with `uv run python scripts/progress.py`.
 
 Start with the [Lecture 01 tokenization activities](l01-tokenization/README.md).
+The [LLM-app survey archive](l01-tokenization/llm-app-survey/README.md) is closed
+to new responses; its accepted Markdown files need no resubmission. Survey
+participation is counted separately from coding-task correctness. The Python
+submission and checker instructions below apply to coding exercises.
 
 Task issues on GitHub carry the same lecture label as the folder
 (`l02-ngram`, `l03-embeddings`, …) plus the type label `task`. The full

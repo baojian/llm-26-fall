@@ -73,20 +73,18 @@ The Lecture 01 LLM-app survey allows any number of selections, including zero
 (instructor decision, September 16, 2026). Include responses with more than two
 selected apps in the results. The former two-app limit is superseded.
 
-Instructor decision, September 20, 2026: survey submissions close at
-**23:59 on September 20, 2026 (Asia/Shanghai, UTC+08:00)**. Students should
-verify that their response is merged into `main`; students who have not
-submitted must open their response PR by the deadline. Review and resolve
-responses submitted on time even if the review or merge happens afterward.
-Do not accept new survey responses after the cutoff, including at the future
-archive location.
+Instructor decision, September 20, 2026: the survey submission deadline was
+**23:59 on September 20, 2026 (Asia/Shanghai, UTC+08:00)**. On-time responses
+were reviewed even when their merge happened afterward. Collection issue #6
+is closed and outstanding survey PRs were resolved before migration.
 
-After the deadline, close collection issue #6 and resolve outstanding survey
-PRs, then implement issue #139 through a separate PR: move the survey to
-`tasks/l01-tokenization/llm-app-survey/`, preserve accepted responses and
-participation, and leave a forwarding README at the old location. Begin the
-migration no earlier than September 21, 2026, 00:00 (Asia/Shanghai). The move
-does not reopen submissions or require students to resubmit.
+Issue #139 archives the accepted survey under
+`tasks/l01-tokenization/llm-app-survey/` on September 21, 2026. Keep accepted
+response contents, filenames, totals, and participation intact. The old
+`surveys/lecture-01/` location contains only a forwarding README. Do not
+accept new responses at either location or ask accepted students to resubmit.
+The survey has its own tally, not a Python task interface; count its
+participation once and separately from coding-task correctness.
 
 ## Commit & Pull Request Guidelines
 

@@ -9,9 +9,11 @@ submitted on [Fudan eLearning](https://elearning.fudan.edu.cn/), not here; secti
 change them. Dates come from [schedule.md](schedule.md) and the
 [course website](../index.html); change them there first, then here.
 
-Related: the Week 1 survey ([surveys/lecture-01](../surveys/lecture-01/)),
-which is the template for every weekly activity: one file per student, a
-mechanical check, and a chart shown at the next lecture. Exercise solutions
+Related: the [closed Week 1 survey archive](../tasks/l01-tokenization/llm-app-survey/README.md)
+records the first-PR activity and its results. Collection closed on September 20,
+2026, at 23:59 (Asia/Shanghai); new responses are not accepted. Accepted responses
+retain one survey participation entry, separate from coding-task correctness,
+and require no resubmission. Exercise solutions
 follow the deadline and batch rule below; public PRs are visible before merging.
 
 ## 0. Where each piece of work is submitted
@@ -250,7 +252,9 @@ Aim for at most one review-heavy task per week.
    unchanged; scripts and CI depend on them.
 3. Recreate the lecture and type labels from section 4 (rename the lecture
    slugs if topics change) and one milestone per lecture.
-4. Re-run the survey flow in Week 1 as the first PR exercise; the results
-   script `scripts/survey_results.py` shows the closed loop.
+4. Create a new survey with its own collection issue and deadline for the next
+   semester. Keep the Fall 2026 archive closed and preserve its accepted files.
+   `scripts/survey_results.py` currently reads that archive; use the new survey
+   paths explicitly when preparing another collection.
 5. Open a lecture-preparation issue per week for the instructor with the
    Sunday 23:59 deadline (issue #39 is the first one).

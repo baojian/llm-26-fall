@@ -18,7 +18,8 @@ scripts/slides.py          `new`, `serve`, `vendor` commands for the slide frame
 scripts/notebooks.py       JupyterLab launcher used by `serve` (opens copies under workspace/)
 slides/                    Reveal.js lecture framework: shared/, template/, example/, lecture-01/, vendor/
 slides/tools/              Playwright-based checkers (check.mjs, check-notebook.mjs), run via npm
-surveys/lecture-01/        Student LLM-app survey: README, template, responses/<username>.md
+tasks/l01-tokenization/llm-app-survey/  Closed survey archive and results
+surveys/lecture-01/        Forwarding README to the survey archive
 tests/                     pytest suite for scripts, notebooks, and the lecture-01 material
 workspace/                 Student scratch area, git-ignored except its README
 ```
@@ -101,20 +102,22 @@ before merge; this policy delays publication on `main`, not access to the
 PRs. Work requiring private submissions must use eLearning or another
 instructor-approved private channel.
 
-## Student survey pull requests
+## Archived Lecture 01 survey
 
-The instructor's September 20, 2026 notice sets the submission deadline to
-**September 20, 2026, 23:59 (Asia/Shanghai, UTC+08:00)**. Students should verify
-that their response is in `main`, or submit their response PR by that deadline.
-Review and resolve on-time submissions even if their merge happens later;
-do not accept new responses after the cutoff. After the deadline, close #6
-and resolve outstanding survey PRs, then implement #139 in a separate PR,
-starting no earlier than September 21, 2026, 00:00 (Asia/Shanghai). Move the
-survey to `tasks/l01-tokenization/llm-app-survey/`, preserve accepted responses
-and participation, and leave a forwarding README. The archive remains closed
-to new survey submissions; accepted students do not resubmit.
+Collection issue #6 is closed. The deadline was **September 20, 2026, 23:59
+(Asia/Shanghai, UTC+08:00)**; on-time PRs were reviewed even when merged later.
+After those reviews, #139 moved the accepted survey on September 21 to
+`tasks/l01-tokenization/llm-app-survey/`. The former `surveys/lecture-01/`
+location contains only a forwarding README.
 
-Students submit `surveys/lecture-01/responses/<github-username>.md` through PRs titled `survey: <username>` (instructions in `surveys/lecture-01/README.md`). When asked to review or triage these PRs, check three things: the file is inside `responses/` with the lowercase username as its name, the `GitHub username:` line is filled in, and an app name is supplied if Other is selected. Any number of selections, including zero, is valid. The instructor removed the two-app limit on September 16, 2026; include responses with more than two selections in the results. Students often leave `YOUR_USERNAME` in place or put the file at the repo root. Do not fix such mistakes yourself, even after merge; the survey is a first-PR exercise, so draft a comment asking the student to correct it in a follow-up PR. PRs should say `Related to #6`, never `Fixes #6`, so the shared issue stays open.
+Keep accepted response contents, filenames, totals, and participation intact.
+Do not accept new responses at either location or ask accepted students to
+resubmit. Any number of app selections, including zero or more than two, is
+valid under the instructor's September 16 policy. The archive has a separate
+Markdown-response tally, no Python task interface, and one survey participation
+entry per student; it does not affect coding-task correctness. Regenerate the
+archive results with `uv run python scripts/survey_results.py` and participation
+with `uv run python scripts/progress.py`.
 
 ## Conventions
 

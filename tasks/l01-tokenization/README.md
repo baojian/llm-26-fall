@@ -29,6 +29,12 @@ using the issue. See the [task workflow](../README.md) for the full process.
 These are public participation activities. Graded assignments and project
 deliverables are submitted privately through [eLearning](https://elearning.fudan.edu.cn/).
 
-The separate [Lecture 01 LLM-app survey](../../surveys/lecture-01/README.md)
-closes on September 20, 2026, at 23:59 (Asia/Shanghai). These exercise deadlines
-do not extend the survey deadline; accepted survey responses need no resubmission.
+## Closed survey
+
+The [Lecture 01 LLM-app survey archive](llm-app-survey/README.md) contains the
+accepted responses and results. Its deadline was **September 20, 2026, 23:59
+(Asia/Shanghai)**. Each student submitted one Markdown response in one PR;
+existing responses and participation are preserved, and no new response or
+resubmission PR is needed or accepted. This was a public participation activity,
+with no Python checker or coding-task correctness score. The exercise deadlines
+above do not reopen the survey.

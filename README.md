@@ -15,11 +15,10 @@ You can also hand these steps to a coding agent such as Claude Code or Codex in 
 
 Quizzes, assignments, and the individual project are submitted on [eLearning](https://elearning.fudan.edu.cn/); weekly tasks and surveys are submitted as pull requests from the GitHub website. See the [participation workflow](docs/participation-workflow.md).
 
-The [Lecture 01 survey](surveys/lecture-01/README.md) closes on **September 20,
-2026, at 23:59 (Asia/Shanghai)**. Submit your response PR by then, or check that
-your existing response is merged into `main`. New responses will not be
-accepted after the deadline. The teaching team will archive the survey under
-`tasks/` afterward; accepted responses do not need to be resubmitted.
+The [Lecture 01 survey archive](tasks/l01-tokenization/llm-app-survey/README.md)
+contains the accepted responses and results. Collection closed on **September 20,
+2026, at 23:59 (Asia/Shanghai)**. New responses are not accepted, and students
+whose responses were accepted do not need to resubmit.
 
 The [Lecture 01 tokenization exercises](tasks/l01-tokenization/README.md) are
 optional; you are encouraged to complete at least one and may complete all three.
@@ -48,8 +47,7 @@ Dates, periods, and holidays: [docs/schedule.md](docs/schedule.md). Assessment d
 | [`slides/`](slides/README.md) | Reveal.js lecture decks with companion notebooks. [Lecture 01](slides/lecture-01/index.html) (tokenization) and its [exercise notebook](slides/lecture-01/lecture-01-exercise.ipynb) are published; a [tokenization sample deck](slides/example/index.html) shows the format. |
 | [`docs/`](docs/README.md) | Reading pages and reference notes: the bilingual [Lecture 01 preprocessing reader](docs/lecture-01-pre-tokenization.html), the [pretraining corpora catalog](docs/lecture-01-pretraining-datasets.md), the [tokenizer reading list](docs/tokenizer-reading-list.md), the [pretraining plan](docs/pretraining-plan.md), the [Lecture 02 note on LM metrics](docs/lecture-02-lm-metrics.md), and the [schedule](docs/schedule.md). |
 | [`papers/`](papers/README.md) | PDFs and citations for the course readings. |
-| [`surveys/`](surveys/lecture-01/README.md) | Weekly surveys: one response file per student, tallied into a chart. |
-| [`tasks/`](tasks/README.md) | Small self-checking exercises: one submission file per student, checked automatically. The [progress board](tasks/PROGRESS.md) shows everyone's merged work. |
+| [`tasks/`](tasks/README.md) | Public participation activities: self-checking exercises and the [closed Lecture 01 survey archive](tasks/l01-tokenization/llm-app-survey/README.md). The [progress board](tasks/PROGRESS.md) shows everyone's merged work. |
 | [`assignments/`](assignments/README.md) | Graded assignments: [A1 Tokenization and language models](assignments/a1-tokenization-and-language-models/README.md). Submit solution ZIPs privately through eLearning. |
 | [`workspace/`](workspace/README.md) | Your own notes, experiments, and exercise solutions. Everything there except its README is ignored by git, so `git pull` never conflicts with your files and your work stays out of any pull request you open. To modify a course file, copy it into `workspace/` and edit the copy: `uv run python workspace/<file>.py`. |
 | `pipeline/` | The course data pipeline, built up lecture by lecture: the n-gram estimator, the bits-per-byte evaluation (`pipeline/eval.py`), and the reference-model document filter. Standard library only. |

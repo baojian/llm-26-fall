@@ -1,5 +1,8 @@
 # Lecture 01 LLM app survey
 
+> Archived template for reference. Collection closed on September 20, 2026,
+> at 23:59 (Asia/Shanghai). Do not submit new responses.
+
 GitHub username: YOUR_USERNAME
 
 ## Which LLM apps do you use most in everyday life?

@@ -177,7 +177,9 @@ def test_changed_head_does_not_report_on_stale_code(pull_request):
 def test_survey_pr_is_outside_exercise_feedback(pull_request):
     repo, event = pull_request
     git(repo, "switch", "-c", "survey")
-    (repo / "response.md").write_text("survey response\n")
+    response = repo / "tasks/l01-tokenization/llm-app-survey/responses/alice.md"
+    response.parent.mkdir(parents=True)
+    response.write_text("survey response\n")
     git(repo, "add", ".")
     git(repo, "commit", "-m", "survey response")
     event["pull_request"].update(title="survey: alice", body="Related to #6")
