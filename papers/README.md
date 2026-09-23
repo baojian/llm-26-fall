@@ -53,9 +53,19 @@ plain Git files, not Git LFS, because GitHub Pages does not serve LFS objects.
 
 ## Lecture 02: N-gram language models and how LMs are measured
 
+- Yoshua Bengio, Réjean Ducharme, Pascal Vincent, and Christian Jauvin. 2003.
+  *A Neural Probabilistic Language Model*. Journal of Machine Learning Research,
+  3:1137-1155.
+  [Course PDF](2003-jmlr-bengio-neural-probabilistic-language-model.pdf) ·
+  [Original publication](https://www.jmlr.org/papers/v3/bengio03a.html).
+  Unmodified publisher PDF, retrieved September 23, 2026. Copyright belongs
+  to the authors; a specific license is not stated in the source PDF.
+  Figure 1 and Section 2 accompany the
+  [NPLM introduction](../slides/lecture-02/index.html#/nplm-1).
+
 Cited in the [Lecture 02 metrics note](../docs/lecture-02-lm-metrics.md),
-which says which figure or table of each paper reports loss, perplexity, or
-bits per byte. All ten are the authors' arXiv versions, retrieved on
+the following ten papers report loss, perplexity, bits per byte, or downstream
+results as detailed in that note. They are the authors' arXiv versions, retrieved on
 September 15, 2026, and redistributed under the license shown on each arXiv
 abstract page (linked below).
 

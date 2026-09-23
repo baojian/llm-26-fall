@@ -559,7 +559,7 @@ Source: Spring Lecture 02 slide 29, https://baojian.github.io/llm-26/slides/lect
 
 <img class="diagram" src="assets/nplm-1.png" alt="Left: language modeling calculates the probability of the next word; we have seen N-gram LMs; neural network LMs far outperform N-gram LMs, with Figure 1 of Bengio et al. (2003) showing table look-up in C, a tanh layer, and a softmax output. Right: NPLM is the same task as the N-gram model, predicting w_t from the last N-1 words, but represents words in the prior context by their embeddings; the header of the JMLR 2003 paper A Neural Probabilistic Language Model.">
 
-<p class="caption">Bengio et al. (2003): NPLM. Same task as the $N$-gram model; words are represented by embeddings.</p>
+<p class="caption"><a href="../../papers/2003-jmlr-bengio-neural-probabilistic-language-model.pdf" target="_blank" rel="noopener noreferrer">Bengio et al. (2003), paper PDF</a>: NPLM. Same task as the $N$-gram model; words are represented by embeddings.</p>
 
 Note:
 The figure and text are the Spring slide image, kept unchanged. Source: Spring Lecture 02 slide 30, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/29.
