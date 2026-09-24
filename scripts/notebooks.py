@@ -138,6 +138,20 @@ class NotebookLauncher:
         except (OSError, ValueError, KeyError, IndexError, TypeError, HTTPError, URLError):
             return False
 
+    def spawned_by_us(self, server):
+        try:
+            pid = int(server["pid"])
+        except (KeyError, TypeError, ValueError):
+            return False
+        if self.process is None:
+            return False
+        if pid == self.process.pid:
+            return True
+        try:
+            return self.process.pid in {ancestor.pid for ancestor in psutil.Process(pid).parents()}
+        except psutil.Error:
+            return False
+
     def start_server(self, notebook):
         if not self.state.resolve().is_relative_to(self.root / "workspace"):
             raise ValueError("Jupyter state must stay inside this repository.")
@@ -173,10 +187,10 @@ class NotebookLauncher:
                 stdout=log, stderr=log, start_new_session=True)
         deadline = time.monotonic() + self.startup_timeout
         while time.monotonic() < deadline and self.process.poll() is None:
-            for filename in runtime.glob(f"jpserver-{self.process.pid}.json"):
+            for filename in runtime.glob(f"jpserver-*.json"):
                 try:
                     server = json.loads(filename.read_text(encoding="utf-8"))
-                    if self.compatible(server, notebook):
+                    if self.spawned_by_us(server) and self.compatible(server, notebook):
                         return server
                 except (OSError, ValueError):
                     pass
