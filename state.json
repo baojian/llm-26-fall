@@ -1,5 +1,5 @@
 {
-  "last_attempt": "observations/2026-09-24/2026-09-24T00-00-53.760164Z-b1f10fcc.json",
+  "last_attempt": "observations/2026-09-24/2026-09-24T04-34-00.416470Z-c27efbcc.json",
   "last_successful": "observations/2026-09-24/2026-09-24T00-00-53.760164Z-b1f10fcc.json",
   "run_keys": [
     "pro",
@@ -7,7 +7,7 @@
   ],
   "runs": {
     "flash": {
-      "last_seen": "2026-09-24T00:00:53.760164Z",
+      "last_seen": "2026-09-24T04:34:00.416470Z",
       "mode": "ended",
       "sampler_first": 1789783257.264,
       "sampler_last": 1789784370.264,
@@ -20,14 +20,14 @@
       "version": "3-5513.32.6.28"
     },
     "pro": {
-      "last_seen": "2026-09-24T00:00:53.760164Z",
+      "last_seen": "2026-09-24T04:34:00.416470Z",
       "mode": "ended",
       "sampler_first": 1789913406.334,
       "sampler_last": 1789927159.334,
       "sampler_reports": 60,
       "series": "fetched",
       "series_manifest": "series/8dd889889b1c4402ab48af01277dae125acb9ce46eb909669e76a8d7ee482864.json",
-      "source_clock": 1790208056.5552857,
+      "source_clock": 1790218816.2521853,
       "step": 30,
       "tag_count": 2029,
       "version": "3-5513.30.15.30"
@@ -35,7 +35,7 @@
   },
   "series_cache": {
     "28134f90e376099229d41beb5c9ebd084c151090c07b6175aa52521d178e0198": {
-      "manifest": "series/0b529a577329373db276e9fe0b82d7e88fe57b106fc32a0592aeec2b4444fd1b.json"
+      "manifest": "series/3128cbe4dc8624b15751ea420b56a6d2d057a0af4a33e6fded503ef3b8b31c70.json"
     },
     "41fa921e02d4d904266a6038e839094c81e2fed827202ef6dd8e529fb6c01adc": {
       "manifest": "series/5dbf3410166b4c04b5b59df272940160a6ff369c8b4da55a6504b3c719e5b8d7.json"
