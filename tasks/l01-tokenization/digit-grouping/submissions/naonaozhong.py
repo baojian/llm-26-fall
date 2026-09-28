@@ -15,8 +15,7 @@ The number 123456789012 has 12 digits, so it becomes 12 tokens when k=1, 4 token
 Bigger groups mean fewer tokens but a much bigger vocabulary,
 because the number of possible groups grows by a factor of 10 for each extra digit.
 A three-character limit only says a chunk has at most three characters; 
-it does not force BPE to keep the chunk as one token, since BPE merges the most common pairs and may split a three-digit chunk into smaller pieces. 
-My solve still groups into threes, which matches k=3."""
+it does not force BPE to keep the chunk as one token, since BPE merges the most common pairs and may split a three-digit chunk into smaller pieces."""
 
 def solve(text: str) -> list[str]:
     output = list()
