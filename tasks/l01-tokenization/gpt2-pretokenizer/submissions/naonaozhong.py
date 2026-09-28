@@ -9,12 +9,7 @@ MY_CASES = [
     ("it's 42", ["it", "'s", " 42"]),
     ("Hello, world!", ["Hello", ",", " world", "!"]),
 ]
-NOTES = """GPT-2 puts the space with the next word, so we get " world" instead of "world ". 
-Spaces almost always come at the start of a word, so the vocabulary only needs one entry per word (" world"), 
-and it does not need separate entries like "world", "world.", or "world,". 
-This keeps the vocabulary small and lets BPE store the common form of each word as one compact token. 
-If the space were attached to the previous word instead, each word would need one entry for every character that could follow it, 
-which makes the vocabulary much bigger. That is why my solve leaves the space with the next word."""
+NOTES = """GPT-2 usually attaches a space to the next word-like chunk, so " world" carries word-boundary information. BPE may learn both "world" and " world", and either can still split into smaller tokens. Attaching the space to the previous chunk would instead favor forms like "world ", shifting the boundary information to the preceding token."""
 
 _PAT = re.compile(
     r"'s|'t|'re|'ve|'m|'ll|'d"
