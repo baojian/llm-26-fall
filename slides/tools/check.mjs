@@ -203,6 +203,38 @@ try {
     assert.equal(await page.evaluate(() => Reveal.getCurrentSlide().id), 'exercise-01');
     assert.ok(await page.locator('.katex').count() > 0, 'Sample equations did not render.');
   }
+  if (folder === 'lecture-04') {
+    assert.equal(await page.locator('#shape-ledger tbody tr:last-child td').count(), 2);
+    assert.equal(await page.locator('#shape-ledger tbody tr:last-child .katex').count(), 1, 'Render vocabulary bars inside the table as math.');
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('attention-demo')).h));
+    const graph = page.locator('#attention-visual');
+    const initialDescription = await graph.getAttribute('aria-label');
+    const initialOutput = JSON.parse(await graph.getAttribute('data-output'));
+    assert.equal(await graph.getAttribute('data-query'), '1');
+    assert.equal(await graph.getAttribute('data-causal'), 'true');
+    assert.ok(Math.abs(initialOutput[0] - 0.7310585786300049) < 1e-12);
+    await page.locator('#attention-value').click();
+    await page.waitForFunction(() => document.getElementById('attention-visual').dataset.changed === 'true');
+    assert.deepEqual(JSON.parse(await graph.getAttribute('data-output')), initialOutput);
+    await page.locator('#attention-mask').click();
+    await page.waitForFunction(() => document.getElementById('attention-visual').dataset.causal === 'false');
+    const leaked = JSON.parse(await graph.getAttribute('data-output'));
+    assert.ok(leaked[0] > initialOutput[0] + 4);
+    const query3 = page.getByRole('button', { name: 'Select query 3', exact: true });
+    await query3.focus();
+    await page.keyboard.press('Enter');
+    await page.waitForFunction(() => document.getElementById('attention-visual').dataset.query === '2');
+    assert.equal(await query3.getAttribute('aria-pressed'), 'true');
+    await page.locator('#attention-reset').click();
+    await page.waitForFunction(expected => document.getElementById('attention-visual').getAttribute('aria-label') === expected, initialDescription);
+    assert.deepEqual(JSON.parse(await graph.getAttribute('data-output')), initialOutput);
+    assert.equal(await page.locator('#attention-mask').getAttribute('aria-pressed'), 'true');
+    assert.equal(await page.locator('#attention-value').getAttribute('aria-pressed'), 'false');
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('exercise-04')).h, 0, -1));
+    assert.equal(await page.locator('#exercise-04 .answer').evaluate(el => el.classList.contains('visible')), false);
+    await page.keyboard.press('Space');
+    assert.equal(await page.locator('#exercise-04 .answer').evaluate(el => el.classList.contains('visible')), true);
+  }
   if (folder === 'lecture-03') {
     assert.equal(count, 60, 'Keep the revised lecture at 60 slides.');
     await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('lookup-table')).h));

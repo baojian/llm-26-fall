@@ -46,6 +46,18 @@ controls demonstrate row lookup and the memory cost of changing table dimensions
 See [asset provenance](lecture-03/assets/README.md) for the teaching figure,
 model metadata, and retained Spring images.
 
+[Lecture 04](lecture-04/index.html) extends the bigram model into a fixed-window
+neural LM, then develops and verifies one causal attention head in 56 slides.
+Its [teaching plan](lecture-04/teaching-plan.md) maps three 45-minute periods
+and the changes from the Spring neural-network and sequence-learning lecture.
+The [notebook](lecture-04/lecture-04-exercise.ipynb) runs E01–E05 and optional
+P01–P02 offline on CPU. Six editable diagrams, a computed training curve, and
+an interactive attention matrix accompany the numerical examples. The controls
+select a query, toggle its causal mask, and change a future value, with a reset
+to the printable initial example. Longer micrograd and LSTM work remains in
+[optional reading](lecture-04/optional-reading.md). See
+[asset provenance](lecture-04/assets/README.md).
+
 ## Teaching from a classroom browser
 
 Once the slide files reach the branch published by GitHub Pages, open the deck
@@ -152,6 +164,7 @@ slides/
   lecture-01/             Lecture 01 deck and lecture-01-exercise.ipynb
   lecture-02/             Lecture 02 deck and lecture-02-exercise.ipynb
   lecture-03/             Lecture 03 deck and lecture-03-exercise.ipynb
+  lecture-04/             Lecture 04 deck and lecture-04-exercise.ipynb
   01-tokenization/        A lecture created when its content is ready
     index.html            Shared viewer shell
     lecture.json          Title, language, and optional demo module

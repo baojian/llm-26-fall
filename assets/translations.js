@@ -108,6 +108,8 @@ window.courseTranslations = {
   "How can a model select useful context instead of compressing everything into one state?": "模型如何选择有用的上下文，而不必把所有信息压缩到一个状态？",
   "Feedforward LM training loop; a brief RNN/LSTM motivation; attention scores, softmax, weighted values, and masking.": "前馈语言模型的训练循环；简要介绍 RNN/LSTM 的动机；注意力分数、softmax、值向量加权与掩码。",
   "Overfit a tiny batch and verify an attention head's outputs and gradients against a reference.": "在微型批次上过拟合，并对照参考实现验证单个注意力头的输出与梯度。",
+  "Bengio et al. (2003), Section 2": "Bengio 等（2003），第 2 节",
+  "Attention Is All You Need, Sections 3.2.1 and 3.2.3": "Attention Is All You Need，第 3.2.1 和 3.2.3 节",
   "A1 due": "A1 截止",
   "Oct 10": "10 月 10 日",
   "Make-up class (Saturday)": "补课（周六）",

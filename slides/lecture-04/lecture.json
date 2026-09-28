@@ -1,0 +1,8 @@
+{
+  "number": "04",
+  "title": "Neural Language Models and Attention",
+  "subtitle": "Lecture 04 \u2013 NLP and LLMs",
+  "language": "en",
+  "notebook": "lecture-04-exercise.ipynb",
+  "demo": "demo.js"
+}
