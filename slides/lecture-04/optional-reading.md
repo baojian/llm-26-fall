@@ -47,7 +47,8 @@ function or architecture.
 
 [Vaswani et al. (2017), Sections 3.2.1 and 3.2.3](https://arxiv.org/abs/1706.03762)
 specify scaled dot-product attention and the model's attention masks. Section
-3.5 previews position information. Lecture 06 assembles the full Transformer.
+3.5 previews position information. Lecture 05 assembles the full Transformer
+on October 10.
 
 [CS336 Lecture 2](https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py)
 provides examples of named tensor axes, explicit matrix-product gradients,

@@ -10,7 +10,7 @@ stated assumptions to be replaced by measurements.
 
 Train a **1B-parameter decoder** on **about 35B tokens** of English, Chinese,
 code, and math with the Qwen3 tokenizer, plus a **ladder of 30M / 125M /
-350M proxies** on the same data, so that every lecture from Week 7 on has a
+350M proxies** on the same data, so that every lecture from Week 6 on has a
 real run to look at and every student ablation is cheap.
 
 Why this point: GPT-2 XL is 1.5B parameters on about 10B tokens (2019);
@@ -78,7 +78,7 @@ light pass (Section 4) so students see the pipeline, not to improve on it.
 
 Mixture: English 40%, Chinese 29%, code 11%, math 11%, reference 9%. The
 Chinese share is deliberately high for a Fudan class and is the main lever
-students can vary in the Week 8 data-policy ablation.
+students can vary in the Week 7 data-policy ablation.
 
 Sizes: 35B tokens is about 140 GB of text and 140 GB tokenized as uint32
 (uint16 cannot hold the 151,669-entry Qwen vocabulary), well inside the 3 TB
@@ -100,7 +100,7 @@ smaller vocabulary would also cut the output-layer cost noted in Section 2.
 2. **Filter**: the C4/Gopher line and document rules, the language ID check,
    and the PII regexes (Weeks 2–4 regex tasks are exactly these functions).
 3. **Deduplicate**: exact hashes per document, then MinHash near-duplicates
-   within each source (Week 8, data lecture).
+   within each source (Week 7, data lecture).
 4. **Decontaminate**: 10-gram overlap against every benchmark we will report
    (DeepSeekMath's rule), before tokenization.
 5. **Tokenize and pack** into fixed 2048-token sequences with document
@@ -115,16 +115,19 @@ the survey chart does.
 
 ## 5. Schedule aligned with the lectures
 
+Lecture dates follow the [revised course schedule](schedule.md). Cluster work
+remains a preparation target, subject to the checks in Section 7.
+
 | Week | Lecture | Cluster work | Students |
 | --- | --- | --- | --- |
 | 2–4 | N-grams, embeddings, attention | finish the measurements in Section 6; download sources; tokenizer counts | regex and tokenizer tasks |
-| 5–6 | make-up class, Transformer | dedup, decontaminate, tokenize; train the 30M and 125M proxies on the full mixture | shape checks on the decoder |
-| 7 | Pretraining and decoding | **launch the 1B flagship** (about one day on 32 cards); publish the training curve live | resumed-run and failure-diagnosis exercises on the 125M |
-| 8 | Data preparation | 125M ablations: two data policies (Chinese share, with/without Cosmopedia) at equal token budget | compare the two policies |
-| 9 | Compute and scaling | fit the 30M–350M ladder; predict the 1B loss, then compare with the real run; dense versus MoE at equal data (Section 6) | resource estimate versus measured value |
-| 10 | Evaluation | evaluate the 1B against Qwen3-0.6B-Base, SmolLM2, GPT-2 XL; contamination audit | audit one benchmark item |
-| 11–12 | SFT, preferences | SFT and a DPO pass on the 1B with open instruction data | before/after on one prompt set |
-| 13–16 | RAG, inference, diffusion, agents | serve the model (vllm is installed on the PPU image); latency tables | projects use the checkpoints |
+| 5 | Transformer (October 10 make-up class) | dedup, decontaminate, tokenize; train the 30M and 125M proxies on the full mixture | shape checks on the decoder |
+| 6 | Pretraining and decoding | **launch the 1B flagship** (about one day on 32 cards); publish the training curve live | resumed-run and failure-diagnosis exercises on the 125M |
+| 7 | Data preparation | 125M ablations: two data policies (Chinese share, with/without Cosmopedia) at equal token budget | compare the two policies |
+| 8 | Compute and scaling | fit the 30M–350M ladder; predict the 1B loss, then compare with the real run; dense versus MoE at equal data (Section 6) | resource estimate versus measured value |
+| 9 | Evaluation | evaluate the 1B against Qwen3-0.6B-Base, SmolLM2, GPT-2 XL; contamination audit | audit one benchmark item |
+| 10–11 | SFT, preferences | SFT and a DPO pass on the 1B with open instruction data | before/after on one prompt set |
+| 12–16 | RAG, inference, diffusion, agents, synthesis | serve the model (vllm is installed on the PPU image); latency tables | projects use the checkpoints |
 
 ## 6. MoE option: measured cost
 
@@ -156,7 +159,7 @@ card, no faster than the dense 1B, so it saves nothing in wall-clock; the
 about 12 hours on 32 cards.
 
 Decision proposed: keep the dense 1B as the flagship. Train the MoE on the
-same data as the Week 9 comparison, in the 16 × top-2 shape with padded
+same data as the Week 8 comparison, in the 16 × top-2 shape with padded
 dispatch; switch to the canonical 64 × top-8 only if a grouped-matmul kernel
 is available on the vendor stack.
 
@@ -192,4 +195,4 @@ needs (the MetaX test container had only 4 CPU cores).
 - **Licensing.** Every source above is redistributable for research; Chinese
   web corpora should be checked once more against their cards before use.
 - **Fallback.** If scaling or stability fails, the 350M proxy on 7B tokens
-  becomes the class model. It still supports every lecture from Week 7 on.
+  becomes the class model. It still supports every lecture from Week 6 on.

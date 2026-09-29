@@ -1,7 +1,8 @@
 # MiMo RL public training archive
 
 The [MiMo training dashboard](https://mimo.xiaomi.com/rl/#overview) exposes a
-production post-training case study for Lectures 11 and 12. The instructor's
+production post-training case study for Lecture 10 (SFT, November 11) and
+Lecture 11 (preferences and alignment, November 18). The instructor's
 [case-study issue #177](https://github.com/baojian/llm-26-fall/issues/177) records
 the initial state, six operator notices, and questions for lecture preparation.
 

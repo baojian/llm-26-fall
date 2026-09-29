@@ -47,7 +47,7 @@ DeepSeek, OLMo 2, DCLM, and Qwen3 report each one; the PDFs are in `papers/`.
 | 2 | 20–38 | 20–25 | Outline; data split and extrinsic evaluation; E02 (3 min): propose a metric, and one zero makes the test set score −∞; perplexity; E03 (3 min): digits example; BPB definition; WSJ and demonstration rows |
 | 2 | 38–45 | 26–28 | Unigram sampling, interval figure, WSJ samples; bigram sampling question |
 | 3 | 0–10 | 29–30 | The perplexity filter as stage 2b of the pipeline; N-gram summary |
-| 3 | 10–36 | 31–35 | Outline; four NPLM pages: task and embeddings, forward inference, training, improvements over N-grams (with the Week 9 preview) |
+| 3 | 10–36 | 31–35 | Outline; four NPLM pages: task and embeddings, forward inference, training, improvements over N-grams (with the Week 8 preview) |
 | 3 | 36–42 | 36 | The loop in miniature: a bigram retrained on its own samples; identify changing token budgets and propose an equal-budget control |
 | 3 | 42–45 | 37–38 | Two-minute exit discussion, sources and optional extensions; preview of Week 3 (embeddings and PyTorch); one minute for toolkits and readings |
 

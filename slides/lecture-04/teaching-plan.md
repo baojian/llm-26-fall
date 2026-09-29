@@ -22,8 +22,9 @@ Students should be able to:
 - Verify forward outputs, gradients, and future-input independence.
 - Estimate the storage of a materialized attention score matrix.
 
-Full Transformer architecture remains in Lecture 06. This notebook trains an
-NPLM and verifies a single attention head; it does not train a Transformer.
+Full Transformer architecture follows in Lecture 05 on October 10. This
+notebook trains an NPLM and verifies a single attention head; it does not
+train a Transformer.
 All students use the same practices and expectations. These practices introduce
 no graded submissions, extra credit, or changes to the assessment policy.
 

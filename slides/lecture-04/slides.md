@@ -27,7 +27,7 @@ Three 45-minute periods. The notebook's E01–E05 are ungraded classroom practic
 <p class="source">Predict first, then run the notebook. All classroom data are toy examples.</p>
 
 Note:
-Allow 1 minute for the opening two slides. Ask students to keep identifying what predicts what. The central course question also contrasts selecting useful stored context with compressing a sequence into one fixed-size state. Full Transformer architecture comes in Lecture 06.
+Allow 1 minute for the opening two slides. Ask students to keep identifying what predicts what. The central course question also contrasts selecting useful stored context with compressing a sequence into one fixed-size state. Full Transformer architecture comes in Lecture 05.
 
 ---
 
@@ -948,14 +948,14 @@ Allow 2 minutes. Expected responses: ordered context embeddings and a learned hi
 
 ## Continuing the course
 
-**Lecture 06:** assemble a Transformer from attention, positions, feedforward layers, residual paths, and normalization.
+**Lecture 05, October 10:** assemble a Transformer from attention, positions, feedforward layers, residual paths, and normalization.
 
 **Optional:** [Spring micrograd and LSTM material](optional-reading.md).
 
 **A1:** due September 30, 23:59, Asia/Shanghai. Submit privately through eLearning.
 
 Note:
-The published architecture lecture is October 14. The October 10 make-up meeting's content is still to be announced; do not assign it a new topic here. The A1 reminder follows the published assignment release at https://github.com/baojian/llm-26-fall/issues/140. E01–E05 introduce no new graded submission. Leave the final references slide available for reading.
+The architecture lecture is on Saturday, October 10, replacing the October 7 holiday meeting. Time and room follow the university make-up notice. The A1 reminder follows the published assignment release at https://github.com/baojian/llm-26-fall/issues/140. E01–E05 introduce no new graded submission. Leave the final references slide available for reading.
 
 ---
 
