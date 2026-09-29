@@ -2,7 +2,7 @@
 
 <p class="eyebrow">CS40008.01</p>
 
-# Neural language models and attention
+# Neural LMs and Attention
 
 <p class="subtitle">Lecture 04 – NLP and LLMs</p>
 
