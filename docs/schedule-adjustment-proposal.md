@@ -1,20 +1,21 @@
-# October 10 schedule adjustment: review proposal
+# October 10 schedule adjustment: approved plan
 
-**Prepared:** September 29, 2026. **Status:** draft for instructor review.
+**Prepared and approved:** September 29, 2026. **Status:** approved for publication.
 
 The instructor requested that Lecture 04 remain on September 30, that the
 Transformer lecture move to the October 10 make-up meeting, and that later
 topics advance accordingly. The instructor also requested corresponding
-assessment-date proposals for review. The tables below distinguish the
-previous dates from the proposal previewed on this branch.
+assessment-date proposals for review. After reviewing the local preview, the
+instructor approved the changes and requested merging PR #237. The tables
+below record the previous and approved dates.
 
-Assessment changes take effect after instructor approval and a synchronized
-update to the published course page and eLearning. Until then, students follow
-the currently published dates. A1's September 30 deadline remains in place.
+The course page publishes these dates when PR #237 merges. Synchronizing
+eLearning remains a publication follow-up; completion has not been verified.
+A1's September 30 deadline remains in place.
 
 ## Lecture sequence
 
-| Lecture | Topic | Previous date | Proposed date |
+| Lecture | Topic | Previous date | Approved date |
 | ---: | --- | --- | --- |
 | 04 | Neural language models and attention | Sep 30 | Sep 30 |
 | 05 | The Transformer as a working model | Oct 14 | **Sat, Oct 10** |
@@ -39,12 +40,12 @@ December 23, students connect course methods to their project evidence and
 revise claims, comparisons, limitations, and writing. This remains guided
 classroom practice within the individual written-project format.
 
-## Proposed assessment dates
+## Approved assessment dates
 
 All submission deadlines are **23:59, Asia/Shanghai (UTC+08:00)**. Quizzes
 take place in class and cover the common core already taught.
 
-| Item | Previously published | Proposal | Reason |
+| Item | Previously published | Approved | Reason |
 | --- | --- | --- | --- |
 | Quiz 1 | Sep 23 | Sep 23 | Retain the past scheduled date |
 | Quiz 2 | Oct 14 | **Sat, Oct 10** | Keep it with the Transformer meeting; assess prior embeddings and attention material |
@@ -60,7 +61,7 @@ take place in class and cover the common core already taught.
 
 Moving A2's deadline to October 28 would leave only 18 days because the
 make-up meeting is on a Saturday. October 31 preserves three weeks. Assignment
-deadlines remain separate from project deadlines. The proposal advances two
+deadlines remain separate from project deadlines. This change advances two
 project checkpoints by seven days and gives students five weeks between the
 progress update and final submission.
 
@@ -71,25 +72,26 @@ maximum scores. Graded submissions remain private through eLearning.
 
 ## Review and publication
 
-- [ ] Approve the proposed quiz dates, including Quiz 2 on Saturday, October 10.
-- [ ] Approve A2's Saturday deadline and the A3 dates.
-- [ ] Approve the earlier project proposal and progress-update dates.
+- [x] Instructor approved the quiz dates, including Quiz 2 on Saturday, October 10.
+- [x] Instructor approved A2's Saturday deadline and the A3 dates.
+- [x] Instructor approved the earlier project proposal and progress-update dates.
+- [x] Instructor reviewed the local preview and authorized merging PR #237 on
+  September 29, 2026.
 - [ ] Confirm the October 10 time and room against the university notice.
-- [ ] Synchronize approved dates with eLearning and publish the course-page
-  changes together. Record approval here before merging the schedule PR.
+- [ ] Synchronize the approved dates with eLearning.
 
 The branch updates the English and Chinese course page, dated schedule,
 participation timeline, preparation maps, task-proposal form, and forward
 references in Lectures 02 and 04. Released A1 files and its announcement
 retain their dates. It contains no student submissions or grading data.
 
-### GitHub follow-up after approval
+### GitHub updates completed after approval
 
-Update the future lecture labels using the mapping below. Rename existing
-labels so linked issues retain their topic association; update each label's
-lecture-number description. Published task paths for Lectures 01–04 stay
-stable. The task-proposal form and participation guide on this branch use the
-new names.
+The future lecture labels were renamed on September 29, 2026, using the
+mapping below. Their identities and issue associations were preserved, and
+each lecture-number description was updated. Published task paths for
+Lectures 01–04 stay stable. The task-proposal form and participation guide use
+the new names.
 
 | Existing label | New label |
 | --- | --- |
@@ -106,9 +108,8 @@ new names.
 | `l15-diffusion` | `l14-diffusion` |
 | `l16-agents` | `l15-agents` |
 
-Update the future-lecture references in the
+The future-lecture references were updated in the
 [Lecture 04 preparation issue](https://github.com/baojian/llm-26-fall/issues/234)
-and the course-placement dates in the
+and the course-placement dates were updated in the
 [MiMo case-study issue](https://github.com/baojian/llm-26-fall/issues/177).
 The latter now supports SFT on November 11 and alignment on November 18.
-These issue edits and label changes remain pending with the schedule review.
