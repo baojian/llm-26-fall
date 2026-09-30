@@ -1,0 +1,10 @@
+\begin{tikzpicture}[font=\small]
+\draw[draw=courseblue,fill=courseblue!20] (0,0) rectangle (3,.9);
+\draw[draw=courseteal,fill=courseteal!20] (3,0) rectangle (6,.9);
+\draw[draw=courseorange,fill=courseorange!20] (6,0) rectangle (12,.9);
+\node[align=center] at (1.5,.45) {parameters\\62.5 MiB};
+\node[align=center] at (4.5,.45) {gradients\\62.5 MiB};
+\node[align=center] at (9,.45) {two Adam moments\\125 MiB};
+\node[below] at (0,-.1) {0};\node[below] at (12,-.1) {250 MiB};
+\node at (6,-.95) {fp32 tensor subtotal $=16P$ bytes\qquad additional memory omitted};
+\end{tikzpicture}

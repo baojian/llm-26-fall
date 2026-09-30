@@ -1,0 +1,220 @@
+\clearpage
+\section{From token IDs to a trainable neural LM}\label{sec:neural}
+\subsection*{Lookup and next-token alignment}
+Let $E\in\R^{K_{\mathrm{in}}\times d}$ be the input table. For token ID $i$,
+lookup returns $E[i]$. Equivalently, for a one-hot row vector $q_i$,
+$q_iE=E[i]$. The one-hot construction explains the operation; an embedding
+lookup avoids materializing the mostly zero tensor. IDs have integer dtype,
+while the trainable weights and selected vectors are floating-point tensors.
+
+For a batch of $B$ sequences with $T$ input positions, IDs have shape
+$(B,T)$ and embeddings have shape $(B,T,d)$. The L03 example uses a table
+with ten rows and width four. The table shape and the input shape are
+different objects; neither is inferred from the numerical magnitude of an ID.
+
+\fig{token-loss}{The neural bigram computation keeps one input token per
+prediction. Lookup changes the representation; it does not extend the context.}
+
+For the sequence $[1,2,3,4,5]$, use inputs $[1,2,3,4]$ and targets
+$[2,3,4,5]$. A second row $[5,6,7,8,9]$ gives inputs $[5,6,7,8]$ and
+targets $[6,7,8,9]$. There are eight predictions, with last targets 5 and 9.
+For a vocabulary of size ten, logits have shape $(2,4,10)$.
+
+An untied neural bigram computes
+\[
+ e_t=E[x_t],\qquad z_t=W_oe_t+b_o,\qquad
+ p(x_{t+1}\mid x_t)=\softmax(z_t),
+\]
+where $W_o\in\R^{K\times d}$. In the general case, $K_{\mathrm{in}}$ and
+$K$ need not be equal: an input-only boundary symbol may occupy a lookup
+row without being an allowed output. L03's ten-symbol toy uses matching sizes.
+
+Flatten logits to $(BT,K)$ and targets to $(BT)$ in the same order before
+computing cross-entropy. Sliced tensors may be non-contiguous; a reshape
+can preserve their logical order while making a copy if needed. Mixing batch
+and time orders would silently train on the wrong labels.
+
+\takeaway{Write down shape, dtype, device, and meaning at every step.
+Correct dimensions alone do not prove correct target alignment.}
+\selfcheck{For $B=2$, $T=4$, $d=4$, and $K=10$, how many logits exist?
+There are 80; only eight are the logits of the observed target classes.}
+
+\nextpage{Stable probabilities and a connected computation graph}
+For one target $y$ and logits $z\in\R^K$, the loss is
+\[
+ \ell(z,y)=-z_y+\log\sum_{j=1}^{K}e^{z_j}.
+\]
+Let $a=\max_jz_j$. Subtracting $a$ inside the exponentials gives the stable
+log-sum-exp identity
+\[
+ \ell(z,y)=-(z_y-a)+\log\sum_j e^{z_j-a}.
+\]
+All exponent arguments are nonpositive, avoiding overflow from a large
+common offset. For $z=(1000,1001)$ and the second class as target,
+$\ell=\log(1+e^{-1})\approx0.3133$ rather than an expression involving
+overflowing $e^{1000}$ and $e^{1001}$.
+
+\fig{loss-graph}{Autograd follows the operations connecting parameters to the
+loss. Detaching the loss breaks that connection even when its printed value is unchanged.}
+
+The gradient with respect to logits has a simple form:
+\[
+ \frac{\partial\ell}{\partial z_j}=p_j-\mathbf1[j=y].
+\]
+It increases pressure on the target score and decreases pressure on the
+others. Summing these derivatives gives zero because probabilities sum to
+one. Adding a common constant to all logits leaves probabilities unchanged.
+
+With all logits zero, $p_j=1/K$ and the loss is exactly $\log K$.
+For $K=10$, this is about 2.3026 nats. Random logits generally do not yield
+that exact value; use an intentional zero-logit setup for the check.
+
+\begin{lstlisting}
+# logits: (B, T, K); targets: (B, T), integer IDs
+loss = F.cross_entropy(
+    logits.reshape(-1, logits.shape[-1]),
+    targets.reshape(-1),
+)
+loss.backward()
+\end{lstlisting}
+Pass raw logits to this loss, which performs the stable normalization
+internally. Calling \texttt{softmax} first changes the function being
+optimized. Calling \texttt{loss.item()} returns a Python number for
+logging; it cannot carry the computation graph. Calling \texttt{detach()}
+similarly removes the path needed for this backward call.
+
+\selfcheck{If training loss is numerically finite but every parameter gradient
+is absent, what would you inspect first? Trace the computation graph and
+the gradient-recording context before changing the learning rate.}
+
+\nextpage{A feedforward model can use more than one token}
+Consider ``red key'' and ``blue key.'' If the next word should be
+\texttt{opens} in the first context and \texttt{closes} in the second,
+a bigram model cannot separate them: its input is \texttt{key} in both cases.
+An embedding with more dimensions still receives the same input ID.
+
+\fig{window-model}{An ordered two-token context distinguishes the two prefixes.
+The hidden layer mixes the concatenated embeddings before producing vocabulary logits.}
+
+A neural probabilistic language model uses a fixed window of $m$ tokens.
+With column-vector conventions,
+\[
+ u=\operatorname{concat}(E[x_{t-m}],\ldots,E[x_{t-1}]),\quad
+ h=\tanh(W_hu+b_h),\quad z=W_oh+b_o.
+\]
+Here $u\in\R^{md}$, $W_h\in\R^{H\times md}$, and
+$W_o\in\R^{K\times H}$. Concatenation preserves slot order. The nonlinear
+activation allows behavior beyond a single affine map of the concatenated
+inputs; composing affine layers without an activation would collapse to
+one affine map of $u$.
+
+The L04 corpus contains two separate sequences:
+\begin{center}
+\texttt{BOS red key opens EOS}\qquad\texttt{BOS blue key closes EOS}.
+\end{center}
+For $m=2$, each supplies three windows. For the first sentence they are
+$(\BOS,\texttt{red})\to\texttt{key}$,
+$(\texttt{red},\texttt{key})\to\texttt{opens}$, and
+$(\texttt{key},\texttt{opens})\to\EOS$. The second sentence supplies
+the analogous blue/closes examples. No window crosses a document boundary.
+
+\begin{tabularx}{\textwidth}{@{}l Y@{}}\toprule
+Stage & Shape for a two-example probe, $m=2,d=4,H=8,K=7$\\\midrule
+Context IDs & $(2,2)$\\
+Lookup / concatenate & $(2,2,4)$ / $(2,8)$\\
+Hidden / logits & $(2,8)$ / $(2,7)$\\\bottomrule
+\end{tabularx}
+
+This toy allocates all seven listed symbols as both input and output rows,
+including \BOS{}, although \BOS{} never appears as a target. That convention
+explains its $K=7$ baseline. A model with \BOS{} excluded from the output
+would need a different output mapping and denominator.
+
+\takeaway{Shared learned representations improve generalization across
+contexts, but a fixed window still has a hard history limit. See \readingref{R04}.}
+\selfcheck{Which parameter matrix grows when the context window doubles while
+$d,H,K$ stay fixed? The input-to-hidden matrix $W_h$ doubles its column count.}
+
+\nextpage{Training, tiny-batch fitting, and evaluation}
+Gradient descent adjusts parameters to reduce a chosen objective. A
+training step must compute a connected loss, differentiate it, and apply
+an update. Gradients normally accumulate, so clear old gradients when
+each step is intended to use only the current batch.
+
+\begin{lstlisting}
+model.train()
+for step in range(200):
+    optimizer.zero_grad(set_to_none=True)
+    logits = model(train_contexts)
+    loss = F.cross_entropy(logits, train_targets)
+    loss.backward()
+    optimizer.step()
+\end{lstlisting}
+This loop assumes the model, optimizer, and sentence-local training windows
+from the course notebook have already been constructed. The call order is
+the transferable idea; the batch and objective determine what it learns.
+
+\fig{training-curves}{Saved L03 and L04 teaching runs, redrawn from separate
+assets. Left: neural bigram, $K=10,d=4$, eight pairs, seed 0. Right: two-token
+NPLM, $K=7,d=4,H=8$, six windows, seed 7. Both use 200 full-batch SGD updates
+with learning rate $0.5$ on CPU. These curves are not a controlled model comparison.}
+
+L03's mean loss reaches about 0.0187 nats, while L04's reaches about
+0.0070. Their vocabularies, batches, architectures, and seeds differ.
+Both examples establish that these implementations can fit their small
+compatible training sets. Neither curve measures generalization to new documents.
+
+An incompatible tiny batch can expose a model limitation. If a bigram sees
+the same token with two equally frequent targets, its best conditional
+distribution splits probability between them. Its optimum for those two
+events has loss $\log2$, not zero. A failed fit is therefore not automatically
+an optimizer bug: first check whether the model's inputs distinguish the labels.
+
+For evaluation, switch behavior with \texttt{model.eval()} and separately
+disable gradient recording with \texttt{torch.no\_grad()}. The first affects
+modules such as dropout; the second controls graph construction. Neither
+performs an optimizer step. The L03 unseen-ID probe tests coverage of selected
+input rows; it is a diagnostic, not a representative held-out corpus.
+
+\selfcheck{A training loss falls while held-out loss rises. Which observation
+supports fitting, and which warns about generalization? Report both with their splits.}
+
+\nextpage{Weight tying and a memory ledger}
+If the same $K$ symbols occupy input and output rows and the state width is
+$d$, the output matrix can share the input table: $W_o=E$. Then
+$z=Eh+b_o$. This saves a table, but changes the gradient paths. Compatible
+row meanings and widths are essential; equal tensor shapes alone are insufficient.
+
+\fig{weight-tying}{Untied tables have independent parameters. Tying makes one
+parameter receive the sum of its input-lookup and output-readout gradients.}
+
+For an untied lookup, a row unused as input has no gradient through that
+lookup. With tying, it may receive a gradient through output normalization
+even if its token never appeared in the input batch. In a finite-logit
+softmax, every output class generally contributes. Do not count the same
+shared parameter twice when reporting model size.
+
+\fig{memory-ledger}{Payload for one $32{,}000\times512$ table. Each fp32 tensor
+of this shape uses 62.5 MiB; two Adam moment tensors account for 125 MiB.
+Activations and temporary allocations require additional memory.}
+
+The table has $P=32{,}000\cdot512=16{,}384{,}000$ parameters.
+At two bytes per parameter its bf16 payload is 31.25 MiB. If parameters,
+gradients, and two Adam moment tensors all use fp32, their combined payload is
+$4P+4P+8P=16P$ bytes, or 250 MiB. This is an explicit storage model;
+mixed-precision implementations can store different copies and dtypes.
+
+Output logits add a different cost. Materializing a $(B,T,K)$ tensor needs
+$BTK$ elements. A dense output projection from width $d$ costs approximately
+$2BTdK$ forward FLOPs when one multiply-add counts as two. In the L03 toy,
+$B=2,T=4,d=4,K=10$ gives 80 logits and about 640 projection FLOPs.
+This excludes softmax, backward computation, and the optimizer update.
+
+Allocated embedding rows, tokenizer entry counts, and maximum token ID are
+not always identical. Use the actual matrix shape for storage, and check
+that every emitted ID falls within its valid row range.
+
+\takeaway{Separate unique parameters, tensor payload, intermediate tensors,
+and peak device memory. A parameter count alone does not specify a training budget.}
+\selfcheck{If weights are tied, do output logits disappear? No. Sharing removes
+one parameter table, while the per-position prediction computation remains.}

@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+\node[box,text width=23mm] (a) at (0,0) {input IDs\\$(2,4)$};
+\node[box,text width=26mm] (b) at (3.5,0) {lookup $E$\\$(2,4,4)$};
+\node[box,text width=28mm] (c) at (7.2,0) {readout logits\\$(2,4,10)$};
+\node[tbox,text width=23mm] (d) at (11,0) {mean loss\\scalar};
+\draw[arr] (a)--(b);\draw[arr] (b)--(c);\draw[arr] (c)--(d);
+\node[box,text width=36mm] (y) at (7.2,-1.5) {shifted targets\\$(2,4)$};
+\draw[arr] (y)--(d);
+\node[lab,anchor=west] at (-1.2,-1.5) {row 1: $1,2,3,4\ \to\ 2,3,4,5$};
+\end{tikzpicture}

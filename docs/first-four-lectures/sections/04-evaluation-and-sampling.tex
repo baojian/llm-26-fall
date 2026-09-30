@@ -1,0 +1,86 @@
+\clearpage
+\section{Evaluating and sampling language models}\label{sec:evaluation}
+\subsection*{One total loss, several units}
+Let $S=-\sum\log p_\theta(x_t\mid x_{<t})$ be total negative log likelihood
+in nats, $N$ the number of scored predictions, and $B_{\mathrm{utf8}}$ the
+number of evaluated text bytes. The same score can be reported as
+\[
+ \ell=\frac SN,\quad \mathrm{BPT}=\frac{S}{N\log2},\quad
+ \mathrm{PPL}=e^{S/N},\quad\mathrm{BPB}=\frac{S}{B_{\mathrm{utf8}}\log2}.
+\]
+Perplexity is the inverse geometric mean of the probabilities assigned to
+observed targets. For a uniform distribution on ten digits, every target
+has probability $1/10$, so every nonempty sequence has perplexity ten.
+For a general model it is an effective branching factor, not an actual
+count of equally likely options at every position.
+
+\fig{metric-units}{Start from a common numerator. The denominator determines
+whether a quantity is per token or per byte; exponentiation produces perplexity.}
+
+\fig{tokenizer-metrics}{A constructed comparison with four total bits of loss
+on the same four-byte text. Fewer scored tokens increase per-token perplexity
+here; bits per byte stays one.}
+
+The figure holds total loss fixed to isolate units. Real tokenizers also
+change the model's events and fitted probabilities, so BPB can change too.
+Cross-tokenizer BPB comparisons require identical evaluated text,
+normalization, document boundaries, and special-token scoring conventions.
+
+\textbf{End tokens affect the numerator and token count.} If a one-byte
+document \texttt{a} has probability $1/2$ for its character and $1/2$ for
+\EOS{}, then $N=2$, $S=2\log2$, and $B_{\mathrm{utf8}}=1$. Perplexity
+is two and BPB is two. The boundary token contributes loss without adding
+a literal byte to the evaluated text.
+
+Use training loss to diagnose fitting, development loss to make choices,
+and a fixed test set for final comparisons. Task-based evaluation asks a
+different question: a model can improve average token loss while becoming
+worse on a particular task or subgroup.
+
+\selfcheck{Why does averaging the perplexities of two batches generally differ
+from exponentiating their combined mean loss? Accumulate total loss and
+prediction counts first, especially when batches have different sizes.}
+
+\nextpage{Sampling, data filters, and experimental conclusions}
+To sample a categorical distribution, draw $u$ uniformly from $[0,1)$ and
+find the interval containing it in the cumulative probabilities. For a
+language model, sample a token, append it to the context, recompute the
+distribution, and repeat until \EOS{} or a stated length cap.
+
+\fig{sampling}{A categorical draw for $(1/2,1/3,1/6)$. A draw at $u=0.7$
+selects the second interval; generation repeats the same operation with updated context.}
+
+For an interpolated model, either sample from the combined distribution or
+first draw a component according to its mixture weight and then sample
+from that component. Both implement the same probability law. Sampling
+from raw counts while reporting the likelihood of a smoothed mixture
+would describe two different models. Temperature and top-$k$ truncation
+also change the generation distribution and should be labeled.
+
+\fig{pipeline-experiments}{Two model-based data workflows in L02. A filter makes
+a selection from scored documents; a sample/retrain loop changes the data
+used by the next model. Neither diagram establishes a benefit on its own.}
+
+\textbf{A filter score is a signal.} A reference LM may give lower loss to
+text resembling its own training distribution. Selecting low-loss documents
+can therefore change topic, language, and style. The course's reference
+trigram is a teaching analogue of perplexity-based filtering; a threshold
+does not certify truth, usefulness, or broad data quality.
+
+\textbf{Read the budget with the curve.} In the saved L02 sample/retrain
+demonstration, held-out BPB rises from 1.299 to 1.940 over five rounds.
+The original training corpus has 6,076,505 tokens; the final synthetic
+round has 100,681. Each round samples 2,000 documents capped at 128 tokens,
+so length caps and changing token budgets are confounded with replacing
+real data by samples. The observation is deterioration in this run, not
+an isolated causal estimate of one mechanism.
+
+An informative follow-up would hold total training tokens, vocabulary,
+evaluation text, and training procedure fixed, then compare real-only,
+synthetic-only, and mixed data across several seeds. This is an experiment
+design, not a result reported by the notes.
+
+\takeaway{Scoring, sampling, and selecting training data are distinct
+operations. State the distribution and the comparison each one uses.}
+\selfcheck{If a sampler stops at a length cap without \EOS{}, should the
+result be recorded as naturally terminated? Keep the two stopping reasons distinct.}

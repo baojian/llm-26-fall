@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+\node[box,text width=35mm,minimum height=20mm] (a) at (0,0)
+ {\texttt{I $\to$ am}\\\texttt{I $\to$ am}\\\texttt{I $\to$ do}};
+\node[box,text width=30mm,minimum height=20mm] (b) at (4.9,0)
+ {$C(\texttt{I},\texttt{am})=2$\\$C(\texttt{I},\texttt{do})=1$};
+\node[tbox,text width=40mm,minimum height=20mm] (c) at (10,0)
+ {$p(\texttt{am}\mid\texttt{I})=2/3$\\$p(\texttt{do}\mid\texttt{I})=1/3$};
+\draw[arr] (a)--node[above,font=\small]{count}(b);
+\draw[arr] (b)--node[above,font=\small]{$\div3$}(c);
+\end{tikzpicture}

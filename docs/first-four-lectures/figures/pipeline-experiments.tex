@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+\node[box,text width=28mm] (a) at (0,0) {documents};
+\node[box,text width=30mm] (b) at (4,0) {reference LM\\scores};
+\node[tbox,text width=30mm] (c) at (8,0) {selection rule\\retained subset};
+\draw[arr] (a)--(b);\draw[arr] (b)--(c);
+\node[box,text width=25mm] (d) at (0,-1.65) {real corpus};
+\node[box,text width=25mm] (e) at (3.6,-1.65) {fit model};
+\node[box,text width=29mm] (f) at (7.3,-1.65) {capped samples};
+\node[tbox,text width=25mm] (g) at (11,-1.65) {fit next model};
+\draw[arr] (d)--(e);\draw[arr] (e)--(f);\draw[arr] (f)--(g);
+\node[lab] at (0,-2.55) {6,076,505 tokens};
+\node[lab] at (8.7,-2.55) {synthetic budget changes by round};
+\end{tikzpicture}

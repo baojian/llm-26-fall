@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+\foreach \i in {1,2,3,4} {
+ \node[box,minimum width=16mm] (h\i) at (3*\i-3,0) {$h_\i$};
+ \node[tbox] (l\i) at (3*\i-3,1.45) {$\ell_\i$};
+ \draw[arr] (h\i)--(l\i);}
+\foreach \i/\j in {1/2,2/3,3/4} {
+ \draw[arr] (h\i)--(h\j);
+ \draw[courseorange,-{Latex},thick] (h\j.south) to[bend left=35] (h\i.south);}
+\draw[gray,dashed,thick] (4.5,-1.3)--(4.5,2.1);
+\node[lab,anchor=south] at (4.5,2.1) {possible truncation boundary};
+\draw[courseorange,very thick] (4.3,-.65)--(4.7,-1.05);
+\draw[courseorange,very thick] (4.3,-1.05)--(4.7,-.65);
+\node[lab] at (4.5,-1.9) {carry the forward state; cut this backward connection when truncating};
+\end{tikzpicture}

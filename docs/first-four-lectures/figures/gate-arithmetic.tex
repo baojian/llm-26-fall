@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+\node[box,text width=37mm,minimum height=22mm] at (0,0)
+ {retain\\$f=1,\ i=0$\\$c_t=c_{t-1}$};
+\node[box,text width=37mm,minimum height=22mm] at (5,0)
+ {overwrite\\$f=0,\ i=1$\\$c_t=g_t$};
+\node[tbox,text width=37mm,minimum height=22mm] at (10,0)
+ {hide\\$f=1,\ i=0,\ o=0$\\$c_t=c_{t-1},\ h_t=0$};
+\node[lab] at (5,-1.9) {worked update: $0.72+0.10=0.82\quad\longrightarrow\quad0.75\tanh(0.82)=0.5063$};
+\end{tikzpicture}
