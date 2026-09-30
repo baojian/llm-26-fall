@@ -16,7 +16,7 @@
 \definecolor{muted}{HTML}{586575}
 \definecolor{softblue}{HTML}{EDF3FA}
 \definecolor{softteal}{HTML}{EAF5F1}
-\hypersetup{pdftitle={From Text to Attention: Structure and Figure Plan},
+\hypersetup{pdftitle={From Text to Recurrent Models: Structure and Figure Plan},
   pdfauthor={CS40008.01, Fudan University}}
 \pagestyle{fancy}
 \fancyhf{}
@@ -46,20 +46,20 @@
 {\small\color{courseblue}\bfseries COURSE NOTES \quad / \quad STRUCTURE AND FIGURE PLAN}
 
 \vspace{8pt}
-{\fontsize{29}{33}\selectfont\bfseries From Text to Attention\par}
+{\fontsize{26}{31}\selectfont\bfseries From Text to Recurrent Models\par}
 \vspace{5pt}
-{\large Foundations for reading \emph{Attention Is All You Need}\par}
+{\large Tokenization, language modeling, and recurrent memory\par}
 {\color{muted}Lectures 01--04 \quad $\cdot$ \quad September 30, 2026\par}
 
-\textbf{Purpose.} Build a compact, illustrated reference around the computations
-students have already encountered. The proposed finished notes have about
+\textbf{Purpose.} Build a compact, illustrated reference for the first four
+lectures. The proposed finished notes have about
 \textbf{20--25 core pages}, with short supporting appendices. This document is
-the structure and figure plan; it contains two vector figure prototypes.
+the structure and figure plan; it contains three vector figure prototypes.
 
-\textbf{Scope.} Include single-head scaled dot-product attention, causal masking,
-and component verification from Lecture 04. End before the full Transformer
-architecture. This is a boundary in the course sequence, not a restriction to
-methods published before 2017.
+\textbf{Scope.} End with RNNs, LSTMs, and the limitations of recurrent memory.
+The instructor's revised sequence starts attention ideas in Lecture 05.
+The closing discussion motivates that next step; attention mechanisms and
+the Transformer architecture belong to the following notes.
 
 \begin{center}
 \input{figures/course-map.tex}
@@ -80,8 +80,8 @@ next-token objective and explicit checks.}
 4 & Evaluating and sampling language models & L02 & 2--3\\
 5 & Learning token representations & L03 & 3\\
 6 & From token IDs to a trainable neural LM & L02--L04 & 4\\
-7 & Representing longer context & L04 & 1--2\\
-8 & Attention, causality, and verification & L04 & 4--5\\
+7 & Recurrent language models & L04 & 2--3\\
+8 & LSTMs and the limits of recurrent memory & L04 & 3--4\\
 \bottomrule
 \end{tabularx}
 
@@ -90,7 +90,7 @@ one equation or algorithm, a small worked example, and a check that can fail.
 Group related panels to keep the finished notes near the page target.
 
 \textbf{Figure budget.} Specify 32 figures or panels: conceptual diagrams in
-TikZ and numerical plots exported as vector PDF. F01 and F29 are prototyped
+TikZ and numerical plots exported as vector PDF. F01, F28, and F29 are prototyped
 here; the remaining entries are authoring plans.
 
 \clearpage
@@ -271,58 +271,69 @@ the last token. An fp32 Adam parameter/gradient/two-moment subtotal uses
 weight tying, and resource ledger.}
 
 \clearpage
-\sectionplan{7}{Representing longer context}{L04's short recurrence and attention-motivation bridge \quad / \quad 1--2 pages}
-\tagline{Question: Which information can reach a prediction?}
+\sectionplan{7}{Recurrent language models}{Revised L04 sequence; existing recurrence material \quad / \quad 2--3 pages}
+\tagline{Question: How can a model use information beyond a fixed window?}
 \begin{enumerate}
-  \item Compare an explicit fixed window with a recurrent state updated
-  through the prefix. Use one unrolled diagram with shared weights:
-  $h_t=\tanh(W_xe_t+W_hh_{t-1}+b)$.
-  \item Explain products of local Jacobians. Label $0.9^{50}$ and
-  $1.1^{50}$ as scalar illustrations, not measured recurrent gradients.
-  \item Give the purpose of LSTM gates using
-  $c_t=f_t\odot c_{t-1}+i_t\odot\widetilde c_t$.
-  Keep the full gate and BPTT derivations in supporting reading.
-  \item Explain the fixed-vector bottleneck of early encoder--decoder
-  translation models and the idea of consulting stored source states.
-\end{enumerate}
-\textbf{Historical distinction.} Bahdanau et al.'s additive attention
-motivates query-dependent context selection. It is not the scaled dot-product
-self-attention mechanism implemented next.
-
-\figids{F26--F27: alternative context paths and query-dependent selection.}
-
-\sectionplan{8}{Attention, causality, and verification}{L04 single-head computation and tests \quad / \quad 4--5 pages}
-\tagline{Question: Can a query select context without reading the future?}
-\begin{enumerate}
-  \item Start from a weighted sum of values, then introduce learned
-  queries, keys, and values with explicit dimensions.
+  \item \textbf{From a window to a state.} Carry information through a
+  shared transition. Contrast theoretical access to the prefix with the
+  information actually retained in a finite-width state.
   \[
-  Q=XW_Q,\quad K_{\!a}=XW_K,\quad V_{\!a}=XW_V,\qquad
-  A=\softmax_{\rm row}\!\left(\frac{QK_{\!a}^{\top}}{\sqrt{d_k}}+M\right),
-  \quad Y=AV_{\!a}.
+  e_t=E[x_t],\qquad h_t=\tanh(W_xe_t+W_hh_{t-1}+b),\qquad
+  p(\cdot\mid x_{\leq t})=\softmax(W_oh_t+b_o).
   \]
-  \item Compute the three-position example from L04: scores, stable
-  row-wise softmax, and value contributions. Explain the scaling rationale
-  and avoid treating weights as a complete causal explanation.
-  \item Align position $t$ with target $x_{t+1}$; permit keys $j\leq t$.
-  Set disallowed scores to $-\infty$ before normalization.
-  \item Compare a vectorized head with a transparent reference:
-  outputs, parameter/input gradients, finite differences, normalized rows,
-  and future-input perturbation tests.
-  \item Account for one materialized score tensor:
-  $b_{\rm elem}BT^2$ bytes per head. For $B=1$ and fp32, lengths
-  $512,1024,2048$ require $1,4,16$ MiB for that tensor.
-  \item End with order information and the familiar
-  embedding--context--readout--loss path. A paired key/value permutation
-  leaves a fixed query's sum unchanged when the allowed set is unchanged;
-  this does not make an entire causal network permutation invariant.
+  \item \textbf{Unroll the computation.} Use a short next-token example
+  with the same parameters at every step. Keep inputs, hidden states,
+  logits, and shifted targets aligned.
+  \item \textbf{Train through time.} Trace backpropagation through time
+  (BPTT), contributions from several losses to shared parameters, and
+  products of local Jacobians:
+  $\partial h_t/\partial h_{t-k}=J_tJ_{t-1}\cdots J_{t-k+1}$.
+  Use $0.9^k$ and $1.1^k$ as scalar illustrations.
+  \item \textbf{Why long dependencies are hard.} Explain vanishing and
+  exploding gradients. Gradient clipping caps the gradient norm; it does
+  not restore a vanished learning signal. Truncated BPTT limits the
+  backward horizon even when the forward state is carried between chunks.
 \end{enumerate}
-\textbf{Stopping point.} Students can explain and verify one causal head.
-The next reading introduces multi-head composition, positional representations,
-residual paths, normalization, feedforward sublayers, and the full 2017
-encoder--decoder architecture.
+\textbf{Checks.} State how document boundaries reset hidden state. A
+unidirectional next-token model uses only the available prefix. Distinguish
+carrying a state from retaining its complete gradient history.
 
-\figids{F28--F32: Q/K/V, numerical attention, mask, verification, and cost.}
+\figids{F26--F28: recurrent state, BPTT paths, and repeated multipliers.}
+
+\sectionplan{8}{LSTMs and the limits of recurrent memory}{Revised L04 sequence; gates and remaining bottlenecks \quad / \quad 3--4 pages}
+\tagline{Question: What do gates improve, and what difficulties remain?}
+\begin{enumerate}
+  \item \textbf{Separate storage from exposure.} Introduce the cell state
+  $c_t$, hidden state $h_t$, forget/input/output gates, and candidate $g_t$.
+  Each gate uses a learned affine map of $[e_t;h_{t-1}]$ followed by sigmoid;
+  the candidate uses $\tanh$.
+  \[
+  c_t=f_t\odot c_{t-1}+i_t\odot g_t,\qquad
+  h_t=o_t\odot\tanh(c_t).
+  \]
+  \item \textbf{Work through retain, write, and read.} Compute one scalar
+  update, then vary each gate. Trace the direct cell-state path with gates
+  held fixed; a product of forget gates is only this path's contribution.
+  Gates near one can help preserve a signal, without guaranteeing
+  successful long-range learning.
+  \item \textbf{What remains.} Standard RNN/LSTM state updates depend on
+  the previous step, limiting parallelism across sequence positions even
+  with known training inputs. Batches and matrix operations still
+  parallelize. Remote information must survive repeated updates in a
+  fixed-width, finite-precision state.
+  \item \textbf{End with a concrete bottleneck.} In a classic
+  encoder--decoder that passes only the encoder's final state, an entire
+  source sentence must be summarized for the decoder. Keep this
+  architecture-specific limitation distinct from recurrence itself.
+\end{enumerate}
+\textbf{Stopping point.} Students can explain an RNN, an LSTM cell, and
+three remaining difficulties: sequential computation, difficult long-range
+credit assignment, and compressing useful history into a state. Close with:
+\emph{How could a prediction access earlier information more directly?}
+Lecture 05 begins the attention story.
+
+\figids{F29--F32: LSTM cell, gate arithmetic, sequence dependence,
+and the encoder bottleneck.}
 
 \clearpage
 \section{Figure inventory: text, counts, and representations}
@@ -365,7 +376,7 @@ L03's count/PPMI fixture is \path{counts-ppmi.json}.
 These files live in the corresponding lecture's assets directory.
 
 \clearpage
-\section{Figure inventory: training, context, and attention}
+\section{Figure inventory: training and recurrent memory}
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.23}
@@ -382,13 +393,13 @@ F22 & Neural bigram versus a two-token NPLM on prefixes sharing the last token. 
 F23 & Tiny-batch training curves beside a separate coverage probe. What has the fit established? & PDF plot / L03 E04, L04 E02\\
 F24 & Untied and tied tables with both gradient paths. Why do shared rows receive multiple contributions? & TikZ / L03 E05\\
 F25 & Parameter, gradient, Adam-moment, and logit-storage ledger; a projection-work panel. What does each subtotal omit? & PDF plot / L03 E06\\
-F26 & Fixed window, unrolled recurrence, and a gated memory path. How does earlier information reach the output? & TikZ / L04 recurrence\\
-F27 & Fixed encoder vector versus query-weighted stored source states. Which bottleneck does attention address? & TikZ / L04 historical bridge\\
-F28 & Q/K/V projections, score matrix, row normalization, value aggregation, and shapes. Which axis indexes keys? & TikZ / L04 Q/K/V\\
-F29 & Scores $(1,0,1)$, masked/unmasked weights, and resulting vectors. What does removing future access change? & TikZ/PGFPlots / L04 E03--E04\\
-F30 & Lower-triangular allowed cells aligned with shifted targets; contrast masking before and after softmax. Which rows are normalized? & TikZ / L04 E04\\
-F31 & Forward comparison, gradient comparison, finite differences, and future-input perturbation. Which bug can each catch? & TikZ / L04 E05\\
-F32 & Linear token-state storage versus quadratic materialized score storage, with the $1,4,16$ MiB examples. Which tensor is counted? & PDF plot / L04 P01\\
+F26 & Fixed-window context beside an unrolled RNN with shared weights and shifted targets. How can earlier tokens affect a prediction? & TikZ / L04 recurrence\\
+F27 & Losses flowing back through shared recurrent steps; mark a truncated-BPTT boundary. Which parameters receive each contribution? & TikZ / recurrence reading\\
+F28 & Scalar powers $0.9^k$, $1$, and $1.1^k$ on a log scale. How can repeated multiplications shrink or amplify a signal? & PGFPlots / exact toy values\\
+F29 & Cell-state path, candidate, and forget/input/output gates. What gets retained, written, and exposed? & TikZ / modern LSTM equations\\
+F30 & A scalar gate update followed by retain/overwrite examples. Why do $c_t$ and $h_t$ serve different roles? & TikZ / worked gate arithmetic\\
+F31 & A timeline of dependent state updates, alongside parallel batches. Which work can proceed before the previous state is available? & TikZ / RNN dependency graph\\
+F32 & Source tokens compressed into the final encoder state, then passed to a decoder. What must this particular interface preserve? & TikZ / L04 encoder bottleneck\\
 \bottomrule
 \end{tabularx}
 \endgroup
@@ -396,56 +407,42 @@ F32 & Linear token-state storage versus quadratic materialized score storage, wi
 \textbf{Numerical provenance.} Use the two distinct
 \texttt{tiny-lm-loss.json} files for the L03 and L04 experiments; label
 their different models, vocabulary sizes, and training batches.
-F29--F31 use L04's \texttt{attention-values.json} and verified notebook cells.
-Use consistent source data rather than tracing plotted pixels.
+F28 uses exact scalar powers; F29--F30 use explicitly chosen gate values.
+These illustrations are not training measurements. Attention examples are
+reserved for the notes beginning with Lecture 05.
 
 \clearpage
-\section{Prototype F29: one query, with and without a causal mask}
-The query is $q_2=(\sqrt2,0)$ with $d_k=2$. The hand-chosen vectors in the
-Lecture 04 fixture are:
-\[
-K_{\!a}=\begin{bmatrix}1&0\\0&1\\1&1\end{bmatrix},
-\qquad
-V_{\!a}=\begin{bmatrix}1&0\\0&2\\3&1\end{bmatrix}.
-\]
-Hence $q_2K_{\!a}^{\top}/\sqrt{d_k}=(1,0,1)$.
-Position 2 may access positions 1 and 2 in causal next-token prediction.
+\section{Prototype F28: repeated multiplication along a path}
+At 50 steps, $0.9^{50}\approx0.00515$ and $1.1^{50}\approx117.39$.
+These exact scalar powers illustrate sensitivity to repeated multiplication.
+Actual recurrent gradients involve products of Jacobians and sums over paths.
 
 \begin{center}
-\input{figures/attention-example.tex}
+\input{figures/recurrent-gradients.tex}
 \end{center}
 
-\begin{align*}
-a_2^{\rm full}&\approx(0.422319,\;0.155362,\;0.422319),&
-y_2^{\rm full}&\approx(1.689275,\;0.733044),\\
-a_2^{\rm causal}&\approx(0.731059,\;0.268941,\;0),&
-y_2^{\rm causal}&\approx(0.731059,\;0.537883).
-\end{align*}
-\textbf{A falsifiable check.} Changing $v_3$ by $(10,10)$ changes the
-unmasked output by approximately $(4.223188,4.223188)$ and leaves the
-causal output unchanged. This example changes a value vector while holding
-the query and keys fixed. The full implementation also tests future
-\emph{input} perturbations and gradients.
+{\small\color{muted}\textbf{Reading.}
+\href{https://proceedings.mlr.press/v28/pascanu13.html}{Pascanu, Mikolov, and Bengio (2013)}
+analyze recurrent gradient difficulties. The plot is an original scalar
+illustration, not a reproduced experimental result.}
 
-{\small\color{muted}\textbf{Source.}
-\source{slides/lecture-04/assets/attention-values.json}{Lecture 04's original toy fixture};
-the vectors are hand-chosen, not learned representations or a benchmark.
-The diagram is editable TikZ/PGFPlots and compiles to vector graphics.}
+\section{Prototype F29: retain, write, and read in an LSTM}
+\begin{center}
+\input{figures/lstm-cell.tex}
+\end{center}
+\textbf{Worked check.} For a scalar cell, choose $c_{t-1}=0.8$,
+$f_t=0.9$, $i_t=0.2$, $g_t=0.5$, and $o_t=0.75$. Then
+\[
+c_t=0.9(0.8)+0.2(0.5)=0.82,\qquad h_t=0.75\tanh(0.82)\approx0.5063.
+\]
+Holding the gates and candidate fixed, increasing $c_{t-1}$ by $0.1$
+increases $c_t$ by $0.09$. The full recurrent derivative also includes
+paths through hidden states and gates.
 
-\subsection{Figure production conventions}
-\begin{itemize}
-  \item Use TikZ for computation graphs, token strips, masks, and dependency
-  diagrams. Use generated vector PDFs for numerical curves and heatmaps.
-  \item Give each figure one explanatory question and a caption stating its
-  assumptions, dimensions or units, source, and the conclusion it supports.
-  \item Keep blue for representations/probabilities, teal for permitted
-  context or verified paths, and gray for masked or inactive elements.
-  Include labels or line styles so color is not the only cue.
-  \item Set final-size labels at 9--11 points. Keep notation identical to
-  the text. Label counts, probabilities, nats, bits, bytes, and MiB explicitly.
-  \item Record seeds, step indexing, split, and model size for empirical
-  curves. Keep toy examples and measured experiments visibly identified.
-\end{itemize}
+{\small\color{muted}\textbf{Convention.} This is the common formulation
+with a forget gate and no peephole connections. The forget-gate extension
+followed the original 1997 LSTM; see the reading anchors. Gate values here
+are hand-chosen, not learned measurements.}
 
 \clearpage
 \section{Notation and reusable source structure}
@@ -458,8 +455,9 @@ $K_{\rm in},K$ & Input-table rows and possible output symbols; declare special-t
 $B,T$ & Batch size and sequence length; $B_{\rm utf8}$ counts evaluated bytes\\
 $d,m,H$ & Embedding width, fixed context length, and hidden width\\
 $E,W_o$ & Input table and vocabulary readout; state orientations beside shapes\\
-$Q,K_{\!a},V_{\!a}$ & Attention queries, keys, and values; subscripts avoid confusing keys with vocabulary size\\
-$d_k,d_v,A,M$ & Key/value widths, attention weights, and additive score mask\\
+$h_t,c_t$ & Recurrent hidden state and LSTM cell state; both have width $H$ in the example\\
+$f_t,i_t,o_t,g_t$ & Forget, input, and output gates; candidate cell content\\
+$J_t$ & Local recurrent Jacobian $\partial h_t/\partial h_{t-1}$\\
 \bottomrule
 \end{tabularx}
 
@@ -474,15 +472,15 @@ docs/first-four-lectures/
     04-evaluation-and-sampling.tex
     05-representation-learning.tex
     06-neural-language-models.tex
-    07-longer-context.tex
-    08-attention-and-causality.tex
+    07-recurrent-language-models.tex
+    08-lstm-and-recurrent-limits.tex
   figures/                 # editable TikZ sources
   plots/                   # deterministic vector-PDF generators
   references.bib
   outline.tex              # this reviewable plan
 \end{verbatim}
 Build products belong under the repository's ignored \texttt{output/pdf/}
-directory. The present draft includes \texttt{outline.tex}, two figure sources,
+directory. The present draft includes \texttt{outline.tex}, three figure sources,
 a Makefile, and a README; the remaining files above are the proposed layout.
 
 \subsection{Writing order and supporting appendices}
@@ -491,8 +489,8 @@ a Makefile, and a README; the remaining files above are the proposed layout.
   Draft Sections 1--4 and their representation/counting diagrams.
   \item Draft Sections 5--6 around the checked token-to-loss computation,
   keeping the classical bridge short.
-  \item Draft Sections 7--8, add component checks, and finish with the
-  explicit boundary before the Transformer paper.
+  \item Draft Sections 7--8 as the RNN-to-LSTM story. End with the
+  unresolved difficulties that motivate attention in Lecture 05.
 \end{enumerate}
 Supporting appendices can contain a regex/Unicode reference, extra
 count and smoothing arithmetic, longer classical-embedding and recurrent
@@ -501,9 +499,11 @@ expectations for all students.
 
 \clearpage
 \section{Coverage and source map}
-The source of coverage is the published Fall course at commit
-\texttt{1adbaa5}. The lecture decks and checked classroom notebooks take
-priority over broader Spring materials and optional readings.
+The source baseline is the Fall course at commit \texttt{1adbaa5}.
+The instructor's September 30 revision expands recurrent models and LSTMs
+at the end of this recap; attention begins in Lecture 05. The older L04
+deck includes attention material, so it is a source baseline rather than
+a record of the revised sequence.
 
 \begin{tabularx}{\textwidth}{@{}l Y@{}}
 \toprule
@@ -524,7 +524,8 @@ Sections 5--6; preserve the bounded classical bridge and neural-bigram limitatio
 L04 & \source{slides/lecture-04/teaching-plan.md}{Teaching plan},
 \source{slides/lecture-04/slides.md}{slides},
 \source{slides/lecture-04/lecture-04-exercise.ipynb}{notebook}.
-Sections 6--8; preserve fixed-window training, attention, and verification.\\
+Section 6 uses fixed-window training. Sections 7--8 expand the recurrence,
+gradient, LSTM, and encoder-bottleneck material under the revised plan.\\
 \bottomrule
 \end{tabularx}
 
@@ -537,7 +538,8 @@ Sections 6--8; preserve fixed-window training, attention, and verification.\\
   use the unit conversions and evaluation conventions.
   \item \source{slides/lecture-03/classical-reading.md}{Lecture 03 classical reading}
   and \source{slides/lecture-04/optional-reading.md}{Lecture 04 optional reading}:
-  sources for appendices, not evidence that all derivations were covered in class.
+  use the linked recurrence/BPTT/LSTM material to develop the revised ending;
+  longer derivations remain supporting reading.
 \end{itemize}
 
 \subsection{Primary reading anchors}
@@ -552,11 +554,18 @@ Sections 6--8; preserve fixed-window training, attention, and verification.\\
   \href{https://arxiv.org/abs/1301.3781}{Efficient Estimation of Word Representations in Vector Space};
   \href{https://papers.nips.cc/paper_files/paper/2013/file/9aa42b31882ec039965f3c4923ce901b-Paper.pdf}{Distributed Representations of Words and Phrases and their Compositionality}.
   Prediction directions and negative sampling.
-  \item Bahdanau, Cho, and Bengio (2015; preprint 2014).
-  \href{https://arxiv.org/abs/1409.0473}{Neural Machine Translation by Jointly Learning to Align and Translate}.
-  Motivation for consulting stored source states.
-  \item Vaswani et al.\ (2017).
-  \href{https://arxiv.org/abs/1706.03762}{Attention Is All You Need}.
-  The next paper; its single-head attention computation has already been introduced in L04.
+  \item Pascanu, Mikolov, and Bengio (2013).
+  \href{https://proceedings.mlr.press/v28/pascanu13.html}{On the difficulty of training recurrent neural networks}.
+  Gradient difficulties and clipping.
+  \item Hochreiter and Schmidhuber (1997).
+  \href{https://www.bioinf.jku.at/publications/older/2604.pdf}{Long Short-Term Memory}.
+  Memory cells and gated access.
+  \item Gers, Schmidhuber, and Cummins (2000).
+  \href{https://sferics.idsia.ch/pub/juergen/FgGates-NC.pdf}{Learning to Forget: Continual Prediction with LSTM}.
+  The forget-gate extension; the notes use a common modern cell.
 \end{itemize}
+\textbf{Next lecture.} Begin attention ideas in Lecture 05, with
+\href{https://arxiv.org/abs/1409.0473}{Bahdanau et al.} as a historical
+entry point and \href{https://arxiv.org/abs/1706.03762}{Vaswani et al.}
+for the subsequent Transformer architecture.
 \end{document}

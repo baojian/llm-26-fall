@@ -1,11 +1,11 @@
 # First four lectures: LaTeX notes plan
 
-This draft proposes the structure of a compact, illustrated review before the
-full Transformer paper. It includes the single-head attention, causal masking,
-and verification covered in Lecture 04.
+This draft proposes a compact, illustrated review ending with recurrent
+language models, LSTMs, and their limitations. Following the instructor's
+September 30 revision, attention ideas begin in Lecture 05.
 
 The planned finished notes have about 20–25 core pages plus short supporting
-appendices. This deliverable is an outline and figure plan, with two editable
+appendices. This deliverable is an outline and figure plan, with three editable
 vector figure prototypes.
 
 ## Proposed sections
@@ -16,15 +16,21 @@ vector figure prototypes.
 4. Evaluating and sampling language models.
 5. Learning token representations.
 6. From token IDs to a trainable neural LM.
-7. Representing longer context.
-8. Attention, causality, and verification.
+7. Recurrent language models.
+8. LSTMs and the limits of recurrent memory.
+
+The final two sections follow one story: fixed windows, recurrent state,
+training through time, difficult gradient paths, gated memory, and the
+limitations that remain. The closing question motivates Lecture 05:
+how can a prediction access earlier information more directly?
 
 The [LaTeX outline](outline.tex) gives the learning questions, topic order,
 equations, worked examples, scope boundaries, source map, and 32 figure or panel
 specifications. Related panels can share a figure in the finished notes.
-The [course map](figures/course-map.tex) and
-[attention example](figures/attention-example.tex) are implemented in
-TikZ/PGFPlots; the remaining figures are planned.
+The [course map](figures/course-map.tex),
+[gradient-path illustration](figures/recurrent-gradients.tex), and
+[LSTM cell](figures/lstm-cell.tex) are implemented in TikZ/PGFPlots;
+the remaining figures are planned.
 
 ## Build
 
@@ -41,15 +47,22 @@ directory. To inspect the layout with Poppler:
 
 ## Source and figure policy
 
-- Base coverage on the published Fall Lecture 01–04 slides and classroom
-  notebooks. The outline records source commit 1adbaa5.
-- Keep the classical-embedding and recurrent-model bridges proportional to
-  the material actually taught; use the longer reading for appendices.
+- Use the Fall Lecture 01–04 slides and classroom notebooks at commit
+  1adbaa5 as the source baseline. The revised outline expands the RNN/LSTM
+  discussion and reserves attention for Lecture 05. It does not claim that
+  the older Lecture 04 deck already follows this revised sequence.
+- Keep the classical-embedding bridge short. Use the existing recurrence
+  reading and primary papers to develop the final two sections, with longer
+  BPTT derivations in supporting appendices.
 - Use TikZ for conceptual diagrams and generated vector PDFs for numerical
   plots. Reuse the checked lecture fixtures and record source, units, split,
   seed, and experiment settings in captions or figure-generation metadata.
-- The prototype attention plot uses the hand-chosen values in
-  [Lecture 04's fixture](../../slides/lecture-04/assets/attention-values.json).
-- Stop before multi-head composition, positional-encoding formulas,
-  residual/normalization/feedforward blocks, and the complete Transformer
-  architecture. The notes serve the same course requirements for all students.
+- Use readable labels at final size, consistent notation, and captions that
+  state each figure's explanatory question and assumptions. Distinguish
+  curves and paths with labels or line styles as well as color.
+- The gradient plot shows scalar powers, not measured RNN gradients. The
+  LSTM prototype uses the common formulation with a forget gate and no
+  peephole connections; its numerical check uses hand-chosen gate values.
+- Stop before attention mechanisms, Q/K/V, attention masks, and the full
+  Transformer architecture. These belong to the sequence starting in
+  Lecture 05. The notes serve the same course requirements for all students.

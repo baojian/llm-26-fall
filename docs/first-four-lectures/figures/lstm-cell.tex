@@ -1,0 +1,43 @@
+% Common LSTM with a forget gate; no peepholes or output projection.
+% Each gate/candidate has its own learned affine map of [e_t; h_{t-1}].
+\begin{tikzpicture}[
+  x=10mm,y=10mm,font=\small,
+  flow/.style={-{Stealth[length=2mm]},draw=courseblue,line width=.8pt},
+  memory/.style={-{Stealth[length=2mm]},draw=courseteal,line width=1.2pt},
+  gate/.style={draw=courseblue!65,fill=softblue,rounded corners=2pt,
+    minimum width=20mm,minimum height=9mm,align=center},
+  op/.style={circle,draw=courseteal,fill=softteal,
+    minimum size=6mm,inner sep=1pt},
+  read/.style={draw=courseteal,fill=softteal,rounded corners=2pt,
+    minimum width=11mm,minimum height=7mm}
+]
+\node (cp) at (0,3.6) {$c_{t-1}$};
+\node[op] (retain) at (2,3.6) {$\odot$};
+\node[op] (add) at (7,3.6) {$+$};
+\node (ct) at (13,3.6) {$c_t$};
+\node[gate] (forget) at (2,.65) {$f_t=\sigma(\cdot)$};
+\node[gate] (input) at (4.5,.65) {$i_t=\sigma(\cdot)$};
+\node[gate] (candidate) at (7,.65) {$g_t=\tanh(\cdot)$};
+\node[gate] (output) at (10.5,.65) {$o_t=\sigma(\cdot)$};
+\node[op] (write) at (7,2.0) {$\odot$};
+\node[read] (squash) at (9,2.0) {$\tanh$};
+\node[op] (readout) at (10.5,2.0) {$\odot$};
+\node (ht) at (13,2.0) {$h_t$};
+\draw[memory] (cp)--(retain);
+\draw[memory] (retain)--node[above,font=\scriptsize]{retained memory}(add);
+\draw[memory] (add)--(ct);
+\draw[flow] (forget)--(retain);
+\draw[flow] (input)--(4.5,2.0)--(write);
+\draw[flow] (candidate)--(write);
+\draw[memory] (write)--node[right,font=\scriptsize]{write}(add);
+\draw[memory] (9,3.6)--(squash);
+\draw[memory] (squash)--(readout);
+\draw[flow] (output)--(readout);
+\draw[flow] (readout)--(ht);
+\draw[draw=courseblue,line width=.8pt] (2,-.3)--(10.5,-.3);
+\foreach \x/\name in {2/forget,4.5/input,7/candidate,10.5/output}
+  \draw[flow] (\x,-.3)--(\name);
+\node[align=center] (inputs) at (6.25,-1.0)
+  {$[e_t;h_{t-1}]$ through separate learned affine maps};
+\draw[flow] (inputs.north)--(6.25,-.3);
+\end{tikzpicture}
