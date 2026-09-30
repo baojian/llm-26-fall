@@ -1,0 +1,165 @@
+% Included by outline.tex; entries are formatted from references.bib.
+\clearpage
+\section{Reading guide: 15 papers before the Transformer}
+These readings follow the teaching sequence, rather than publication order.
+\textbf{Core} marks six recommended close readings: \readingref{R03},
+\readingref{R04}, \readingref{R06}, \readingref{R10}, \readingref{R13}, and
+\readingref{R14}. For the other papers, use the selected ideas below.
+The labels guide study depth; they do not add graded requirements.
+
+\textbf{Boundary.} \readingref{R01}--\readingref{R13} support the first-four
+recap. \readingref{R14}--\readingref{R15} prepare Lecture 05, where attention
+begins. The bibliography is supporting material outside the proposed
+20--25 core pages.
+
+\subsection{1. Statistical language modeling and tokenization}
+\paperentry{R01}{Shannon (1948)}{Selected passages}
+  {Sections 1, 3--4 \quad / \quad F08, F11--F12}
+  {shannon1948}
+  {Connect probabilistic descriptions of text, uncertainty, and compression.
+  This gives the later likelihood and perplexity discussion its information-theoretic setting.}
+  {The successive approximations to English and the entropy definition.
+  Recompute entropy for a tiny distribution; leave communication-channel
+  proofs outside this recap.}
+
+\paperentry{R02}{Kneser and Ney (1995)}{Selected idea}
+  {Section 3 \quad / \quad F09--F10}
+  {kneser1995}
+  {Sparse counts need a useful fallback distribution. A word's variety of
+  preceding contexts provides information that its raw frequency misses.}
+  {The motivation for continuation probabilities and the backoff construction.
+  Use one small count example; a full smoothing implementation can remain
+  supporting material.}
+
+\paperentry{R03}{Sennrich et al.\ (2016)}{Core}
+  {Section 2 \quad / \quad F05--F07}
+  {sennrich2016}
+  {Subword units reduce the rare-word problem while keeping a finite
+  vocabulary. BPE supplies a concrete learned segmentation algorithm.}
+  {Section 3.2 and the merge algorithm. Trace one merge, then distinguish
+  the paper's character-based, within-word BPE from the course's byte-level
+  tokenizer.}
+
+\clearpage
+\section{Reading guide: neural language models and embeddings}
+\textbf{Thread.} Learn reusable token representations through prediction,
+then compare local prediction objectives with a global co-occurrence objective.
+Keep normalized language-model likelihood separate from embedding objectives.
+
+\paperentry{R04}{Bengio et al.\ (2003)}{Core}
+  {Sections 5--6 \quad / \quad F18, F20, F22}
+  {bengio2003}
+  {Learn word vectors and a conditional language model together. Shared
+  features let the model generalize beyond individually observed word sequences.}
+  {Figure 1 and Section 2. Annotate the lookup, fixed context window,
+  hidden layer, and normalized output; connect their shapes to the course's
+  token-to-loss computation.}
+
+\paperentry{R05}{Mikolov et al.\ (2013a)}{Selected models}
+  {Section 5 \quad / \quad F16, F18}
+  {mikolov2013efficient}
+  {CBOW and skip-gram make the prediction direction explicit: use context
+  to predict a word, or use a word to predict surrounding words.}
+  {The two architectures and their computational motivation. Draw both
+  arrow patterns; use \readingref{R06} for the negative-sampling objective.}
+
+\paperentry{R06}{Mikolov et al.\ (2013b)}{Core}
+  {Section 5 \quad / \quad F16--F17}
+  {mikolov2013distributed}
+  {Negative sampling learns representations from observed and sampled
+  word--context pairs; subsampling and phrase construction extend the approach.}
+  {Section 2.2. Compute one positive and one negative term and identify
+  the two embedding tables. This objective is not a normalized next-token
+  log likelihood.}
+
+\paperentry{R07}{Pennington et al.\ (2014)}{Selected objective}
+  {Section 5 \quad / \quad F15--F18, conceptual comparison}
+  {pennington2014}
+  {GloVe learns vectors from weighted log co-occurrence counts, offering a
+  useful comparison with the predictive objectives of word2vec.}
+  {The co-occurrence-ratio motivation and weighted least-squares objective.
+  Identify counts, weights, vectors, and biases; distinguish this objective
+  from the PPMI/SVD example.}
+
+\clearpage
+\section{Reading guide: recurrence, gradients, and memory}
+\textbf{Thread.} A recurrent state carries history beyond a fixed input
+window. Training this state exposes long gradient paths, motivating
+controlled access to a memory cell.
+
+\paperentry{R08}{Elman (1990)}{Selected architecture}
+  {Section 7 \quad / \quad F26--F27}
+  {elman1990}
+  {A hidden state copied into the next step lets a simple recurrent network
+  represent temporal context using shared parameters.}
+  {The network diagram and selected sequence examples. Unroll three steps
+  and distinguish a changing hidden state from fixed, shared recurrent weights.}
+
+\paperentry{R09}{Bengio et al.\ (1994)}{Selected argument}
+  {Section 7 \quad / \quad F27--F28}
+  {bengio1994}
+  {Learning long dependencies with gradient descent can be difficult
+  because sensitivity changes across repeated recurrent transformations.}
+  {The long-dependency argument and its assumptions. Connect it to
+  products of Jacobians and the scalar-power illustration; avoid treating
+  that illustration as a measured RNN gradient.}
+
+\paperentry{R10}{Hochreiter and Schmidhuber (1997)}{Core}
+  {Section 8 \quad / \quad F29--F30}
+  {hochreiter1997}
+  {LSTM introduces a memory cell and gated access to help preserve useful
+  learning signals over long intervals.}
+  {The memory-cell mechanism and gradient motivation. The original cell
+  predates the forget gate; the notes use the later formulation identified
+  in the supporting references. Gates do not guarantee successful learning.}
+
+\paperentry{R11}{Mikolov et al.\ (2010)}{Selected model and results}
+  {Sections 6--7 \quad / \quad F20, F26}
+  {mikolov2010}
+  {Apply a recurrent hidden state to probabilistic language modeling,
+  connecting the sequence architecture directly to next-word prediction.}
+  {Figure 1, the model description, and a results table. Distinguish
+  static evaluation from the paper's dynamic test-time updates before
+  comparing perplexities.}
+
+\clearpage
+\section{Reading guide: encoder--decoder models and attention}
+\textbf{Boundary.} The first two entries close the RNN/LSTM story in
+Lecture 04. The last two begin Lecture 05. Their annotations motivate the
+next lecture without adding attention mechanisms to the first-four recap.
+
+\paperentry{R12}{Cho et al.\ (2014)}{Selected architecture}
+  {Section 8 \quad / \quad F29, F32, comparison only}
+  {cho2014}
+  {An RNN encoder--decoder learns phrase representations, with reset and
+  update gates providing another approach to controlling recurrent memory.}
+  {Section 2 and the gated hidden unit. Compare its gates with LSTM and
+  draw the encoder-to-decoder interface; keep a full GRU derivation as
+  supporting reading.}
+
+\paperentry{R13}{Sutskever et al.\ (2014)}{Core}
+  {Section 8; endpoint of Lecture 04 \quad / \quad F31--F32}
+  {sutskever2014}
+  {An LSTM encoder maps an input sequence to a fixed-dimensional vector
+  from which an LSTM decoder generates an output sequence.}
+  {The model diagram and reversed-input experiment. Ask what the final
+  encoder representation must preserve, and which computations still depend
+  on earlier sequence steps.}
+
+\paperentry{R14}{Bahdanau et al.\ (2015)}{Core: Lecture 05}
+  {Lecture 05 handoff \quad / \quad follow the F32 bottleneck discussion}
+  {bahdanau2015}
+  {Learn a soft alignment so the decoder can form a context from encoder
+  annotations at each output step, addressing the fixed-vector interface.}
+  {Sections 2--3 and the alignment illustration. Identify scores, normalized
+  weights, and the weighted context. Cite the 2015 conference paper and
+  acknowledge its 2014 preprint.}
+
+\paperentry{R15}{Luong et al.\ (2015)}{Selected methods: Lecture 05}
+  {Lecture 05 handoff \quad / \quad compare with \readingref{R14}}
+  {luong2015}
+  {Global and local attention offer distinct ways to select source
+  positions and compute the context used by a recurrent decoder.}
+  {Section 3: dot, general, and concat scores; global versus local context.
+  Distinguish these encoder--decoder attention mechanisms from the
+  Transformer self-attention architecture introduced later.}

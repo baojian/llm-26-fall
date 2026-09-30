@@ -6,7 +6,8 @@ September 30 revision, attention ideas begin in Lecture 05.
 
 The planned finished notes have about 20–25 core pages plus short supporting
 appendices. This deliverable is an outline and figure plan, with three editable
-vector figure prototypes.
+vector figure prototypes and an annotated guide to 15 papers published before
+the Transformer.
 
 ## Proposed sections
 
@@ -32,15 +33,41 @@ The [course map](figures/course-map.tex),
 [LSTM cell](figures/lstm-cell.tex) are implemented in TikZ/PGFPlots;
 the remaining figures are planned.
 
+## Reading guide
+
+The [annotated guide](reading-guide.tex), included in the compiled PDF,
+organizes the 15 papers into four groups:
+
+1. Statistical language modeling and tokenization (R01–R03).
+2. Neural language models and embeddings (R04–R07).
+3. Recurrence, gradients, and memory (R08–R11).
+4. Encoder–decoder models and the Lecture 05 attention handoff (R12–R15).
+
+Each entry gives the paper's role, a reading focus, and connections to the
+notes and planned figures. Six are recommended close readings: R03
+(subword BPE), R04 (neural probabilistic LM), R06 (negative sampling), R10
+(LSTM), R13 (sequence to sequence), and R14 (learned alignment). The reading
+priorities guide study depth and do not add graded requirements. R14 and R15
+belong to Lecture 05; the first-four recap ends with recurrent limitations.
+
+The [BibTeX bibliography](references.bib) contains exactly these 15 readings.
+The guide uses `bibentry` to render their metadata directly from that file.
+The gradient-clipping paper, forget-gate extension, and subsequent Transformer
+paper remain supporting links outside the selected 15. The guide preserves
+the difference between the original 1997 LSTM and the later cell used in
+the notes, and between the 2014 Bahdanau preprint and its 2015 conference paper.
+
 ## Build
 
-Install a TeX distribution with latexmk, TikZ/PGFPlots, and the standard
-LaTeX packages used in the preamble. From the repository root:
+Install a TeX distribution with latexmk, BibTeX, TikZ/PGFPlots, natbib,
+bibentry, and the standard LaTeX packages used in the preamble. From the
+repository root:
 
     make -C docs/first-four-lectures outline
 
-The PDF and intermediate TeX files are written to the ignored output/pdf
-directory. To inspect the layout with Poppler:
+Latexmk runs BibTeX and the required LaTeX passes automatically. The PDF and
+intermediate TeX files are written to the ignored output/pdf directory.
+To inspect the layout with Poppler:
 
     mkdir -p output/pdf/first-four-lectures-preview
     pdftoppm -r 120 -png output/pdf/outline.pdf output/pdf/first-four-lectures-preview/page

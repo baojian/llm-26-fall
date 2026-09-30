@@ -10,13 +10,14 @@
 \usetikzlibrary{arrows.meta,positioning,calc}
 \pgfplotsset{compat=1.18}
 \usepackage{fancyhdr}
+\usepackage{natbib,bibentry}
 \usepackage[colorlinks=true,linkcolor=courseblue,urlcolor=courseblue]{hyperref}
 \definecolor{courseblue}{HTML}{1F4E8C}
 \definecolor{courseteal}{HTML}{247C78}
 \definecolor{muted}{HTML}{586575}
 \definecolor{softblue}{HTML}{EDF3FA}
 \definecolor{softteal}{HTML}{EAF5F1}
-\hypersetup{pdftitle={From Text to Recurrent Models: Structure and Figure Plan},
+\hypersetup{pdftitle={From Text to Recurrent Models: Outline, Figures, and Reading Guide},
   pdfauthor={CS40008.01, Fudan University}}
 \pagestyle{fancy}
 \fancyhf{}
@@ -41,7 +42,20 @@
 \newcommand{\CE}{\operatorname{CE}}
 \newcommand{\BOS}{\textsc{bos}}
 \newcommand{\EOS}{\textsc{eos}}
+\newcommand{\doi}[1]{\href{https://doi.org/#1}{DOI}}
+\newcommand{\readingref}[1]{\hyperlink{reading:#1}{#1}}
+\newcommand{\paperentry}[7]{%
+  \par\addvspace{7pt}%
+  \hypertarget{reading:#1}{}%
+  {\color{courseblue}\bfseries #1\quad #2}\hfill
+  {\footnotesize\bfseries #3}\par
+  {\footnotesize\color{muted}#4\par}%
+  {\small\bibentry{#5}\par}%
+  \textbf{Why it matters.} #6\par
+  \textbf{Read for.} #7\par}
 \begin{document}
+\bibliographystyle{plainnat}
+\nobibliography{references}
 \thispagestyle{empty}
 {\small\color{courseblue}\bfseries COURSE NOTES \quad / \quad STRUCTURE AND FIGURE PLAN}
 
@@ -49,12 +63,13 @@
 {\fontsize{26}{31}\selectfont\bfseries From Text to Recurrent Models\par}
 \vspace{5pt}
 {\large Tokenization, language modeling, and recurrent memory\par}
-{\color{muted}Lectures 01--04 \quad $\cdot$ \quad September 30, 2026\par}
+{\color{muted}Lectures 01--04 \quad $\cdot$ \quad October 1, 2026\par}
 
 \textbf{Purpose.} Build a compact, illustrated reference for the first four
 lectures. The proposed finished notes have about
 \textbf{20--25 core pages}, with short supporting appendices. This document is
-the structure and figure plan; it contains three vector figure prototypes.
+the structure and figure plan, with three vector figure prototypes and an
+annotated guide to 15 papers published before the Transformer.
 
 \textbf{Scope.} End with RNNs, LSTMs, and the limitations of recurrent memory.
 The instructor's revised sequence starts attention ideas in Lecture 05.
@@ -441,7 +456,7 @@ paths through hidden states and gates.
 
 {\small\color{muted}\textbf{Convention.} This is the common formulation
 with a forget gate and no peephole connections. The forget-gate extension
-followed the original 1997 LSTM; see the reading anchors. Gate values here
+followed the original 1997 LSTM; see \readingref{R10} and supporting references. Gate values here
 are hand-chosen, not learned measurements.}
 
 \clearpage
@@ -476,12 +491,14 @@ docs/first-four-lectures/
     08-lstm-and-recurrent-limits.tex
   figures/                 # editable TikZ sources
   plots/                   # deterministic vector-PDF generators
-  references.bib
+  references.bib           # 15 selected papers
+  reading-guide.tex        # annotated reading route
   outline.tex              # this reviewable plan
 \end{verbatim}
 Build products belong under the repository's ignored \texttt{output/pdf/}
-directory. The present draft includes \texttt{outline.tex}, three figure sources,
-a Makefile, and a README; the remaining files above are the proposed layout.
+directory. The present draft includes \texttt{outline.tex}, the reading guide,
+the bibliography, three figure sources, a Makefile, and a README.
+The section files and plot generators above are the proposed layout.
 
 \subsection{Writing order and supporting appendices}
 \begin{enumerate}
@@ -542,30 +559,35 @@ gradient, LSTM, and encoder-bottleneck material under the revised plan.\\
   longer derivations remain supporting reading.
 \end{itemize}
 
-\subsection{Primary reading anchors}
-\begin{itemize}
-  \item Sennrich, Haddow, and Birch (2016).
-  \href{https://aclanthology.org/P16-1162/}{Neural Machine Translation of Rare Words with Subword Units}.
-  BPE as a subword method; distinguish the paper's setup from the course's byte-level example.
-  \item Bengio et al.\ (2003).
-  \href{https://www.jmlr.org/papers/v3/bengio03a.html}{A Neural Probabilistic Language Model}.
-  Jointly learned representations and a fixed-window conditional model.
-  \item Mikolov et al.\ (2013).
-  \href{https://arxiv.org/abs/1301.3781}{Efficient Estimation of Word Representations in Vector Space};
-  \href{https://papers.nips.cc/paper_files/paper/2013/file/9aa42b31882ec039965f3c4923ce901b-Paper.pdf}{Distributed Representations of Words and Phrases and their Compositionality}.
-  Prediction directions and negative sampling.
-  \item Pascanu, Mikolov, and Bengio (2013).
-  \href{https://proceedings.mlr.press/v28/pascanu13.html}{On the difficulty of training recurrent neural networks}.
-  Gradient difficulties and clipping.
-  \item Hochreiter and Schmidhuber (1997).
-  \href{https://www.bioinf.jku.at/publications/older/2604.pdf}{Long Short-Term Memory}.
-  Memory cells and gated access.
-  \item Gers, Schmidhuber, and Cummins (2000).
-  \href{https://sferics.idsia.ch/pub/juergen/FgGates-NC.pdf}{Learning to Forget: Continual Prediction with LSTM}.
-  The forget-gate extension; the notes use a common modern cell.
-\end{itemize}
-\textbf{Next lecture.} Begin attention ideas in Lecture 05, with
-\href{https://arxiv.org/abs/1409.0473}{Bahdanau et al.} as a historical
-entry point and \href{https://arxiv.org/abs/1706.03762}{Vaswani et al.}
-for the subsequent Transformer architecture.
+\subsection{Reading route}
+The following four pages annotate 15 selected papers. Click a reading ID
+to see its citation, role, recommended focus, and figure connections.
+
+\begin{tabularx}{\textwidth}{@{}l Y@{}}
+\toprule
+Notes section & Reading IDs\\
+\midrule
+1--4: text, counts, and evaluation & \readingref{R01} Shannon;
+\readingref{R02} Kneser--Ney; \readingref{R03} subword BPE\\
+5--6: representations and neural LMs & \readingref{R04} neural LM;
+\readingref{R05}--\readingref{R06} word2vec; \readingref{R07} GloVe\\
+7: recurrent language models & \readingref{R08} Elman;
+\readingref{R09} long dependencies; \readingref{R11} RNN LM\\
+8: gated memory and bottlenecks & \readingref{R10} LSTM;
+\readingref{R12} RNN encoder--decoder; \readingref{R13} sequence to sequence\\
+Lecture 05 handoff & \readingref{R14} soft alignment;
+\readingref{R15} global and local attention\\
+\bottomrule
+\end{tabularx}
+
+\subsection{Supporting references outside the selected 15}
+\href{https://proceedings.mlr.press/v28/pascanu13.html}{Pascanu, Mikolov,
+and Bengio (2013)} supports the gradient and clipping discussion.
+\href{https://sferics.idsia.ch/pub/juergen/FgGates-NC.pdf}{Gers, Schmidhuber,
+and Cummins (2000)} supplies the forget-gate extension used in the modern
+LSTM prototype. The later
+\href{https://arxiv.org/abs/1706.03762}{Vaswani et al.\ (2017)} paper
+introduces the Transformer architecture after the attention readings.
+
+\input{reading-guide.tex}
 \end{document}
