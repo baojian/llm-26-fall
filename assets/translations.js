@@ -110,7 +110,7 @@ window.courseTranslations = {
   "Weight tying (Press and Wolf, 2017)": "权重共享（Press 与 Wolf，2017）",
   "Quiz 1": "小测 1",
   "Sep 30": "9 月 30 日",
-  "Neural language models and attention": "神经语言模型与注意力",
+  "Neural LMs and Attention": "神经语言模型与注意力",
   "How can a model select useful context instead of compressing everything into one state?": "模型如何选择有用的上下文，而不必把所有信息压缩到一个状态？",
   "Feedforward LM training loop; a brief RNN/LSTM motivation; attention scores, softmax, weighted values, and masking.": "前馈语言模型的训练循环；简要介绍 RNN/LSTM 的动机；注意力分数、softmax、值向量加权与掩码。",
   "Overfit a tiny batch and verify an attention head's outputs and gradients against a reference.": "在微型批次上过拟合，并对照参考实现验证单个注意力头的输出与梯度。",

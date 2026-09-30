@@ -1,4 +1,4 @@
-# Lecture 04: Neural language models and attention
+# Lecture 04: Neural LMs and Attention
 
 **Date:** Wednesday, September 30, 2026
 
