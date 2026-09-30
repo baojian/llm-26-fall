@@ -58,6 +58,18 @@ to the printable initial example. Longer micrograd and LSTM work remains in
 [optional reading](lecture-04/optional-reading.md). See
 [asset provenance](lecture-04/assets/README.md).
 
+[Lecture 05](lecture-05/index.html) turns the checked attention head into a
+complete decoder language model in 51 slides. Its
+[teaching plan](lecture-05/teaching-plan.md) maps all 85 slides of the
+instructor's 2025 Transformer lecture and reserves the 15-minute Quiz 2 slot.
+The [notebook](lecture-05/lecture-05-exercise.ipynb) runs E01–E05 offline on CPU:
+multi-head shapes and references, positions, normalization, parameter counts,
+and full-model causality. Four editable diagrams, an interactive permutation
+example, and measured pre/post-LN loss curves support the explanations.
+Historical translation results, head pruning, and efficient-attention papers
+remain in [optional reading](lecture-05/optional-reading.md). See
+[asset provenance and reproduction](lecture-05/assets/README.md).
+
 ## Teaching from a classroom browser
 
 Once the slide files reach the branch published by GitHub Pages, open the deck
@@ -165,6 +177,7 @@ slides/
   lecture-02/             Lecture 02 deck and lecture-02-exercise.ipynb
   lecture-03/             Lecture 03 deck and lecture-03-exercise.ipynb
   lecture-04/             Lecture 04 deck and lecture-04-exercise.ipynb
+  lecture-05/             Lecture 05 deck and lecture-05-exercise.ipynb
   01-tokenization/        A lecture created when its content is ready
     index.html            Shared viewer shell
     lecture.json          Title, language, and optional demo module

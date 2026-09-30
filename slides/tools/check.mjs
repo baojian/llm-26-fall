@@ -203,6 +203,35 @@ try {
     assert.equal(await page.evaluate(() => Reveal.getCurrentSlide().id), 'exercise-01');
     assert.ok(await page.locator('.katex').count() > 0, 'Sample equations did not render.');
   }
+  if (folder === 'lecture-05') {
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('position-demo')).h));
+    const graph = page.locator('#position-visual');
+    const initialDescription = await graph.getAttribute('aria-label');
+    assert.equal(await graph.getAttribute('data-positions'), 'false');
+    assert.equal(await graph.getAttribute('data-swapped'), 'false');
+    assert.equal(Number(await graph.getAttribute('data-difference')), 0);
+    await page.locator('#position-swap').click();
+    await page.waitForFunction(() => document.getElementById('position-visual').dataset.swapped === 'true');
+    assert.equal(Number(await graph.getAttribute('data-difference')), 0);
+    assert.equal(await page.locator('#position-swap').getAttribute('aria-pressed'), 'true');
+    await page.locator('#position-toggle').focus();
+    await page.keyboard.press('Enter');
+    await page.waitForFunction(() => document.getElementById('position-visual').dataset.positions === 'true');
+    assert.ok(Math.abs(Number(await graph.getAttribute('data-difference')) - 1.3650501767846626) < 1e-12);
+    assert.equal(await page.locator('#position-toggle').getAttribute('aria-pressed'), 'true');
+    assert.match(await graph.getAttribute('aria-label'), /Positions on.*river, of, the, bank.*1\.3651/);
+    await page.locator('#position-swap').click();
+    await page.waitForFunction(() => document.getElementById('position-visual').dataset.swapped === 'false');
+    assert.equal(Number(await graph.getAttribute('data-difference')), 0);
+    await page.locator('#position-reset').click();
+    await page.waitForFunction(expected => document.getElementById('position-visual').getAttribute('aria-label') === expected, initialDescription);
+    assert.equal(await page.locator('#position-toggle').getAttribute('aria-pressed'), 'false');
+    assert.equal(await page.locator('#position-swap').getAttribute('aria-pressed'), 'false');
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('exercise-05')).h, 0, -1));
+    assert.equal(await page.locator('#exercise-05 .answer').evaluate(el => el.classList.contains('visible')), false);
+    await page.keyboard.press('Space');
+    assert.equal(await page.locator('#exercise-05 .answer').evaluate(el => el.classList.contains('visible')), true);
+  }
   if (folder === 'lecture-04') {
     assert.equal(await page.locator('#shape-ledger tbody tr:last-child td').count(), 2);
     assert.equal(await page.locator('#shape-ledger tbody tr:last-child .katex').count(), 1, 'Render vocabulary bars inside the table as math.');
