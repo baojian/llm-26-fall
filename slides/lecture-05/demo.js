@@ -26,8 +26,7 @@ export async function initialize() {
   function update(change) {
     state = { ...state, ...change };
     const snapshot = { ...state };
-    queue = queue.then(() => render(snapshot));
-    queue.catch(error => {
+    queue = queue.then(() => render(snapshot)).catch(error => {
       graph.setAttribute('aria-label', 'The position chart could not update: ' + error.message);
       console.error(error);
     });

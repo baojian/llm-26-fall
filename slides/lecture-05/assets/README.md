@@ -6,6 +6,7 @@ figure screenshots, datasets, model weights, or student submissions are copied.
 
 | Files | Content and provenance |
 | --- | --- |
+| `encoder-context.svg` and `.excalidraw` | Fixed context versus a context selected at each target step; follows Bahdanau et al. (2015), §§2–3 |
 | `multihead-path.svg` and `.excalidraw` | Q/K/V projections, head split, per-head attention, merge, and output projection; follows the mechanism in Vaswani et al., §3.2.2 |
 | `residual-block.svg` and `.excalidraw` | Two pre-LN residual sublayers; distinguishes normalization placement from the original post-LN model |
 | `decoder-model.svg` and `.excalidraw` | Token/position embeddings, two decoder blocks, final norm, and tied vocabulary readout used in the notebook |
@@ -19,6 +20,8 @@ The diagrams are editable Excalidraw scenes, exported with
 `@excalidraw/excalidraw` 0.18.1. They follow the previous lectures' canvas,
 font sizes, and palette. Edit the scene and export its SVG alongside it; the
 classroom browser loads only the SVG. Sources for the adapted concepts are
+[Bahdanau et al. (2015), §3](https://arxiv.org/abs/1409.0473),
+[Luong et al. (2015), §3](https://aclanthology.org/D15-1166/),
 [Vaswani et al. (2017), §§3.1–3.5](https://arxiv.org/abs/1706.03762),
 [Xiong et al. (2020)](https://proceedings.mlr.press/v119/xiong20b.html), and
 the instructor's 2025 Lecture 05. The [source map](../teaching-plan.md#map-from-all-85-source-slides)

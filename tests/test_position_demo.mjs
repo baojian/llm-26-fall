@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { initialState, computePositionExample, sinusoidalPositions, figureFor, describeState }
   from '../slides/lecture-05/position-demo.js';
+import { initialize } from '../slides/lecture-05/demo.js';
 
 const asset = name => new URL('../slides/lecture-05/assets/' + name, import.meta.url);
 const fixture = JSON.parse(await readFile(asset('position-values.json'), 'utf8'));
@@ -48,4 +49,43 @@ test('the PDF initial figure and accessible description match the computation', 
   assert.deepEqual(figure, figureFor(fixture, initialState));
   assert.match(describeState(fixture, initialState), /Positions off.*0\.0000/);
   assert.match(describeState(fixture, { positions: true, swapped: true }), /1\.3651/);
+});
+
+test('reset recovers after a failed chart update', async () => {
+  const controls = Object.fromEntries(['position-visual', 'position-toggle', 'position-swap', 'position-reset']
+    .map(id => [id, {
+      dataset: {}, attributes: {},
+      setAttribute(name, value) { this.attributes[name] = value; },
+      addEventListener(name, listener) { this[name] = listener; },
+    }]));
+  const saved = { fetch: globalThis.fetch, document: globalThis.document, Plotly: globalThis.Plotly };
+  const savedError = console.error;
+  const errors = [];
+  let failNext = false;
+  try {
+    globalThis.fetch = async () => ({ ok: true, json: async () => fixture });
+    globalThis.document = { getElementById: id => controls[id] };
+    globalThis.Plotly = { react: async () => {
+      if (failNext) { failNext = false; throw new Error('simulated chart failure'); }
+    } };
+    console.error = error => errors.push(error.message);
+    await initialize();
+    failNext = true;
+    controls['position-toggle'].click();
+    await new Promise(resolve => setImmediate(resolve));
+    assert.deepEqual(errors, ['simulated chart failure']);
+    assert.match(controls['position-visual'].attributes['aria-label'], /could not update/);
+    controls['position-reset'].click();
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal(controls['position-visual'].dataset.positions, 'false');
+    assert.equal(controls['position-toggle'].attributes['aria-pressed'], 'false');
+    assert.equal(controls['position-visual'].attributes['aria-label'], describeState(fixture, initialState));
+    assert.equal(errors.length, 1);
+  } finally {
+    for (const [name, value] of Object.entries(saved)) {
+      if (value === undefined) delete globalThis[name];
+      else globalThis[name] = value;
+    }
+    console.error = savedError;
+  }
 });

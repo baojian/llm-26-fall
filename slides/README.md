@@ -59,12 +59,13 @@ to the printable initial example. Longer micrograd and LSTM work remains in
 [asset provenance](lecture-04/assets/README.md).
 
 [Lecture 05](lecture-05/index.html) turns the checked attention head into a
-complete decoder language model in 51 slides. Its
+complete decoder language model in 55 slides, beginning with the recurrent
+bottleneck and learned alignment. Its
 [teaching plan](lecture-05/teaching-plan.md) maps all 85 slides of the
 instructor's 2025 Transformer lecture and reserves the 15-minute Quiz 2 slot.
 The [notebook](lecture-05/lecture-05-exercise.ipynb) runs E01–E05 offline on CPU:
 multi-head shapes and references, positions, normalization, parameter counts,
-and full-model causality. Four editable diagrams, an interactive permutation
+and full-model causality. Five editable diagrams, an interactive permutation
 example, and measured pre/post-LN loss curves support the explanations.
 Historical translation results, head pruning, and efficient-attention papers
 remain in [optional reading](lecture-05/optional-reading.md). See

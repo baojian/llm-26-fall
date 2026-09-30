@@ -2,7 +2,7 @@
 
 <p class="eyebrow">CS40008.01</p>
 
-# The Transformer as a working model
+# Attention and the Transformer
 
 <p class="subtitle">Lecture 05 – NLP and LLMs</p>
 
@@ -17,8 +17,9 @@ Saturday make-up class. Three 45-minute periods, with 15 minutes reserved for Qu
 
 ## What you will be able to do
 
-**Which components turn attention into a trainable language model?**
+**How does attention select useful context, and how does it lead to the Transformer?**
 
+- Connect the encoder–decoder bottleneck to learned alignment.
 - Trace multiple heads and the complete decoder block.
 - Explain positions, residual paths, normalization, and the FFN.
 - Check a small model's parameters, gradients, and causality.
@@ -34,7 +35,7 @@ Allow 2 minutes for the opening two slides. The notebook contains the full code;
 ## Outline
 
 <ul class="outline-topics">
-<li aria-current="step">Multi-head attention and positions</li>
+<li aria-current="step">From attention to multiple heads</li>
 <li>Transformer blocks</li>
 <li>A working language model</li>
 </ul>
@@ -42,7 +43,75 @@ Allow 2 minutes for the opening two slides. The notebook contains the full code;
 <p class="caption">Period 1 · 45 minutes, including E01 and E02</p>
 
 Note:
-Allow 1 minute. Lecture 04 gave us one checked causal attention head. This period adds multiple projections and explicit position representations.
+Allow 1 minute. Lecture 04 gave us one checked causal attention head. Start from the recurrent bottleneck and learned alignment, then connect that computation to self-attention, multiple projections, and positions. This opening follows the updated course topic and readings in PR #260.
+
+---
+
+<!-- .slide: id="recurrence-limits" -->
+
+## A recurrent state carries the past forward
+
+$$h_t=f(h_{t-1},x_t)$$
+
+- Computing $h_t$ requires the previous state.
+- Distant information passes through many recurrent steps.
+- LSTM gates help retain information, but the recurrence remains.
+
+<p class="caption">The next step: let a decoder select from several source states.</p>
+
+Note:
+Allow 2 minutes. Recap Lecture 04 rather than deriving LSTM gates again. Sequential state dependencies restrict parallelism across positions in a conventional RNN; long paths can make credit assignment difficult. These are architectural and optimization considerations, not a claim that RNNs cannot learn long dependencies. Sources: 2025 slides 3–8 and 84; Bahdanau et al. (ICLR 2015), §§2–3, https://arxiv.org/abs/1409.0473; Vaswani et al., §4.
+
+---
+
+<!-- .slide: id="encoder-bottleneck" -->
+
+## Replace one summary with selectable context
+
+<img class="diagram" src="assets/encoder-context.svg" data-excalidraw-source="assets/encoder-context.excalidraw" alt="A fixed-context encoder compresses the source into one context vector for the decoder. With attention, the decoder selects a weighted combination of encoder states for each target step.">
+
+<p class="caption">The context is still a vector, but its weights can change with the target step.</p>
+
+Note:
+Allow 3 minutes. The fixed-context case uses a final recurrent state as its summary. The attentional case keeps the source states available and produces a separate context c_t for each target step. In Bahdanau et al., source annotations come from a bidirectional RNN; the decoder and alignment model are trained jointly. This is still a recurrent encoder–decoder, before the Transformer removes recurrence from its blocks. Sources: 2025 slides 3–8; Bahdanau et al., §§2.1–3.1.
+
+---
+
+<!-- .slide: id="learned-alignment" -->
+
+## Learn which source states to combine
+
+$$e_{t,s}=a(q_t,h_s),\qquad
+\alpha_{t,s}=\frac{\exp(e_{t,s})}{\sum_j\exp(e_{t,j})}$$
+
+$$c_t=\sum_s\alpha_{t,s}h_s$$
+
+$q_t$ is the decoder query; $h_s$ is a source state.
+
+The alignment function $a$ is learned with the translation model.
+
+Note:
+Allow 3 minutes. Softmax is over source positions s. Bahdanau's query is the previous decoder state; its alignment network is additive, for example v^T tanh(W_q q_t + W_h h_s). Luong et al. (§3.1) compare dot, general/bilinear, and concat scores; their query uses the current decoder state. Do not conflate those state-update conventions. The common mechanism is score, normalize, and combine. Gradients pass through the weights; hard alignment labels are not required by these translation objectives. Sources: Bahdanau et al., §3.1 and Appendix A.1.2; Luong et al., §3, https://aclanthology.org/D15-1166/.
+
+---
+
+<!-- .slide: id="alignment-numbers" -->
+
+## Calculate one weighted context
+
+Use an unscaled dot score, $q=(1,0)$, and $h_1=(0,1)$, $h_2=(1,0)$.
+
+| Source state | Score $q^\top h_s$ | Softmax weight |
+| --- | ---: | ---: |
+| $h_1$ | 0 | 0.2689 |
+| $h_2$ | 1 | 0.7311 |
+
+$$c=0.2689h_1+0.7311h_2\approx(0.7311,\ 0.2689)$$
+
+<p class="caption">Invented vectors; dot scoring is one of Luong et al.'s alignment choices.</p>
+
+Note:
+Allow 3 minutes. Compute exp(0)/(exp(0)+exp(1)) and its complement, then combine both coordinates. The source states serve as both keys and values here. This example isolates aggregation; the vectors are supplied rather than produced by trained encoders. The notebook reproduces the exact calculation before E01. The Transformer head next adds learned Q/K/V projections and sqrt(d_k) scaling. Sources: Luong et al., §3.1; 2025 source slides 8 and 25.
 
 ---
 
@@ -78,7 +147,7 @@ $$A=\operatorname{softmax}_{\text{keys}}
 - Queries and keys share $d_k$; values may have another width.
 
 Note:
-Allow 2 minutes. Row vectors throughout this lecture; batch dimensions are suppressed here. M is zero on allowed entries and negative infinity elsewhere. Every query must retain an allowed key. The variance motivation for sqrt(d_k) assumes independent, zero-mean, unit-variance components. Lecture 04 already verified outputs, gradients, and future-input independence. Correct the 2025 slide 29 dictionary analogy: d['b'] is 2, not 3. Source: Vaswani et al. (2017), §§3.2.1 and 3.2.3, https://arxiv.org/abs/1706.03762.
+Allow 2 minutes. The implementation uses row-vector batches; batch dimensions are suppressed here. M is zero on allowed entries and negative infinity elsewhere. Every query must retain an allowed key. The variance motivation for sqrt(d_k) assumes independent, zero-mean, unit-variance components. Lecture 04 already verified outputs, gradients, and future-input independence. Correct the 2025 slide 29 dictionary analogy: d['b'] is 2, not 3. Source: Vaswani et al. (2017), §§3.2.1 and 3.2.3, https://arxiv.org/abs/1706.03762.
 
 ---
 
@@ -112,7 +181,7 @@ Each head learns its own query, key, and value projections.
 <p class="source">The sentence illustrates possible relations. Heads are not assigned grammatical roles.</p>
 
 Note:
-Allow 2 minutes. Adapt 2025 slides 32–35. This example uses bidirectional context, as in the original encoder. Do not draw a causal arrow from gave to food in our language model. Multiple heads permit different learned projections; neither unique specialization nor improved quality is guaranteed. At fixed model width with d_h=d/h, increasing h does not itself increase the four dense projection matrices' total parameters. Source: Vaswani et al. (2017), §3.2.2.
+Allow 1 minute. Adapt 2025 slides 32–35. This example uses bidirectional context, as in the original encoder. Do not draw a causal arrow from gave to food in our language model. Multiple heads permit different learned projections; neither unique specialization nor improved quality is guaranteed. At fixed model width with d_h=d/h, increasing h does not itself increase the four dense projection matrices' total parameters. Source: Vaswani et al. (2017), §3.2.2.
 
 ---
 
@@ -131,7 +200,7 @@ Each head has width $d_h=d/h$ in our model.
 Concatenate along features, then mix with $W_O$.
 
 Note:
-Allow 3 minutes. The semicolon denotes feature concatenation, not addition. All heads receive the same sequence but use different learned projections. Our baseline uses d_k=d_v=d_h and no projection biases. More general dimension choices are possible. Source: 2025 slides 34 and 39; Vaswani et al. (2017), §3.2.2.
+Allow 2 minutes. The semicolon denotes feature concatenation, not addition. All heads receive the same sequence but use different learned projections. Our baseline uses d_k=d_v=d_h and no projection biases. More general dimension choices are possible. Source: 2025 slides 34 and 39; Vaswani et al. (2017), §3.2.2.
 
 ---
 
@@ -144,7 +213,7 @@ Allow 3 minutes. The semicolon denotes feature concatenation, not addition. All 
 <p class="caption">Splitting heads rearranges features. It creates no new parameters.</p>
 
 Note:
-Allow 2 minutes. Trace one token through every stage, then trace one head across tokens. The projections do the learning; reshape and transpose do bookkeeping. Original editable diagram, following 2025 slides 34 and 39.
+Allow 1 minute. Trace one token through every stage, then trace one head across tokens. The projections do the learning; reshape and transpose do bookkeeping. Original editable diagram, following 2025 slides 34 and 39.
 
 ---
 
@@ -161,7 +230,7 @@ Allow 2 minutes. Trace one token through every stage, then trace one head across
 | Joined and projected output | $(B,T,d)$ |
 
 Note:
-Allow 2 minutes. Key positions are the last axis of the score tensor. The query and key lengths happen to agree for self-attention; they can differ in cross-attention. Our example has B=2, T=4, d=16, h=4, and d_h=4. Use labels, not just the repeated number 4, to identify axes.
+Allow 1 minute. Key positions are the last axis of the score tensor. The query and key lengths happen to agree for self-attention; they can differ in cross-attention. Our example has B=2, T=4, d=16, h=4, and d_h=4. Use labels, not just the repeated number 4, to identify axes.
 
 ---
 
@@ -180,7 +249,7 @@ q = q.transpose(1, 2)
 The transpose changes which axis is a token position.
 
 Note:
-Allow 2 minutes. Apply the same operations to K and V. A direct reshape to (B,h,T,d_h) generally mixes token and head indices; matching output shapes cannot establish correctness. The notebook compares with a loop over heads. PyTorch uses row-vector batches, while nn.Linear stores each matrix as (out_features,in_features).
+Allow 1 minute. Apply the same operations to K and V. A direct reshape to (B,h,T,d_h) generally mixes token and head indices; matching output shapes cannot establish correctness. The notebook compares with a loop over heads. PyTorch uses row-vector batches, while nn.Linear stores each matrix as (out_features,in_features).
 
 ---
 
@@ -200,7 +269,7 @@ out = out_proj(z)
 <p class="caption">The allowed mask broadcasts across the batch and heads.</p>
 
 Note:
-Allow 3 minutes. Here allowed is a lower triangular (T,T) Boolean tensor, with True meaning permitted. Explain contiguous before view: transpose changes strides. This explicit version materializes scores for teaching. The notebook supplies imports, projections, shape validation, and mask construction on the input device; this slide is an excerpt.
+Allow 2 minutes. Here allowed is a lower triangular (T,T) Boolean tensor, with True meaning permitted. Explain contiguous before view: transpose changes strides. This explicit version materializes scores for teaching. The notebook supplies imports, projections, shape validation, and mask construction on the input device; this slide is an excerpt.
 
 ---
 
@@ -240,7 +309,7 @@ $P$ permutes the token rows.
 The output moves with each token; it does not identify its original slot.
 
 Note:
-Allow 3 minutes. This is permutation equivariance, not invariance of the whole output tensor. It assumes shared projections and no position-dependent mask or bias. A causal mask already constrains ordering, so do not apply this identity to a fixed causal mask under arbitrary permutations. Connect to the paired-key/value permutation in Lecture 04. Source: 2025 slides 23 and 52–55; Vaswani et al. (2017), §3.5.
+Allow 2 minutes. This is permutation equivariance, not invariance of the whole output tensor. It assumes shared projections and no position-dependent mask or bias. A causal mask already constrains ordering, so do not apply this identity to a fixed causal mask under arbitrary permutations. Connect to the paired-key/value permutation in Lecture 04. Source: 2025 slides 23 and 52–55; Vaswani et al. (2017), §3.5.
 
 ---
 
@@ -259,7 +328,7 @@ Add this vector to the token embedding at position $p$.
 <p class="caption">$i=0,\ldots,d/2-1$; the teaching example uses an even width.</p>
 
 Note:
-Allow 3 minutes. A pair of coordinates uses the same frequency. Correct the duplicate final sine in 2025 slide 54 and use zero-based frequency indices consistently. At p=0 each pair is (0,1), not (0,0). The original model used sinusoidal positions and also evaluated learned positions. Source: Vaswani et al. (2017), §3.5.
+Allow 2 minutes. A pair of coordinates uses the same frequency. Correct the duplicate final sine in 2025 slide 54 and use zero-based frequency indices consistently. At p=0 each pair is (0,1), not (0,0). The original model used sinusoidal positions and also evaluated learned positions. Source: Vaswani et al. (2017), §3.5.
 
 ---
 
@@ -272,7 +341,7 @@ Allow 3 minutes. A pair of coordinates uses the same frequency. Correct the dupl
 <p class="caption">Deterministic formula values, with $d=8$. This is not a training result.</p>
 
 Note:
-Allow 2 minutes. The source deck compares positional frequencies with binary digits (slides 53–54). The graph makes the frequency change visible without suggesting that sine coordinates are bits. The omitted cosine partners have the same frequency. Explicit position features do not guarantee extrapolation to arbitrary sequence lengths.
+Allow 1 minute. The source deck compares positional frequencies with binary digits (slides 53–54). The graph makes the frequency change visible without suggesting that sine coordinates are bits. The omitted cosine partners have the same frequency. Explicit position features do not guarantee extrapolation to arbitrary sequence lengths.
 
 ---
 
@@ -292,7 +361,7 @@ Both tables are learned jointly with the model.
 The position table covers a fixed range of slots.
 
 Note:
-Allow 2 minutes. Our baseline uses a four-row position table. Reject sequences beyond max_length rather than silently recycling indices. Learned positions add max_length*d parameters. They do not require a pretrained word-vector model. This resolves the inconsistent descriptions in 2025 slides 42 and 57. Source: Vaswani et al. (2017), §3.5, learned-position comparison.
+Allow 1 minute. Our baseline uses a four-row position table. Reject sequences beyond max_length rather than silently recycling indices. Learned positions add max_length*d parameters. They do not require a pretrained word-vector model. This resolves the inconsistent descriptions in 2025 slides 42 and 57. Source: Vaswani et al. (2017), §3.5, learned-position comparison.
 
 ---
 
@@ -312,7 +381,7 @@ The relative offset enters the dot product.
 <p class="source">RoPE comparison; the notebook baseline uses learned absolute positions.</p>
 
 Note:
-Allow 2 minutes. Column vectors in this two-dimensional rotation identity; the rest of the implementation stores row-vector batches. Each pair has its own frequency, and R_p transpose times R_s equals R_(s-p). Standard RoPE rotates Q and K, not V. This is a short continuation of the reference on 2025 slide 55; do not turn it into a survey of long-context modifications. Source: Su et al., RoFormer, §3.2, https://arxiv.org/abs/2104.09864.
+Allow 1 minute. Column vectors in this two-dimensional rotation identity; the rest of the implementation stores row-vector batches. Each pair has its own frequency, and R_p transpose times R_s equals R_(s-p). Standard RoPE rotates Q and K, not V. This is a short continuation of the reference on 2025 slide 55; do not turn it into a survey of long-context modifications. Source: Su et al., RoFormer, §3.2, https://arxiv.org/abs/2104.09864.
 
 ---
 
@@ -360,7 +429,7 @@ Allow 5 minutes. Use the browser before running the corresponding notebook cells
 ## Outline
 
 <ul class="outline-topics">
-<li>Multi-head attention and positions</li>
+<li>From attention to multiple heads</li>
 <li aria-current="step">Transformer blocks</li>
 <li>A working language model</li>
 </ul>
@@ -432,11 +501,13 @@ Allow 4 minutes. Use the population variance (divide by d), as in nn.LayerNorm. 
 For $x=(1,3)$, find $\mu$, $v$, and $\operatorname{LN}(x)$ with $\gamma=1$, $\beta=0$, $\epsilon=10^{-5}$.
 
 A sublayer returns $(2,-1)$. What is the residual sum?
+For $(B,T,d)$ states, which axis does LayerNorm normalize?
 
 <div class="answer fragment">
 
 $\mu=2,\ v=1$; $\operatorname{LN}(x)\approx(-1,1)$.
 The residual sum is $(3,2)$.
+Normalize over the last feature axis, $d$.
 
 </div>
 
@@ -625,7 +696,7 @@ Allow 2 minutes. In BERT's original recipe, selected prediction positions are co
 ## Outline
 
 <ul class="outline-topics">
-<li>Multi-head attention and positions</li>
+<li>From attention to multiple heads</li>
 <li>Transformer blocks</li>
 <li aria-current="step">A working language model</li>
 </ul>
@@ -892,8 +963,8 @@ Allow 1 minute. These are the published course dates at authoring; the slide int
 - [Vaswani et al., Attention Is All You Need](https://arxiv.org/abs/1706.03762): §§3.1–3.5; §4.
 - [Xiong et al., LayerNorm in Transformers](https://proceedings.mlr.press/v119/xiong20b.html): pre-LN and post-LN.
 - [Devlin et al., BERT](https://aclanthology.org/N19-1423/): §3.1, masked prediction.
-- [Su et al., RoFormer](https://arxiv.org/abs/2104.09864): §3.2, optional RoPE reading.
+- [Bahdanau et al.](https://arxiv.org/abs/1409.0473) and [Luong et al.](https://aclanthology.org/D15-1166/): §3, learned alignment.
 - [Historical examples and further reading](optional-reading.md)
 
 Note:
-The 2025 Lecture 05 PowerPoint supplied the content sequence and examples; teaching-plan.md maps every source slide and records corrections. All new diagrams are editable and documented in assets/README.md. The core notebook is offline. Figures and reported values must be checked against their cited versions rather than carried forward from a screenshot.
+Allow 3 minutes for readings and remaining questions. The 2025 Lecture 05 PowerPoint supplied the content sequence and examples; teaching-plan.md maps every source slide and records corrections. All new diagrams are editable and documented in assets/README.md. The core notebook is offline. Figures and reported values must be checked against their cited versions rather than carried forward from a screenshot.

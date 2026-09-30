@@ -1,6 +1,7 @@
 """Execute the offline Lecture 05 notebook and verify its Transformer claims."""
 
 import json
+import hashlib
 import math
 import platform
 import re
@@ -89,6 +90,13 @@ def test_toy_data_is_shifted_and_floor_is_log2_over_4(lesson):
     # The floor is attained by p=1/2 after BOS and certainty elsewhere.
     probabilities = [0.5, 1, 1, 1, 0.5, 1, 1, 1]
     assert -sum(map(math.log, probabilities)) / 8 == pytest.approx(lesson["loss_floor"])
+
+
+def test_alignment_example_matches_the_independent_hand_calculation(lesson):
+    assert lesson["alignment_scores"].tolist() == [0.0, 1.0]
+    weight = math.e / (1 + math.e)
+    assert lesson["alignment_weights"].tolist() == pytest.approx([1 - weight, weight])
+    assert lesson["alignment_context"].tolist() == pytest.approx([weight, 1 - weight])
 
 
 def test_split_and_merge_heads_move_feature_chunks(lesson):
@@ -361,6 +369,8 @@ def test_teaching_curve_preserves_every_update_and_records_its_environment(lesso
     assert metadata["device"] == "cpu" and metadata["threads"] == 1
     assert metadata["timezone"] == "Asia/Shanghai"
     assert len(metadata["git_revision"]) == 40 and len(metadata["notebook_sha256"]) == 64
+    assert metadata["notebook_sha256"] == hashlib.sha256(
+        (LECTURE / "lecture-05-exercise.ipynb").read_bytes()).hexdigest()
     for trace, prefix in zip(figure["data"][:2], ["pre", "post"]):
         assert trace["x"] == list(range(201))
         losses = trace["y"]

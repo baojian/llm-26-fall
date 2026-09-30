@@ -9,11 +9,19 @@ Transformers* lecture. They supplement the [current slides](index.html) and
 An encoder–decoder system maps a source sequence to a target sequence. In a
 recurrent system, using only the last encoder state forces that state to carry
 all the information needed by the decoder. Attention lets each decoder query
-combine several encoder states. Lecture 04 already develops this motivation;
-Lecture 05 distinguishes encoder self-attention, decoder self-attention, and
+combine several encoder states. Lecture 05 revisits this motivation and the weighted-context calculation,
+then distinguishes encoder self-attention, decoder self-attention, and
 decoder-to-encoder cross-attention. In cross-attention, Q comes from the
 decoder, while K and V come from the encoder. See
 [Vaswani et al., §§3.1–3.2.3](https://arxiv.org/abs/1706.03762).
+
+For the original learned-alignment formulation, read
+[Bahdanau et al., §3](https://arxiv.org/abs/1409.0473). The alignment network
+uses the previous decoder state and source annotations. Compare it with
+[Luong et al., §3](https://aclanthology.org/D15-1166/): the current decoder
+state supplies the query, with dot, general, or concat scoring. Distinguish
+these recurrent update conventions from the shared score/softmax/weighted-sum
+mechanism. Our two-state worked example uses unscaled dot scoring.
 
 The source lecture's noisy time-series example illustrates weighted averaging:
 weights can emphasize observations relevant to a query. A local smoothing

@@ -1,7 +1,7 @@
 {
   "number": "05",
-  "title": "The Transformer as a Working Model",
-  "subtitle": "Lecture 05 – NLP and LLMs",
+  "title": "Attention and the Transformer",
+  "subtitle": "Lecture 05 \u2013 NLP and LLMs",
   "language": "en",
   "notebook": "lecture-05-exercise.ipynb",
   "demo": "demo.js"
