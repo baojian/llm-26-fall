@@ -1,0 +1,19 @@
+\begin{tikzpicture}[
+  node distance=6mm,
+  lecture/.style={draw=courseblue!65,fill=softblue,rounded corners=3pt,
+    text width=31mm,minimum height=19mm,align=center,font=\small,inner sep=4pt},
+  flow/.style={-{Stealth[length=2mm]},line width=.8pt,draw=courseblue}
+]
+\node[lecture] (l1) {\textbf{Lecture 01}\\Text and token IDs};
+\node[lecture,right=of l1] (l2) {\textbf{Lecture 02}\\Counts and probabilities};
+\node[lecture,right=of l2] (l3) {\textbf{Lecture 03}\\Embeddings and trainable loss};
+\node[lecture,right=of l3] (l4) {\textbf{Lecture 04}\\Context networks and attention};
+\draw[flow] (l1)--(l2);
+\draw[flow] (l2)--(l3);
+\draw[flow] (l3)--(l4);
+\node[below=7mm of $(l2.south)!0.5!(l3.south)$,align=center,
+  text width=145mm,font=\small,text=courseteal] {
+  Shared task: predict the next token from the allowed context.\\
+  Shared checks: preserve data, normalize probabilities, align targets, verify computations.
+};
+\end{tikzpicture}
