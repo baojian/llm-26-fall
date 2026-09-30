@@ -33,7 +33,7 @@ Subscribe to an assignment's issue to follow its announcements and clarification
 - **Semester:** Fall 2026 (2026–2027 academic year, fall semester)
 - **Schedule:** Wednesdays, periods 6–8 (13:30–16:10), weeks 1–16
 - **First / last class:** September 9 / December 23, 2026
-- **Make-up class:** Saturday, October 10: The Transformer as a working model (replaces October 7)
+- **Make-up class:** Saturday, October 10: Attention and the Transformer (replaces October 7)
 - **Location:** Handan Campus, HGX103
 - **Teaching language:** Chinese lectures, English materials
 - **Assessment:** Quizzes 10%, assignments 45%, individual project 45%
