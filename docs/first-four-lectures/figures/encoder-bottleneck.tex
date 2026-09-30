@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+\foreach \i in {1,2,3} {
+ \node[box,minimum width=11mm] (e\i) at (1.8*\i-1.8,0) {$h_\i$};
+ \node[lab] (x\i) at (1.8*\i-1.8,-1) {$x_\i$};
+ \draw[arr] (x\i)--(e\i);}
+\draw[arr] (e1)--(e2);\draw[arr] (e2)--(e3);
+\node[tbox,text width=18mm] (v) at (6.3,0) {final\\state};
+\draw[arr] (e3)--(v);
+\foreach \i in {1,2,3} {
+ \node[box,minimum width=11mm] (d\i) at (1.8*\i+7.1,0) {$s_\i$};
+ \node[lab] (y\i) at (1.8*\i+7.1,1) {$y_\i$};
+ \draw[arr] (d\i)--(y\i);}
+\draw[arr] (v)--(d1);\draw[arr] (d1)--(d2);\draw[arr] (d2)--(d3);
+\node[lab] at (1.8,1.2) {encoder};\node[lab] at (10.7,-1.2) {decoder};
+\node[lab] at (6.3,-1.2) {fixed-width interface};
+\end{tikzpicture}

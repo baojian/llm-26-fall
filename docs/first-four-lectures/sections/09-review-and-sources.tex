@@ -1,0 +1,56 @@
+\clearpage
+\section*{Review, notation, and sources}\label{sec:review}
+\subsection*{Explain the complete modeling path}
+Given a new text sample, you should be able to identify what preprocessing
+preserves, how tokens are formed, which context each prediction uses, how
+its probability is normalized, and how a learning signal reaches parameters.
+The following questions connect the sections.
+
+\begin{tabularx}{\textwidth}{@{}l Y@{}}\toprule
+Topic & A question to answer without running code\\\midrule
+Tokenization & Why can byte coverage coexist with poor compression for a language?\\
+Counts & How do unseen histories differ from unseen continuations of a known history?\\
+Evaluation & What changes in perplexity when the token unit changes?\\
+Embeddings & What distinguishes pair discrimination from normalized next-token likelihood?\\
+Neural LMs & Why cannot a wider token table alone distinguish two prefixes ending in the same token?\\
+Training & What does successful tiny-batch fitting establish, and what requires held-out evidence?\\
+Recurrence & How can the forward context exceed the truncated backward horizon?\\
+LSTM & Which derivative does a product of forget gates describe?\\\bottomrule
+\end{tabularx}
+
+\subsection*{Notation to keep consistent}
+$x_t$ is a token ID; a state after consuming $x_t$ predicts $x_{t+1}$.
+$K_{\mathrm{in}}$ counts input rows and $K$ counts possible outputs.
+$B,T,d,m,H$ denote batch size, input positions, embedding width, fixed
+context length, and recurrent/hidden width. $E$ is the input table;
+readout matrices are identified beside their equations. In the LSTM cell,
+the subscript $o$ names its output gate rather than the vocabulary readout.
+$\log$ means natural logarithm; $\log_2$ measures bits. MiB means $2^{20}$ bytes.
+
+\subsection*{Course sources and numerical provenance}
+The source baseline is repository commit \texttt{1adbaa5}. The
+\href{https://github.com/baojian/llm-26-fall/tree/1adbaa5442a567cbd2ab65035b8e485778dd46a9/slides/lecture-01}{L01},
+\href{https://github.com/baojian/llm-26-fall/tree/1adbaa5442a567cbd2ab65035b8e485778dd46a9/slides/lecture-02}{L02},
+\href{https://github.com/baojian/llm-26-fall/tree/1adbaa5442a567cbd2ab65035b8e485778dd46a9/slides/lecture-03}{L03}, and
+\href{https://github.com/baojian/llm-26-fall/tree/1adbaa5442a567cbd2ab65035b8e485778dd46a9/slides/lecture-04}{L04}
+directories contain the slides, teaching plans, and classroom notebooks.
+The revised notes expand recurrent models and LSTMs at the instructor's
+request and place attention in Lecture 05; the older L04 deck has a different boundary.
+
+\begin{itemize}
+\item In the lecture directories, F07 redraws L01's
+\path{assets/heldout-chinese.json}; F15 uses L03's \path{assets/counts-ppmi.json}.
+\item F23 redraws the two distinct \texttt{tiny-lm-loss.json} assets in
+L03 and L04. Their captions state models, batches, seeds, and update budgets.
+\item The L02 loop numbers come from \texttt{self-training-loop.json}.
+Full settings and data fingerprints are in \texttt{lecture02-results.json}
+and its asset README; upstream dataset revisions were not recorded for the original download.
+\item Other numerical illustrations are exact arithmetic or explicitly
+chosen toy values. No new model training is reported by these notes.
+\end{itemize}
+
+The next four pages give the selected 15-paper reading route. Supporting
+sources for gradient clipping and the later forget gate are linked in
+Sections 7--8. The subsequent Transformer paper is
+\href{https://arxiv.org/abs/1706.03762}{Vaswani et al.\ (2017)}; its
+architecture belongs to the next part of the course.

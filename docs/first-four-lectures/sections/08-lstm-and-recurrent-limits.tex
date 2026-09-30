@@ -1,0 +1,129 @@
+\clearpage
+\section{LSTMs and the limits of recurrent memory}\label{sec:lstm}
+\subsection*{Separate stored content from exposed state}
+A vanilla RNN replaces its state through a nonlinear transformation at
+every step. LSTM introduces an additional cell state and learned gates
+that control retaining, writing, and exposing information. The cell state
+$c_t$ and hidden state $h_t$ each have width $H$ in the formulation below.
+
+Let $q_t=[e_t;h_{t-1}]\in\R^{d+H}$. The modern cell used in these notes is
+\begin{align*}
+ f_t&=\sigma(W_fq_t+b_f), & i_t&=\sigma(W_iq_t+b_i),\\
+ o_t&=\sigma(W_oq_t+b_o), & g_t&=\tanh(W_gq_t+b_g),\\
+ c_t&=f_t\odot c_{t-1}+i_t\odot g_t,
+ &h_t&=o_t\odot\tanh(c_t).
+\end{align*}
+Here the four gate/candidate matrices have shape $H\times(d+H)$.
+Within this cell, $W_o,b_o$ name the output gate; a separate vocabulary
+readout acts on $h_t$ to predict the next token.
+
+\fig{lstm-cell}{A cell with a forget gate and no peephole connections. The top
+path carries the cell state; multiplication nodes apply gates elementwise.}
+
+\begin{itemize}
+\item The \textbf{forget gate} $f_t$ controls how much previous cell content survives.
+\item The \textbf{input gate} $i_t$ controls how much candidate content $g_t$ is written.
+\item The \textbf{output gate} $o_t$ controls how much transformed cell content is exposed as $h_t$.
+\end{itemize}
+Sigmoid gates lie between zero and one, independently for each coordinate.
+They are not a categorical distribution: $f_t+i_t$ need not equal one.
+The candidate can be negative. The cell state accumulates content through
+an additive update and is not itself restricted to $[-1,1]$.
+
+\textbf{Historical convention.} \readingref{R10}, the 1997 LSTM paper,
+introduced the memory-cell idea before this forget-gate formulation.
+The extension is documented by \href{https://sferics.idsia.ch/pub/juergen/FgGates-NC.pdf}{Gers,
+Schmidhuber, and Cummins (2000)}. Distinguishing the two avoids attributing
+all modern equations to the original cell.
+
+\selfcheck{Why keep $c_t$ as well as $h_t$? The model can retain cell content
+while controlling how much of it reaches the prediction and next gate computations.}
+
+\nextpage{A scalar LSTM update and its gradient path}
+Choose $c_{t-1}=0.8$, $f_t=0.9$, $i_t=0.2$, $g_t=0.5$, and $o_t=0.75$.
+These hand-chosen values make each operation visible:
+\[
+ c_t=0.9(0.8)+0.2(0.5)=0.82,\qquad
+ h_t=0.75\tanh(0.82)\approx0.5063.
+\]
+The previous memory contributes $0.72$ and the candidate contributes $0.10$.
+The hidden state exposes a bounded transform of their sum.
+
+\fig{gate-arithmetic}{Idealized gate settings illustrate retain, overwrite,
+and hide operations. Exact zero/one gates are limiting cases of sigmoid gates.}
+
+If the gates and candidate are held fixed, increasing $c_{t-1}$ by $0.1$
+increases $c_t$ by $0.09$. Along this direct cell-state path,
+\[
+ \left.\frac{\partial c_t}{\partial c_{t-1}}\right|_{f_t,i_t,g_t\ \mathrm{fixed}}
+ =\operatorname{diag}(f_t).
+\]
+Across several steps, the contribution through only the direct cell path
+is an elementwise product of forget gates. Gates near one can preserve
+this contribution better than repeated saturated nonlinear transformations.
+
+\subsection*{Why this is not the full gradient}
+The gates depend on $h_{t-1}$, which depends on earlier cells and gates.
+There are therefore additional paths from earlier states to later losses.
+A product of forget gates isolates one path; it does not equal the full
+recurrent derivative in general. The output gate and $\tanh(c_t)$ also
+affect the sensitivity of a prediction to the stored content.
+
+Even on the direct path, a forget value of 0.9 repeated 50 times yields
+about 0.00515. Gates closer to one help retention, but successful learning
+also requires that the right content be written, preserved, and exposed
+at the right time. An LSTM improves the architecture's options for learning
+memory; it does not eliminate all gradient or optimization difficulties.
+
+\textbf{A useful alternative.} A GRU combines state and gating differently,
+using reset and update gates. \readingref{R12} provides the historical
+encoder--decoder context for that design. For this recap, understand the
+shared purpose of controlling recurrent memory before comparing full equations.
+
+\takeaway{Treat the additive memory path as a useful mechanism with stated
+assumptions. Separate its local derivative from the total gradient of the network.}
+\selfcheck{Can $h_t$ be near zero while $c_t$ retains a nonzero value? Yes:
+a nearly closed output gate can hide stored content from the exposed state.}
+
+\nextpage{What recurrent memory still cannot make easy}
+\subsection*{Sequential computation remains}
+The standard RNN or LSTM update needs the previous state. Even when all
+training tokens are known, state $h_t$ cannot be evaluated by the usual
+recurrence until $h_{t-1}$ is available. Matrix operations within a step
+and different sequences in a batch can run in parallel; the within-sequence
+chain remains a source of limited parallelism.
+
+\fig{sequential-computation}{Two sequences can be processed alongside each
+other, but each row has a left-to-right state dependency. Knowing the next
+input does not supply the next hidden state.}
+
+\subsection*{A state must retain the distinctions needed later}
+A fixed-width state can be sufficient for some tasks, such as tracking a
+small set of conditions. It need not preserve every detail of the prefix.
+However, when useful information is spread across a long sequence, later
+predictions depend on what survived earlier updates. Long-range credit
+assignment must also teach the network which details to retain.
+
+\fig{encoder-bottleneck}{A classic encoder--decoder interface passes only a
+final encoder representation to the decoder. This particular design requires
+that representation to carry the source information needed for every output.
+Decoder token inputs are omitted.}
+
+In the sequence-to-sequence model of \readingref{R13}, an LSTM encoder
+produces a fixed-dimensional representation for an LSTM decoder. Unlike
+an ordinary next-token LM on one stream, the task maps one sequence to
+another. The interface makes the burden concrete: details needed at
+different output positions must all remain available through that final
+representation. This bottleneck is a property of the interface, not a
+claim that every recurrent architecture exposes only one source vector.
+
+The remaining concerns are related but distinct: sequential computation,
+learning across long gradient paths, and retaining useful distinctions in
+a finite state. Gates address part of the memory problem; they do not
+remove the serial dependency or automatically change the encoder--decoder interface.
+
+\takeaway{The next question is how a prediction could consult earlier
+information more directly. Lecture 05 begins with learned alignment and
+attention, using \readingref{R14} and \readingref{R15}.}
+\selfcheck{Which limitation would remain if a recurrent model remembered
+every needed detail perfectly? Its standard state updates would still depend on earlier steps.}

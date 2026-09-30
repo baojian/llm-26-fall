@@ -1,0 +1,59 @@
+\clearpage
+\section{Language modeling as a common task}\label{sec:task}
+\subsection*{From text applications to a probability model}
+A translation, a summary, and a continuation all contain sequences of text.
+A language model assigns probabilities to token sequences. This makes it
+possible to score candidate sequences and generate new ones. A high model
+probability expresses what the model expects; factual accuracy and success
+on a task still need their own checks.
+
+Let $x_1,\ldots,x_T$ be tokens from a finite output vocabulary
+$\mathcal V$ of size $K$. We first fix the tokenizer and the treatment of
+document boundaries. The chain rule gives the exact identity
+\[
+ p_\theta(x_{1:T})=\prod_{t=1}^{T}p_\theta(x_t\mid x_{<t}).
+\]
+This identity makes no short-context assumption. An $n$-gram, a feedforward
+network, and an RNN differ in how they approximate each conditional.
+Every conditional must be nonnegative and sum to one over $\mathcal V$.
+
+\subsection*{The learning objective}
+Write $P$ for the data distribution and $Q_\theta$ for the model. On a
+fixed sequence sample space, with $Q_\theta$ positive wherever $P$ is positive,
+\[
+ D_{\mathrm{KL}}(P\Vert Q_\theta)
+ =\mathbb E_P[\log P(X)]-\mathbb E_P[\log Q_\theta(X)].
+\]
+The first term is independent of $\theta$, so minimizing this divergence
+amounts to maximizing expected log likelihood. We cannot sum over the
+unknown data distribution directly. Instead, training uses observed documents
+and minimizes their empirical negative log likelihood:
+\[
+ \mathcal L(\theta)=-\frac{1}{N_{\mathrm{pred}}}
+ \sum_{d}\sum_{t\in\mathcal S_d}\log p_\theta(x_t^{(d)}\mid x_{<t}^{(d)}).
+\]
+Here $\mathcal S_d$ specifies the scored positions, including an end token
+if the evaluation convention scores it. $N_{\mathrm{pred}}$ is their total
+count. During training this denominator is constant with respect to the
+parameters. Averaging each document separately and then averaging documents
+would give shorter documents more weight per token.
+
+\subsection*{Worked example: probability is a product, loss is a sum}
+Suppose the model assigns probabilities $1/2$, $1/4$, and $1/2$ to the
+three scored events in a short document. The document probability is $1/16$,
+its negative log probability is $\log 16$, and its mean token loss is
+$\log(16)/3\approx0.9242$ nats. Taking logs converts a long product of
+small numbers into a sum and makes the contribution of each prediction visible.
+
+\textbf{Boundaries matter.} A beginning marker supplies context but need
+not be an output symbol. An end marker can be a predicted event. Including
+the probability of termination is part of defining a distribution over
+variable-length documents; a generation length cap is a separate practical rule.
+
+\takeaway{Fix the representation and scoring events before comparing models.
+Then ask how each model turns the allowed context into a normalized distribution.}
+\selfcheck{If one target receives probability zero, what happens to the document
+probability and its loss? The answers are zero and $+\infty$. Explain why
+adding an end token changes the scored-event count.}
+\textbf{Reading connection.} \readingref{R01} connects uncertainty with
+coding; \readingref{R04} replaces discrete context tables with shared learned features.

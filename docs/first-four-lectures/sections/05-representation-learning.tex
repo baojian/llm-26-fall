@@ -1,0 +1,135 @@
+\clearpage
+\section{Learning token representations}\label{sec:embeddings}
+\subsection*{From context counts to association}
+Words that occur in similar contexts can acquire related representations.
+The choice of ``context'' matters: neighboring words, a document, and a
+syntactic relation define different statistics. In the lecture's constructed
+word--context table, \texttt{tea} and \texttt{coffee} share \texttt{drink}
+and \texttt{hot}, while \texttt{car} occurs with \texttt{drive}.
+
+Let $X_{wc}$ be the count for word $w$ and context $c$, and
+$Z=\sum_{w,c}X_{wc}$. Pointwise mutual information compares the observed
+joint frequency with the frequency expected under independence:
+\[
+ \operatorname{PMI}(w,c)=\log_2\frac{X_{wc}Z}{X_{w\cdot}X_{\cdot c}},\qquad
+ \operatorname{PPMI}(w,c)=\max(0,\operatorname{PMI}(w,c)).
+\]
+Here the row and column totals are positive. An unobserved pair with positive
+marginals has PMI $-\infty$ and is assigned PPMI zero.
+
+\fig{counts-ppmi}{The L03 invented count table and its PPMI transform. Counts
+sum to 35. The transformed values measure association in bits, not probability.}
+
+For \texttt{tea}/\texttt{drink}, the joint count is eight, the row total is
+14, and the column total is 15. Therefore
+\[
+ \operatorname{PMI}(\texttt{tea},\texttt{drink})
+ =\log_2\frac{8\cdot35}{14\cdot15}
+ =\log_2(4/3)\approx0.4150\text{ bits}.
+\]
+The zero entries after PPMI conflate unobserved and nonpositively associated
+pairs. This choice is part of the representation, not a lossless rewrite of counts.
+
+\subsection*{Compression and alternative objectives}
+For a matrix $M$, truncated SVD forms $M_r=U_r\Sigma_rV_r^\top$.
+It minimizes squared reconstruction error among matrices of rank at most
+$r$. A word table can use $U_r\Sigma_r$, producing a dense vector for each
+row; the scaling convention should be stated because it affects geometry.
+
+GloVe instead fits weighted log counts using vectors and biases:
+\[
+ J=\sum_{X_{wc}>0}f(X_{wc})
+ \bigl(u_w^\top v_c+b_w+\widetilde b_c-\log X_{wc}\bigr)^2.
+\]
+The weight function reduces the influence of selected count ranges.
+This objective differs from applying SVD to PPMI. Both produce vectors,
+but what they preserve is determined by their input statistics and loss.
+
+\selfcheck{Why can a frequent word have low PMI with a frequent context?
+The independence baseline is already large. See \readingref{R07} for GloVe's objective.}
+
+\nextpage{Predictive embeddings and one gradient by hand}
+CBOW predicts a center word from its surrounding context; skip-gram predicts
+surrounding contexts from a center word. These are representation-learning
+tasks. A symmetric context window may contain future words, so it should
+not be mistaken for the prefix-only conditioning of a causal language model.
+
+\fig{cbow-skipgram}{Prediction direction changes the training examples.
+Word2vec uses distinct input and output roles even when both index the same vocabulary.}
+
+Negative sampling replaces a vocabulary-wide prediction objective with
+observed-versus-sampled pair discrimination. For one positive context $c_+$
+and one sampled negative context $c_-$, write
+\[
+ \ell=-\log\sigma(w^\top c_+)-\log\sigma(-w^\top c_-),\qquad
+ \sigma(a)=\frac1{1+e^{-a}}.
+\]
+The sigmoid values do not sum to one across vocabulary items. This loss
+is therefore not a normalized next-token negative log likelihood.
+
+\fig{negative-gradient}{The positive score is one and the negative score is
+$0.5$. Gradient descent increases the positive score when the center vector is held fixed.}
+
+Using $w=(1,0.5)$, $c_+=(0.5,1)$, and $c_-=(1,-1)$ gives
+$\sigma(1)\approx0.7311$, $\sigma(0.5)\approx0.6225$, and
+$\ell\approx1.2873$. Differentiating the positive term gives
+\[
+ \nabla_{c_+}\ell=(\sigma(w^\top c_+)-1)w
+ \approx(-0.2689,-0.1345).
+\]
+At step size $\eta=0.5$, the positive context becomes approximately
+$(0.6345,1.0672)$. With $w$ fixed, its score rises from 1 to 1.1681.
+The negative-context gradient is $\sigma(w^\top c_-)w$; descent reduces
+that score. The center vector receives contributions from both pairs.
+
+\takeaway{Specify the prediction task and objective before interpreting
+the vectors. The sampling distribution also influences what the model learns.}
+\selfcheck{At zero scores, each binary term contributes $\log2$. What is the
+initial loss with one positive and five negatives? It is $6\log2\approx4.1589$.}
+\textbf{Reading connection.} \readingref{R05} introduces CBOW/skip-gram;
+\readingref{R06}, Section 2.2, gives the negative-sampling objective.
+
+\nextpage{Static vectors, contextual states, and subword composition}
+An embedding table is a learned collection of rows. Looking up the ID for
+\texttt{bank} returns the same row every time that ID occurs. Contextual
+computation can transform that row together with other inputs into a
+different state for ``river bank'' and ``bank loan.'' Learning a good table
+does not by itself supply that context computation.
+
+\fig{representation-types}{A token row, a contextual state, and a retrieval
+vector have different inputs and uses. A retrieval representation may summarize
+an entire passage and be trained for matching.}
+
+Cosine similarity compares the directions of two nonzero vectors:
+\[
+ \operatorname{cos}(u,v)=\frac{u^\top v}{\|u\|_2\|v\|_2}.
+\]
+Nearest neighbors and vector analogies are useful inspections of geometry.
+They depend on the corpus, objective, normalization, and chosen examples.
+A plausible neighbor list does not establish language-model likelihood,
+factual accuracy, or performance on a downstream task.
+
+\fig{subword-composition}{An illustrative fastText-style composition sums
+overlapping character $n$-gram vectors. BPE segmentation supplies a sequence
+of token IDs. The two operations use subwords in different ways.}
+
+In a character $n$-gram representation, a word can be represented by a
+word-specific vector plus vectors for its subword features. Overlapping
+features can share statistical strength between related forms, and known
+features can help represent a previously unseen word. The exact boundary
+symbols, $n$-gram lengths, hashing, and normalization belong to the chosen
+implementation. The figure only illustrates the composition principle.
+
+In a BPE-based language model, the tokenizer instead emits separate subword
+tokens. Each token has a lookup row; the model then processes their ordered
+sequence. Character-feature composition and BPE can address related coverage
+problems, but they define different model inputs.
+
+\textbf{What carries forward.} Modern neural LMs still begin with lookup
+tables and learn output scores. The additional question is how the model
+forms a state from its available context. We next make the lookup, target
+alignment, objective, and parameter updates explicit.
+
+\selfcheck{If two occurrences have the same token ID, when must their vectors
+be identical? At a deterministic table lookup. After a context-dependent
+network, their states can differ.}

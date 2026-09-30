@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+\node[lab,text width=38mm] (a) at (0,1.2) {token ID};
+\node[lab,text width=38mm] (b) at (5,1.2) {token and its context};
+\node[lab,text width=38mm] (c) at (10,1.2) {complete passage};
+\node[box,text width=38mm] (d) at (0,0) {lookup row $E[i]$\\static for that ID};
+\node[box,text width=38mm] (e) at (5,0) {state $h_t$\\depends on context};
+\node[tbox,text width=38mm] (f) at (10,0) {retrieval vector\\used for matching};
+\draw[arr] (a)--(d);\draw[arr] (b)--(e);\draw[arr] (c)--(f);
+\end{tikzpicture}

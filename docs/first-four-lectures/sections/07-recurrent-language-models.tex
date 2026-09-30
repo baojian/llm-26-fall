@@ -1,0 +1,145 @@
+\clearpage
+\section{Recurrent language models}\label{sec:rnn}
+\subsection*{Carry a state instead of fixing a window}
+A fixed-window neural LM cannot distinguish prefixes whose final $m$
+tokens agree. To let earlier tokens influence a prediction, a recurrent
+network carries a state forward. At each step it combines the current
+embedding with the previous state:
+\[
+ e_t=E[x_t],\qquad
+ h_t=\tanh(W_xe_t+W_hh_{t-1}+b_h),\qquad
+ z_t=W_oh_t+b_o.
+\]
+The state has width $H$, so $W_x\in\R^{H\times d}$,
+$W_h\in\R^{H\times H}$, and $W_o\in\R^{K\times H}$.
+The output $\softmax(z_t)$ predicts $x_{t+1}$. The same parameters are
+used at every position, while the state changes with the sequence.
+
+\fig{recurrent-state}{Unrolling a recurrent network exposes the sequence of
+computations. Repeated boxes share parameters; the hidden states are different tensors.}
+
+There is no fixed architectural cutoff at $m$ previous tokens in this
+recurrence. An earlier input can affect later states through repeated
+updates. This describes a possible dependency, not a guarantee that useful
+information will be retained or learned. A finite-width, finite-precision
+state must preserve relevant distinctions through those updates.
+
+\subsection*{Worked scalar recurrence}
+To isolate the state update, choose $h_0=0$, $W_x=1$, $W_h=0.5$,
+$b_h=0$, and scalar inputs $(e_1,e_2,e_3)=(1,0,0)$. Then
+\[
+ h_1=\tanh(1)\approx0.7616,\quad
+ h_2=\tanh(0.5h_1)\approx0.3634,\quad
+ h_3=\tanh(0.5h_2)\approx0.1797.
+\]
+The first input still affects the third state, although its effect has
+shrunk. These are hand-chosen parameters illustrating a mechanism, not
+the output of a trained language model.
+
+At a new independent document, reset or explicitly initialize the state.
+Carrying a previous document's state would change the conditioning context.
+For padded batches, exclude padding positions from the loss unless they
+are intentionally part of the modeled event space. Reset policy and loss
+masking are data conventions, not details to leave implicit.
+
+\takeaway{Recurrence shares a transition rule across time. It trades a
+fixed input window for a repeatedly updated summary of the prefix.}
+\selfcheck{Does making a batch larger remove the dependence of $h_t$ on
+$h_{t-1}$ within one sequence? No; batch parallelism and time dependence are separate.}
+\textbf{Reading connection.} \readingref{R08} develops learned temporal
+representations; \readingref{R11} applies recurrent states to language modeling.
+
+\nextpage{Backpropagation through time}
+Training an RNN differentiates the unrolled computation graph. A parameter
+can affect the loss directly at the current step and indirectly through
+many later states. Backpropagation through time (BPTT) applies the ordinary
+chain rule to all these paths, then sums contributions to each shared parameter.
+
+\fig{bptt-paths}{Forward states connect adjacent time steps. Backward signals
+from a later loss pass through earlier states. A truncation boundary blocks
+the backward connection while a numerical state can still be carried forward.}
+
+For the vanilla recurrence, hold input embeddings fixed and define the
+local recurrent Jacobian
+\[
+ J_t=\frac{\partial h_t}{\partial h_{t-1}}
+ =\operatorname{diag}(1-h_t\odot h_t)W_h.
+\]
+The influence of an earlier state on a later one is a product:
+\[
+ \frac{\partial h_t}{\partial h_s}=J_tJ_{t-1}\cdots J_{s+1},\qquad s<t.
+\]
+The order matters because matrices do not generally commute. A loss at
+step $t$ sends its derivative through this product to states before $t$.
+When differentiating a shared weight, sum over the steps where that weight
+was used as well as over the losses affected by each use.
+
+\textbf{A small graph to trace.} With three recurrent steps and losses at
+all three outputs, the first state receives contributions from all three
+losses. The third state receives a contribution only from the third loss
+in this graph. The transition weights are shared, so their gradient
+accumulates contributions at steps one, two, and three.
+
+\subsection*{Truncation changes the learning path}
+For long streams, truncated BPTT divides computation into chunks. The
+final state of one chunk may initialize the next, while its graph is
+detached at the boundary. The next chunk sees earlier information in the
+forward state, but its loss cannot change parameters through the detached
+earlier computation. The forward context and backward credit-assignment
+horizon are therefore different quantities.
+
+For a first-order RNN, ordinary full BPTT stores information proportional
+to sequence length for the backward pass. Checkpointing can trade extra
+computation for less storage, but it does not alter the mathematical
+gradient when the recomputation is exact. Truncation instead omits paths
+and generally changes that gradient.
+
+\selfcheck{If a clue is carried across a detached boundary, can the current
+loss teach the earlier transition how to store that clue through that path?
+No. It can still update parameters through their uses in the current chunk.}
+
+\nextpage{Why long dependencies are difficult to learn}
+Repeated multiplication can make sensitivity very small or very large.
+For compatible matrix norms,
+\[
+ \left\|\frac{\partial h_t}{\partial h_s}\right\|
+ \le\prod_{k=s+1}^{t}\|J_k\|.
+\]
+If every factor is bounded by a constant below one, the bound decreases
+exponentially with distance. Factors larger than one permit amplification,
+but do not by themselves prove explosion in every direction. Singular
+directions, nonlinearities, and the actual state trajectory matter.
+
+\fig{recurrent-gradients}{Exact scalar powers illustrate repeated multiplication.
+The curves are not measured RNN gradients: real gradients involve matrix
+products and contributions from several paths.}
+
+At 50 steps, $0.9^{50}\approx0.00515$ and $1.1^{50}\approx117.39$.
+The scalar example makes the issue visible without assuming that an RNN's
+Jacobian is constant. A saturated $\tanh$ also has a small derivative,
+so a model can represent a dependency in principle while receiving a weak
+learning signal for it. \readingref{R09} studies the difficulty of learning
+long dependencies with gradient descent.
+
+\subsection*{What gradient clipping does}
+For a gradient vector $g$ and threshold $\tau>0$, global norm clipping uses
+\[
+ \widetilde g=
+ \begin{cases}
+ g,&\|g\|_2\le\tau,\\
+ \tau g/\|g\|_2,&\|g\|_2>\tau.
+ \end{cases}
+\]
+For $g=(3,4)$ and $\tau=2$, the clipped vector is $(1.2,1.6)$.
+It preserves direction and caps the norm of the gradient supplied to the
+optimizer. With plain SGD it also bounds that update norm by $\eta\tau$;
+adaptive optimizers can rescale coordinates afterward. Clipping does not
+restore a learning signal that has already vanished.
+
+\takeaway{Long-range learning depends on both forward memory and backward
+sensitivity. Neither a long theoretical context nor gradient clipping
+guarantees successful credit assignment.}
+\selfcheck{Would setting every recurrent weight to one guarantee stable gradients?
+No: the relevant factors are full local Jacobians, including nonlinear derivatives.}
+\textbf{Supporting reading.} \href{https://proceedings.mlr.press/v28/pascanu13.html}{Pascanu,
+Mikolov, and Bengio (2013)} analyzes these training difficulties and clipping.

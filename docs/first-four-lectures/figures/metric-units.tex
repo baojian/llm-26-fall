@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+\node[box,text width=23mm] (s) at (0,0) {total loss $S$\\nats};
+\node[box,text width=28mm] (l) at (4,1) {$\ell=S/N$\\nats/token};
+\node[tbox,text width=29mm] (p) at (8,1) {$e^\ell$\\perplexity};
+\node[box,text width=30mm] (b) at (4,-1) {$S/\log2$\\total bits};
+\node[tbox,text width=31mm] (bp) at (8,-1) {$S/(B_{\rm utf8}\log2)$\\bits/byte};
+\draw[arr] (s)--(l);\draw[arr] (l)--(p);
+\draw[arr] (s)--(b);\draw[arr] (b)--(bp);
+\end{tikzpicture}
