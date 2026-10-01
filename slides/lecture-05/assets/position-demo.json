@@ -1,0 +1,241 @@
+{
+  "data": [
+    {
+      "type": "heatmap",
+      "x": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "y": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "z": [
+        [
+          0.35466124439244334,
+          0.21511291853585218,
+          0.21511291853585218,
+          0.21511291853585218
+        ],
+        [
+          0.21511291853585218,
+          0.35466124439244334,
+          0.21511291853585218,
+          0.21511291853585218
+        ],
+        [
+          0.21511291853585218,
+          0.21511291853585218,
+          0.35466124439244334,
+          0.21511291853585218
+        ],
+        [
+          0.21511291853585218,
+          0.21511291853585218,
+          0.21511291853585218,
+          0.35466124439244334
+        ]
+      ],
+      "zmin": 0,
+      "zmax": 1,
+      "colorscale": [
+        [
+          0,
+          "#f0f4f7"
+        ],
+        [
+          1,
+          "#20578c"
+        ]
+      ],
+      "showscale": false,
+      "text": [
+        [
+          "0.35",
+          "0.22",
+          "0.22",
+          "0.22"
+        ],
+        [
+          "0.22",
+          "0.35",
+          "0.22",
+          "0.22"
+        ],
+        [
+          "0.22",
+          "0.22",
+          "0.35",
+          "0.22"
+        ],
+        [
+          "0.22",
+          "0.22",
+          "0.22",
+          "0.35"
+        ]
+      ],
+      "texttemplate": "%{text}",
+      "textfont": {
+        "size": 28
+      },
+      "hovertemplate": "Query slot %{y}<br>Key slot %{x}<br>Weight %{z:.4f}<extra></extra>"
+    }
+  ],
+  "layout": {
+    "width": 1152,
+    "height": 410,
+    "paper_bgcolor": "#fbfbf9",
+    "plot_bgcolor": "#fbfbf9",
+    "font": {
+      "family": "Arial, sans-serif",
+      "size": 26,
+      "color": "#202b38"
+    },
+    "margin": {
+      "l": 90,
+      "r": 20,
+      "t": 40,
+      "b": 70
+    },
+    "xaxis": {
+      "domain": [
+        0,
+        0.51
+      ],
+      "tickvals": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ticktext": [
+        "bank",
+        "of",
+        "the",
+        "river"
+      ],
+      "title": {
+        "text": "Key token"
+      },
+      "fixedrange": true
+    },
+    "yaxis": {
+      "range": [
+        3.5,
+        -0.5
+      ],
+      "tickvals": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "ticktext": [
+        "bank",
+        "of",
+        "the",
+        "river"
+      ],
+      "fixedrange": true
+    },
+    "annotations": [
+      {
+        "x": 0.255,
+        "y": 1.13,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "Attention weights",
+        "showarrow": false,
+        "font": {
+          "size": 28
+        }
+      },
+      {
+        "x": 0.62,
+        "y": 1.04,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "No position vectors",
+        "showarrow": false,
+        "xanchor": "left",
+        "align": "left",
+        "font": {
+          "family": "Arial, sans-serif",
+          "size": 28,
+          "color": "#142e4b"
+        }
+      },
+      {
+        "x": 0.62,
+        "y": 0.79,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "Original token order",
+        "showarrow": false,
+        "xanchor": "left",
+        "align": "left",
+        "font": {
+          "family": "Arial, sans-serif",
+          "size": 26,
+          "color": "#142e4b"
+        }
+      },
+      {
+        "x": 0.62,
+        "y": 0.53,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "Compare the same token<br>after restoring row order",
+        "showarrow": false,
+        "xanchor": "left",
+        "align": "left",
+        "font": {
+          "family": "Arial, sans-serif",
+          "size": 26,
+          "color": "#142e4b"
+        }
+      },
+      {
+        "x": 0.62,
+        "y": 0.21,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "Max change: 0.0000",
+        "showarrow": false,
+        "xanchor": "left",
+        "align": "left",
+        "font": {
+          "family": "Arial, sans-serif",
+          "size": 28,
+          "color": "#142e4b"
+        }
+      },
+      {
+        "x": 0.62,
+        "y": -0.02,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "Unmasked; Q = K = V",
+        "showarrow": false,
+        "xanchor": "left",
+        "align": "left",
+        "font": {
+          "family": "Arial, sans-serif",
+          "size": 24,
+          "color": "#142e4b"
+        }
+      }
+    ]
+  },
+  "config": {
+    "displayModeBar": false,
+    "displaylogo": false,
+    "scrollZoom": false,
+    "responsive": false
+  }
+}
