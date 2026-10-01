@@ -99,6 +99,38 @@ def test_alignment_example_matches_the_independent_hand_calculation(lesson):
     assert lesson["alignment_context"].tolist() == pytest.approx([weight, 1 - weight])
 
 
+def test_single_head_worked_example_matches_closed_form(lesson):
+    denominator = 2 * math.e + 1
+    assert lesson["head_scores"].tolist() == pytest.approx([1, 0, 1])
+    assert lesson["head_weights"].tolist() == pytest.approx(
+        [math.e / denominator, 1 / denominator, math.e / denominator]
+    )
+    assert lesson["head_output"].tolist() == pytest.approx(
+        [3 * math.e / denominator, (math.e + 2) / denominator]
+    )
+    allowed_weight = math.e / (math.e + 1)
+    assert lesson["head_masked_weights"].tolist() == pytest.approx(
+        [allowed_weight, 1 - allowed_weight, 0]
+    )
+    assert lesson["head_masked_output"].tolist() == pytest.approx(
+        [allowed_weight, 2 * (1 - allowed_weight)]
+    )
+
+
+def test_introductory_mask_blocks_future_values_and_gradients(lesson):
+    torch.testing.assert_close(lesson["head_masked_changed"], lesson["head_masked_output"],
+                               rtol=0, atol=0)
+    assert (lesson["head_unmasked_changed"] - lesson["head_output"]).abs().max() > 10
+    for gradients in (lesson["head_key_grad"], lesson["head_value_grad"]):
+        assert torch.count_nonzero(gradients[2]) == 0
+        assert gradients[:2].abs().sum() > 0
+    # Dropping probability mass after softmax leaves the allowed row unnormalized.
+    assert lesson["head_wrong_weights"].sum().item() == pytest.approx(
+        (math.e + 1) / (2 * math.e + 1)
+    )
+    assert lesson["head_masked_weights"].sum().item() == pytest.approx(1)
+
+
 def test_split_and_merge_heads_move_feature_chunks(lesson):
     x = torch.arange(2 * 3 * 8, dtype=torch.float64).reshape(2, 3, 8)
     split = lesson["split_heads"](x, 4)

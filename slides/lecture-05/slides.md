@@ -9,7 +9,7 @@
 <p class="byline">Baojian Zhou<br>School of Data Science<br>Fudan University<br>October 10, 2026</p>
 
 Note:
-Saturday make-up class. Three 45-minute periods, with 15 minutes reserved for Quiz 2. The five E exercises are ungraded practices. Quiz 2 assesses previously taught material and is administered separately. Time and room follow the university notice. Adapted from the instructor's 2025 Lecture 05, with the source map in teaching-plan.md.
+Allow 1 minute. Saturday make-up class. Three 45-minute periods, with 15 minutes reserved for Quiz 2. The five E exercises are ungraded practices. Quiz 2 assesses previously taught material and is administered separately. Time and room follow the university notice. Adapted from the instructor's 2025 Lecture 05, with the source map in teaching-plan.md.
 
 ---
 
@@ -26,7 +26,7 @@ Saturday make-up class. Three 45-minute periods, with 15 minutes reserved for Qu
 - Interpret a controlled comparison on toy data.
 
 Note:
-Allow 2 minutes for the opening two slides. The notebook contains the full code; slides isolate the important operations. No datasets or model weights need downloading. Predictions before execution are the expected classroom response.
+Allow 2 minutes. The notebook contains the full code; slides isolate the important operations. No datasets or model weights need downloading. Predictions before execution are the expected classroom response.
 
 ---
 
@@ -35,15 +35,15 @@ Allow 2 minutes for the opening two slides. The notebook contains the full code;
 ## Outline
 
 <ul class="outline-topics">
-<li aria-current="step">From attention to multiple heads</li>
-<li>Transformer blocks</li>
+<li aria-current="step">From recurrence to attention</li>
+<li>Positions and Transformer blocks</li>
 <li>A working language model</li>
 </ul>
 
-<p class="caption">Period 1 · 45 minutes, including E01 and E02</p>
+<p class="caption">Period 1 · 45 minutes, including E01</p>
 
 Note:
-Allow 1 minute. Lecture 04 gave us one checked causal attention head. Start from the recurrent bottleneck and learned alignment, then connect that computation to self-attention, multiple projections, and positions. This opening follows the updated course topic and readings in PR #260.
+Allow 1 minute. The revised first-four-lecture recap ends with RNNs, LSTMs, and their limitations. Introduce attention here without requiring students to have studied the attention extension in the published Lecture 04 deck. Start from recurrent context, build one head numerically, and then introduce multiple projections.
 
 ---
 
@@ -117,26 +117,26 @@ Allow 3 minutes. Compute exp(0)/(exp(0)+exp(1)) and its complement, then combine
 
 <!-- .slide: id="context-recap" -->
 
-## Context changes a representation
+## Queries select; values are combined
 
-**bank of the river**
+| Vector | Role in one attention head |
+| --- | --- |
+| Query $q_t$ | Scores candidate source positions |
+| Key $k_s$ | Is compared with the query |
+| Value $v_s$ | Contributes to the weighted output |
 
-A representation of <strong>bank</strong> can use information from <strong>river</strong>.
+Self-attention obtains all three from the same sequence of states.
 
-Attention forms a weighted combination of value vectors.
-
-The weights depend on the query and the available keys.
-
-<p class="source">Illustrative sentence; these words do not prescribe a learned attention pattern.</p>
+The three projection matrices are learned jointly with the model.
 
 Note:
-Allow 2 minutes. Retain the contextualization example from 2025 slides 22–31. Its bidirectional reading is permitted in an encoder. In a causal decoder, the first token cannot yet see river. At the last position, the prefix contains the whole phrase. The earlier noisy-signal analogy can motivate weighted averaging, but learned attention need not favor nearby positions. Background: Lecture 04, selecting context and causal attention.
+Allow 3 minutes. In the preceding alignment example, the same source state supplied both the key and the value. Separate projections let scoring and returned content use different learned features. The query is also a learned projection, not a human-written question. For example, bank in bank of the river can use river in an unmasked encoder; a causal decoder cannot use that future word at bank. No grammatical role or semantic coordinate is assigned to a head. Sources: 2025 slides 22–31; Vaswani et al., §§3.2.1–3.2.3.
 
 ---
 
 <!-- .slide: id="attention-contract" -->
 
-## The head we already checked
+## One head: project, score, normalize, combine
 
 $$Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V$$
 
@@ -147,7 +147,49 @@ $$A=\operatorname{softmax}_{\text{keys}}
 - Queries and keys share $d_k$; values may have another width.
 
 Note:
-Allow 2 minutes. The implementation uses row-vector batches; batch dimensions are suppressed here. M is zero on allowed entries and negative infinity elsewhere. Every query must retain an allowed key. The variance motivation for sqrt(d_k) assumes independent, zero-mean, unit-variance components. Lecture 04 already verified outputs, gradients, and future-input independence. Correct the 2025 slide 29 dictionary analogy: d['b'] is 2, not 3. Source: Vaswani et al. (2017), §§3.2.1 and 3.2.3, https://arxiv.org/abs/1706.03762.
+Allow 3 minutes. Read the computation left to right, without assuming prior attention work. With T input rows and model width d, W_Q and W_K have shape (d,d_k), and W_V has shape (d,d_v). QK^T is (T,T), softmax normalizes each query row over keys, and O is (T,d_v). The projections are shared across token positions. M is zero on allowed entries and negative infinity elsewhere; every query must retain an allowed key. Under independent zero-mean unit-variance Q/K coordinates, the unscaled dot product has variance d_k, motivating division by sqrt(d_k). This is an initialization argument, not a constraint maintained during training. Correct the source slide 29 dictionary lookup: d['b'] is 2, not 3. Source: Vaswani et al. (2017), §§3.2.1 and 3.2.3, https://arxiv.org/abs/1706.03762.
+
+---
+
+<!-- .slide: id="scaled-attention-numbers" -->
+
+## Work through one query
+
+Already-projected toy vectors: $q=(\sqrt{2},0)$ and $d_k=2$.
+
+| Slot | Key $k_s$ | Value $v_s$ | Score $q^\top k_s/\sqrt{2}$ |
+| --- | --- | --- | ---: |
+| 0 | $(1,0)$ | $(1,0)$ | 1 |
+| 1 | $(0,1)$ | $(0,2)$ | 0 |
+| 2 | $(1,1)$ | $(2,1)$ | 1 |
+
+$$\alpha=\operatorname{softmax}(1,0,1)
+\approx(0.4223,0.1554,0.4223)$$
+
+$$o=\sum_s\alpha_sv_s\approx(1.2670,0.7330)$$
+
+Note:
+Allow 3 minutes. The denominator is 2e+1. Derive the first output coordinate as 3e/(2e+1) and the second as (2+e)/(2e+1). Keys set the weights, while values determine what is averaged; they need not be the same vectors. Use the supplied projected vectors rather than inventing semantic meanings for their coordinates. The notebook's single-head-example reproduces these values in float64. Source for the operation: Vaswani et al., §3.2.1. The numbers are original teaching data.
+
+---
+
+<!-- .slide: id="mask-before-softmax" -->
+
+## Mask future scores before softmax
+
+The query is at input slot 1. Slots 0 and 1 are available; slot 2 is future.
+
+$$\operatorname{softmax}(1,0,-\infty)
+\approx(0.7311,0.2689,0)$$
+
+$$o\approx0.7311(1,0)+0.2689(0,2)=(0.7311,0.5379)$$
+
+Only allowed positions contribute to this query.
+
+<div class="answer fragment">Changing the future value leaves this output unchanged. The allowed weights sum to one.</div>
+
+Note:
+Allow 4 minutes. This is the same supplied query and the same K/V table, now with causal visibility. Slot 1 may read its own input while predicting slot 2's target: the input and next-token target are shifted. Setting the future weight to zero after the unmasked softmax would leave total weight about 0.5777 and is not the same operation. Explicit renormalization could repair that construction, but masking logits first is the direct stable implementation. Every row needs at least one allowed key; all-negative-infinity logits yield undefined softmax. The notebook verifies both weights, the future-value perturbation, an unmasked control, and zero derivatives to the future key and value. Source: Vaswani et al., §3.2.3.
 
 ---
 
@@ -230,7 +272,7 @@ Allow 1 minute. Trace one token through every stage, then trace one head across 
 | Joined and projected output | $(B,T,d)$ |
 
 Note:
-Allow 1 minute. Key positions are the last axis of the score tensor. The query and key lengths happen to agree for self-attention; they can differ in cross-attention. Our example has B=2, T=4, d=16, h=4, and d_h=4. Use labels, not just the repeated number 4, to identify axes.
+Allow 2 minutes. Key positions are the last axis of the score tensor. The query and key lengths happen to agree for self-attention; they can differ in cross-attention. Our example has B=2, T=4, d=16, h=4, and d_h=4. Use labels, not just the repeated number 4, to identify axes.
 
 ---
 
@@ -249,7 +291,7 @@ q = q.transpose(1, 2)
 The transpose changes which axis is a token position.
 
 Note:
-Allow 1 minute. Apply the same operations to K and V. A direct reshape to (B,h,T,d_h) generally mixes token and head indices; matching output shapes cannot establish correctness. The notebook compares with a loop over heads. PyTorch uses row-vector batches, while nn.Linear stores each matrix as (out_features,in_features).
+Allow 2 minutes. Apply the same operations to K and V. A direct reshape to (B,h,T,d_h) generally mixes token and head indices; matching output shapes cannot establish correctness. The notebook compares with a loop over heads. PyTorch uses row-vector batches, while nn.Linear stores each matrix as (out_features,in_features).
 
 ---
 
@@ -269,7 +311,7 @@ out = out_proj(z)
 <p class="caption">The allowed mask broadcasts across the batch and heads.</p>
 
 Note:
-Allow 2 minutes. Here allowed is a lower triangular (T,T) Boolean tensor, with True meaning permitted. Explain contiguous before view: transpose changes strides. This explicit version materializes scores for teaching. The notebook supplies imports, projections, shape validation, and mask construction on the input device; this slide is an excerpt.
+Allow 3 minutes. Here allowed is a lower triangular (T,T) Boolean tensor, with True meaning permitted. Explain contiguous before view: transpose changes strides. This explicit version materializes scores for teaching. The notebook supplies imports, projections, shape validation, and mask construction on the input device; this slide is an excerpt.
 
 ---
 
@@ -292,7 +334,24 @@ Equal shapes hide different axis meanings. Check values and gradients.
 </div>
 
 Note:
-Allow 5 minutes, including checking. Notebook E01 runs the independently expressed head reference in float64. Students identify every axis and inspect the agreement. A wrong reshape is a useful negative control. Do not merely verify that the output has the right shape.
+Allow 5 minutes. Notebook E01 runs the independently expressed head reference in float64. Students identify every axis and inspect the agreement. A wrong reshape is a useful negative control. Do not merely verify that the output has the right shape.
+
+---
+
+<!-- .slide: class="outline-slide" id="outline-blocks" -->
+
+## Outline
+
+<ul class="outline-topics">
+<li>From recurrence to attention</li>
+<li aria-current="step">Positions and Transformer blocks</li>
+<li>A working language model</li>
+</ul>
+
+<p class="caption">Period 2 · 45 minutes, including E02–E04</p>
+
+Note:
+Allow 1 minute. The head mixes context; a block also needs feature transformations and a trainable path through depth. The original source returns to the architecture repeatedly in slides 51,56,59,65,68,70,71; this section follows that progression in a simpler decoder diagram.
 
 ---
 
@@ -309,7 +368,7 @@ $P$ permutes the token rows.
 The output moves with each token; it does not identify its original slot.
 
 Note:
-Allow 2 minutes. This is permutation equivariance, not invariance of the whole output tensor. It assumes shared projections and no position-dependent mask or bias. A causal mask already constrains ordering, so do not apply this identity to a fixed causal mask under arbitrary permutations. Connect to the paired-key/value permutation in Lecture 04. Source: 2025 slides 23 and 52–55; Vaswani et al. (2017), §3.5.
+Allow 2 minutes. This is permutation equivariance, not invariance of the whole output tensor. It assumes shared projections and no position-dependent mask or bias. A causal mask already constrains ordering, so do not apply this identity to a fixed causal mask under arbitrary permutations. Permuting key/value pairs together preserves their correspondence; the output follows the permuted query rows. Source: 2025 slides 23 and 52–55; Vaswani et al. (2017), §3.5.
 
 ---
 
@@ -365,26 +424,6 @@ Allow 1 minute. Our baseline uses a four-row position table. Reject sequences be
 
 ---
 
-<!-- .slide: id="rotary-positions" -->
-
-## Rotary positions change Q and K
-
-$$\widetilde q_p=R_pq_p,\qquad
-\widetilde k_s=R_sk_s$$
-
-$$\widetilde q_p^\top\widetilde k_s
-=q_p^\top R_{s-p}k_s$$
-
-Each coordinate pair rotates with position.
-The relative offset enters the dot product.
-
-<p class="source">RoPE comparison; the notebook baseline uses learned absolute positions.</p>
-
-Note:
-Allow 1 minute. Column vectors in this two-dimensional rotation identity; the rest of the implementation stores row-vector batches. Each pair has its own frequency, and R_p transpose times R_s equals R_(s-p). Standard RoPE rotates Q and K, not V. This is a short continuation of the reference on 2025 slide 55; do not turn it into a survey of long-context modifications. Source: Su et al., RoFormer, §3.2, https://arxiv.org/abs/2104.09864.
-
----
-
 <!-- .slide: id="position-demo" -->
 
 ## Position changes a token's output
@@ -398,7 +437,7 @@ Allow 1 minute. Column vectors in this two-dimensional rotation identity; the re
 <div id="position-visual" class="plot" data-plotly="assets/position-demo.json" role="img" aria-label="An unmasked four-token toy attention example, initially without positions."></div>
 
 Note:
-Allow 1 minute before E02. The four word labels reuse the source sentence, but their vectors are the rows of the identity matrix, not trained embeddings. Q/K/V projections are identity and the scale is sqrt(4). Swap the first and last token and compare each token's output after undoing that permutation. Position vectors, when enabled, remain attached to slots. There is deliberately no causal mask. Reset restores the PDF's initial state.
+Allow 1 minute. The four word labels reuse the source sentence, but their vectors are the rows of the identity matrix, not trained embeddings. Q/K/V projections are identity and the scale is sqrt(4). Swap the first and last token and compare each token's output after undoing that permutation. Position vectors, when enabled, remain attached to slots. There is deliberately no causal mask. Reset restores the PDF's initial state.
 
 ---
 
@@ -424,23 +463,6 @@ Allow 5 minutes. Use the browser before running the corresponding notebook cells
 
 ---
 
-<!-- .slide: class="outline-slide" id="outline-blocks" -->
-
-## Outline
-
-<ul class="outline-topics">
-<li>From attention to multiple heads</li>
-<li aria-current="step">Transformer blocks</li>
-<li>A working language model</li>
-</ul>
-
-<p class="caption">Period 2 · 45 minutes, including E03 and E04</p>
-
-Note:
-Allow 1 minute. The head mixes context; a block also needs feature transformations and a trainable path through depth. The original source returns to the architecture repeatedly in slides 51,56,59,65,68,70,71; this section follows that progression in a simpler decoder diagram.
-
----
-
 <!-- .slide: id="residual-paths" -->
 
 ## Keep a residual path through each sublayer
@@ -450,7 +472,7 @@ Allow 1 minute. The head mixes context; a block also needs feature transformatio
 <p class="caption">Every update and its residual have shape $(B,T,d)$.</p>
 
 Note:
-Allow 4 minutes. Trace the direct path and the learned update separately. The attention sublayer mixes allowed positions; the FFN transforms features at each position. Addition requires identical shapes. Residual paths provide a direct gradient contribution but do not guarantee stable gradients at all depths. Sources: 2025 slides 66–67; Vaswani et al. (2017), §3.1; Xiong et al. (2020).
+Allow 3 minutes. Trace the direct path and the learned update separately. The attention sublayer mixes allowed positions; the FFN transforms features at each position. Addition requires identical shapes. Residual paths provide a direct gradient contribution but do not guarantee stable gradients at all depths. Sources: 2025 slides 66–67; Vaswani et al. (2017), §3.1; Xiong et al. (2020).
 
 ---
 
@@ -469,7 +491,7 @@ $$y=x+F\bigl(\operatorname{LN}(x)\bigr)$$
 The placement changes the computation and its gradients.
 
 Note:
-Allow 4 minutes. F is attention or the FFN. The original 2017 Transformer also uses dropout; the teaching model has none. Our pre-LN decoder includes a final normalization before readout. For the controlled comparison later, both variants retain that final norm, so only sublayer norm order changes. Do not describe the comparison model as a full reproduction of the 2017 architecture. Source: Xiong et al., On Layer Normalization in the Transformer Architecture, https://proceedings.mlr.press/v119/xiong20b.html.
+Allow 3 minutes. F is attention or the FFN. The original 2017 Transformer also uses dropout; the teaching model has none. Our pre-LN decoder includes a final normalization before readout. For the controlled comparison later, both variants retain that final norm, so only sublayer norm order changes. Do not describe the comparison model as a full reproduction of the 2017 architecture. Source: Xiong et al., On Layer Normalization in the Transformer Architecture, https://proceedings.mlr.press/v119/xiong20b.html.
 
 ---
 
@@ -488,7 +510,7 @@ For $(B,T,d)$ states, normalize the last axis.
 <p class="caption">Each token has its own statistics; $\gamma,\beta$ are shared across tokens.</p>
 
 Note:
-Allow 4 minutes. Use the population variance (divide by d), as in nn.LayerNorm. Our epsilon is 1e-5, with learned affine scale and bias. Normalizing across time would mix statistics from future positions and can break causality. Source: Ba et al., Layer Normalization (2016), https://arxiv.org/abs/1607.06450; 2025 slide 67.
+Allow 3 minutes. Use the population variance (divide by d), as in nn.LayerNorm. Our epsilon is 1e-5, with learned affine scale and bias. Normalizing across time would mix statistics from future positions and can break causality. Source: Ba et al., Layer Normalization (2016), https://arxiv.org/abs/1607.06450; 2025 slide 67.
 
 ---
 
@@ -592,6 +614,19 @@ Allow 2 minutes. Four heads of width 4 partition each full-width projection. The
 
 ---
 
+<!-- .slide: id="full-model" -->
+
+## Assemble the language model
+
+<img class="diagram" src="assets/decoder-model.svg" data-excalidraw-source="assets/decoder-model.excalidraw" alt="Token IDs select token embeddings and add learned positions. Two decoder blocks and a final LayerNorm produce states. A vocabulary readout reuses the token embedding table to produce next-token logits.">
+
+<p class="caption">Every position produces a vocabulary logit vector: $(B,T,7)$.</p>
+
+Note:
+Allow 4 minutes. Match each box to a notebook module. The repeated blocks change representations but preserve shape. Only the token embedding table is reused for readout; the position table is independent. The source architecture's encoder and cross-attention are omitted because this model predicts a continuation from one prefix.
+
+---
+
 <!-- .slide: class="exercise" id="exercise-04" -->
 
 <p class="exercise-meta">Exercise E04 · 5 minutes · predict, then check</p>
@@ -615,16 +650,20 @@ Allow 5 minutes. Verify 4432 unique trainable parameters, or 4544 with an untied
 
 ---
 
-<!-- .slide: id="full-model" -->
+<!-- .slide: class="outline-slide" id="outline-working" -->
 
-## Assemble the language model
+## Outline
 
-<img class="diagram" src="assets/decoder-model.svg" data-excalidraw-source="assets/decoder-model.excalidraw" alt="Token IDs select token embeddings and add learned positions. Two decoder blocks and a final LayerNorm produce states. A vocabulary readout reuses the token embedding table to produce next-token logits.">
+<ul class="outline-topics">
+<li>From recurrence to attention</li>
+<li>Positions and Transformer blocks</li>
+<li aria-current="step">A working language model</li>
+</ul>
 
-<p class="caption">Every position produces a vocabulary logit vector: $(B,T,7)$.</p>
+<p class="caption">Period 3 · 30 minutes of teaching, then Quiz 2 (15 minutes)</p>
 
 Note:
-Allow 4 minutes. Match each box to a notebook module. The repeated blocks change representations but preserve shape. Only the token embedding table is reused for readout; the position table is independent. The source architecture's encoder and cross-attention are omitted because this model predicts a continuation from one prefix.
+Allow 1 minute. The complete code is already in the notebook. Run small checks before interpreting a training curve. Quiz 2 is separate private material on previous lectures. The teaching plan reserves the published 15-minute quiz duration.
 
 ---
 
@@ -642,7 +681,7 @@ The logit vector at position $t$ predicts token $t+1$.
 Teacher forcing supplies the observed input prefix during training.
 
 Note:
-Allow 3 minutes. Continue Lecture 04's seven-token vocabulary and two invented sentences. The second is BOS blue key closes EOS. Inputs and targets are sliced within each document; nothing crosses a sentence boundary. There is no padding in this example. Source: 2025 slide58 and original Transformer shifted-right decoder input.
+Allow 1 minute. Continue Lecture 04's seven-token vocabulary and two invented sentences. The second is BOS blue key closes EOS. Inputs and targets are sliced within each document; nothing crosses a sentence boundary. There is no padding in this example. Source: 2025 slide58 and original Transformer shifted-right decoder input.
 
 ---
 
@@ -655,7 +694,7 @@ Allow 3 minutes. Continue Lecture 04's seven-token vocabulary and two invented s
 <p class="caption">Position $t$ can read input $t$ while predicting target $t+1$.</p>
 
 Note:
-Allow 2 minutes. Revisit the off-by-one ambiguity in 2025 slide61. The token at the diagonal is an observed input, not the next target. A strict lower triangle would create a fully masked first row unless another special convention were used. Our lower triangle includes the diagonal and every row has at least one allowed key.
+Allow 1 minute. Revisit the off-by-one ambiguity in 2025 slide61. The token at the diagonal is an observed input, not the next target. A strict lower triangle would create a fully masked first row unless another special convention were used. Our lower triangle includes the diagonal and every row has at least one allowed key.
 
 ---
 
@@ -670,7 +709,7 @@ Allow 2 minutes. Revisit the off-by-one ambiguity in 2025 slide61. The token at 
 | Decoder cross-attention | Target states | Encoder outputs | All valid source tokens |
 
 Note:
-Allow 2 minutes. This table completes the bridge from the original source's translation diagram to the implemented model. Source and target lengths can differ in cross-attention, so its score matrix can be rectangular. Padding masks still apply when sequences are padded. Our no-padding decoder-only notebook needs just the causal self-attention row. Source: Vaswani et al. (2017), §3.2.3.
+Allow 1 minute. This table completes the bridge from the original source's translation diagram to the implemented model. Source and target lengths can differ in cross-attention, so its score matrix can be rectangular. Padding masks still apply when sequences are padded. Our no-padding decoder-only notebook needs just the causal self-attention row. Source: Vaswani et al. (2017), §3.2.3.
 
 ---
 
@@ -687,24 +726,7 @@ The training objective predicts selected corrupted positions.
 A causal language model instead predicts the next token from its prefix.
 
 Note:
-Allow 2 minutes. In BERT's original recipe, selected prediction positions are corrupted using a mixture of masking, replacement, and unchanged tokens; this sentence shows only the mask-token case. Do not imply BERT is obtained by removing a causal mask while keeping next-token targets, which would leak target information. Source: Devlin et al. (2019), §3.1. Keep the broader model-family survey for other material.
-
----
-
-<!-- .slide: class="outline-slide" id="outline-working" -->
-
-## Outline
-
-<ul class="outline-topics">
-<li>From attention to multiple heads</li>
-<li>Transformer blocks</li>
-<li aria-current="step">A working language model</li>
-</ul>
-
-<p class="caption">Period 3 · 30 minutes of teaching, then Quiz 2 (15 minutes)</p>
-
-Note:
-Allow 1 minute. The complete code is already in the notebook. Run small checks before interpreting a training curve. Quiz 2 is separate private material on previous lectures. The teaching plan reserves the published 15-minute quiz duration.
+Allow 1 minute. In BERT's original recipe, selected prediction positions are corrupted using a mixture of masking, replacement, and unchanged tokens; this sentence shows only the mask-token case. Do not imply BERT is obtained by removing a causal mask while keeping next-token targets, which would leak target information. Source: Devlin et al. (2019), §3.1. Keep the broader model-family survey for other material.
 
 ---
 
@@ -756,7 +778,7 @@ Allow 1 minute. Flatten batch and position in the same order for logits and targ
 Run comparisons with dropout disabled and stated tolerances.
 
 Note:
-Allow 2 minutes. A correct head can still be embedded in an incorrect model. A wrong normalization axis or reshape can introduce leakage. The gradient test must use per-position input states, not embedding-table gradients: the same token embedding parameters can be used at several positions. No dropout is present here; eval mode remains a useful habit for deterministic comparisons.
+Allow 1 minute. A correct head can still be embedded in an incorrect model. A wrong normalization axis or reshape can introduce leakage. The gradient test must use per-position input states, not embedding-table gradients: the same token embedding parameters can be used at several positions. No dropout is present here; eval mode remains a useful habit for deterministic comparisons.
 
 ---
 
@@ -839,7 +861,7 @@ for step in range(200):
 <p class="caption">CPU, seed 7, full batch, no dropout. This is a fitting check.</p>
 
 Note:
-Allow 2 minutes. Parameters are initialized with standard deviation 0.02 for embeddings and Linear weights; norms start with scale 1 and bias 0. AdamW uses betas (0.9,0.999), epsilon 1e-8, and zero weight decay. Record losses before training and after completed updates; do not confuse update index with an epoch over a large dataset. See assets/README.md for the exact run and caveats.
+Allow 1 minute. Parameters are initialized with standard deviation 0.02 for embeddings and Linear weights; norms start with scale 1 and bias 0. AdamW uses betas (0.9,0.999), epsilon 1e-8, and zero weight decay. Record losses before training and after completed updates; do not confuse update index with an epoch over a large dataset. See assets/README.md for the exact run and caveats.
 
 ---
 
@@ -867,7 +889,7 @@ Allow 3 minutes. Both variants retain the same final LayerNorm, tied readout, le
 Next: change one factor and repeat the checks.
 
 Note:
-Allow 2 minutes. The notebook records initial/final losses and gradient norms even if post-LN performs as well as or better than pre-LN. Preserve that result. Training stability can depend on depth, initialization, learning rate, and normalization details; the source deck's blanket claim of no vanishing/exploding gradients is removed. Do not infer held-out performance because there is no held-out set. If extending to a corpus, split documents before forming overlapping windows.
+Allow 1 minute. The notebook records initial/final losses and gradient norms even if post-LN performs as well as or better than pre-LN. Preserve that result. Training stability can depend on depth, initialization, learning rate, and normalization details; the source deck's blanket claim of no vanishing/exploding gradients is removed. Do not infer held-out performance because there is no held-out set. If extending to a corpus, split documents before forming overlapping windows.
 
 ---
 
@@ -887,22 +909,6 @@ $$\text{score storage}=4BhT^2\ \text{bytes in float32}$$
 
 Note:
 Allow 2 minutes. MiB means 2^20 bytes. The formula counts a materialized (B,h,T,T) tensor, not every kernel's implementation or total model state. Our tiny T=4 tensor needs 512 bytes. At fixed width, QK and AV together take approximately 4BT²d floating-point operations when a multiply-add counts as 2. Original slides 81–82 survey approximate alternatives; later efficiency material will distinguish algorithm changes from memory-efficient exact attention. Training positions can be parallelized, but autoregressive generation still depends on preceding generated tokens.
-
----
-
-<!-- .slide: id="historical-result" -->
-
-## A historical translation result
-
-| WMT14 English–French | BLEU | Estimated training FLOPs |
-| --- | ---: | ---: |
-| ConvS2S, single model | 40.46 | $1.5\times10^{20}$ |
-| Transformer, big | 41.8 | $2.3\times10^{19}$ |
-
-<p class="source">Vaswani et al., Table 2, arXiv v7. Historical systems with different training setups.</p>
-
-Note:
-Allow 1 minute, or assign as reading if the comparison discussion runs long. These are the table values, not a controlled same-hardware timing experiment. The roughly 6.5x ratio is estimated FLOPs; the roughly 50x source claim compared an ensemble's cost and called it speed. The paper's prose and historical versions can report a different EN-FR number; explicitly pin this table. Source: 2025 slides72–75; https://arxiv.org/html/1706.03762v7#S6.T2. Further MT and parsing details are in optional-reading.md.
 
 ---
 
@@ -967,4 +973,4 @@ Allow 1 minute. These are the published course dates at authoring; the slide int
 - [Historical examples and further reading](optional-reading.md)
 
 Note:
-Allow 3 minutes for readings and remaining questions. The 2025 Lecture 05 PowerPoint supplied the content sequence and examples; teaching-plan.md maps every source slide and records corrections. All new diagrams are editable and documented in assets/README.md. The core notebook is offline. Figures and reported values must be checked against their cited versions rather than carried forward from a screenshot.
+Allow 3 minutes. The 2025 Lecture 05 PowerPoint supplied the content sequence and examples; teaching-plan.md maps every source slide and records corrections. All new diagrams are editable and documented in assets/README.md. The core notebook is offline. Figures and reported values must be checked against their cited versions rather than carried forward from a screenshot.

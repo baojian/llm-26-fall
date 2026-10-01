@@ -895,11 +895,11 @@
     },
     "meta": {
       "command": "uv run python slides/lecture-05/prepare-figures.py",
-      "timestamp": "2026-10-01T01:57:21+08:00",
+      "timestamp": "2026-10-01T19:23:25+08:00",
       "timezone": "Asia/Shanghai",
-      "git_revision": "e77917133abb17129503e8c584558d6c407fbf41",
+      "git_revision": "7b70a42a5158fab57b52e692b179f514252bdbfd",
       "git_dirty": true,
-      "notebook_sha256": "13a4ffd67acdd3d0a95bec2b25cc9eed6a9963cb7aa1d62a3ca655fc7407b6fb",
+      "notebook_sha256": "faba944c4833b0e04624979ee676ec784c9b58bf0ec9a8ea7bb6ece202cd62ce",
       "python": "3.11.14",
       "torch": "2.14.0",
       "platform": "macOS-26.4.1-arm64-arm-64bit",
@@ -930,7 +930,7 @@
       ],
       "configuration": "slides/lecture-05/teaching-plan.md#exact-teaching-model",
       "raw_artifact": "slides/.checks/lecture-05/figure-run.json",
-      "elapsed_seconds": 0.8902
+      "elapsed_seconds": 0.9153
     }
   },
   "config": {

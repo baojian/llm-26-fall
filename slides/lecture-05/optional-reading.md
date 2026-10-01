@@ -9,7 +9,7 @@ Transformers* lecture. They supplement the [current slides](index.html) and
 An encoder–decoder system maps a source sequence to a target sequence. In a
 recurrent system, using only the last encoder state forces that state to carry
 all the information needed by the decoder. Attention lets each decoder query
-combine several encoder states. Lecture 05 revisits this motivation and the weighted-context calculation,
+combine several encoder states. Lecture 05 introduces this motivation and the weighted-context calculation,
 then distinguishes encoder self-attention, decoder self-attention, and
 decoder-to-encoder cross-attention. In cross-attention, Q comes from the
 decoder, while K and V come from the encoder. See
@@ -54,6 +54,12 @@ comparison and position-probing experiments. RoPE is a separate way to place
 relative offsets in Q/K dot products;
 [Su et al., §3.2](https://arxiv.org/abs/2104.09864) gives the rotation derivation.
 
+For a pair of column-vector coordinates, let `R_p` rotate by a frequency
+times position `p`. Then `q'_p = R_p q_p` and `k'_s = R_s k_s` give
+`q'_p^T k'_s = q_p^T R_(s-p) k_s`, because `R_p^T R_s = R_(s-p)`.
+Standard RoPE rotates Q and K, while V is unchanged. This optional extension
+is separate from the notebook's learned absolute position table.
+
 The original Transformer's appendix includes attention visualizations for
 particular encoder heads and sentences. Such examples can suggest a hypothesis
 about a head; they do not establish a fixed grammatical role for every head.
@@ -71,7 +77,7 @@ sublayers, dropout, and label smoothing. Our small pre-LN decoder omits the
 encoder and cross-attention, uses learned positions, and has no dropout or
 label smoothing. These choices must be stated when comparing results.
 
-The historical English–French comparison in the slides is pinned to
+This optional historical English–French comparison is pinned to
 [arXiv v7, Table 2](https://arxiv.org/html/1706.03762v7#S6.T2): single-model
 ConvS2S reports 40.46 BLEU and an estimated 1.5 × 10²⁰ training FLOPs;
 Transformer big reports 41.8 BLEU and 2.3 × 10¹⁹ FLOPs. The ratio of estimated
