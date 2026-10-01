@@ -4,11 +4,8 @@ PREDICTIONS = {
     "GPT-4o很强": ["GPT","-","4o","很强"],
 }
 MY_CASES = [("Ａ１é", ["Ａ１é"]), ("Grok和Gemini", ["Grok","和","Gemini"])]
-NOTES = """如果Han-Latin边界允许合并,比如说让"GPT用"或者"用GPT"预分为一个块。
-            好处是BPE token数可能更少,坏处是这种混合串频率低,难复用,还会占用词表。
-            因此把Han放第一可以防止"用GPT"被整体吞掉,而从其他字母分支排除Han。
-            则可以防止"GPT用"被整体吞掉,两者合起来目的就是建立对称硬边界,提高纯汉字
-            和纯拉丁token复用率。"""
+# Teaching-team edit: translated or corrected NOTES during the authorized October 1 review.
+NOTES = """Allowing merges across Han-Latin boundaries could make mixed forms such as 用GPT and GPT用 use fewer tokens, but these specific combinations may be rare and occupy vocabulary entries with limited reuse. Putting the Han branch first prevents a broad letter branch from consuming 用GPT as one run when matching starts at 用. Excluding Han from other letter branches also stops a Latin-first run at the boundary in GPT用. Together, these choices create boundaries in both directions so the same Han and Latin pieces can be reused across contexts."""
 
 def solve(text: str) -> list[str]:
     import re

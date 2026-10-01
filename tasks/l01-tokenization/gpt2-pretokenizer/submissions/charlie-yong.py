@@ -11,7 +11,8 @@ MY_CASES = [
     ("a_b c", ["a", "_", "b", " c"]),
 ]
 
-NOTES = """把空格挂在后一个词的开头（例如把 “ world” 当作一个整体 token）而不是挂在前一个词的末尾，最大的好处是同一个词无论出现在句首还是句中都能复用同一条词表项。倘若反过来把空格附在前词末尾，“world” 与 “world ”、“world.”、“world,” 都得各自占一个词条，标点和空格的组合会让词表膨胀得相当厉害，几乎每个词都要为它后面可能跟随的字符各存一份。GPT-2 的做法本质上是把空格当作词的一部分而不是分隔符，BPE 在训练阶段就会自然把“前导空格 + 词”这种高频模式合并成单个 token，于是常见词的表示更稳定、序列也更短。换个角度看，这种挂法把位置信息编码进了 token 本身，模型不必再从上下文里推断某个词是不是位于句首，词表也能保持相对紧凑。"""
+# Teaching-team edit: translated or corrected NOTES during the authorized October 1 review.
+NOTES = """Attaching a leading ASCII space to a word gives the model a reusable word-start cue in forms such as " world". BPE may learn this frequent form, but both "world" and " world" can occur in the vocabulary, and a pre-tokenization chunk may still become several tokens. Using trailing spaces would instead favor variants such as "world ", marking a boundary after the word. This changes the space-bearing forms the vocabulary learns; it neither requires a separate token for every following punctuation mark nor guarantees a smaller vocabulary or one token per word."""
 
 import re
 

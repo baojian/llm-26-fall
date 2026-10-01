@@ -18,4 +18,3 @@ MY_CASES = [
     ("é中　x", ["é", "中", "　", "x"]),
 ]
 NOTES = """If BPE merges across Han-Latin boundaries, forms such as "用GPT" and "GPT用" can each occupy a separate vocabulary entry and shorten mixed-script token sequences. These mixed forms may be rare, receive fewer training updates, and reduce reuse of the shared "GPT" piece. Putting the Han branch first ensures that a run beginning with Han characters is matched there before a general letter branch can consume it. Excluding Han from other letter branches also stops a Latin-first run such as "GPT用" at the script boundary, so both examples split into reusable "用" and "GPT" pieces."""
-

@@ -47,10 +47,10 @@ MY_CASES = [
 
 
 NOTES = """
-Allowing digit strings of length 1 through k to be separate tokens requires 10 entries for k=1, 
-1110 entries for k=3, and 11110 entries for k=4. For the 12-digit string 123456789012, the corresponding 
+Allowing digit strings of length 1 through k to be separate tokens requires 10 entries for k=1,
+1110 entries for k=3, and 11110 entries for k=4. For the 12-digit string 123456789012, the corresponding
 numbers of tokens are 12, 4, and 3. Therefore, larger digit groups can reduce the number of tokens and
-shorten the sequence, but they also require a much larger vocabulary. This shows a trade-off between vocabulary 
-size and sequence length. Also, a pre-tokenized chunk is not necessarily one final BPE token, because BPE may 
+shorten the sequence, but they also require a much larger vocabulary. This shows a trade-off between vocabulary
+size and sequence length. Also, a pre-tokenized chunk is not necessarily one final BPE token, because BPE may
 split the chunk further if the whole chunk was not learned as a vocabulary item.
 """

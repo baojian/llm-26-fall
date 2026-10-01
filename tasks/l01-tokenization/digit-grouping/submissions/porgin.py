@@ -4,10 +4,8 @@ PREDICTIONS = {
     "2024-09-16": ["202","4","-","09","-","16"],
 }
 MY_CASES = [("a1b2c3", ["a","1","b","2","c","3"]), ("a\n1\n", ["a\n","1","\n"])]
-NOTES = """问题1:在k=1时,entries=10;在k=3时,entries=10+100+1000;在k=4时,entries=10+100+1000+10000。
-            问题2:k=1,3,4的情况下tokens数量分别为12,4,3。
-            问题3:k越大,词表大小指数级增长,好处是长数字会被拆成更少的token,推理速度更快;
-            预分词只决定候选块的边界,而合并规则存在先后顺序,即使是123,也可能被拆分为1|23两个token，无法保证一个数据块对应一个BPE token。"""
+# Teaching-team edit: translated or corrected NOTES during the authorized October 1 review.
+NOTES = """For k=1, k=3, and k=4, including all ASCII digit strings and leading zeros requires 10, 10+100+1000=1110, and 10+100+1000+10000=11110 vocabulary entries, respectively. The string 123456789012 then takes 12, 4, and 3 tokens, respectively. Increasing k makes long numbers shorter in tokens, but the vocabulary grows exponentially. Pre-tokenization only sets chunk boundaries, so a chunk such as 123 may still become 1 and 23 if the learned BPE merges do not combine the whole chunk."""
 
 def solve(text: str) -> list[str]:
     temp_str = ''

@@ -1,6 +1,8 @@
 # October 1, 2026 merge batch: gpt2-pretokenizer
 
-**Status:** prepared; student PR merges and teaching-team corrections pending.
+**Status:** complete. All listed student PRs merged on October 1, 2026.
+The completion commit also contains the reviewed teaching-team corrections
+and the regenerated progress board.
 
 ## Deadline and instructor decisions
 
@@ -17,15 +19,15 @@
 
 | PR | Student | Reviewed head commit | Deadline status | Teaching-team correction | Merge status |
 | --- | --- | --- | --- | --- | --- |
-| [#226](https://github.com/baojian/llm-26-fall/pull/226) | Sunny-hs | `99aadfde6284de3d60cc34f8c9f2d46d2694f1b4` | On time | None | Pending |
-| [#228](https://github.com/baojian/llm-26-fall/pull/228) | Cincinnatus23 | `e7e15d5dff18fea8d16fe5f6f8c2b195767e80f0` | On time | Trailing whitespace/blank lines only | Pending |
-| [#230](https://github.com/baojian/llm-26-fall/pull/230) | naonaozhong | `534448f169d14a707c4e7db396ca6181a8aa7edb` | On time | None | Pending |
-| [#232](https://github.com/baojian/llm-26-fall/pull/232) | porgin | `933b1e5dffc201c1185f2b35739f2c66def81894` | On time | English NOTES translation/correction | Pending |
-| [#246](https://github.com/baojian/llm-26-fall/pull/246) | Jessica0818 | `00ad932ef60fc15e37c5c25ab225ad4e192bd23f` | On time | Trailing whitespace/blank lines only | Pending |
-| [#247](https://github.com/baojian/llm-26-fall/pull/247) | Charlie-Yong | `c734823bfda7438bf25087fc05ae198926ccc252` | On time | English NOTES translation/correction | Pending |
-| [#250](https://github.com/baojian/llm-26-fall/pull/250) | 6o6-Ma | `2d1b05993f4e581d68056de353cc2640138c960c` | On time | English NOTES translation/correction | Pending |
-| [#254](https://github.com/baojian/llm-26-fall/pull/254) | geekeraman | `7cf842ca85715517c0367d615590523b56f9a5c7` | On time | English NOTES translation/correction | Pending |
-| [#256](https://github.com/baojian/llm-26-fall/pull/256) | hxjuju | `8cab6825bdb9efbfbddf230928c58627b7636a2e` | On time | None | Pending |
+| [#226](https://github.com/baojian/llm-26-fall/pull/226) | Sunny-hs | `99aadfde6284de3d60cc34f8c9f2d46d2694f1b4` | On time | None | Merged [4c1c140](https://github.com/baojian/llm-26-fall/commit/4c1c140c99a861435b1e6279a6a14120ea3144fb) |
+| [#228](https://github.com/baojian/llm-26-fall/pull/228) | Cincinnatus23 | `e7e15d5dff18fea8d16fe5f6f8c2b195767e80f0` | On time | Trailing whitespace/blank lines only | Merged [e2975cb](https://github.com/baojian/llm-26-fall/commit/e2975cbc35021ad5e57ca608824e6d6d4321b281) |
+| [#230](https://github.com/baojian/llm-26-fall/pull/230) | naonaozhong | `534448f169d14a707c4e7db396ca6181a8aa7edb` | On time | None | Merged [4c9e71d](https://github.com/baojian/llm-26-fall/commit/4c9e71d447e7b7372cad1349cecd84e40f2afdef) |
+| [#232](https://github.com/baojian/llm-26-fall/pull/232) | porgin | `933b1e5dffc201c1185f2b35739f2c66def81894` | On time | English NOTES translation/correction | Merged [b9af6b5](https://github.com/baojian/llm-26-fall/commit/b9af6b50e7b513461fd7ae4b8ae92a7cf090f499) |
+| [#246](https://github.com/baojian/llm-26-fall/pull/246) | Jessica0818 | `00ad932ef60fc15e37c5c25ab225ad4e192bd23f` | On time | Trailing whitespace/blank lines only | Merged [7d2dd47](https://github.com/baojian/llm-26-fall/commit/7d2dd479ca56719a5f5d173c5d4c799640a3e4c6) |
+| [#247](https://github.com/baojian/llm-26-fall/pull/247) | Charlie-Yong | `c734823bfda7438bf25087fc05ae198926ccc252` | On time | English NOTES translation/correction | Merged [164d89b](https://github.com/baojian/llm-26-fall/commit/164d89b9cc70ede1a8cae526470e0ea6074f7cd8) |
+| [#250](https://github.com/baojian/llm-26-fall/pull/250) | 6o6-Ma | `2d1b05993f4e581d68056de353cc2640138c960c` | On time | English NOTES translation/correction | Merged [31aa3a9](https://github.com/baojian/llm-26-fall/commit/31aa3a94a1693cab5ce1fd341dfd952cd52e502d) |
+| [#254](https://github.com/baojian/llm-26-fall/pull/254) | geekeraman | `7cf842ca85715517c0367d615590523b56f9a5c7` | On time | English NOTES translation/correction | Merged [a1a2941](https://github.com/baojian/llm-26-fall/commit/a1a294171816cffed3787c79eb568e7d0f06af09) |
+| [#256](https://github.com/baojian/llm-26-fall/pull/256) | hxjuju | `8cab6825bdb9efbfbddf230928c58627b7636a2e` | On time | None | Merged [ddadf07](https://github.com/baojian/llm-26-fall/commit/ddadf078a7660b0de9e2423e577a1abbfc864189) |
 
 ## Review and validation
 
@@ -35,23 +37,27 @@
 - All implementations pass the current public task checker and **1,010**
   additional cases covering Unicode, whitespace, boundaries, empty input,
   long input, and lossless reconstruction.
-- Prepared explanation and whitespace corrections also pass the public
+- The final explanation and whitespace corrections also pass the public
   checker. An AST comparison confirms that they do not change executable
   logic, predictions, or personal cases.
 - The instructor authorized resolving the outstanding explanation comments
   through the teaching-team edits listed above. Corrected explanations
   remain clearly attributed to the teaching team.
 
-## Batch sequence
+## Completion record
 
-1. Merge this deadline and batch record through a course-maintenance PR.
-2. Merge each listed student PR at its reviewed head, retaining its author
-   and PR identity. Verify current CI and pause if any reviewed head changes.
-3. Apply the reviewed teaching-team corrections through a separate PR within
-   this same batch. Some forks disable maintainer edits; this also keeps
-   instructor-authored explanations distinct from the original submissions.
-4. Verify every final submission, record merge commits and completion here,
-   and regenerate the progress board from merged files and GitHub PR counts.
+- The deadline and exact-head batch records were merged first in
+  [PR #262](https://github.com/baojian/llm-26-fall/pull/262).
+- Each student PR was merged individually at the reviewed head above, with
+  passing current public-feedback and regression checks. Original authorship
+  and PR identities are preserved.
+- Nine explanations across the three tasks were translated or corrected by
+  the teaching team; seven other files received whitespace-only cleanup.
+  These edits are separate from student commits, and changed explanations
+  carry a teaching-team attribution comment.
+- All final submissions pass their public task checks. The progress board was
+  regenerated on October 1 from these files and the actual merged-PR counts.
+- The archived survey, its responses, and its participation counts are retained.
 
 The progress board records the final reviewed submissions, including approved
 teaching-team corrections; it is participation feedback, not a graded score.

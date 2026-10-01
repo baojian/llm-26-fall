@@ -9,13 +9,8 @@ MY_CASES = [
     ("AA0- 3n_jk09", ["AA", "0", "- ", "3", "n_jk", "09"]),
 ]
 
-NOTES = """
-Treating every complete number as one token would require a very large vocabulary,
-because there are too many possible numbers. Splitting every digit separately keeps
-the vocabulary small, but makes long numbers use many tokens. Grouping digits into
-chunks of at most three is a compromise: it limits vocabulary growth while keeping
-number sequences relatively short.
-"""
+# Teaching-team edit: translated or corrected NOTES during the authorized October 1 review.
+NOTES = """Treating every complete number as one token would require a very large vocabulary, because there are too many possible numbers. Including every ASCII digit string of lengths 1 through k and leading zeros needs 10 entries for k=1, 10+100+1000=1110 for k=3, and 11110 for k=4. The string 123456789012 takes 12, 4, and 3 tokens in these three cases. Grouping digits into longer chunks shortens sequences at the cost of a larger vocabulary. A pre-tokenization limit only sets chunk boundaries, and BPE may split a chunk further if the required merges were not learned."""
 
 
 def solve(text: str) -> list[str]:

@@ -9,7 +9,8 @@ MY_CASES = [
     ("a12\n3456b", ["a", "12", "\n", "345", "6", "b"]),
 ]
 
-NOTES = """如果每个长度 1 到 k 的 ASCII 数字串都单独进词表，并且允许前导零，k=1 需要 10 个，k=3 需要 10+100+1000=1110 个，k=4 则需要 11110 个。字符串 123456789012 在 k=1 时要 12 个数字 token，在 k=3 时可以是 4 个三位块，在 k=4 时可以是 3 个四位块。更大的 k 会缩短序列，但词表会快速膨胀，还会让模型为很多罕见数字组合付出容量。预分词最多三位只规定了 BPE 可以合并的边界，训练数据里没有学到的块仍可能被继续拆开，所以它不保证每个 chunk 都是一个 BPE token。"""
+# Teaching-team edit: translated or corrected NOTES during the authorized October 1 review.
+NOTES = """If every ASCII digit string of length 1 through k has its own vocabulary entry, including leading zeros, k=1 needs 10 entries, k=3 needs 10+100+1000=1110, and k=4 needs 11110. The string 123456789012 uses 12 numeric tokens for k=1, four three-digit tokens for k=3, and three four-digit tokens for k=4. A larger k shortens sequences but rapidly expands the vocabulary and spends model capacity on rare numeric combinations. A three-digit pre-tokenization limit only sets BPE merge boundaries, so a chunk whose merges were not learned may still split into several BPE tokens."""
 
 
 def solve(text: str) -> list[str]:

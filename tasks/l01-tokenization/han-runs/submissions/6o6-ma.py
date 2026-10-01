@@ -9,7 +9,8 @@ MY_CASES = [
     ("𠀀A中９", ["𠀀", "A", "中", "９"]),
 ]
 
-NOTES = """如果允许 Han 和 Latin 在同一个预分词块里随意合并，像 用GPT 或 GPT用 这样的混合脚本片段可能学成专门 token，词表会被具体搭配占用，GPT 这个英文片段在不同中文上下文里的复用也会变差。先匹配 Han run 可以把 用 和 GPT 分开，GPT用 也会在 Latin run 后遇到 Han 边界而停止。Kimi 的模式还要把 Han 从其他字母分支排除，否则 Han 可能被更宽的 letter 类吞掉，重新产生跨脚本合并。这样的边界通常会让混合文本的 token 数略增，但换来更稳定的中文、英文子词复用。"""
+# Teaching-team edit: translated or corrected NOTES during the authorized October 1 review.
+NOTES = """Allowing Han and Latin characters in the same pre-tokenization chunk could produce dedicated tokens for mixed forms such as 用GPT and GPT用. Those combinations can shorten mixed-script sequences, but may be rare and reduce reuse of the GPT piece across Chinese contexts. Putting the Han branch first separates 用 from GPT when matching starts at the Han character in 用GPT. Excluding Han from other letter branches is also needed to stop a broader Latin-first run from consuming GPT用 across the boundary. These boundaries can increase the number of mixed-script tokens while improving reuse of Chinese and Latin pieces."""
 
 
 def _category(char: str) -> int:
