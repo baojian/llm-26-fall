@@ -34,7 +34,7 @@ GROUPS = {
 }
 HINTS = {
     "Submission format": "Use your lowercase GitHub username as the filename.",
-    "Examples and edge cases": "Try the first failing input locally. Compare the expected and actual outputs, including whitespace and Unicode characters.",
+    "Examples and edge cases": "Try the first failing input locally. Compare expected and actual values, output fields, and ordering using the handout's rules and numeric tolerances.",
     "Your predictions": "Include exactly the three requested inputs, then investigate each disagreement between your prediction and solve.",
     "Your own tests": "Use distinct new inputs, not copies of the supplied cases, and check their expected outputs by hand.",
     "Explanation completeness": "Write your explanation in NOTES using the handout's length and content requirements. A human will review the reasoning.",
@@ -87,7 +87,7 @@ def read_results(path: Path) -> list[Check]:
 def run_checks(folder: Path, username: str, source: bytes, timeout: float = 30) -> Feedback:
     """Run only this student's file against a fresh copy of the public checker."""
     info = tomllib.loads((folder / "task.toml").read_text())["task"]
-    result = Feedback(info["id"], username, str(info["deadline"]))
+    result = Feedback(info["id"], username, str(info["deadline"] or "Pending; see the task's release issue"))
     if not re.fullmatch(r"[a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?", username):
         result.problems.append("Use your lowercase GitHub username, without .py.")
         return result
@@ -216,7 +216,13 @@ def markdown(result: Feedback) -> str:
         lines += [f"### {group}", "", HINTS[group], ""]
         for check in failures:
             case = re.fullmatch(r"test_cases\[(.*)-expected\d+-user\.[^]]+\]", check.name)
-            label = f"Input: {case[1]}" if case else check.name.split("[", 1)[0].removeprefix("test_").replace("_", " ")
+            named_case = re.fullmatch(r"test_cases\[(.*)-user\.[^]]+\]", check.name)
+            if case:
+                label = f"Input: {case[1]}"
+            elif named_case:
+                label = f"Case: {named_case[1]}"
+            else:
+                label = check.name.split("[", 1)[0].removeprefix("test_").replace("_", " ")
             lines += [f"<details><summary>{html.escape(label[:250])}</summary>", "",
                       f"<pre>{html.escape(check.detail)}</pre>", "", "</details>", ""]
     lines += ["### Your next step", ""]
