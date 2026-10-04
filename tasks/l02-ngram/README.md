@@ -4,8 +4,7 @@ Both exercises are **optional** and have the same requirements for all students.
 Each targets **90–120 minutes**, including a supplied CPU experiment. Complete
 either or both; submit **one separate PR per exercise**.
 
-**Draft:** submissions open after the release PR is merged and this notice is
-removed. The student timing pilot is pending.
+**Submissions are open.** Follow the handout and task issue for each exercise.
 
 **Deadline for both tasks:** October 14, 2026, 23:59 **Asia/Shanghai (UTC+08:00)**,
 seven days after October 7. Each handout, `task.toml`, and task issue uses this date.
@@ -19,7 +18,7 @@ Each task supplies hashing, validation, experiment code, and data. You implement
 five helpers and complete `PREDICTIONS`, `MY_CASES`, and `NOTES` in one file.
 No Assignment 01 implementation is needed.
 
-After release:
+To submit:
 
 1. Copy the task's `starter.py` to `submissions/<your-lowercase-github-username>.py`.
 2. Follow the five-section handout, run the comparison, and check your file locally.

@@ -2,7 +2,7 @@
 
 **Lecture:** l02-ngram · **Difficulty:** medium · **Time:** 90–120 minutes (target).
 
-**Participation:** Optional. Draft; submissions open after the release PR is merged and this notice is removed.
+**Participation:** Optional. Submissions are open.
 
 **Deadline:** October 14, 2026, 23:59 (Asia/Shanghai, UTC+08:00).
 **Task issue:** [#274](https://github.com/baojian/llm-26-fall/issues/274).
@@ -157,7 +157,7 @@ Finish your cases and reflection, then rerun checks. They cover outputs,
 predictions, new cases, lowercase filenames, and reflection length; the teaching
 team reviews reasoning. All four fields must be complete to pass.
 
-After release, submit only `submissions/<username>.py` from your own account,
+Submit only `submissions/<username>.py` from your own account,
 with PR title `l02-ngram/ngram-contamination: <username>` and body
 `Related to #274`. Use your own code and words; keep supplied files
 unchanged and reports in ignored `workspace/`.

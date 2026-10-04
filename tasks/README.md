@@ -24,8 +24,8 @@ correct rate, participation, merged PRs, and badges per student. It is
 regenerated after each merge batch with `uv run python scripts/progress.py`.
 
 Start with the [Lecture 01 tokenization activities](l01-tokenization/README.md).
-The [Lecture 02 n-gram activities](l02-ngram/README.md) are prepared as drafts;
-their release issues state the October 14 deadline and will announce when submissions open.
+The [Lecture 02 n-gram activities](l02-ngram/README.md) are open for submissions
+until October 14, 2026, 23:59 (Asia/Shanghai).
 The [LLM-app survey archive](l01-tokenization/llm-app-survey/README.md) is closed
 to new responses; its accepted Markdown files need no resubmission. Survey
 participation is counted separately from coding-task correctness. The Python
