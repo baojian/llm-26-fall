@@ -98,15 +98,15 @@ def main(argv=None):
     args = parser.parse_args(argv)
     start = time.perf_counter()
     corpus_path, baseline_path = ROOT / "data/corpus.json", ROOT / "data/baselines.json"
-    corpus = json.loads(corpus_path.read_text())
+    corpus = json.loads(corpus_path.read_text(encoding="utf-8"))
     config = corpus["experiment"]
-    baselines = json.loads(baseline_path.read_text())
+    baselines = json.loads(baseline_path.read_text(encoding="utf-8"))
     hashes = {"corpus_sha256": sha256(corpus_path), "baselines_sha256": sha256(baseline_path),
               "submission_sha256": sha256(args.submission)}
     if args.stage == "final":
         if args.selection is None:
             parser.error("final evaluation requires --selection <development-report.json>")
-        frozen = json.loads(args.selection.read_text())
+        frozen = json.loads(args.selection.read_text(encoding="utf-8"))
         if frozen.get("stage") != "dev" or any(frozen.get(key) != value for key, value in hashes.items()):
             parser.error("use the development report for this exact submission and data version")
         chosen = frozen["chosen_num_buckets"]

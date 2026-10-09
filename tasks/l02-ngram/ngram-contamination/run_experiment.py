@@ -66,8 +66,8 @@ def main(argv=None):
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     start = time.perf_counter()
-    corpus = json.loads((ROOT / "data/corpus.json").read_text())
-    audit = json.loads((ROOT / "data/evaluation-audit.json").read_text())
+    corpus = json.loads((ROOT / "data/corpus.json").read_text(encoding="utf-8"))
+    audit = json.loads((ROOT / "data/evaluation-audit.json").read_text(encoding="utf-8"))
     module = load_submission(args.submission)
     rows = compare(module.solve, corpus)
     report = {"corpus_version": corpus["version"],

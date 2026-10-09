@@ -69,5 +69,8 @@ def write_report(path, report):
     path = Path(path).resolve()
     path.parent.mkdir(parents=True, exist_ok=True)
     report["artifact_path"] = str(path)
-    path.write_text(json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + "\n")
+    path.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
     print(f"Report: {path}")

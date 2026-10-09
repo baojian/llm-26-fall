@@ -12,8 +12,8 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 DSIR = True
 PROJECTION = "selected_ids" if DSIR else "contamination_pairs"
-CASES = json.loads((ROOT / "data/checks.json").read_text())
-PREDICTIONS = json.loads((ROOT / "data/examples.json").read_text())
+CASES = json.loads((ROOT / "data/checks.json").read_text(encoding="utf-8"))
+PREDICTIONS = json.loads((ROOT / "data/examples.json").read_text(encoding="utf-8"))
 SUBMISSIONS = sorted(path for path in (ROOT / "submissions").glob("*.py")
                      if not path.name.startswith((".", "_")))
 USERS = [f"user.{path.stem}" for path in SUBMISSIONS]

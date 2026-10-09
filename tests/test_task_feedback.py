@@ -2,6 +2,7 @@
 
 import ast
 import importlib.util
+import json
 import shutil
 import subprocess
 from pathlib import Path
@@ -200,6 +201,41 @@ def l02_checker(request):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+@pytest.fixture
+def gbk_text_default(monkeypatch):
+    """Simulate a Chinese Windows locale without changing explicit encodings."""
+    original_open = Path.open
+
+    def open_with_gbk(path, mode="r", buffering=-1, encoding=None, errors=None, newline=None):
+        if "b" not in mode and encoding in (None, "locale"):
+            encoding = "gbk"
+        return original_open(path, mode, buffering, encoding, errors, newline)
+
+    monkeypatch.setattr(Path, "open", open_with_gbk)
+
+
+@pytest.mark.parametrize("slug", ["dsir-data-selection", "ngram-contamination"])
+def test_l02_fixtures_preserve_unicode_with_gbk_default(slug, gbk_text_default):
+    folder = ROOT / "tasks/l02-ngram" / slug
+    spec = importlib.util.spec_from_file_location("locale_checker", folder / "tests/test_task.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    assert module.CASES == json.loads((folder / "data/checks.json").read_bytes())
+    assert module.PREDICTIONS == json.loads((folder / "data/examples.json").read_bytes())
+
+
+@pytest.mark.parametrize("slug", ["dsir-data-selection", "ngram-contamination"])
+def test_l02_reports_round_trip_utf8_with_gbk_default(slug, tmp_path, gbk_text_default):
+    path = ROOT / "tasks/l02-ngram" / slug / "experiment_utils.py"
+    spec = importlib.util.spec_from_file_location("locale_utils", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    report = {"text": "café, 中文, 🌍"}
+    output = tmp_path / "report.json"
+    module.write_report(output, report)
+    assert json.loads(output.read_bytes()) == report
 
 
 def test_wrong_output_gets_named_cases_and_actionable_feedback(l02_checker):
