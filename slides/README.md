@@ -52,7 +52,8 @@ in 45 slides. Its [teaching plan](lecture-04/teaching-plan.md) records the
 boundary with Lecture 05 and maps three 45-minute periods. The
 [notebook](lecture-04/lecture-04-exercise.ipynb) runs E01–E05 offline on CPU:
 context shapes, training, recurrent derivatives, gates, and source alignment.
-Four editable diagrams and a prepared NPLM loss curve accompany the examples.
+Three editable diagrams, the source encoder–decoder illustration, and a
+prepared NPLM loss curve accompany the examples.
 Longer micrograd and recurrent training remain in
 [optional reading](lecture-04/optional-reading.md). See
 [asset provenance](lecture-04/assets/README.md).

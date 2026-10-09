@@ -32,7 +32,7 @@ These old slide numbers refer to the deck before this revision.
 | --- | --- |
 | 1–20: fixed-window LM and training | Retain; update objectives and outline |
 | 21–25: RNN/LSTM bridge | Expand into recurrent-state, gradient, and gate practice in current slides 21–32 |
-| 26: encoder context selection | Retain within recurrent translation; develop additive alignment in current slides 33–44 |
+| 26: encoder context selection | Replace the abstract schematic with source Transformer slide 7's bottleneck illustration in current slide 35; develop additive alignment in current slides 33–44 |
 | 27–37: weighted values, Q/K/V, scaling, matrix attention | Replace with recurrent alignment; self-attention is developed in Lecture 05, slides 6–19 |
 | 38–42: causal masks and shifted targets | Remove from Lecture 04; covered by Lecture 05, slides 9–11 and 38–39 |
 | 43: causal browser demonstration | Move code, fixture, and interaction checks to Lecture 05, slide 10 |

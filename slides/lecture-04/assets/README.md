@@ -1,21 +1,25 @@
 # Lecture 04 assets
 
-All figures are original course teaching assets. The text corpus and numerical
-vectors are invented toy data. There are no model weights, student submissions,
-or benchmark results in this folder.
+The figures include original course diagrams and an illustration reused from
+the instructor's source slides. The text corpus and numerical vectors are
+invented toy data. There are no model weights, student submissions, or benchmark
+results in this folder.
 
 | Files | Content and provenance |
 | --- | --- |
-| `context-windows.svg` and `.excalidraw` | Three sentence-local windows in the notebook's `BOS red key opens EOS` example |
+| `context-windows.svg` and `.excalidraw` | Three sentence-local windows in the notebook's `BOS red key opens EOS` example; compact 180×64 token boxes with centered labels |
 | `feedforward-lm.svg` and `.excalidraw` | Embedding lookup, ordered concatenation, a tanh hidden layer, and vocabulary logits; follows the NPLM mechanism in the instructor's Spring Lecture 04, pages 17–20, and Bengio et al. (2003), §2 |
 | `recurrent-state.svg` and `.excalidraw` | Shared recurrent transition across three inputs; follows the Spring lecture's recurrence explanation, pages 38–44 |
-| `context-selection.svg` and `.excalidraw` | A query selects among stored encoder states; an original schematic of the motivation in Bahdanau et al. (ICLR 2015), §§2–3 |
+| `encoder-bottleneck.png` | The encoder–decoder diagram from slide 7 of the instructor's `lecture-05-slides-transformers.pptx`; extracted unchanged from `ppt/media/image10.png` (1419×230 pixels) |
 | `tiny-lm-loss.json` | Editable Plotly figure sampled from notebook E02 at updates 0, 1, 5, 10, 20, 40, 60, 100, 150, and 200; includes the uniform-logit baseline `log(7)` |
 
-The diagrams were authored as editable Excalidraw scenes and exported with
-`@excalidraw/excalidraw` 0.18.1. Their dimensions, fonts, and colors follow the
-existing course diagrams. Open a scene in Excalidraw to revise it, then export
-its SVG alongside it. The classroom browser uses only the SVG files.
+The original editable diagrams were authored with `@excalidraw/excalidraw`
+0.18.1. The compact context-window layout keeps its rectangles, centered text,
+and arrows synchronized between the editable scene and native SVG. Their
+dimensions, fonts, and colors follow the existing course diagrams. Open a scene
+in Excalidraw to revise it, then export its SVG alongside it. The bottleneck
+illustration retains the original raster artwork from the PowerPoint. The
+classroom browser uses the SVG and PNG assets without authoring dependencies.
 
 ## Numerical examples
 
@@ -29,7 +33,7 @@ small platform-dependent floating-point differences.
 
 The causal-attention fixture, computation module, interactive controls, and
 printable figure moved to [Lecture 05](../../lecture-05/assets/README.md).
-Lecture 04 retains the context-selection diagram for recurrent alignment.
+Lecture 04 uses the source encoder–decoder illustration to motivate alignment.
 The notebook now supplies deterministic recurrence, LSTM, and additive-score
 calculations in addition to the existing NPLM fitting example.
 
@@ -43,4 +47,4 @@ calculations in addition to the existing NPLM fitting example.
   and [Assignment 1](https://github.com/stanford-cs336/assignment1-basics)
 
 Precise source sections and qualifications appear in the slide notes and
-notebook. No screenshots of third-party figures were copied into this deck.
+notebook. The source PowerPoint remains with the instructor's original materials.

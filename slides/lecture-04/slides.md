@@ -605,14 +605,16 @@ Allow 3 minutes. Here y_(t-1) denotes the previous target word or its embedding 
 
 <!-- .slide: id="encoder-bottleneck" -->
 
-## Selecting from encoder states
+## One encoder state is the bottleneck
 
-<img class="diagram" src="assets/context-selection.svg" data-excalidraw-source="assets/context-selection.excalidraw" alt="An encoder produces several source states. The previous decoder state selects a weighted combination of them, producing a context vector for the next target word.">
+The source summary is $c=h_n^{\mathrm{enc}}$, the encoder's final hidden state.
 
-<p class="caption">The decoder can use a different source summary at each target step.</p>
+<img class="diagram" src="assets/encoder-bottleneck.png" alt="The encoder reads source tokens through five purple recurrent states. A green circle highlights its final state as the bottleneck passed to a red recurrent decoder, which generates target tokens in sequence.">
+
+<p class="caption">One vector must carry the whole source sentence. Attention will instead select from all encoder states.</p>
 
 Note:
-Allow 3 minutes. Read the query label as the previous decoder state. This diagram is an original schematic of recurrent encoder–decoder attention. It does not introduce Transformer Q/K/V projections. The source states stay available rather than being compressed into only one final state. Source: Bahdanau et al., §§2–3.
+Allow 3 minutes. Use the illustration from slide 7 of the instructor's lecture-05-slides-transformers.pptx. Each purple box is an encoder state after reading one source token; the green circle marks the final state c. The red boxes show successive decoder states, and the loops carry the preceding generated token to the next step. The drawing depicts a fixed-context recurrent encoder–decoder: all source information available to the decoder passes through c. Its width stays fixed as the source sentence grows. Different source sentences still produce different c. Ask which earlier source state the decoder can inspect directly: none in this model. The next slides introduce attention over the retained encoder states, with a decoder-dependent context at each target step. Source illustration: embedded ppt/media/image10.png, reused without modification. Conceptual sources: Bahdanau et al., §§2–3; Cho et al. (2014).
 
 ---
 
