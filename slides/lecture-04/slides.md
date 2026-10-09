@@ -579,8 +579,6 @@ Allow 3 minutes. The fixed final-vector bottleneck belongs to the particular enc
 <li aria-current="step">Attention in an RNN encoder–decoder</li>
 </ul>
 
-<p class="caption">Period 3 · 45 minutes, including E05</p>
-
 Note:
 Allow 1 minute. Attention now solves a specific recurrent translation problem. Use encoder source states and a decoder state throughout this section. Transformer self-attention is developed in Lecture 05.
 
@@ -588,20 +586,24 @@ Allow 1 minute. Attention now solves a specific recurrent translation problem. U
 
 <!-- .slide: id="encoder-decoder" -->
 
-## Encoder–decoder bottleneck
+## Machine translation with an RNN
 
-**Encoder:** source sentence → fixed-size final hidden state $c=h_n^{\mathrm{enc}}$.
+**Translate:** “I am hungry” (English) → “J’ai faim” (French).
+
+**Encoder:** source sentence → fixed-size final state $c=h_n^{\mathrm{enc}}$.
 
 <img id="encoder-bottleneck" src="assets/encoder-bottleneck.png" width="1152" alt="The encoder reads source tokens through five purple recurrent states. A green circle highlights its final state as the bottleneck passed to a red recurrent decoder, which generates target tokens in sequence.">
 
 **Decoder:** $s_t=f(s_{t-1},y_{t-1},c)$, with the same $c$ for every target step.
 
-Source and target sequences can have different lengths.
+Source and target lengths can differ.
 
-<p class="caption"><strong>Bottleneck:</strong> all source information available to the decoder must pass through $c$. Attention lets each target step select from all encoder states.</p>
+<p class="caption"><strong>Bottleneck:</strong> the decoder sees the source only through $c$. Attention lets each target step select from all encoder states.</p>
 
 Note:
-Allow 6 minutes for the encoder–decoder update and its bottleneck. Here y_(t-1) denotes the previous target word or its embedding in the update function. The summary is fixed in dimension, not a constant independent of the source: different source sentences produce different c. The decoder generates target words using that same source summary at every step, and source and target lengths can differ.
+Allow 6 minutes for the translation task, encoder–decoder update, and bottleneck. Establish the task before the architecture: read a complete sentence in one language and generate its translation in another. The English–French sentence is an illustrative teaching example; the diagram's state counts are schematic. Bahdanau et al. developed their attention-based recurrent model for neural machine translation and evaluated English-to-French translation (§4). First explain this fixed-context baseline, then show how attention gives each target word its own source context.
+
+Here y_(t-1) denotes the previous target word or its embedding in the update function. The summary is fixed in dimension, not a constant independent of the source: different source sentences produce different c. The decoder generates target words using that same source summary at every step, and source and target lengths can differ.
 
 Use the illustration from slide 7 of the instructor's lecture-05-slides-transformers.pptx. Each purple box is an encoder state after reading one source token; the green circle marks the final state c. The red boxes show successive decoder states, and the loops carry the preceding generated token to the next step. The drawing depicts a fixed-context recurrent encoder–decoder: all source information available to the decoder passes through c. Its width stays fixed as the source sentence grows. Ask which earlier source state the decoder can inspect directly: none in this model. The next slides introduce attention over the retained encoder states, with a decoder-dependent context at each target step. Source illustration: embedded ppt/media/image10.png, reused without modification. Conceptual sources: Bahdanau et al., §§2–3; Cho et al. (2014), https://aclanthology.org/D14-1179/.
 
@@ -617,9 +619,9 @@ Use the illustration from slide 7 of the instructor's lecture-05-slides-transfor
 
 2014 preprint; ICLR 2015.
 
-An alignment network learns which encoder states to combine for each target word.
+For machine translation, an alignment network learns which encoder states to combine for each target word.
 
-<p class="source"><a href="https://arxiv.org/abs/1409.0473">Paper, §§2–3 and Appendix A.1.2</a></p>
+<p class="source"><a href="../../papers/2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf">Course PDF, §§2–3 and Appendix A.1.2</a></p>
 
 Note:
 Allow 2 minutes. Present this as the seminal additive soft-attention model for neural machine translation. Do not call it the first attention mechanism in all of neural computing. Its §6.1 discusses Graves's earlier handwriting alignment (2013, https://arxiv.org/abs/1308.0850). Mnih et al.'s visual-attention paper was submitted in June 2014 (https://arxiv.org/abs/1406.6247), before the September 2014 NMT preprint. The Bahdanau model uses gated recurrent units, not LSTM cells; LSTM above illustrates recurrent memory more generally.
@@ -789,7 +791,7 @@ Allow 3 minutes. The resulting contribution also depends on the vector being wei
 <ul>
 <li><a href="https://www.jmlr.org/papers/v3/bengio03a.html">Bengio et al. (2003)</a>: §2</li>
 <li><a href="https://proceedings.mlr.press/v28/pascanu13.html">Pascanu et al. (2013)</a>: §2</li>
-<li><a href="https://arxiv.org/abs/1409.0473">Bahdanau et al. (2014/2015)</a>: §§2–3</li>
+<li><a href="../../papers/2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf">Bahdanau et al. (2014/2015)</a>: §§2–3</li>
 <li><a href="https://arxiv.org/abs/1308.0850">Graves (2013)</a>: handwriting alignment</li>
 <li><a href="optional-reading.md">Original lecture and further reading</a></li>
 </ul>

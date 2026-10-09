@@ -40,7 +40,7 @@ result, not an estimate of generalization.
 
 ## Additive alignment in recurrent translation
 
-[Bahdanau et al.](https://arxiv.org/abs/1409.0473), §§2–3 and Appendix A.1.2,
+[Bahdanau et al.](../../papers/2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf), §§2–3 and Appendix A.1.2,
 develops the fixed-vector bottleneck, bidirectional source annotations, additive
 alignment, and a decoder-dependent context. The preprint appeared in September
 2014 and the paper at ICLR 2015. The model uses GRUs; the LSTM section teaches

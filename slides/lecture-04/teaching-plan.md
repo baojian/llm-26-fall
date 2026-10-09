@@ -64,7 +64,7 @@ planning allocations, not measured classroom completion times.
 | 2 | 29–35 | 29–30 | Cell memory and gates |
 | 2 | 35–42 | 31 | E04, 7 min: memory, exposure, and direct derivative |
 | 2 | 42–45 | 32 | Remaining recurrent limitations |
-| 3 | 0–9 | 33–35 | Encoder–decoder update and bottleneck illustration; attribution |
+| 3 | 0–9 | 33–35 | Machine translation task; encoder–decoder update and bottleneck; attribution |
 | 3 | 9–22 | 36–39 | Source annotations, additive scores, context, decoder update |
 | 3 | 22–25 | 40 | Numerical alignment example |
 | 3 | 25–32 | 41 | E05, 7 min: two contexts from the same annotations |
@@ -97,7 +97,7 @@ There is no held-out evaluation. New reference examples use float64, seeds
 
 ## Historical and technical precision
 
-[Bahdanau, Cho, and Bengio](https://arxiv.org/abs/1409.0473) introduced additive
+[Bahdanau, Cho, and Bengio](../../papers/2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf) introduced additive
 soft alignment for neural machine translation: September 2014 preprint, ICLR
 2015. Avoid a universal first-attention claim. The paper's §6.1 discusses
 [Graves's earlier handwriting alignment](https://arxiv.org/abs/1308.0850);
