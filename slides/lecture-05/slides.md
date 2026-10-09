@@ -963,7 +963,7 @@ Allow 1 minute. Expected responses: attention combines permitted positions; the 
 
 - Reopen E05 and inspect the complete-model checks.
 - A2 and candidate projects are scheduled for release today.
-- A2 is due October 31; project proposals are due October 14.
+- A2 is due October 31; project proposals are due October 21.
 
 **October 14:** pretraining and decoding in practice.
 
