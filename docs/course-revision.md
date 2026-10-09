@@ -1,9 +1,10 @@
 # Fall 2026 course revision: review draft
 
-Review draft updated September 29, 2026. The lecture sequence uses the October 10
+Review draft updated October 9, 2026. The lecture sequence uses the October 10
 make-up meeting for Transformers and ends with research synthesis on December 23.
 The [schedule adjustment proposal](schedule-adjustment-proposal.md) records the
-assessment dates for instructor review. The [course page](../index.html#schedule)
+approved assessment dates and the October 9 proposal-deadline extension.
+The [course page](../index.html#schedule)
 and [dated schedule](schedule.md) carry the matching sequence. Lectures 01–04
 and A1 are available; linked spring and CS336 materials support later preparation.
 
@@ -124,7 +125,7 @@ The proposal establishes importance, prior work, plausible alternatives,
 evaluation, and feasibility. Careful replication, useful failure analysis, or
 a sound negative result can earn full credit.
 
-Written milestones are Week 6 proposal, Week 12 progress update (including a
+Written milestones are Week 7 proposal, Week 12 progress update (including a
 baseline and initial results), and Week 17 final report. These replace the former posters, oral defenses,
 pod comparison pages, and mandatory reviewer roles. Students can reuse and revise
 checkpoint text in the final report. Peer discussion and individual office-hour
@@ -155,7 +156,7 @@ than receiving duplicate credit for the same submission.
 | A1: Tokenization and language models | Week 2, Sep 16 | Week 4, Sep 30 |
 | A2: Build and investigate a small LM | Week 5, Oct 10 | Week 8, Sat, Oct 31 |
 | A3: Adapt and evaluate | Week 10, Nov 11 | Week 13, Dec 2 |
-| Project proposal | Project introduced Week 1 | Week 6, Oct 14 |
+| Project proposal | Project introduced Week 1 | Week 7, Oct 21 |
 | Project progress update, including baseline and initial results | Follows proposal feedback | Week 12, Nov 25 |
 | Final report, code, experiment record | Reuses the written checkpoints | Week 17, Dec 30 |
 
