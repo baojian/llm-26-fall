@@ -6,7 +6,8 @@ Time and room follow the university notice.
 **Central question:** How does attention select useful context, and how does it lead to the Transformer?
 
 This package contains **55 slides**, five ungraded E exercises, short practice P01, an
-offline CPU notebook, five editable diagrams, and interactive causal and position
+offline CPU notebook, five editable diagrams, a source RNN-attention illustration,
+and interactive causal and position
 examples. It follows the shared Lecture 01–04 template: title and byline,
 typography, repeating outlines, answer fragments, notes, and notebook launcher.
 Preparation is tracked in [issue #259](https://github.com/baojian/llm-26-fall/issues/259).
@@ -21,6 +22,9 @@ controlled component comparison with stated limits.
 
 Lecture 04 develops recurrent memory and Bahdanau's additive alignment in an
 RNN encoder–decoder. Slides 4–5 retrieve that mechanism in four minutes.
+Slide 4 reuses the recurrent-attention image from slide 8 of the instructor's
+supplied 83-slide PowerPoint, with a visible notation mapping and a distinction
+between the figure's dot-product scores and Lecture 04's additive score.
 Q/K/V projections, scaled dot products, and causal self-attention are introduced
 here. Lecture 03 supplies embeddings, raw-logit loss, autograd, and weight tying.
 The two-sentence toy corpus is restated in full.
