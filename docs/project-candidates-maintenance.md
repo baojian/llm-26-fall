@@ -27,6 +27,55 @@ resource estimates are not measured course results or staff allocations.
 Upstream work can require paid agent trials, hosted environments, domain
 expertise, and external review; each route has a local minimum outcome.
 
+## Student page and resource screening
+
+The instructor's October 9 refinement asks for 2–3 relevant references per
+candidate and projects that fit the small shared GPU pool. The student page
+now leads with the proposal checklist, deadlines, and a compute guide. Each
+card displays its references, why to read them, device/memory target, total
+GPU-time ceiling, and main cost risk before the detailed experiment plan.
+The historical course comparison stays in these notes. Optional upstream
+contribution guidance is collapsed after the catalog.
+
+- All 49 cards have 2–3 distinct annotated references. The open-choice card
+  links planning guidance and explicitly asks students to find 2–3 papers for
+  their own topic. Code/data links supplement a reference rather than counting
+  as another independent paper.
+- Ten minimum studies require no GPU. All other plans use at most one GPU;
+  the custom-project route asks for a CPU or one-GPU proposal. Resource labels
+  describe the local minimum, not the cost of reproducing an entire source
+  paper or obtaining upstream acceptance.
+- The initial resource screen proposes at most eight GPU-hours per project,
+  with inference cards usually targeting two or four. This numeric ceiling is
+  provisional pending the instructor's budget choice; it is not an allocation
+  or measured runtime. `resource_policy.status` records that distinction.
+- Every total includes baselines, tuning, evaluation, ablations, and reruns.
+  Students should time a small pilot and reduce scope if necessary. Hardware
+  compatibility and memory figures remain unpiloted planning targets.
+- Byte patching now uses a CPU n-gram predictor. The reward project studies
+  verifier errors offline. Chunking uses BM25 evidence retrieval; ALE and HLE
+  have CPU infrastructure/parsing minima. Large online RL, full LLM training,
+  full benchmark reruns, and multi-GPU jobs are outside the proposed scopes.
+- Adapter distillation and per-example unlearning start with much smaller
+  samples. Tiny-model training retains matched controls and a total run cap.
+- The visual-preparation study now asks about one small model. The skills
+  study includes a generic prompt at matched length/budget. The visual
+  retrieval study compares modalities within one encoder before comparing
+  different systems.
+
+Primary arXiv records for the 33 added research references were checked for
+title, authors, and topic on October 9. Their years identify the arXiv release;
+the catalog does not infer conference acceptance or claim full replications.
+Reading notes identify their role in the proposed study, not reported course
+results. The PyTorch tutorial is an official implementation reference; students
+must match instructions to their installed backend. Existing recent model and
+benchmark links retain the earlier source checks described below.
+
+The renderer rejects missing reading notes, fewer than two distinct
+references, duplicate reference URLs, multi-GPU requirements, inconsistent CPU
+labels, and GPU-hour plans above the catalog's current ceiling. Human review
+is still needed for reference relevance and pilot feasibility.
+
 ## Changes from Spring 2026
 
 Sources were the [previous final-project deck](https://baojian.github.io/llm-26/slides/final-project/index.html),
@@ -83,15 +132,31 @@ private experiment records.
 
 The initial 45 entries drew on the previous Fudan list and primary research.
 On October 9, the instructor requested comparison with other courses. The
-[catalog's course comparison](project-candidates.html#course-comparison) links
-the official CS336 Spring 2026 assignments, CS224N Winter 2026 project gallery
-and report guidance, and CMU Advanced NLP Fall 2025 project requirements.
+comparison is retained here for instructors; it is omitted from the
+student page so students can focus on proposals and resource choices. Sources
+are the official [CS336 Spring 2026 assignments](https://cs336.stanford.edu/),
+[CS224N Winter 2026 gallery](https://web.stanford.edu/class/cs224n/project.html),
+[CS224N report guidance](https://web.stanford.edu/class/cs224n/project/Project_Report_Instructions.pdf),
+and [CMU Advanced NLP Fall 2025 project requirements](https://cmu-l3.github.io/anlp-fall2025/assignments/assignment3%264).
 CMU is explicitly labeled as the 2025 offering; this review does not claim to
 have checked a 2026 Advanced NLP syllabus or all linked student reports.
 
+| Reference course | Pattern retained in our design |
+| --- | --- |
+| CS336, Spring 2026 | Start from working model/data code, then isolate a systems or scaling question. Projects 46–47 use local tiny-model studies. |
+| CS224N, Winter 2026 | Use a concrete question about efficiency, reasoning, memory, or clarification; its gallery informed project 48. |
+| CMU Advanced NLP, Fall 2025 | Move from literature review to a baseline, then an extension and analysis across the written checkpoints. |
+| UMD CMSC 723, Fall 2026 | Connect personal motivation to prior work, data, baseline, evaluation, compute, and a schedule in the proposal. |
+
+External course deadlines, team sizes, and grading rules do not transfer to
+this course. These are design references for instructors rather than another
+set of student requirements.
+
 That review added projects 46-48: small-scale scaling prediction, training
 profiling, and clarification before coding. Existing candidate numbers and IDs
-were preserved. The CMU RAG assignment is now also linked from project 16.
+were preserved. The [CMU RAG assignment](https://github.com/cmu-l3/anlp-fall2025-hw2)
+also informed project 16; its student reading list now emphasizes the retriever
+and evaluation references directly.
 The new scopes are original adaptations with local fallback routes, not full
 copies of the external assignments or claims of reproducing student results.
 

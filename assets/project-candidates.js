@@ -10,6 +10,13 @@
   const empty = document.getElementById('no-results');
   const expand = document.getElementById('expand-projects');
 
+  function updateExpandLabel() {
+    const visible = cards.filter(card => !card.hidden);
+    expand.disabled = visible.length === 0;
+    expand.textContent = visible.length && visible.every(card => card.querySelector('details').open)
+      ? 'Collapse visible project details' : 'Expand visible project details';
+  }
+
   function update() {
     const words = search.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
     for (const card of cards) {
@@ -23,8 +30,7 @@
     const count = cards.filter(card => !card.hidden).length;
     counter.textContent = `${count} of ${cards.length} projects`;
     empty.hidden = count > 0;
-    expand.disabled = count === 0;
-    expand.textContent = 'Expand visible project details';
+    updateExpandLabel();
   }
 
   function revealLinkedProject() {
@@ -38,6 +44,7 @@
       update();
     }
     card.querySelector('details').open = true;
+    updateExpandLabel();
     card.scrollIntoView({ block: 'start' });
   }
 
@@ -51,8 +58,9 @@
     const visible = cards.filter(card => !card.hidden);
     const open = visible.some(card => !card.querySelector('details').open);
     visible.forEach(card => { card.querySelector('details').open = open; });
-    expand.textContent = open ? 'Collapse visible project details' : 'Expand visible project details';
+    updateExpandLabel();
   });
+  cards.forEach(card => card.querySelector('details').addEventListener('toggle', updateExpandLabel));
   window.addEventListener('hashchange', revealLinkedProject);
   let printState;
   window.addEventListener('beforeprint', () => {

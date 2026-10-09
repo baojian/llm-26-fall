@@ -23,19 +23,18 @@
     "Open-source contributions"
   ],
   "compute": {
-    "CPU": "Laptop, roughly 8-16 GB RAM; plan for at most 4 hours of processing and a small data download. An optional inference sanity check can use a shared GPU.",
-    "Inference": "One 12-24 GB GPU or a suitable local quantized runtime; target at most 8 GPU-hours total on the scoped subset. Start with 0.6B-2B models, batch size 1, short contexts and capped outputs.",
-    "Training": "One 16-24 GB GPU; target at most 24 GPU-hours total across baselines, ablations and seeds. Use 5M-30M models from scratch or 0.6B adapter tuning. Pilot memory and step time before committing.",
-    "External review": "CPU/container development plus a small local-model pilot; reserve at most 8 GPU-hours initially. Required frontier-agent trials, hosted VMs, API calls and upstream review time are additional constraints to settle before choosing this route.",
-    "Propose a budget": "Identify the CPU, GPU, or API access you actually have, estimate total time and any spending, and give a smaller fallback. Start with a small pilot before selecting model size or promising training. The instructor reviews the proposed budget with the project scope."
+    "CPU": "A laptop with roughly 8–16 GB RAM. Use bounded data and cache repeated work. The minimum study needs no GPU; time a small CPU pilot before fixing the scope.",
+    "Inference": "One shared GPU used sequentially, usually 12–24 GB, or a suitable local quantized runtime. Reuse a released 0.6B–2B model, cap context/output lengths, and cache generations. The card gives a total GPU-time planning ceiling for all comparisons and reruns.",
+    "Training": "One shared GPU, usually 16–24 GB. Limit training to a 5M–30M teaching model or adapters on a 0.6B checkpoint. Baselines, tuning, evaluation, and reruns all count toward the card’s total ceiling. Choose this route only after a short memory/time pilot fits.",
+    "Propose a budget": "Prefer a CPU investigation or short inference on one shared GPU. Identify the model, data size, memory need, total runs, and a CPU or cached-output fallback. Resource access is scheduled through the shared pool."
   },
   "featured": [
     "student-proposed-project",
     "multilingual-tokenizer-audit",
-    "reasoning-budget-allocation",
+    "adaptive-byte-patches",
+    "verifier-reward-quality",
     "hybrid-retrieval",
-    "rag-abstention",
-    "clm-context-management",
+    "ngram-overlap-audit",
     "science-verifier-repair"
   ],
   "sources": {
@@ -385,13 +384,6 @@
       "url": "https://web.stanford.edu/class/cs224n/project.html",
       "kind": "Course project listing; inspiration, not a verified research result"
     },
-    "cmu-rag-assignment": {
-      "title": "CMU Advanced NLP Assignment 2: End-to-end NLP System Building",
-      "authors": "CMU Advanced NLP course staff",
-      "year": "Fall 2025",
-      "url": "https://github.com/cmu-l3/anlp-fall2025-hw2",
-      "kind": "Official course assignment; larger group scope"
-    },
     "umd-proposal": {
       "title": "CMSC 723 project proposal guidance",
       "authors": "Mohit Iyyer and the UMD CMSC 723 course staff",
@@ -400,6 +392,251 @@
       "artifact": "https://www.overleaf.com/read/jrxnkfqvkjfm",
       "artifact_label": "UMD proposal template",
       "kind": "Course planning reference; our course requirements apply"
+    },
+    "byt5": {
+      "title": "ByT5: Towards a token-free future with pre-trained byte-to-byte models",
+      "authors": "Xue et al.",
+      "year": "2021 arXiv release",
+      "url": "https://arxiv.org/abs/2105.13626",
+      "kind": "Research paper"
+    },
+    "dedup": {
+      "title": "Deduplicating Training Data Makes Language Models Better",
+      "authors": "Lee et al.",
+      "year": "2021 arXiv release",
+      "url": "https://arxiv.org/abs/2107.06499",
+      "kind": "Research paper"
+    },
+    "setfit": {
+      "title": "Efficient Few-Shot Learning Without Prompts",
+      "authors": "Tunstall et al.",
+      "year": "2022 arXiv release",
+      "url": "https://arxiv.org/abs/2209.11055",
+      "kind": "Research paper"
+    },
+    "dpo": {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2305.18290",
+      "kind": "Research paper"
+    },
+    "dpo-length": {
+      "title": "Disentangling Length from Quality in Direct Preference Optimization",
+      "authors": "Park et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2403.19159",
+      "kind": "Research paper"
+    },
+    "deita": {
+      "title": "What Makes Good Data for Alignment? A Comprehensive Study of Automatic Data Selection in Instruction Tuning",
+      "authors": "Liu et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2312.15685",
+      "kind": "Research paper"
+    },
+    "deepseekmath": {
+      "title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models",
+      "authors": "Shao et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2402.03300",
+      "kind": "Research paper"
+    },
+    "step-distillation": {
+      "title": "Distilling Step-by-Step! Outperforming Larger Language Models with Less Training Data and Smaller Model Sizes",
+      "authors": "Hsieh et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2305.02301",
+      "kind": "Research paper"
+    },
+    "self-consistency": {
+      "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+      "authors": "Wang et al.",
+      "year": "2022 arXiv release",
+      "url": "https://arxiv.org/abs/2203.11171",
+      "kind": "Research paper"
+    },
+    "mtbench": {
+      "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+      "authors": "Zheng et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2306.05685",
+      "kind": "Research paper"
+    },
+    "evalplus": {
+      "title": "Is Your Code Generated by ChatGPT Really Correct? Rigorous Evaluation of Large Language Models for Code Generation",
+      "authors": "Liu et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2305.01210",
+      "kind": "Research paper"
+    },
+    "beir": {
+      "title": "BEIR: A Heterogenous Benchmark for Zero-shot Evaluation of Information Retrieval Models",
+      "authors": "Thakur et al.",
+      "year": "2021 arXiv release",
+      "url": "https://arxiv.org/abs/2104.08663",
+      "kind": "Research paper"
+    },
+    "lost-middle": {
+      "title": "Lost in the Middle: How Language Models Use Long Contexts",
+      "authors": "Liu et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2307.03172",
+      "kind": "Research paper"
+    },
+    "matryoshka": {
+      "title": "Matryoshka Representation Learning",
+      "authors": "Kusupati et al.",
+      "year": "2022 arXiv release",
+      "url": "https://arxiv.org/abs/2205.13147",
+      "kind": "Research paper"
+    },
+    "self-refine": {
+      "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+      "authors": "Madaan et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2303.17651",
+      "kind": "Research paper"
+    },
+    "reflexion": {
+      "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+      "authors": "Shinn et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2303.11366",
+      "kind": "Research paper"
+    },
+    "memgpt": {
+      "title": "MemGPT: Towards LLMs as Operating Systems",
+      "authors": "Packer et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2310.08560",
+      "kind": "Research paper"
+    },
+    "agentdojo": {
+      "title": "AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents",
+      "authors": "Debenedetti et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2406.13352",
+      "kind": "Research paper"
+    },
+    "kivi": {
+      "title": "KIVI: A Tuning-Free Asymmetric 2bit Quantization for KV Cache",
+      "authors": "Liu et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2402.02750",
+      "kind": "Research paper"
+    },
+    "speculative": {
+      "title": "Fast Inference from Transformers via Speculative Decoding",
+      "authors": "Leviathan et al.",
+      "year": "2022 arXiv release",
+      "url": "https://arxiv.org/abs/2211.17192",
+      "kind": "Research paper"
+    },
+    "longformer": {
+      "title": "Longformer: The Long-Document Transformer",
+      "authors": "Beltagy et al.",
+      "year": "2020 arXiv release",
+      "url": "https://arxiv.org/abs/2004.05150",
+      "kind": "Research paper"
+    },
+    "sae-evaluation": {
+      "title": "Scaling and evaluating sparse autoencoders",
+      "authors": "Gao et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2406.04093",
+      "kind": "Research paper"
+    },
+    "mkqa": {
+      "title": "MKQA: A Linguistically Diverse Benchmark for Multilingual Open Domain Question Answering",
+      "authors": "Longpre et al.",
+      "year": "2020 arXiv release",
+      "url": "https://arxiv.org/abs/2007.15207",
+      "kind": "Research paper"
+    },
+    "bbq": {
+      "title": "BBQ: A Hand-Built Bias Benchmark for Question Answering",
+      "authors": "Parrish et al.",
+      "year": "2021 arXiv release",
+      "url": "https://arxiv.org/abs/2110.08193",
+      "kind": "Research paper"
+    },
+    "babylm": {
+      "title": "Call for Papers — The BabyLM Challenge: Sample-efficient pretraining on a developmentally plausible corpus",
+      "authors": "Warstadt et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2301.11796",
+      "kind": "Challenge proposal"
+    },
+    "mdlm": {
+      "title": "Simple and Effective Masked Diffusion Language Models",
+      "authors": "Sahoo et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2406.07524",
+      "kind": "Research paper"
+    },
+    "whisper": {
+      "title": "Robust Speech Recognition via Large-Scale Weak Supervision",
+      "authors": "Radford et al.",
+      "year": "2022 arXiv release",
+      "url": "https://arxiv.org/abs/2212.04356",
+      "kind": "Research paper"
+    },
+    "voyager": {
+      "title": "Voyager: An Open-Ended Embodied Agent with Large Language Models",
+      "authors": "Wang et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2305.16291",
+      "kind": "Research paper"
+    },
+    "scienceagentbench": {
+      "title": "ScienceAgentBench: Toward Rigorous Assessment of Language Agents for Data-Driven Scientific Discovery",
+      "authors": "Chen et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2410.05080",
+      "kind": "Research paper"
+    },
+    "agentbench": {
+      "title": "AgentBench: Evaluating LLMs as Agents",
+      "authors": "Liu et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2308.03688",
+      "kind": "Research paper"
+    },
+    "chinchilla": {
+      "title": "Training Compute-Optimal Large Language Models",
+      "authors": "Hoffmann et al.",
+      "year": "2022 arXiv release",
+      "url": "https://arxiv.org/abs/2203.15556",
+      "kind": "Research paper"
+    },
+    "scaling-laws": {
+      "title": "Scaling Laws for Neural Language Models",
+      "authors": "Kaplan et al.",
+      "year": "2020 arXiv release",
+      "url": "https://arxiv.org/abs/2001.08361",
+      "kind": "Research paper"
+    },
+    "clarifygpt": {
+      "title": "ClarifyGPT: Empowering LLM-based Code Generation with Intention Clarification",
+      "authors": "Mu et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2310.10996",
+      "kind": "Research paper"
+    },
+    "torch-compile": {
+      "title": "Introduction to torch.compile",
+      "authors": "PyTorch contributors",
+      "year": "Documentation checked October 9, 2026",
+      "kind": "Official tutorial",
+      "url": "https://docs.pytorch.org/tutorials/intermediate/torch_compile_tutorial.html"
+    },
+    "course-project": {
+      "title": "Fudan NLP and LLMs: individual-project requirements",
+      "authors": "Course staff",
+      "year": "Fall 2026",
+      "kind": "Course requirements",
+      "url": "https://baojian.github.io/llm-26-fall/#project"
     }
   },
   "projects": [
@@ -423,10 +660,22 @@
       "fallback": "Use 200 documents and two tokenizers; no model inference or training is needed.",
       "sources": [
         "qwen35",
-        "fineweb2"
+        "fineweb2",
+        "byt5"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "qwen35": "Inspect a current tokenizer and its exact configuration.",
+        "fineweb2": "Plan multilingual sampling and document-quality controls.",
+        "byt5": "Understand the byte-level alternative and noise-robustness question."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Tokenizer files only; do not download model weights. Stream a small corpus sample."
+      }
     },
     {
       "number": 2,
@@ -450,7 +699,17 @@
         "qwen3"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "numbers": "Motivate the digit-representation question.",
+        "qwen3": "Choose the small checkpoint, tokenizer, and inference settings."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Start with 100 integer problems and one 0.6B model. Keep three renderings and cap each answer at 128 tokens."
+      }
     },
     {
       "number": 3,
@@ -471,33 +730,55 @@
       "preparation": "L01 preprocessing and L02 loss; learn a small Transformer training loop after L05-L06.",
       "fallback": "Use a 5M model and 1M tokens; a corpus-only audit is a pilot, not a claim about model improvement.",
       "sources": [
-        "fineweb2"
+        "fineweb2",
+        "dedup"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "fineweb2": "Choose a documented corpus slice and filtering methods.",
+        "dedup": "Understand duplicate detection and train/test overlap controls."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Training cost grows with every data condition and seed. Begin with 5M parameters and 1M tokens per run; scale only within the same total budget."
+      }
     },
     {
       "number": 4,
       "id": "adaptive-byte-patches",
-      "title": "When do adaptive byte patches help?",
+      "title": "Where do adaptive byte patches spend their resolution?",
       "topic": "Data and tokenization",
       "categories": [
         "Paper replication"
       ],
-      "compute": "Training",
-      "summary": "Study one BLT mechanism at teaching scale.",
-      "question": "Do entropy-based patch boundaries preserve difficult text better than fixed byte blocks at similar compression?",
-      "scope": "Use a small byte predictor and 1M-5M bytes of text. Compare fixed-length and entropy-threshold patching, then train a tiny matched patch model if the pilot fits.",
-      "baseline": "Fixed-size byte patches at the same average patch length; include patcher cost in the budget.",
-      "evaluation": "Patch-length distribution, byte reconstruction or held-out byte loss, compute, and errors near code or mixed-language boundaries.",
-      "outcome": "A working patcher, correctness checks, and a controlled boundary/quality comparison; label deviations from BLT.",
-      "preparation": "L01 byte tokenization; PyTorch; learn causal masking and encoder/decoder interfaces.",
-      "fallback": "Limit the question to patch-boundary prediction using the small predictor; do not claim a full BLT reproduction.",
+      "compute": "CPU",
+      "summary": "Study the BLT boundary rule using a CPU byte predictor.",
+      "question": "At the same average patch length, which code and multilingual patterns receive finer segments under entropy-based patching?",
+      "scope": "Fit a smoothed byte n-gram predictor on a separate training slice, then apply fixed-length and entropy-threshold patching to 1M held-out bytes. Use disjoint development text to match average patch length.",
+      "baseline": "Fixed-size byte blocks at the same average patch length. Hold predictor and text fixed; count the predictor and patcher runtime.",
+      "evaluation": "Patch-length distribution, boundary locations around code/Unicode, allocation near high-surprisal bytes, round-trip correctness, and CPU time. These measurements do not establish downstream model quality.",
+      "outcome": "A working patcher, a paired boundary audit, and an explanation of where it allocates finer segments. Label the n-gram predictor as an adaptation of BLT.",
+      "preparation": "L01 bytes and L02 n-grams; learn conditional entropy and development-set threshold selection.",
+      "fallback": "Use 200 KB of text and a byte bigram predictor. Keep the boundary-allocation question; do not train a BLT model.",
       "sources": [
-        "blt"
+        "blt",
+        "byt5"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "blt": "Read the entropy-based patching mechanism; scope the study to boundaries.",
+        "byt5": "Compare byte-level processing with learned token boundaries."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Use a smoothed byte n-gram predictor on CPU. Study patch boundaries without training a BLT model."
+      }
     },
     {
       "number": 5,
@@ -522,7 +803,17 @@
         "byte-engram"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "engram": "Study hashed n-gram lookup and the capacity comparison.",
+        "byte-engram": "Understand how byte hashing changes tokenizer dependence."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Use a small lookup table and a 5M model first. Include the wider-model baseline in both memory and time accounting."
+      }
     },
     {
       "number": 6,
@@ -543,10 +834,22 @@
       "fallback": "Use 300 examples and two selection policies; reduce context to 1,024 tokens.",
       "sources": [
         "smollm3",
+        "deita",
         "qwen3"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "smollm3": "Locate the SmolTalk2 data recipe and documented subsets.",
+        "deita": "Study selection by quality, complexity, and diversity.",
+        "qwen3": "Use the 0.6B student rather than reproducing a large training recipe."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Cache selection embeddings once. Use 300–500 examples and 1,024-token contexts for the first two-policy comparison."
+      }
     },
     {
       "number": 7,
@@ -557,20 +860,31 @@
         "Paper replication",
         "Case study"
       ],
-      "compute": "Training",
+      "compute": "CPU",
       "summary": "Update classic text classification with a sample-efficiency and cost question.",
       "question": "At which label budget does a small encoder overtake a prompted decoder?",
-      "scope": "Select one public dataset shipped by the authors, cap it at 10 classes, and use 16, 64, and 256 training examples per class. Compare a frozen encoder with a linear head and a 0.6B-1.7B prompted decoder.",
-      "baseline": "TF-IDF plus logistic regression; fixed labels, split, and examples available to each method.",
+      "scope": "Choose one public dataset from the authors with at most five classes. Use 8, 32, and 128 labeled examples per class for TF-IDF and a frozen small encoder plus linear head. Compare a quantized 0.6B prompted decoder on 100 fixed test examples with a documented few-shot selection rule.",
+      "baseline": "TF-IDF plus logistic regression. Keep splits and label access fixed; state the decoder’s few-shot/context limit rather than assuming all training examples fit into its prompt.",
       "evaluation": "Macro-F1, calibration, latency, training/inference cost, and performance under one controlled domain shift.",
       "outcome": "Learning curves that support a concrete deployment decision; a leaderboard score alone is insufficient.",
       "preparation": "L03 embeddings and classification; learn pretrained encoders and dataset splits.",
-      "fallback": "Use five classes and frozen embeddings only; keep the same experimental question.",
+      "fallback": "Use three classes and 50 test examples. Cache decoder outputs on CPU and keep the encoder frozen.",
       "sources": [
-        "classifiers"
+        "classifiers",
+        "setfit"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "classifiers": "Frame the encoder/decoder classification comparison.",
+        "setfit": "Read the small-data classification design; distinguish a frozen probe from SetFit training."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Use a frozen small encoder and a CPU linear classifier. Run the 0.6B quantized decoder on a small fixed test subset; cache all predictions."
+      }
     },
     {
       "number": 8,
@@ -590,35 +904,58 @@
       "preparation": "Neural LM loss; learn preference pairs and the DPO loss before beginning training.",
       "fallback": "Reduce to 200 pairs and a 0.6B model; do not run a large online preference collection.",
       "sources": [
-        "smollm3",
+        "dpo",
+        "dpo-length",
         "qwen3"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "dpo": "Understand the preference loss and reference policy.",
+        "dpo-length": "Identify verbosity as a confound and design length controls.",
+        "qwen3": "Start with one small student checkpoint."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Start with 200 short preference pairs and 0.6B adapters. Count the SFT control and each preference condition in the same total."
+      }
     },
     {
       "number": 9,
       "id": "verifier-reward-quality",
-      "title": "Can a weak verifier teach the wrong behavior?",
+      "title": "Can a weak verifier select the wrong solution?",
       "topic": "Adaptation and training",
       "categories": [
         "Research problem",
         "Case study"
       ],
-      "compute": "Training",
-      "summary": "Study verifiable rewards without attempting a large reasoning-model reproduction.",
-      "question": "What changes when a reward checks only the final number rather than the validity of the full calculation?",
-      "scope": "Generate fresh Countdown-style problems. Compare strict and permissive reward functions on identical sampled answers, then run short adapter GRPO experiments on a 0.6B model if feasible.",
-      "baseline": "Untuned checkpoint, rejection sampling, and strict-oracle scoring. Keep generated training instances separate from evaluation seeds.",
-      "evaluation": "True solution rate, invalid expressions rewarded, output length, reward/accuracy disagreement, and training cost.",
-      "outcome": "An audited verifier plus a controlled reward comparison; identify concrete reward-hacking cases.",
-      "preparation": "Python tests and LM sampling; learn policy-gradient/GRPO basics and restricted expression parsing.",
-      "fallback": "Complete an offline reward audit on 1,000 cached completions; report it as a verifier study, not an RL reproduction.",
+      "compute": "CPU",
+      "summary": "Audit reward mistakes with checked candidate expressions before considering reinforcement learning.",
+      "question": "How often does a final-number check reward an invalid calculation, and how does this affect candidate selection?",
+      "scope": "Generate 100 fresh Countdown-style problems with known valid solutions. Create controlled invalid candidates by changing allowed numbers, operations, or expression structure. Score the same candidates with permissive and strict verifiers; optionally add a small cached model-output set with documented provenance.",
+      "baseline": "Strict-oracle scoring, random candidate selection, and permissive scoring. Keep problem-generation seeds disjoint between development and evaluation.",
+      "evaluation": "False accepts/rejects by error type, true validity of the selected expression, reward/validity disagreement, and CPU runtime. Controlled invalid examples measure verifier behavior, not the frequency of real model errors.",
+      "outcome": "A tested verifier, a controlled selection comparison, and concrete reward-hacking cases. This is an offline verifier study, not an RL training result.",
+      "preparation": "Python tests, exact arithmetic, and restricted expression parsing; read the reward/GRPO motivation without implementing training.",
+      "fallback": "Use 50 problems and three invalid-candidate families. No model training or fresh rollout collection is required.",
       "sources": [
-        "drgrpo"
+        "drgrpo",
+        "deepseekmath"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "drgrpo": "Read the critique of reward and optimization behavior.",
+        "deepseekmath": "Understand the GRPO setting that motivates verifier auditing; no RL run is required."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Audit generated or cached candidate expressions with a CPU verifier. Online RL and fresh large rollout collections are outside the minimum project."
+      }
     },
     {
       "number": 10,
@@ -631,17 +968,28 @@
       "compute": "Training",
       "summary": "Distill a small, verified subset of reasoning traces.",
       "question": "Does concise reasoning retain accuracy better per training token than full reasoning traces?",
-      "scope": "Choose 300-500 training examples from the public s1 data. Compare full traces, manually checked shortened traces, and answers only using the same 0.6B student.",
+      "scope": "Choose 30–50 short, verifiable public s1 examples or an original exact-arithmetic generator. Document the source and inspect all traces. Compare full reasoning, checked shortened reasoning, and answers only using adapters on one 0.6B student; cap the initial context at 1,024 tokens.",
       "baseline": "Untuned student; run both an equal-example comparison and a clearly labeled equal-token comparison.",
       "evaluation": "Held-out answer accuracy, generated length, training tokens, and error types. Avoid using s1 training questions as test examples.",
       "outcome": "A distillation ablation that separates supervision content from training-budget effects.",
       "preparation": "LM training; learn response masking, adapter tuning, and exact mathematical answer checks.",
-      "fallback": "Use 100 problems with short traces; no paid teacher generation is required.",
+      "fallback": "Use 20 short generated problems and two supervision conditions. If the available traces cannot fit without losing essential steps, change the task before training.",
       "sources": [
-        "s1"
+        "s1",
+        "step-distillation"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "s1": "Inspect public reasoning traces and supervision choices.",
+        "step-distillation": "Compare rationale supervision with answers-only supervision."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Manual trace checking and sequence length are the main risks. Begin with 30–50 short verified examples, one 0.6B student, and two supervision conditions."
+      }
     },
     {
       "number": 11,
@@ -662,10 +1010,20 @@
       "fallback": "Use 80 easy problems and two strategies; cap each total problem budget at 2,048 tokens.",
       "sources": [
         "s1",
-        "qwen3"
+        "self-consistency"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "s1": "Study inference-time budget allocation.",
+        "self-consistency": "Implement the multiple-sample voting comparison."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Sampling multiplies cost. Begin with 80 problems and at most 2,048 output tokens per problem across all attempts in each condition."
+      }
     },
     {
       "number": 12,
@@ -686,10 +1044,21 @@
       "preparation": "Sampling and evaluation; learn how the selected model separates reasoning from its final answer.",
       "fallback": "Use answer-stability checks at two fixed cutoffs. Label this as an adaptation, not an exact DTSR implementation.",
       "sources": [
-        "early-exit"
+        "early-exit",
+        "s1"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "early-exit": "Read the thought-sufficiency stopping mechanism.",
+        "s1": "Define a fixed-budget reasoning baseline."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Count every sufficiency check, not just final answers. Begin with 80 problems and two stopping checkpoints."
+      }
     },
     {
       "number": 13,
@@ -702,18 +1071,28 @@
       "compute": "Training",
       "summary": "Revisit a 2025 candidate using its 2026 methodological critique.",
       "question": "Does targeted reasoning-step unlearning change answers more than irrelevant or shuffled-text unlearning?",
-      "scope": "Use 30-50 short reasoning examples on one 0.6B checkpoint; compare targeted, irrelevant, and shuffled interventions with matched update counts.",
+      "scope": "Begin with 12–20 short reasoning examples on one 0.6B checkpoint and one layer or adapter. Compare targeted, irrelevant, and shuffled interventions with matched update counts. Pilot five examples with 10 updates per intervention first.",
       "baseline": "Unmodified checkpoint and unrelated-question retention checks. Freeze the tuning protocol before the held-out comparison.",
       "evaluation": "Answer/log-probability changes, intervention success, and general capability damage. A changed answer alone does not establish faithful reasoning.",
       "outcome": "A controlled assessment of the metric and a clear account of collateral model changes.",
       "preparation": "PyTorch gradients and LM loss; learn unlearning objectives and intervention controls.",
-      "fallback": "Use 15 examples and one layer. If only text perturbation is feasible, state that it measures a different notion.",
+      "fallback": "Use a descriptive pilot with five examples and one layer, reporting uncertainty and unsuccessful interventions. If only text perturbation is feasible, rename the question because it measures a different notion.",
       "sources": [
         "faithfulness",
         "faithfulness-controls"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "faithfulness": "Understand the targeted-unlearning measurement.",
+        "faithfulness-controls": "Choose irrelevant-text controls and measure collateral damage."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Repeated unlearning runs are costly. Pilot five examples with 10 updates per intervention; restrict updates to one layer or adapters and use 12–20 examples initially."
+      }
     },
     {
       "number": 14,
@@ -734,10 +1113,21 @@
       "preparation": "L02 evaluation; learn paired experimental design and judge prompt formatting.",
       "fallback": "Use one local 0.6B judge and 50 math pairs; stronger performance is not needed to study failure.",
       "sources": [
-        "judgebench"
+        "judgebench",
+        "mtbench"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "judgebench": "Start from objectively checked answer pairs.",
+        "mtbench": "Read about position and verbosity bias in model judges."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "One 0.6B judge and 50–100 answer pairs suffice. Cache the original, swapped, and length-perturbed judgments."
+      }
     },
     {
       "number": 15,
@@ -758,10 +1148,21 @@
       "preparation": "Python and tests; learn sandboxed execution, parsing, and benchmark versioning.",
       "fallback": "Use 15 original small tasks with a deterministic generator; do not copy competition problems without checking reuse terms.",
       "sources": [
-        "livecode"
+        "livecode",
+        "evalplus"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "livecode": "Pin the coding task release and evaluation protocol.",
+        "evalplus": "Strengthen tests and check semantic equivalence of task variants."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use 15–30 short tasks and one generation per variant. Bound sandbox CPU time as well as output tokens."
+      }
     },
     {
       "number": 16,
@@ -783,10 +1184,20 @@
       "fallback": "Use 100 passages and 50 queries; embeddings can be precomputed once on a shared GPU.",
       "sources": [
         "qwen-embedding",
-        "cmu-rag-assignment"
+        "beir"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "qwen-embedding": "Use a released small retriever with its required input format.",
+        "beir": "Compare lexical and dense retrieval using a consistent evaluation."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 2,
+        "gpu_memory_gb": 12,
+        "note": "Encode the corpus once, then reuse cached embeddings for every query and fusion setting. No answer generation is needed."
+      }
     },
     {
       "number": 17,
@@ -796,21 +1207,31 @@
       "categories": [
         "Research problem"
       ],
-      "compute": "Inference",
+      "compute": "CPU",
       "summary": "Study document segmentation while holding the retrieval model fixed.",
       "question": "Do section-aware chunks reduce failures caused by separating a claim from its conditions?",
-      "scope": "Use public course notes with 80 evidence-labeled questions, including cross-paragraph cases. Compare fixed 128/256-token chunks and heading-aware chunks.",
+      "scope": "Use public course notes with 80 evidence-labeled questions, including cross-paragraph cases. Compare fixed 128/256-token chunks and heading-aware chunks using the same BM25 retriever.",
       "baseline": "Fixed-token chunking; compare both fixed top-k and fixed retrieved-token budget so larger chunks do not win merely by supplying more text.",
-      "evaluation": "Evidence recall, answer support on a 40-question subset, redundancy, and retrieved tokens.",
+      "evaluation": "Evidence recall under fixed top-k and fixed retrieved-token budgets, missing conditions at boundaries, redundancy, and CPU latency. Inspect 20 failures manually.",
       "outcome": "A chunking ablation with annotated boundary failures.",
       "preparation": "Text processing and embeddings; learn retrieval evaluation and document-level splits.",
-      "fallback": "Use BM25 only and evaluate evidence retrieval before adding generation.",
+      "fallback": "Use 40 questions and two chunking settings. Evidence retrieval is a complete study; no answer model is required.",
       "sources": [
-        "qwen-embedding",
-        "sufficient"
+        "sufficient",
+        "lost-middle"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "sufficient": "Distinguish retrieved text from sufficient answer evidence.",
+        "lost-middle": "Motivate position and evidence-location controls."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Use BM25 and evidence labels as the complete first study. Chunking and retrieval need no language-model generation."
+      }
     },
     {
       "number": 18,
@@ -832,10 +1253,22 @@
       "fallback": "Use 1,000 documents and 100 queries; omit approximate nearest-neighbor indexing.",
       "sources": [
         "qwen-embedding",
+        "matryoshka",
         "mmteb"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "qwen-embedding": "Check supported embedding dimensions.",
+        "matryoshka": "Understand representations that support truncation.",
+        "mmteb": "Choose one documented retrieval subset and metric."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 2,
+        "gpu_memory_gb": 12,
+        "note": "Encode documents and queries once. Truncation, quantization, and exact-search comparisons run on CPU."
+      }
     },
     {
       "number": 19,
@@ -857,10 +1290,22 @@
       "fallback": "Use 60 questions and fixed supplied contexts, retaining the same abstention question.",
       "sources": [
         "sufficient",
+        "judgebench",
         "qwen35"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "sufficient": "Define sufficient, incomplete, and missing evidence.",
+        "judgebench": "Plan an audit of any model-based evidence judge.",
+        "qwen35": "Use a small answer model with a fixed prompt format."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Begin with 60 questions and supplied contexts. Cache answer and sufficiency-check outputs; include both in the budget."
+      }
     },
     {
       "number": 20,
@@ -882,10 +1327,22 @@
       "fallback": "Use 50 course-note queries; no need to rebuild the full CS-MTEB suite.",
       "sources": [
         "csir",
-        "qwen-embedding"
+        "qwen-embedding",
+        "mmteb"
       ],
       "upstream": "A carefully licensed dataset or evaluator improvement may fit MTEB; check current contribution requirements before proposing it.",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "csir": "Read the code-switching evaluation design.",
+        "qwen-embedding": "Choose the multilingual dense retriever.",
+        "mmteb": "Check retrieval metrics and dataset conventions."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 2,
+        "gpu_memory_gb": 12,
+        "note": "Cache document embeddings. Reuse the same checked query triplets and account separately for any translation model calls."
+      }
     },
     {
       "number": 21,
@@ -909,7 +1366,17 @@
         "qwen35"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "bfcl": "Separate tool selection, argument correctness, and execution.",
+        "qwen35": "Inspect the chosen model’s tool-use interface."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use five mock tools and a 0.6B model. Limit repairs to one additional call and include its tokens."
+      }
     },
     {
       "number": 22,
@@ -930,10 +1397,23 @@
       "preparation": "Python debugging and tests; learn bounded agent loops and process isolation.",
       "fallback": "Use 15 deterministic seeded bugs and one repair round.",
       "sources": [
-        "livecode"
+        "livecode",
+        "self-refine",
+        "reflexion"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "livecode": "Define isolated execution and coding-task correctness.",
+        "self-refine": "Compare iterative feedback with direct generation.",
+        "reflexion": "Understand feedback-driven agent retries without weight updates."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "At most three attempts per task; start with 15 tasks and one repair. Set a CPU timeout for every generated program."
+      }
     },
     {
       "number": 23,
@@ -954,10 +1434,21 @@
       "preparation": "Python records and retrieval; learn agent state, timestamp semantics, and memory accounting.",
       "fallback": "Use 50 synthetic key-value episodes with exact scoring; label this as an adaptation of the memory question.",
       "sources": [
-        "simplemem"
+        "simplemem",
+        "memgpt"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "simplemem": "Study compact memory construction and retrieval.",
+        "memgpt": "Compare explicit memory management with ordinary context replay."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Start with 50 short episodes and capped memories. Memory writing, retrieval prompts, and final queries all consume inference time."
+      }
     },
     {
       "number": 24,
@@ -978,10 +1469,21 @@
       "preparation": "Tool calls and evaluation; learn trusted instructions versus external tool data.",
       "fallback": "Use a 20-case local retrieval assistant without network actions; do not claim full AgentDyn replication.",
       "sources": [
-        "agentdyn"
+        "agentdyn",
+        "agentdojo"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "agentdyn": "Choose dynamic tasks with paired benign controls.",
+        "agentdojo": "Study attack-success and legitimate-task-success evaluation together."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use 20–30 mocked cases with capped action counts. Run benign controls under the same budget; no external network actions are needed."
+      }
     },
     {
       "number": 25,
@@ -1002,10 +1504,23 @@
       "preparation": "Python, token counting, and evaluation; learn context budgets and a bounded file-editing tool.",
       "fallback": "ContextBench is still listed as coming soon at the checked October 9 revision. Use an original synthetic generator and label this an adapted experiment; begin with 30 episodes.",
       "sources": [
-        "clm"
+        "clm",
+        "memgpt",
+        "lost-middle"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "clm": "Read editable-context operations and the controlled-task setup.",
+        "memgpt": "Compare another explicit memory-management design.",
+        "lost-middle": "Control the position of decisive evidence."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Start with 30 episodes at 512, 1,024, and 2,048 tokens. Summaries and context edits count toward cost; avoid long agent trajectories."
+      }
     },
     {
       "number": 26,
@@ -1030,7 +1545,17 @@
         "llamacpp"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "qwen35": "Identify the exact starting checkpoint and architecture.",
+        "llamacpp": "Check supported quantization formats and timing tools."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 2,
+        "gpu_memory_gb": 12,
+        "note": "Load one precision at a time. Use one small checkpoint and short prompts; compare on the same hardware."
+      }
     },
     {
       "number": 27,
@@ -1051,10 +1576,21 @@
       "preparation": "L03 vectors; learn attention, KV caching, and quantization.",
       "fallback": "Quantize cached vectors offline and analyze attention error; do not claim a serving speedup from fake quantization.",
       "sources": [
-        "turboquant"
+        "turboquant",
+        "kivi"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "turboquant": "Study rotation-based vector compression.",
+        "kivi": "Compare a KV-specific asymmetric quantization method."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Begin with offline cache-vector quantization and attention-error analysis. Integrated serving is optional and must fit the same budget."
+      }
     },
     {
       "number": 28,
@@ -1075,10 +1611,21 @@
       "preparation": "Learn causal attention, KV caching, and batching; comfortable debugging tensor shapes.",
       "fallback": "Use n-gram proposals with a small target, or a correctness-first CPU study; do not promise acceleration.",
       "sources": [
+        "speculative",
         "eagle3"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "speculative": "Understand draft verification and output preservation.",
+        "eagle3": "Read a modern acceleration design; drafter training is outside this study."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use a 0.6B draft and at most 1.7B target on the same device, or n-gram proposals. Drafter training and multi-device serving are outside the scope."
+      }
     },
     {
       "number": 29,
@@ -1098,10 +1645,21 @@
       "preparation": "Learn Transformer attention/masks and training; suitable for students who enjoy implementation.",
       "fallback": "Use dense masked attention at short lengths to test the idea. Dense masking does not demonstrate sparse-kernel speedups.",
       "sources": [
-        "nsa"
+        "nsa",
+        "longformer"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "nsa": "Read the combination of local and selected attention.",
+        "longformer": "Compare a simpler local/global attention pattern."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Begin with a 5M decoder and short synthetic sequences. Dense masks suffice for accuracy; sparse CUDA kernels are not required."
+      }
     },
     {
       "number": 30,
@@ -1127,7 +1685,18 @@
         "turboquant"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "qwen35": "Inspect one documented hybrid-attention configuration.",
+        "nsa": "Compare sparse-attention resource claims.",
+        "turboquant": "Separate compression gains from architectural gains."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Reconstruct memory estimates and test one toy attention module on CPU. No full hybrid-model training or benchmark rerun is needed."
+      }
     },
     {
       "number": 31,
@@ -1148,10 +1717,21 @@
       "preparation": "L03 embeddings and PyTorch; learn residual streams, hooks, and SAE reconstruction.",
       "fallback": "Analyze activation specificity without intervention if hooks are incompatible; never apply a base-model SAE to an unrelated instruct checkpoint.",
       "sources": [
-        "qwen-scope"
+        "qwen-scope",
+        "sae-evaluation"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "qwen-scope": "Load the SAE matched to the exact base model and layer.",
+        "sae-evaluation": "Read reconstruction, sparsity, and intervention evaluation criteria."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 24,
+        "note": "Load one released SAE layer with the matched 2B base model. Begin with 50 short prompts; training a new SAE is outside the scope."
+      }
     },
     {
       "number": 32,
@@ -1171,10 +1751,21 @@
       "preparation": "Bilingual evaluation and PyTorch hooks; learn Transformer hidden states and the selected intervention.",
       "fallback": "Use 50 pairs and one layer; switch to a supported older checkpoint if the latest architecture is incompatible.",
       "sources": [
-        "incline"
+        "incline",
+        "mkqa"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "incline": "Implement one supported cross-lingual intervention.",
+        "mkqa": "Plan aligned questions and language-independent answer checks."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use one supported small checkpoint and one layer. If the official code needs a larger model or unsupported hooks, choose a simpler prompting comparison and rename the claim."
+      }
     },
     {
       "number": 33,
@@ -1195,10 +1786,21 @@
       "preparation": "Evaluation and careful reading; learn paired analysis and limitations of normative annotations.",
       "fallback": "One scenario and 80 examples, with manual inspection of ambiguous labels.",
       "sources": [
-        "fairness"
+        "fairness",
+        "bbq"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "fairness": "Distinguish desired differences from unwanted discrimination.",
+        "bbq": "Compare how question context changes the intended bias criterion."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 2,
+        "gpu_memory_gb": 12,
+        "note": "One model and one or two scenarios suffice. Reuse the same examples across prompts and keep responses short."
+      }
     },
     {
       "number": 34,
@@ -1218,10 +1820,21 @@
       "preparation": "L04 recurrent limitations and language modeling; learn Transformer training and synthetic generators.",
       "fallback": "A 5M model with at most 1M tokens per stage and a single formal grammar.",
       "sources": [
-        "formal"
+        "formal",
+        "babylm"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "formal": "Select one formal-language warm-up and its controls.",
+        "babylm": "Read the motivation for data-limited language learning; use a much smaller course experiment."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Use a 5M model, one grammar, and at most 1M tokens per stage initially. Count the direct-training control and all seeds."
+      }
     },
     {
       "number": 35,
@@ -1242,10 +1855,21 @@
       "preparation": "L01 preprocessing and L02 n-grams; learn indexing and retrieval precision/recall.",
       "fallback": "Use 5 MB and exact search if FM-index installation fails; label the implementation change.",
       "sources": [
-        "infinigram"
+        "infinigram",
+        "dedup"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "infinigram": "Understand exact n-gram indexing.",
+        "dedup": "Plan overlap detection and false-positive analysis."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Use a 5–50 MB corpus and a CPU index. Internet-scale indexing is outside this study."
+      }
     },
     {
       "number": 36,
@@ -1266,10 +1890,21 @@
       "preparation": "Learn masked prediction, iterative unmasking, and the released sampler interface.",
       "fallback": "Use 50 prompts and outputs capped at 64 tokens; no conversion training or 8B model is needed.",
       "sources": [
-        "dllm"
+        "dllm",
+        "mdlm"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "dllm": "Load Tiny-A2D and inspect the released sampler.",
+        "mdlm": "Understand masked prediction and unmasking schedules."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use the released 0.6B checkpoint, 50 prompts, and outputs of at most 64 tokens first. Count all denoising forward passes."
+      }
     },
     {
       "number": 37,
@@ -1294,12 +1929,22 @@
         "dllm"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "block-diffusion": "Read blockwise denoising and supported cache behavior.",
+        "dllm": "Use the small released checkpoint and sampler interface."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use two supported block settings and 50 short prompts initially. Count all denoising passes and cache setup."
+      }
     },
     {
       "number": 38,
       "id": "small-vlm-document-qa",
-      "title": "Can better image preparation beat a larger vision model?",
+      "title": "Which image preparation helps a small vision model?",
       "topic": "Diffusion and multimodal",
       "categories": [
         "Case study",
@@ -1307,10 +1952,10 @@
       ],
       "compute": "Inference",
       "summary": "Evaluate small vision-language models on readable document questions.",
-      "question": "Does cropping a relevant region help more than feeding a downscaled whole page?",
+      "question": "Do question-independent tiling or OCR preserve document evidence better than a resized whole page at a bounded input cost?",
       "scope": "Create 60 original document/table images with exact questions and source values. Compare whole-page resize, question-independent tiling, and OCR-text input on SmolVLM-500M or Qwen3.5-0.8B.",
       "baseline": "Whole-page input and a text-only oracle supplied with the actual page text; preserve the same question and output budget.",
-      "evaluation": "Exact field/number accuracy, failures by font size/layout, image tokens, and latency; account for crop-selection information.",
+      "evaluation": "Exact field/number accuracy, errors by font size/layout, total image and text input size, tile count, and latency. Use question-independent tiling to avoid supplying answer-location information.",
       "outcome": "A reproducible document-QA study with annotated visual failure cases.",
       "preparation": "Python image/data handling; learn image preprocessing and multimodal prompts.",
       "fallback": "Use 30 single-page tables and one model. Avoid projects requiring large VLM fine-tuning.",
@@ -1319,7 +1964,17 @@
         "qwen35"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "smolvlm": "Inspect the small vision model’s image-processing interface.",
+        "qwen35": "Consider an alternative small multimodal checkpoint; run only one model family."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use one 500M–0.8B VLM and 30 original pages first. Cap image resolution and tile count; no larger-model comparison or VLM tuning is required."
+      }
     },
     {
       "number": 39,
@@ -1333,7 +1988,7 @@
       "summary": "Use a 2026 multimodal embedding release on mixed text/layout evidence.",
       "question": "Do page images recover diagram/table evidence that a text index misses?",
       "scope": "Use 100 public course pages or original figures and 60 evidence-labeled queries. Compare extracted-text BM25, text embeddings, and Qwen3-VL-Embedding-2B page embeddings.",
-      "baseline": "Fixed pages and query labels; include a clean text-export condition to isolate OCR loss.",
+      "baseline": "Use fixed pages and labels. Within Qwen3-VL-Embedding-2B compare page images with clean extracted text to study modality. Report BM25 and Qwen3 text embeddings separately as system comparisons; they also change the encoder.",
       "evaluation": "Recall@5, nDCG, errors by text/table/diagram query, encoding time, and index size.",
       "outcome": "A modality comparison and an explanation of which visual information changes retrieval.",
       "preparation": "L03 embeddings; learn document rendering, multimodal encoders, and retrieval labels.",
@@ -1343,7 +1998,17 @@
         "qwen-embedding"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "vl-embedding": "Encode page images and compare its text-only input route.",
+        "qwen-embedding": "Use a text retriever as a separately labeled system baseline."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 24,
+        "note": "Encode 40–100 pages once and cache all vectors. Compare image/text inputs within the same VL encoder before adding a different text model."
+      }
     },
     {
       "number": 40,
@@ -1364,10 +2029,21 @@
       "preparation": "Text normalization and evaluation; learn audio loading, transcript alignment, and ASR context formatting.",
       "fallback": "Use 30 self-recorded clips and two glossary conditions; keep private voices and transcripts out of the course repository.",
       "sources": [
-        "asr"
+        "asr",
+        "whisper"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "asr": "Read the selected ASR model and use its supported context input.",
+        "whisper": "Compare ASR evaluation and text-conditioning design; no second model run is required."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 2,
+        "gpu_memory_gb": 12,
+        "note": "Use 30 short self-recorded clips first and the 0.6B ASR checkpoint. Cache each glossary condition; no speech-model training is needed."
+      }
     },
     {
       "number": 41,
@@ -1378,20 +2054,31 @@
         "Research problem",
         "New task"
       ],
-      "compute": "External review",
+      "compute": "Inference",
       "summary": "Build and evaluate one reusable skill with a possible SkillsBench contribution.",
-      "question": "Does a concise tested skill improve held-out workflow success beyond a longer generic prompt?",
-      "scope": "Choose one local workflow such as structured file conversion. Create 10 development and 20 held-out instances with deterministic checks; compare no skill, a concise skill, and an irrelevant skill.",
-      "baseline": "Same model/tools and total token budget; keep task answers out of the skill. Inspect reuse across changed filenames and data.",
+      "question": "Does a concise tested skill improve held-out workflow success beyond generic instructions at a matched budget?",
+      "scope": "Choose one local workflow such as structured file conversion. Create 10 development and 20 held-out instances with deterministic checks. Compare no skill, a concise relevant skill, a generic workflow prompt, and an irrelevant skill.",
+      "baseline": "Use the same model, tools, tasks, and total token cap. Construct a generic prompt at the same prompt length as the relevant skill, then optionally a longer version within the same total cap. Match the irrelevant skill’s length too. Keep task answers out of all prompts.",
       "evaluation": "Artifact correctness, tool calls, total tokens, generalization failures, and skill-induced regressions.",
       "outcome": "A useful skill, held-out tests, a comparison report, and a reviewable contribution if it matches the upstream scope.",
       "preparation": "Python tooling and tests; learn agent traces, skill loading, and contribution etiquette.",
-      "fallback": "Run the experiment locally with one 0.6B-1.7B model. Frontier-agent or hosted runs need a separately agreed cap.",
+      "fallback": "Use 10 held-out instances and one 0.6B model with at most three tool calls. Keep the generic-prompt control; frontier-agent trials are outside the local minimum.",
       "sources": [
-        "skillsbench"
+        "skillsbench",
+        "voyager"
       ],
       "upstream": "SkillsBench: inspect the current task registry and contribution guide, agree on an unclaimed need, and propose one task or verifier improvement. Merge is an external decision.",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "skillsbench": "Inspect task checks, skill packaging, and upstream contribution requirements.",
+        "voyager": "Study reusable skills and transfer; adapt the idea to a local file workflow."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "One local model, one workflow, and 30 instances. Cap tool calls and include all four prompt conditions; upstream frontier-model trials need a separate plan."
+      }
     },
     {
       "number": 42,
@@ -1402,21 +2089,33 @@
         "New task",
         "Case study"
       ],
-      "compute": "External review",
+      "compute": "Inference",
       "summary": "Develop a Terminal-Bench-Science-style task from a real research workflow.",
       "question": "Can an agent complete a scientifically meaningful workflow whose result can be verified independently?",
-      "scope": "Choose one domain you already understand, such as reproducing a numerical convergence result from published data. Package inputs, a bounded environment, an independently checked solution, and a verifier; analyze two bounded agent baselines.",
+      "scope": "Choose a CPU-only workflow in a domain you already understand, such as checking a numerical convergence result from a small published dataset. Package inputs, a bounded environment, an independently checked solution, and a verifier; analyze two small agent baselines sequentially.",
       "baseline": "Known-correct solution and a no-op/invalid solution; include plausible wrong outputs so the verifier cannot pass superficial artifacts.",
       "evaluation": "Oracle solvability, false accepts/rejects, repeated agent success, resource use, and scientific failure analysis.",
       "outcome": "One well-specified task and a defensible verifier; an upstream-quality result requires maintainer/domain review.",
       "preparation": "Scientific-domain knowledge, Python and Docker; learn Harbor task packaging and agent evaluation.",
-      "fallback": "Complete the local task and evaluation as the course project. The posted TB-Science 0.2 cutoff was October 5; obtain a future-intake decision before promising submission.",
+      "fallback": "Complete the local CPU task and a small-model pilot as the course project. If the scientific workload itself needs GPUs, select a different task. The posted TB-Science 0.2 cutoff was October 5; confirm a future intake before promising submission.",
       "sources": [
         "tb-science",
-        "tb-rubric"
+        "tb-rubric",
+        "scienceagentbench"
       ],
       "upstream": "New TB-Science tasks require a proposal approved by maintainers before full implementation. Toy textbook exercises do not satisfy the scientific-workflow scope. A future intake is unconfirmed as of October 9.",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "tb-science": "Check task packaging, proposal approval, and intake dates.",
+        "tb-rubric": "Check scientific relevance and verification requirements.",
+        "scienceagentbench": "Read how scientific agent outputs are evaluated."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Choose a CPU scientific workflow and two small agent baselines run sequentially. A task requiring GPU simulation, model training, or full benchmark reruns is unsuitable."
+      }
     },
     {
       "number": 43,
@@ -1427,44 +2126,68 @@
         "Case study",
         "Research problem"
       ],
-      "compute": "External review",
+      "compute": "CPU",
       "summary": "Make an existing scientific task more trustworthy through one evidence-backed repair.",
       "question": "Can a verifier accept a scientifically wrong answer or reject an equivalent correct one?",
-      "scope": "Choose one existing TB-Science task and reproduce one numerical-tolerance, unit, schema, or environment bug. Build a minimal failing case and a focused fix.",
+      "scope": "Choose one existing TB-Science task with CPU-only local oracle and verifier checks. Reproduce one numerical-tolerance, unit, schema, or environment bug; build a minimal failing case and a focused fix.",
       "baseline": "Current verifier, independently valid solutions, and deliberately wrong outputs; rerun the oracle and no-op checks.",
       "evaluation": "False accepts/rejects, robustness across equivalent outputs, runtime, and preserved task difficulty.",
       "outcome": "A reproducible bug report, regression tests, focused patch, and evidence explaining why the task meaning is preserved.",
       "preparation": "Python testing, numerical reasoning, Docker; learn the chosen task domain and upstream repair process.",
-      "fallback": "Limit to one verifier defect and a local reproduction; maintainer response time is outside the student's control.",
+      "fallback": "Use a CPU reproduction of the verifier defect if the complete environment is too costly. State the checks not rerun; maintainer response and any required frontier-agent trials are outside the local minimum.",
       "sources": [
-        "tb-science"
+        "tb-science",
+        "scienceagentbench",
+        "evalplus"
       ],
       "upstream": "The current guide explicitly supports task-fix requests. Discuss the defect with maintainers and follow the repair workflow; do not publish hidden solutions or exploit details beyond their approved channel.",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "tb-science": "Follow the documented task-repair route.",
+        "scienceagentbench": "Study scientific artifact verification and failure analysis.",
+        "evalplus": "Design regression cases that expose weak correctness checks."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Choose a CPU-only verifier defect. Local correctness cases and regression tests are the minimum; expensive upstream agent trials are a separate dependency."
+      }
     },
     {
       "number": 44,
       "id": "ale-agent-adapter",
-      "title": "Make a small agent reliably evaluable in Agents' Last Exam",
+      "title": "Make agent traces and grading reproducible",
       "topic": "Open-source contributions",
       "categories": [
         "Case study",
         "Research problem"
       ],
-      "compute": "External review",
+      "compute": "CPU",
       "summary": "Contribute a narrow adapter, trace, or grading fix instead of running the full benchmark.",
-      "question": "Can one agent integration produce correctly scored artifacts and complete, auditable traces on a small public task subset?",
-      "scope": "Choose 3-5 compatible public ALE tasks and one local-container/CLI integration. Implement or fix one deployer, timeout path, trajectory field, or grading edge case after identifying an upstream need.",
-      "baseline": "Existing integration plus oracle/invalid-artifact checks; stage reference answers only after agent execution.",
+      "question": "Can a task integration reliably preserve artifacts, traces, and grading across success, failure, and timeout?",
+      "scope": "Choose one Linux/CLI-compatible public ALE task with CPU-only dependencies. Use a mock agent that emits known valid and invalid outputs, then repair one timeout, trajectory, or grading path after identifying a maintainer need. A small real-agent run is optional.",
+      "baseline": "Existing integration plus valid/invalid-artifact and timeout cases. Keep references unavailable during the mock or real agent run, then stage them for grading.",
       "evaluation": "End-to-end reproducibility, task results, missing trace fields, timeout recovery, and CPU/GPU/API cost.",
-      "outcome": "A focused integration or evaluator patch, regression tests, and an honest limitation analysis of the small-model runs.",
+      "outcome": "A focused infrastructure patch, regression tests, and a reproducible lifecycle comparison. Mock-agent results establish infrastructure behavior, not agent intelligence.",
       "preparation": "Python processes, containers, and tests; learn ALE deployment and task lifecycle.",
-      "fallback": "Use one Linux-compatible public task and a mock agent for lifecycle tests; a mock tests infrastructure, not agent intelligence.",
+      "fallback": "Use the task lifecycle with small local fixtures if the full task requires a VM, GUI, or expensive dependencies. Document what was adapted.",
       "sources": [
-        "ale"
+        "ale",
+        "agentbench"
       ],
       "upstream": "ALE documents how to add an agent. Confirm maintainer interest in the specific patch; many full benchmark tasks need VMs or GUI software, so the complete benchmark is outside this project.",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "ale": "Understand the task lifecycle, grading, and trajectory artifacts.",
+        "agentbench": "Compare agent evaluation interfaces and failure categories."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Choose one CPU/Linux CLI task and a mock agent for lifecycle checks. Avoid GUI VMs, GPU-dependent environments, and full ALE evaluation."
+      }
     },
     {
       "number": 45,
@@ -1475,20 +2198,31 @@
         "Case study",
         "Research problem"
       ],
-      "compute": "External review",
+      "compute": "CPU",
       "summary": "Contribute evaluation reliability rather than treating a benchmark score as a mergeable artifact.",
       "question": "Can answer formatting or confidence parsing change the measured score without changing the substantive answer?",
-      "scope": "Use 20-30 public, domain-understood HLE examples and controlled synthetic answer variants. Audit one extraction/judging/calibration path; propose a targeted code fix or documented question correction.",
+      "scope": "Use 20–30 public, domain-understood HLE examples and synthetic answer/confidence strings. Audit one local parsing or calibration path using equivalent formatting and known incorrect variants. A model-judge audit is optional only when a bounded cached-output set is available.",
       "baseline": "Current scorer, manually verified equivalence classes, and deliberately incorrect answers. Use only the public split and pin dataset revision.",
-      "evaluation": "False acceptance/rejection, score changes under equivalent formatting, confidence calibration, and judge disagreement.",
+      "evaluation": "Parsing false accepts/rejects, score changes under equivalent formatting, and correctness of confidence/calibration calculations. Report small-sample uncertainty; no model capability claim follows from synthetic strings.",
       "outcome": "An evaluation bug reproduction or well-supported correction, regression cases, and a small empirical analysis.",
       "preparation": "Evaluation, Python tests, and subject knowledge; learn HLE answer formats and calibration.",
       "fallback": "Audit parsing with synthetic outputs when small-model accuracy is too low. No full HLE run, frontier API spend, or new expert question is required.",
       "sources": [
-        "hle"
+        "hle",
+        "judgebench"
       ],
       "upstream": "HLE question feedback uses its official form; rolling contributions are coordinated with maintainers. Its GitHub repository has issues disabled. Confirm a code-PR route before assuming that question acceptance will be represented by a merge; preserve benchmark canaries and keep evaluation data out of training.",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "hle": "Check public-data, answer-format, and feedback rules.",
+        "judgebench": "Plan false-accept and false-reject checks for an evaluator."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Use synthetic answer/confidence strings and public reference examples for local parsing tests. Requiring paid frontier judges or a full HLE run would change the scope."
+      }
     },
     {
       "number": 46,
@@ -1510,10 +2244,22 @@
       "fallback": "Use four smaller models and fewer tokens, preserving the held-out configuration. Run locally: Stanford student API access is not assumed. A narrow tiny-model fit cannot establish a frontier-model scaling law.",
       "sources": [
         "cs336-scaling",
-        "fineweb2"
+        "scaling-laws",
+        "chinchilla"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "cs336-scaling": "Use the local scaling exercise as a starting point.",
+        "scaling-laws": "Understand the form and limitations of a fitted scaling curve.",
+        "chinchilla": "Distinguish model size, training tokens, and compute allocation."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Train the four tiny configurations sequentially. Pilot the smallest model, count every seed, and reduce token counts before enlarging the model family."
+      }
     },
     {
       "number": 47,
@@ -1534,10 +2280,21 @@
       "preparation": "PyTorch training and tensor shapes; learn profiling, asynchronous GPU timing, warm-up effects, and numerical equivalence checks.",
       "fallback": "Use the smaller model and one sequence length. If GPU kernels are unavailable, analyze CPU execution and one supported optimization; do not report it as a GPU speedup. Distributed training and writing a Triton kernel are outside the minimum scope.",
       "sources": [
-        "cs336-systems"
+        "cs336-systems",
+        "torch-compile"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "cs336-systems": "Plan profiling, correctness checks, and fair timing.",
+        "torch-compile": "Measure compilation overhead using the installed backend."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "One GPU, one optimization, and a fixed set of short step counts. Include compilation and profiling in the total; no distributed training or custom kernel is needed."
+      }
     },
     {
       "number": 48,
@@ -1558,11 +2315,23 @@
       "preparation": "Python tests, basic prompting, and evaluation; learn controlled user simulation and ambiguity annotation. The CS224N gallery supplies topic inspiration; this is an original reduced protocol.",
       "fallback": "Use 20 tasks, two ambiguity types, and a 0.6B model. Human user studies, unrestricted dialogue, and a full replication of the Stanford project are outside the minimum scope.",
       "sources": [
+        "clarifygpt",
         "cs224n-projects",
         "qwen3"
       ],
       "upstream": "",
-      "status": "Unreviewed"
+      "status": "Unreviewed",
+      "reading_notes": {
+        "clarifygpt": "Read ambiguity detection and targeted clarification.",
+        "cs224n-projects": "See a student-scale topic example; the gallery is not evidence of results.",
+        "qwen3": "Use a small local checkpoint for the bounded comparison."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use 20–40 short Python tasks, one 0.6B model, and one clarification. Count question and answer tokens and cap program execution time."
+      }
     },
     {
       "number": 49,
@@ -1581,13 +2350,29 @@
       "baseline": "Begin with the simplest credible solution: a rule, majority prediction, lexical retrieval, or an existing small model. Identify one change to compare against it, and explain which outcome would support or weaken your hypothesis.",
       "evaluation": "Define a held-out set or explicit evidence-selection protocol, relevant quantitative or qualitative criteria, and an error analysis. Record the time and resources used. Match the evaluation to the question; an app demonstration alone does not establish whether the proposed method works.",
       "outcome": "An individual investigation with a reproducible baseline, one meaningful comparison or structured analysis, and a clear explanation of findings and limitations. A well-supported negative result is valid and uses the same course rubric as a listed topic.",
-      "preparation": "Use the one-page proposal to cover motivation, related work, approach and baseline, data access, evaluation, compute, tools, and a short schedule. Identify what you will implement and what you will reuse, including AI coding assistance. Plan an early baseline and reserve time for analysis and writing.",
+      "preparation": "Use the one-page proposal to cover motivation, related work, approach and baseline, data access, evaluation, compute, tools, and a short schedule. Identify what you will implement and what you will reuse, including AI coding assistance. Plan an early baseline and reserve time for analysis and writing. Find 2–3 primary references specific to your chosen question and explain what each contributes; the planning links below are not a topic literature review.",
       "fallback": "Narrow to one language, one dataset, fewer examples, or a smaller model if data or compute access is uncertain. Discuss feasibility with the instructor through the normal proposal feedback process. Submit the proposal by October 21; the final report has up to six pages of main content, excluding references and appendices.",
       "sources": [
+        "course-project",
         "umd-proposal"
       ],
       "upstream": "A custom project may also produce an upstream contribution if it meets a real maintainer need. The same accepted-and-merged contribution guidance applies.",
-      "status": "Scope to be proposed"
+      "status": "Scope to be proposed",
+      "reading_notes": {
+        "course-project": "Follow this course’s individual scope, checkpoints, and rubric.",
+        "umd-proposal": "Use the planning questions only; Fudan’s dates and page limits apply."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "State the total cost of all baselines, ablations, and reruns. A project depending on multiple GPUs, prolonged pretraining, or large online-RL runs should be reduced before selection."
+      }
     }
-  ]
+  ],
+  "resource_policy": {
+    "max_gpus": 1,
+    "max_gpu_hours": 8,
+    "status": "proposed"
+  }
 }

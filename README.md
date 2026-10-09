@@ -34,8 +34,10 @@ Dates, periods, and holidays: [docs/schedule.md](docs/schedule.md). Assessment d
 
 The [individual project catalog](docs/project-candidates.html) starts with a
 student-proposed project option and contains 48 suggested directions for
-Lecture 05, with recent sources, baselines, evaluation plans, compute estimates,
-and possible upstream contributions. Search by topic or browse by category.
+Lecture 05. Each suggestion has 2–3 annotated references, a baseline, an
+evaluation plan, and a CPU or one-GPU resource plan with a smaller fallback.
+Prefer CPU studies and short inference runs in our shared compute pool.
+Search by topic or browse by category.
 The one-page proposal is due **October 21, 2026,
 23:59 (Asia/Shanghai)** through eLearning.
 

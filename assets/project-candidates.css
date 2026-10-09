@@ -7,6 +7,11 @@
 .catalog-meta, .source-kind { color: var(--muted); font-size: 14px; }
 .hero-facts { display: flex; flex-wrap: wrap; gap: 18px 36px; margin-top: 28px; color: var(--muted); }
 .hero-facts strong { color: var(--accent); font-size: 26px; margin-right: 6px; }
+.proposal-checklist { padding-left: 24px; }
+.proposal-checklist li { margin: 12px 0; }
+.compute-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin: 22px 0; }
+.compute-options h3 { font-size: 16px; line-height: 1.5; color: var(--accent); margin: 0 0 8px; }
+.compute-options p { font-size: 15px; margin: 0; }
 .guide-panel { border: 1px solid var(--line); background: var(--card); border-radius: 10px; padding: 24px 28px; margin: 24px 0; }
 .guide-panel h2, #catalog-title { font-size: 27px; line-height: 1.3; margin: 0 0 18px; }
 .guide-panel p { max-width: 950px; }
@@ -37,6 +42,12 @@ summary { cursor: pointer; font-weight: 650; padding: 6px 0; }
 .project-number { color: var(--accent); font-weight: 500; margin-right: 8px; }
 .card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; color: var(--muted); font-size: 13px; }
 .review-status { border: 1px solid var(--line); border-radius: 4px; padding: 1px 7px; margin-left: auto; }
+.resource-badge { border: 1px solid currentColor; border-radius: 4px; padding: 2px 8px; font-weight: 650; }
+.resource-cpu { color: #216443; background: #eef8f0; }
+.resource-inference { color: #20578c; background: #edf4fd; }
+.resource-training { color: #875a15; background: #fff7e8; }
+.resource-summary { border-left: 3px solid var(--line); padding-left: 14px; font-size: 14px; margin: 18px 0; }
+.resource-summary p { margin: 5px 0; }
 .project-summary { color: var(--muted); margin: 0 0 14px; }
 .tags { display: flex; flex-wrap: wrap; gap: 7px; }
 .tag { font-size: 12px; background: var(--soft); color: var(--accent); border-radius: 4px; padding: 3px 8px; }
@@ -48,6 +59,9 @@ summary { cursor: pointer; font-weight: 650; padding: 6px 0; }
 .project-card h3 { font-size: 17px; margin: 24px 0 10px; }
 .sources { font-size: 14px; padding-left: 20px; }
 .sources li { margin: 9px 0; overflow-wrap: anywhere; }
+.project-readings h3 { margin: 18px 0 8px; }
+.project-readings .sources { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 30px; margin: 0 0 20px; padding-left: 22px; }
+.reading-purpose { margin: 6px 0 0; color: var(--muted); }
 .reading-header nav { max-width: 1180px; flex-wrap: wrap; gap: 12px 20px; }
 [hidden] { display: none !important; }
 @media (max-width: 700px) {
@@ -58,7 +72,7 @@ summary { cursor: pointer; font-weight: 650; padding: 6px 0; }
   .course-home { flex-basis: 100%; }
   .guide-panel, .project-card { padding: 20px 18px; }
   .guide-panel h2, #catalog-title { font-size: 24px; }
-  .milestones, .catalog-filters { grid-template-columns: 1fr; }
+  .milestones, .catalog-filters, .compute-options, .project-readings .sources { grid-template-columns: 1fr; }
   .milestones { gap: 14px; }
   .catalog-filters { padding: 18px; }
   .project-card h2 { font-size: 21px; }
@@ -77,5 +91,7 @@ summary { cursor: pointer; font-weight: 650; padding: 6px 0; }
   .upstream-panel table { min-width: 0; }
   .project-card h2 { font-size: 19px; }
   .project-card dl, .sources { font-size: 11px; }
+  .resource-summary { font-size: 11px; }
+  .project-readings .sources { display: block; }
   body { font-size: 12px; background: #fff; color: #000; }
 }

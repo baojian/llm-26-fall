@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Propose your own NLP or LLM project, or explore the suggested questions, papers, baselines, and open-source opportunities for Fall 2026.">
+  <meta name="description" content="Choose an individual NLP or LLM project with a concrete question, 2–3 starting references, and a plan that fits a laptop or one shared GPU.">
   <title>Individual project candidates · NLP and LLMs · Fall 2026</title>
   <link rel="stylesheet" href="../assets/notes.css">
   <link rel="stylesheet" href="../assets/course-language.css">
@@ -18,8 +18,8 @@
   <nav aria-label="Course navigation">
     <a class="course-home" href="../index.html#project">NLP and LLMs · Fall 2026</a>
     <a href="#catalog">Browse projects</a>
-    <a href="#how-to-choose">How to choose</a>
-    <a href="#upstream">Open-source contributions</a>
+    <a href="#how-to-choose">Proposal checklist</a>
+    <a href="#compute-guide">Compute guide</a>
     <div class="lang-toggle" role="group" aria-label="Course interface language">
       <button type="button" data-lang="en" aria-pressed="true">EN</button>
       <button type="button" data-lang="zh" aria-pressed="false">中文</button>
@@ -28,55 +28,59 @@
 </header>
 <main class="catalog-main" lang="en">
   <div class="catalog-hero">
-    <p class="reading-kicker">LECTURE 05 · OCTOBER 10, 2026</p>
+    <p class="reading-kicker">INDIVIDUAL PROJECT · FALL 2026</p>
     <h1>Choose a project that interests you</h1>
-    <p class="catalog-intro">Propose your own question about NLP or language models, or adapt a suggested project below. Start with something you care about, build a baseline, and use evidence to explain what works, what fails, and why.</p>
+    <p class="catalog-intro">Start with a question about language models that you can investigate on a laptop or one shared GPU. Each suggested project includes a small experiment, starting references, compute needs, and a fallback.</p>
     <p><a class="catalog-start" href="#student-proposed-project">Propose your own project</a> · <a href="#catalog">Browse all {{COUNT}} options ↓</a></p>
-    <p class="catalog-meta">Sources checked {{VERIFIED_ON}} · Proposed scopes; instructor review and resource pilots pending · Project descriptions are in English.</p>
-    <div class="hero-facts"><span><strong>1</strong> student per project</span><span><strong>9</strong> suggested topic areas</span><span><strong>6</strong> project categories</span></div>
+    <div class="hero-facts"><span><strong>1</strong> student per project</span><span><strong>2–3</strong> starting references</span><span><strong>0–1</strong> GPUs per study</span></div>
   </div>
 
   <section class="guide-panel" id="how-to-choose" aria-labelledby="choose-title">
-    <h2 id="choose-title">Choose a question you can test</h2>
-    <p><strong>Your own idea is welcome.</strong> A personal interest, a problem in another discipline, a community need, or an unexpected model behavior can motivate a project. Include a clear language-processing component and turn the idea into a question you can investigate individually. Student-proposed projects use the same proposal process, checkpoints, and grading rubric as the suggested topics.</p>
-    <p>Each card is a proposed investigation, not a promise that a paper's results will reproduce at this scale. The minimum outcome is designed for one student over the remaining semester, with roughly 4-6 hours of work per week. A well-supported negative result is a complete outcome. All students have the same requirements and maximum score under the published course policy.</p>
-    <p><strong>Start small:</strong> one main dataset or generator, one model family, one baseline, and one controlled change. Freeze a development/evaluation split and record model revisions, prompts, seeds, budgets, and unsuccessful runs. Inspect at least 20 examples when the dataset permits. Use repeated runs or uncertainty estimates appropriate to the experiment. Reusing assignment code is welcome; identify the project's additional question and evidence.</p>
-    <p><strong>Preparation:</strong> the first four lectures provide text processing, n-grams, evaluation, embeddings, PyTorch, and neural/recurrent models. Each card names what remains to learn. Attention, Transformers, tuning, retrieval, diffusion, and agents can be learned from the linked starter resources before their later lectures.</p>
-    <p><strong>Compute estimates are planning targets, not allocations or measured runtimes.</strong> CPU, inference, training, and external-review labels describe resources, not grading tracks. Pilot 10 examples or 100 training steps, then reduce scope if needed. Paid APIs are optional; propose a spending cap before using them. Small-model projects should usually begin at 0.6B-2B for inference, 0.6B for adapter tuning, or 5M-30M when training from scratch.</p>
+    <h2 id="choose-title">Prepare your one-page proposal</h2>
+    <ol class="proposal-checklist">
+      <li><strong>Question and motivation.</strong> Explain what you want to learn and why it matters. Read 2–3 relevant primary references and identify what remains unclear. For your own topic, find topic-specific papers beyond the planning links.</li>
+      <li><strong>First experiment.</strong> Name accessible data or a generator, a simple baseline, one comparison, and an evaluation that can answer the question. Keep development and evaluation examples separate.</li>
+      <li><strong>Feasibility.</strong> State the model size, memory requirement, total runs and GPU-hours, including baselines and retries. Give a smaller CPU or cached-output fallback and plan an early timing/memory pilot.</li>
+    </ol>
     <div class="milestones">
       <div><strong>October 21</strong><span>One-page proposal</span></div>
       <div><strong>November 25</strong><span>Progress update, up to two pages</span></div>
-      <div><strong>December 30</strong><span>Main report (up to six pages), code and experiment record</span></div>
+      <div><strong>December 30</strong><span>Main report, up to six pages; code and experiment record</span></div>
     </div>
-    <p>Deadlines are <strong>23:59, Asia/Shanghai (UTC+08:00)</strong>. Submit graded work privately through <a href="https://elearning.fudan.edu.cn/">eLearning</a>. References and appendices are outside the six-page main-report limit. See the <a href="../index.html#project">full project requirements and rubric</a>.</p>
-    <details>
-      <summary>Some useful starting points for choosing a topic</summary>
-      <p>These offer concrete first experiments; they are not an instructor-approved shortlist. Upstream work also depends on the receiving project's review process.</p>
-      <ul class="featured-list">{{FEATURED}}</ul>
-    </details>
-    <details>
-      <summary>How this updates the earlier project list</summary>
-      <p>The <a href="https://baojian.github.io/llm-26/slides/final-project/index.html">Spring 2026 list</a> combined older challenge tasks with recent papers. Standalone reproductions of SemEval-2014 sentiment classification, the Fake News Challenge, 2019/2020 commonsense tasks, and generic Kaggle classification are retired from this shortlist. Their datasets and simple methods can still serve as useful baselines.</p>
-      <p>BLT, sparse attention, difference-aware fairness, cross-lingual intervention, formal-language pretraining, and Infini-gram mini remain useful after reducing their scope. The reasoning-faithfulness project adds a 2026 control study. New directions include editable context, agent memory and security, Qwen-Scope, small diffusion checkpoints, current multimodal models, and upstream benchmark contributions. Foundational methods may be older; every project asks a current, bounded question.</p>
-    </details>
-    <details id="course-comparison">
-      <summary>What we learned from Stanford, CMU, and UMD courses</summary>
-      <p>Official course materials checked October 9, 2026 helped identify gaps in this catalog. These are our adaptations for one student; their original assignment workloads, team sizes, and grading policies do not transfer to this course.</p>
-      <div class="table-scroll"><table>
-        <thead><tr><th>Course reviewed</th><th>Useful pattern</th><th>Connection to these candidates</th></tr></thead>
-        <tbody>
-          <tr><td><a href="https://cs336.stanford.edu/">Stanford CS336, Spring 2026</a></td><td>Five substantial assignments spanning model construction, systems, scaling, data, and alignment.</td><td>Add <a href="#small-scale-scaling-prediction">46 · scaling prediction</a> and <a href="#training-profile-break-even">47 · training profiling</a>; retain the existing data and reward audits. Use local experiments without assuming access to Stanford's training API.</td></tr>
-          <tr><td><a href="https://web.stanford.edu/class/cs224n/project.html">Stanford CS224N, Winter 2026</a></td><td>The project gallery includes small-model efficiency, adaptive reasoning, agent memory, and clarification for coding.</td><td>These themes overlap with our reasoning, context, and decoding studies. Add <a href="#clarification-before-coding">48 · clarification before coding</a>. The gallery provides examples, not proof of their results or of our resource estimates.</td></tr>
-          <tr><td><a href="https://cmu-l3.github.io/anlp-fall2025/assignments/assignment3%264">CMU 11-711 Advanced NLP, Fall 2025</a></td><td>Progress from literature review to baseline reproduction, then an extension and analysis.</td><td>Use this sequence within our existing proposal, progress, and final checkpoints. The <a href="https://github.com/cmu-l3/anlp-fall2025-hw2">course RAG assignment</a> is a larger example behind our bounded retrieval studies; reproduce a baseline before testing the new question.</td></tr>
-          <tr><td><a href="https://www.cs.umd.edu/~miyyer/cmsc723/schedule.html">UMD CMSC 723, Fall 2026</a></td><td>The <a href="https://www.overleaf.com/read/jrxnkfqvkjfm">proposal template</a> connects topic motivation to related work, baselines, data, compute, tools, and a schedule.</td><td>Put <a href="#student-proposed-project">student-proposed projects</a> first. Use these planning questions within our one-page individual proposal and existing course requirements.</td></tr>
-        </tbody>
-      </table></div>
-      <p><strong>Report length:</strong> <a href="https://web.stanford.edu/class/cs224n/project/Project_Report_Instructions.pdf">CS224N's 2026 guidance</a> specifies 6-8 pages excluding references. <a href="https://cmu-l3.github.io/anlp-fall2025/#assignments">CMU's Fall 2025 guidance</a> allows up to 9 pages for the final project, with teams of 2-3. Our instructor-set limit is <strong>up to six pages of main content</strong> for one student, excluding references and appendices.</p>
-    </details>
+    <p>Submit privately through <a href="https://elearning.fudan.edu.cn/">eLearning</a> by <strong>23:59, Asia/Shanghai (UTC+08:00)</strong>. References and appendices are outside the final report’s six-page limit. All students use the same <a href="../index.html#project">requirements and rubric</a>. A sound negative result can receive full credit.</p>
   </section>
 
+  <section class="guide-panel compute-guide" id="compute-guide" aria-labelledby="compute-title">
+    <h2 id="compute-title">Choose for our shared compute pool</h2>
+    <p><strong>Prefer CPU studies and short inference runs.</strong> Our GPU pool is shared. Choose a project whose complete comparison can finish with limited access to one GPU.</p>
+    <div class="compute-options">
+      <div><h3>CPU · recommended starting point</h3><p>Tokenizer and data audits, retrieval, verifier tests, or a focused evidence review. The minimum study needs no GPU.</p></div>
+      <div><h3>One GPU · inference</h3><p>Reuse a small released checkpoint and cached outputs. Most cards target a total of 2–4 GPU-hours, including all conditions.</p></div>
+      <div><h3>One GPU · short training</h3><p>Use a 5M–30M teaching model or adapters on a 0.6B checkpoint. Check the full run plan with a small pilot before choosing this route.</p></div>
+    </div>
+    <p><strong>{{BUDGET_STATUS}}: up to {{GPU_HOURS}} GPU-hours per project, on at most one GPU.</strong> Card budgets are scope-planning ceilings, not measured runtimes or promised allocations. Count preparation on a GPU, training, generation, evaluation, ablations, and reruns. Record actual memory and time; reduce the scope if the pilot does not fit.</p>
+    <p><strong>Avoid projects that depend on multiple GPUs, prolonged LLM pretraining, large full-model tuning, online RL, or full benchmark reruns.</strong> The papers may use much more compute than the bounded experiment suggested here. Read them for methods and evaluation ideas; reproduce only the stated small study. Paid APIs and hosted environments also need an explicit cost estimate.</p>
+    <details><summary>Low-compute starting points</summary><ul class="featured-list">{{FEATURED}}</ul></details>
+  </section>
+
+  <section id="catalog" aria-labelledby="catalog-title">
+    <h2 id="catalog-title">Browse the candidates</h2>
+    <p>Start with your own idea or one of the suggested questions. Filter by approach, topic, or compute. Each card shows 2–3 references and its resource plan before the detailed experiment. “Unreviewed” means the scope still needs proposal feedback and a small resource pilot.</p>
+    <form id="catalog-filters" class="catalog-filters" role="search" hidden>
+      <div class="search-control"><label for="project-search">Search title, question, paper or keyword</label><input id="project-search" name="q" type="search" placeholder="Try context, tokenizer, verifier, Chinese…" autocomplete="off"></div>
+      <div><label for="project-category">Project approach</label><select id="project-category" name="category"><option value="">All approaches</option>{{CATEGORY_OPTIONS}}</select></div>
+      <div><label for="project-topic">Topic</label><select id="project-topic" name="topic"><option value="">All topics</option>{{TOPIC_OPTIONS}}</select></div>
+      <div><label for="project-compute">Compute</label><select id="project-compute" name="compute"><option value="">All resources</option>{{COMPUTE_OPTIONS}}</select></div>
+      <button type="reset" class="reset-filters">Clear filters</button>
+    </form>
+    <noscript><p>All candidates are shown below. Use your browser’s Find command to search without JavaScript.</p></noscript>
+    <div class="results-line"><p id="result-count" role="status" aria-live="polite">{{COUNT}} of {{COUNT}} projects</p><button id="expand-projects" type="button" hidden>Expand visible project details</button></div>
+    <p id="no-results" hidden>No projects match these filters. Try a broader term or clear the filters.</p>
+    <div id="project-list">{{CARDS}}</div>
+  </section>
   <section class="guide-panel upstream-panel" id="upstream" aria-labelledby="upstream-title">
-    <h2 id="upstream-title">Contribute something other people can use</h2>
+    <h2 id="upstream-title">Optional open-source contributions</h2>
+    <details><summary>Contribution routes and current limits</summary>
     <p><strong>Instructor direction, October 9:</strong> substantive individual work accepted and merged into established, actively used open-source repositories will be considered for additional course-project credit. The exact points, cap, and treatment within or beyond the existing project maximum have not yet been specified. No automatic bonus is assigned by this catalog; the published rubric remains the basis for grading until a common policy is announced.</p>
     <p>A new benchmark task, a verified evaluator repair, a useful model adapter, or a reusable dataset/tool can be a strong project. Agree on a useful contribution with upstream maintainers early. Keep a local experiment and report that answer the project question even if review takes longer than the semester.</p>
     <p>For credit consideration, include the upstream PR and merge-commit links, maintainer acceptance, your individual contribution, tests and before/after evidence, and how review changed the work. A self-merged personal fork, raw PR count, or repository star count is not evidence of substantive external acceptance. This guidance does not promise a maintainer decision or paper authorship.</p>
@@ -90,26 +94,11 @@
       </tbody>
     </table></div>
     <p>These are contribution destinations, not guaranteed openings. Check current rules again before submitting. The instructor's requested public-contribution route concerns an agreed upstream artifact; proposals, graded reports, experiment records, grades, and course assignment solutions still belong on eLearning. Keep upstream reference solutions and evaluation material in the channels required by that project's maintainers, not in this public course repository.</p>
-  </section>
-
-  <section id="catalog" aria-labelledby="catalog-title">
-    <h2 id="catalog-title">Browse the candidates</h2>
-    <p>The first category, <strong>Student-proposed project</strong>, welcomes your own idea. The other five categories describe approaches: survey, case study, replication, new task, or research problem. Topic describes what you study, and several approaches may apply to one project. “Unreviewed” means a suggested scope still needs instructor selection and a resource pilot; an open topic starts with your proposal.</p>
-    <form id="catalog-filters" class="catalog-filters" role="search" hidden>
-      <div class="search-control"><label for="project-search">Search title, question, paper or keyword</label><input id="project-search" name="q" type="search" placeholder="Try context, Qwen, verifier, Chinese…" autocomplete="off"></div>
-      <div><label for="project-category">Project category</label><select id="project-category" name="category"><option value="">All categories</option>{{CATEGORY_OPTIONS}}</select></div>
-      <div><label for="project-topic">Topic</label><select id="project-topic" name="topic"><option value="">All topics</option>{{TOPIC_OPTIONS}}</select></div>
-      <div><label for="project-compute">Compute / dependencies</label><select id="project-compute" name="compute"><option value="">All resources</option>{{COMPUTE_OPTIONS}}</select></div>
-      <button type="reset" class="reset-filters">Clear filters</button>
-    </form>
-    <noscript><p>All candidates are shown below. Use your browser's Find command to search without JavaScript.</p></noscript>
-    <div class="results-line"><p id="result-count" role="status" aria-live="polite">{{COUNT}} of {{COUNT}} projects</p><button id="expand-projects" type="button" hidden>Expand visible project details</button></div>
-    <p id="no-results" hidden>No projects match these filters. Try a broader term or clear the filters.</p>
-    <div id="project-list">{{CARDS}}</div>
+    </details>
   </section>
   <footer class="reading-footer">
-    <p>CS40008.01 · Fudan University · Fall 2026. <a href="project-candidates.json">Editable catalog data</a> · <a href="project-candidates-maintenance.md">Source and maintenance notes</a> · <a href="https://github.com/baojian/llm-26-fall/issues/265">Catalog planning issue</a>.</p>
-    <p>Paper findings are starting points, not course measurements. Hardware estimates and proposed experiments have not been piloted. New papers are labeled as preprints where publication status is not established.</p>
+    <p>CS40008.01 · Fudan University · Fall 2026 · <a href="../index.html#project">Project requirements and rubric</a> · <a href="https://elearning.fudan.edu.cn/">Submit through eLearning</a>.</p>
+    <p>References checked {{VERIFIED_ON}}. Proposed experiments and resource budgets have not been piloted; published results do not guarantee the same outcomes at this scale.</p>
   </footer>
 </main>
 </body>

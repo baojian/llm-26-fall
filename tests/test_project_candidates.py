@@ -87,3 +87,34 @@ def test_catalog_text_is_escaped_and_executable_source_links_are_rejected():
     data["sources"]["qwen35"]["url"] = "javascript:alert(1)"
     with pytest.raises(ValueError, match="Unsafe"):
         catalog.validate(data)
+
+
+@pytest.mark.parametrize("source_ids", [[], ["qwen35"], ["qwen35", "qwen35"]])
+def test_reading_lists_require_at_least_two_distinct_references(source_ids):
+    data = deepcopy(DATA)
+    data["projects"][0]["sources"] = source_ids
+    with pytest.raises(ValueError, match="two distinct"):
+        catalog.validate(data)
+
+
+def test_each_reference_requires_a_reason_to_read_it():
+    data = deepcopy(DATA)
+    data["projects"][0]["reading_notes"].pop("qwen35")
+    with pytest.raises(ValueError, match="Explain each reference"):
+        catalog.validate(data)
+
+
+@pytest.mark.parametrize("field,value", [("max_gpus", 2), ("gpu_hours", 9), ("gpu_hours", -1)])
+def test_projects_cannot_exceed_the_shared_gpu_budget(field, value):
+    data = deepcopy(DATA)
+    project = next(p for p in data["projects"] if p["compute"] == "Training")
+    project["resources"][field] = value
+    with pytest.raises(ValueError):
+        catalog.validate(data)
+
+
+def test_cpu_filter_cannot_hide_a_gpu_requirement():
+    data = deepcopy(DATA)
+    data["projects"][0]["resources"]["gpu_hours"] = 1
+    with pytest.raises(ValueError, match="Inconsistent CPU"):
+        catalog.validate(data)

@@ -22,6 +22,11 @@ TEXT_FIELDS = (
 
 def validate(data: dict) -> None:
     """Reject entries that would break navigation or omit proposal essentials."""
+    policy = data["resource_policy"]
+    if policy["max_gpus"] != 1 or policy["status"] not in {"proposed", "confirmed"}:
+        raise ValueError("The catalog supports CPU or one shared GPU")
+    if type(policy["max_gpu_hours"]) not in (int, float) or not 0 < policy["max_gpu_hours"] < float("inf"):
+        raise ValueError("Invalid catalog GPU-time ceiling")
     ids = set()
     for number, project in enumerate(data["projects"], 1):
         identifier = project["id"]
@@ -37,8 +42,33 @@ def validate(data: dict) -> None:
             raise ValueError(f"Unknown or empty category: {identifier}")
         if project["topic"] not in data["topics"] or project["compute"] not in data["compute"]:
             raise ValueError(f"Unknown topic or compute budget: {identifier}")
-        if not project["sources"] or not set(project["sources"]) <= data["sources"].keys():
+        if not set(project["sources"]) <= data["sources"].keys():
             raise ValueError(f"Missing source: {identifier}")
+        if len(project["sources"]) < 2 or len(set(project["sources"])) != len(project["sources"]):
+            raise ValueError(f"Provide at least two distinct references: {identifier}")
+        if len({data["sources"][key]["url"] for key in project["sources"]}) != len(project["sources"]):
+            raise ValueError(f"References must use distinct primary URLs: {identifier}")
+        reading_notes = project.get("reading_notes", {})
+        if set(reading_notes) != set(project["sources"]) or any(
+            not isinstance(note, str) or not note.strip() for note in reading_notes.values()
+        ):
+            raise ValueError(f"Explain each reference: {identifier}")
+        resources = project.get("resources", {})
+        if type(resources.get("max_gpus")) is not int or resources["max_gpus"] not in (0, 1):
+            raise ValueError(f"Project must fit CPU or one GPU: {identifier}")
+        for field in ("gpu_hours", "gpu_memory_gb"):
+            value = resources.get(field)
+            if type(value) not in (int, float) or not 0 <= value < float("inf"):
+                raise ValueError(f"Invalid resource estimate: {identifier}")
+        if resources["gpu_hours"] > data["resource_policy"]["max_gpu_hours"]:
+            raise ValueError(f"GPU time exceeds catalog ceiling: {identifier}")
+        if resources["max_gpus"] == 0:
+            if resources["gpu_hours"] != 0 or resources["gpu_memory_gb"] != 0 or project["compute"] != "CPU":
+                raise ValueError(f"Inconsistent CPU budget: {identifier}")
+        elif project["compute"] == "CPU" or not resources["gpu_hours"] or not resources["gpu_memory_gb"]:
+            raise ValueError(f"Missing GPU budget: {identifier}")
+        if not isinstance(resources.get("note"), str) or not resources["note"].strip():
+            raise ValueError(f"Missing resource scope: {identifier}")
     if not set(data["featured"]) <= ids:
         raise ValueError("Featured project does not exist")
     for key, source in data["sources"].items():
@@ -62,6 +92,20 @@ def render(data: dict, template: str) -> str:
     cards = []
     for project in sorted(data["projects"], key=lambda item: item.get("display_priority", 1)):
         e = {key: escape(value) for key, value in project.items() if isinstance(value, str)}
+        resources = project["resources"]
+        if resources["max_gpus"] == 0:
+            resource_class, resource_label = "cpu", "CPU · no GPU required"
+            budget = "Laptop CPU, roughly 8–16 GB RAM."
+        else:
+            resource_class = "training" if project["compute"] == "Training" else "inference"
+            resource_label = "1 GPU · short training" if resource_class == "training" else "1 GPU · inference"
+            if project["compute"] == "Propose a budget":
+                resource_label = "CPU or 1 GPU · propose scope"
+            budget = (
+                f"{resources['gpu_memory_gb']:g} GB GPU memory target; "
+                f"up to {resources['gpu_hours']:g} GPU-hours total."
+            )
+        budget_status = "Proposed ceiling" if data["resource_policy"]["status"] == "proposed" else "Planning ceiling"
         tags = "".join(f'<span class="tag">{escape(category)}</span>' for category in project["categories"])
         fields = [
             ("Minimum scope and data", e["scope"]),
@@ -88,19 +132,20 @@ def render(data: dict, template: str) -> str:
             references.append(
                 f'<li><a href="{escape(source["url"])}">{escape(source["title"])}</a>'
                 f' — {escape(source["authors"])}; {escape(source["year"])}.'
-                f' <span class="source-kind">{escape(source["kind"])}</span>{artifact}</li>'
+                f' <span class="source-kind">{escape(source["kind"])}</span>{artifact}'
+                f'<p class="reading-purpose">{escape(project["reading_notes"][key])}</p></li>'
             )
         search = escape(" ".join(search_parts).lower())
         categories = escape("|".join(project["categories"]))
         cards.append(f'''<article class="project-card" id="{e['id']}" data-category="{categories}" data-topic="{e['topic']}" data-compute="{e['compute']}" data-search="{search}">
-  <div class="card-meta"><span>{e['topic']}</span><span>{e['compute']}</span><span class="review-status">{e['status']}</span></div>
+  <div class="card-meta"><span>{e['topic']}</span><span class="resource-badge resource-{resource_class}">{resource_label}</span><span class="review-status">{e['status']}</span></div>
   <h2><a class="project-link" href="#{e['id']}"><span class="project-number">{project_label(project)}</span> {e['title']}</a></h2>
   <p class="project-summary">{e['summary']}</p>
   <div class="tags" aria-label="Project approaches">{tags}</div>
   <p class="question"><strong>Question:</strong> {e['question']}</p>
-  <details><summary>Scope, evaluation, resources and sources</summary><dl>{details}</dl>
-    <h3>Starting sources</h3><ul class="sources">{''.join(references)}</ul>
-  </details>
+  <div class="resource-summary"><p><strong>{budget_status if resources['max_gpus'] else 'Compute'}:</strong> {budget}</p><p>{escape(resources['note'])}</p></div>
+  <div class="project-readings"><h3>Read first</h3><ol class="sources">{''.join(references)}</ol></div>
+  <details><summary>Experiment plan, evaluation and smaller fallback</summary><dl>{details}</dl></details>
 </article>''')
     lookup = {project["id"]: project for project in data["projects"]}
     featured = "".join(
@@ -109,6 +154,8 @@ def render(data: dict, template: str) -> str:
     )
     substitutions = {
         "COUNT": str(len(data["projects"])), "VERIFIED_ON": escape(data["verified_on"]),
+        "GPU_HOURS": str(data["resource_policy"]["max_gpu_hours"]),
+        "BUDGET_STATUS": "Proposed planning ceiling" if data["resource_policy"]["status"] == "proposed" else "Planning ceiling",
         "CATEGORY_OPTIONS": options(data["categories"]), "TOPIC_OPTIONS": options(data["topics"]),
         "COMPUTE_OPTIONS": options(data["compute"]), "FEATURED": featured,
         "CARDS": "\n".join(cards),

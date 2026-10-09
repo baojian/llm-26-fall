@@ -3,8 +3,11 @@
 The [individual project catalog](project-candidates.html) puts student-proposed
 projects first, followed by 48 suggested projects for the October 10 Lecture 05
 release. It supports search and filters by category, topic, and resources.
-Each candidate includes sources, prerequisites,
-a question, baseline, evaluation, minimum outcome, and fallback. See the
+Each candidate includes 2–3 annotated references, prerequisites, a question,
+baseline, evaluation, minimum outcome, and fallback. Compute badges distinguish
+CPU studies, short inference runs, and small training studies on one shared GPU.
+The page prioritizes proposal preparation and resource choices; comparisons
+with other universities are retained in the maintenance notes. See the
 [editable data](project-candidates.json) and
 [maintenance notes](project-candidates-maintenance.md) for review status,
 source checks, upstream contribution routes, and rebuilding instructions.
