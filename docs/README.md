@@ -1,5 +1,13 @@
 # Course reading pages
 
+The [individual project catalog](project-candidates.html) contains 45 proposed
+projects for the October 10 Lecture 05 release. It supports search and filters
+by approach, topic, and resources. Each candidate includes sources, prerequisites,
+a question, baseline, evaluation, minimum outcome, and fallback. See the
+[editable data](project-candidates.json) and
+[maintenance notes](project-candidates-maintenance.md) for review status,
+source checks, upstream contribution routes, and rebuilding instructions.
+
 The [MiMo RL archive guide](mimo-rl-archive.md) documents the public training
 history preserved for the post-training lectures and how to retrieve it.
 

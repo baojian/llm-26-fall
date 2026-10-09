@@ -49,7 +49,7 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
 | 2 | Wed, Sep 16, 2026 | N-gram language models | A1 released |
 | 3 | Wed, Sep 23, 2026 | Embeddings and PyTorch for language models | Quiz 1 |
 | 4 | Wed, Sep 30, 2026 | Neural language models and attention | A1 due |
-| 5 | **Sat, Oct 10, 2026** | **Attention and the Transformer** | **Make-up class**; Quiz 2; A2 released |
+| 5 | **Sat, Oct 10, 2026** | **Attention and the Transformer** | **Make-up class**; Quiz 2; A2 released; [candidate projects](project-candidates.html) |
 | 6 | Wed, Oct 14, 2026 | Pretraining and decoding in practice | — |
 | 7 | Wed, Oct 21, 2026 | Data preparation and quality | Quiz 3; Project proposal due |
 | 8 | Wed, Oct 28, 2026 | Compute budgets and scaling | A2 due **Sat, Oct 31** |

@@ -1,0 +1,1452 @@
+{
+  "title": "Individual project candidates",
+  "release_date": "2026-10-10",
+  "verified_on": "2026-10-09",
+  "categories": [
+    "Survey paper",
+    "Case study",
+    "Paper replication",
+    "New task",
+    "Research problem"
+  ],
+  "topics": [
+    "Data and tokenization",
+    "Adaptation and training",
+    "Reasoning and evaluation",
+    "Retrieval and evidence",
+    "Agents and memory",
+    "Efficient inference",
+    "Interpretability and language",
+    "Diffusion and multimodal",
+    "Open-source contributions"
+  ],
+  "compute": {
+    "CPU": "Laptop, roughly 8-16 GB RAM; plan for at most 4 hours of processing and a small data download. An optional inference sanity check can use a shared GPU.",
+    "Inference": "One 12-24 GB GPU or a suitable local quantized runtime; target at most 8 GPU-hours total on the scoped subset. Start with 0.6B-2B models, batch size 1, short contexts and capped outputs.",
+    "Training": "One 16-24 GB GPU; target at most 24 GPU-hours total across baselines, ablations and seeds. Use 5M-30M models from scratch or 0.6B adapter tuning. Pilot memory and step time before committing.",
+    "External review": "CPU/container development plus a small local-model pilot; reserve at most 8 GPU-hours initially. Required frontier-agent trials, hosted VMs, API calls and upstream review time are additional constraints to settle before choosing this route."
+  },
+  "featured": [
+    "multilingual-tokenizer-audit",
+    "reasoning-budget-allocation",
+    "hybrid-retrieval",
+    "rag-abstention",
+    "clm-context-management",
+    "science-verifier-repair"
+  ],
+  "sources": {
+    "qwen35": {
+      "title": "Qwen3.5 small model release",
+      "authors": "Qwen Team",
+      "year": "2026",
+      "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B",
+      "kind": "Model card"
+    },
+    "qwen3": {
+      "title": "Qwen3-0.6B",
+      "authors": "Qwen Team",
+      "year": "2025",
+      "url": "https://huggingface.co/Qwen/Qwen3-0.6B",
+      "kind": "Model card"
+    },
+    "fineweb2": {
+      "title": "FineWeb2: One Pipeline to Scale Them All",
+      "authors": "Penedo et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2506.20920",
+      "kind": "Paper"
+    },
+    "numbers": {
+      "title": "Language Models Encode Numbers Using Digit Representations in Base 10",
+      "authors": "Levy et al.",
+      "year": "NAACL 2025",
+      "url": "https://aclanthology.org/2025.naacl-short.33/",
+      "kind": "Paper"
+    },
+    "blt": {
+      "title": "Byte Latent Transformer: Patches Scale Better Than Tokens",
+      "authors": "Pagnoni et al.",
+      "year": "2024 preprint / ACL 2025",
+      "url": "https://github.com/facebookresearch/blt",
+      "kind": "Paper and official code"
+    },
+    "engram": {
+      "title": "Conditional Memory via Scalable Lookup: A New Axis of Sparsity for Large Language Models",
+      "authors": "Cheng et al.",
+      "year": "2026 preprint",
+      "url": "https://arxiv.org/abs/2601.07372",
+      "kind": "Paper",
+      "artifact": "https://github.com/deepseek-ai/Engram"
+    },
+    "byte-engram": {
+      "title": "Tokenizer-Agnostic Engram Module",
+      "authors": "Lim and Chieu",
+      "year": "2026 preprint",
+      "url": "https://arxiv.org/abs/2607.29065",
+      "kind": "Paper"
+    },
+    "smollm3": {
+      "title": "SmolLM3-3B: open training recipe and model",
+      "authors": "Hugging Face Smol Models team",
+      "year": "2025",
+      "url": "https://huggingface.co/HuggingFaceTB/SmolLM3-3B",
+      "kind": "Model card",
+      "artifact": "https://huggingface.co/datasets/HuggingFaceTB/smoltalk2"
+    },
+    "classifiers": {
+      "title": "Generative or Discriminative? Revisiting Text Classification in the Era of Transformers",
+      "authors": "Kasa et al.",
+      "year": "EMNLP 2025",
+      "url": "https://aclanthology.org/2025.emnlp-main.486/",
+      "kind": "Paper",
+      "artifact": "https://github.com/amazon-science/Generative-vs-Discriminative-Classifiers"
+    },
+    "drgrpo": {
+      "title": "Understanding R1-Zero-Like Training: A Critical Perspective",
+      "authors": "Liu et al.",
+      "year": "2025 preprint",
+      "url": "https://arxiv.org/abs/2503.20783",
+      "kind": "Paper",
+      "artifact": "https://github.com/sail-sg/understand-r1-zero"
+    },
+    "s1": {
+      "title": "s1: Simple test-time scaling",
+      "authors": "Muennighoff et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2501.19393",
+      "kind": "Paper",
+      "artifact": "https://github.com/simplescaling/s1"
+    },
+    "early-exit": {
+      "title": "When Is Thinking Enough? Early Exit via Sufficiency Assessment for Efficient Reasoning",
+      "authors": "Xiang et al.",
+      "year": "2026; arXiv lists ACL 2026",
+      "url": "https://arxiv.org/abs/2604.06787",
+      "kind": "Paper"
+    },
+    "faithfulness": {
+      "title": "Measuring Chain of Thought Faithfulness by Unlearning Reasoning Steps",
+      "authors": "Tutek et al.",
+      "year": "EMNLP 2025",
+      "url": "https://aclanthology.org/2025.emnlp-main.504/",
+      "kind": "Paper",
+      "artifact": "https://github.com/technion-cs-nlp/parametric-faithfulness"
+    },
+    "faithfulness-controls": {
+      "title": "Disentangling the Effects of Unlearning in Measuring Parametric Faithfulness of Chain-of-Thought",
+      "authors": "Mitsuhashi et al.",
+      "year": "ACL SRW 2026",
+      "url": "https://aclanthology.org/2026.acl-srw.36/",
+      "kind": "Paper"
+    },
+    "judgebench": {
+      "title": "JudgeBench: A Benchmark for Evaluating LLM-based Judges",
+      "authors": "Tan et al.",
+      "year": "2024 preprint / ICLR 2025",
+      "url": "https://arxiv.org/abs/2410.12784",
+      "kind": "Paper",
+      "artifact": "https://github.com/ScalerLab/JudgeBench"
+    },
+    "livecode": {
+      "title": "LiveCodeBench: Holistic and Contamination Free Evaluation of Large Language Models for Code",
+      "authors": "Jain et al.",
+      "year": "2024 preprint; versioned releases through 2025+",
+      "url": "https://arxiv.org/abs/2403.07974",
+      "kind": "Paper",
+      "artifact": "https://github.com/LiveCodeBench/LiveCodeBench"
+    },
+    "qwen-embedding": {
+      "title": "Qwen3 Embedding: Advancing Text Embedding and Reranking Through Foundation Models",
+      "authors": "Zhang et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2506.05176",
+      "kind": "Paper",
+      "artifact": "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B"
+    },
+    "mmteb": {
+      "title": "MMTEB: Massive Multilingual Text Embedding Benchmark",
+      "authors": "Enevoldsen et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2502.13595",
+      "kind": "Paper",
+      "artifact": "https://github.com/embeddings-benchmark/mteb"
+    },
+    "sufficient": {
+      "title": "Sufficient Context: A New Lens on Retrieval Augmented Generation Systems",
+      "authors": "Joren et al.",
+      "year": "2024 preprint / ICLR 2025",
+      "url": "https://arxiv.org/abs/2411.06037",
+      "kind": "Paper"
+    },
+    "csir": {
+      "title": "Code-Switching Information Retrieval: Benchmarks, Analysis, and the Limits of Current Retrievers",
+      "authors": "Zeng et al.",
+      "year": "Findings of ACL 2026",
+      "url": "https://aclanthology.org/2026.findings-acl.636/",
+      "kind": "Paper"
+    },
+    "bfcl": {
+      "title": "The Berkeley Function Calling Leaderboard: From Tool Use to Agentic Evaluation of Large Language Models",
+      "authors": "Patil et al.",
+      "year": "ICML 2025; V4 evaluation",
+      "url": "https://gorilla.cs.berkeley.edu/leaderboard",
+      "kind": "Paper, code and benchmark links"
+    },
+    "simplemem": {
+      "title": "SimpleMem: Efficient Lifelong Memory for LLM Agents",
+      "authors": "Liu et al.",
+      "year": "2026 preprint",
+      "url": "https://arxiv.org/abs/2601.02553",
+      "kind": "Paper"
+    },
+    "agentdyn": {
+      "title": "AgentDyn: Are Your Agent Security Defenses Deployable in Real-World Dynamic Environments?",
+      "authors": "Li et al.",
+      "year": "2026 preprint; repository title",
+      "url": "https://github.com/SaFo-Lab/AgentDyn",
+      "kind": "Official code and paper links"
+    },
+    "clm": {
+      "title": "Context Language Models",
+      "authors": "Shao et al.",
+      "year": "September 2026 preprint",
+      "url": "https://arxiv.org/abs/2609.37725v1",
+      "kind": "Paper",
+      "artifact": "https://github.com/facebookresearch/context-language-models/tree/18dc11115f50f261233c5bba7937834491e307e8"
+    },
+    "llamacpp": {
+      "title": "llama.cpp: local inference and quantization",
+      "authors": "llama.cpp contributors",
+      "year": "Ongoing software; checked October 2026",
+      "url": "https://github.com/ggml-org/llama.cpp",
+      "kind": "Official software"
+    },
+    "turboquant": {
+      "title": "TurboQuant: Online Vector Quantization with Near-optimal Distortion Rate",
+      "authors": "Zandieh et al.",
+      "year": "2025 preprint / ICLR 2026",
+      "url": "https://arxiv.org/abs/2504.19874",
+      "kind": "Paper"
+    },
+    "eagle3": {
+      "title": "EAGLE-3: Scaling up Inference Acceleration of Large Language Models via Training-Time Test",
+      "authors": "Li et al.",
+      "year": "NeurIPS 2025",
+      "url": "https://github.com/SafeAILab/EAGLE",
+      "kind": "Paper and official code"
+    },
+    "nsa": {
+      "title": "Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention",
+      "authors": "Yuan et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2502.11089",
+      "kind": "Paper",
+      "artifact": "https://github.com/fla-org/native-sparse-attention"
+    },
+    "qwen-scope": {
+      "title": "Qwen-Scope: Turning Sparse Features into Development Tools for Large Language Models",
+      "authors": "Deng et al. / Qwen Team",
+      "year": "2026 preprint and release",
+      "url": "https://arxiv.org/abs/2605.11887",
+      "kind": "Paper",
+      "artifact": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-2B-Base-W32K-L0_100"
+    },
+    "incline": {
+      "title": "Bridging the Language Gaps in Large Language Models with Inference-Time Cross-Lingual Intervention",
+      "authors": "Wang et al.",
+      "year": "ACL 2025",
+      "url": "https://aclanthology.org/2025.acl-long.270/",
+      "kind": "Paper",
+      "artifact": "https://github.com/weixuan-wang123/INCLINE"
+    },
+    "fairness": {
+      "title": "Fairness through Difference Awareness: Measuring Desired Group Discrimination in LLMs",
+      "authors": "Wang et al.",
+      "year": "ACL 2025",
+      "url": "https://aclanthology.org/2025.acl-long.341/",
+      "kind": "Paper",
+      "artifact": "https://github.com/Angelina-Wang/difference_awareness"
+    },
+    "formal": {
+      "title": "Between Circuits and Chomsky: Pre-pretraining on Formal Languages Imparts Linguistic Biases",
+      "authors": "Hu et al.",
+      "year": "ACL 2025",
+      "url": "https://aclanthology.org/2025.acl-long.478/",
+      "kind": "Paper",
+      "artifact": "https://github.com/michahu/pre-pretraining"
+    },
+    "infinigram": {
+      "title": "Infini-gram mini: Exact n-gram Search at the Internet Scale with FM-Index",
+      "authors": "Xu et al.",
+      "year": "EMNLP 2025",
+      "url": "https://aclanthology.org/2025.emnlp-main.1268/",
+      "kind": "Paper",
+      "artifact": "https://infini-gram-mini.io/"
+    },
+    "dllm": {
+      "title": "dLLM: Simple Diffusion Language Modeling",
+      "authors": "Zhou et al.",
+      "year": "2026 preprint; Tiny-A2D released December 2025",
+      "url": "https://arxiv.org/abs/2602.22661",
+      "kind": "Paper",
+      "artifact": "https://github.com/ZHZisZZ/dllm"
+    },
+    "block-diffusion": {
+      "title": "Block Diffusion: Interpolating Between Autoregressive and Diffusion Language Models",
+      "authors": "Arriola et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2503.09573",
+      "kind": "Paper",
+      "artifact": "https://huggingface.co/dllm-hub/Qwen3-0.6B-diffusion-bd3lm-v0.1"
+    },
+    "smolvlm": {
+      "title": "SmolVLM: Redefining small and efficient multimodal models",
+      "authors": "Marafioti et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2504.05299",
+      "kind": "Paper",
+      "artifact": "https://huggingface.co/HuggingFaceTB/SmolVLM-500M-Instruct"
+    },
+    "vl-embedding": {
+      "title": "Qwen3-VL-Embedding-2B",
+      "authors": "Qwen Team",
+      "year": "2026",
+      "url": "https://huggingface.co/Qwen/Qwen3-VL-Embedding-2B",
+      "kind": "Model card and technical report"
+    },
+    "asr": {
+      "title": "Qwen3-ASR Technical Report",
+      "authors": "Shi et al.",
+      "year": "2026 preprint",
+      "url": "https://arxiv.org/abs/2601.21337",
+      "kind": "Paper",
+      "artifact": "https://github.com/QwenLM/Qwen3-ASR"
+    },
+    "skillsbench": {
+      "title": "SkillsBench: agent skills evaluation",
+      "authors": "SkillsBench maintainers",
+      "year": "2026",
+      "url": "https://github.com/benchflow-ai/skillsbench",
+      "kind": "Official benchmark and contribution guide"
+    },
+    "tb-science": {
+      "title": "Terminal-Bench-Science: contribution requirements",
+      "authors": "Harbor / Terminal-Bench-Science maintainers",
+      "year": "Checked October 9, 2026",
+      "url": "https://github.com/harbor-framework/terminal-bench-science/blob/8ef49c8a64cf57f9913755b41ed6a0fe1a667192/CONTRIBUTING.md",
+      "kind": "Versioned contribution guide",
+      "artifact": "https://github.com/harbor-framework/terminal-bench-science"
+    },
+    "tb-rubric": {
+      "title": "Terminal-Bench-Science task proposal rubric",
+      "authors": "Terminal-Bench-Science maintainers",
+      "year": "Checked October 9, 2026",
+      "url": "https://github.com/harbor-framework/terminal-bench-science/blob/8ef49c8a64cf57f9913755b41ed6a0fe1a667192/rubrics/task-proposal.md",
+      "kind": "Versioned rubric"
+    },
+    "ale": {
+      "title": "Agents' Last Exam",
+      "authors": "Sun et al.",
+      "year": "2026 preprint",
+      "url": "https://arxiv.org/abs/2606.05405",
+      "kind": "Paper",
+      "artifact": "https://github.com/rdi-berkeley/agents-last-exam"
+    },
+    "hle": {
+      "title": "Humanity's Last Exam",
+      "authors": "Phan et al.",
+      "year": "2025 preprint / Nature 2026; rolling updates",
+      "url": "https://lastexam.ai/",
+      "kind": "Official paper, dataset and submission routes",
+      "artifact": "https://github.com/centerforaisafety/hle"
+    }
+  },
+  "projects": [
+    {
+      "number": 1,
+      "id": "multilingual-tokenizer-audit",
+      "title": "Whose text costs more tokens?",
+      "topic": "Data and tokenization",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "CPU",
+      "summary": "Audit modern tokenizers on English, Chinese, code, and mixed text.",
+      "question": "Which tokenization gaps persist when document type and meaning are controlled?",
+      "scope": "Freeze 1,000 short documents from two languages and code; compare three released tokenizers including Qwen3.5. Add a 100-pair, manually checked English/Chinese parallel subset.",
+      "baseline": "Byte and character counts, plus the course BPE tokenizer. Keep normalization and documents fixed.",
+      "evaluation": "Tokens per UTF-8 byte, tokens per character, paired token counts, round-trip failures, and robustness to spaces or Unicode variants. Token counts alone do not measure model quality.",
+      "outcome": "A reproducible tokenizer audit with paired plots and 20 explained outliers.",
+      "preparation": "L01 tokenization; Python text processing and sampling.",
+      "fallback": "Use 200 documents and two tokenizers; no model inference or training is needed.",
+      "sources": [
+        "qwen35",
+        "fineweb2"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 2,
+      "id": "number-format-robustness",
+      "title": "Does number formatting change the answer?",
+      "topic": "Data and tokenization",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Separate numeric token boundaries from changes to the mathematical problem.",
+      "question": "Do digit grouping, leading zeros, or equivalent decimal notation systematically change small-model accuracy?",
+      "scope": "Generate 200 exact arithmetic problems with three meaning-preserving renderings. Use a 0.6B-1.7B model, at most 512 output tokens per problem.",
+      "baseline": "Canonical numeral formatting and a Python exact-arithmetic oracle; pair every variant with its original.",
+      "evaluation": "Exact answer accuracy, consistency within pairs, token count, and errors by digit length. Do not attribute every formatting effect to tokenization alone.",
+      "outcome": "A paired error analysis and one tested formatting intervention.",
+      "preparation": "L01 tokenization; L02 evaluation; learn model inference and robust answer parsing.",
+      "fallback": "Restrict to integer addition and multiplication, 100 examples, one model.",
+      "sources": [
+        "numbers",
+        "qwen3"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 3,
+      "id": "dedup-quality-budget",
+      "title": "Deduplication or quality filtering under a fixed budget?",
+      "topic": "Data and tokenization",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Adapt the FineWeb2 data-curation question to a tiny model.",
+      "question": "Does removing repetition help more than quality filtering when the training-token budget is fixed?",
+      "scope": "Sample a small, versioned FineWeb2 slice in one language. Train a 10M-30M decoder on at most 5M tokens per run in raw, deduplicated, and filtered conditions; use two seeds if the pilot fits.",
+      "baseline": "Identical architecture, tokenizer, optimizer, token budget, and a document-disjoint evaluation set formed before filtering. Deduplicate across splits first.",
+      "evaluation": "Held-out bits per byte, loss by document type, unique training bytes, and wall time; distinguish cleaner data from extra resampling.",
+      "outcome": "One controlled three-condition result with uncertainty and examples of removed documents.",
+      "preparation": "L01 preprocessing and L02 loss; learn a small Transformer training loop after L05-L06.",
+      "fallback": "Use a 5M model and 1M tokens; a corpus-only audit is a pilot, not a claim about model improvement.",
+      "sources": [
+        "fineweb2"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 4,
+      "id": "adaptive-byte-patches",
+      "title": "When do adaptive byte patches help?",
+      "topic": "Data and tokenization",
+      "categories": [
+        "Paper replication"
+      ],
+      "compute": "Training",
+      "summary": "Study one BLT mechanism at teaching scale.",
+      "question": "Do entropy-based patch boundaries preserve difficult text better than fixed byte blocks at similar compression?",
+      "scope": "Use a small byte predictor and 1M-5M bytes of text. Compare fixed-length and entropy-threshold patching, then train a tiny matched patch model if the pilot fits.",
+      "baseline": "Fixed-size byte patches at the same average patch length; include patcher cost in the budget.",
+      "evaluation": "Patch-length distribution, byte reconstruction or held-out byte loss, compute, and errors near code or mixed-language boundaries.",
+      "outcome": "A working patcher, correctness checks, and a controlled boundary/quality comparison; label deviations from BLT.",
+      "preparation": "L01 byte tokenization; PyTorch; learn causal masking and encoder/decoder interfaces.",
+      "fallback": "Limit the question to patch-boundary prediction using the small predictor; do not claim a full BLT reproduction.",
+      "sources": [
+        "blt"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 5,
+      "id": "tiny-engram",
+      "title": "Can a tiny language model benefit from lookup memory?",
+      "topic": "Data and tokenization",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Connect course n-grams to Engram conditional memory.",
+      "question": "Does a small hashed n-gram memory help on repeated local patterns beyond simply adding parameters?",
+      "scope": "Add a modest lookup table to a 10M-30M decoder; train on at most 5M tokens. Compare ordinary token hashing with the 2026 byte-based proposal only if the first comparison works.",
+      "baseline": "No-memory model and a parameter-matched wider model; identical corpus, tokenizer, training tokens, and seeds.",
+      "evaluation": "Held-out loss, rare/frequent n-gram performance, lookup collisions, parameter memory, and runtime.",
+      "outcome": "An ablation that distinguishes memory benefit from capacity or data leakage.",
+      "preparation": "L01-L02 tokenization and n-grams; PyTorch; learn residual model components.",
+      "fallback": "Use synthetic local-dependency sequences and a 5M model; upstream supplies a demo, not a turnkey small-model training recipe.",
+      "sources": [
+        "engram",
+        "byte-engram"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 6,
+      "id": "sft-data-selection",
+      "title": "Which 1,000 instruction examples should we train on?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Compare selection policies using an open post-training data recipe.",
+      "question": "Does diversity selection improve held-out instruction following over a random subset of the same size?",
+      "scope": "Use one documented SmolTalk2 subset and LoRA on Qwen3-0.6B. Compare 500-1,000 random, length-balanced, and embedding-diverse examples.",
+      "baseline": "Untuned checkpoint and random selection; match training tokens and training steps, and exclude evaluation prompts before selection.",
+      "evaluation": "Exact checks on 100 verifiable held-out prompts, domain coverage, output length, and regressions on a separate general set.",
+      "outcome": "A data-selection experiment with selected IDs, fixed splits, and an explanation of tradeoffs.",
+      "preparation": "L01-L04 data and neural training; learn chat templates, response masking, and LoRA.",
+      "fallback": "Use 300 examples and two selection policies; reduce context to 1,024 tokens.",
+      "sources": [
+        "smollm3",
+        "qwen3"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 7,
+      "id": "encoder-decoder-classification",
+      "title": "When is a small classifier better than a prompted LLM?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Paper replication",
+        "Case study"
+      ],
+      "compute": "Training",
+      "summary": "Update classic text classification with a sample-efficiency and cost question.",
+      "question": "At which label budget does a small encoder overtake a prompted decoder?",
+      "scope": "Select one public dataset shipped by the authors, cap it at 10 classes, and use 16, 64, and 256 training examples per class. Compare a frozen encoder with a linear head and a 0.6B-1.7B prompted decoder.",
+      "baseline": "TF-IDF plus logistic regression; fixed labels, split, and examples available to each method.",
+      "evaluation": "Macro-F1, calibration, latency, training/inference cost, and performance under one controlled domain shift.",
+      "outcome": "Learning curves that support a concrete deployment decision; a leaderboard score alone is insufficient.",
+      "preparation": "L03 embeddings and classification; learn pretrained encoders and dataset splits.",
+      "fallback": "Use five classes and frozen embeddings only; keep the same experimental question.",
+      "sources": [
+        "classifiers"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 8,
+      "id": "preference-shortcuts",
+      "title": "Does preference tuning learn correctness or verbosity?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Test a preference-data shortcut on verifiable tasks.",
+      "question": "Does DPO follow answer correctness when length and correctness disagree?",
+      "scope": "Construct 500 synthetic preference pairs from arithmetic or structured extraction: correct-short/incorrect-long and the reverse. Apply one small LoRA DPO run per data condition.",
+      "baseline": "Untuned model and an SFT model trained on the same preferred answers; control training tokens and preference-pair content.",
+      "evaluation": "Held-out exact correctness, response length, sensitivity to 10% flipped preferences, and invalid output rate.",
+      "outcome": "A shortcut audit with balanced evaluation pairs and examples where the tuning objective fails.",
+      "preparation": "Neural LM loss; learn preference pairs and the DPO loss before beginning training.",
+      "fallback": "Reduce to 200 pairs and a 0.6B model; do not run a large online preference collection.",
+      "sources": [
+        "smollm3",
+        "qwen3"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 9,
+      "id": "verifier-reward-quality",
+      "title": "Can a weak verifier teach the wrong behavior?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Research problem",
+        "Case study"
+      ],
+      "compute": "Training",
+      "summary": "Study verifiable rewards without attempting a large reasoning-model reproduction.",
+      "question": "What changes when a reward checks only the final number rather than the validity of the full calculation?",
+      "scope": "Generate fresh Countdown-style problems. Compare strict and permissive reward functions on identical sampled answers, then run short adapter GRPO experiments on a 0.6B model if feasible.",
+      "baseline": "Untuned checkpoint, rejection sampling, and strict-oracle scoring. Keep generated training instances separate from evaluation seeds.",
+      "evaluation": "True solution rate, invalid expressions rewarded, output length, reward/accuracy disagreement, and training cost.",
+      "outcome": "An audited verifier plus a controlled reward comparison; identify concrete reward-hacking cases.",
+      "preparation": "Python tests and LM sampling; learn policy-gradient/GRPO basics and restricted expression parsing.",
+      "fallback": "Complete an offline reward audit on 1,000 cached completions; report it as a verifier study, not an RL reproduction.",
+      "sources": [
+        "drgrpo"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 10,
+      "id": "concise-reasoning-distillation",
+      "title": "Do longer teaching traces make a better small model?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Distill a small, verified subset of reasoning traces.",
+      "question": "Does concise reasoning retain accuracy better per training token than full reasoning traces?",
+      "scope": "Choose 300-500 training examples from the public s1 data. Compare full traces, manually checked shortened traces, and answers only using the same 0.6B student.",
+      "baseline": "Untuned student; run both an equal-example comparison and a clearly labeled equal-token comparison.",
+      "evaluation": "Held-out answer accuracy, generated length, training tokens, and error types. Avoid using s1 training questions as test examples.",
+      "outcome": "A distillation ablation that separates supervision content from training-budget effects.",
+      "preparation": "LM training; learn response masking, adapter tuning, and exact mathematical answer checks.",
+      "fallback": "Use 100 problems with short traces; no paid teacher generation is required.",
+      "sources": [
+        "s1"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 11,
+      "id": "reasoning-budget-allocation",
+      "title": "One long attempt or several short attempts?",
+      "topic": "Reasoning and evaluation",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Compare reasoning strategies under an explicit total generation budget.",
+      "question": "How should a small model spend a fixed number of output tokens on a problem?",
+      "scope": "Use 150 generated math/logic problems at two difficulty levels. Compare one long sample, several short samples with majority vote, and answer-verified selection.",
+      "baseline": "Greedy direct answer. Match total sampled tokens, including failed attempts; report verifier access separately.",
+      "evaluation": "Exact accuracy versus total tokens and wall time, abstentions, and uncertainty over problems.",
+      "outcome": "A budget/accuracy curve with cases where extra reasoning hurts.",
+      "preparation": "L02 probability and evaluation; learn generation settings and answer normalization.",
+      "fallback": "Use 80 easy problems and two strategies; cap each total problem budget at 2,048 tokens.",
+      "sources": [
+        "s1",
+        "qwen3"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 12,
+      "id": "reasoning-early-exit",
+      "title": "When should a reasoning model stop thinking?",
+      "topic": "Reasoning and evaluation",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Adapt the 2026 thought-sufficiency question to a small open model.",
+      "question": "Can an inexpensive stopping rule save tokens without abandoning solvable problems?",
+      "scope": "Use 150 exact-answer problems and a Qwen3 0.6B-1.7B reasoning checkpoint. Compare a fixed budget with answer-stability and a small thought-sufficiency check.",
+      "baseline": "Direct answer and full-budget reasoning; select thresholds only on a development split.",
+      "evaluation": "Accuracy, early-stop error, all generated tokens including sufficiency checks, and latency.",
+      "outcome": "A calibrated stopping policy and a failure analysis of premature confidence.",
+      "preparation": "Sampling and evaluation; learn how the selected model separates reasoning from its final answer.",
+      "fallback": "Use answer-stability checks at two fixed cutoffs. Label this as an adaptation, not an exact DTSR implementation.",
+      "sources": [
+        "early-exit"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 13,
+      "id": "faithfulness-with-controls",
+      "title": "Does a faithfulness score survive its control experiments?",
+      "topic": "Reasoning and evaluation",
+      "categories": [
+        "Paper replication"
+      ],
+      "compute": "Training",
+      "summary": "Revisit a 2025 candidate using its 2026 methodological critique.",
+      "question": "Does targeted reasoning-step unlearning change answers more than irrelevant or shuffled-text unlearning?",
+      "scope": "Use 30-50 short reasoning examples on one 0.6B checkpoint; compare targeted, irrelevant, and shuffled interventions with matched update counts.",
+      "baseline": "Unmodified checkpoint and unrelated-question retention checks. Freeze the tuning protocol before the held-out comparison.",
+      "evaluation": "Answer/log-probability changes, intervention success, and general capability damage. A changed answer alone does not establish faithful reasoning.",
+      "outcome": "A controlled assessment of the metric and a clear account of collateral model changes.",
+      "preparation": "PyTorch gradients and LM loss; learn unlearning objectives and intervention controls.",
+      "fallback": "Use 15 examples and one layer. If only text perturbation is feasible, state that it measures a different notion.",
+      "sources": [
+        "faithfulness",
+        "faithfulness-controls"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 14,
+      "id": "judge-order-and-length",
+      "title": "Can we trust a small LLM judge?",
+      "topic": "Reasoning and evaluation",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Test answer-order and verbosity effects with objective reference labels.",
+      "question": "Does a judge prefer a longer wrong answer over a shorter correct one, and can order averaging help?",
+      "scope": "Select 100 objective answer pairs from JudgeBench or generate checked math pairs. Swap A/B order and add meaning-preserving verbosity to one answer.",
+      "baseline": "Exact verifier where available, random choice, and the unmodified judge prompt.",
+      "evaluation": "Agreement with verified labels, swap consistency, verbosity-induced reversals, and judge-token cost.",
+      "outcome": "An evaluator audit and one validated mitigation; keep ambiguous pairs separate.",
+      "preparation": "L02 evaluation; learn paired experimental design and judge prompt formatting.",
+      "fallback": "Use one local 0.6B judge and 50 math pairs; stronger performance is not needed to study failure.",
+      "sources": [
+        "judgebench"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 15,
+      "id": "benchmark-perturbation-audit",
+      "title": "Does a coding score survive a changed problem surface?",
+      "topic": "Reasoning and evaluation",
+      "categories": [
+        "New task",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Use paired tests to separate brittle pattern matching from problem solving.",
+      "question": "How robust is a model to equivalent variable names, story details, and reordered input descriptions?",
+      "scope": "Pin a LiveCodeBench release and select 30 easy problems, or author 30 small programming tasks. Create one meaning-preserving variant each and verify both with the same tests.",
+      "baseline": "Original statements, fixed generation budget, and known-correct reference programs.",
+      "evaluation": "Paired pass@1, timeout/error categories, and confidence intervals. A drop is evidence of brittleness, not proof of training contamination.",
+      "outcome": "A versioned robustness set, correctness evidence for transformations, and a paired result table.",
+      "preparation": "Python and tests; learn sandboxed execution, parsing, and benchmark versioning.",
+      "fallback": "Use 15 original small tasks with a deterministic generator; do not copy competition problems without checking reuse terms.",
+      "sources": [
+        "livecode"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 16,
+      "id": "hybrid-retrieval",
+      "title": "When does lexical retrieval beat a modern embedding?",
+      "topic": "Retrieval and evidence",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Measure where hybrid retrieval helps on technical course material.",
+      "question": "Do formulas, identifiers, and rare terminology change the best retriever?",
+      "scope": "Index 200-500 public course-note passages and author 100 questions with evidence labels. Compare BM25, Qwen3-Embedding-0.6B, and reciprocal-rank fusion.",
+      "baseline": "BM25; keep documents, chunk boundaries, and evaluation questions fixed.",
+      "evaluation": "Recall@5, MRR, query latency, index bytes, and results by query type; no answer generator is needed.",
+      "outcome": "A retrieval benchmark with audited relevance labels and a practical recommendation.",
+      "preparation": "L01 tokenization and L03 embeddings; learn BM25 and vector similarity.",
+      "fallback": "Use 100 passages and 50 queries; embeddings can be precomputed once on a shared GPU.",
+      "sources": [
+        "qwen-embedding"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 17,
+      "id": "chunking-evidence-loss",
+      "title": "Which chunk boundaries destroy the evidence?",
+      "topic": "Retrieval and evidence",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Study document segmentation while holding the retrieval model fixed.",
+      "question": "Do section-aware chunks reduce failures caused by separating a claim from its conditions?",
+      "scope": "Use public course notes with 80 evidence-labeled questions, including cross-paragraph cases. Compare fixed 128/256-token chunks and heading-aware chunks.",
+      "baseline": "Fixed-token chunking; compare both fixed top-k and fixed retrieved-token budget so larger chunks do not win merely by supplying more text.",
+      "evaluation": "Evidence recall, answer support on a 40-question subset, redundancy, and retrieved tokens.",
+      "outcome": "A chunking ablation with annotated boundary failures.",
+      "preparation": "Text processing and embeddings; learn retrieval evaluation and document-level splits.",
+      "fallback": "Use BM25 only and evaluate evidence retrieval before adding generation.",
+      "sources": [
+        "qwen-embedding",
+        "sufficient"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 18,
+      "id": "embedding-size-tradeoff",
+      "title": "How small can a retrieval index become?",
+      "topic": "Retrieval and evidence",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Use supported embedding dimensions and compression instead of retraining an encoder.",
+      "question": "Which dimension or precision reduction gives the best retrieval quality per stored byte?",
+      "scope": "Use one small English or Chinese MMTEB retrieval subset and Qwen3-Embedding-0.6B. Compare three supported output dimensions and float versus integer storage.",
+      "baseline": "Full-dimensional, full-precision exact search with the same encoder and document embeddings.",
+      "evaluation": "nDCG@10, recall, total index bytes, query latency, and quality by query length; re-normalize after truncation.",
+      "outcome": "A quality/storage frontier and a reproducible encoding manifest.",
+      "preparation": "L03 vector representations; learn retrieval metrics and quantization.",
+      "fallback": "Use 1,000 documents and 100 queries; omit approximate nearest-neighbor indexing.",
+      "sources": [
+        "qwen-embedding",
+        "mmteb"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 19,
+      "id": "rag-abstention",
+      "title": "When should a course assistant say it lacks evidence?",
+      "topic": "Retrieval and evidence",
+      "categories": [
+        "Research problem",
+        "New task"
+      ],
+      "compute": "Inference",
+      "summary": "Make unanswerable questions a first-class part of RAG evaluation.",
+      "question": "Can an evidence-sufficiency check reduce unsupported answers without rejecting too many answerable questions?",
+      "scope": "Author 120 questions over public notes: sufficient, incomplete, and absent evidence. Include an oracle-context condition and ordinary retrieval.",
+      "baseline": "Always answer and always abstain; compare retrieval-score thresholding with a model-based sufficiency check.",
+      "evaluation": "Accuracy among answered questions versus coverage, unsupported-answer rate, citation support, and checking cost.",
+      "outcome": "A risk/coverage curve and separate diagnoses of retrieval and generation failure.",
+      "preparation": "Embeddings and evaluation; learn retrieval, evidence annotation, and development-set threshold selection.",
+      "fallback": "Use 60 questions and fixed supplied contexts, retaining the same abstention question.",
+      "sources": [
+        "sufficient",
+        "qwen35"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 20,
+      "id": "code-switched-retrieval",
+      "title": "Can a retriever understand Chinese-English technical queries?",
+      "topic": "Retrieval and evidence",
+      "categories": [
+        "Paper replication",
+        "New task"
+      ],
+      "compute": "Inference",
+      "summary": "Extend retrieval evaluation to the language mixture students actually use.",
+      "question": "Does mixing English technical terms into Chinese queries hurt retrieval beyond a monolingual translation?",
+      "scope": "Use 100 human-checked Chinese, English, and mixed query triplets over one fixed corpus, following the 2026 code-switching study.",
+      "baseline": "BM25, a multilingual dense encoder, and translating the query before retrieval.",
+      "evaluation": "Paired recall@5 and nDCG, errors by terminology type, translation errors, and added latency.",
+      "outcome": "A small auditable query set and evidence about when translation helps or loses intent.",
+      "preparation": "L01 multilingual tokenization and L03 embeddings; bilingual annotation and retrieval metrics.",
+      "fallback": "Use 50 course-note queries; no need to rebuild the full CS-MTEB suite.",
+      "sources": [
+        "csir",
+        "qwen-embedding"
+      ],
+      "upstream": "A carefully licensed dataset or evaluator improvement may fit MTEB; check current contribution requirements before proposing it.",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 21,
+      "id": "tool-schema-reliability",
+      "title": "Valid JSON is not the same as a correct tool call",
+      "topic": "Agents and memory",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Measure schema validity, tool choice, and argument semantics separately.",
+      "question": "Does constrained output improve end-to-end task success or only parseability?",
+      "scope": "Choose 100 BFCL-style single-turn cases over five local mock tools. Compare ordinary prompting, schema-constrained decoding, and one repair attempt.",
+      "baseline": "The same model, tool definitions, and token budget; include cases where no tool should be called.",
+      "evaluation": "Parse/schema validity, tool-choice accuracy, argument correctness, execution success, and repair tokens.",
+      "outcome": "A tool-call error taxonomy and a controlled decoding comparison.",
+      "preparation": "Python functions and JSON; learn chat/tool templates and constrained generation.",
+      "fallback": "Use 50 locally generated cases and prompt/repair only if the inference backend lacks grammar support.",
+      "sources": [
+        "bfcl",
+        "qwen35"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 22,
+      "id": "bounded-code-repair",
+      "title": "Which feedback makes a coding agent improve?",
+      "topic": "Agents and memory",
+      "categories": [
+        "Research problem",
+        "Case study"
+      ],
+      "compute": "Inference",
+      "summary": "Evaluate a small code-repair loop with a strict stopping rule.",
+      "question": "Does an informative failing test help more than a generic request to try again?",
+      "scope": "Use 30 small Python tasks with flawed candidate solutions. Compare direct repair, generic retry, and execution feedback, with at most three attempts.",
+      "baseline": "Equal total output budget; separate feedback tests from final evaluation tests; run all candidate code in a sandbox.",
+      "evaluation": "Final pass rate, regression rate, tool calls, elapsed time, and failure-trace categories.",
+      "outcome": "A reproducible repair loop with hidden-to-the-agent evaluation tests and explained failures.",
+      "preparation": "Python debugging and tests; learn bounded agent loops and process isolation.",
+      "fallback": "Use 15 deterministic seeded bugs and one repair round.",
+      "sources": [
+        "livecode"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 23,
+      "id": "memory-updated-facts",
+      "title": "Can an agent forget an outdated fact?",
+      "topic": "Agents and memory",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Compare memory stores on revised facts rather than simple recall alone.",
+      "question": "Which memory policy keeps current information without losing useful history?",
+      "scope": "Generate 100 short episodes with dated updates and delayed queries. Compare append-only retrieval, summary memory, and an update-on-write fact store.",
+      "baseline": "No memory and full-history replay; same model, visible facts, context cap, and query budget.",
+      "evaluation": "Current-fact accuracy, stale-fact use, justified historical recall, memory-update tokens, and latency.",
+      "outcome": "A memory benchmark and a policy comparison with inspectable write/read traces.",
+      "preparation": "Python records and retrieval; learn agent state, timestamp semantics, and memory accounting.",
+      "fallback": "Use 50 synthetic key-value episodes with exact scoring; label this as an adaptation of the memory question.",
+      "sources": [
+        "simplemem"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 24,
+      "id": "injection-defense-utility",
+      "title": "Can an agent reject injections while still completing the task?",
+      "topic": "Agents and memory",
+      "categories": [
+        "Paper replication",
+        "Case study"
+      ],
+      "compute": "Inference",
+      "summary": "Use AgentDyn to study the security/utility tradeoff in a local mock environment.",
+      "question": "Does a defensive prompt stop injected instructions at the cost of ignoring legitimate tool data?",
+      "scope": "Select 20-30 public AgentDyn cases and paired benign controls, or adapt them to mocked local tools. Compare no defense, clear data boundaries, and tool-output filtering.",
+      "baseline": "Fixed model, task set, and action budget. Use synthetic secrets and simulated destinations only.",
+      "evaluation": "Benign task success, attack success, unnecessary refusals, and trace-level failure causes.",
+      "outcome": "A paired security/utility evaluation; a refusal-rate number alone is insufficient.",
+      "preparation": "Tool calls and evaluation; learn trusted instructions versus external tool data.",
+      "fallback": "Use a 20-case local retrieval assistant without network actions; do not claim full AgentDyn replication.",
+      "sources": [
+        "agentdyn"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 25,
+      "id": "clm-context-management",
+      "title": "Editable context versus summary compaction",
+      "topic": "Agents and memory",
+      "categories": [
+        "Paper replication",
+        "Case study"
+      ],
+      "compute": "Inference",
+      "summary": "Investigate the Context Language Models direction requested by the instructor.",
+      "question": "When does editing a context file preserve evidence better than a sliding window or summary at the same budget?",
+      "scope": "Generate 100 retention/update episodes at three input lengths. Give each method the same model, file access, context cap, and turn/output limits; log every context edit.",
+      "baseline": "Sliding window, summary compaction, and editable context; use ordinary inference without retraining or custom cache serving.",
+      "evaluation": "Exact retention/task success, evidence deletions, total input/output tokens, elapsed time, and actual API cost if used. Keep modeled FLOPs separate from observed latency.",
+      "outcome": "A three-method comparison and an explanation of which edits preserve or lose decisive evidence.",
+      "preparation": "Python, token counting, and evaluation; learn context budgets and a bounded file-editing tool.",
+      "fallback": "ContextBench is still listed as coming soon at the checked October 9 revision. Use an original synthetic generator and label this an adapted experiment; begin with 30 episodes.",
+      "sources": [
+        "clm"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 26,
+      "id": "quantization-task-regressions",
+      "title": "Which small-model abilities break first under quantization?",
+      "topic": "Efficient inference",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Evaluate practical quantization on a current small checkpoint.",
+      "question": "Does lower memory cost preserve structured extraction, arithmetic, and multilingual output equally well?",
+      "scope": "Use Qwen3.5-0.8B or Qwen3-0.6B and 150 short prompts. Compare a high-precision reference with supported 8-bit and 4-bit variants from the same weights.",
+      "baseline": "Same prompts, chat template, backend where possible, and decoding. If kernels differ, describe a system comparison rather than attributing all changes to precision.",
+      "evaluation": "Exact task scores, peak memory, prefill/decode latency, cold versus warm runs, and per-task regressions.",
+      "outcome": "A measured quality/memory tradeoff and a list of brittle behaviors.",
+      "preparation": "Model inference; learn quantization formats and reliable timing.",
+      "fallback": "Two precisions and one task; a CPU run is valid if hardware and runtime are documented.",
+      "sources": [
+        "qwen35",
+        "llamacpp"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 27,
+      "id": "kv-quantization",
+      "title": "How much KV-cache compression is useful?",
+      "topic": "Efficient inference",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Connect TurboQuant to a small attention-cache experiment.",
+      "question": "Which compression errors matter for retrieval accuracy under growing context?",
+      "scope": "On a conventional-attention small model, compare full precision, scalar KV quantization, and a rotation-based quantizer on synthetic retrieval at 1K, 2K, and 4K context.",
+      "baseline": "Uncompressed cache; identical weights, prompts, and output lengths. Count scale/rotation metadata in stored bytes.",
+      "evaluation": "Actual cache bytes, vector/dot-product distortion, retrieval accuracy, and end-to-end latency where an integrated implementation exists.",
+      "outcome": "A compression/quality comparison with a clear distinction between mathematical simulation and realized memory savings.",
+      "preparation": "L03 vectors; learn attention, KV caching, and quantization.",
+      "fallback": "Quantize cached vectors offline and analyze attention error; do not claim a serving speedup from fake quantization.",
+      "sources": [
+        "turboquant"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 28,
+      "id": "speculative-decoding-break-even",
+      "title": "When does speculative decoding actually save time?",
+      "topic": "Efficient inference",
+      "categories": [
+        "Paper replication",
+        "Case study"
+      ],
+      "compute": "Inference",
+      "summary": "Study the draft-and-verify tradeoff behind modern speculative decoders.",
+      "question": "At what draft length and acceptance rate does verification pay for its overhead?",
+      "scope": "Use a compatible small draft/target pair with identical tokenization on 100 short prompts. Implement greedy speculative verification or use a supported existing implementation.",
+      "baseline": "Target-only greedy generation; first verify identical outputs and account for draft and verification time.",
+      "evaluation": "Output equality, accepted tokens per iteration, wall time, memory, and variation by prompt domain.",
+      "outcome": "A break-even plot and a correctness-tested implementation; EAGLE-3 is a recent reference, not a required drafter-training reproduction.",
+      "preparation": "Learn causal attention, KV caching, and batching; comfortable debugging tensor shapes.",
+      "fallback": "Use n-gram proposals with a small target, or a correctness-first CPU study; do not promise acceleration.",
+      "sources": [
+        "eagle3"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 29,
+      "id": "sparse-attention-mechanism",
+      "title": "Which sparse attention pattern preserves retrieval?",
+      "topic": "Efficient inference",
+      "categories": [
+        "Paper replication"
+      ],
+      "compute": "Training",
+      "summary": "Retain sparse attention as a narrowly scoped mechanism study.",
+      "question": "Does combining local attention with selected global blocks outperform local attention alone at a matched token-access budget?",
+      "scope": "Train a 5M-15M decoder on synthetic associative recall. Compare full, local-window, and simple selected-block attention across two sequence lengths.",
+      "baseline": "Same training examples, parameters, and optimization; report different attention/FLOP budgets explicitly.",
+      "evaluation": "Held-out retrieval accuracy, extrapolation to longer inputs, memory, and runtime.",
+      "outcome": "An accuracy/access-budget ablation and a faithful description of how the simplified pattern differs from NSA.",
+      "preparation": "Learn Transformer attention/masks and training; suitable for students who enjoy implementation.",
+      "fallback": "Use dense masked attention at short lengths to test the idea. Dense masking does not demonstrate sparse-kernel speedups.",
+      "sources": [
+        "nsa"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 30,
+      "id": "hybrid-attention-evidence-map",
+      "title": "What evidence supports hybrid attention for small models?",
+      "topic": "Efficient inference",
+      "categories": [
+        "Survey paper",
+        "Case study"
+      ],
+      "compute": "CPU",
+      "summary": "A focused survey with a reproducible resource calculation and small sanity check.",
+      "question": "Which claimed memory or speed gains remain comparable after accounting for context length, model size, and kernels?",
+      "scope": "Select 6-8 primary sources around full attention, sparse attention, and Qwen3.5-style hybrid attention. Define inclusion criteria and reconstruct memory estimates for one documented configuration.",
+      "baseline": "A conventional-attention configuration with the same stated dimensions; separate analytical estimates from model-to-model performance comparisons.",
+      "evaluation": "An evidence table of task, hardware, precision, batch/context length, baselines, and measured versus estimated claims; validate one estimate with a small local inference trace.",
+      "outcome": "A defensible taxonomy, a reproducible calculation, and one unresolved question grounded in conflicting or incomplete evidence.",
+      "preparation": "L03 memory/parameter accounting; learn attention/KV cache and how to read model configurations.",
+      "fallback": "Use six sources and a toy attention module on CPU; do not infer a causal architecture benefit from two differently trained checkpoints.",
+      "sources": [
+        "qwen35",
+        "nsa",
+        "turboquant"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 31,
+      "id": "sae-feature-controls",
+      "title": "Does an interpretable feature control the intended behavior?",
+      "topic": "Interpretability and language",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Use released Qwen-Scope autoencoders instead of training a large SAE.",
+      "question": "Does steering a language-related feature change output language without destroying answer correctness?",
+      "scope": "Use the exact Qwen3.5-2B-Base checkpoint matched to a released SAE, one layer, and 100 short bilingual continuation prompts. Compare three intervention strengths.",
+      "baseline": "No intervention and a norm-matched random feature/direction; include unrelated control prompts.",
+      "evaluation": "Language adherence, answer/content preservation, perplexity change, activation sparsity, and off-target effects.",
+      "outcome": "A controlled feature-intervention result with both successes and failures.",
+      "preparation": "L03 embeddings and PyTorch; learn residual streams, hooks, and SAE reconstruction.",
+      "fallback": "Analyze activation specificity without intervention if hooks are incompatible; never apply a base-model SAE to an unrelated instruct checkpoint.",
+      "sources": [
+        "qwen-scope"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 32,
+      "id": "cross-lingual-intervention",
+      "title": "Can an inference-time intervention transfer across languages?",
+      "topic": "Interpretability and language",
+      "categories": [
+        "Paper replication"
+      ],
+      "compute": "Inference",
+      "summary": "Retain INCLINE with a two-language, one-layer study.",
+      "question": "Does a cross-lingual intervention improve Chinese answers without merely forcing English output?",
+      "scope": "Use 100 parallel, objectively scored English/Chinese questions and one small open model. Implement one intervention from the official code and tune it on a separate development set.",
+      "baseline": "No intervention and translate-to-English prompting; use paired questions and matched generation budgets.",
+      "evaluation": "Accuracy, output-language compliance, translation errors, and sensitivity to intervention strength.",
+      "outcome": "A bilingual comparison with a clear accounting of where transfer helps or fails.",
+      "preparation": "Bilingual evaluation and PyTorch hooks; learn Transformer hidden states and the selected intervention.",
+      "fallback": "Use 50 pairs and one layer; switch to a supported older checkpoint if the latest architecture is incompatible.",
+      "sources": [
+        "incline"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 33,
+      "id": "difference-aware-fairness",
+      "title": "When is treating two cases identically the wrong criterion?",
+      "topic": "Interpretability and language",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Retain a recent fairness paper while keeping the assessment question precise.",
+      "question": "Does a generic fairness prompt improve one kind of distinction while damaging another?",
+      "scope": "Select two documented scenarios and 100-200 examples from the authors' benchmark. Compare a neutral prompt with a difference-unaware and a context-sensitive prompt.",
+      "baseline": "Unmodified prompt and original benchmark labels; distinguish descriptive, normative, and associative judgments.",
+      "evaluation": "Scenario-specific accuracy/agreement, paired changes, inconsistent responses, and limitations of the reference labels.",
+      "outcome": "An evidence-based analysis of the evaluation criterion, avoiding a single unqualified fairness score.",
+      "preparation": "Evaluation and careful reading; learn paired analysis and limitations of normative annotations.",
+      "fallback": "One scenario and 80 examples, with manual inspection of ambiguous labels.",
+      "sources": [
+        "fairness"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 34,
+      "id": "formal-language-warmup",
+      "title": "Does a formal-language warm-up teach useful structure?",
+      "topic": "Interpretability and language",
+      "categories": [
+        "Paper replication"
+      ],
+      "compute": "Training",
+      "summary": "Test one pre-pretraining hypothesis using a tiny Transformer.",
+      "question": "Does bracket-structured pretraining help later language learning more than equally long random-symbol pretraining?",
+      "scope": "Train a 5M-15M model on matched short formal sequences, then the same small natural-language corpus. Include direct natural-language training with matched total compute.",
+      "baseline": "Random-symbol warm-up and no formal warm-up; report natural-language tokens and total training tokens separately.",
+      "evaluation": "Held-out language loss, a small syntax test, convergence curves, and two seeds if feasible.",
+      "outcome": "A controlled transfer experiment that separates structure from extra optimization.",
+      "preparation": "L04 recurrent limitations and language modeling; learn Transformer training and synthetic generators.",
+      "fallback": "A 5M model with at most 1M tokens per stage and a single formal grammar.",
+      "sources": [
+        "formal"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 35,
+      "id": "ngram-overlap-audit",
+      "title": "Can exact text search expose evaluation leakage?",
+      "topic": "Interpretability and language",
+      "categories": [
+        "Paper replication",
+        "New task"
+      ],
+      "compute": "CPU",
+      "summary": "Bring Infini-gram mini down to a local, inspectable corpus.",
+      "question": "Which overlap thresholds catch planted leakage while avoiding ordinary shared phrases?",
+      "scope": "Index 10-50 MB of licensed text and inject a separate, labeled set of exact, paraphrased, and boilerplate overlaps. Compare exact n-gram search with a simple near-duplicate baseline.",
+      "baseline": "Substring/hash-based search; evaluate on planted cases and manually inspect natural matches.",
+      "evaluation": "Precision/recall for each overlap type, index size, query time, and false-positive causes.",
+      "outcome": "An overlap auditor and an explanation of why corpus overlap alone cannot prove a model saw a benchmark.",
+      "preparation": "L01 preprocessing and L02 n-grams; learn indexing and retrieval precision/recall.",
+      "fallback": "Use 5 MB and exact search if FM-index installation fails; label the implementation change.",
+      "sources": [
+        "infinigram"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 36,
+      "id": "diffusion-unmasking-order",
+      "title": "Which tokens should a diffusion model fill first?",
+      "topic": "Diffusion and multimodal",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Use a released Tiny-A2D checkpoint for a sampling-only project.",
+      "question": "Does confidence-based unmasking improve quality per forward pass over random order?",
+      "scope": "Use the Qwen3-0.6B-derived Tiny-A2D masked-diffusion checkpoint, 100 short exact-answer or completion prompts, and three step budgets.",
+      "baseline": "Random unmasking with the same checkpoint, output length, and number of forward passes; include the corresponding AR model as a separately qualified reference.",
+      "evaluation": "Exact correctness, repetition, wall time, model calls, and output length. Do not compare diffusion likelihood directly with AR perplexity without matching definitions.",
+      "outcome": "A sampler comparison and failure cases showing the step/quality tradeoff.",
+      "preparation": "Learn masked prediction, iterative unmasking, and the released sampler interface.",
+      "fallback": "Use 50 prompts and outputs capped at 64 tokens; no conversion training or 8B model is needed.",
+      "sources": [
+        "dllm"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 37,
+      "id": "block-diffusion-size",
+      "title": "How does diffusion block size change generation?",
+      "topic": "Diffusion and multimodal",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Study block diffusion using a small released checkpoint.",
+      "question": "Where does block size trade parallel generation for consistency across a sequence?",
+      "scope": "Use the Tiny-A2D block-diffusion checkpoint and 100 short structured completions. Compare only block sizes supported by its published inference recipe.",
+      "baseline": "Default block size; hold total forward-pass budget and maximum output length fixed, and separately report supported cache behavior.",
+      "evaluation": "Constraint satisfaction, exact answer accuracy, repetition, throughput, and actual latency.",
+      "outcome": "A block-size ablation with clear checkpoint/training-distribution caveats.",
+      "preparation": "Learn autoregressive versus masked generation, attention masks, and inference timing.",
+      "fallback": "Two supported block settings and 50 prompts; if changing blocks is unsupported, compare step allocation within the documented default.",
+      "sources": [
+        "block-diffusion",
+        "dllm"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 38,
+      "id": "small-vlm-document-qa",
+      "title": "Can better image preparation beat a larger vision model?",
+      "topic": "Diffusion and multimodal",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Evaluate small vision-language models on readable document questions.",
+      "question": "Does cropping a relevant region help more than feeding a downscaled whole page?",
+      "scope": "Create 60 original document/table images with exact questions and source values. Compare whole-page resize, question-independent tiling, and OCR-text input on SmolVLM-500M or Qwen3.5-0.8B.",
+      "baseline": "Whole-page input and a text-only oracle supplied with the actual page text; preserve the same question and output budget.",
+      "evaluation": "Exact field/number accuracy, failures by font size/layout, image tokens, and latency; account for crop-selection information.",
+      "outcome": "A reproducible document-QA study with annotated visual failure cases.",
+      "preparation": "Python image/data handling; learn image preprocessing and multimodal prompts.",
+      "fallback": "Use 30 single-page tables and one model. Avoid projects requiring large VLM fine-tuning.",
+      "sources": [
+        "smolvlm",
+        "qwen35"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 39,
+      "id": "visual-document-retrieval",
+      "title": "Should we retrieve a document as text or as an image?",
+      "topic": "Diffusion and multimodal",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Use a 2026 multimodal embedding release on mixed text/layout evidence.",
+      "question": "Do page images recover diagram/table evidence that a text index misses?",
+      "scope": "Use 100 public course pages or original figures and 60 evidence-labeled queries. Compare extracted-text BM25, text embeddings, and Qwen3-VL-Embedding-2B page embeddings.",
+      "baseline": "Fixed pages and query labels; include a clean text-export condition to isolate OCR loss.",
+      "evaluation": "Recall@5, nDCG, errors by text/table/diagram query, encoding time, and index size.",
+      "outcome": "A modality comparison and an explanation of which visual information changes retrieval.",
+      "preparation": "L03 embeddings; learn document rendering, multimodal encoders, and retrieval labels.",
+      "fallback": "Use 40 pages and one-time shared-GPU embeddings; generation is outside the minimum scope.",
+      "sources": [
+        "vl-embedding",
+        "qwen-embedding"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 40,
+      "id": "asr-terminology-context",
+      "title": "Does a glossary help speech recognition or create hallucinations?",
+      "topic": "Diffusion and multimodal",
+      "categories": [
+        "Research problem",
+        "New task"
+      ],
+      "compute": "Inference",
+      "summary": "Test a small 2026 ASR model on English-Chinese technical terminology.",
+      "question": "Does domain context correct rare terms without inserting terms that were never spoken?",
+      "scope": "Record 60-100 short consented or self-recorded clips with manually checked transcripts. Compare Qwen3-ASR-0.6B with no context, a relevant glossary, and a distractor glossary using supported context input.",
+      "baseline": "No-context ASR with the same audio. Split by sentence template and speaker when possible; preserve uncued controls.",
+      "evaluation": "Chinese character error rate, English word error rate, terminology recall, false term insertions, and runtime.",
+      "outcome": "An annotated terminology benchmark and a measured context/faithfulness tradeoff.",
+      "preparation": "Text normalization and evaluation; learn audio loading, transcript alignment, and ASR context formatting.",
+      "fallback": "Use 30 self-recorded clips and two glossary conditions; keep private voices and transcripts out of the course repository.",
+      "sources": [
+        "asr"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 41,
+      "id": "agent-skill-transfer",
+      "title": "Do reusable agent skills transfer to unseen tasks?",
+      "topic": "Open-source contributions",
+      "categories": [
+        "Research problem",
+        "New task"
+      ],
+      "compute": "External review",
+      "summary": "Build and evaluate one reusable skill with a possible SkillsBench contribution.",
+      "question": "Does a concise tested skill improve held-out workflow success beyond a longer generic prompt?",
+      "scope": "Choose one local workflow such as structured file conversion. Create 10 development and 20 held-out instances with deterministic checks; compare no skill, a concise skill, and an irrelevant skill.",
+      "baseline": "Same model/tools and total token budget; keep task answers out of the skill. Inspect reuse across changed filenames and data.",
+      "evaluation": "Artifact correctness, tool calls, total tokens, generalization failures, and skill-induced regressions.",
+      "outcome": "A useful skill, held-out tests, a comparison report, and a reviewable contribution if it matches the upstream scope.",
+      "preparation": "Python tooling and tests; learn agent traces, skill loading, and contribution etiquette.",
+      "fallback": "Run the experiment locally with one 0.6B-1.7B model. Frontier-agent or hosted runs need a separately agreed cap.",
+      "sources": [
+        "skillsbench"
+      ],
+      "upstream": "SkillsBench: inspect the current task registry and contribution guide, agree on an unclaimed need, and propose one task or verifier improvement. Merge is an external decision.",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 42,
+      "id": "science-workflow-task",
+      "title": "Design one verifiable scientific-agent task",
+      "topic": "Open-source contributions",
+      "categories": [
+        "New task",
+        "Case study"
+      ],
+      "compute": "External review",
+      "summary": "Develop a Terminal-Bench-Science-style task from a real research workflow.",
+      "question": "Can an agent complete a scientifically meaningful workflow whose result can be verified independently?",
+      "scope": "Choose one domain you already understand, such as reproducing a numerical convergence result from published data. Package inputs, a bounded environment, an independently checked solution, and a verifier; analyze two bounded agent baselines.",
+      "baseline": "Known-correct solution and a no-op/invalid solution; include plausible wrong outputs so the verifier cannot pass superficial artifacts.",
+      "evaluation": "Oracle solvability, false accepts/rejects, repeated agent success, resource use, and scientific failure analysis.",
+      "outcome": "One well-specified task and a defensible verifier; an upstream-quality result requires maintainer/domain review.",
+      "preparation": "Scientific-domain knowledge, Python and Docker; learn Harbor task packaging and agent evaluation.",
+      "fallback": "Complete the local task and evaluation as the course project. The posted TB-Science 0.2 cutoff was October 5; obtain a future-intake decision before promising submission.",
+      "sources": [
+        "tb-science",
+        "tb-rubric"
+      ],
+      "upstream": "New TB-Science tasks require a proposal approved by maintainers before full implementation. Toy textbook exercises do not satisfy the scientific-workflow scope. A future intake is unconfirmed as of October 9.",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 43,
+      "id": "science-verifier-repair",
+      "title": "Repair a scientific benchmark verifier",
+      "topic": "Open-source contributions",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "External review",
+      "summary": "Make an existing scientific task more trustworthy through one evidence-backed repair.",
+      "question": "Can a verifier accept a scientifically wrong answer or reject an equivalent correct one?",
+      "scope": "Choose one existing TB-Science task and reproduce one numerical-tolerance, unit, schema, or environment bug. Build a minimal failing case and a focused fix.",
+      "baseline": "Current verifier, independently valid solutions, and deliberately wrong outputs; rerun the oracle and no-op checks.",
+      "evaluation": "False accepts/rejects, robustness across equivalent outputs, runtime, and preserved task difficulty.",
+      "outcome": "A reproducible bug report, regression tests, focused patch, and evidence explaining why the task meaning is preserved.",
+      "preparation": "Python testing, numerical reasoning, Docker; learn the chosen task domain and upstream repair process.",
+      "fallback": "Limit to one verifier defect and a local reproduction; maintainer response time is outside the student's control.",
+      "sources": [
+        "tb-science"
+      ],
+      "upstream": "The current guide explicitly supports task-fix requests. Discuss the defect with maintainers and follow the repair workflow; do not publish hidden solutions or exploit details beyond their approved channel.",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 44,
+      "id": "ale-agent-adapter",
+      "title": "Make a small agent reliably evaluable in Agents' Last Exam",
+      "topic": "Open-source contributions",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "External review",
+      "summary": "Contribute a narrow adapter, trace, or grading fix instead of running the full benchmark.",
+      "question": "Can one agent integration produce correctly scored artifacts and complete, auditable traces on a small public task subset?",
+      "scope": "Choose 3-5 compatible public ALE tasks and one local-container/CLI integration. Implement or fix one deployer, timeout path, trajectory field, or grading edge case after identifying an upstream need.",
+      "baseline": "Existing integration plus oracle/invalid-artifact checks; stage reference answers only after agent execution.",
+      "evaluation": "End-to-end reproducibility, task results, missing trace fields, timeout recovery, and CPU/GPU/API cost.",
+      "outcome": "A focused integration or evaluator patch, regression tests, and an honest limitation analysis of the small-model runs.",
+      "preparation": "Python processes, containers, and tests; learn ALE deployment and task lifecycle.",
+      "fallback": "Use one Linux-compatible public task and a mock agent for lifecycle tests; a mock tests infrastructure, not agent intelligence.",
+      "sources": [
+        "ale"
+      ],
+      "upstream": "ALE documents how to add an agent. Confirm maintainer interest in the specific patch; many full benchmark tasks need VMs or GUI software, so the complete benchmark is outside this project.",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 45,
+      "id": "hle-evaluation-audit",
+      "title": "Audit answer extraction and calibration in Humanity's Last Exam",
+      "topic": "Open-source contributions",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "External review",
+      "summary": "Contribute evaluation reliability rather than treating a benchmark score as a mergeable artifact.",
+      "question": "Can answer formatting or confidence parsing change the measured score without changing the substantive answer?",
+      "scope": "Use 20-30 public, domain-understood HLE examples and controlled synthetic answer variants. Audit one extraction/judging/calibration path; propose a targeted code fix or documented question correction.",
+      "baseline": "Current scorer, manually verified equivalence classes, and deliberately incorrect answers. Use only the public split and pin dataset revision.",
+      "evaluation": "False acceptance/rejection, score changes under equivalent formatting, confidence calibration, and judge disagreement.",
+      "outcome": "An evaluation bug reproduction or well-supported correction, regression cases, and a small empirical analysis.",
+      "preparation": "Evaluation, Python tests, and subject knowledge; learn HLE answer formats and calibration.",
+      "fallback": "Audit parsing with synthetic outputs when small-model accuracy is too low. No full HLE run, frontier API spend, or new expert question is required.",
+      "sources": [
+        "hle"
+      ],
+      "upstream": "HLE question feedback uses its official form; rolling contributions are coordinated with maintainers. Its GitHub repository has issues disabled. Confirm a code-PR route before assuming that question acceptance will be represented by a merge; preserve benchmark canaries and keep evaluation data out of training.",
+      "status": "Unreviewed"
+    }
+  ]
+}
