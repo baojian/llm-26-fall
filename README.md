@@ -34,7 +34,7 @@ Dates, periods, and holidays: [docs/schedule.md](docs/schedule.md). Assessment d
 
 The [individual project catalog](docs/project-candidates.html) starts with a
 student-proposed project option and contains 48 suggested directions for
-Lecture 05. Each suggestion has 2–3 annotated references, a baseline, an
+Lecture 05. Each suggestion has annotated references, a baseline, an
 evaluation plan, and an explicit resource plan with a smaller fallback. The
 compute guide covers CPUs, one GPU, two GPUs, and larger requirements; cards
 distinguish minimum hardware from optional parallel runs.

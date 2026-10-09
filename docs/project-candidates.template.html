@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Choose an individual NLP or LLM project with a concrete question, 2–3 starting references, and explicit CPU, one-GPU, or two-GPU resource requirements.">
+  <meta name="description" content="Choose an individual NLP or LLM project with a concrete question, suggested readings, and explicit CPU, one-GPU, or two-GPU resource requirements.">
   <title>Individual project candidates · NLP and LLMs · Fall 2026</title>
   <link rel="stylesheet" href="../assets/notes.css">
   <link rel="stylesheet" href="../assets/course-language.css">
@@ -47,14 +47,14 @@
   <div class="catalog-hero">
     <p class="reading-kicker">INDIVIDUAL PROJECT · FALL 2026</p>
     <h1 id="overview-title">Choose a project that interests you</h1>
-    <p class="catalog-intro">Work individually on <a href="#student-proposed-project">your own project</a> or <a href="#catalog">one of {{COUNT}} candidates</a>, with 2–3 references, a small experiment, CPU or 1–{{RECOMMENDED_GPUS}} GPU requirements, and a fallback.</p>
+    <p class="catalog-intro">Work individually on <a href="#student-proposed-project">your own project</a> or <a href="#catalog">one of {{COUNT}} candidates</a>, with a small experiment, CPU or 1–{{RECOMMENDED_GPUS}} GPU requirements, and a fallback.</p>
   </div>
 
   <section class="guide-panel" id="how-to-choose" aria-labelledby="choose-title">
     <h2 id="choose-title">1. Prepare and overview</h2>
     <p>Prepare a one-page proposal for an individual investigation. <strong>Survey-only projects are not allowed.</strong> Include an implementation, experiment, or tested artifact, with evidence that answers your question.</p>
     <ol class="proposal-checklist">
-      <li><strong>Question and motivation.</strong> Explain what you want to learn and why it matters. Read 2–3 relevant primary references and identify what remains unclear. For your own topic, find topic-specific papers beyond the planning links.</li>
+      <li><strong>Question and motivation.</strong> Explain what you want to learn, why it matters, and what prior work leaves unclear.</li>
       <li><strong>First experiment.</strong> Name accessible data or a generator, a simple baseline, one comparison, and an evaluation that can answer the question. Keep development and evaluation examples separate.</li>
       <li><strong>Feasibility.</strong> State CPU cores and RAM, GPU count and model, memory per GPU, storage, runtime per run, and total runs. Separate minimum hardware from optional parallel runs; total GPU-hours must include baselines and retries. Give a smaller CPU, one-GPU, or cached-output fallback and plan an early timing/memory pilot.</li>
     </ol>
@@ -77,15 +77,13 @@
       <div><h3>2 GPUs · a bounded alternative</h3><p>Run independent seeds or conditions in parallel, or test a supported draft/target split. Explain each device’s role and keep a one-GPU fallback. Two GPUs are optional in the suggested studies.</p></div>
       <div><h3>{{HIGH_DEMAND_GPUS}}+ GPUs · high demand</h3><p>A project that needs this many devices is a poor fit for our small shared pool. Reduce the model, data, or number of runs before selecting it. Larger plans can use resources you obtain yourself; state their source and availability in the proposal.</p></div>
     </div>
-    <p><strong>{{BUDGET_STATUS}} for the course pool: up to {{GPU_HOURS}} GPU-hours per project across all devices and runs.</strong> Sum GPU count × elapsed hours for each run: two GPUs for two hours use four GPU-hours. A second GPU does not increase this proposed shared-pool budget. Resources you obtain yourself are allowed; see <a href="#others">Other resources</a>. Card figures are scope-planning ceilings, not measured runtimes or promised allocations. Count preparation on a GPU, training, generation, evaluation, ablations, and reruns.</p>
-    <p>Report memory <strong>per GPU</strong>: two 24 GB GPUs do not automatically provide one 48 GB device. A split model needs a compatible implementation, and communication can add overhead. Pilot the chosen setup, record actual memory and time, and reduce scope if it does not fit.</p>
-    <p><strong>Avoid projects that depend on prolonged LLM pretraining, large full-model tuning, large online-RL runs, or full benchmark reruns.</strong> The papers may use much more compute than the bounded experiment suggested here. Read them for methods and evaluation ideas; reproduce only the stated small study. Paid APIs and hosted environments also need an explicit cost estimate.</p>
+    <p>Be careful with GPU usage; our course pool is limited.</p>
     <details><summary>Low-compute starting points</summary><ul class="featured-list">{{FEATURED}}</ul></details>
   </section>
 
   <section class="custom-project-section" id="choose-your-own" aria-labelledby="custom-title">
     <h2 id="custom-title">3. Choose your own project</h2>
-    <p>Start with a question you care about. Find 2–3 references specific to your topic, plan a working baseline, and explain how you will test your idea.</p>
+    <p>Start with a question you care about, plan a working baseline, and explain how you will test your idea.</p>
     {{OPEN_CHOICE}}
   </section>
 
@@ -108,9 +106,10 @@
     <p>These are contribution destinations, not guaranteed openings. Check current rules again before submitting. The instructor's requested public-contribution route concerns an agreed upstream artifact; proposals, graded reports, experiment records, grades, and course assignment solutions still belong on eLearning. Keep upstream reference solutions and evaluation material in the channels required by that project's maintainers, not in this public course repository.</p>
     </details>
   </section>
+  <p id="previous-projects">For more ideas, see the <a href="https://baojian.github.io/llm-26/slides/final-project/index.html">previous projects and papers</a>. You may implement a paper’s method and evaluate it with a small experiment, following this semester’s requirements.</p>
   <section id="catalog" aria-labelledby="catalog-title">
     <h2 id="catalog-title">5. {{COUNT}} candidate projects</h2>
-    <p>Choose a topic from the sidebar or filter these {{COUNT}} suggestions by approach, topic, or compute. Your own proposal has a separate section above. Each card shows 2–3 references and its resource plan before the detailed experiment. “Unreviewed” means the scope still needs proposal feedback and a small resource pilot.</p>
+    <p>Choose a topic from the sidebar or filter these {{COUNT}} suggestions by approach, topic, or compute. Your own proposal has a separate section above. Each card shows suggested readings and its resource plan before the detailed experiment. “Unreviewed” means the scope still needs proposal feedback and a small resource pilot.</p>
     <form id="catalog-filters" class="catalog-filters" role="search" hidden>
       <div class="search-control"><label for="project-search">Search title, question, paper or keyword</label><input id="project-search" name="q" type="search" placeholder="Try context, tokenizer, verifier, Chinese…" autocomplete="off"></div>
       <div><label for="project-category">Project approach</label><select id="project-category" name="category"><option value="">All approaches</option>{{CATEGORY_OPTIONS}}</select></div>

@@ -29,8 +29,9 @@ expertise, and external review; each route has a local minimum outcome.
 
 ## Student page and resource screening
 
-The instructor's October 9 refinement asks for 2–3 relevant references per
-candidate and projects that fit the small shared GPU pool. The student page
+The instructor's October 9 refinement retains suggested readings without a
+fixed reference-count requirement. Projects should fit the resources students
+can access, and the course-pool caution is kept to one sentence. The student page
 now has six sections in the requested order: preparation and overview,
 resource requirements, student-proposed projects, open-source contributions,
 48 candidate projects, and other guidance. A sticky left contents panel links
@@ -42,10 +43,9 @@ GPU-time ceiling, and main cost risk before the detailed experiment plan.
 The historical course comparison stays in these notes. Detailed upstream
 contribution guidance is collapsed within the fourth section.
 
-- All 49 cards have 2–3 distinct annotated references. The open-choice card
-  links planning guidance and explicitly asks students to find 2–3 papers for
-  their own topic. Code/data links supplement a reference rather than counting
-  as another independent paper.
+- All 49 cards retain their annotated readings. The open-choice card links
+  planning guidance; students connect their question to relevant prior work
+  without a numeric citation requirement.
 - Ten minimum studies require no GPU. The other suggested studies have a
   one-GPU minimum. Speculative decoding and the tiny-model scaling study also
   offer optional two-GPU configurations; the custom route asks students to
@@ -87,8 +87,8 @@ results. The PyTorch tutorial is an official implementation reference; students
 must match instructions to their installed backend. Existing recent model and
 benchmark links retain the earlier source checks described below.
 
-The renderer rejects missing reading notes, fewer than two distinct
-references, duplicate reference URLs, invalid GPU-count ranges, inconsistent
+The renderer rejects missing notes for supplied readings, duplicate references
+or reference URLs, invalid GPU-count ranges, inconsistent
 CPU labels, survey categories, and shared-pool GPU-hour plans above the
 proposed ceiling. Higher GPU counts are supported and labeled as high demand.
 `min_gpus` defaults to `max_gpus`; when different, the card explains the
@@ -103,6 +103,8 @@ Sources were the [previous final-project deck](https://baojian.github.io/llm-26/
 its [embedded example-task handout](https://baojian.github.io/llm-26/slides/final-project/media/example-tasks.pdf),
 and its 20-paper list. Its group size, report length, dates, and grading
 breakdown do not apply to Fall 2026.
+A short paragraph between sections 4 and 5 links students to this list and
+suggests implementing and evaluating a paper's method under the current requirements.
 
 | Earlier direction | Fall treatment |
 | --- | --- |

@@ -89,11 +89,21 @@ def test_catalog_text_is_escaped_and_executable_source_links_are_rejected():
         catalog.validate(data)
 
 
-@pytest.mark.parametrize("source_ids", [[], ["qwen35"], ["qwen35", "qwen35"]])
-def test_reading_lists_require_at_least_two_distinct_references(source_ids):
+@pytest.mark.parametrize("source_ids", [[], ["qwen35"]])
+def test_reading_lists_have_no_fixed_count_requirement(source_ids):
     data = deepcopy(DATA)
-    data["projects"][0]["sources"] = source_ids
-    with pytest.raises(ValueError, match="two distinct"):
+    project = data["projects"][0]
+    project["sources"] = source_ids
+    project["reading_notes"] = {key: project["reading_notes"][key] for key in source_ids}
+    output = catalog.render(data, TEMPLATE)
+    card = output.split(f'id="{project["id"]}"', 1)[1].split('</article>', 1)[0]
+    assert ('class="project-readings"' in card) == bool(source_ids)
+
+
+def test_duplicate_references_are_rejected():
+    data = deepcopy(DATA)
+    data["projects"][0]["sources"] = ["qwen35", "qwen35"]
+    with pytest.raises(ValueError, match="Duplicate references"):
         catalog.validate(data)
 
 

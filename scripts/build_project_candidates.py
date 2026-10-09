@@ -49,8 +49,8 @@ def validate(data: dict) -> None:
             raise ValueError(f"Unknown topic or compute budget: {identifier}")
         if not set(project["sources"]) <= data["sources"].keys():
             raise ValueError(f"Missing source: {identifier}")
-        if len(project["sources"]) < 2 or len(set(project["sources"])) != len(project["sources"]):
-            raise ValueError(f"Provide at least two distinct references: {identifier}")
+        if len(set(project["sources"])) != len(project["sources"]):
+            raise ValueError(f"Duplicate references: {identifier}")
         if len({data["sources"][key]["url"] for key in project["sources"]}) != len(project["sources"]):
             raise ValueError(f"References must use distinct primary URLs: {identifier}")
         reading_notes = project.get("reading_notes", {})
@@ -171,6 +171,11 @@ def render(data: dict, template: str) -> str:
         search = escape(" ".join(search_parts).lower())
         categories = escape("|".join(project["categories"]))
         heading = 3 if project["id"] == OPEN_CHOICE_ID else 4
+        readings = (
+            f'<div class="project-readings"><h{heading + 1} class="readings-title">Read first</h{heading + 1}>'
+            f'<ol class="sources">{"".join(references)}</ol></div>'
+            if references else ""
+        )
         cards[project["id"]] = f'''<article class="project-card" id="{e['id']}" data-category="{categories}" data-topic="{e['topic']}" data-compute="{e['compute']}" data-search="{search}">
   <div class="card-meta"><span>{e['topic']}</span><span class="resource-badge resource-{resource_class}">{resource_label}</span><span class="review-status">{e['status']}</span></div>
   <h{heading} class="project-title"><a class="project-link" href="#{e['id']}"><span class="project-number">{project_label(project)}</span> {e['title']}</a></h{heading}>
@@ -178,7 +183,7 @@ def render(data: dict, template: str) -> str:
   <div class="tags" aria-label="Project approaches">{tags}</div>
   <p class="question"><strong>Question:</strong> {e['question']}</p>
   <div class="resource-summary"><p><strong>{budget_status if resources['max_gpus'] else 'Compute'}:</strong> {budget}</p><p>{escape(resources['note'])}</p></div>
-  <div class="project-readings"><h{heading + 1} class="readings-title">Read first</h{heading + 1}><ol class="sources">{''.join(references)}</ol></div>
+  {readings}
   <details><summary>Experiment plan, evaluation and smaller fallback</summary><dl>{details}</dl></details>
 </article>'''
     candidates = [project for project in data["projects"] if project["id"] != OPEN_CHOICE_ID]
@@ -203,8 +208,6 @@ def render(data: dict, template: str) -> str:
         "COUNT": str(len(candidates)), "VERIFIED_ON": escape(data["verified_on"]),
         "RECOMMENDED_GPUS": str(data["resource_policy"]["recommended_max_gpus"]),
         "HIGH_DEMAND_GPUS": str(data["resource_policy"]["recommended_max_gpus"] + 1),
-        "GPU_HOURS": str(data["resource_policy"]["max_gpu_hours"]),
-        "BUDGET_STATUS": "Proposed planning ceiling" if data["resource_policy"]["status"] == "proposed" else "Planning ceiling",
         "CATEGORY_OPTIONS": options([value for value in data["categories"] if any(value in project["categories"] for project in candidates)]),
         "TOPIC_OPTIONS": options(topics),
         "COMPUTE_OPTIONS": options([value for value in data["compute"] if any(project["compute"] == value for project in candidates)]),

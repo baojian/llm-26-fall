@@ -5,7 +5,7 @@ projects first, followed by 48 suggested projects for the October 10 Lecture 05
 release. A left contents panel links the six guidance sections and nine topic
 groups; it becomes a collapsible menu on narrow screens. The 48 candidates
 support search and filters by category, topic, and resources.
-Each candidate includes 2–3 annotated references, prerequisites, a question,
+Each candidate includes suggested readings, prerequisites, a question,
 baseline, evaluation, minimum outcome, and fallback. Compute badges distinguish
 CPU studies, one-GPU plans, and optional two-GPU plans. The compute guide also
 flags larger requirements as a poor fit for the shared pool. GPU memory is
