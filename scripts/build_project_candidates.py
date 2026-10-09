@@ -207,6 +207,7 @@ def render(data: dict, template: str) -> str:
     substitutions = {
         "COUNT": str(len(candidates)), "VERIFIED_ON": escape(data["verified_on"]),
         "RECOMMENDED_GPUS": str(data["resource_policy"]["recommended_max_gpus"]),
+        "MAX_GPU_HOURS": f"{data['resource_policy']['max_gpu_hours']:g}",
         "HIGH_DEMAND_GPUS": str(data["resource_policy"]["recommended_max_gpus"] + 1),
         "CATEGORY_OPTIONS": options([value for value in data["categories"] if any(value in project["categories"] for project in candidates)]),
         "TOPIC_OPTIONS": options(topics),

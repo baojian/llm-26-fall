@@ -102,7 +102,9 @@
   form.addEventListener('submit', event => event.preventDefault());
   form.addEventListener('input', update);
   form.addEventListener('change', update);
-  form.addEventListener('reset', () => queueMicrotask(update));
+  // A native reset-button click runs microtasks before the controls reset.
+  // Read their restored values in the next task, after the default action.
+  form.addEventListener('reset', () => setTimeout(update, 0));
   expand.addEventListener('click', () => {
     const visible = cards.filter(card => !card.hidden);
     const open = visible.some(card => !card.querySelector('details').open);

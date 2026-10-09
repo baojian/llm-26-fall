@@ -27,6 +27,47 @@ resource estimates are not measured course results or staff allocations.
 Upstream work can require paid agent trials, hosted environments, domain
 expertise, and external review; each route has a local minimum outcome.
 
+## Independent pre-merge review, October 9, 2026
+
+Reviewed all 48 suggestions and the student-proposed route against the course
+assessment page, schedule, repository policy, and primary source records.
+The common rubric, individual scope, private eLearning submissions, October 21 /
+November 25 / December 30 checkpoints, six-page final main report, and required
+code and experiment record agree. Earlier courses' rules do not transfer.
+The review made these corrections:
+
+- Removed the student-facing suggestion of pending additional credit. An
+  upstream merge is neither required for full credit nor an extra-credit track
+  under the current policy; the earlier discussion is preserved below.
+- Corrected candidate 03: the released FineWeb2 corpus is already filtered and
+  deduplicated. The study now measures additional curation and reports residual
+  duplicates, with a direct link to the official dataset card.
+- Made the preference labels in candidate 08 explicit, separated an over-budget
+  full-history reference in candidate 23, and limited candidate 31's
+  observational fallback to association rather than causal steering claims.
+- Restated AI disclosure, assignment-reuse attribution, the ACL report template,
+  and the absence of oral deliverables. Marked the proposed resource ceiling
+  as unpiloted and unallocated, separate from outside resources.
+- Fixed a browser reset-order bug: clicking Clear filters restored the controls
+  but could leave only 36 of 48 cards visible. A deferred update now reads the
+  reset values. The existing browser check covers native reset clicks, empty
+  search recovery, and all nine topic links under conflicting filters.
+
+Validation: 22 catalog tests passed; generated HTML is current; JavaScript
+syntax and whitespace checks passed. `npm --prefix slides run check:notes`
+passed, including the new navigation regression checks. An independent
+Chromium check covered every filter option, combined filters, paper/author
+search, deep links, expand/collapse, print-state restoration, keyboard access,
+no-JavaScript use, 320/390px layouts, and the bilingual homepage requirements.
+Desktop, mobile, and candidate-card screenshots were visually inspected.
+All 112 distinct external URLs in the catalog returned HTTP 200; paper titles
+and authors were checked against primary metadata, and recent model releases
+and contribution routes were inspected. The Overleaf reader's availability
+does not establish access to its editable source. No model training, GPU
+experiment, or feasibility pilot was run. The **Unreviewed** badges still mean
+that each student's scope needs proposal feedback and a resource pilot; they
+do not indicate a completed allocation or an instructor shortlist decision.
+
 ## Student page and resource screening
 
 The instructor's October 9 refinement retains suggested readings without a
@@ -123,13 +164,15 @@ labels distinguish preprints, conference papers, software, and model cards.
 ## Upstream credit and current openings
 
 On October 9 the instructor asked to consider additional project credit for
-work accepted and merged into established repositories. The catalog records
-this intent and requests evidence of substantive individual contribution and
-external acceptance. Numeric points, a maximum-score change, an upstream merge
-deadline, and acceptance without a GitHub merge have **not** been decided.
-The existing rubric remains in force. Any later point policy must apply
-equally to all students and be reconciled with `AGENTS.md` and the assessment
-page before publication as a grading rule.
+work accepted and merged into established repositories. This remains a policy
+discussion, not an approved grading rule. Numeric points, a maximum-score
+change, an upstream merge deadline, and acceptance without a GitHub merge have
+**not** been decided. The student page therefore uses the existing common
+rubric and maximum score, with no extra-credit track or merge requirement.
+External acceptance can be evidence of usefulness and quality. Any later
+policy change needs an explicit instructor decision, must apply equally to all
+students, and must be reconciled with `AGENTS.md` and the assessment page
+before publication as a grading rule.
 
 A sound local investigation remains assessable if a maintainer rejects a
 contribution or cannot review it before the course deadline. The catalog does

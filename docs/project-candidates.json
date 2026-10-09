@@ -52,15 +52,16 @@
       "kind": "Model card"
     },
     "fineweb2": {
-      "title": "FineWeb2: One Pipeline to Scale Them All",
+      "title": "FineWeb2: One Pipeline to Scale Them All — Adapting Pre-Training Data Processing to Every Language",
       "authors": "Penedo et al.",
       "year": "2025",
       "url": "https://arxiv.org/abs/2506.20920",
+      "artifact": "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2",
       "kind": "Paper"
     },
     "numbers": {
       "title": "Language Models Encode Numbers Using Digit Representations in Base 10",
-      "authors": "Levy et al.",
+      "authors": "Levy and Geva",
       "year": "NAACL 2025",
       "url": "https://aclanthology.org/2025.naacl-short.33/",
       "kind": "Paper"
@@ -721,10 +722,10 @@
       ],
       "compute": "Training",
       "summary": "Adapt the FineWeb2 data-curation question to a tiny model.",
-      "question": "Does removing repetition help more than quality filtering when the training-token budget is fixed?",
-      "scope": "Sample a small, versioned FineWeb2 slice in one language. Train a 10M-30M decoder on at most 5M tokens per run in raw, deduplicated, and filtered conditions; use two seeds if the pilot fits.",
+      "question": "Does additional deduplication or quality filtering help on an already curated corpus at a fixed training-token budget?",
+      "scope": "Sample a small, versioned FineWeb2 slice in one language. FineWeb2 is already filtered and deduplicated: compare the as-released slice, additional deduplication, and additional quality filtering. Audit residual duplicates and removed examples before training a 10M-30M decoder on at most 5M tokens per run; use two seeds if the pilot fits.",
       "baseline": "Identical architecture, tokenizer, optimizer, token budget, and a document-disjoint evaluation set formed before filtering. Deduplicate across splits first.",
-      "evaluation": "Held-out bits per byte, loss by document type, unique training bytes, and wall time; distinguish cleaner data from extra resampling.",
+      "evaluation": "Held-out bits per byte, loss by document type, unique training bytes, residual duplicate rate, and wall time; distinguish additional curation from extra resampling. If further deduplication removes almost nothing, report that limitation rather than treating this as an experiment on raw web data.",
       "outcome": "One controlled three-condition result with uncertainty and examples of removed documents.",
       "preparation": "L01 preprocessing and L02 loss; learn a small Transformer training loop after L05-L06.",
       "fallback": "Use a 5M model and 1M tokens; a corpus-only audit is a pilot, not a claim about model improvement.",
@@ -896,7 +897,7 @@
       "compute": "Training",
       "summary": "Test a preference-data shortcut on verifiable tasks.",
       "question": "Does DPO follow answer correctness when length and correctness disagree?",
-      "scope": "Construct 500 synthetic preference pairs from arithmetic or structured extraction: correct-short/incorrect-long and the reverse. Apply one small LoRA DPO run per data condition.",
+      "scope": "Construct 500 synthetic preference pairs from arithmetic or structured extraction in two conditions: correct-short versus incorrect-long, and correct-long versus incorrect-short. Prefer the correct answer in both conditions. Apply one small LoRA DPO run per condition; isolate any deliberately flipped labels in a separate noise ablation.",
       "baseline": "Untuned model and an SFT model trained on the same preferred answers; control training tokens and preference-pair content.",
       "evaluation": "Held-out exact correctness, response length, sensitivity to 10% flipped preferences, and invalid output rate.",
       "outcome": "A shortcut audit with balanced evaluation pairs and examples where the tuning objective fails.",
@@ -1427,7 +1428,7 @@
       "summary": "Compare memory stores on revised facts rather than simple recall alone.",
       "question": "Which memory policy keeps current information without losing useful history?",
       "scope": "Generate 100 short episodes with dated updates and delayed queries. Compare append-only retrieval, summary memory, and an update-on-write fact store.",
-      "baseline": "No memory and full-history replay; same model, visible facts, context cap, and query budget.",
+      "baseline": "No memory and full-history replay when the complete history fits the cap; use the same model, visible facts, context cap, and query budget for the main comparison. If full-history replay needs a larger context, label it as a separate higher-budget reference and account for its tokens.",
       "evaluation": "Current-fact accuracy, stale-fact use, justified historical recall, memory-update tokens, and latency.",
       "outcome": "A memory benchmark and a policy comparison with inspectable write/read traces.",
       "preparation": "Python records and retrieval; learn agent state, timestamp semantics, and memory accounting.",
@@ -1715,7 +1716,7 @@
       "evaluation": "Language adherence, answer/content preservation, perplexity change, activation sparsity, and off-target effects.",
       "outcome": "A controlled feature-intervention result with both successes and failures.",
       "preparation": "L03 embeddings and PyTorch; learn residual streams, hooks, and SAE reconstruction.",
-      "fallback": "Analyze activation specificity without intervention if hooks are incompatible; never apply a base-model SAE to an unrelated instruct checkpoint.",
+      "fallback": "Analyze activation specificity without intervention if steering is incompatible, and rename the question to feature association: this fallback cannot establish causal control. Never apply a base-model SAE to an unrelated instruct checkpoint.",
       "sources": [
         "qwen-scope",
         "sae-evaluation"
@@ -2357,7 +2358,7 @@
         "course-project",
         "umd-proposal"
       ],
-      "upstream": "A custom project may also produce an upstream contribution if it meets a real maintainer need. The same accepted-and-merged contribution guidance applies.",
+      "upstream": "A custom project may also produce an upstream contribution if it meets a real maintainer need. Document its review or acceptance status; the same course rubric and maximum score apply, with no merge requirement or extra-credit track.",
       "status": "Scope to be proposed",
       "reading_notes": {
         "course-project": "Follow this course’s individual scope, checkpoints, and rubric.",
