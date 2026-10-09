@@ -605,70 +605,60 @@ Use the illustration from slide 7 of the instructor's lecture-05-slides-transfor
 
 ## Learned alignment for neural translation
 
-**Bahdanau, Cho, and Bengio**
-
-*Neural Machine Translation by Jointly Learning to Align and Translate*
-
-2014 preprint; ICLR 2015.
-
-For machine translation, an alignment network learns which encoder states to combine for each target word.
-
-<p class="source"><a href="../../papers/2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf">Course PDF, §§2–3 and Appendix A.1.2</a></p>
-
-Note:
-Allow 2 minutes. Present this as the seminal additive soft-attention model for neural machine translation. Do not call it the first attention mechanism in all of neural computing. Its §6.1 discusses Graves's earlier handwriting alignment (2013, https://arxiv.org/abs/1308.0850). Mnih et al.'s visual-attention paper was submitted in June 2014 (https://arxiv.org/abs/1406.6247), before the September 2014 NMT preprint. The Bahdanau model uses gated recurrent units, not LSTM cells; LSTM above illustrates recurrent memory more generally.
-
----
-
-<!-- .slide: id="source-annotations" -->
-
-## A source annotation uses both directions
-
-$$h_j=[\overrightarrow h_j;\overleftarrow h_j]$$
-
-Bahdanau's encoder runs over the source sentence in both directions.
-
-Each annotation represents a source position with surrounding context.
-
-The whole source sentence is available before translation starts.
+<div class="columns">
+<div>
+<h3>Bahdanau, Cho, and Bengio</h3>
+<p><em>Neural Machine Translation by Jointly Learning to Align and Translate</em></p>
+<p>2014 preprint; ICLR 2015.</p>
+<p>An alignment network learns which encoder states to combine for each target word.</p>
+<p class="source"><a href="../../papers/2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf">Course PDF: §§2–3; Appendix A.1.2</a></p>
+</div>
+<div>
+<h3 id="source-annotations">Bidirectional source states</h3>
+<p>$h_j=[\overrightarrow h_j;\overleftarrow h_j]$</p>
+<p>The encoder reads the source sentence in both directions.</p>
+<p>Each annotation represents a source position with surrounding context.</p>
+<p>The whole source sentence is available before translation starts.</p>
+</div>
+</div>
 
 Note:
-Allow 3 minutes. Distinguish the source annotation h_j from the target decoder state s_t. A source annotation can contain information from later source words. This does not reveal a future target word. The encoder states are produced by a bidirectional gated RNN in the paper. Source: Bahdanau et al., §3.2 and Figure 1.
+Allow 5 minutes: 2 for the paper and 3 for source annotations. Present this as the seminal additive soft-attention model for neural machine translation. Do not call it the first attention mechanism in all of neural computing. Its §6.1 discusses Graves's earlier handwriting alignment (2013, https://arxiv.org/abs/1308.0850). Mnih et al.'s visual-attention paper was submitted in June 2014 (https://arxiv.org/abs/1406.6247), before the September 2014 NMT preprint. The Bahdanau model uses gated recurrent units, not LSTM cells; LSTM above illustrates recurrent memory more generally.
+
+Distinguish the source annotation h_j from the target decoder state s_t. A source annotation can contain information from later source words. This does not reveal a future target word. The encoder states are produced by a bidirectional gated RNN in the paper. Source: Bahdanau et al., §3.2 and Figure 1.
 
 ---
 
 <!-- .slide: id="additive-alignment" -->
 
-## Additive alignment scores
+## From alignment scores to context
 
 $$e_{t,j}=v_a^\top\tanh(W_as_{t-1}+U_ah_j)$$
 
-| Input | Meaning |
-| --- | --- |
-| $s_{t-1}$ | Previous decoder state |
-| $h_j$ | Annotation at source position $j$ |
-
-$W_a$, $U_a$, and $v_a$ are learned with the translation model.
-
-Note:
-Allow 4 minutes. This is Bahdanau's additive score, not a scaled dot product. W_a and U_a map decoder and encoder widths into a common alignment width; the original widths need not match. The final vector v_a produces one scalar per source position. The same alignment parameters serve every source position and target step. Source: Appendix A.1.2.
-
----
-
-<!-- .slide: id="weighted-context" -->
-
-## Normalize and combine the source states
-
-$$\alpha_{t,j}=\frac{\exp(e_{t,j})}{\sum_{k=1}^{S}\exp(e_{t,k})}$$
-
-$$c_t=\sum_{j=1}^{S}\alpha_{t,j}h_j$$
-
-One target step gets one distribution over source positions.
-
-The context has the same width as an encoder annotation.
+<div class="columns">
+<div>
+<h3>Score each source position</h3>
+<table>
+<thead><tr><th>Input</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>$s_{t-1}$</td><td>Previous decoder state</td></tr>
+<tr><td>$h_j$</td><td>Annotation at source position $j$</td></tr>
+</tbody>
+</table>
+<p>$W_a$, $U_a$, and $v_a$ are learned with the translation model.</p>
+</div>
+<div>
+<h3 id="weighted-context">Normalize and combine</h3>
+<p>$\displaystyle\alpha_{t,j}=\frac{\exp(e_{t,j})}{\sum_{k=1}^{S}\exp(e_{t,k})}$</p>
+<p>$\displaystyle c_t=\sum_{j=1}^{S}\alpha_{t,j}h_j$</p>
+<p>Each target step gets a distribution over source positions. The context has the same width as an encoder annotation.</p>
+</div>
+</div>
 
 Note:
-Allow 3 minutes. The softmax axis is the source sequence. In this unpadded example all source positions are valid. The context is a differentiable weighted combination, not a sampled single position. We use c for context and s for the decoder state; the previous section used c for LSTM cell memory in a different model. Source: Bahdanau et al., §3.1, equations (5)–(6).
+Allow 7 minutes: 4 for additive scores and 3 for normalization and context. This is Bahdanau's additive score, not a scaled dot product. W_a and U_a map decoder and encoder widths into a common alignment width; the original widths need not match. The final vector v_a produces one scalar per source position. The same alignment parameters serve every source position and target step. Source: Appendix A.1.2.
+
+The softmax axis is the source sequence. In this unpadded example all source positions are valid. The context is a differentiable weighted combination, not a sampled single position. We use c for context and s for the decoder state; the previous section used c for LSTM cell memory in a different model. Source: Bahdanau et al., §3.1, equations (5)–(6).
 
 ---
 
@@ -676,8 +666,8 @@ Allow 3 minutes. The softmax axis is the source sequence. In this unpadded examp
 
 ## A context for the next decoder update
 
-$$s_{t-1},\{h_j\}\quad\longrightarrow\quad
-\{e_{t,j}\}\quad\longrightarrow\quad c_t$$
+$$s_{t-1},\lbrace h_j\rbrace\quad\longrightarrow\quad
+\lbrace e_{t,j}\rbrace\quad\longrightarrow\quad c_t$$
 
 $$s_t=f(s_{t-1},y_{t-1},c_t)$$
 
@@ -690,78 +680,71 @@ Allow 3 minutes. The arrow chain shows dependencies, not extra discrete decision
 
 ---
 
-<!-- .slide: id="alignment-example" -->
-
-## Two source annotations
-
-For one target step, suppose the alignment network returns:
-
-| Source annotation | Alignment score |
-| --- | ---: |
-| $h_1=(1,2)$ | $0$ |
-| $h_2=(3,0)$ | $\log 3$ |
-
-Exponentiation gives unnormalized weights **1** and **3**.
-
-<p class="caption">Invented vectors and supplied scores, chosen for hand calculation.</p>
-
-Note:
-Allow 3 minutes. These scores are supplied outputs of an alignment network, not claimed results of a pretrained model or a dot product. Separate the score computation from normalization and aggregation. The next exercise calculates the context and changes the score pattern at a later decoder step.
-
----
-
 <!-- .slide: class="exercise" id="exercise-05" -->
 
 <p class="exercise-meta">Exercise E05 · 7 minutes · calculate, then check</p>
 
 ## A different context at each target step
 
-Use $h_1=(1,2)$ and $h_2=(3,0)$.
-
-Find the weights and context for scores $(0,\log 3)$.
-Repeat for scores $(\log 3,0)$ at another target step.
-
-<div class="answer fragment">
-
-First: weights $(1/4,3/4)$, context $(2.5,0.5)$.
-Second: weights $(3/4,1/4)$, context $(1.5,1.5)$.
-
+<div class="columns">
+<div>
+<h3 id="alignment-example">One target step</h3>
+<table>
+<thead><tr><th>Source annotation</th><th>Score</th></tr></thead>
+<tbody>
+<tr><td>$h_1=(1,2)$</td><td>$0$</td></tr>
+<tr><td>$h_2=(3,0)$</td><td>$\log 3$</td></tr>
+</tbody>
+</table>
+<p>Exponentiation gives unnormalized weights <strong>1</strong> and <strong>3</strong>.</p>
+<p class="caption">Invented vectors and supplied alignment scores, chosen for hand calculation.</p>
+</div>
+<div>
+<h3>Calculate, then compare</h3>
+<p>Find the weights and context for scores $(0,\log 3)$. Repeat for $(\log 3,0)$ at another target step.</p>
+<div class="answer fragment" data-fragment-index="0">
+<p>First: weights $(1/4,3/4)$,<br>context $(2.5,0.5)$.</p>
+<p>Second: weights $(3/4,1/4)$,<br>context $(1.5,1.5)$.</p>
+</div>
+</div>
 </div>
 
 Note:
-Allow 7 minutes. The same source annotations produce different contexts because the decoder-dependent scores change. The notebook first checks this arithmetic, then implements the additive score with explicitly supplied toy matrices. It checks gradients through both the weights and source states. No translation benchmark is trained.
+Allow 10 minutes: 3 for the supplied-score example and 7 for E05. These scores are supplied outputs of an alignment network, not claimed results of a pretrained model or a dot product. Separate the score computation from normalization and aggregation. The exercise calculates the context and changes the score pattern at a later decoder step. Reveal the answers after students calculate both cases.
+
+The same source annotations produce different contexts because the decoder-dependent scores change. The notebook first checks this arithmetic, then implements the additive score with explicitly supplied toy matrices. It checks gradients through both the weights and source states. No translation benchmark is trained.
 
 ---
 
 <!-- .slide: id="source-and-target-context" -->
 
-## Available source and target context
+## Source visibility and alignment weights
 
-| Information | Available when generating target $y_t$? |
-| --- | --- |
-| Entire source sentence | Yes |
-| Previously generated target words | Yes |
-| Future target words | No |
-
-Source position $j$ and target step $t$ index different sequences.
-
-Note:
-Allow 4 minutes. A translation can require reordering: source position j greater than target index t is still available. Do not impose a target-index triangular mask on this source alignment. Padding, if present, must be excluded separately. The decoder remains autoregressive in target words. Lecture 05 introduces masking for self-attention over a target sequence.
-
----
-
-<!-- .slide: id="alignment-interpretation" -->
-
-## What an alignment weight tells us
-
-A larger weight gives that source annotation a larger coefficient in the context.
-
-The annotation already contains contextual information.
-
-Weights can help inspect alignment, but they do not establish a unique explanation of the prediction.
+<div class="columns">
+<div>
+<h3>When generating target $y_t$</h3>
+<table>
+<thead><tr><th>Information</th><th>Available?</th></tr></thead>
+<tbody>
+<tr><td>Entire source sentence</td><td>Yes</td></tr>
+<tr><td>Previously generated target words</td><td>Yes</td></tr>
+<tr><td>Future target words</td><td>No</td></tr>
+</tbody>
+</table>
+<p>Source position $j$ and target step $t$ index different sequences.</p>
+</div>
+<div>
+<h3 id="alignment-interpretation">Interpret the weight</h3>
+<p>A larger weight gives that source annotation a larger coefficient in the context.</p>
+<p>The annotation already contains contextual information.</p>
+<p>Weights can help inspect alignment, but they do not establish a unique explanation of the prediction.</p>
+</div>
+</div>
 
 Note:
-Allow 3 minutes. The resulting contribution also depends on the vector being weighted. Bahdanau et al., §5.2 and Figure 3, show learned alignments and source/target reordering. Explain the axes without treating attention as a guaranteed human linguistic annotation or a causal attribution method.
+Allow 7 minutes: 4 for available context and 3 for interpretation. A translation can require reordering: source position j greater than target index t is still available. Do not impose a target-index triangular mask on this source alignment. Padding, if present, must be excluded separately. The decoder remains autoregressive in target words. Lecture 05 introduces masking for self-attention over a target sequence.
+
+The resulting contribution also depends on the vector being weighted. Bahdanau et al., §5.2 and Figure 3, show learned alignments and source/target reordering. Explain the axes without treating attention as a guaranteed human linguistic annotation or a causal attribution method.
 
 ---
 

@@ -7,7 +7,7 @@ to Lecture 05.
 
 **Central question:** How can a model retain and select useful context?
 
-The revised package has **42 slides**, five ungraded exercises, and an offline
+The revised package has **38 slides**, five ungraded exercises, and an offline
 CPU notebook. All students have the same practices and expectations. The
 shared course theme, notebook launcher, and original NPLM fitting example
 are retained. Original preparation: [issue #234](https://github.com/baojian/llm-26-fall/issues/234).
@@ -32,13 +32,13 @@ These old slide numbers refer to the deck before this revision.
 | --- | --- |
 | 1–20: fixed-window LM and training | Retain; update objectives and outline |
 | 21–25: RNN/LSTM bridge | Expand into recurrent-state, gradient, and gate practice in current slides 21–30; combine cell memory with gates on slide 29, and E04 with remaining limitations on slide 30 |
-| 26: encoder context selection | Combine the encoder–decoder update with source Transformer slide 7's bottleneck illustration in current slide 32; develop additive alignment in current slides 31–41 |
+| 26: encoder context selection | Combine the encoder–decoder update with source Transformer slide 7's bottleneck illustration in current slide 32; develop additive alignment in five compact pages, current slides 33–37 |
 | 27–37: weighted values, Q/K/V, scaling, matrix attention | Replace with recurrent alignment; self-attention is developed in Lecture 05, slides 6–19 |
 | 38–42: causal masks and shifted targets | Remove from Lecture 04; covered by Lecture 05, slides 9–11 and 38–39 |
 | 43: causal browser demonstration | Move code, fixture, and interaction checks to Lecture 05, slide 10 |
 | 44–50: head implementation, output/gradient references, causality | Remove duplicate notebook section; covered by Lecture 05's references and E05 |
 | 51–53: attention cost, LM path, positions | Remove from Lecture 04; covered by Lecture 05, slides 21–26, 35, and 51 |
-| 54–56: exit questions and reading | Combine recurrence review, continuation, and readings in current slide 42 |
+| 54–56: exit questions and reading | Combine recurrence review, continuation, and readings in current slide 38 |
 
 Lecture 04's former E03–E05 and optional P01–P02 attention tasks are replaced.
 Current E03 traces memory, E04 calculates a gated update, and E05 calculates
@@ -64,12 +64,14 @@ planning allocations, not measured classroom completion times.
 | 2 | 29–35 | 29 | Cell memory, gates, and exposure |
 | 2 | 35–42 | 30 | E04, 7 min: memory, exposure, and direct derivative |
 | 2 | 42–45 | 30 | Reveal the remaining recurrent limitations after the exercise answer |
-| 3 | 0–9 | 31–33 | Machine translation task; encoder–decoder update and bottleneck; attribution |
-| 3 | 9–22 | 34–37 | Source annotations, additive scores, context, decoder update |
-| 3 | 22–25 | 38 | Numerical alignment example |
-| 3 | 25–32 | 39 | E05, 7 min: two contexts from the same annotations |
-| 3 | 32–39 | 40–41 | Source versus target visibility and interpretation |
-| 3 | 39–45 | 42 | Combined recap, continuation, and readings |
+| 3 | 0–7 | 31–32 | Machine translation task; encoder–decoder update and bottleneck |
+| 3 | 7–12 | 33 | Paper attribution and bidirectional source annotations |
+| 3 | 12–19 | 34 | Additive scores, normalization, and weighted context |
+| 3 | 19–22 | 35 | Context-dependent decoder update and joint training |
+| 3 | 22–25 | 36 | Numerical alignment example |
+| 3 | 25–32 | 36 | E05, 7 min: two contexts from the same annotations; reveal answers after calculation |
+| 3 | 32–39 | 37 | Source versus target visibility and interpretation |
+| 3 | 39–45 | 38 | Combined recap, continuation, and readings |
 
 Preserve practice and feedback. If discussion runs long, leave the supplied
 library-comparison code for reading rather than typing it in class.
