@@ -188,8 +188,12 @@ Only allowed positions contribute to this query.
 
 <div class="answer fragment">Changing the future value leaves this output unchanged. The allowed weights sum to one.</div>
 
+<p class="source">Interactive example: <a href="https://poloclub.github.io/transformer-explainer/" target="_blank" rel="noopener noreferrer">Transformer Explainer</a>.</p>
+
 Note:
 Allow 4 minutes. This is the same supplied query and the same K/V table, now with causal visibility. Slot 1 may read its own input while predicting slot 2's target: the input and next-token target are shifted. Setting the future weight to zero after the unmasked softmax would leave total weight about 0.5777 and is not the same operation. Explicit renormalization could repair that construction, but masking logits first is the direct stable implementation. Every row needs at least one allowed key; all-negative-infinity logits yield undefined softmax. The notebook verifies both weights, the future-value perturbation, an unmasked control, and zero derivatives to the future key and value. Source: Vaswani et al., §3.2.3.
+
+Use the first 3 minutes for the numerical example and its counterexample. In the final minute, open the prepared Transformer Explainer tab: https://poloclub.github.io/transformer-explainer/. Follow one query through its allowed keys, normalized weights, and weighted values. Its GPT-2 small model has different dimensions and parameters from our toy head. Keep sampling controls for Lecture 06. If the page is not ready within 10 seconds, continue with this slide and the local single-head-mask notebook cell. Return here before advancing.
 
 ---
 
@@ -622,8 +626,12 @@ Allow 2 minutes. Four heads of width 4 partition each full-width projection. The
 
 <p class="caption">Every position produces a vocabulary logit vector: $(B,T,7)$.</p>
 
+<p class="source">Interactive model: <a href="https://bbycroft.net/llm" target="_blank" rel="noopener noreferrer">Brendan Bycroft's LLM Visualization</a>.</p>
+
 Note:
 Allow 4 minutes. Match each box to a notebook module. The repeated blocks change representations but preserve shape. Only the token embedding table is reused for readout; the position table is independent. The source architecture's encoder and cross-attention are omitted because this model predicts a continuation from one prefix.
+
+Spend 3 minutes on our diagram, then at most 1 minute in the prepared https://bbycroft.net/llm tab. Trace an input token through embeddings, attention, the feedforward computation, and the output. The working small model sorts letters; it has its own dimensions and parameters. Ask students to identify the token axis and feature axis, then return to our seven-token, two-block model before E04. Source and implementation: https://github.com/bbycroft/llm-viz. If the visualization does not load promptly, trace the same path in the local diagram.
 
 ---
 
@@ -907,8 +915,12 @@ $$\text{score storage}=4BhT^2\ \text{bytes in float32}$$
 
 <p class="caption">One layer's score or weight tensor; this is not total training memory.</p>
 
+<p class="source">Generation walkthrough: <a href="https://www.llm-visualized.com/?token=4&amp;generation=0&amp;kvCache=0" target="_blank" rel="noopener noreferrer">LLM-Visualized</a>.</p>
+
 Note:
 Allow 2 minutes. MiB means 2^20 bytes. The formula counts a materialized (B,h,T,T) tensor, not every kernel's implementation or total model state. Our tiny T=4 tensor needs 512 bytes. At fixed width, QK and AV together take approximately 4BT²d floating-point operations when a multiply-add counts as 2. Original slides 81–82 survey approximate alternatives; later efficiency material will distinguish algorithm changes from memory-efficient exact attention. Training positions can be parallelized, but autoregressive generation still depends on preceding generated tokens.
+
+Use 1 minute for the storage table and 1 minute for the prepared https://www.llm-visualized.com/?token=4&generation=0&kvCache=0 tab. Preserve this starting URL and keep KV caching off. Trace one forward pass to the next-token probabilities and show how the next pass extends the prefix. Keep KV caching for Lecture 13. The site illustrates a separate model; its numerical values do not reproduce our notebook. If it is unavailable, return to shifted-targets and trace the next prediction with the local decoder diagram. Keep the entire walkthrough within this slide's 2-minute allocation.
 
 ---
 
@@ -971,6 +983,7 @@ Allow 1 minute. These are the published course dates at authoring; the slide int
 - [Devlin et al., BERT](https://aclanthology.org/N19-1423/): §3.1, masked prediction.
 - [Bahdanau et al.](https://arxiv.org/abs/1409.0473) and [Luong et al.](https://aclanthology.org/D15-1166/): §3, learned alignment.
 - [Historical examples and further reading](optional-reading.md)
+- [Interactive Transformer walkthroughs](optional-reading.md#interactive-transformer-walkthroughs)
 
 Note:
 Allow 3 minutes. The 2025 Lecture 05 PowerPoint supplied the content sequence and examples; teaching-plan.md maps every source slide and records corrections. All new diagrams are editable and documented in assets/README.md. The core notebook is offline. Figures and reported values must be checked against their cited versions rather than carried forward from a screenshot.

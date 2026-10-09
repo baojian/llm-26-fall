@@ -4,6 +4,28 @@ These notes retain background from the instructor's 2025 *Attention and
 Transformers* lecture. They supplement the [current slides](index.html) and
 [notebook](lecture-05-exercise.ipynb); they add no graded work.
 
+## Interactive Transformer walkthroughs
+
+Use these resources alongside the lecture's numerical examples. Each site
+illustrates its own model and parameter choices. Use the course notebook to
+reproduce the seven-token model and its 4,432-parameter count.
+
+| Resource | What to follow | Lecture connection |
+| --- | --- | --- |
+| [Transformer Explainer, Georgia Tech / Polo Club](https://poloclub.github.io/transformer-explainer/) | In GPT-2 small, follow one query through Q/K scores, the causal mask, softmax weights, and the weighted values. | [Masking before softmax](index.html#/mask-before-softmax), after the hand calculation |
+| [LLM Visualization, Brendan Bycroft](https://bbycroft.net/llm) | Explore a GPT-style network in 3D. The working small model sorts letters. Follow the token and feature axes through embeddings, attention, the feedforward computation, and readout. | [Complete decoder](index.html#/full-model), before the parameter-count exercise |
+| [LLM-Visualized](https://www.llm-visualized.com/?token=4&generation=0&kvCache=0) | Use the supplied starting view with KV caching off. Follow the matrix operations of one forward pass, then the next-token generation loop. | [Attention storage and generation](index.html#/attention-cost); caching is a later Lecture 13 topic |
+
+For each visualization, identify the current token, the positions it can
+attend to, and the operation that produces vocabulary logits. Distinguish
+softmax over attention keys from softmax over the output vocabulary.
+For Bycroft's model, the [author's code and explanation](https://github.com/bbycroft/llm-viz)
+describe the letter-sorting example and the larger model views.
+
+The external sites need a network connection. The lecture's diagrams,
+position demonstration, and CPU notebook remain available locally. If a
+site cannot load, use the matching slide and notebook calculation.
+
 ## From a context vector to attention
 
 An encoder–decoder system maps a source sequence to a target sequence. In a

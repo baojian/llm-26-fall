@@ -34,13 +34,15 @@ for graded assignments, hidden tests, or student data. Quiz 2 uses the published
 ## Three-period sequence
 
 Times include exercises. Breaks are outside the 135 minutes. These are planning
-allocations; a classroom pacing rehearsal remains part of instructor review.
+allocations. The three external walkthroughs replace part of the explanation
+inside existing slide allocations. A classroom rehearsal is needed to measure
+discussion and exercise time with students.
 
 | Period | Minutes | Slides | Teaching and activity |
 | --- | --- | --- | --- |
 | 1 | 0–4 | 1–3 | Objectives and outline |
 | 1 | 4–15 | 4–7 | RNN/LSTM limits, encoder bottleneck, learned alignment, and a weighted context |
-| 1 | 15–28 | 8–11 | Q/K/V roles, full head equation, scaled numerical example, and masking before softmax |
+| 1 | 15–28 | 8–11 | Q/K/V roles, full head equation, scaled numerical example, and masking before softmax; final minute of slide 11 uses Transformer Explainer |
 | 1 | 28–40 | 12–18 | Architecture families; multiple projections; split/merge axes and code |
 | 1 | 40–45 | 19 | **E01, 5 min:** compare shapes, values, and gradients against a head loop |
 | 2 | 0–8 | 20–25 | Outline; permutations; sinusoidal and learned positions; browser demonstration |
@@ -48,13 +50,13 @@ allocations; a classroom pacing rehearsal remains part of instructor review.
 | 2 | 13–22 | 27–29 | Residual paths, pre/post-LN, and the feature axis |
 | 2 | 22–26 | 30 | **E03, 4 min:** normalize a vector and calculate a residual sum |
 | 2 | 26–36 | 31–34 | Position-wise FFN, complete block, and parameter ledger |
-| 2 | 36–40 | 35 | Assemble the complete decoder before counting it |
+| 2 | 36–40 | 35 | Assemble the complete decoder; final minute uses Bycroft's model view before counting our model |
 | 2 | 40–45 | 36 | **E04, 5 min:** count the tied model |
 | 3 | 0–8 | 37–44 | Outline; shifted targets and visibility; attention uses; toy configuration and checks |
 | 3 | 8–14 | 45 | **E05, 6 min:** full-model perturbations and input-state gradients |
 | 3 | 14–18 | 46–48 | Verification evidence, irreducible toy loss, and fitting loop |
 | 3 | 18–22 | 49–50 | Prepared normalization comparison and its limits |
-| 3 | 22–25 | 51–52 | Attention storage and the baseline's differences from the 2017 model |
+| 3 | 22–25 | 51–52 | Attention storage, one minute of LLM-Visualized generation, and the baseline's differences from the 2017 model |
 | 3 | 25–30 | 53–55 | Recap, published course dates, readings, and questions |
 | 3 | 30–45 | Separate private material | **Quiz 2, 15 min** |
 
@@ -72,6 +74,30 @@ is supplied: activities ask for predictions and checks, rather than typing
 the model from scratch. The FFN isolation check in E03 can be revisited after
 slide 32. E05's training cells support the discussion after its timed
 causality activity.
+
+### External walkthroughs and pacing
+
+Open the three [interactive resources](optional-reading.md#interactive-transformer-walkthroughs)
+before class. Each has a one-minute budget within the 120 teaching minutes:
+
+| Slide | Allocation within the slide | Prompt | Local fallback |
+| --- | --- | --- | --- |
+| 11, `mask-before-softmax` | 3 min explanation + 1 min Transformer Explainer | Which keys remain available to this query, and where do its weighted values go? | The displayed calculation and `single-head-mask` notebook cell |
+| 35, `full-model` | 3 min diagram + 1 min Bycroft | Which axis is tokens, which is features, and where are vocabulary logits produced? | The decoder diagram and `decoder-model` notebook cell |
+| 51, `attention-cost` | 1 min storage calculation + 1 min LLM-Visualized | After one token is chosen, what changes in the next forward pass? | Slides 35 and 38, tracing the extended prefix |
+
+Keep the LLM-Visualized starting URL exactly as supplied:
+`https://www.llm-visualized.com/?token=4&generation=0&kvCache=0`.
+Leave caching off during this lecture. The three sites show different models;
+return to our specified toy configuration for all calculations and exercises.
+Allow at most ten seconds for an unavailable page before using its local
+fallback. Do not spend exercise or quiz time troubleshooting a site.
+
+At the end of period 1, finish E01. At the end of period 2, finish E04.
+Start Quiz 2 at minute 30 of period 3. If discussion needs more time,
+use the five-minute reading fallback above before cutting an exercise.
+These budgets support preparation; they do not establish observed classroom
+completion times.
 
 ## Notebook correspondence
 
