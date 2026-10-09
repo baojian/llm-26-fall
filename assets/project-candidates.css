@@ -19,11 +19,7 @@
 .catalog-hero { padding: 12px 0 30px; }
 .catalog-hero h1 { font-size: clamp(32px, 5vw, 54px); line-height: 1.15; letter-spacing: -.035em; max-width: 850px; margin: 12px 0 22px; }
 .catalog-intro { font-size: 21px; max-width: 810px; line-height: 1.6; }
-.catalog-start { display: inline-block; background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 9px 16px; font-weight: 650; text-decoration: none; }
-.catalog-start:hover { text-decoration: underline; }
 .catalog-meta, .source-kind { color: var(--muted); font-size: 14px; }
-.hero-facts { display: flex; flex-wrap: wrap; gap: 18px 36px; margin-top: 28px; color: var(--muted); }
-.hero-facts strong { color: var(--accent); font-size: 26px; margin-right: 6px; }
 .proposal-checklist { padding-left: 24px; }
 .proposal-checklist li { margin: 12px 0; }
 .compute-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin: 22px 0; }
