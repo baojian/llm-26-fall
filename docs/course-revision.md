@@ -39,7 +39,7 @@ mandatory curriculum delivered during every meeting.
 | 1 | Sep 9 | Introduction and tokenization | A correct BPE trace and bilingual tokenization comparison |
 | 2 | Sep 16 | Language models, cross-entropy, and perplexity | A bigram baseline and a checked loss calculation |
 | 3 | Sep 23 | Embeddings and PyTorch | A tensor trace through a small neural LM |
-| 4 | Sep 30 | Neural LMs and attention | A working tiny training loop and checked attention computation |
+| 4 | Sep 30 | Neural LMs and recurrent attention | A tiny training loop, recurrent-state trace, and additive source alignment |
 | 5 | Sat, Oct 10 | The Transformer as a working model | A decoder block with shape and causal-mask checks |
 | 6 | Oct 14 | Pretraining and decoding | A training curve, resumed run, and diagnosed failure |
 | 7 | Oct 21 | Data preparation and quality | A comparison of two data policies under controlled conditions |
@@ -73,7 +73,7 @@ available as references; do not delete their source files.
 | L01 introduction/tokenization | Ambiguity, BPE, vocabulary decisions, bilingual examples | Long product/history tour; regex tutorial moves to preparation | Bytes/Unicode, round-trip checks, and tokenizer tradeoffs |
 | L02 n-grams | Chain rule, MLE, sampling, held-out loss, additive smoothing, interpolation | Katz backoff and Good–Turing/Kneser–Ney details become optional; consolidate repeated NPLM introduction | Explicit NLL/cross-entropy connection and baseline interpretation |
 | L03 classification/embeddings | Distributional hypothesis, embedding lookup, one skip-gram example, similarity, contextual representations | Repeated NB/LR derivations and full word2vec gradient sequence; GloVe/SVD/fastText survey optional; TF-IDF moves to retrieval | Batching, autograd, output projections, and shape reasoning |
-| L04 neural LMs | Existing PyTorch introduction, small feedforward LM, tiny-batch training | Micrograd optional; RNN/LSTM motivation brief; no separate required LSTM training pipeline | Training-loop diagnosis and attention computation |
+| L04 neural LMs | Existing PyTorch introduction, small feedforward LM, tiny-batch training | Micrograd and full LSTM training remain optional; Q/K/V and causal self-attention move to L05 | Training-loop diagnosis, recurrent memory and gates, and Bahdanau alignment |
 | L05 attention/Transformers | Attention intuition, Q/K/V, multiple heads, residuals, normalization | Repeated BPE walkthrough, detailed MT results, constituency parsing, long encoder–decoder tour | One consistent decoder implementation and modern component comparisons |
 | L06 GPT/pretraining | Existing GPT training notebook, AdamW, scheduling, checkpoint use, HellaSwag example | ELMo history and repeated beam-search variants shortened; model-generation catalog optional | Make training configuration and failure diagnosis explicit outcomes |
 | L07 benchmarks | Representative task examples and distinctions between loss and downstream scores | Dataset-by-dataset GLUE/SuperGLUE catalog and many leaderboard slides become reference tables | Contamination, prompt sensitivity, uncertainty, metrics, and error analysis |

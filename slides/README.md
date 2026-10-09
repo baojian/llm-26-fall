@@ -46,15 +46,15 @@ controls demonstrate row lookup and the memory cost of changing table dimensions
 See [asset provenance](lecture-03/assets/README.md) for the teaching figure,
 model metadata, and retained Spring images.
 
-[Lecture 04](lecture-04/index.html) extends the bigram model into a fixed-window
-neural LM, then develops and verifies one causal attention head in 56 slides.
-Its [teaching plan](lecture-04/teaching-plan.md) maps three 45-minute periods
-and the changes from the Spring neural-network and sequence-learning lecture.
-The [notebook](lecture-04/lecture-04-exercise.ipynb) runs E01–E05 and optional
-P01–P02 offline on CPU. Six editable diagrams, a computed training curve, and
-an interactive attention matrix accompany the numerical examples. The controls
-select a query, toggle its causal mask, and change a future value, with a reset
-to the printable initial example. Longer micrograd and LSTM work remains in
+[Lecture 04](lecture-04/index.html) develops a fixed-window neural LM,
+recurrent states, LSTM memory, and additive attention in an RNN encoder–decoder
+in 39 slides. Its [teaching plan](lecture-04/teaching-plan.md) records the
+boundary with Lecture 05 and maps three 45-minute periods. The
+[notebook](lecture-04/lecture-04-exercise.ipynb) runs E01–E05 offline on CPU:
+context shapes, training, recurrent derivatives, gates, and source alignment.
+Three editable diagrams, the source encoder–decoder and attention illustrations, and a
+prepared NPLM loss curve accompany the examples.
+Longer micrograd and recurrent training remain in
 [optional reading](lecture-04/optional-reading.md). See
 [asset provenance](lecture-04/assets/README.md).
 

@@ -2,14 +2,14 @@
 
 <p class="eyebrow">CS40008.01</p>
 
-# Neural language models and attention
+# Neural language models and recurrent attention
 
 <p class="subtitle">Lecture 04 – NLP and LLMs</p>
 
 <p class="byline">Baojian Zhou<br>School of Data Science<br>Fudan University<br>September 30, 2026</p>
 
 Note:
-Three 45-minute periods. The notebook's E01–E05 are ungraded classroom practices. All examples run offline on CPU. The first period extends last week's model, the second develops attention, and the third checks causal attention. The shared Notebook link opens a personal working copy.
+Three 45-minute periods. The notebook's E01–E05 are ungraded classroom practices. All examples run offline on CPU. The first period extends last week's model, the second develops recurrent states and gated memory, and the third introduces additive alignment in an RNN encoder–decoder. The shared Notebook link opens a personal working copy.
 
 ---
 
@@ -17,17 +17,16 @@ Three 45-minute periods. The notebook's E01–E05 are ungraded classroom practic
 
 ## What you will be able to do
 
-**How can a model select useful context?**
+**How can a model retain and select useful context?**
 
-- Extend a bigram model with a learned context network.
-- Fit a tiny batch and diagnose training problems.
-- Compute and implement one causal attention head.
-- Check its outputs, gradients, and resource costs.
-
-<p class="source">Predict first, then run the notebook. All classroom data are toy examples.</p>
+- Train a fixed-window neural language model.
+- Trace a recurrent state and its gradient paths.
+- Explain an LSTM cell update and its gates.
+- Compute an RNN decoder's weighted source context.
+- Distinguish source context from target history.
 
 Note:
-Allow 1 minute for the opening two slides. Ask students to keep identifying what predicts what. The central course question also contrasts selecting useful stored context with compressing a sequence into one fixed-size state. Full Transformer architecture comes in Lecture 05.
+Allow 1 minute for the opening two slides. The first period extends Lecture 03's one-token model. The second develops recurrent memory. The third introduces Bahdanau's additive alignment inside an RNN encoder–decoder. Lecture 05 develops Q/K/V projections, scaled dot products, and causal self-attention.
 
 ---
 
@@ -74,8 +73,8 @@ Ask which information the model needs. Restrict attention to these two targets: 
 
 <ul class="outline-topics">
 <li aria-current="step">Feedforward language models</li>
-<li>Selecting context with attention</li>
-<li>Causal attention and verification</li>
+<li>Recurrent states and gated memory</li>
+<li>Attention in an RNN encoder–decoder</li>
 </ul>
 
 <p class="caption">Period 1 · 45 minutes, including E01 and E02</p>
@@ -351,37 +350,37 @@ Use the final minutes of period 1 for discussion and notebook catch-up. Our six-
 
 ---
 
-<!-- .slide: class="outline-slide" id="outline-attention" -->
+<!-- .slide: class="outline-slide" id="outline-recurrence" -->
 
 ## Outline
 
 <ul class="outline-topics">
 <li>Feedforward language models</li>
-<li aria-current="step">Selecting context with attention</li>
-<li>Causal attention and verification</li>
+<li aria-current="step">Recurrent states and gated memory</li>
+<li>Attention in an RNN encoder–decoder</li>
 </ul>
 
-<p class="caption">Period 2 · 45 minutes, including E03</p>
+<p class="caption">Period 2 · 45 minutes, including E03–E04</p>
 
 Note:
-The opening recurrence bridge takes about 8 minutes. Focus on the reason to change context mechanisms. Detailed LSTM gate derivations and training remain in optional reading.
+Allow 1 minute. Develop recurrence before introducing attention. Students trace a state and a gradient, then a supplied LSTM cell update. Full sequence-model training remains optional.
 
 ---
 
 <!-- .slide: id="context-mechanisms" -->
 
-## Ways to represent context
+## Fixed windows and recurrent states
 
-| Mechanism | What reaches a prediction? |
+| Model | Information available to a prediction |
 | --- | --- |
-| Fixed-window network | A fixed number of recent token vectors |
-| Recurrent network | A state updated through the prefix |
-| Attention | A weighted combination of allowed states |
+| Bigram | The current token |
+| Fixed-window neural LM | A fixed number of recent token vectors |
+| Recurrent LM | A state updated through the prefix |
 
-The next-token prediction task stays the same.
+The recurrent state has the same width as the prefix grows.
 
 Note:
-Allow 1 minute. This is a comparison of mechanisms, not a claim that one always wins on every task or budget. Attention can operate on recurrent states as well as token-derived vectors. A full architecture can combine multiple mechanisms. The lecture will implement one simple self-attention head.
+Allow 2 minutes. Reuse red key versus blue key: a recurrent state can carry the earlier color forward. Available information and successfully learned memory are different claims. This comparison is about the context path, not a universal quality ranking.
 
 ---
 
@@ -394,7 +393,68 @@ Allow 1 minute. This is a comparison of mechanisms, not a claim that one always 
 <p class="caption">Each update uses the previous state and the current input.</p>
 
 Note:
-Allow 2 minutes. h_t = tanh(W_x x_t + W_h h_{t-1} + b). The recurrent transition shares parameters across positions. It can in principle depend on the entire earlier prefix, but information must survive the state updates. The state dimensions stay fixed as the prefix grows. Source: instructor's Spring Lecture 04, pages 38–44, https://github.com/baojian/llm-26/blob/main/slides/lecture-04-slides/lecture-04-slides.pdf#page=38.
+Allow 3 minutes. Trace one sequence through the diagram. The repeated boxes use the same parameters but produce different states. Reset the state at independent document boundaries. Source: the instructor's Spring Lecture 04, pages 38–44, linked in optional-reading.md.
+
+---
+
+<!-- .slide: id="recurrent-update" -->
+
+## The recurrent update
+
+$$h_t=\tanh(W_xx_t+W_hh_{t-1}+b)$$
+
+| Quantity | Shape for one sequence |
+| --- | --- |
+| Input $x_t$ | $d$ |
+| State $h_t$ | $m$ |
+| Input / recurrent matrices | $m\times d$ / $m\times m$ |
+
+The parameters are shared across time.
+
+Note:
+Allow 4 minutes. Use column-vector notation on this slide. The notebook supplies a row-vector implementation and compares it with torch.nn.RNN using the same weights. The number of parameters does not grow with sequence length. The state is an activation, not a new trainable parameter at each step.
+
+---
+
+<!-- .slide: class="exercise" id="exercise-03" -->
+
+<p class="exercise-meta">Exercise E03 · 7 minutes · trace, then check</p>
+
+## Trace a memory path
+
+Use the **linear toy recurrence** $h_t=0.5h_{t-1}+x_t$.
+
+Start with $h_0=0$ and inputs $(1,0,1)$.
+Find $h_1,h_2,h_3$ and $\partial h_3/\partial x_1$.
+
+What changes if the first input becomes 2?
+
+<div class="answer fragment">
+
+States: $1,0.5,1.25$. The derivative is $0.25$.
+Changing the first input to 2 changes the final state to $1.5$.
+
+</div>
+
+Note:
+Allow 7 minutes. This scalar recurrence deliberately omits tanh to make the memory path exact and transparent. Expand h3 = 0.25 x1 + 0.5 x2 + x3. The last input is unchanged, but its state retains information from an earlier input. Run recurrent-trace in the notebook and compare autograd with the expansion.
+
+---
+
+<!-- .slide: id="recurrent-language-model" -->
+
+## An RNN language model
+
+$$x_t=E[w_t],\qquad z_t=Uh_t+b_o$$
+
+The state at position $t$ predicts token $t+1$.
+
+- Training supplies the observed prefix.
+- Generation feeds each chosen token into the next update.
+- The state carries information between updates.
+
+Note:
+Allow 4 minutes. Revisit the shifted loss from Lecture 03, now with a recurrent context function. Teacher forcing supplies known inputs during training; the recurrent state still depends on the preceding state. Keep decoding choices for Lecture 06. Source: Graves (2013), Generating Sequences With Recurrent Neural Networks, §2, https://arxiv.org/abs/1308.0850.
 
 ---
 
@@ -402,16 +462,33 @@ Allow 2 minutes. h_t = tanh(W_x x_t + W_h h_{t-1} + b). The recurrent transition
 
 ## Gradients through repeated updates
 
-The chain rule multiplies local derivatives along the sequence.
+The chain rule multiplies local derivatives along a state path.
 
 $$0.9^{50}\approx0.0052,\qquad 1.1^{50}\approx117.4$$
 
-These scalar examples illustrate shrinking and growing signals.
-
 Real recurrent gradients involve **products of Jacobians**.
 
+Shrinking and growing signals can make long dependencies hard to learn.
+
 Note:
-Allow 1 minute. The numbers are illustrative, not measured RNN gradients. The path also depends on activation derivatives and weight matrices. Do not promise that every recurrent gradient vanishes or explodes. This compresses the Spring discussion on pages 60–62 into one motivation slide. It prepares the purpose of gates without a full BPTT derivation.
+Allow 4 minutes. These scalar products illustrate a mechanism, not measured RNN gradients. Activation derivatives and recurrent weights both matter. Do not claim that every recurrent gradient vanishes or explodes. Source: Pascanu, Mikolov, and Bengio (2013), §2, https://proceedings.mlr.press/v28/pascanu13.html.
+
+---
+
+<!-- .slide: id="shared-recurrent-gradient" -->
+
+## Shared weights receive contributions across time
+
+For $h_t=ah_{t-1}+x_t$ and $h_0=0$:
+
+$$h_3=a^2x_1+ax_2+x_3$$
+
+$$\frac{\partial h_3}{\partial a}=2ax_1+x_2$$
+
+With E03's inputs and $a=0.5$, this derivative is **1**.
+
+Note:
+Allow 4 minutes. Backpropagation through time differentiates the unrolled computation while accumulating into the same parameter a. Distinguish the derivative to the first input (0.25) from the derivative to a shared weight (1). The notebook checks both. Detaching a carried state truncates its gradient path, even if its numerical value is preserved.
 
 ---
 
@@ -419,554 +496,307 @@ Allow 1 minute. The numbers are illustrative, not measured RNN gradients. The pa
 
 ## LSTM memory and gates
 
-$$c_t=f_t\odot c_{t-1}+i_t\odot\widetilde c_t$$
-
-- The forget gate controls retained cell information.
-- The input gate controls new information.
-- The output gate controls exposure of the cell state.
-
-Gates help preserve information across repeated updates.
-
-Note:
-Allow 2 minutes. The displayed equation is the cell-state update; h_t additionally uses an output gate and tanh(c_t). Values of the forget gate near one can help maintain a direct memory path. Gates do not guarantee perfect long-range memory or eliminate sequential dependence. Further derivations and the original training notebook are linked in optional-reading.md. Source: Spring Lecture 04, pages 63–73.
-
----
-
-<!-- .slide: id="encoder-bottleneck" -->
-
-## Selecting from stored context
-
-<img class="diagram" src="assets/context-selection.svg" data-excalidraw-source="assets/context-selection.excalidraw" alt="An encoder produces several source states. A decoder query assigns weights to the stored states, yielding a context vector that changes with the query.">
-
-<p class="caption">Historical motivation: a decoder can revisit different source states.</p>
-
-Note:
-Allow 2 minutes. The fixed-vector bottleneck here refers specifically to early encoder–decoder designs. Bahdanau, Cho, and Bengio introduce query-dependent additive attention over encoder states. This is cross-attention in a translation setting. Our next example uses scaled dot products, and our implementation uses self-attention. Keep those distinctions explicit. Source: https://arxiv.org/abs/1409.0473, §§2–3. The diagram is an original schematic, not their architecture figure.
-
----
-
-<!-- .slide: id="weighted-context" -->
-
-## A weighted combination of values
-
-$$o_i=\sum_j a_{ij}v_j$$
-
-$$a_{ij}\geq0,\qquad\sum_j a_{ij}=1$$
-
-Each query gets its own weights.
-
-The output combines the corresponding **value vectors**.
-
-Note:
-Allow 3 minutes. Begin with the familiar operation of a weighted average. Which item gets weight is separate from what vector is contributed. The coefficients are scalar weights; the values and output are vectors. In this head there is no dropout, so the weights sum to one over the allowed keys. Next establish how the model computes those coefficients.
-
----
-
-<!-- .slide: id="qkv-roles" -->
-
-## Queries, keys, and values
-
-<img class="diagram" src="assets/qkv-path.svg" data-excalidraw-source="assets/qkv-path.excalidraw" alt="Input states X produce learned queries Q, keys K, and values V. Query-key comparisons produce normalized weights, which combine values into output states.">
-
-<p class="caption">Self-attention derives Q, K, and V from the same input sequence.</p>
-
-Note:
-Allow 3 minutes. Q = XW_Q, K = XW_K, V = XW_V in row-vector notation. The three projections have separate learned parameters. All input positions produce a query as well as a key and a value. A key and a value at the same position remain paired. Source: Vaswani et al. (2017), §§3.2.1–3.2.3, https://arxiv.org/abs/1706.03762. Cross-attention obtains queries from a different sequence than the keys and values.
-
----
-
-<!-- .slide: id="attention-shapes" -->
-
-## Shapes inside one head
-
-| Tensor | Shape |
-| --- | --- |
-| Queries Q, keys K | $(B,T,d_k)$ |
-| Values V | $(B,T,d_v)$ |
-| Scores and weights | $(B,T,T)$ |
-| Output O | $(B,T,d_v)$ |
-
-<p class="caption">Rows index queries. Columns index keys.</p>
-
-Note:
-Allow 2 minutes. We use self-attention here, so query and key counts are both T. The notebook function also supports different Tq and Tk. d_k must match between Q and K for their dot product; d_v can differ. The batch axis must remain separate. This extends Lecture 03's shape reasoning to attention and follows CS336 Lecture 2's named-dimension approach.
-
----
-
-<!-- .slide: id="scaled-scores" -->
-
-## Scaled query–key scores
-
-$$s_{ij}=\frac{q_i^\top k_j}{\sqrt{d_k}}$$
-
-Under independent, zero-mean, unit-variance components:
-
-$$\operatorname{Var}(q_i^\top k_j)=d_k$$
-
-Scaling controls the initial spread of the scores.
-
-Note:
-Allow 3 minutes. State the independence and variance assumptions before giving this motivation. They are not guaranteed for learned projections. Large score differences can saturate softmax and make some derivatives very small. Dividing by sqrt(d_k) is the standard scaled dot-product definition, not a way to force every learned score variance to one. Source: Vaswani et al. (2017), §3.2.1 and footnote 4 in some PDF versions, https://arxiv.org/html/1706.03762v7#S3.SS2.SSS1.
-
----
-
-<!-- .slide: id="attention-softmax" -->
-
-## Softmax over keys
-
-$$a_{ij}=\frac{\exp(s_{ij}-m_i)}{\sum_r\exp(s_{ir}-m_i)},\quad m_i=\max_r s_{ir}$$
-
-```python
-weights = torch.softmax(scores, dim=-1)
-```
-
-Each query row sums to one. Subtracting its maximum preserves the probabilities.
-
-Note:
-Allow 2 minutes. With scores shaped (B,T,T), the final dimension indexes keys. Normalizing the query dimension would solve a different problem even though the returned shape looks correct. PyTorch's softmax performs a stable computation. The notebook's large-logit example already motivates avoiding a literal exp/sum implementation.
-
----
-
-<!-- .slide: id="attention-toy-values" -->
-
-## A three-position example
-
-Let $q_2=(\sqrt{2},0)$ and $d_k=2$.
-
-| Position | Label | Key | Value |
-| --- | --- | --- | --- |
-| 1 | red | (1, 0) | (1, 0) |
-| 2 | key | (0, 1) | (0, 2) |
-| 3 | opens | (1, 1) | (3, 1) |
-
-<p class="caption">Hand-chosen vectors. All keys are allowed for now.</p>
-
-Note:
-Allow 2 minutes. The labels connect to the toy sentence, but the vectors are invented separately from the trained NPLM. They are not embeddings learned by that model, nor do the coordinates have semantic interpretations. Positions in the slides are one-based; the notebook selects Python index 1 for query 2. Have students compute the scaled score for one key before beginning E03.
-
----
-
-<!-- .slide: class="exercise" id="exercise-03" -->
-
-<p class="exercise-meta">Exercise E03 · 5 minutes · one row by hand</p>
-
-## Scores, weights, and one output
-
-For $q_2=(\sqrt{2},0)$, calculate:
-
-1. The three scaled scores.
-2. The softmax weights, using $e\approx2.7183$.
-3. The weighted value vector.
-
-<div class="answer fragment">
-<p>Scores: (1, 0, 1). Weights: (0.4223, 0.1554, 0.4223).</p>
-<p>Output: (1.6893, 0.7330).</p>
+<div class="columns">
+<div>
+<h3>Cell memory</h3>
+<p>$c_t=f_t\odot c_{t-1}+i_t\odot\widetilde c_t$</p>
+<table>
+<thead><tr><th>Contribution</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td>$f_t\odot c_{t-1}$</td><td>Retain part of the previous cell</td></tr>
+<tr><td>$i_t\odot\widetilde c_t$</td><td>Add selected candidate information</td></tr>
+</tbody>
+</table>
+<p>Cell state $c_t$ and exposed state $h_t$ are different quantities.</p>
+</div>
+<div>
+<h3 id="lstm-gates">Gates and exposure</h3>
+<p>$g_t=\sigma(W_gx_t+U_gh_{t-1}+b_g)$</p>
+<p>Each of $f_t$, $i_t$, $o_t$ has its own parameters; entries lie between 0 and 1.</p>
+<p>$\widetilde c_t=\tanh(\text{learned candidate})$</p>
+<p>$h_t=o_t\odot\tanh(c_t)$</p>
+<p>The output gate controls what reaches the next prediction.</p>
+</div>
 </div>
 
 Note:
-Keep the table on the preceding slide available or use the matching notebook table. The denominator is 2e+1. Output coordinate 1 is a_21 + 3a_23; coordinate 2 is 2a_22 + a_23. The notebook recomputes the result in float64. Ask why the output has dimension d_v, not the number of keys.
+Allow 6 minutes: 3 for cell memory and 3 for gates and exposure. This is the common modern LSTM with a forget gate. The original Hochreiter–Schmidhuber 1997 model predates that gate; do not attribute this exact later form to the original paper. The current equations follow torch.nn.LSTM and the instructor's Spring gate explanation. Gating helps preserve a direct state path but does not guarantee stable gradients.
 
----
-
-<!-- .slide: id="attention-row-result" -->
-
-## How the values contribute
-
-$$o_2=0.4223(1,0)+0.1554(0,2)+0.4223(3,1)$$
-
-$$o_2\approx(1.6893,0.7330)$$
-
-Equal weights can contribute different vectors.
-
-The keys determine compatibility; the values supply content.
-
-Note:
-Allow 2 minutes. Keep full precision in code and round only for display. Values 1 and 3 receive the same weight here because their scores match, yet their contributions differ. Reusing the output from the key vectors would change the computation. This distinction is easier to see numerically than through a semantic analogy alone.
-
----
-
-<!-- .slide: id="attention-matrix" -->
-
-## All queries together
-
-$$S=\frac{QK^\top}{\sqrt{d_k}},\qquad A=\operatorname{softmax}_{\text{keys}}(S)$$
-
-$$O=AV$$
-
-One matrix multiplication computes all query–key comparisons.
-
-Another combines the values for every query.
-
-Note:
-Allow 3 minutes. This is the same row calculation repeated for all positions, not a new operation. In a batch, transpose only the last two axes of K. Parallel evaluation across known input positions is useful in training. Autoregressive generation still produces one new token before the next one can be used. Source: Vaswani et al. (2017), §3.2.1, Equation 1.
-
----
-
-<!-- .slide: id="batched-attention-code" -->
-
-## Batched tensor operations
-
-```python
-# Q, K: B, T, dk     V: B, T, dv
-scores = Q @ K.transpose(-2, -1) / math.sqrt(dk)
-weights = scores.softmax(dim=-1)  # B, T, T
-output = weights @ V             # B, T, dv
-```
-
-The score contraction can also be written:
-
-```python
-torch.einsum('bik,bjk->bij', Q, K) / math.sqrt(dk)
-```
-
-Note:
-Allow 3 minutes. Read the indices aloud: batch b, query i, key j, feature k. The feature index is summed out. The two notations express the same contraction; students need not adopt another library for this notebook. CS336 Lecture 2 uses einops.einsum with descriptive axis names; this example uses the built-in torch.einsum equivalent. The current code is intentionally unmasked. Add causal constraints in period 3.
-
----
-
-<!-- .slide: id="attention-weight-meaning" -->
-
-## Reading an attention weight
-
-A large weight means a larger coefficient on that value vector **in this head**.
-
-The output also depends on the value vectors and later computations.
-
-**A heatmap alone does not establish why a model made a prediction.**
-
-Note:
-Use the remaining period-2 minutes for discussion and catch-up. This follows directly from O=AV: attention weights do not specify V or the downstream readout. Avoid calling the displayed colors a full explanation of a trained model. Our heatmap uses invented vectors and exposes the exact numerical output, so students can inspect the mechanism. Ask what would happen if every value vector were identical. Resume with causal attention after the break.
-
----
-
-<!-- .slide: class="outline-slide" id="outline-causal" -->
-
-## Outline
-
-<ul class="outline-topics">
-<li>Feedforward language models</li>
-<li>Selecting context with attention</li>
-<li aria-current="step">Causal attention and verification</li>
-</ul>
-
-<p class="caption">Period 3 · 45 minutes, including E04 and E05</p>
-
-Note:
-At the end of this period students have one checked attention component. Keep the architecture preview brief. No new graded exercise or quiz is introduced today.
-
----
-
-<!-- .slide: id="shift-and-leakage" -->
-
-## Inputs and next-token targets
-
-| Position | Input token | Target | Permitted input positions |
-| --- | --- | --- | --- |
-| 1 | red | key | 1 |
-| 2 | key | opens | 1, 2 |
-| 3 | opens | EOS | 1, 2, 3 |
-
-At position 2, reading position 3 would expose the answer.
-
-Note:
-Allow 2 minutes. This three-position segment reuses the attention example labels. Its output at input position t predicts the next token t+1. The current token is already observed, so the diagonal is allowed. Distinguish teacher-forced training, where the tensor contains later tokens, from generation, where they have not been generated yet. Source: Vaswani et al. (2017), §3.1 decoder description and §3.2.3.
-
----
-
-<!-- .slide: id="causal-mask" -->
-
-## A causal score mask
-
-$$M=\begin{bmatrix}0&-\infty&-\infty\\\\0&0&-\infty\\\\0&0&0\end{bmatrix}$$
-
-$$A=\operatorname{softmax}_{\text{keys}}(S+M)$$
-
-Future keys receive zero probability.
-
-<p class="caption">Notebook convention: True means an allowed connection.</p>
-
-Note:
-Allow 2 minutes. Rows are queries and columns are keys. The upper triangle is forbidden, excluding the diagonal. In our boolean API, allowed[i,j] means j <= i. Other library APIs may use a different boolean convention, so inspect the contract. At least one finite score remains in every row of this ordinary causal mask.
-
----
-
-<!-- .slide: id="mask-before-softmax" -->
-
-## Mask before normalization
-
-Query 2 has scores $(1,0,1)$.
-
-| Computation | Resulting weights |
-| --- | --- |
-| Softmax, then zero future weight | (0.4223, 0.1554, 0) |
-| Mask scores, then softmax | (0.7311, 0.2689, 0) |
-
-The first row sums to **0.5777**. The second sums to **1**.
-
-Note:
-Allow 2 minutes. Zeroing after softmax without renormalization loses probability mass. Renormalizing the surviving weights would recover the intended distribution in exact arithmetic, but masking scores first expresses the operation directly and avoids an unnecessary unstable route. The notebook computes both rows and their sums.
+The three gates have separate parameters. The notation abbreviates three affine maps, not one shared gate. A small output gate can hide stored cell information without erasing it. The notebook checks a complete cell against torch.nn.LSTMCell; E04 isolates the arithmetic with supplied gates.
 
 ---
 
 <!-- .slide: class="exercise" id="exercise-04" -->
 
-<p class="exercise-meta">Exercise E04 · 4 minutes · draw and predict</p>
+<p class="exercise-meta">Exercise E04 · 7 minutes · calculate, then check</p>
 
-## Which outputs can change?
+## A gated update and recurrent limitations
 
-Draw the allowed connections for three positions.
+Use $c_{t-1}=2$, $f_t=0.75$, $i_t=0.5$,
+$\widetilde c_t=-0.5$, and $o_t=0.5$.
 
-Change only value 3 from $(3,1)$ to $(13,11)$.
-
-Does query 2's output change with a causal mask? Without one?
-
-<div class="answer fragment">
-<p>Masked: unchanged. Unmasked: both coordinates rise by 4.2232.</p>
+<div class="columns">
+<div>
+<h3>Calculate</h3>
+<p>Find $c_t$ and $h_t$. Holding these gates fixed, what is $\partial c_t/\partial c_{t-1}$?</p>
+<div class="answer fragment" data-fragment-index="0">
+<p>$c_t=1.25$<br>$h_t=0.5\tanh(1.25)\approx0.4241$.</p>
+<p>Direct cell-path derivative: $0.75$.</p>
+</div>
+</div>
+<div class="fragment" data-fragment-index="1">
+<h3 id="recurrent-limitations">Remaining limitations</h3>
+<ul>
+<li>State updates depend on preceding states.</li>
+<li>Information must survive repeated updates.</li>
+<li>A fixed-context encoder–decoder passes only one source summary, motivating attention.</li>
+</ul>
+</div>
 </div>
 
 Note:
-The mask rows are (1,0,0), (1,1,0), and (1,1,1). For unmasked query 2, value 3 carries weight 0.4223188, so adding (10,10) changes the output by about (4.2232,4.2232). This exercise changes only V3 to isolate the weighted-sum mechanism. Later, a stronger test perturbs future input vectors before all learned projections.
+Allow 10 minutes: 7 for E04 and 3 for the remaining limitations. Reveal the answer after students calculate, then reveal the limitations to bridge to attention. The direct derivative holds the supplied gates fixed. A complete recurrent derivative also includes dependencies through earlier hidden states and gate computations. Ask how f=0 versus f=1 changes the retained term, and how o=0 changes exposure without changing c. Run lstm-update and the separate complete-cell comparison.
+
+The fixed final-vector bottleneck belongs to the particular encoder–decoder design considered next, not to every possible recurrent architecture. LSTM gates address memory propagation but do not automatically give a decoder access to every encoder state. Bahdanau et al., §§2–3.
 
 ---
 
-<!-- .slide: id="attention-demo" -->
+<!-- .slide: class="outline-slide" id="outline-alignment" -->
 
-## Causal attention in numbers
+## Outline
 
-<div class="plot" id="attention-visual" data-plotly="assets/attention-demo.json" role="img" aria-live="polite" aria-label="Causal attention weights for three queries. Query 2 weights are 0.7311, 0.2689, and zero; its output is 0.7311, 0.5379."></div>
-
-<form class="demo-form" id="attention-controls" aria-label="Attention controls">
-<button type="button" data-query="0" aria-label="Select query 1">Q1</button>
-<button type="button" data-query="1" aria-label="Select query 2">Q2</button>
-<button type="button" data-query="2" aria-label="Select query 3">Q3</button>
-<button type="button" id="attention-mask">Mask: on</button>
-<button type="button" id="attention-value">Change V3</button>
-<button type="button" id="attention-reset">Reset</button>
-</form>
+<ul class="outline-topics">
+<li>Feedforward language models</li>
+<li>Recurrent states and gated memory</li>
+<li aria-current="step">Attention in an RNN encoder–decoder</li>
+</ul>
 
 Note:
-Allow 4 minutes. Initial state: query 2, causal mask on, original values. Ask students to predict, then Change V3: query 2's output stays fixed. Turn Mask off: the third key now contributes, so the output changes. Select Q3 to show that position 3 is allowed to read its own value. Reset restores the entire initial example. Q/K/V are the invented notebook values, not learned model weights. The chart labels distinguish weights from value-space output coordinates. The initial state appears in the PDF.
+Allow 1 minute. Attention now solves a specific recurrent translation problem. Use encoder source states and a decoder state throughout this section. Transformer self-attention is developed in Lecture 05.
 
 ---
 
-<!-- .slide: id="single-head-code" -->
+<!-- .slide: id="encoder-decoder" -->
 
-## One learned self-attention head
+## Machine translation with an RNN
 
-```python
-q, k, v = self.query(x), self.key(x), self.value(x)
-scores = q @ k.transpose(-2, -1) / math.sqrt(dk)
-allowed = torch.ones(T, T, dtype=torch.bool).tril()
-scores = scores.masked_fill(~allowed, float('-inf'))
-weights = scores.softmax(dim=-1)
-output = weights @ v
-```
+**Translate:** “I am hungry” (English) → “J’ai faim” (French).
 
-Input: $(B,T,d_{model})$. Output: $(B,T,d_v)$.
+**Encoder:** source sentence → fixed-size final state $c=h_n^{\mathrm{enc}}$.
+
+<img id="encoder-bottleneck" src="assets/encoder-bottleneck.png" width="1152" alt="The encoder reads source tokens through five purple recurrent states. A green circle highlights its final state as the bottleneck passed to a red recurrent decoder, which generates target tokens in sequence.">
+
+**Decoder:** $s_t=f(s_{t-1},y_{t-1},c)$, with the same $c$ for every target step.
+
+Source and target lengths can differ.
+
+<p class="caption"><strong>Bottleneck:</strong> the decoder sees the source only through $c$. Attention lets each target step select from all encoder states.</p>
 
 Note:
-Allow 2 minutes. This CPU excerpt combines the core of SingleHead and scaled_attention in the notebook. The full notebook creates the mask on x.device and validates shapes and mask rows. query, key, and value are learned linear projections without biases in this example. There is one head and no dropout. Do not call this a complete Transformer block.
+Allow 6 minutes for the translation task, encoder–decoder update, and bottleneck. Establish the task before the architecture: read a complete sentence in one language and generate its translation in another. The English–French sentence is an illustrative teaching example; the diagram's state counts are schematic. Bahdanau et al. developed their attention-based recurrent model for neural machine translation and evaluated English-to-French translation (§4). First explain this fixed-context baseline, then show how attention gives each target word its own source context.
+
+Here y_(t-1) denotes the previous target word or its embedding in the update function. The summary is fixed in dimension, not a constant independent of the source: different source sentences produce different c. The decoder generates target words using that same source summary at every step, and source and target lengths can differ.
+
+Use the illustration from slide 7 of the instructor's lecture-05-slides-transformers.pptx. Each purple box is an encoder state after reading one source token; the green circle marks the final state c. The red boxes show successive decoder states, and the loops carry the preceding generated token to the next step. The drawing depicts a fixed-context recurrent encoder–decoder: all source information available to the decoder passes through c. Its width stays fixed as the source sentence grows. Ask which earlier source state the decoder can inspect directly: none in this model. The next slides introduce attention over the retained encoder states, with a decoder-dependent context at each target step. Source illustration: embedded ppt/media/image10.png, reused without modification. Conceptual sources: Bahdanau et al., §§2–3; Cho et al. (2014), https://aclanthology.org/D14-1179/.
 
 ---
 
-<!-- .slide: id="reference-implementation" -->
+<!-- .slide: id="bahdanau-attention" -->
 
-## A transparent reference
+## Learned alignment for neural translation
 
-For each batch item and query:
-
-1. List its allowed keys.
-2. Compute one dot product for each key.
-3. Normalize those scores.
-4. Sum the weighted values.
-
-Compare this explicit loop with the batched implementation.
+<div class="columns">
+<div>
+<h3>Bahdanau, Cho, and Bengio</h3>
+<p><em>Neural Machine Translation by Jointly Learning to Align and Translate</em></p>
+<p>2014 preprint; ICLR 2015.</p>
+<p>An alignment network learns which encoder states to combine for each target word.</p>
+<p class="source"><a href="../../papers/2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf">Course PDF: §§2–3; Appendix A.1.2</a></p>
+</div>
+<div>
+<h3 id="source-annotations">Bidirectional source states</h3>
+<p>$h_j=[\overrightarrow h_j;\overleftarrow h_j]$</p>
+<p>The encoder reads the source sentence in both directions.</p>
+<p>Each annotation represents a source position with surrounding context.</p>
+<p>The whole source sentence is available before translation starts.</p>
+</div>
+</div>
 
 Note:
-Allow 2 minutes. The notebook reference does not form a full masked score matrix. It iterates over permitted keys and stacks differentiable scalar dot products. This alternate expression can expose transposition, broadcast, and softmax-axis mistakes. It is deliberately small and slow. The same mathematical contract should produce the same output within numerical tolerances.
+Allow 5 minutes: 2 for the paper and 3 for source annotations. Present this as the seminal additive soft-attention model for neural machine translation. Do not call it the first attention mechanism in all of neural computing. Its §6.1 discusses Graves's earlier handwriting alignment (2013, https://arxiv.org/abs/1308.0850). Mnih et al.'s visual-attention paper was submitted in June 2014 (https://arxiv.org/abs/1406.6247), before the September 2014 NMT preprint. The Bahdanau model uses gated recurrent units, not LSTM cells; LSTM above illustrates recurrent memory more generally.
+
+Distinguish the source annotation h_j from the target decoder state s_t. A source annotation can contain information from later source words. This does not reveal a future target word. The encoder states are produced by a bidirectional gated RNN in the paper. Source: Bahdanau et al., §3.2 and Figure 1.
 
 ---
 
-<!-- .slide: id="forward-check" -->
+<!-- .slide: id="additive-alignment" -->
 
-## Comparing forward outputs
+## From alignment scores to context
 
-```python
-actual, weights = scaled_attention(q, k, v, allowed)
-expected = attention_reference(q, k, v, allowed)
-torch.testing.assert_close(
-    actual, expected, rtol=1e-10, atol=1e-10
-)
-```
+$$e_{t,j}=v_a^\top\tanh(W_as_{t-1}+U_ah_j)$$
 
-Use small float64 tensors to make numerical differences visible.
+<div class="columns">
+<div>
+<h3>Score each source position</h3>
+<table>
+<thead><tr><th>Input</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>$s_{t-1}$</td><td>Previous decoder state</td></tr>
+<tr><td>$h_j$</td><td>Annotation at source position $j$</td></tr>
+</tbody>
+</table>
+<p>$W_a$, $U_a$, and $v_a$ are learned with the translation model.</p>
+</div>
+<div>
+<h3 id="weighted-context">Normalize and combine</h3>
+<p>$\displaystyle\alpha_{t,j}=\frac{\exp(e_{t,j})}{\sum_{k=1}^{S}\exp(e_{t,k})}$</p>
+<p>$\displaystyle c_t=\sum_{j=1}^{S}\alpha_{t,j}h_j$</p>
+<p>Each target step gets a distribution over source positions. The context has the same width as an encoder annotation.</p>
+</div>
+</div>
 
 Note:
-Allow 2 minutes. Absolute and relative tolerances apply to this small float64 computation, not universally to mixed-precision GPU training. Test more than one shape, including unequal query/key counts and different key/value widths. Check normalized rows and masked weights separately. The hand example provides an additional known numerical target rather than relying only on agreement between two programs.
+Allow 7 minutes: 4 for additive scores and 3 for normalization and context. This is Bahdanau's additive score, not a scaled dot product. W_a and U_a map decoder and encoder widths into a common alignment width; the original widths need not match. The final vector v_a produces one scalar per source position. The same alignment parameters serve every source position and target step. Source: Appendix A.1.2.
+
+The softmax axis is the source sequence. In this unpadded example all source positions are valid. The context is a differentiable weighted combination, not a sampled single position. We use c for context and s for the decoder state; the previous section used c for LSTM cell memory in a different model. Source: Bahdanau et al., §3.1, equations (5)–(6).
 
 ---
 
-<!-- .slide: id="gradient-check" -->
+<!-- .slide: id="aligned-decoder-step" -->
 
-## Gradients need their own check
+## Context vector for the decoder
 
-Choose a scalar probe $L=\sum_{i,r}R_{ir}O_{ir}$.
+<p>$\alpha_{t,:}=\operatorname{softmax}(e_{t,:}),\qquad c_t=\sum_j\alpha_{t,j}h_j$</p>
 
-Compare $\nabla_Q L$, $\nabla_K L$, and $\nabla_V L$.
+<img class="diagram" src="assets/rnn-attention.png" alt="Encoder states receive attention weights 0.4, 0.3, 0.1, and 0.2 according to the previous decoder state. Their weighted sum forms a context vector supplied to the next decoder update.">
 
-```python
-grads = torch.autograd.grad((output * probe).sum(),
-                            (q, k, v))
-```
-
-Forward agreement at one input does not establish gradient agreement.
+<p class="caption">Generic RNN schematic with dot-product scoring and its own decoder indexing.<br>Use the next slide's equations for our additive-attention model.</p>
 
 Note:
-Allow 2 minutes. Use a nonuniform probe so that a simple accidental symmetry does not cancel the differences. The notebook clones the same inputs into two independent computation graphs and compares each gradient. Finite-difference gradcheck adds another check against numerical perturbations. Gradients flow into the learned projection weights through Q/K/V by the chain rule. CS336 Lecture 2 verifies gradients of matrix products against explicit formulas.
+Allow 1.5 minutes, sharing the existing three-minute decoder-update slot with the next slide. Trace the green paths from the previous decoder state to the alignment weights, then from the source states into the weighted context. The four illustrated weights sum to one; they are schematic values, not a measured translation result. A later target step can select a different combination of the same source states.
+
+Source: page 2, “Context vector c_i,” of the instructor's 57-slide Desktop lecture-05-slides-transformers.pptx snapshot used on October 10, 2026 (Asia/Shanghai). The original PNG is reused unchanged from ppt/media/image1.png. This same artwork was ppt/media/image11.png on page 8 of the earlier 83-slide saved copy. The prose and formula screenshots are rendered here as editable course text and KaTeX.
+
+Notation: the diagram's i corresponds to t, h_j^e to the encoder annotation h_j, and h_(i-1)^d to the previous decoder state s_(t-1). The dashed green label illustrates a dot-product score; the preceding slide and notebook use Bahdanau's learned additive score instead. Both normalize scores over source positions and form a weighted context. The figure is a generic recurrent-attention schematic, with a one-direction encoder and its own decoder/output indexing; it is not a literal diagram of the bidirectional Bahdanau model. Use the following slide's equations for this lecture's decoder dependencies and target indexing.
+
+---
+
+<!-- .slide: id="decoder-update" -->
+
+## A context for the next decoder update
+
+$$s_{t-1},\lbrace h_j\rbrace\quad\longrightarrow\quad
+\lbrace e_{t,j}\rbrace\quad\longrightarrow\quad c_t$$
+
+$$s_t=f(s_{t-1},y_{t-1},c_t)$$
+
+$$p(y_t\mid y_{<t},x)=g(y_{t-1},s_t,c_t)$$
+
+The translation loss trains the encoder, alignment network, and decoder jointly.
+
+Note:
+Allow 1.5 minutes after the context illustration. The arrow chain shows dependencies, not extra discrete decisions. In the Bahdanau convention the score uses s_(t-1) before the new state is computed. In other attention architectures this ordering can differ. g includes the vocabulary probability computation. Gold word-alignment labels are not required for this objective. Source: Bahdanau et al., §3.1 and Appendix A.1.2.
 
 ---
 
 <!-- .slide: class="exercise" id="exercise-05" -->
 
-<p class="exercise-meta">Exercise E05 · 6 minutes · implement and verify</p>
+<p class="exercise-meta">Exercise E05 · 7 minutes · calculate, then check</p>
 
-## A checked attention head
+## A different context at each target step
 
-Write the core score, masked-softmax, and value-product operations.
-
-Run the notebook checks:
-
-- Forward output and Q/K/V gradient agreement.
-- Finite-difference gradient check.
-- Earlier-output independence from future inputs.
-
-<div class="answer fragment">
-<p>All checks pass. A wrong softmax axis or reversed mask must fail.</p>
+<div class="columns">
+<div>
+<h3 id="alignment-example">One target step</h3>
+<table>
+<thead><tr><th>Source annotation</th><th>Score</th></tr></thead>
+<tbody>
+<tr><td>$h_1=(1,2)$</td><td>$0$</td></tr>
+<tr><td>$h_2=(3,0)$</td><td>$\log 3$</td></tr>
+</tbody>
+</table>
+<p>Exponentiation gives unnormalized weights <strong>1</strong> and <strong>3</strong>.</p>
+<p class="caption">Invented vectors and supplied alignment scores, chosen for hand calculation.</p>
+</div>
+<div>
+<h3>Calculate, then compare</h3>
+<p>Find the weights and context for scores $(0,\log 3)$. Repeat for $(\log 3,0)$ at another target step.</p>
+<div class="answer fragment" data-fragment-index="0">
+<p>First: weights $(1/4,3/4)$,<br>context $(2.5,0.5)$.</p>
+<p>Second: weights $(3/4,1/4)$,<br>context $(1.5,1.5)$.</p>
+</div>
+</div>
 </div>
 
 Note:
-Students predict the three operations before running the supplied explanation. Use E05's explicit reference, gradient comparison, and causal perturbation cells. The notebook is a guided ungraded practice, so it includes runnable explanations. gradcheck uses float64, epsilon 1e-6, atol 1e-5, and rtol 1e-3. Separate the numerical gradient tolerance from the stricter comparison against the loop reference.
+Allow 10 minutes: 3 for the supplied-score example and 7 for E05. These scores are supplied outputs of an alignment network, not claimed results of a pretrained model or a dot product. Separate the score computation from normalization and aggregation. The exercise calculates the context and changes the score pattern at a later decoder step. Reveal the answers after students calculate both cases.
+
+The same source annotations produce different contexts because the decoder-dependent scores change. The notebook first checks this arithmetic, then implements the additive score with explicitly supplied toy matrices. It checks gradients through both the weights and source states. No translation benchmark is trained.
 
 ---
 
-<!-- .slide: id="causality-regression" -->
+<!-- .slide: id="source-and-target-context" -->
 
-## Testing future-input independence
+## Source visibility and alignment weights
 
-```python
-changed = x.detach().clone()
-changed[:, 2:] += 10
-before, _ = head(x)
-after, _ = head(changed)
-assert_close(before[:, :2], after[:, :2])
-```
-
-A loss using only the first two outputs has **zero gradient** to later inputs.
+<div class="columns">
+<div>
+<h3>When generating target $y_t$</h3>
+<table>
+<thead><tr><th>Information</th><th>Available?</th></tr></thead>
+<tbody>
+<tr><td>Entire source sentence</td><td>Yes</td></tr>
+<tr><td>Previously generated target words</td><td>Yes</td></tr>
+<tr><td>Future target words</td><td>No</td></tr>
+</tbody>
+</table>
+<p>Source position $j$ and target step $t$ index different sequences.</p>
+</div>
+<div>
+<h3 id="alignment-interpretation">Interpret the weight</h3>
+<p>A larger weight gives that source annotation a larger coefficient in the context.</p>
+<p>The annotation already contains contextual information.</p>
+<p>Weights can help inspect alignment, but they do not establish a unique explanation of the prediction.</p>
+</div>
+</div>
 
 Note:
-Allow 2 minutes. This changes future x values before the learned Q/K/V projections, making it stronger than changing V3 alone. In zero-based Python indexing, [:2] selects positions 1 and 2. The unmasked control changes, demonstrating that the perturbation is meaningful. A loss over all positions can legitimately have gradients at later inputs; do not test that broader loss for zero future gradients.
+Allow 7 minutes: 4 for available context and 3 for interpretation. A translation can require reordering: source position j greater than target index t is still available. Do not impose a target-index triangular mask on this source alignment. Padding, if present, must be excluded separately. The decoder remains autoregressive in target words. Lecture 05 introduces masking for self-attention over a target sequence.
+
+The resulting contribution also depends on the vector being weighted. Bahdanau et al., §5.2 and Figure 3, show learned alignments and source/target reordering. Explain the axes without treating attention as a guaranteed human linguistic annotation or a causal attribution method.
 
 ---
 
-<!-- .slide: id="attention-failure-cases" -->
+<!-- .slide: id="references" -->
 
-## Useful failure cases
+## Recap and next steps
 
-| Mistake | What exposes it? |
-| --- | --- |
-| Softmax over queries | Row sums or reference outputs |
-| Transposed causal mask | Future-input perturbation |
-| Zero weights after softmax | Row sum below one |
-| Every key masked | Explicit rejection of the row |
+<div class="columns">
+<div>
+<h3 id="exit-questions">Review</h3>
+<ol>
+<li>How does an RNN retain earlier context?</li>
+<li>What do LSTM memory and output gates control?</li>
+<li>Why can attention select a new context each step?</li>
+</ol>
+</div>
+<div class="references">
+<h3>Reading</h3>
+<ul>
+<li><a href="https://www.jmlr.org/papers/v3/bengio03a.html">Bengio et al. (2003)</a>: §2</li>
+<li><a href="https://proceedings.mlr.press/v28/pascanu13.html">Pascanu et al. (2013)</a>: §2</li>
+<li><a href="../../papers/2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf">Bahdanau et al. (2014/2015)</a>: §§2–3</li>
+<li><a href="https://arxiv.org/abs/1308.0850">Graves (2013)</a>: handwriting alignment</li>
+<li><a href="optional-reading.md">Original lecture and further reading</a></li>
+</ul>
+</div>
+</div>
 
-Note:
-Allow 2 minutes. A fully masked row sends every score to negative infinity, making ordinary softmax undefined. Our teaching API raises ValueError. That is a deliberate contract; other kernels may define another policy. The API also checks ranks, dimension compatibility, common floating dtype/device, and a boolean mask that broadcasts to the score shape. These checks aid debugging rather than claiming production robustness for arbitrary numerical inputs.
-
----
-
-<!-- .slide: id="attention-cost" -->
-
-## The cost of longer context
-
-One dense fp32 score matrix, $B=1$:
-
-| Context length T | Score storage |
-| --- | --- |
-| 512 | 1 MiB |
-| 1,024 | 4 MiB |
-| 2,048 | 16 MiB |
-
-Doubling T quadruples this matrix's size: **$4BT^2$ bytes**.
+<p id="continuation"><strong>Lecture 05:</strong> Q/K/V, scaled dot products, causal self-attention, and Transformer blocks.</p>
 
 Note:
-Allow 3 minutes, including an oral prediction before revealing the table. This counts one materialized score tensor only, not total model or training memory. MiB means 2^20 bytes. For d_k=d_v=d, QK^T and AV together use approximately 4BT^2d FLOPs under the two-FLOPs-per-multiply-add convention, excluding projections and softmax. Notebook P01 recomputes the table. Efficient kernels can avoid storing the entire score matrix; keep that systems discussion for later. Method: CS336 Lecture 2, tensors_memory() and tensor_operations_flops().
+Allow 6 minutes: 3 for review, 1 for the continuation, and 2 for readings and questions. Expected responses: earlier inputs affect the carried state; the cell stores information and the output gate controls exposure; the previous decoder state changes alignment scores over the same source annotations. Ask students to distinguish the source and target sequences in the third answer.
 
----
+Lecture 05 uses a short recurrent-attention recap before developing Q/K/V projections, scaled dot products, causal self-attention, and complete decoder blocks.
 
-<!-- .slide: id="attention-in-lm" -->
-
-## Attention in the language-model path
-
-<img class="diagram" src="assets/attention-lm.svg" data-excalidraw-source="assets/attention-lm.excalidraw" alt="Token embeddings feed a causal attention head, whose context-dependent output vectors pass through a vocabulary readout. Logits are compared with shifted targets to compute next-token loss.">
-
-<p class="caption">The context computation changes. The next-token objective remains.</p>
-
-Note:
-Allow 1 minute. This diagram places the checked component into the familiar token-to-loss path. It is a schematic continuation, not a claim that we trained a Transformer in the notebook. A linear vocabulary readout maps d_v to V logits at each position. Position information and the rest of the Transformer block are the next architecture topic.
-
----
-
-<!-- .slide: id="position-information" -->
-
-## Where does position enter?
-
-For a fixed query, permuting allowed **key/value pairs together** leaves the weighted sum unchanged.
-
-A dot-product score contains no explicit relative distance.
-
-Causal masks restrict access. Positional representations add position information.
-
-Note:
-Allow 1 minute. Use the final query, whose allowed set contains all three pairs, to avoid changing the mask while discussing permutation. Notebook P02 swaps the first two paired keys and values and verifies the same output. This does not imply that an entire causal network is permutation invariant: its masks encode an ordering constraint. Preview position representations without deriving sinusoidal encodings or RoPE. Source: Vaswani et al. (2017), §3.5.
-
----
-
-<!-- .slide: id="exit-questions" -->
-
-## Exit questions
-
-1. What lets the NPLM distinguish **red key** from **blue key**?
-2. Why does query 2 lose access to value 3?
-3. Which checks would catch a plausible-looking but incorrect attention implementation?
-
-Note:
-Allow 2 minutes. Expected responses: ordered context embeddings and a learned hidden function; next-token alignment makes position 3 a future input; independent forward/gradient comparisons, normalized mask rows, finite differences, and perturbation tests. Ask students to name a failure case for each kind of check. Keep training fit separate from model generalization in their explanations.
-
----
-
-<!-- .slide: id="continuation" -->
-
-## Continuing the course
-
-**Lecture 05, October 10:** assemble a Transformer from attention, positions, feedforward layers, residual paths, and normalization.
-
-**Optional:** [Spring micrograd and LSTM material](optional-reading.md).
-
-**A1:** due September 30, 23:59, Asia/Shanghai. Submit privately through eLearning.
-
-Note:
-The architecture lecture is on Saturday, October 10, replacing the October 7 holiday meeting. Time and room follow the university make-up notice. The A1 reminder follows the published assignment release at https://github.com/baojian/llm-26-fall/issues/140. E01–E05 introduce no new graded submission. Leave the final references slide available for reading.
-
----
-
-<!-- .slide: class="references" id="references" -->
-
-## Reading
-
-- [Bengio et al. (2003), §2](https://www.jmlr.org/papers/v3/bengio03a.html): the neural probabilistic language model.
-- [Bahdanau et al. (ICLR 2015), §§2–3](https://arxiv.org/abs/1409.0473): selecting source context.
-- [Vaswani et al. (2017), §§3.2.1 and 3.2.3](https://arxiv.org/abs/1706.03762): attention and masking.
-- [CS336 Lecture 2](https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py) and [Assignment 1](https://github.com/stanford-cs336/assignment1-basics): tensor reasoning and implementation checks.
-
-Note:
-Selected reading only. Section 3.5 of Vaswani et al. previews positions. The teaching plan and optional reading map the source Spring slides and notebook. All classroom vectors and loss measurements are original toy computations in the companion notebook. No external network access is needed to present the slides or execute the notebook's cells.
+Read Bengio §2 for neural language models; Pascanu §2 for recurrent gradients; Bahdanau §§2–3, Appendix A.1.2, and §6.1 for additive alignment and earlier work; and Graves for recurrent generation and handwriting alignment. The core notebook runs offline on CPU. Historical sources describe their own architectures and experiments; our small arithmetic examples are teaching constructions. The paper dates and earlier alignment reference support a scoped attribution rather than a claim that all attention began in 2014.

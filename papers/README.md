@@ -104,3 +104,17 @@ These PDFs are unmodified copies from the ACL Anthology, retrieved on
 September 8, 2026. Both are distributed under
 [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/),
 as stated by the original publication pages.
+
+## Lecture 04: Attention in recurrent machine translation
+
+- Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. 2015.
+  *Neural Machine Translation by Jointly Learning to Align and Translate*. ICLR.
+  [Course PDF](2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf) ·
+  [Original arXiv record, 1409.0473v7](https://arxiv.org/abs/1409.0473v7).
+  First preprint: September 1, 2014. This is the unmodified May 19, 2016
+  revision (v7), retrieved October 9, 2026 (Asia/Shanghai).
+  License recorded by arXiv:
+  [arXiv.org non-exclusive distribution license](https://arxiv.org/licenses/nonexclusive-distrib/1.0/).
+  Read §§2–3 and Appendix A.1.2 for the fixed-vector bottleneck, learned
+  source alignment, and recurrent decoder; §4 describes the English-to-French
+  translation experiments.

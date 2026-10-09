@@ -235,6 +235,21 @@ try {
   if (folder === 'lecture-04') {
     assert.equal(await page.locator('#shape-ledger tbody tr:last-child td').count(), 2);
     assert.equal(await page.locator('#shape-ledger tbody tr:last-child .katex').count(), 1, 'Render vocabulary bars inside the table as math.');
+    for (const id of ['exercise-01', 'exercise-02', 'exercise-03', 'exercise-04', 'exercise-05']) {
+      await page.evaluate(id => Reveal.slide(Reveal.getIndices(document.getElementById(id)).h, 0, -1), id);
+      assert.equal(await page.locator(`#${id} .answer`).evaluate(el => el.classList.contains('visible')), false);
+      await page.keyboard.press('Space');
+      assert.equal(await page.locator(`#${id} .answer`).evaluate(el => el.classList.contains('visible')), true);
+      if (id === 'exercise-04') {
+        const limitations = page.locator('#recurrent-limitations');
+        assert.equal(await limitations.evaluate(el => el.closest('.fragment').classList.contains('visible')), false);
+        await page.keyboard.press('Space');
+        assert.equal(await limitations.evaluate(el => el.closest('.fragment').classList.contains('visible')), true);
+        assert.equal(await page.evaluate(() => Reveal.getCurrentSlide().id), id);
+      }
+    }
+  }
+  if (await page.locator('#attention-visual').count()) {
     await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('attention-demo')).h));
     const graph = page.locator('#attention-visual');
     const initialDescription = await graph.getAttribute('aria-label');
@@ -259,10 +274,6 @@ try {
     assert.deepEqual(JSON.parse(await graph.getAttribute('data-output')), initialOutput);
     assert.equal(await page.locator('#attention-mask').getAttribute('aria-pressed'), 'true');
     assert.equal(await page.locator('#attention-value').getAttribute('aria-pressed'), 'false');
-    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('exercise-04')).h, 0, -1));
-    assert.equal(await page.locator('#exercise-04 .answer').evaluate(el => el.classList.contains('visible')), false);
-    await page.keyboard.press('Space');
-    assert.equal(await page.locator('#exercise-04 .answer').evaluate(el => el.classList.contains('visible')), true);
   }
   if (folder === 'lecture-03') {
     assert.equal(count, 60, 'Keep the revised lecture at 60 slides.');
