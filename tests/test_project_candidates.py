@@ -44,6 +44,8 @@ def test_published_catalog_is_current_and_readable_without_javascript():
     assert 30 <= document.articles <= 50
     assert len(document.ids) == len(set(document.ids))
     assert "clm-context-management" in document.ids
+    assert DATA["categories"][0] == "Student-proposed project"
+    assert document.ids.index("student-proposed-project") < document.ids.index("multilingual-tokenizer-audit")
     assert set(DATA["categories"]) == {category for project in DATA["projects"] for category in project["categories"]}
     for project in DATA["projects"]:
         assert project["question"].replace("&", "&amp;") in output

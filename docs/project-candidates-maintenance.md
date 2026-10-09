@@ -1,7 +1,7 @@
 # Individual project catalog: review and maintenance
 
-The [catalog](project-candidates.html) prepares 48 individual project directions
-for Lecture 05 on October 10, 2026. It implements
+The [catalog](project-candidates.html) offers a student-proposed project route
+and 48 suggested individual directions for Lecture 05 on October 10, 2026. It implements
 [issue #265](https://github.com/baojian/llm-26-fall/issues/265), including the
 instructor-requested Context Language Models candidate and its stable
 `clm-context-management` link. The course goal of a small agent for math, code,
@@ -9,17 +9,20 @@ and science is recorded in [issue #269](https://github.com/baojian/llm-26-fall/i
 
 ## Scope and review status
 
-There are 48 candidates across nine topic areas. Topic and approach are
-separate: a candidate can have several approach tags (survey paper, case study,
-paper replication, new task, research problem). The page supports combined
+The first category and displayed card welcome student-proposed projects.
+The 48 suggested candidates span nine topic areas; an open topic has its own
+topic and budget labels. The other five categories describe approaches
+(survey paper, case study, paper replication, new task, research problem), and
+a candidate can have several approach tags. The page supports combined
 filters, keyword search, stable links, keyboard operation, and printing visible
 candidates with details. Content is present in HTML without JavaScript and works
 when opened directly from disk.
 
 Every entry includes a question, scope/data, baseline/controls, evaluation,
 minimum outcome, preparation, planning resources, fallback, sources, and review
-status. All entries are initially **Unreviewed**: source verification does not
-replace instructor selection or hardware pilots. Proposed experiments and
+status. Suggested entries are initially **Unreviewed**; the custom route is
+marked **Scope to be proposed**. Source verification does not replace
+instructor selection or hardware pilots. Proposed experiments and
 resource estimates are not measured course results or staff allocations.
 Upstream work can require paid agent trials, hosted environments, domain
 expertise, and external review; each route has a local minimum outcome.
@@ -96,6 +99,23 @@ The instructor also set a six-page maximum for the final report's main content
 on October 9. References and appendices remain outside the limit; code and an
 experiment record are still required. This decision is recorded in `AGENTS.md`
 and reflected in the homepage, translation, template, and generated catalog.
+
+The instructor subsequently supplied the UMD CMSC 723 proposal template and
+requested student-chosen interests as the first category. The open-topic entry
+has the stable ID `student-proposed-project` and internal number 49, displayed
+as **Open choice** before projects 01-48. `display_priority` controls placement;
+`display_label` supplies that label. Existing suggested-project IDs and numbers
+are unchanged. The same individual-project rubric applies to this route.
+
+The [UMD schedule](https://www.cs.umd.edu/~miyyer/cmsc723/schedule.html) was checked
+on October 9 and links the [proposal template](https://www.overleaf.com/read/jrxnkfqvkjfm).
+Its planning prompts inform the open-topic card: motivation, related work,
+baseline, data, evaluation, resources, tools, and schedule. The template text
+was supplied by the instructor; the web reader did not expose the Overleaf
+document contents. UMD's group size, deadlines, proposal minimum length,
+citation minimum, and AI-detector grading rule are not adopted. Our one-page
+proposal, October 21 deadline, six-page final main report, and eLearning
+submission process remain the applicable requirements.
 
 ## Files and rebuild
 

@@ -3,6 +3,7 @@
   "release_date": "2026-10-10",
   "verified_on": "2026-10-09",
   "categories": [
+    "Student-proposed project",
     "Survey paper",
     "Case study",
     "Paper replication",
@@ -10,6 +11,7 @@
     "Research problem"
   ],
   "topics": [
+    "Student-defined topic",
     "Data and tokenization",
     "Adaptation and training",
     "Reasoning and evaluation",
@@ -24,9 +26,11 @@
     "CPU": "Laptop, roughly 8-16 GB RAM; plan for at most 4 hours of processing and a small data download. An optional inference sanity check can use a shared GPU.",
     "Inference": "One 12-24 GB GPU or a suitable local quantized runtime; target at most 8 GPU-hours total on the scoped subset. Start with 0.6B-2B models, batch size 1, short contexts and capped outputs.",
     "Training": "One 16-24 GB GPU; target at most 24 GPU-hours total across baselines, ablations and seeds. Use 5M-30M models from scratch or 0.6B adapter tuning. Pilot memory and step time before committing.",
-    "External review": "CPU/container development plus a small local-model pilot; reserve at most 8 GPU-hours initially. Required frontier-agent trials, hosted VMs, API calls and upstream review time are additional constraints to settle before choosing this route."
+    "External review": "CPU/container development plus a small local-model pilot; reserve at most 8 GPU-hours initially. Required frontier-agent trials, hosted VMs, API calls and upstream review time are additional constraints to settle before choosing this route.",
+    "Propose a budget": "Identify the CPU, GPU, or API access you actually have, estimate total time and any spending, and give a smaller fallback. Start with a small pilot before selecting model size or promising training. The instructor reviews the proposed budget with the project scope."
   },
   "featured": [
+    "student-proposed-project",
     "multilingual-tokenizer-audit",
     "reasoning-budget-allocation",
     "hybrid-retrieval",
@@ -387,6 +391,15 @@
       "year": "Fall 2025",
       "url": "https://github.com/cmu-l3/anlp-fall2025-hw2",
       "kind": "Official course assignment; larger group scope"
+    },
+    "umd-proposal": {
+      "title": "CMSC 723 project proposal guidance",
+      "authors": "Mohit Iyyer and the UMD CMSC 723 course staff",
+      "year": "Fall 2026 course; proposal template supplied by the instructor",
+      "url": "https://www.cs.umd.edu/~miyyer/cmsc723/schedule.html",
+      "artifact": "https://www.overleaf.com/read/jrxnkfqvkjfm",
+      "artifact_label": "UMD proposal template",
+      "kind": "Course planning reference; our course requirements apply"
     }
   },
   "projects": [
@@ -1550,6 +1563,31 @@
       ],
       "upstream": "",
       "status": "Unreviewed"
+    },
+    {
+      "number": 49,
+      "id": "student-proposed-project",
+      "display_priority": 0,
+      "display_label": "Open choice",
+      "title": "Propose your own NLP or LLM project",
+      "topic": "Student-defined topic",
+      "categories": [
+        "Student-proposed project"
+      ],
+      "compute": "Propose a budget",
+      "summary": "Start with a topic you care about: a hobby, language, research question, community, or practical problem. The suggested projects are starting points, and you are welcome to propose a different idea.",
+      "question": "Which specific question about language processing would you be excited to investigate, and what evidence would change your mind?",
+      "scope": "Choose one question with a clear NLP or LLM component that one student can investigate this semester. Explain its motivation and connection to related work, identify accessible data or a small generator, and define one main comparison. For example, study terminology preservation in translations, search over historical documents, or a language tool for a hobby you know well.",
+      "baseline": "Begin with the simplest credible solution: a rule, majority prediction, lexical retrieval, or an existing small model. Identify one change to compare against it, and explain which outcome would support or weaken your hypothesis.",
+      "evaluation": "Define a held-out set or explicit evidence-selection protocol, relevant quantitative or qualitative criteria, and an error analysis. Record the time and resources used. Match the evaluation to the question; an app demonstration alone does not establish whether the proposed method works.",
+      "outcome": "An individual investigation with a reproducible baseline, one meaningful comparison or structured analysis, and a clear explanation of findings and limitations. A well-supported negative result is valid and uses the same course rubric as a listed topic.",
+      "preparation": "Use the one-page proposal to cover motivation, related work, approach and baseline, data access, evaluation, compute, tools, and a short schedule. Identify what you will implement and what you will reuse, including AI coding assistance. Plan an early baseline and reserve time for analysis and writing.",
+      "fallback": "Narrow to one language, one dataset, fewer examples, or a smaller model if data or compute access is uncertain. Discuss feasibility with the instructor through the normal proposal feedback process. Submit the proposal by October 21; the final report has up to six pages of main content, excluding references and appendices.",
+      "sources": [
+        "umd-proposal"
+      ],
+      "upstream": "A custom project may also produce an upstream contribution if it meets a real maintainer need. The same accepted-and-merged contribution guidance applies.",
+      "status": "Scope to be proposed"
     }
   ]
 }

@@ -53,10 +53,14 @@ def options(values: list | dict) -> str:
     return "".join(f'<option value="{escape(value)}">{escape(value)}</option>' for value in values)
 
 
+def project_label(project: dict) -> str:
+    return escape(project.get("display_label", f"{project['number']:02d}"))
+
+
 def render(data: dict, template: str) -> str:
     validate(data)
     cards = []
-    for project in data["projects"]:
+    for project in sorted(data["projects"], key=lambda item: item.get("display_priority", 1)):
         e = {key: escape(value) for key, value in project.items() if isinstance(value, str)}
         tags = "".join(f'<span class="tag">{escape(category)}</span>' for category in project["categories"])
         fields = [
@@ -77,7 +81,8 @@ def render(data: dict, template: str) -> str:
             source = data["sources"][key]
             search_parts.extend(str(value) for value in source.values())
             artifact = (
-                f' · <a href="{escape(source["artifact"])}">Code / data / model</a>'
+                f' · <a href="{escape(source["artifact"])}">'
+                f'{escape(source.get("artifact_label", "Code / data / model"))}</a>'
                 if "artifact" in source else ""
             )
             references.append(
@@ -89,7 +94,7 @@ def render(data: dict, template: str) -> str:
         categories = escape("|".join(project["categories"]))
         cards.append(f'''<article class="project-card" id="{e['id']}" data-category="{categories}" data-topic="{e['topic']}" data-compute="{e['compute']}" data-search="{search}">
   <div class="card-meta"><span>{e['topic']}</span><span>{e['compute']}</span><span class="review-status">{e['status']}</span></div>
-  <h2><a class="project-link" href="#{e['id']}"><span class="project-number">{project['number']:02d}</span> {e['title']}</a></h2>
+  <h2><a class="project-link" href="#{e['id']}"><span class="project-number">{project_label(project)}</span> {e['title']}</a></h2>
   <p class="project-summary">{e['summary']}</p>
   <div class="tags" aria-label="Project approaches">{tags}</div>
   <p class="question"><strong>Question:</strong> {e['question']}</p>
@@ -99,7 +104,7 @@ def render(data: dict, template: str) -> str:
 </article>''')
     lookup = {project["id"]: project for project in data["projects"]}
     featured = "".join(
-        f'<li><a href="#{identifier}">{lookup[identifier]["number"]:02d} · {escape(lookup[identifier]["title"])}</a></li>'
+        f'<li><a href="#{identifier}">{project_label(lookup[identifier])} · {escape(lookup[identifier]["title"])}</a></li>'
         for identifier in data["featured"]
     )
     substitutions = {

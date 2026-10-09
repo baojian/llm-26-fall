@@ -38,6 +38,11 @@ up to **six pages of main content**. References and appendices do not count
 toward this limit and have no page limit. Code and a concise experiment record
 are also required. Apply this limit equally to all students.
 
+Instructor decision, October 9, 2026: students may propose an NLP or LLM project
+based on their own interests. Present this as the first project category, ahead
+of the suggested topics. Use the same individual scope, proposal process,
+checkpoints, and grading rubric for student-proposed and suggested projects.
+
 ## Task Solution Merge Policy — Mandatory
 
 Instructor decision, September 20, 2026: merge student exercise solutions
