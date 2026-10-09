@@ -7,7 +7,7 @@ to Lecture 05.
 
 **Central question:** How can a model retain and select useful context?
 
-The revised package has **47 slides**, five ungraded exercises, and an offline
+The revised package has **45 slides**, five ungraded exercises, and an offline
 CPU notebook. All students have the same practices and expectations. The
 shared course theme, notebook launcher, and original NPLM fitting example
 are retained. Original preparation: [issue #234](https://github.com/baojian/llm-26-fall/issues/234).
@@ -38,7 +38,7 @@ These old slide numbers refer to the deck before this revision.
 | 43: causal browser demonstration | Move code, fixture, and interaction checks to Lecture 05, slide 10 |
 | 44–50: head implementation, output/gradient references, causality | Remove duplicate notebook section; covered by Lecture 05's references and E05 |
 | 51–53: attention cost, LM path, positions | Remove from Lecture 04; covered by Lecture 05, slides 21–26, 35, and 51 |
-| 54–56: exit questions and reading | Rewrite around recurrence and source alignment |
+| 54–56: exit questions and reading | Combine recurrence review, continuation, and readings in current slide 45 |
 
 Lecture 04's former E03–E05 and optional P01–P02 attention tasks are replaced.
 Current E03 traces memory, E04 calculates a gated update, and E05 calculates
@@ -69,7 +69,7 @@ planning allocations, not measured classroom completion times.
 | 3 | 22–25 | 41 | Numerical alignment example |
 | 3 | 25–32 | 42 | E05, 7 min: two contexts from the same annotations |
 | 3 | 32–39 | 43–44 | Source versus target visibility and interpretation |
-| 3 | 39–45 | 45–47 | Exit questions, continuation, and readings |
+| 3 | 39–45 | 45 | Combined recap, continuation, and readings |
 
 Preserve practice and feedback. If discussion runs long, leave the supplied
 library-comparison code for reading rather than typing it in class.

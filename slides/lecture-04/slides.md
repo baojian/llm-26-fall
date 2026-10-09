@@ -780,43 +780,38 @@ Allow 3 minutes. The resulting contribution also depends on the vector being wei
 
 ---
 
-<!-- .slide: id="exit-questions" -->
+<!-- .slide: id="references" -->
 
-## Check the sequence-model story
+## Recap and next steps
 
-1. How can the same last token lead to different recurrent states?
-2. What do an LSTM cell state and its output gate control?
-3. Why does an attentive decoder use a different context at each step?
+<div class="columns">
+<div>
+<h3 id="exit-questions">Review</h3>
+<ol>
+<li>How does an RNN retain earlier context?</li>
+<li>What do LSTM memory and output gates control?</li>
+<li>Why can attention select a new context each step?</li>
+</ol>
+</div>
+<div class="references">
+<h3>Reading</h3>
+<ul>
+<li><a href="https://www.jmlr.org/papers/v3/bengio03a.html">Bengio et al. (2003)</a>: §2</li>
+<li><a href="https://proceedings.mlr.press/v28/pascanu13.html">Pascanu et al. (2013)</a>: §2</li>
+<li><a href="https://arxiv.org/abs/1409.0473">Bahdanau et al. (2014/2015)</a>: §§2–3</li>
+<li><a href="https://arxiv.org/abs/1308.0850">Graves (2013)</a>: handwriting alignment</li>
+<li><a href="optional-reading.md">Original lecture and further reading</a></li>
+</ul>
+</div>
+</div>
 
-Note:
-Allow 3 minutes. Expected responses: earlier inputs affect the carried state; the cell stores information and the gate controls exposure; the previous decoder state changes alignment scores over the same source annotations. Ask students to identify the source versus target sequence in the third answer.
+<p id="continuation"><strong>Lecture 05:</strong> Q/K/V, scaled dot products, causal self-attention, and Transformer blocks.</p>
 
----
-
-<!-- .slide: id="continuation" -->
-
-## Next: attention in the Transformer
-
-Lecture 05 develops Q/K/V projections, scaled dot products,
-causal self-attention, and complete decoder blocks.
-
-A1 deadline: **September 30, 23:59, Asia/Shanghai**.
-Submit privately through eLearning.
-
-Note:
-Allow 1 minute. Preserve the published deadline on this September 30 lecture. This slide introduces no new requirement. The next lecture uses a short recurrent-attention recap before developing a different score function and architecture.
-
----
-
-<!-- .slide: class="references" id="references" -->
-
-## Reading
-
-- [Bengio et al. (2003)](https://www.jmlr.org/papers/v3/bengio03a.html): §2, neural language models.
-- [Pascanu et al. (2013)](https://proceedings.mlr.press/v28/pascanu13.html): §2, recurrent gradients.
-- [Bahdanau et al. (2014/2015)](https://arxiv.org/abs/1409.0473): §§2–3, Appendix A.1.2, and §6.1.
-- [Graves (2013)](https://arxiv.org/abs/1308.0850): recurrent generation and handwriting alignment.
-- [Original lecture and further reading](optional-reading.md)
+<p class="caption">A1: September 30, 23:59 (Asia/Shanghai) · Submit privately through eLearning.</p>
 
 Note:
-Allow 2 minutes. The core notebook runs offline on CPU. Historical sources describe their own architectures and experiments; our small arithmetic examples are teaching constructions. The paper dates and the earlier alignment reference support a scoped attribution rather than a claim that all attention began in 2014.
+Allow 6 minutes: 3 for review, 1 for the continuation, and 2 for readings and questions. Expected responses: earlier inputs affect the carried state; the cell stores information and the output gate controls exposure; the previous decoder state changes alignment scores over the same source annotations. Ask students to distinguish the source and target sequences in the third answer.
+
+Lecture 05 uses a short recurrent-attention recap before developing Q/K/V projections, scaled dot products, causal self-attention, and complete decoder blocks. Preserve the published A1 deadline on this September 30 lecture; this reminder introduces no new requirement.
+
+Read Bengio §2 for neural language models; Pascanu §2 for recurrent gradients; Bahdanau §§2–3, Appendix A.1.2, and §6.1 for additive alignment and earlier work; and Graves for recurrent generation and handwriting alignment. The core notebook runs offline on CPU. Historical sources describe their own architectures and experiments; our small arithmetic examples are teaching constructions. The paper dates and earlier alignment reference support a scoped attribution rather than a claim that all attention began in 2014.
