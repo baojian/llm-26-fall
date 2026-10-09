@@ -104,7 +104,7 @@ def test_each_reference_requires_a_reason_to_read_it():
         catalog.validate(data)
 
 
-@pytest.mark.parametrize("field,value", [("max_gpus", 2), ("gpu_hours", 9), ("gpu_hours", -1)])
+@pytest.mark.parametrize("field,value", [("max_gpus", -1), ("gpu_hours", 9), ("gpu_hours", -1)])
 def test_projects_cannot_exceed_the_shared_gpu_budget(field, value):
     data = deepcopy(DATA)
     project = next(p for p in data["projects"] if p["compute"] == "Training")
@@ -117,4 +117,69 @@ def test_cpu_filter_cannot_hide_a_gpu_requirement():
     data = deepcopy(DATA)
     data["projects"][0]["resources"]["gpu_hours"] = 1
     with pytest.raises(ValueError, match="Inconsistent CPU"):
+        catalog.validate(data)
+
+
+@pytest.mark.parametrize("gpu_count", [1, 2, 4])
+def test_gpu_counts_use_per_device_memory_and_total_hours(gpu_count):
+    data = deepcopy(DATA)
+    project = next(p for p in data["projects"] if p["compute"] == "Training")
+    project["resources"].update(max_gpus=gpu_count, gpu_hours=4)
+    output = catalog.render(data, TEMPLATE)
+    card = output.split(f'id="{project["id"]}"', 1)[1].split('</article>', 1)[0]
+    label = f"{gpu_count} GPU" + ("s" if gpu_count != 1 else "")
+    assert f"{label} · short training" in card
+    assert "memory target per GPU" in card
+    assert "up to 4 GPU-hours total across all devices and runs" in card
+    assert ("high demand" in card) == (gpu_count > data["resource_policy"]["recommended_max_gpus"])
+
+
+def test_optional_two_gpu_plan_preserves_the_one_gpu_minimum():
+    output = catalog.render(DATA, TEMPLATE)
+    card = output.split('id="small-scale-scaling-prediction"', 1)[1].split('</article>', 1)[0]
+    assert "1–2 GPUs · short training" in card
+    assert "Minimum: one GPU" in card
+    data = deepcopy(DATA)
+    project = next(p for p in data["projects"] if p["id"] == "small-scale-scaling-prediction")
+    project["resources"]["min_gpus"] = 3
+    with pytest.raises(ValueError, match="GPU range"):
+        catalog.validate(data)
+
+
+def test_external_resources_are_separate_from_the_course_pool_request():
+    data = deepcopy(DATA)
+    project = next(p for p in data["projects"] if p["compute"] == "Training")
+    project["resources"].update(gpu_hours=16, shared_gpu_hours=4)
+    output = catalog.render(data, TEMPLATE)
+    assert "up to 16 GPU-hours total across all devices and runs" in output
+    assert "Up to 4 GPU-hours would use the course pool" in output
+    project["resources"]["shared_gpu_hours"] = 9
+    with pytest.raises(ValueError, match="shared-pool planning ceiling"):
+        catalog.validate(data)
+    project["resources"]["shared_gpu_hours"] = 17
+    with pytest.raises(ValueError, match="Invalid shared-pool"):
+        catalog.validate(data)
+
+
+def test_contents_follow_six_sections_and_link_every_candidate_topic():
+    output = catalog.render(DATA, TEMPLATE)
+    main = output.split('<main ', 1)[1]
+    sections = ["overview", "compute-guide", "choose-your-own", "upstream", "catalog", "others"]
+    assert sorted(sections, key=lambda identifier: main.index(f'id="{identifier}"')) == sections
+    sidebar = output.split('<aside class="catalog-sidebar">', 1)[1].split('</aside>', 1)[0]
+    for identifier in sections:
+        assert f'href="#{identifier}"' in sidebar
+    candidates = [project for project in DATA["projects"] if project["id"] != catalog.OPEN_CHOICE_ID]
+    for topic in {project["topic"] for project in candidates}:
+        assert f'href="#{catalog.topic_id(topic)}"' in sidebar
+        assert f'id="{catalog.topic_id(topic)}"' in main
+    candidate_list = main.split('<div id="project-list">', 1)[1].split('<section class="guide-panel" id="others"', 1)[0]
+    assert candidate_list.count('<article ') == 48
+    assert f'id="{catalog.OPEN_CHOICE_ID}"' not in candidate_list
+
+
+def test_survey_only_project_category_cannot_be_reintroduced():
+    data = deepcopy(DATA)
+    data["categories"].append("Survey paper")
+    with pytest.raises(ValueError, match="Survey-only"):
         catalog.validate(data)

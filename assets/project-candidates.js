@@ -5,10 +5,27 @@
   const category = document.getElementById('project-category');
   const topic = document.getElementById('project-topic');
   const compute = document.getElementById('project-compute');
-  const cards = [...document.querySelectorAll('.project-card')];
+  const allCards = [...document.querySelectorAll('.project-card')];
+  const cards = [...document.querySelectorAll('#project-list .project-card')];
+  const groups = [...document.querySelectorAll('.topic-group')];
   const counter = document.getElementById('result-count');
   const empty = document.getElementById('no-results');
   const expand = document.getElementById('expand-projects');
+  const toc = document.querySelector('.catalog-toc');
+  const tocLinks = [...toc.querySelectorAll('a')];
+  const compactLayout = window.matchMedia('(max-width: 980px)');
+
+  function updateCurrentSection() {
+    let current = tocLinks[0];
+    for (const link of tocLinks) {
+      const target = document.getElementById(link.hash.slice(1));
+      if (target && !target.hidden && target.getBoundingClientRect().top <= 140) current = link;
+    }
+    for (const link of tocLinks) {
+      if (link === current) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    }
+  }
 
   function updateExpandLabel() {
     const visible = cards.filter(card => !card.hidden);
@@ -27,26 +44,58 @@
         (!compute.value || card.dataset.compute === compute.value)
       );
     }
+    for (const group of groups) {
+      group.hidden = ![...group.querySelectorAll('.project-card')].some(card => !card.hidden);
+    }
     const count = cards.filter(card => !card.hidden).length;
     counter.textContent = `${count} of ${cards.length} projects`;
     empty.hidden = count > 0;
     updateExpandLabel();
+    updateCurrentSection();
   }
 
-  function revealLinkedProject() {
+  function revealLinkedTarget() {
     let identifier;
     try { identifier = decodeURIComponent(location.hash.slice(1)); } catch { return; }
-    const card = cards.find(item => item.id === identifier);
-    if (!card) return;
-    // A bookmarked project remains reachable even while other filters are active.
-    if (card.hidden) {
+    const target = document.getElementById(identifier);
+    if (!target) return;
+    const group = groups.find(item => item.id === identifier);
+    const card = allCards.find(item => item.id === identifier);
+    if (group) {
+      form.reset();
+      topic.value = group.dataset.topic;
+      update();
+    } else if (identifier === 'catalog' || (card && card.hidden)) {
+      // A bookmarked project remains reachable while other filters are active.
       form.reset();
       update();
     }
-    card.querySelector('details').open = true;
+    if (card) card.querySelector('details').open = true;
     updateExpandLabel();
-    card.scrollIntoView({ block: 'start' });
+    target.scrollIntoView({ block: 'start' });
+    updateCurrentSection();
   }
+
+  function resizeContents() {
+    toc.open = !compactLayout.matches;
+    updateCurrentSection();
+  }
+
+  resizeContents();
+  compactLayout.addEventListener('change', resizeContents);
+  tocLinks.forEach(link => link.addEventListener('click', () => {
+    if (compactLayout.matches) toc.open = false;
+    if (location.hash === link.hash) revealLinkedTarget();
+  }));
+  let scrollPending = false;
+  window.addEventListener('scroll', () => {
+    if (scrollPending) return;
+    scrollPending = true;
+    requestAnimationFrame(() => {
+      scrollPending = false;
+      updateCurrentSection();
+    });
+  }, { passive: true });
 
   form.hidden = false;
   expand.hidden = false;
@@ -61,15 +110,15 @@
     updateExpandLabel();
   });
   cards.forEach(card => card.querySelector('details').addEventListener('toggle', updateExpandLabel));
-  window.addEventListener('hashchange', revealLinkedProject);
+  window.addEventListener('hashchange', revealLinkedTarget);
   let printState;
   window.addEventListener('beforeprint', () => {
-    printState = cards.map(card => card.querySelector('details').open);
-    cards.filter(card => !card.hidden).forEach(card => { card.querySelector('details').open = true; });
+    printState = allCards.map(card => card.querySelector('details').open);
+    allCards.filter(card => !card.hidden).forEach(card => { card.querySelector('details').open = true; });
   });
   window.addEventListener('afterprint', () => {
-    if (printState) cards.forEach((card, i) => { card.querySelector('details').open = printState[i]; });
+    if (printState) allCards.forEach((card, i) => { card.querySelector('details').open = printState[i]; });
   });
   update();
-  revealLinkedProject();
+  revealLinkedTarget();
 })();

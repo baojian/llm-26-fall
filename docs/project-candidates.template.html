@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Choose an individual NLP or LLM project with a concrete question, 2–3 starting references, and a plan that fits a laptop or one shared GPU.">
+  <meta name="description" content="Choose an individual NLP or LLM project with a concrete question, 2–3 starting references, and explicit CPU, one-GPU, or two-GPU resource requirements.">
   <title>Individual project candidates · NLP and LLMs · Fall 2026</title>
   <link rel="stylesheet" href="../assets/notes.css">
   <link rel="stylesheet" href="../assets/course-language.css">
@@ -26,21 +26,39 @@
     </div>
   </nav>
 </header>
+<div class="catalog-layout">
+<aside class="catalog-sidebar">
+  <details class="catalog-toc" open>
+    <summary>On this page</summary>
+    <nav aria-label="Project proposal contents">
+      <ol class="toc-sections">
+        <li><a href="#overview">1. Prepare and overview</a></li>
+        <li><a href="#compute-guide">2. Resource requirements</a></li>
+        <li><a href="#choose-your-own">3. Choose your own project</a></li>
+        <li><a href="#upstream">4. Open-source contributions</a></li>
+        <li><a href="#catalog">5. {{COUNT}} candidate projects</a><ol class="toc-topics">{{TOPIC_LINKS}}</ol></li>
+        <li><a href="#others">6. Others</a></li>
+      </ol>
+    </nav>
+  </details>
+</aside>
 <main class="catalog-main" lang="en">
+<section id="overview" aria-labelledby="overview-title">
   <div class="catalog-hero">
     <p class="reading-kicker">INDIVIDUAL PROJECT · FALL 2026</p>
-    <h1>Choose a project that interests you</h1>
-    <p class="catalog-intro">Start with a question about language models that you can investigate on a laptop or one shared GPU. Each suggested project includes a small experiment, starting references, compute needs, and a fallback.</p>
-    <p><a class="catalog-start" href="#student-proposed-project">Propose your own project</a> · <a href="#catalog">Browse all {{COUNT}} options ↓</a></p>
-    <div class="hero-facts"><span><strong>1</strong> student per project</span><span><strong>2–3</strong> starting references</span><span><strong>0–1</strong> GPUs per study</span></div>
+    <h1 id="overview-title">Choose a project that interests you</h1>
+    <p class="catalog-intro">Start with a question about language models and choose a CPU, one-GPU, or two-GPU plan that fits the resources you can access. Each suggested project includes a small experiment, starting references, compute needs, and a fallback.</p>
+    <p><a class="catalog-start" href="#student-proposed-project">Propose your own project</a> · <a href="#catalog">Browse {{COUNT}} candidates ↓</a></p>
+    <div class="hero-facts"><span><strong>1</strong> student per project</span><span><strong>2–3</strong> starting references</span><span><strong>CPU / 1 / {{RECOMMENDED_GPUS}} GPUs</strong> resource options</span></div>
   </div>
 
   <section class="guide-panel" id="how-to-choose" aria-labelledby="choose-title">
-    <h2 id="choose-title">Prepare your one-page proposal</h2>
+    <h2 id="choose-title">1. Prepare and overview</h2>
+    <p>Prepare a one-page proposal for an individual investigation. <strong>Survey-only projects are not allowed.</strong> Include an implementation, experiment, or tested artifact, with evidence that answers your question.</p>
     <ol class="proposal-checklist">
       <li><strong>Question and motivation.</strong> Explain what you want to learn and why it matters. Read 2–3 relevant primary references and identify what remains unclear. For your own topic, find topic-specific papers beyond the planning links.</li>
       <li><strong>First experiment.</strong> Name accessible data or a generator, a simple baseline, one comparison, and an evaluation that can answer the question. Keep development and evaluation examples separate.</li>
-      <li><strong>Feasibility.</strong> State the model size, memory requirement, total runs and GPU-hours, including baselines and retries. Give a smaller CPU or cached-output fallback and plan an early timing/memory pilot.</li>
+      <li><strong>Feasibility.</strong> State CPU cores and RAM, GPU count and model, memory per GPU, storage, runtime per run, and total runs. Separate minimum hardware from optional parallel runs; total GPU-hours must include baselines and retries. Give a smaller CPU, one-GPU, or cached-output fallback and plan an early timing/memory pilot.</li>
     </ol>
     <div class="milestones">
       <div><strong>October 21</strong><span>One-page proposal</span></div>
@@ -50,36 +68,32 @@
     <p>Submit privately through <a href="https://elearning.fudan.edu.cn/">eLearning</a> by <strong>23:59, Asia/Shanghai (UTC+08:00)</strong>. References and appendices are outside the final report’s six-page limit. All students use the same <a href="../index.html#project">requirements and rubric</a>. A sound negative result can receive full credit.</p>
   </section>
 
+  </section>
+
   <section class="guide-panel compute-guide" id="compute-guide" aria-labelledby="compute-title">
-    <h2 id="compute-title">Choose for our shared compute pool</h2>
-    <p><strong>Prefer CPU studies and short inference runs.</strong> Our GPU pool is shared. Choose a project whose complete comparison can finish with limited access to one GPU.</p>
+    <h2 id="compute-title">2. Resource requirements</h2>
+    <p><strong>Prefer CPU studies and short inference runs.</strong> Our GPU pool is shared. Choose the smallest hardware setup that can answer your question; one- and two-GPU plans should keep total use modest.</p>
     <div class="compute-options">
-      <div><h3>CPU · recommended starting point</h3><p>Tokenizer and data audits, retrieval, verifier tests, or a focused evidence review. The minimum study needs no GPU.</p></div>
-      <div><h3>One GPU · inference</h3><p>Reuse a small released checkpoint and cached outputs. Most cards target a total of 2–4 GPU-hours, including all conditions.</p></div>
-      <div><h3>One GPU · short training</h3><p>Use a 5M–30M teaching model or adapters on a 0.6B checkpoint. Check the full run plan with a small pilot before choosing this route.</p></div>
+      <div><h3>CPU · recommended starting point</h3><p>Tokenizer and data audits, retrieval, verifier tests, or a measured cache-storage experiment. State CPU cores, RAM, and elapsed time; the minimum study needs no GPU.</p></div>
+      <div><h3>1 GPU · inference or short training</h3><p>Reuse a small checkpoint, train a 5M–30M teaching model, or fit adapters on a 0.6B model. Cards give a memory target per device and a total time estimate to check in a pilot.</p></div>
+      <div><h3>2 GPUs · a bounded alternative</h3><p>Run independent seeds or conditions in parallel, or test a supported draft/target split. Explain each device’s role and keep a one-GPU fallback. Two GPUs are optional in the suggested studies.</p></div>
+      <div><h3>{{HIGH_DEMAND_GPUS}}+ GPUs · high demand</h3><p>A project that needs this many devices is a poor fit for our small shared pool. Reduce the model, data, or number of runs before selecting it. Larger plans can use resources you obtain yourself; state their source and availability in the proposal.</p></div>
     </div>
-    <p><strong>{{BUDGET_STATUS}}: up to {{GPU_HOURS}} GPU-hours per project, on at most one GPU.</strong> Card budgets are scope-planning ceilings, not measured runtimes or promised allocations. Count preparation on a GPU, training, generation, evaluation, ablations, and reruns. Record actual memory and time; reduce the scope if the pilot does not fit.</p>
-    <p><strong>Avoid projects that depend on multiple GPUs, prolonged LLM pretraining, large full-model tuning, online RL, or full benchmark reruns.</strong> The papers may use much more compute than the bounded experiment suggested here. Read them for methods and evaluation ideas; reproduce only the stated small study. Paid APIs and hosted environments also need an explicit cost estimate.</p>
+    <p><strong>{{BUDGET_STATUS}} for the course pool: up to {{GPU_HOURS}} GPU-hours per project across all devices and runs.</strong> Sum GPU count × elapsed hours for each run: two GPUs for two hours use four GPU-hours. A second GPU does not increase this proposed shared-pool budget. Resources you obtain yourself are allowed; see <a href="#others">Other resources</a>. Card figures are scope-planning ceilings, not measured runtimes or promised allocations. Count preparation on a GPU, training, generation, evaluation, ablations, and reruns.</p>
+    <p>Report memory <strong>per GPU</strong>: two 24 GB GPUs do not automatically provide one 48 GB device. A split model needs a compatible implementation, and communication can add overhead. Pilot the chosen setup, record actual memory and time, and reduce scope if it does not fit.</p>
+    <p><strong>Avoid projects that depend on prolonged LLM pretraining, large full-model tuning, large online-RL runs, or full benchmark reruns.</strong> The papers may use much more compute than the bounded experiment suggested here. Read them for methods and evaluation ideas; reproduce only the stated small study. Paid APIs and hosted environments also need an explicit cost estimate.</p>
     <details><summary>Low-compute starting points</summary><ul class="featured-list">{{FEATURED}}</ul></details>
   </section>
 
-  <section id="catalog" aria-labelledby="catalog-title">
-    <h2 id="catalog-title">Browse the candidates</h2>
-    <p>Start with your own idea or one of the suggested questions. Filter by approach, topic, or compute. Each card shows 2–3 references and its resource plan before the detailed experiment. “Unreviewed” means the scope still needs proposal feedback and a small resource pilot.</p>
-    <form id="catalog-filters" class="catalog-filters" role="search" hidden>
-      <div class="search-control"><label for="project-search">Search title, question, paper or keyword</label><input id="project-search" name="q" type="search" placeholder="Try context, tokenizer, verifier, Chinese…" autocomplete="off"></div>
-      <div><label for="project-category">Project approach</label><select id="project-category" name="category"><option value="">All approaches</option>{{CATEGORY_OPTIONS}}</select></div>
-      <div><label for="project-topic">Topic</label><select id="project-topic" name="topic"><option value="">All topics</option>{{TOPIC_OPTIONS}}</select></div>
-      <div><label for="project-compute">Compute</label><select id="project-compute" name="compute"><option value="">All resources</option>{{COMPUTE_OPTIONS}}</select></div>
-      <button type="reset" class="reset-filters">Clear filters</button>
-    </form>
-    <noscript><p>All candidates are shown below. Use your browser’s Find command to search without JavaScript.</p></noscript>
-    <div class="results-line"><p id="result-count" role="status" aria-live="polite">{{COUNT}} of {{COUNT}} projects</p><button id="expand-projects" type="button" hidden>Expand visible project details</button></div>
-    <p id="no-results" hidden>No projects match these filters. Try a broader term or clear the filters.</p>
-    <div id="project-list">{{CARDS}}</div>
+  <section class="custom-project-section" id="choose-your-own" aria-labelledby="custom-title">
+    <h2 id="custom-title">3. Choose your own project</h2>
+    <p>Start with a question you care about. Find 2–3 references specific to your topic, plan a working baseline, and explain how you will test your idea.</p>
+    {{OPEN_CHOICE}}
   </section>
+
   <section class="guide-panel upstream-panel" id="upstream" aria-labelledby="upstream-title">
-    <h2 id="upstream-title">Optional open-source contributions</h2>
+    <h2 id="upstream-title">4. Open-source contributions</h2>
+    <p>Build and evaluate a useful contribution to an existing project: a task, verifier repair, model adapter, or tool. Include tests or a controlled comparison and describe your individual work.</p>
     <details><summary>Contribution routes and current limits</summary>
     <p><strong>Instructor direction, October 9:</strong> substantive individual work accepted and merged into established, actively used open-source repositories will be considered for additional course-project credit. The exact points, cap, and treatment within or beyond the existing project maximum have not yet been specified. No automatic bonus is assigned by this catalog; the published rubric remains the basis for grading until a common policy is announced.</p>
     <p>A new benchmark task, a verified evaluator repair, a useful model adapter, or a reusable dataset/tool can be a strong project. Agree on a useful contribution with upstream maintainers early. Keep a local experiment and report that answer the project question even if review takes longer than the semester.</p>
@@ -96,10 +110,35 @@
     <p>These are contribution destinations, not guaranteed openings. Check current rules again before submitting. The instructor's requested public-contribution route concerns an agreed upstream artifact; proposals, graded reports, experiment records, grades, and course assignment solutions still belong on eLearning. Keep upstream reference solutions and evaluation material in the channels required by that project's maintainers, not in this public course repository.</p>
     </details>
   </section>
+  <section id="catalog" aria-labelledby="catalog-title">
+    <h2 id="catalog-title">5. {{COUNT}} candidate projects</h2>
+    <p>Choose a topic from the sidebar or filter these {{COUNT}} suggestions by approach, topic, or compute. Your own proposal has a separate section above. Each card shows 2–3 references and its resource plan before the detailed experiment. “Unreviewed” means the scope still needs proposal feedback and a small resource pilot.</p>
+    <form id="catalog-filters" class="catalog-filters" role="search" hidden>
+      <div class="search-control"><label for="project-search">Search title, question, paper or keyword</label><input id="project-search" name="q" type="search" placeholder="Try context, tokenizer, verifier, Chinese…" autocomplete="off"></div>
+      <div><label for="project-category">Project approach</label><select id="project-category" name="category"><option value="">All approaches</option>{{CATEGORY_OPTIONS}}</select></div>
+      <div><label for="project-topic">Topic</label><select id="project-topic" name="topic"><option value="">All topics</option>{{TOPIC_OPTIONS}}</select></div>
+      <div><label for="project-compute">Compute</label><select id="project-compute" name="compute"><option value="">All resources</option>{{COMPUTE_OPTIONS}}</select></div>
+      <button type="reset" class="reset-filters">Clear filters</button>
+    </form>
+    <noscript><p>All candidates are shown below. Use your browser’s Find command to search without JavaScript.</p></noscript>
+    <div class="results-line"><p id="result-count" role="status" aria-live="polite">{{COUNT}} of {{COUNT}} projects</p><button id="expand-projects" type="button" hidden>Expand visible project details</button></div>
+    <p id="no-results" hidden>No projects match these filters. Try a broader term or clear the filters.</p>
+    <div id="project-list">{{CARDS}}</div>
+  </section>
+  <section class="guide-panel" id="others" aria-labelledby="others-title">
+    <h2 id="others-title">6. Others</h2>
+    <h3>Use other resources you can access</h3>
+    <p>You may use your own computers or GPUs, laboratory or research-group machines, cloud credits, hosted APIs, and other resources you can obtain. You are not limited to the course pool or its proposed GPU-hour budget. State the resource source, availability, estimated cost, and total use in your proposal and experiment record.</p>
+    <p>Request only the portion you need from the shared course pool. Keep a smaller fallback if outside access is uncertain. The same rubric applies to everyone; a larger compute budget does not itself earn a higher grade.</p>
+    <h3>Complete practical or experimental work</h3>
+    <p><strong>Students may not submit a survey-only project.</strong> Related work provides background. Your own contribution must include an implementation, experiment, tested dataset or benchmark, or evaluated repair, together with a baseline or other meaningful comparison and analysis. CPU projects qualify when they produce this evidence.</p>
+  </section>
+
   <footer class="reading-footer">
     <p>CS40008.01 · Fudan University · Fall 2026 · <a href="../index.html#project">Project requirements and rubric</a> · <a href="https://elearning.fudan.edu.cn/">Submit through eLearning</a>.</p>
     <p>References checked {{VERIFIED_ON}}. Proposed experiments and resource budgets have not been piloted; published results do not guarantee the same outcomes at this scale.</p>
   </footer>
 </main>
+</div>
 </body>
 </html>

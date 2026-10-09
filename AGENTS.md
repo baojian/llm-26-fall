@@ -44,11 +44,22 @@ of the suggested topics. Use the same individual scope, proposal process,
 checkpoints, and grading rubric for student-proposed and suggested projects.
 
 Instructor direction, October 9, 2026: each candidate project should provide
-2–3 relevant references and make its compute needs explicit. Prefer CPU studies
-and short runs on one shared GPU. Avoid suggesting projects that depend on many
-GPUs or long training runs. A cited paper's full compute scale is not the course
-project scope. Mark unmeasured budgets as planning estimates and preserve a
-smaller fallback; proposed hour limits are not resource allocations.
+2–3 relevant references and make its compute needs explicit. Cover CPU,
+one-GPU, two-GPU, and larger requirements; distinguish minimum hardware from
+optional parallel runs. Prefer CPU studies and short GPU runs. Discourage
+projects that depend on many GPUs or long training runs in our small shared
+pool. State memory per GPU and total GPU-hours across all devices and runs.
+A cited paper's full compute scale is not the course project scope. Mark
+unmeasured budgets as planning estimates and preserve a smaller fallback;
+proposed hour limits are not resource allocations.
+
+The project page uses six sections: preparation and overview, resource
+requirements, student-proposed projects, open-source contributions, the 48
+candidates grouped by topic, and other guidance. Students may use resources
+they obtain outside the course pool; record their source and cost separately
+from any course-pool request. Survey-only projects are not allowed. Every
+project must include an implementation, experiment, or tested artifact with
+a meaningful comparison and analysis. Related work remains required background.
 
 ## Task Solution Merge Policy — Mandatory
 

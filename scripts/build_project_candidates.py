@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "docs/project-candidates.json"
 TEMPLATE = ROOT / "docs/project-candidates.template.html"
 OUTPUT = ROOT / "docs/project-candidates.html"
+OPEN_CHOICE_ID = "student-proposed-project"
 TEXT_FIELDS = (
     "title", "summary", "question", "scope", "baseline", "evaluation",
     "outcome", "preparation", "fallback", "status",
@@ -23,10 +24,14 @@ TEXT_FIELDS = (
 def validate(data: dict) -> None:
     """Reject entries that would break navigation or omit proposal essentials."""
     policy = data["resource_policy"]
-    if policy["max_gpus"] != 1 or policy["status"] not in {"proposed", "confirmed"}:
-        raise ValueError("The catalog supports CPU or one shared GPU")
+    if type(policy["recommended_max_gpus"]) is not int or policy["recommended_max_gpus"] < 1:
+        raise ValueError("Invalid recommended GPU count")
+    if policy["status"] not in {"proposed", "confirmed"}:
+        raise ValueError("Invalid resource policy status")
     if type(policy["max_gpu_hours"]) not in (int, float) or not 0 < policy["max_gpu_hours"] < float("inf"):
         raise ValueError("Invalid catalog GPU-time ceiling")
+    if "Survey paper" in data["categories"]:
+        raise ValueError("Survey-only projects are not eligible")
     ids = set()
     for number, project in enumerate(data["projects"], 1):
         identifier = project["id"]
@@ -54,14 +59,22 @@ def validate(data: dict) -> None:
         ):
             raise ValueError(f"Explain each reference: {identifier}")
         resources = project.get("resources", {})
-        if type(resources.get("max_gpus")) is not int or resources["max_gpus"] not in (0, 1):
-            raise ValueError(f"Project must fit CPU or one GPU: {identifier}")
+        if type(resources.get("max_gpus")) is not int or resources["max_gpus"] < 0:
+            raise ValueError(f"Invalid GPU count: {identifier}")
+        minimum = resources.get("min_gpus", resources["max_gpus"])
+        if type(minimum) is not int or not 0 <= minimum <= resources["max_gpus"]:
+            raise ValueError(f"Invalid GPU range: {identifier}")
+        if minimum == 0 and resources["max_gpus"] and project["compute"] != "Propose a budget":
+            raise ValueError(f"CPU/GPU choice needs a proposed scope: {identifier}")
         for field in ("gpu_hours", "gpu_memory_gb"):
             value = resources.get(field)
             if type(value) not in (int, float) or not 0 <= value < float("inf"):
                 raise ValueError(f"Invalid resource estimate: {identifier}")
-        if resources["gpu_hours"] > data["resource_policy"]["max_gpu_hours"]:
-            raise ValueError(f"GPU time exceeds catalog ceiling: {identifier}")
+        shared_hours = resources.get("shared_gpu_hours", resources["gpu_hours"])
+        if type(shared_hours) not in (int, float) or not 0 <= shared_hours <= resources["gpu_hours"]:
+            raise ValueError(f"Invalid shared-pool GPU time: {identifier}")
+        if shared_hours > policy["max_gpu_hours"]:
+            raise ValueError(f"GPU time exceeds shared-pool planning ceiling: {identifier}")
         if resources["max_gpus"] == 0:
             if resources["gpu_hours"] != 0 or resources["gpu_memory_gb"] != 0 or project["compute"] != "CPU":
                 raise ValueError(f"Inconsistent CPU budget: {identifier}")
@@ -71,6 +84,8 @@ def validate(data: dict) -> None:
             raise ValueError(f"Missing resource scope: {identifier}")
     if not set(data["featured"]) <= ids:
         raise ValueError("Featured project does not exist")
+    if OPEN_CHOICE_ID not in ids:
+        raise ValueError("Missing student-proposed project")
     for key, source in data["sources"].items():
         for field in ("url", "artifact"):
             if field in source:
@@ -87,9 +102,13 @@ def project_label(project: dict) -> str:
     return escape(project.get("display_label", f"{project['number']:02d}"))
 
 
+def topic_id(topic: str) -> str:
+    return "topic-" + re.sub(r"[^a-z0-9]+", "-", topic.lower()).strip("-")
+
+
 def render(data: dict, template: str) -> str:
     validate(data)
-    cards = []
+    cards = {}
     for project in sorted(data["projects"], key=lambda item: item.get("display_priority", 1)):
         e = {key: escape(value) for key, value in project.items() if isinstance(value, str)}
         resources = project["resources"]
@@ -98,13 +117,27 @@ def render(data: dict, template: str) -> str:
             budget = "Laptop CPU, roughly 8–16 GB RAM."
         else:
             resource_class = "training" if project["compute"] == "Training" else "inference"
-            resource_label = "1 GPU · short training" if resource_class == "training" else "1 GPU · inference"
+            maximum = resources["max_gpus"]
+            minimum = resources.get("min_gpus", maximum)
+            if minimum == 0:
+                hardware = "CPU or 1 GPU" if maximum == 1 else f"CPU, 1–{maximum} GPUs"
+            elif minimum == maximum:
+                hardware = f"{maximum} GPU" + ("s" if maximum != 1 else "")
+            else:
+                hardware = f"{minimum}–{maximum} GPUs"
+            activity = "short training" if resource_class == "training" else "inference"
             if project["compute"] == "Propose a budget":
-                resource_label = "CPU or 1 GPU · propose scope"
+                activity = "propose scope"
+            resource_label = f"{hardware} · {activity}"
+            if maximum > data["resource_policy"]["recommended_max_gpus"]:
+                resource_class = "heavy"
+                resource_label += " · high demand"
             budget = (
-                f"{resources['gpu_memory_gb']:g} GB GPU memory target; "
-                f"up to {resources['gpu_hours']:g} GPU-hours total."
+                f"{resources['gpu_memory_gb']:g} GB memory target per GPU; "
+                f"up to {resources['gpu_hours']:g} GPU-hours total across all devices and runs."
             )
+            if "shared_gpu_hours" in resources:
+                budget += f" Up to {resources['shared_gpu_hours']:g} GPU-hours would use the course pool."
         budget_status = "Proposed ceiling" if data["resource_policy"]["status"] == "proposed" else "Planning ceiling"
         tags = "".join(f'<span class="tag">{escape(category)}</span>' for category in project["categories"])
         fields = [
@@ -137,28 +170,46 @@ def render(data: dict, template: str) -> str:
             )
         search = escape(" ".join(search_parts).lower())
         categories = escape("|".join(project["categories"]))
-        cards.append(f'''<article class="project-card" id="{e['id']}" data-category="{categories}" data-topic="{e['topic']}" data-compute="{e['compute']}" data-search="{search}">
+        heading = 3 if project["id"] == OPEN_CHOICE_ID else 4
+        cards[project["id"]] = f'''<article class="project-card" id="{e['id']}" data-category="{categories}" data-topic="{e['topic']}" data-compute="{e['compute']}" data-search="{search}">
   <div class="card-meta"><span>{e['topic']}</span><span class="resource-badge resource-{resource_class}">{resource_label}</span><span class="review-status">{e['status']}</span></div>
-  <h2><a class="project-link" href="#{e['id']}"><span class="project-number">{project_label(project)}</span> {e['title']}</a></h2>
+  <h{heading} class="project-title"><a class="project-link" href="#{e['id']}"><span class="project-number">{project_label(project)}</span> {e['title']}</a></h{heading}>
   <p class="project-summary">{e['summary']}</p>
   <div class="tags" aria-label="Project approaches">{tags}</div>
   <p class="question"><strong>Question:</strong> {e['question']}</p>
   <div class="resource-summary"><p><strong>{budget_status if resources['max_gpus'] else 'Compute'}:</strong> {budget}</p><p>{escape(resources['note'])}</p></div>
-  <div class="project-readings"><h3>Read first</h3><ol class="sources">{''.join(references)}</ol></div>
+  <div class="project-readings"><h{heading + 1} class="readings-title">Read first</h{heading + 1}><ol class="sources">{''.join(references)}</ol></div>
   <details><summary>Experiment plan, evaluation and smaller fallback</summary><dl>{details}</dl></details>
-</article>''')
+</article>'''
+    candidates = [project for project in data["projects"] if project["id"] != OPEN_CHOICE_ID]
+    topics = [topic for topic in data["topics"] if any(project["topic"] == topic for project in candidates)]
+    groups = []
+    topic_links = []
+    for topic in topics:
+        projects = [project for project in candidates if project["topic"] == topic]
+        identifier = topic_id(topic)
+        groups.append(
+            f'<section class="topic-group" id="{identifier}" data-topic="{escape(topic)}" aria-labelledby="{identifier}-title">'
+            f'<h3 class="topic-title" id="{identifier}-title">{escape(topic)} <span>{len(projects)} projects</span></h3>'
+            + "\n".join(cards[project["id"]] for project in projects) + '</section>'
+        )
+        topic_links.append(f'<li><a href="#{identifier}">{escape(topic)} <span>{len(projects)}</span></a></li>')
     lookup = {project["id"]: project for project in data["projects"]}
     featured = "".join(
         f'<li><a href="#{identifier}">{project_label(lookup[identifier])} · {escape(lookup[identifier]["title"])}</a></li>'
         for identifier in data["featured"]
     )
     substitutions = {
-        "COUNT": str(len(data["projects"])), "VERIFIED_ON": escape(data["verified_on"]),
+        "COUNT": str(len(candidates)), "VERIFIED_ON": escape(data["verified_on"]),
+        "RECOMMENDED_GPUS": str(data["resource_policy"]["recommended_max_gpus"]),
+        "HIGH_DEMAND_GPUS": str(data["resource_policy"]["recommended_max_gpus"] + 1),
         "GPU_HOURS": str(data["resource_policy"]["max_gpu_hours"]),
         "BUDGET_STATUS": "Proposed planning ceiling" if data["resource_policy"]["status"] == "proposed" else "Planning ceiling",
-        "CATEGORY_OPTIONS": options(data["categories"]), "TOPIC_OPTIONS": options(data["topics"]),
-        "COMPUTE_OPTIONS": options(data["compute"]), "FEATURED": featured,
-        "CARDS": "\n".join(cards),
+        "CATEGORY_OPTIONS": options([value for value in data["categories"] if any(value in project["categories"] for project in candidates)]),
+        "TOPIC_OPTIONS": options(topics),
+        "COMPUTE_OPTIONS": options([value for value in data["compute"] if any(project["compute"] == value for project in candidates)]),
+        "FEATURED": featured, "OPEN_CHOICE": cards[OPEN_CHOICE_ID],
+        "TOPIC_LINKS": "\n".join(topic_links), "CARDS": "\n".join(groups),
     }
     for key, value in substitutions.items():
         token = "{{" + key + "}}"

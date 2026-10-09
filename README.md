@@ -35,9 +35,14 @@ Dates, periods, and holidays: [docs/schedule.md](docs/schedule.md). Assessment d
 The [individual project catalog](docs/project-candidates.html) starts with a
 student-proposed project option and contains 48 suggested directions for
 Lecture 05. Each suggestion has 2–3 annotated references, a baseline, an
-evaluation plan, and a CPU or one-GPU resource plan with a smaller fallback.
+evaluation plan, and an explicit resource plan with a smaller fallback. The
+compute guide covers CPUs, one GPU, two GPUs, and larger requirements; cards
+distinguish minimum hardware from optional parallel runs.
 Prefer CPU studies and short inference runs in our shared compute pool.
-Search by topic or browse by category.
+Use the left contents panel to jump to a topic, or search by approach and
+resource needs. Students may use resources they obtain outside the course pool.
+Every project requires practical or experimental work; survey-only projects
+are not allowed.
 The one-page proposal is due **October 21, 2026,
 23:59 (Asia/Shanghai)** through eLearning.
 

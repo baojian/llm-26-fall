@@ -9,11 +9,11 @@ and science is recorded in [issue #269](https://github.com/baojian/llm-26-fall/i
 
 ## Scope and review status
 
-The first category and displayed card welcome student-proposed projects.
-The 48 suggested candidates span nine topic areas; an open topic has its own
-topic and budget labels. The other five categories describe approaches
-(survey paper, case study, paper replication, new task, research problem), and
-a candidate can have several approach tags. The page supports combined
+The student-proposed card has its own section before the 48 suggested
+candidates, which are grouped into nine topic sections. Four categories
+describe approaches (case study, paper replication, new task, research
+problem); a candidate can have several approach tags. Survey-only projects
+are not eligible. The page supports combined
 filters, keyword search, stable links, keyboard operation, and printing visible
 candidates with details. Content is present in HTML without JavaScript and works
 when opened directly from disk.
@@ -31,31 +31,47 @@ expertise, and external review; each route has a local minimum outcome.
 
 The instructor's October 9 refinement asks for 2–3 relevant references per
 candidate and projects that fit the small shared GPU pool. The student page
-now leads with the proposal checklist, deadlines, and a compute guide. Each
+now has six sections in the requested order: preparation and overview,
+resource requirements, student-proposed projects, open-source contributions,
+48 candidate projects, and other guidance. A sticky left contents panel links
+each section and the nine candidate topics. It collapses on narrow screens;
+topic links filter the candidate list, and ordinary anchors work without
+JavaScript. Each
 card displays its references, why to read them, device/memory target, total
 GPU-time ceiling, and main cost risk before the detailed experiment plan.
-The historical course comparison stays in these notes. Optional upstream
-contribution guidance is collapsed after the catalog.
+The historical course comparison stays in these notes. Detailed upstream
+contribution guidance is collapsed within the fourth section.
 
 - All 49 cards have 2–3 distinct annotated references. The open-choice card
   links planning guidance and explicitly asks students to find 2–3 papers for
   their own topic. Code/data links supplement a reference rather than counting
   as another independent paper.
-- Ten minimum studies require no GPU. All other plans use at most one GPU;
-  the custom-project route asks for a CPU or one-GPU proposal. Resource labels
-  describe the local minimum, not the cost of reproducing an entire source
-  paper or obtaining upstream acceptance.
-- The initial resource screen proposes at most eight GPU-hours per project,
+- Ten minimum studies require no GPU. The other suggested studies have a
+  one-GPU minimum. Speculative decoding and the tiny-model scaling study also
+  offer optional two-GPU configurations; the custom route asks students to
+  specify CPU, one-GPU, two-GPU, or larger needs. Three or more devices are
+  flagged as high demand for the course pool. Resource labels distinguish
+  minimum hardware from optional parallel runs.
+- The initial resource screen proposes at most eight GPU-hours per project
+  from the course pool,
   with inference cards usually targeting two or four. This numeric ceiling is
   provisional pending the instructor's budget choice; it is not an allocation
   or measured runtime. `resource_policy.status` records that distinction.
-- Every total includes baselines, tuning, evaluation, ablations, and reruns.
+  Students may use resources they obtain themselves; the proposed pool budget
+  does not cap their total external resource use.
+- Every total includes all devices, baselines, tuning, evaluation, ablations,
+  and reruns. Two GPUs for two hours consume four GPU-hours. Memory targets
+  are per GPU, and two devices do not automatically pool their memory.
   Students should time a small pilot and reduce scope if necessary. Hardware
   compatibility and memory figures remain unpiloted planning targets.
 - Byte patching now uses a CPU n-gram predictor. The reward project studies
   verifier errors offline. Chunking uses BM25 evidence retrieval; ALE and HLE
   have CPU infrastructure/parsing minima. Large online RL, full LLM training,
-  full benchmark reruns, and multi-GPU jobs are outside the proposed scopes.
+  and full benchmark reruns remain outside the suggested minimum scopes.
+- The former survey candidate (#30) is now a CPU cache-memory measurement
+  study: implement an estimator and allocation harness, compare predictions
+  with measured tensor storage, and add regression tests. Its stable ID is
+  preserved. Every project requires practical or experimental evidence.
 - Adapter distillation and per-example unlearning start with much smaller
   samples. Tiny-model training retains matched controls and a total run cap.
 - The visual-preparation study now asks about one small model. The skills
@@ -72,9 +88,14 @@ must match instructions to their installed backend. Existing recent model and
 benchmark links retain the earlier source checks described below.
 
 The renderer rejects missing reading notes, fewer than two distinct
-references, duplicate reference URLs, multi-GPU requirements, inconsistent CPU
-labels, and GPU-hour plans above the catalog's current ceiling. Human review
-is still needed for reference relevance and pilot feasibility.
+references, duplicate reference URLs, invalid GPU-count ranges, inconsistent
+CPU labels, survey categories, and shared-pool GPU-hour plans above the
+proposed ceiling. Higher GPU counts are supported and labeled as high demand.
+`min_gpus` defaults to `max_gpus`; when different, the card explains the
+optional configuration. `gpu_memory_gb` is per device, and `gpu_hours` is the
+total across all devices and runs. Optional `shared_gpu_hours` separates a
+course-pool request from externally supplied time; it defaults to the total.
+Human review is still needed for reference relevance and pilot feasibility.
 
 ## Changes from Spring 2026
 
@@ -168,9 +189,9 @@ and reflected in the homepage, translation, template, and generated catalog.
 The instructor subsequently supplied the UMD CMSC 723 proposal template and
 requested student-chosen interests as the first category. The open-topic entry
 has the stable ID `student-proposed-project` and internal number 49, displayed
-as **Open choice** before projects 01-48. `display_priority` controls placement;
-`display_label` supplies that label. Existing suggested-project IDs and numbers
-are unchanged. The same individual-project rubric applies to this route.
+as **Open choice** in its own section before projects 01-48. `display_label`
+supplies that label. Existing suggested-project IDs and numbers are unchanged.
+The same individual-project rubric applies to this route.
 
 The [UMD schedule](https://www.cs.umd.edu/~miyyer/cmsc723/schedule.html) was checked
 on October 9 and links the [proposal template](https://www.overleaf.com/read/jrxnkfqvkjfm).
@@ -207,7 +228,8 @@ and generated HTML together. No Node build, model download, external font, or
 runtime network request is needed. Content is English; the header preserves
 the existing shared course-language control.
 
-Check combined filters, multi-tag entries, paper search, no-results recovery,
+Check sidebar navigation, topic links under active filters, combined filters,
+multi-tag entries, paper search, no-results recovery,
 deep links after filtering, keyboard access, narrow screens, print, and
 eLearning links. Verify dates against [the schedule](schedule.md). Do not infer
 new grade weights or deadline exceptions from an upstream opportunity.

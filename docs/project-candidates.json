@@ -4,7 +4,6 @@
   "verified_on": "2026-10-09",
   "categories": [
     "Student-proposed project",
-    "Survey paper",
     "Case study",
     "Paper replication",
     "New task",
@@ -24,9 +23,9 @@
   ],
   "compute": {
     "CPU": "A laptop with roughly 8–16 GB RAM. Use bounded data and cache repeated work. The minimum study needs no GPU; time a small CPU pilot before fixing the scope.",
-    "Inference": "One shared GPU used sequentially, usually 12–24 GB, or a suitable local quantized runtime. Reuse a released 0.6B–2B model, cap context/output lengths, and cache generations. The card gives a total GPU-time planning ceiling for all comparisons and reruns.",
-    "Training": "One shared GPU, usually 16–24 GB. Limit training to a 5M–30M teaching model or adapters on a 0.6B checkpoint. Baselines, tuning, evaluation, and reruns all count toward the card’s total ceiling. Choose this route only after a short memory/time pilot fits.",
-    "Propose a budget": "Prefer a CPU investigation or short inference on one shared GPU. Identify the model, data size, memory need, total runs, and a CPU or cached-output fallback. Resource access is scheduled through the shared pool."
+    "Inference": "Start with one shared GPU, usually 12–24 GB, or a suitable local quantized runtime. Reuse a released 0.6B–2B model, cap context/output lengths, and cache generations. A card may also offer a two-GPU plan. Its total GPU-hours include every device, comparison, and rerun.",
+    "Training": "Start with one shared GPU, usually 16–24 GB. Limit training to a 5M–30M teaching model or adapters on a 0.6B checkpoint. Where a card offers two GPUs, independent seeds or configurations can run in parallel. Count all devices and runs toward the same total GPU-hours; pilot memory and time first.",
+    "Propose a budget": "Describe a CPU, one-GPU, two-GPU, or larger setup, separating the minimum from optional hardware. Identify CPU cores/RAM, GPU models and memory per device, storage, total runs, total GPU-hours, and a smaller fallback. State which resources you can obtain yourself and which you would request from the shared course pool."
   },
   "featured": [
     "student-proposed-project",
@@ -1606,7 +1605,7 @@
       "question": "At what draft length and acceptance rate does verification pay for its overhead?",
       "scope": "Use a compatible small draft/target pair with identical tokenization on 100 short prompts. Implement greedy speculative verification or use a supported existing implementation.",
       "baseline": "Target-only greedy generation; first verify identical outputs and account for draft and verification time.",
-      "evaluation": "Output equality, accepted tokens per iteration, wall time, memory, and variation by prompt domain.",
+      "evaluation": "Output equality, accepted tokens per iteration, wall time, memory per device, total GPU-hours, and variation by prompt domain. If testing two devices, include transfer overhead and the one-device baseline.",
       "outcome": "A break-even plot and a correctness-tested implementation; EAGLE-3 is a recent reference, not a required drafter-training reproduction.",
       "preparation": "Learn causal attention, KV caching, and batching; comfortable debugging tensor shapes.",
       "fallback": "Use n-gram proposals with a small target, or a correctness-first CPU study; do not promise acceleration.",
@@ -1621,10 +1620,11 @@
         "eagle3": "Read a modern acceleration design; drafter training is outside this study."
       },
       "resources": {
-        "max_gpus": 1,
+        "max_gpus": 2,
         "gpu_hours": 4,
         "gpu_memory_gb": 12,
-        "note": "Use a 0.6B draft and at most 1.7B target on the same device, or n-gram proposals. Drafter training and multi-device serving are outside the scope."
+        "note": "Minimum: one GPU holding a 0.6B draft and at most 1.7B target, or using n-gram proposals. Optional: place draft and target on two GPUs if the implementation supports it; measure transfer overhead and compare with the one-GPU baseline. All runs share the four-GPU-hour planning total; drafter training is outside the scope.",
+        "min_gpus": 1
       }
     },
     {
@@ -1664,21 +1664,21 @@
     {
       "number": 30,
       "id": "hybrid-attention-evidence-map",
-      "title": "What evidence supports hybrid attention for small models?",
+      "title": "Can a cache-memory estimator predict measured allocations?",
       "topic": "Efficient inference",
       "categories": [
-        "Survey paper",
-        "Case study"
+        "Case study",
+        "Research problem"
       ],
       "compute": "CPU",
-      "summary": "A focused survey with a reproducible resource calculation and small sanity check.",
-      "question": "Which claimed memory or speed gains remain comparable after accounting for context length, model size, and kernels?",
-      "scope": "Select 6-8 primary sources around full attention, sparse attention, and Qwen3.5-style hybrid attention. Define inclusion criteria and reconstruct memory estimates for one documented configuration.",
-      "baseline": "A conventional-attention configuration with the same stated dimensions; separate analytical estimates from model-to-model performance comparisons.",
-      "evaluation": "An evidence table of task, hardware, precision, batch/context length, baselines, and measured versus estimated claims; validate one estimate with a small local inference trace.",
-      "outcome": "A defensible taxonomy, a reproducible calculation, and one unresolved question grounded in conflicting or incomplete evidence.",
-      "preparation": "L03 memory/parameter accounting; learn attention/KV cache and how to read model configurations.",
-      "fallback": "Use six sources and a toy attention module on CPU; do not infer a causal architecture benefit from two differently trained checkpoints.",
+      "summary": "Build and test a cache-memory estimator using controlled CPU tensor experiments.",
+      "question": "When does a simple cache-size formula predict live tensor storage, and what explains its errors?",
+      "scope": "Implement a cache-memory calculator and a CPU harness that allocates and updates tiny key/value caches. Sweep batch size, context length, KV-head count, and dtype across at least 12 bounded configurations. Test a dense cache and a sliding-window cache under identical dimensions; document each storage layout.",
+      "baseline": "Use an explicit dense key/value cache as the reference. Compare predicted byte counts with deduplicated live tensor storage; distinguish allocated capacity from logical sequence length. Hold batch size, head dimensions, and dtype fixed when comparing cache layouts.",
+      "evaluation": "Report absolute and relative prediction error, boundary cases where the window fills, and memory-versus-context plots. Add regression tests for an incorrect dtype size, an omitted key/value factor, and shared storage counted twice. Separate tensor bytes from process memory and measured results from estimates.",
+      "outcome": "A working estimator, executable allocation harness, regression tests, and a measured explanation of when each estimate succeeds or fails. Reading papers alone does not complete this project.",
+      "preparation": "L03 memory/parameter accounting; learn attention, KV caching, tensor storage, and model configuration fields. Use the references to define assumptions before running the measurements.",
+      "fallback": "Use one layer, two cache layouts, and shorter contexts on CPU while retaining the measured comparison and regression tests. Do not infer end-to-end GPU speed or model quality from storage measurements.",
       "sources": [
         "qwen35",
         "nsa",
@@ -1687,15 +1687,15 @@
       "upstream": "",
       "status": "Unreviewed",
       "reading_notes": {
-        "qwen35": "Inspect one documented hybrid-attention configuration.",
-        "nsa": "Compare sparse-attention resource claims.",
-        "turboquant": "Separate compression gains from architectural gains."
+        "qwen35": "Inspect layer types and KV-head dimensions; explain which configuration fields your calculator supports.",
+        "nsa": "Distinguish an attention pattern from the cache storage an implementation actually retains.",
+        "turboquant": "Understand cache precision and why theoretical bits per value may differ from allocated bytes."
       },
       "resources": {
         "max_gpus": 0,
         "gpu_hours": 0,
         "gpu_memory_gb": 0,
-        "note": "Reconstruct memory estimates and test one toy attention module on CPU. No full hybrid-model training or benchmark rerun is needed."
+        "note": "Use small CPU tensors and cap the entire sweep’s live allocations at 256 MB. Keep measured storage and process-memory observations separate. No model download, training, or GPU run is required."
       }
     },
     {
@@ -2255,10 +2255,11 @@
         "chinchilla": "Distinguish model size, training tokens, and compute allocation."
       },
       "resources": {
-        "max_gpus": 1,
+        "max_gpus": 2,
         "gpu_hours": 8,
         "gpu_memory_gb": 24,
-        "note": "Train the four tiny configurations sequentially. Pilot the smallest model, count every seed, and reduce token counts before enlarging the model family."
+        "note": "Minimum: one GPU running the four tiny configurations sequentially. Optional: use two GPUs for independent configurations or seeds. Two devices for two hours consume four GPU-hours; all runs share the eight-GPU-hour planning total. Pilot the smallest model and reduce token counts if needed.",
+        "min_gpus": 1
       }
     },
     {
@@ -2348,8 +2349,8 @@
       "question": "Which specific question about language processing would you be excited to investigate, and what evidence would change your mind?",
       "scope": "Choose one question with a clear NLP or LLM component that one student can investigate this semester. Explain its motivation and connection to related work, identify accessible data or a small generator, and define one main comparison. For example, study terminology preservation in translations, search over historical documents, or a language tool for a hobby you know well.",
       "baseline": "Begin with the simplest credible solution: a rule, majority prediction, lexical retrieval, or an existing small model. Identify one change to compare against it, and explain which outcome would support or weaken your hypothesis.",
-      "evaluation": "Define a held-out set or explicit evidence-selection protocol, relevant quantitative or qualitative criteria, and an error analysis. Record the time and resources used. Match the evaluation to the question; an app demonstration alone does not establish whether the proposed method works.",
-      "outcome": "An individual investigation with a reproducible baseline, one meaningful comparison or structured analysis, and a clear explanation of findings and limitations. A well-supported negative result is valid and uses the same course rubric as a listed topic.",
+      "evaluation": "Define a held-out set, relevant quantitative or qualitative criteria, a baseline comparison, and an error analysis. Implement and test the proposed method, system, or audit; a literature survey or app demonstration alone is insufficient. Record the time and resources used.",
+      "outcome": "An individual investigation with a reproducible implementation or tested artifact, a meaningful comparison, and a clear explanation of findings and limitations. A well-supported negative result is valid and uses the same course rubric as a listed topic.",
       "preparation": "Use the one-page proposal to cover motivation, related work, approach and baseline, data access, evaluation, compute, tools, and a short schedule. Identify what you will implement and what you will reuse, including AI coding assistance. Plan an early baseline and reserve time for analysis and writing. Find 2–3 primary references specific to your chosen question and explain what each contributes; the planning links below are not a topic literature review.",
       "fallback": "Narrow to one language, one dataset, fewer examples, or a smaller model if data or compute access is uncertain. Discuss feasibility with the instructor through the normal proposal feedback process. Submit the proposal by October 21; the final report has up to six pages of main content, excluding references and appendices.",
       "sources": [
@@ -2363,15 +2364,16 @@
         "umd-proposal": "Use the planning questions only; Fudan’s dates and page limits apply."
       },
       "resources": {
-        "max_gpus": 1,
+        "max_gpus": 2,
         "gpu_hours": 8,
         "gpu_memory_gb": 24,
-        "note": "State the total cost of all baselines, ablations, and reruns. A project depending on multiple GPUs, prolonged pretraining, or large online-RL runs should be reduced before selection."
+        "note": "Propose CPU, one-GPU, or two-GPU use and distinguish necessary devices from optional parallel runs. Larger setups are possible with resources you can obtain yourself. State the source, access, and total cost of all baselines, ablations, and reruns; scope any request to the small course pool separately. The displayed budget is an initial shared-pool planning target.",
+        "min_gpus": 0
       }
     }
   ],
   "resource_policy": {
-    "max_gpus": 1,
+    "recommended_max_gpus": 2,
     "max_gpu_hours": 8,
     "status": "proposed"
   }
