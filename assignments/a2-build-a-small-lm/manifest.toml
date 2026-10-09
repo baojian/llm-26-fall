@@ -1,0 +1,28 @@
+[assignment]
+id = "a2-build-a-small-lm"
+version = "2026-10-10"
+status = "student release"
+python = ">=3.11"
+course_weight_percent = 15
+release_at = "2026-10-10T00:00:00+08:00"
+due_at = "2026-10-31T23:59:00+08:00"
+entry_point = "uv run python run.py suite"
+
+[submission]
+zip_name = "a2-<student-id>.zip"
+required = ["a2/__init__.py", "a2/model.py", "a2/train.py", "a2/generate.py", "a2/data_policy.py", "results.json", "report.md"]
+excluded = ["data/", "tests/", "outputs/", ".venv/", "*.pt", "*.zip"]
+
+[scoring]
+parts = [40, 30, 10, 20]
+automatic = [30, 18, 6, 6]
+ta = [10, 12, 4, 14]
+missing_disclosure_deduction = 5
+
+[late_policy]
+due_at = "2026-10-31T23:59:00+08:00"
+period_hours = 24
+round_partial_period_up = true
+score_multipliers_days_0_to_5 = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5]
+zero_from_day = 6
+apply_after = "ordinary grading, including any report/disclosure deductions"

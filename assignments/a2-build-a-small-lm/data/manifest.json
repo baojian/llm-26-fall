@@ -1,0 +1,44 @@
+{
+  "version": "a2-tinystories-v1",
+  "seed": 20261009,
+  "license": "CDLA-Sharing-1.0",
+  "upstream": "https://huggingface.co/datasets/roneneldan/TinyStories",
+  "upstream_revision": "mirror captured 2026-09-12; exact content pinned by A1 hashes",
+  "source_repository_revision": "0ff07b27035b8a027fbb0fac8b47695a6e9b30b2",
+  "a1_source_sha256": {
+    "train": "1ac5c9ab31d3ca2e6b3ee22ce184d658d1481328be008063865e0180e546634e",
+    "dev": "ce52dcd79c48e9b160e3898977481639471e66d3191f7d13bc2b933bc72caa0e",
+    "test": "667acbf84462e976b3e520c43f0d78c9bfa00141aea7b601ceb7251c5d443b7b"
+  },
+  "unique_train_documents": 2048,
+  "injected_duplicates": 768,
+  "repeated_source_documents": 256,
+  "tokenizer": {
+    "type": "byte-level BPE",
+    "vocab_size": 4096,
+    "fit_split": "unique training documents only",
+    "unk_id": 0,
+    "bos_id": 1,
+    "eos_id": 2,
+    "pad_id": 3
+  },
+  "split_policy": "preserve A1 official-train versus validation-derived dev/test; no selected exact family overlap",
+  "near_duplicates": "not ruled out; exact duplicate control is the learning objective",
+  "files": {
+    "train.jsonl": {
+      "sha256": "05b128e4d638507fbcccdcfdb627d78e6d101c355bb88402a0f71a76c94062e8",
+      "documents": 2816
+    },
+    "dev.jsonl": {
+      "sha256": "001cf42eb58b70ffa038489b8c4ee2201da861ac0700c8076b1b4aac47341663",
+      "documents": 128
+    },
+    "test.jsonl": {
+      "sha256": "6992f6de5406085cfbc60fe84b1e31e28da704bf06d666f757b14967f7b7dde9",
+      "documents": 128
+    },
+    "tokenizer.json": {
+      "sha256": "9c787a3b080c6322e2ccaeba032cee17ca9d080198c7d684d118c7a253432e0a"
+    }
+  }
+}
