@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="45 individual NLP and LLM project ideas for Fall 2026: questions, recent papers, baselines, resources, and open-source contribution opportunities.">
+  <meta name="description" content="{{COUNT}} individual NLP and LLM project ideas for Fall 2026: questions, recent papers, baselines, resources, and open-source contribution opportunities.">
   <title>Individual project candidates · NLP and LLMs · Fall 2026</title>
   <link rel="stylesheet" href="../assets/notes.css">
   <link rel="stylesheet" href="../assets/course-language.css">
@@ -57,6 +57,19 @@
       <summary>How this updates the earlier project list</summary>
       <p>The <a href="https://baojian.github.io/llm-26/slides/final-project/index.html">Spring 2026 list</a> combined older challenge tasks with recent papers. Standalone reproductions of SemEval-2014 sentiment classification, the Fake News Challenge, 2019/2020 commonsense tasks, and generic Kaggle classification are retired from this shortlist. Their datasets and simple methods can still serve as useful baselines.</p>
       <p>BLT, sparse attention, difference-aware fairness, cross-lingual intervention, formal-language pretraining, and Infini-gram mini remain useful after reducing their scope. The reasoning-faithfulness project adds a 2026 control study. New directions include editable context, agent memory and security, Qwen-Scope, small diffusion checkpoints, current multimodal models, and upstream benchmark contributions. Foundational methods may be older; every project asks a current, bounded question.</p>
+    </details>
+    <details id="course-comparison">
+      <summary>What we learned from CS336, CS224N, and CMU Advanced NLP</summary>
+      <p>Official course materials checked October 9, 2026 helped identify gaps in this catalog. These are our adaptations for one student; their original assignment workloads, team sizes, and grading policies do not transfer to this course.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Course reviewed</th><th>Useful pattern</th><th>Connection to these candidates</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://cs336.stanford.edu/">Stanford CS336, Spring 2026</a></td><td>Five substantial assignments spanning model construction, systems, scaling, data, and alignment.</td><td>Add <a href="#small-scale-scaling-prediction">46 · scaling prediction</a> and <a href="#training-profile-break-even">47 · training profiling</a>; retain the existing data and reward audits. Use local experiments without assuming access to Stanford's training API.</td></tr>
+          <tr><td><a href="https://web.stanford.edu/class/cs224n/project.html">Stanford CS224N, Winter 2026</a></td><td>The project gallery includes small-model efficiency, adaptive reasoning, agent memory, and clarification for coding.</td><td>These themes overlap with our reasoning, context, and decoding studies. Add <a href="#clarification-before-coding">48 · clarification before coding</a>. The gallery provides examples, not proof of their results or of our resource estimates.</td></tr>
+          <tr><td><a href="https://cmu-l3.github.io/anlp-fall2025/assignments/assignment3%264">CMU 11-711 Advanced NLP, Fall 2025</a></td><td>Progress from literature review to baseline reproduction, then an extension and analysis.</td><td>Use this sequence within our existing proposal, progress, and final checkpoints. The <a href="https://github.com/cmu-l3/anlp-fall2025-hw2">course RAG assignment</a> is a larger example behind our bounded retrieval studies; reproduce a baseline before testing the new question.</td></tr>
+        </tbody>
+      </table></div>
+      <p><strong>Report length:</strong> <a href="https://web.stanford.edu/class/cs224n/project/Project_Report_Instructions.pdf">CS224N's 2026 guidance</a> specifies 6-8 pages excluding references. <a href="https://cmu-l3.github.io/anlp-fall2025/#assignments">CMU's Fall 2025 guidance</a> allows up to 9 pages for the final project, with teams of 2-3. Our instructor-set limit is <strong>up to six pages of main content</strong> for one student, excluding references and appendices.</p>
     </details>
   </section>
 

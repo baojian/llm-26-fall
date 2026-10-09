@@ -1,6 +1,6 @@
 # Course reading pages
 
-The [individual project catalog](project-candidates.html) contains 45 proposed
+The [individual project catalog](project-candidates.html) contains 48 proposed
 projects for the October 10 Lecture 05 release. It supports search and filters
 by approach, topic, and resources. Each candidate includes sources, prerequisites,
 a question, baseline, evaluation, minimum outcome, and fallback. See the

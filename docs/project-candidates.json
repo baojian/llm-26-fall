@@ -359,6 +359,34 @@
       "url": "https://lastexam.ai/",
       "kind": "Official paper, dataset and submission routes",
       "artifact": "https://github.com/centerforaisafety/hle"
+    },
+    "cs336-scaling": {
+      "title": "CS336 Assignment 3: Scaling",
+      "authors": "Stanford CS336 course staff",
+      "year": "Spring 2026",
+      "url": "https://github.com/stanford-cs336/assignment3-scaling",
+      "kind": "Official assignment and local-training code"
+    },
+    "cs336-systems": {
+      "title": "CS336 Assignment 2: Systems",
+      "authors": "Stanford CS336 course staff",
+      "year": "Spring 2026",
+      "url": "https://github.com/stanford-cs336/assignment2-systems",
+      "kind": "Official assignment and starter code"
+    },
+    "cs224n-projects": {
+      "title": "CS224N project gallery: clarification for code generation",
+      "authors": "Stanford CS224N students; clarification project by Alexandra Suriya Kim, Julia Xi, and Ria Garg",
+      "year": "Winter 2026",
+      "url": "https://web.stanford.edu/class/cs224n/project.html",
+      "kind": "Course project listing; inspiration, not a verified research result"
+    },
+    "cmu-rag-assignment": {
+      "title": "CMU Advanced NLP Assignment 2: End-to-end NLP System Building",
+      "authors": "CMU Advanced NLP course staff",
+      "year": "Fall 2025",
+      "url": "https://github.com/cmu-l3/anlp-fall2025-hw2",
+      "kind": "Official course assignment; larger group scope"
     }
   },
   "projects": [
@@ -741,7 +769,8 @@
       "preparation": "L01 tokenization and L03 embeddings; learn BM25 and vector similarity.",
       "fallback": "Use 100 passages and 50 queries; embeddings can be precomputed once on a shared GPU.",
       "sources": [
-        "qwen-embedding"
+        "qwen-embedding",
+        "cmu-rag-assignment"
       ],
       "upstream": "",
       "status": "Unreviewed"
@@ -1446,6 +1475,80 @@
         "hle"
       ],
       "upstream": "HLE question feedback uses its official form; rolling contributions are coordinated with maintainers. Its GitHub repository has issues disabled. Confirm a code-PR route before assuming that question acceptance will be represented by a merge; preserve benchmark canaries and keep evaluation data out of training.",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 46,
+      "id": "small-scale-scaling-prediction",
+      "title": "Can small training runs predict the next scale?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Test the reliability of a scaling prediction on tiny models before using it to allocate a larger budget.",
+      "question": "How well does a curve fitted to smaller runs predict a held-out larger configuration, and how sensitive is that prediction to the fitting choices?",
+      "scope": "Train one decoder family at roughly 5M, 8M, 12M, and 20M parameters on one fixed licensed corpus. Save checkpoints at 0.5M, 1M, and 2M training tokens; use two seeds if the pilot fits. Reserve the largest model for evaluating predictions rather than choosing the fitted curve.",
+      "baseline": "Compare a predeclared low-parameter power-law fit with a simple log-linear extrapolation and a constant-loss predictor. Keep tokenizer, validation set, data order, and optimizer policy fixed; report any size-specific tuning.",
+      "evaluation": "Held-out loss-prediction error, ranking of candidate allocations, sensitivity to omitted fitting points and seeds, actual training time, and approximate FLOPs. Report uncertainty and distinguish interpolation from extrapolation.",
+      "outcome": "An auditable run table, an out-of-sample prediction, and evidence explaining whether the prediction is useful within the measured range.",
+      "preparation": "Course language-model training and evaluation; learn nonlinear fitting, log-scale plots, compute accounting, and uncertainty estimation. CS336 supplies a larger reference exercise.",
+      "fallback": "Use four smaller models and fewer tokens, preserving the held-out configuration. Run locally: Stanford student API access is not assumed. A narrow tiny-model fit cannot establish a frontier-model scaling law.",
+      "sources": [
+        "cs336-scaling",
+        "fineweb2"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 47,
+      "id": "training-profile-break-even",
+      "title": "Which optimization actually shortens a small training run?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Use a profiler to identify the bottleneck, then test one optimization including its setup cost.",
+      "question": "When do faster attention or graph compilation repay their overhead in the short training runs a student actually performs?",
+      "scope": "Use a 5M-20M decoder, one fixed input batch stream, and two sequence lengths. Profile a baseline, then choose either supported optimized attention or graph compilation. Compare runs of 20, 100, and 500 steps on one GPU; check the installed backend supports the chosen method.",
+      "baseline": "Unoptimized execution with identical weights, batches, precision, optimizer, and hardware. Check outputs and gradients within documented numerical tolerances, and compare short loss trajectories before interpreting speed.",
+      "evaluation": "End-to-end elapsed time including compilation, steady-state tokens/second, peak allocated memory, repeated-run variation, and time spent in attention, optimizer, and data loading. Synchronize accelerator timing and separate warm-up from measurement.",
+      "outcome": "A profiler-backed bottleneck diagnosis, a correctness-checked change, and a break-even estimate showing when it helps or fails.",
+      "preparation": "PyTorch training and tensor shapes; learn profiling, asynchronous GPU timing, warm-up effects, and numerical equivalence checks.",
+      "fallback": "Use the smaller model and one sequence length. If GPU kernels are unavailable, analyze CPU execution and one supported optimization; do not report it as a GPU speedup. Distributed training and writing a Triton kernel are outside the minimum scope.",
+      "sources": [
+        "cs336-systems"
+      ],
+      "upstream": "",
+      "status": "Unreviewed"
+    },
+    {
+      "number": 48,
+      "id": "clarification-before-coding",
+      "title": "When should a coding assistant ask a question first?",
+      "topic": "Agents and memory",
+      "categories": [
+        "New task",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Measure the value and cost of one clarification on an underspecified programming request.",
+      "question": "Can a small model recognize missing requirements and ask a useful question without burdening users whose requests are already clear?",
+      "scope": "Author 40 small Python tasks with hidden specification fields such as tie-breaking, units, or case handling. Create paired complete and incomplete requests. Use a deterministic simulated user that reveals only the field explicitly requested, and allow at most one clarification.",
+      "baseline": "Answer immediately, always ask a fixed question, selectively ask, and an oracle given the full specification. Use the same model and total generation-token cap. Keep development templates separate from evaluation tasks and run code in a sandbox.",
+      "evaluation": "Hidden-test pass rate, useful and unnecessary question rates, unresolved ambiguities, interaction count, and total tokens. Inspect whether questions reveal task requirements rather than reference implementations.",
+      "outcome": "A paired task generator, a reproducible clarification policy comparison, and an analysis of when the additional interaction earns its cost.",
+      "preparation": "Python tests, basic prompting, and evaluation; learn controlled user simulation and ambiguity annotation. The CS224N gallery supplies topic inspiration; this is an original reduced protocol.",
+      "fallback": "Use 20 tasks, two ambiguity types, and a 0.6B model. Human user studies, unrestricted dialogue, and a full replication of the Stanford project are outside the minimum scope.",
+      "sources": [
+        "cs224n-projects",
+        "qwen3"
+      ],
+      "upstream": "",
       "status": "Unreviewed"
     }
   ]

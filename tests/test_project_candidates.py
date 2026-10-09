@@ -40,7 +40,8 @@ def test_published_catalog_is_current_and_readable_without_javascript():
     assert output == (ROOT / "docs/project-candidates.html").read_text()
     document = Document()
     document.feed(output)
-    assert document.articles == 45
+    assert document.articles == len(DATA["projects"])
+    assert 30 <= document.articles <= 50
     assert len(document.ids) == len(set(document.ids))
     assert "clm-context-management" in document.ids
     assert set(DATA["categories"]) == {category for project in DATA["projects"] for category in project["categories"]}

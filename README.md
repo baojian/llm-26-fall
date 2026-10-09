@@ -32,7 +32,7 @@ Subscribe to an assignment's issue to follow its announcements and clarification
 
 Dates, periods, and holidays: [docs/schedule.md](docs/schedule.md). Assessment details: [course website](https://baojian.github.io/llm-26-fall/).
 
-The [individual project catalog](docs/project-candidates.html) contains 45
+The [individual project catalog](docs/project-candidates.html) contains 48
 proposed directions for Lecture 05, with recent sources, baselines, evaluation
 plans, compute estimates, and possible upstream contributions. Search by topic
 or browse by project approach. The one-page proposal is due **October 21, 2026,

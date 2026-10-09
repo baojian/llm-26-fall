@@ -1,6 +1,6 @@
 # Individual project catalog: review and maintenance
 
-The [catalog](project-candidates.html) prepares 45 individual project directions
+The [catalog](project-candidates.html) prepares 48 individual project directions
 for Lecture 05 on October 10, 2026. It implements
 [issue #265](https://github.com/baojian/llm-26-fall/issues/265), including the
 instructor-requested Context Language Models candidate and its stable
@@ -9,7 +9,7 @@ and science is recorded in [issue #269](https://github.com/baojian/llm-26-fall/i
 
 ## Scope and review status
 
-There are five candidates in each of nine topic areas. Topic and approach are
+There are 48 candidates across nine topic areas. Topic and approach are
 separate: a candidate can have several approach tags (survey paper, case study,
 paper replication, new task, research problem). The page supports combined
 filters, keyword search, stable links, keyboard operation, and printing visible
@@ -75,6 +75,27 @@ Primary papers and official model/code releases establish starting methods and
 artifacts, not proposed student runtime or outcomes. Recheck external access
 before selection. Students should pin code/model/data revisions in their
 private experiment records.
+
+## Comparison with other courses
+
+The initial 45 entries drew on the previous Fudan list and primary research.
+On October 9, the instructor requested comparison with other courses. The
+[catalog's course comparison](project-candidates.html#course-comparison) links
+the official CS336 Spring 2026 assignments, CS224N Winter 2026 project gallery
+and report guidance, and CMU Advanced NLP Fall 2025 project requirements.
+CMU is explicitly labeled as the 2025 offering; this review does not claim to
+have checked a 2026 Advanced NLP syllabus or all linked student reports.
+
+That review added projects 46-48: small-scale scaling prediction, training
+profiling, and clarification before coding. Existing candidate numbers and IDs
+were preserved. The CMU RAG assignment is now also linked from project 16.
+The new scopes are original adaptations with local fallback routes, not full
+copies of the external assignments or claims of reproducing student results.
+
+The instructor also set a six-page maximum for the final report's main content
+on October 9. References and appendices remain outside the limit; code and an
+experiment record are still required. This decision is recorded in `AGENTS.md`
+and reflected in the homepage, translation, template, and generated catalog.
 
 ## Files and rebuild
 
