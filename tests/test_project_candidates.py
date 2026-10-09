@@ -171,14 +171,15 @@ def test_external_resources_are_separate_from_the_course_pool_request():
         catalog.validate(data)
 
 
-def test_contents_follow_six_sections_and_link_every_candidate_topic():
+def test_contents_follow_seven_sections_and_link_every_candidate_topic():
     output = catalog.render(DATA, TEMPLATE)
     main = output.split('<main ', 1)[1]
-    sections = ["overview", "compute-guide", "choose-your-own", "upstream", "catalog", "others"]
+    sections = ["overview", "compute-guide", "choose-your-own", "upstream", "previous-projects", "catalog", "others"]
     assert sorted(sections, key=lambda identifier: main.index(f'id="{identifier}"')) == sections
     sidebar = output.split('<aside class="catalog-sidebar">', 1)[1].split('</aside>', 1)[0]
     for identifier in sections:
         assert f'href="#{identifier}"' in sidebar
+    assert sorted(sections, key=lambda identifier: sidebar.index(f'href="#{identifier}"')) == sections
     candidates = [project for project in DATA["projects"] if project["id"] != catalog.OPEN_CHOICE_ID]
     for topic in {project["topic"] for project in candidates}:
         assert f'href="#{catalog.topic_id(topic)}"' in sidebar

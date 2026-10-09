@@ -53,10 +53,10 @@ A cited paper's full compute scale is not the course project scope. Mark
 unmeasured budgets as planning estimates and preserve a smaller fallback;
 proposed hour limits are not resource allocations.
 
-The project page uses six sections: preparation and overview, resource
-requirements, student-proposed projects, open-source contributions, the 48
-candidates grouped by topic, and other guidance. Students may use resources
-they obtain outside the course pool; record their source and cost separately
+The project page uses seven sections: preparation and overview, resource
+requirements, student-proposed projects, open-source contributions, previous
+projects and papers, the 48 candidates grouped by topic, and other guidance.
+Students may use resources they obtain outside the course pool; record their source and cost separately
 from any course-pool request. Survey-only projects are not allowed. Every
 project must include an implementation, experiment, or tested artifact with
 a meaningful comparison and analysis. Related work remains required background.

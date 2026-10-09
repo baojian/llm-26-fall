@@ -2,7 +2,7 @@
 
 The [individual project catalog](project-candidates.html) puts student-proposed
 projects first, followed by 48 suggested projects for the October 10 Lecture 05
-release. A left contents panel links the six guidance sections and nine topic
+release. A left contents panel links the seven guidance sections and nine topic
 groups; it becomes a collapsible menu on narrow screens. The 48 candidates
 support search and filters by category, topic, and resources.
 Each candidate includes suggested readings, prerequisites, a question,

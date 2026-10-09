@@ -32,10 +32,11 @@ expertise, and external review; each route has a local minimum outcome.
 The instructor's October 9 refinement retains suggested readings without a
 fixed reference-count requirement. Projects should fit the resources students
 can access, and the course-pool caution is kept to one sentence. The student page
-now has six sections in the requested order: preparation and overview,
+now has seven sections in the requested order: preparation and overview,
 resource requirements, student-proposed projects, open-source contributions,
-48 candidate projects, and other guidance. A sticky left contents panel links
-each section and the nine candidate topics. It collapses on narrow screens;
+previous projects and papers, 48 candidate projects, and other guidance. A
+sticky left contents panel links each section and the nine candidate topics.
+It collapses on narrow screens;
 topic links filter the candidate list, and ordinary anchors work without
 JavaScript. Each
 card displays its references, why to read them, device/memory target, total
@@ -103,7 +104,7 @@ Sources were the [previous final-project deck](https://baojian.github.io/llm-26/
 its [embedded example-task handout](https://baojian.github.io/llm-26/slides/final-project/media/example-tasks.pdf),
 and its 20-paper list. Its group size, report length, dates, and grading
 breakdown do not apply to Fall 2026.
-A short paragraph between sections 4 and 5 links students to this list and
+Section 5, also linked from the sidebar, points students to this list and
 suggests implementing and evaluating a paper's method under the current requirements.
 
 | Earlier direction | Fall treatment |

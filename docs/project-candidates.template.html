@@ -36,8 +36,9 @@
         <li><a href="#compute-guide">2. Resource requirements</a></li>
         <li><a href="#choose-your-own">3. Choose your own project</a></li>
         <li><a href="#upstream">4. Open-source contributions</a></li>
-        <li><a href="#catalog">5. {{COUNT}} candidate projects</a><ol class="toc-topics">{{TOPIC_LINKS}}</ol></li>
-        <li><a href="#others">6. Others</a></li>
+        <li><a href="#previous-projects">5. Previous projects and papers</a></li>
+        <li><a href="#catalog">6. {{COUNT}} candidate projects</a><ol class="toc-topics">{{TOPIC_LINKS}}</ol></li>
+        <li><a href="#others">7. Others</a></li>
       </ol>
     </nav>
   </details>
@@ -106,9 +107,12 @@
     <p>These are contribution destinations, not guaranteed openings. Check current rules again before submitting. The instructor's requested public-contribution route concerns an agreed upstream artifact; proposals, graded reports, experiment records, grades, and course assignment solutions still belong on eLearning. Keep upstream reference solutions and evaluation material in the channels required by that project's maintainers, not in this public course repository.</p>
     </details>
   </section>
-  <p id="previous-projects">For more ideas, see the <a href="https://baojian.github.io/llm-26/slides/final-project/index.html">previous projects and papers</a>. You may implement a paper’s method and evaluate it with a small experiment, following this semester’s requirements.</p>
+  <section class="guide-panel" id="previous-projects" aria-labelledby="previous-projects-title">
+    <h2 id="previous-projects-title">5. Previous projects and papers</h2>
+    <p>For more ideas, see the <a href="https://baojian.github.io/llm-26/slides/final-project/index.html">previous projects and papers</a>. You may implement a paper’s method and evaluate it with a small experiment, following this semester’s requirements.</p>
+  </section>
   <section id="catalog" aria-labelledby="catalog-title">
-    <h2 id="catalog-title">5. {{COUNT}} candidate projects</h2>
+    <h2 id="catalog-title">6. {{COUNT}} candidate projects</h2>
     <p>Choose a topic from the sidebar or filter these {{COUNT}} suggestions by approach, topic, or compute. Your own proposal has a separate section above. Each card shows suggested readings and its resource plan before the detailed experiment. “Unreviewed” means the scope still needs proposal feedback and a small resource pilot.</p>
     <form id="catalog-filters" class="catalog-filters" role="search" hidden>
       <div class="search-control"><label for="project-search">Search title, question, paper or keyword</label><input id="project-search" name="q" type="search" placeholder="Try context, tokenizer, verifier, Chinese…" autocomplete="off"></div>
@@ -123,7 +127,7 @@
     <div id="project-list">{{CARDS}}</div>
   </section>
   <section class="guide-panel" id="others" aria-labelledby="others-title">
-    <h2 id="others-title">6. Others</h2>
+    <h2 id="others-title">7. Others</h2>
     <h3>Use other resources you can access</h3>
     <p>You may use your own computers or GPUs, laboratory or research-group machines, cloud credits, hosted APIs, and other resources you can obtain. You are not limited to the course pool or its proposed GPU-hour budget. State the resource source, availability, estimated cost, and total use in your proposal and experiment record.</p>
     <p>Request only the portion you need from the shared course pool. Keep a smaller fallback if outside access is uncertain. The same rubric applies to everyone; a larger compute budget does not itself earn a higher grade.</p>
