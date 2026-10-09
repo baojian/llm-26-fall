@@ -588,33 +588,22 @@ Allow 1 minute. Attention now solves a specific recurrent translation problem. U
 
 <!-- .slide: id="encoder-decoder" -->
 
-## An encoder–decoder with one context vector
+## Encoder–decoder bottleneck
 
-The encoder reads a source sentence into a vector $c$.
+**Encoder:** source sentence → fixed-size final hidden state $c=h_n^{\mathrm{enc}}$.
 
-$$s_t=f(s_{t-1},y_{t-1},c)$$
+<img id="encoder-bottleneck" src="assets/encoder-bottleneck.png" width="1152" alt="The encoder reads source tokens through five purple recurrent states. A green circle highlights its final state as the bottleneck passed to a red recurrent decoder, which generates target tokens in sequence.">
 
-The decoder generates target words using the same source summary at every step.
+**Decoder:** $s_t=f(s_{t-1},y_{t-1},c)$, with the same $c$ for every target step.
 
 Source and target sequences can have different lengths.
 
-Note:
-Allow 3 minutes. Here y_(t-1) denotes the previous target word or its embedding in the update function. The summary is fixed in dimension, not a constant independent of the source. Different sources produce different c. Sources: Bahdanau et al., §2; Cho et al. (2014), https://aclanthology.org/D14-1179/.
-
----
-
-<!-- .slide: id="encoder-bottleneck" -->
-
-## One encoder state is the bottleneck
-
-The source summary is $c=h_n^{\mathrm{enc}}$, the encoder's final hidden state.
-
-<img class="diagram" src="assets/encoder-bottleneck.png" alt="The encoder reads source tokens through five purple recurrent states. A green circle highlights its final state as the bottleneck passed to a red recurrent decoder, which generates target tokens in sequence.">
-
-<p class="caption">One vector must carry the whole source sentence. Attention will instead select from all encoder states.</p>
+<p class="caption"><strong>Bottleneck:</strong> all source information available to the decoder must pass through $c$. Attention lets each target step select from all encoder states.</p>
 
 Note:
-Allow 3 minutes. Use the illustration from slide 7 of the instructor's lecture-05-slides-transformers.pptx. Each purple box is an encoder state after reading one source token; the green circle marks the final state c. The red boxes show successive decoder states, and the loops carry the preceding generated token to the next step. The drawing depicts a fixed-context recurrent encoder–decoder: all source information available to the decoder passes through c. Its width stays fixed as the source sentence grows. Different source sentences still produce different c. Ask which earlier source state the decoder can inspect directly: none in this model. The next slides introduce attention over the retained encoder states, with a decoder-dependent context at each target step. Source illustration: embedded ppt/media/image10.png, reused without modification. Conceptual sources: Bahdanau et al., §§2–3; Cho et al. (2014).
+Allow 6 minutes for the encoder–decoder update and its bottleneck. Here y_(t-1) denotes the previous target word or its embedding in the update function. The summary is fixed in dimension, not a constant independent of the source: different source sentences produce different c. The decoder generates target words using that same source summary at every step, and source and target lengths can differ.
+
+Use the illustration from slide 7 of the instructor's lecture-05-slides-transformers.pptx. Each purple box is an encoder state after reading one source token; the green circle marks the final state c. The red boxes show successive decoder states, and the loops carry the preceding generated token to the next step. The drawing depicts a fixed-context recurrent encoder–decoder: all source information available to the decoder passes through c. Its width stays fixed as the source sentence grows. Ask which earlier source state the decoder can inspect directly: none in this model. The next slides introduce attention over the retained encoder states, with a decoder-dependent context at each target step. Source illustration: embedded ppt/media/image10.png, reused without modification. Conceptual sources: Bahdanau et al., §§2–3; Cho et al. (2014), https://aclanthology.org/D14-1179/.
 
 ---
 
