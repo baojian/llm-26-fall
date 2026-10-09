@@ -7,7 +7,7 @@ to Lecture 05.
 
 **Central question:** How can a model retain and select useful context?
 
-The revised package has **44 slides**, five ungraded exercises, and an offline
+The revised package has **42 slides**, five ungraded exercises, and an offline
 CPU notebook. All students have the same practices and expectations. The
 shared course theme, notebook launcher, and original NPLM fitting example
 are retained. Original preparation: [issue #234](https://github.com/baojian/llm-26-fall/issues/234).
@@ -31,14 +31,14 @@ These old slide numbers refer to the deck before this revision.
 | Original slides | Revision and destination |
 | --- | --- |
 | 1–20: fixed-window LM and training | Retain; update objectives and outline |
-| 21–25: RNN/LSTM bridge | Expand into recurrent-state, gradient, and gate practice in current slides 21–32 |
-| 26: encoder context selection | Combine the encoder–decoder update with source Transformer slide 7's bottleneck illustration in current slide 34; develop additive alignment in current slides 33–43 |
+| 21–25: RNN/LSTM bridge | Expand into recurrent-state, gradient, and gate practice in current slides 21–30; combine cell memory with gates on slide 29, and E04 with remaining limitations on slide 30 |
+| 26: encoder context selection | Combine the encoder–decoder update with source Transformer slide 7's bottleneck illustration in current slide 32; develop additive alignment in current slides 31–41 |
 | 27–37: weighted values, Q/K/V, scaling, matrix attention | Replace with recurrent alignment; self-attention is developed in Lecture 05, slides 6–19 |
 | 38–42: causal masks and shifted targets | Remove from Lecture 04; covered by Lecture 05, slides 9–11 and 38–39 |
 | 43: causal browser demonstration | Move code, fixture, and interaction checks to Lecture 05, slide 10 |
 | 44–50: head implementation, output/gradient references, causality | Remove duplicate notebook section; covered by Lecture 05's references and E05 |
 | 51–53: attention cost, LM path, positions | Remove from Lecture 04; covered by Lecture 05, slides 21–26, 35, and 51 |
-| 54–56: exit questions and reading | Combine recurrence review, continuation, and readings in current slide 44 |
+| 54–56: exit questions and reading | Combine recurrence review, continuation, and readings in current slide 42 |
 
 Lecture 04's former E03–E05 and optional P01–P02 attention tasks are replaced.
 Current E03 traces memory, E04 calculates a gated update, and E05 calculates
@@ -61,15 +61,15 @@ planning allocations, not measured classroom completion times.
 | 2 | 0–10 | 21–24 | Fixed windows, recurrent states, and update shapes |
 | 2 | 10–17 | 25 | E03, 7 min: state trace and input derivative |
 | 2 | 17–29 | 26–28 | Recurrent LM, gradient products, and shared-weight derivatives |
-| 2 | 29–35 | 29–30 | Cell memory and gates |
-| 2 | 35–42 | 31 | E04, 7 min: memory, exposure, and direct derivative |
-| 2 | 42–45 | 32 | Remaining recurrent limitations |
-| 3 | 0–9 | 33–35 | Machine translation task; encoder–decoder update and bottleneck; attribution |
-| 3 | 9–22 | 36–39 | Source annotations, additive scores, context, decoder update |
-| 3 | 22–25 | 40 | Numerical alignment example |
-| 3 | 25–32 | 41 | E05, 7 min: two contexts from the same annotations |
-| 3 | 32–39 | 42–43 | Source versus target visibility and interpretation |
-| 3 | 39–45 | 44 | Combined recap, continuation, and readings |
+| 2 | 29–35 | 29 | Cell memory, gates, and exposure |
+| 2 | 35–42 | 30 | E04, 7 min: memory, exposure, and direct derivative |
+| 2 | 42–45 | 30 | Reveal the remaining recurrent limitations after the exercise answer |
+| 3 | 0–9 | 31–33 | Machine translation task; encoder–decoder update and bottleneck; attribution |
+| 3 | 9–22 | 34–37 | Source annotations, additive scores, context, decoder update |
+| 3 | 22–25 | 38 | Numerical alignment example |
+| 3 | 25–32 | 39 | E05, 7 min: two contexts from the same annotations |
+| 3 | 32–39 | 40–41 | Source versus target visibility and interpretation |
+| 3 | 39–45 | 42 | Combined recap, continuation, and readings |
 
 Preserve practice and feedback. If discussion runs long, leave the supplied
 library-comparison code for reading rather than typing it in class.

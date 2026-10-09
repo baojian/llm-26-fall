@@ -494,39 +494,35 @@ Allow 4 minutes. Backpropagation through time differentiates the unrolled comput
 
 <!-- .slide: id="lstm-purpose" -->
 
-## LSTM cell memory
+## LSTM memory and gates
 
-$$c_t=f_t\odot c_{t-1}+i_t\odot\widetilde c_t$$
-
-| Term | Role |
-| --- | --- |
-| $f_t\odot c_{t-1}$ | Retain part of the previous cell |
-| $i_t\odot\widetilde c_t$ | Add selected candidate information |
-
-The cell state $c_t$ and exposed state $h_t$ are different quantities.
-
-Note:
-Allow 3 minutes. This is the common modern LSTM with a forget gate. The original Hochreiter–Schmidhuber 1997 model predates that gate; do not attribute this exact later form to the original paper. The current equations follow torch.nn.LSTM and the instructor's Spring gate explanation. Gating helps preserve a direct state path but does not guarantee stable gradients.
-
----
-
-<!-- .slide: id="lstm-gates" -->
-
-## Gates control storage and exposure
-
-$$g_t=\sigma(W_gx_t+U_gh_{t-1}+b_g)$$
-
-Each gate $f_t$, $i_t$, and $o_t$ has its own parameters.
-
-$$\widetilde c_t=\tanh(\text{learned candidate}),\qquad
-h_t=o_t\odot\tanh(c_t)$$
-
-Gate entries lie between 0 and 1.
-
-The output gate controls what reaches the next prediction.
+<div class="columns">
+<div>
+<h3>Cell memory</h3>
+<p>$c_t=f_t\odot c_{t-1}+i_t\odot\widetilde c_t$</p>
+<table>
+<thead><tr><th>Contribution</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td>$f_t\odot c_{t-1}$</td><td>Retain part of the previous cell</td></tr>
+<tr><td>$i_t\odot\widetilde c_t$</td><td>Add selected candidate information</td></tr>
+</tbody>
+</table>
+<p>Cell state $c_t$ and exposed state $h_t$ are different quantities.</p>
+</div>
+<div>
+<h3 id="lstm-gates">Gates and exposure</h3>
+<p>$g_t=\sigma(W_gx_t+U_gh_{t-1}+b_g)$</p>
+<p>Each of $f_t$, $i_t$, $o_t$ has its own parameters; entries lie between 0 and 1.</p>
+<p>$\widetilde c_t=\tanh(\text{learned candidate})$</p>
+<p>$h_t=o_t\odot\tanh(c_t)$</p>
+<p>The output gate controls what reaches the next prediction.</p>
+</div>
+</div>
 
 Note:
-Allow 3 minutes. The three gates have separate parameters. The notation abbreviates three affine maps, not one shared gate. A small output gate can hide stored cell information without erasing it. The notebook checks a complete cell against torch.nn.LSTMCell; E04 isolates the arithmetic with supplied gates.
+Allow 6 minutes: 3 for cell memory and 3 for gates and exposure. This is the common modern LSTM with a forget gate. The original Hochreiter–Schmidhuber 1997 model predates that gate; do not attribute this exact later form to the original paper. The current equations follow torch.nn.LSTM and the instructor's Spring gate explanation. Gating helps preserve a direct state path but does not guarantee stable gradients.
+
+The three gates have separate parameters. The notation abbreviates three affine maps, not one shared gate. A small output gate can hide stored cell information without erasing it. The notebook checks a complete cell against torch.nn.LSTMCell; E04 isolates the arithmetic with supplied gates.
 
 ---
 
@@ -534,38 +530,34 @@ Allow 3 minutes. The three gates have separate parameters. The notation abbrevia
 
 <p class="exercise-meta">Exercise E04 · 7 minutes · calculate, then check</p>
 
-## One gated memory update
+## A gated update and recurrent limitations
 
 Use $c_{t-1}=2$, $f_t=0.75$, $i_t=0.5$,
 $\widetilde c_t=-0.5$, and $o_t=0.5$.
 
-Find $c_t$ and $h_t$. Holding these gates fixed,
-what is $\partial c_t/\partial c_{t-1}$?
-
-<div class="answer fragment">
-
-$c_t=1.25$, $h_t=0.5\tanh(1.25)\approx0.4241$.
-The direct cell-path derivative is $0.75$.
-
+<div class="columns">
+<div>
+<h3>Calculate</h3>
+<p>Find $c_t$ and $h_t$. Holding these gates fixed, what is $\partial c_t/\partial c_{t-1}$?</p>
+<div class="answer fragment" data-fragment-index="0">
+<p>$c_t=1.25$<br>$h_t=0.5\tanh(1.25)\approx0.4241$.</p>
+<p>Direct cell-path derivative: $0.75$.</p>
+</div>
+</div>
+<div class="fragment" data-fragment-index="1">
+<h3 id="recurrent-limitations">Remaining limitations</h3>
+<ul>
+<li>State updates depend on preceding states.</li>
+<li>Information must survive repeated updates.</li>
+<li>A fixed-context encoder–decoder passes only one source summary, motivating attention.</li>
+</ul>
+</div>
 </div>
 
 Note:
-Allow 7 minutes. The direct derivative holds the supplied gates fixed. A complete recurrent derivative also includes dependencies through earlier hidden states and gate computations. Ask how f=0 versus f=1 changes the retained term, and how o=0 changes exposure without changing c. Run lstm-update and the separate complete-cell comparison.
+Allow 10 minutes: 7 for E04 and 3 for the remaining limitations. Reveal the answer after students calculate, then reveal the limitations to bridge to attention. The direct derivative holds the supplied gates fixed. A complete recurrent derivative also includes dependencies through earlier hidden states and gate computations. Ask how f=0 versus f=1 changes the retained term, and how o=0 changes exposure without changing c. Run lstm-update and the separate complete-cell comparison.
 
----
-
-<!-- .slide: id="recurrent-limitations" -->
-
-## What gated recurrence still requires
-
-- State updates depend on preceding states.
-- Information must survive repeated updates.
-- A fixed-context encoder–decoder passes only one source summary.
-
-The last limitation motivates attention in an encoder–decoder.
-
-Note:
-Allow 3 minutes. The fixed final-vector bottleneck belongs to the particular encoder–decoder design considered next, not to every possible recurrent architecture. LSTM gates address memory propagation but do not automatically give a decoder access to every encoder state. Bahdanau et al., §§2–3.
+The fixed final-vector bottleneck belongs to the particular encoder–decoder design considered next, not to every possible recurrent architecture. LSTM gates address memory propagation but do not automatically give a decoder access to every encoder state. Bahdanau et al., §§2–3.
 
 ---
 
