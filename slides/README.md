@@ -46,30 +46,28 @@ controls demonstrate row lookup and the memory cost of changing table dimensions
 See [asset provenance](lecture-03/assets/README.md) for the teaching figure,
 model metadata, and retained Spring images.
 
-[Lecture 04](lecture-04/index.html) extends the bigram model into a fixed-window
-neural LM, then develops and verifies one causal attention head in 56 slides.
-Its [teaching plan](lecture-04/teaching-plan.md) maps three 45-minute periods
-and the changes from the Spring neural-network and sequence-learning lecture.
-The [notebook](lecture-04/lecture-04-exercise.ipynb) runs E01–E05 and optional
-P01–P02 offline on CPU. Six editable diagrams, a computed training curve, and
-an interactive attention matrix accompany the numerical examples. The controls
-select a query, toggle its causal mask, and change a future value, with a reset
-to the printable initial example. Longer micrograd and LSTM work remains in
+[Lecture 04](lecture-04/index.html) develops a fixed-window neural LM,
+recurrent states, LSTM memory, and additive attention in an RNN encoder–decoder
+in 47 slides. Its [teaching plan](lecture-04/teaching-plan.md) records the
+boundary with Lecture 05 and maps three 45-minute periods. The
+[notebook](lecture-04/lecture-04-exercise.ipynb) runs E01–E05 offline on CPU:
+context shapes, training, recurrent derivatives, gates, and source alignment.
+Four editable diagrams and a prepared NPLM loss curve accompany the examples.
+Longer micrograd and recurrent training remain in
 [optional reading](lecture-04/optional-reading.md). See
 [asset provenance](lecture-04/assets/README.md).
 
-[Lecture 05](lecture-05/index.html) introduces attention and builds a complete
-decoder language model in 55 slides. It starts with the recurrent bottleneck
-and learned alignment, then works through Q/K/V and causal masking numerically. Its
-[teaching plan](lecture-05/teaching-plan.md) maps all 85 slides of the
-instructor's 2025 Transformer lecture and reserves the 15-minute Quiz 2 slot.
-The [notebook](lecture-05/lecture-05-exercise.ipynb) runs E01–E05 offline on CPU:
-multi-head shapes and references, positions, normalization, parameter counts,
-and full-model causality. Five editable diagrams, an interactive permutation
-example, and measured pre/post-LN loss curves support the explanations.
-Historical translation results, head pruning, and efficient-attention papers
-remain in [optional reading](lecture-05/optional-reading.md). See
-[asset provenance and reproduction](lecture-05/assets/README.md).
+[Lecture 05](lecture-05/index.html) develops Q/K/V, scaled dot products,
+causal self-attention, and a complete Transformer decoder in 55 slides.
+A four-minute recap connects Lecture 04's additive alignment to self-attention.
+The causal-matrix controls moved here from Lecture 04, followed by P01 practice.
+Its [teaching plan](lecture-05/teaching-plan.md) maps the instructor's 85-slide
+2025 source deck and preserves the final 15-minute Quiz 2 slot. The
+[notebook](lecture-05/lecture-05-exercise.ipynb) runs P01 and E01–E05 offline:
+masked outputs, multi-head references, positions, normalization, parameter
+counts, and full-model causality. Position controls and measured pre/post-LN
+curves support the explanations. See [optional reading](lecture-05/optional-reading.md)
+and [asset provenance](lecture-05/assets/README.md).
 
 ## Teaching from a classroom browser
 

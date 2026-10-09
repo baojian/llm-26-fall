@@ -1,4 +1,4 @@
-"""Execute the offline lesson and verify its numerical and causal claims."""
+"""Execute the offline lesson and verify its feedforward, recurrent, and alignment claims."""
 
 import json
 import math
@@ -39,7 +39,7 @@ def test_notebook_is_clean_and_exercise_order_matches_slides():
             assert cell["outputs"] == [] and cell["execution_count"] is None
     ids = [match.group(1) for cell in NOTEBOOK["cells"] if cell["cell_type"] == "markdown"
            if (match := re.match(r"## ([EP]\d\d) ·", "".join(cell["source"])))]
-    assert ids == ["E01", "E02", "E03", "E04", "E05", "P01", "P02"]
+    assert ids == ["E01", "E02", "E03", "E04", "E05"]
     slides = (LECTURE / "slides.md").read_text()
     assert re.findall(r"Exercise (E\d\d) ·", slides) == ids[:5]
 
@@ -96,100 +96,96 @@ def test_loss_figure_matches_the_executed_notebook(lesson):
     assert figure["data"][1]["y"] == pytest.approx([math.log(7)] * 2)
 
 
-def test_hand_attention_example_and_browser_fixture(lesson):
-    weights = [math.e / (2 * math.e + 1), 1 / (2 * math.e + 1), math.e / (2 * math.e + 1)]
-    assert lesson["toy_weights"][0, 1].tolist() == pytest.approx(weights, abs=1e-12)
-    assert lesson["toy_outputs"][0, 1].tolist() == pytest.approx([1.689275193006, 0.733043605245], abs=1e-12)
-    fixture = json.loads((LECTURE / "assets/attention-values.json").read_text())
-    for field, tensor in [("query", "toy_q"), ("key", "toy_k"), ("value", "toy_v")]:
-        assert fixture[field] == lesson[tensor][0].tolist()
-    figure = json.loads((LECTURE / "assets/attention-demo.json").read_text())
-    for actual, expected in zip(figure["data"][0]["z"], lesson["causal_weights"][0].tolist()):
-        assert actual == pytest.approx(expected, abs=1e-12)
-
-
-def test_masking_normalizes_only_the_allowed_keys(lesson):
+def test_recurrent_memory_and_shared_parameter_derivatives(lesson):
+    assert lesson["recurrent_states"].tolist() == [1, 0.5, 1.25]
+    assert lesson["input_derivatives"].tolist() == [0.25, 0.5, 1]
+    assert lesson["shared_derivative"].item() == 1
+    assert lesson["changed_states"].tolist() == [2, 1, 1.5]
     torch = lesson["torch"]
-    weights = lesson["causal_weights"]
-    assert torch.equal(weights.masked_select(~lesson["allowed"]), torch.zeros(3, dtype=torch.float64))
-    torch.testing.assert_close(weights.sum(-1), torch.ones(1, 3, dtype=torch.float64))
-    assert lesson["causal_outputs"][0, 1].tolist() == pytest.approx([0.731058578630, 0.537882842740], abs=1e-12)
-    assert lesson["post_softmax_mask"][0, 1].sum().item() == pytest.approx(0.577681201748, abs=1e-12)
-    assert torch.equal(lesson["causal_changed"][:, :2], lesson["causal_outputs"][:, :2])
-    assert (lesson["unmasked_changed"] - lesson["toy_outputs"])[0, 1].tolist() == pytest.approx([4.223187982515] * 2)
+    # A zero recurrent coefficient discards every earlier input.
+    values = torch.tensor([5., -3., 2.], dtype=torch.float64)
+    assert torch.equal(lesson["linear_recurrence"](values, 0), values)
 
 
-@pytest.mark.parametrize("mask_mode", ["none", "shared", "per_batch"])
-def test_batched_attention_matches_pytorch_with_unequal_lengths_and_widths(lesson, mask_mode):
+@pytest.mark.parametrize("length", [1, 4])
+def test_tanh_recurrence_matches_library_for_outputs_and_gradients(lesson, length):
     torch = lesson["torch"]
-    generator = torch.Generator().manual_seed(37)
-    q = torch.randn(2, 3, 4, dtype=torch.float64, generator=generator)
-    k = torch.randn(2, 5, 4, dtype=torch.float64, generator=generator)
-    v = torch.randn(2, 5, 2, dtype=torch.float64, generator=generator)
-    allowed = None
-    if mask_mode != "none":
-        allowed = torch.tensor([[True, False, True, False, False],
-                                [True, True, False, False, True],
-                                [False, False, True, True, False]])
-        if mask_mode == "per_batch":
-            allowed = torch.stack([allowed, allowed.flip(-1)])
-    actual, weights = lesson["scaled_attention"](q, k, v, allowed)
-    expected = torch.nn.functional.scaled_dot_product_attention(q, k, v, attn_mask=allowed, dropout_p=0.0)
-    torch.testing.assert_close(actual, expected, rtol=1e-10, atol=1e-10)
-    assert tuple(actual.shape) == (2, 3, 2)
-    torch.testing.assert_close(weights.sum(-1), torch.ones(2, 3, dtype=torch.float64))
+    model = lesson["rnn"]
+    inputs = lesson["rnn_inputs"][:, :length].clone().requires_grad_()
+    initial = lesson["rnn_initial"].clone().requires_grad_()
+    actual, final = lesson["tanh_recurrence"](
+        inputs, initial, model.weight_ih_l0, model.weight_hh_l0,
+        model.bias_ih_l0 + model.bias_hh_l0)
+    expected, expected_final = model(inputs, initial.unsqueeze(0))
+    torch.testing.assert_close(actual, expected, rtol=1e-12, atol=1e-12)
+    torch.testing.assert_close(final, expected_final[0], rtol=1e-12, atol=1e-12)
+    parameters = (inputs, initial, *model.parameters())
+    grad_actual = torch.autograd.grad(actual.square().sum(), parameters)
+    grad_expected = torch.autograd.grad(expected.square().sum(), parameters)
+    for left, right in zip(grad_actual, grad_expected):
+        torch.testing.assert_close(left, right, rtol=1e-11, atol=1e-11)
 
 
-def test_single_allowed_key_returns_its_value(lesson):
+def test_lstm_cell_arithmetic_and_gate_extremes(lesson):
+    assert lesson["next_cell"].item() == 1.25
+    assert lesson["next_hidden"].item() == pytest.approx(0.5 * math.tanh(1.25))
+    assert lesson["direct_cell_derivative"].item() == 0.75
+    update = lesson["supplied_gate_update"]
+    old = lesson["previous_cell"]
+    assert update(old, 0, 0.5, -0.5, 0.5)[0].item() == -0.25
+    assert update(old, 1, 0.5, -0.5, 0.5)[0].item() == 1.75
+    stored, hidden = update(old, 0.75, 0.5, -0.5, 0)
+    assert stored.item() == 1.25 and hidden.item() == 0
+
+
+def test_complete_lstm_cell_matches_library_outputs_and_gradients(lesson):
     torch = lesson["torch"]
-    mask = torch.tensor([[False, True, False]]).expand(3, 3)
-    output, weights = lesson["scaled_attention"](lesson["toy_q"], lesson["toy_k"], lesson["toy_v"], mask)
-    assert torch.equal(output, lesson["toy_v"][:, 1:2].expand(1, 3, 2))
-    assert torch.equal(weights[:, :, 1], torch.ones(1, 3, dtype=torch.float64))
+    cell = lesson["lstm_cell"]
+    inputs, hidden, previous = [lesson[name].clone().requires_grad_()
+                               for name in ("lstm_input", "lstm_hidden", "lstm_previous")]
+    actual_cell, actual_hidden = lesson["explicit_lstm_cell"](inputs, hidden, previous, cell)
+    expected_hidden, expected_cell = cell(inputs, (hidden, previous))
+    torch.testing.assert_close(actual_cell, expected_cell, rtol=1e-12, atol=1e-12)
+    torch.testing.assert_close(actual_hidden, expected_hidden, rtol=1e-12, atol=1e-12)
+    variables = (inputs, hidden, previous, *cell.parameters())
+    actual_grad = torch.autograd.grad(actual_cell.square().sum() + actual_hidden.square().sum(), variables)
+    expected_grad = torch.autograd.grad(expected_cell.square().sum() + expected_hidden.square().sum(), variables)
+    for left, right in zip(actual_grad, expected_grad):
+        torch.testing.assert_close(left, right, rtol=1e-11, atol=1e-11)
 
 
-@pytest.mark.parametrize("failure", ["rank", "key_width", "value_length", "dtype", "mask_type", "mask_shape", "empty_row"])
-def test_invalid_attention_inputs_fail_clearly(lesson, failure):
+def test_decoder_steps_select_different_source_contexts(lesson):
+    assert lesson["alignment_weights"].tolist() == pytest.approx([0.25, 0.75])
+    assert lesson["alignment_context"].tolist() == pytest.approx([2.5, 0.5])
+    assert lesson["next_alignment_weights"].tolist() == pytest.approx([0.75, 0.25])
+    assert lesson["next_alignment_context"].tolist() == pytest.approx([1.5, 1.5])
+
+
+def test_additive_alignment_matches_scalar_reference_and_finite_differences(lesson):
     torch = lesson["torch"]
-    q, k, v = (lesson[name] for name in ["toy_q", "toy_k", "toy_v"])
-    mask = lesson["allowed"].clone()
-    if failure == "rank":
-        q = q[0]
-    elif failure == "key_width":
-        k = k[:, :, :1]
-    elif failure == "value_length":
-        v = v[:, :2]
-    elif failure == "dtype":
-        q = q.float()
-    elif failure == "mask_type":
-        mask = mask.float()
-    elif failure == "mask_shape":
-        mask = torch.ones(4, 4, dtype=torch.bool)
-    elif failure == "empty_row":
-        mask[1] = False
-    with pytest.raises(ValueError):
-        lesson["scaled_attention"](q, k, v, mask)
+    state, source, weight_s, weight_h, vector = lesson["additive_inputs"]
+    # Independent scalar expansion of the two affine projections and tanh score.
+    scores = []
+    for annotation in source.tolist():
+        score = 0
+        for row_s, row_h, coefficient in zip(weight_s.tolist(), weight_h.tolist(), vector.tolist()):
+            score += coefficient * math.tanh(
+                sum(a * b for a, b in zip(row_s, state.tolist()))
+                + sum(a * b for a, b in zip(row_h, annotation)))
+        scores.append(score)
+    weights = [math.exp(s) / sum(math.exp(x) for x in scores) for s in scores]
+    context = [sum(w * row[d] for w, row in zip(weights, source.tolist())) for d in range(2)]
+    assert lesson["additive_scores"].tolist() == pytest.approx(scores)
+    assert lesson["additive_weights"].tolist() == pytest.approx(weights)
+    assert lesson["additive_context"].tolist() == pytest.approx(context)
+    assert all(torch.isfinite(g).all() and g.abs().max() > 0 for g in lesson["additive_gradients"])
+    assert torch.autograd.gradcheck(lambda *args: lesson["additive_attention"](*args)[2],
+                                   lesson["additive_inputs"])
 
 
-def test_gradient_reference_and_finite_differences_agree(lesson):
-    assert lesson["forward_error"] < 1e-10
-    assert max(lesson["gradient_errors"].values()) < 1e-10
-    assert lesson["gradcheck_ok"] is True
-
-
-def test_causality_before_learned_projections_and_negative_control(lesson):
-    assert lesson["prefix_error"] == 0
-    assert lesson["future_gradient_max"] == 0
-    assert lesson["prefix_gradient"][:, :2].abs().max().item() > 0
-    assert lesson["unmasked_prefix_change"] > 1e-3
+def test_one_source_annotation_receives_all_weight(lesson):
     torch = lesson["torch"]
-    output, _ = lesson["head"](lesson["head_inputs"].detach())
-    gradients = torch.autograd.grad(output.square().sum(), tuple(lesson["head"].parameters()))
-    assert all(torch.isfinite(gradient).all() and gradient.abs().max() > 0 for gradient in gradients)
-
-
-def test_resource_arithmetic_and_paired_permutation(lesson):
-    assert lesson["score_mib"] == {512: 1, 1024: 4, 2048: 16}
-    assert lesson["dense_head_flops"][1024] == 268_435_456
-    assert lesson["dense_head_flops"][2048] == 4 * lesson["dense_head_flops"][1024]
-    assert lesson["pair_permutation_error"] < 1e-12
+    state, source, ws, wh, vector = lesson["additive_inputs"]
+    _, weights, context = lesson["additive_attention"](state, source[:1], ws, wh, vector)
+    assert weights.tolist() == [1]
+    assert torch.equal(context, source[0])

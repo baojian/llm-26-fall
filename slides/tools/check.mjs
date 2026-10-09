@@ -235,6 +235,8 @@ try {
   if (folder === 'lecture-04') {
     assert.equal(await page.locator('#shape-ledger tbody tr:last-child td').count(), 2);
     assert.equal(await page.locator('#shape-ledger tbody tr:last-child .katex').count(), 1, 'Render vocabulary bars inside the table as math.');
+  }
+  if (folder === 'lecture-05') {
     await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('attention-demo')).h));
     const graph = page.locator('#attention-visual');
     const initialDescription = await graph.getAttribute('aria-label');

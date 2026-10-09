@@ -19,7 +19,7 @@ Allow 1 minute. Saturday make-up class. Three 45-minute periods, with 15 minutes
 
 **How does attention select useful context, and how does it lead to the Transformer?**
 
-- Connect the encoder–decoder bottleneck to learned alignment.
+- Extend recurrent alignment to scaled dot-product self-attention.
 - Trace multiple heads and the complete decoder block.
 - Explain positions, residual paths, normalization, and the FFN.
 - Check a small model's parameters, gradients, and causality.
@@ -35,83 +35,48 @@ Allow 2 minutes. The notebook contains the full code; slides isolate the importa
 ## Outline
 
 <ul class="outline-topics">
-<li aria-current="step">From recurrence to attention</li>
+<li aria-current="step">Self-attention and multiple heads</li>
 <li>Positions and Transformer blocks</li>
 <li>A working language model</li>
 </ul>
 
-<p class="caption">Period 1 · 45 minutes, including E01</p>
+<p class="caption">Period 1 · 45 minutes, including P01 and E01</p>
 
 Note:
-Allow 1 minute. The revised first-four-lecture recap ends with RNNs, LSTMs, and their limitations. Introduce attention here without requiring students to have studied the attention extension in the published Lecture 04 deck. Start from recurrent context, build one head numerically, and then introduce multiple projections.
+Allow 1 minute. Recall Lecture 04's additive alignment briefly, then teach Q/K/V, scaled dot products, causal masking, and multiple heads. Single-head calculations and causal verification begin here.
 
 ---
 
-<!-- .slide: id="recurrence-limits" -->
+<!-- .slide: id="recurrent-attention-recap" -->
 
-## A recurrent state carries the past forward
+## Recall recurrent encoder–decoder attention
 
-$$h_t=f(h_{t-1},x_t)$$
+$$e_{t,j}=a(s_{t-1},h_j),\qquad c_t=\sum_j\alpha_{t,j}h_j$$
 
-- Computing $h_t$ requires the previous state.
-- Distant information passes through many recurrent steps.
-- LSTM gates help retain information, but the recurrence remains.
-
-<p class="caption">The next step: let a decoder select from several source states.</p>
+- The query comes from the previous decoder state.
+- The source annotations come from the recurrent encoder.
+- Softmax over source scores gives $\alpha_{t,j}$.
+- The whole source is available at each target step.
 
 Note:
-Allow 2 minutes. Recap Lecture 04 rather than deriving LSTM gates again. Sequential state dependencies restrict parallelism across positions in a conventional RNN; long paths can make credit assignment difficult. These are architectural and optimization considerations, not a claim that RNNs cannot learn long dependencies. Sources: 2025 slides 3–8 and 84; Bahdanau et al. (ICLR 2015), §§2–3, https://arxiv.org/abs/1409.0473; Vaswani et al., §4.
+Allow 2 minutes. Retrieve Lecture 04's encoder–decoder story without rederiving recurrence or additive alignment. Bahdanau's alignment score is an additive network. Its source and target indices refer to different sequences. This lecture changes the score function and develops self-attention. Source: Bahdanau et al., §3 and Appendix A.1.2, https://arxiv.org/abs/1409.0473.
 
 ---
 
-<!-- .slide: id="encoder-bottleneck" -->
+<!-- .slide: id="recurrent-and-self-attention" -->
 
-## Replace one summary with selectable context
+## Recurrent alignment and self-attention
 
-<img class="diagram" src="assets/encoder-context.svg" data-excalidraw-source="assets/encoder-context.excalidraw" alt="A fixed-context encoder compresses the source into one context vector for the decoder. With attention, the decoder selects a weighted combination of encoder states for each target step.">
+| Component | Bahdanau alignment | Transformer self-attention |
+| --- | --- | --- |
+| Query source | Previous decoder state | Current sequence state |
+| Context source | Encoder annotations | The same sequence |
+| Score | Additive network | Scaled dot product |
 
-<p class="caption">The context is still a vector, but its weights can change with the target step.</p>
-
-Note:
-Allow 3 minutes. The fixed-context case uses a final recurrent state as its summary. The attentional case keeps the source states available and produces a separate context c_t for each target step. In Bahdanau et al., source annotations come from a bidirectional RNN; the decoder and alignment model are trained jointly. This is still a recurrent encoder–decoder, before the Transformer removes recurrence from its blocks. Sources: 2025 slides 3–8; Bahdanau et al., §§2.1–3.1.
-
----
-
-<!-- .slide: id="learned-alignment" -->
-
-## Learn which source states to combine
-
-$$e_{t,s}=a(q_t,h_s),\qquad
-\alpha_{t,s}=\frac{\exp(e_{t,s})}{\sum_j\exp(e_{t,j})}$$
-
-$$c_t=\sum_s\alpha_{t,s}h_s$$
-
-$q_t$ is the decoder query; $h_s$ is a source state.
-
-The alignment function $a$ is learned with the translation model.
+Both normalize scores and combine source vectors.
 
 Note:
-Allow 3 minutes. Softmax is over source positions s. Bahdanau's query is the previous decoder state; its alignment network is additive, for example v^T tanh(W_q q_t + W_h h_s). Luong et al. (§3.1) compare dot, general/bilinear, and concat scores; their query uses the current decoder state. Do not conflate those state-update conventions. The common mechanism is score, normalize, and combine. Gradients pass through the weights; hard alignment labels are not required by these translation objectives. Sources: Bahdanau et al., §3.1 and Appendix A.1.2; Luong et al., §3, https://aclanthology.org/D15-1166/.
-
----
-
-<!-- .slide: id="alignment-numbers" -->
-
-## Calculate one weighted context
-
-Use an unscaled dot score, $q=(1,0)$, and $h_1=(0,1)$, $h_2=(1,0)$.
-
-| Source state | Score $q^\top h_s$ | Softmax weight |
-| --- | ---: | ---: |
-| $h_1$ | 0 | 0.2689 |
-| $h_2$ | 1 | 0.7311 |
-
-$$c=0.2689h_1+0.7311h_2\approx(0.7311,\ 0.2689)$$
-
-<p class="caption">Invented vectors; dot scoring is one of Luong et al.'s alignment choices.</p>
-
-Note:
-Allow 3 minutes. Compute exp(0)/(exp(0)+exp(1)) and its complement, then combine both coordinates. The source states serve as both keys and values here. This example isolates aggregation; the vectors are supplied rather than produced by trained encoders. The notebook reproduces the exact calculation before E01. The Transformer head next adds learned Q/K/V projections and sqrt(d_k) scaling. Sources: Luong et al., §3.1; 2025 source slides 8 and 25.
+Allow 2 minutes. The Transformer also supports cross-attention; the table describes its self-attention operation specifically. We next name the separate Q/K/V projections. Reusing the aggregation idea does not make the two architectures identical. Sources: Bahdanau et al., §3; Vaswani et al., §3.2.
 
 ---
 
@@ -194,6 +159,49 @@ Note:
 Allow 4 minutes. This is the same supplied query and the same K/V table, now with causal visibility. Slot 1 may read its own input while predicting slot 2's target: the input and next-token target are shifted. Setting the future weight to zero after the unmasked softmax would leave total weight about 0.5777 and is not the same operation. Explicit renormalization could repair that construction, but masking logits first is the direct stable implementation. Every row needs at least one allowed key; all-negative-infinity logits yield undefined softmax. The notebook verifies both weights, the future-value perturbation, an unmasked control, and zero derivatives to the future key and value. Source: Vaswani et al., §3.2.3.
 
 Use the first 3 minutes for the numerical example and its counterexample. In the final minute, open the prepared Transformer Explainer tab: https://poloclub.github.io/transformer-explainer/. Follow one query through its allowed keys, normalized weights, and weighted values. Its GPT-2 small model has different dimensions and parameters from our toy head. Keep sampling controls for Lecture 06. If the page is not ready within 10 seconds, continue with this slide and the local single-head-mask notebook cell. Return here before advancing.
+
+---
+
+<!-- .slide: id="attention-demo" -->
+
+## Causal attention in numbers
+
+<div class="plot" id="attention-visual" data-plotly="assets/attention-demo.json" role="img" aria-live="polite" aria-label="Causal attention weights for three queries. Query 2 weights are 0.7311, 0.2689, and zero; its output is 0.7311, 0.5379."></div>
+
+<form class="demo-form" id="attention-controls" aria-label="Attention controls">
+<button type="button" data-query="0" aria-label="Select query 1">Q1</button>
+<button type="button" data-query="1" aria-label="Select query 2">Q2</button>
+<button type="button" data-query="2" aria-label="Select query 3">Q3</button>
+<button type="button" id="attention-mask">Mask: on</button>
+<button type="button" id="attention-value">Change V3</button>
+<button type="button" id="attention-reset">Reset</button>
+</form>
+
+Note:
+Allow 3 minutes. The chart uses one-based labels Q1–Q3; Q2 is input slot 1 in the preceding slides. Use the same key/value vectors as the worked example. Ask for a prediction before changing V3 by (10,10), then toggle the mask. The selected earlier output is unchanged with the mask and changes without it. Reset restores the printable state. This isolates the value path; E05 later perturbs an input before every projection.
+
+---
+
+<!-- .slide: class="exercise" id="practice-01" -->
+
+<p class="exercise-meta">Practice P01 · 4 minutes · calculate, then check</p>
+
+## A masked weighted sum
+
+A query at slot 1 has scaled scores $(0,\log 3,\log 2)$.
+Values at slots 0–2 are $(2,0)$, $(0,4)$, and $(9,9)$.
+
+Find its causal weights and output. Can changing only the future value change that output?
+
+<div class="answer fragment">
+
+Weights $(1/4,3/4,0)$; output $(0.5,3)$.
+The future value has zero weight.
+
+</div>
+
+Note:
+Allow 4 minutes. The scores are already scaled. Keep slots 0 and 1, replace slot 2's score by negative infinity, and normalize the allowed scores. Have students calculate before revealing the answer. The single-head-practice notebook cell verifies the weights, output, and future-value perturbation. This is ungraded practice.
 
 ---
 
@@ -347,7 +355,7 @@ Allow 5 minutes. Notebook E01 runs the independently expressed head reference in
 ## Outline
 
 <ul class="outline-topics">
-<li>From recurrence to attention</li>
+<li>Self-attention and multiple heads</li>
 <li aria-current="step">Positions and Transformer blocks</li>
 <li>A working language model</li>
 </ul>
@@ -663,7 +671,7 @@ Allow 5 minutes. Verify 4432 unique trainable parameters, or 4544 with an untied
 ## Outline
 
 <ul class="outline-topics">
-<li>From recurrence to attention</li>
+<li>Self-attention and multiple heads</li>
 <li>Positions and Transformer blocks</li>
 <li aria-current="step">A working language model</li>
 </ul>

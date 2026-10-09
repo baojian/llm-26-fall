@@ -52,7 +52,7 @@ export function figureFor(fixture, state) {
         annotation(0.9, `Scores: ${vector(result.scores[selected], 0)}`),
         annotation(0.63, `Weights: ${vector(result.weights[selected], 2)}`),
         annotation(0.3, `Output: ${vector(result.outputs[selected], 3)}`, 28),
-        annotation(-0.02, state.changed ? 'V3 = (13, 11)' : 'V3 = (3, 1)'),
+        annotation(-0.02, state.changed ? 'V3 = (12, 11)' : 'V3 = (2, 1)'),
       ],
       shapes: [{ type: 'rect', x0: 0.5, x1: 3.5, y0: selected + 0.5, y1: selected + 1.5,
         line: { color: '#28673f', width: 4 }, fillcolor: 'rgba(0,0,0,0)' }],
@@ -66,5 +66,5 @@ export function describeState(fixture, state) {
   return `Query ${state.query + 1}. Causal mask ${state.causal ? 'on' : 'off'}. `
     + `Weights ${result.weights[state.query].map(value => value.toFixed(4)).join(', ')}. `
     + `Output ${result.outputs[state.query].map(value => value.toFixed(4)).join(', ')}. `
-    + `Value 3 ${state.changed ? 'changed to 13, 11' : 'is 3, 1'}.`;
+    + `Value 3 ${state.changed ? 'changed to 12, 11' : 'is 2, 1'}.`;
 }

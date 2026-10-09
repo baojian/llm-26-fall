@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
-import { computeAttention, describeState, figureFor, initialState } from '../slides/lecture-04/attention-demo.js';
+import { computeAttention, describeState, figureFor, initialState } from '../slides/lecture-05/attention-demo.js';
 
-const fixture = JSON.parse(await readFile(new URL('../slides/lecture-04/assets/attention-values.json', import.meta.url), 'utf8'));
+const fixture = JSON.parse(await readFile(new URL('../slides/lecture-05/assets/attention-values.json', import.meta.url), 'utf8'));
 const close = (actual, expected) => assert.ok(Math.abs(actual - expected) < 1e-12, `${actual} != ${expected}`);
 
 test('the initial masked example matches the independent hand calculation', () => {
@@ -40,8 +40,8 @@ test('every row stays normalized in all control states and the fixture is unchan
 });
 
 test('the printable initial figure and accessible description match the computation', async () => {
-  const stored = JSON.parse(await readFile(new URL('../slides/lecture-04/assets/attention-demo.json', import.meta.url), 'utf8'));
+  const stored = JSON.parse(await readFile(new URL('../slides/lecture-05/assets/attention-demo.json', import.meta.url), 'utf8'));
   assert.deepEqual(stored, figureFor(fixture, initialState));
   assert.match(describeState(fixture, initialState), /Query 2.*mask on.*0.7311, 0.5379/);
-  assert.match(describeState(fixture, { ...initialState, query: 2, changed: true }), /Query 3.*changed to 13, 11/);
+  assert.match(describeState(fixture, { ...initialState, query: 2, changed: true }), /Query 3.*changed to 12, 11/);
 });

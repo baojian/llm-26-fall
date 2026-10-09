@@ -5,9 +5,9 @@ Time and room follow the university notice.
 
 **Central question:** How does attention select useful context, and how does it lead to the Transformer?
 
-This package contains **55 slides**, five ungraded classroom exercises, an
-offline CPU notebook, five editable diagrams, and an interactive position
-example. It follows the shared Lecture 01–04 template: title and byline,
+This package contains **55 slides**, five ungraded E exercises, short practice P01, an
+offline CPU notebook, five editable diagrams, and interactive causal and position
+examples. It follows the shared Lecture 01–04 template: title and byline,
 typography, repeating outlines, answer fragments, notes, and notebook launcher.
 Preparation is tracked in [issue #259](https://github.com/baojian/llm-26-fall/issues/259).
 
@@ -19,14 +19,13 @@ explain positions, residual paths, LayerNorm, and the FFN; count trainable
 parameters; verify full-model causality and gradients; and interpret a
 controlled component comparison with stated limits.
 
-The first-four-lecture recap ends with RNNs, LSTMs, and their limitations.
-Attention begins here: no earlier attention implementation is required.
-Lecture 03 supplies embedding lookup, raw-logit cross-entropy, autograd, and
-weight tying; Lecture 01 supplies BPE. We reuse the two-sentence toy corpus
-from Lecture 04 and restate it in full. The published Lecture 04 deck's
-attention extension is available as an additional reference.
+Lecture 04 develops recurrent memory and Bahdanau's additive alignment in an
+RNN encoder–decoder. Slides 4–5 retrieve that mechanism in four minutes.
+Q/K/V projections, scaled dot products, and causal self-attention are introduced
+here. Lecture 03 supplies embeddings, raw-logit loss, autograd, and weight tying.
+The two-sentence toy corpus is restated in full.
 
-All students have the same practices and expectations. E01–E05 are ungraded.
+All students have the same practices and expectations. P01 and E01–E05 are ungraded.
 The public package contains no current Quiz 2 questions, reference solutions
 for graded assignments, hidden tests, or student data. Quiz 2 uses the published
 15-minute slot and is administered separately through the instructor workflow.
@@ -41,8 +40,10 @@ discussion and exercise time with students.
 | Period | Minutes | Slides | Teaching and activity |
 | --- | --- | --- | --- |
 | 1 | 0–4 | 1–3 | Objectives and outline |
-| 1 | 4–15 | 4–7 | RNN/LSTM limits, encoder bottleneck, learned alignment, and a weighted context |
-| 1 | 15–28 | 8–11 | Q/K/V roles, full head equation, scaled numerical example, and masking before softmax; final minute of slide 11 uses Transformer Explainer |
+| 1 | 4–8 | 4–5 | Retrieve recurrent alignment; distinguish it from self-attention |
+| 1 | 8–21 | 6–9 | Q/K/V, head equation, scaled example, mask-before-softmax; final minute of slide 9 uses Transformer Explainer |
+| 1 | 21–24 | 10 | Interactive query/mask/value controls moved from Lecture 04 |
+| 1 | 24–28 | 11 | P01, 4 min: masked weights, output, and a future-value change |
 | 1 | 28–40 | 12–18 | Architecture families; multiple projections; split/merge axes and code |
 | 1 | 40–45 | 19 | **E01, 5 min:** compare shapes, values, and gradients against a head loop |
 | 2 | 0–8 | 20–25 | Outline; permutations; sinusoidal and learned positions; browser demonstration |
@@ -61,7 +62,7 @@ discussion and exercise time with students.
 | 3 | 30–45 | Separate private material | **Quiz 2, 15 min** |
 
 Speaker-note allocations sum to **45 + 45 + 30 minutes of teaching**.
-The five exercises are included in those totals. The quiz adds 15 minutes,
+The five E exercises and P01 are included in those totals. The quiz adds 15 minutes,
 for the published 135-minute class. This is a timed plan, not an observed
 classroom rehearsal.
 
@@ -82,7 +83,7 @@ before class. Each has a one-minute budget within the 120 teaching minutes:
 
 | Slide | Allocation within the slide | Prompt | Local fallback |
 | --- | --- | --- | --- |
-| 11, `mask-before-softmax` | 3 min explanation + 1 min Transformer Explainer | Which keys remain available to this query, and where do its weighted values go? | The displayed calculation and `single-head-mask` notebook cell |
+| 9, `mask-before-softmax` | 3 min explanation + 1 min Transformer Explainer | Which keys remain available to this query, and where do its weighted values go? | The displayed calculation and `single-head-mask` notebook cell |
 | 35, `full-model` | 3 min diagram + 1 min Bycroft | Which axis is tokens, which is features, and where are vocabulary logits produced? | The decoder diagram and `decoder-model` notebook cell |
 | 51, `attention-cost` | 1 min storage calculation + 1 min LLM-Visualized | After one token is chosen, what changes in the next forward pass? | Slides 35 and 38, tracing the extended prefix |
 
@@ -112,10 +113,12 @@ before executing the next cell or revealing the slide answer.
 | E04 | 36 / `exercise-04` | `decoder-model`, `e04-count` | 2,112 parameters per block; 4,432 for the tied model, 4,544 untied; tying reuses the same Parameter |
 | E05 | 45 / `exercise-05` | `e05-causality`, `e05-fit` | Logits `(2,4,7)`; future perturbation leaves prefix logits unchanged; zero future-state gradient; an unmasked control leaks; reference-run mean loss below 0.20 after 200 updates |
 
-`alignment-example` reproduces slide 7 before E01: scores `(0,1)`, weights
-about `(0.2689,0.7311)`, and context `(0.7311,0.2689)`.
+`single-head-practice` accompanies P01 on slide 11: already-scaled scores
+`(0, log(3), log(2))` and values `(2,0)`, `(0,4)`, `(9,9)` give causal
+weights `(1/4,3/4,0)` and output `(0.5,3)` at slot 1. The future-value
+perturbation leaves that output unchanged.
 
-`single-head-example` and `single-head-mask` reproduce slides 10–11:
+`single-head-example` and `single-head-mask` reproduce slides 8–9:
 scaled scores `(1,0,1)` yield weights `(0.4223,0.1554,0.4223)` and output
 `(1.2670,0.7330)`. Masking future slot 2 gives weights `(0.7311,0.2689,0)`
 and output `(0.7311,0.5379)`. Perturbing the future value has no effect;
@@ -170,17 +173,17 @@ numbers refer to this 55-slide version. Optional material is retained in
 | 2025 source slide(s) | Treatment and destination |
 | --- | --- |
 | 1–2 | Replace course/date/title and outlines; current 1–3, 20, 37 |
-| 3–8 | Retain recurrent bottleneck and learned alignment; 4–7, 12, 40 and reading “From a context vector to attention” |
+| 3–8 | Develop recurrent bottleneck and additive alignment in Lecture 04; recap in 4–5, use in 12/40, and retain reading “From a context vector to attention” |
 | 9 | Replace repeated outline with the shared active-topic outline |
 | 10–16 | Move noisy-signal weighted-average analogy to optional reading |
 | 17 | Replace repeated outline with the shared active-topic outline |
-| 18–20 | Condense proximity-versus-context examples into slide 8 notes and contextualization reading |
+| 18–20 | Condense proximity-versus-context examples into slide 6 notes and contextualization reading |
 | 21 | Treat embedding lookup as a Lecture 03 prerequisite; omit invented semantic-coordinate labels |
-| 22–28 | Introduce Q/K/V and supply transparent numerical examples; 7–11; keep the invented bank/river permutation example in 25–26 |
-| 29 | Correct dictionary lookup and compatible Q/K dimensions; 9 notes |
-| 30–31 | Teach one head from the beginning; 8–11 and the new notebook walkthrough |
+| 22–28 | Introduce Q/K/V and supply transparent numerical examples; 6–11; keep the invented bank/river permutation example in 25–26 |
+| 29 | Correct dictionary lookup and compatible Q/K dimensions; 7 notes |
+| 30–31 | Teach one head from the beginning; 6–11 and the notebook walkthrough |
 | 32–35 | Retain multi-head motivation and projections; 13–19; remove guaranteed roles and parameter-growth implication |
-| 36 | Condense recap into 9 and 14 |
+| 36 | Condense recap into 7 and 14 |
 | 37 | Replace repeated outline with the shared active-topic outline |
 | 38–41 | Retain original architecture context; 12, 14–15, 35, 40, 52; draw the implemented decoder explicitly |
 | 42 | Correct requirement for pretrained embeddings; 24, notebook, tokenization reading |
@@ -190,7 +193,7 @@ numbers refer to this 55-slide version. Optional material is retained in
 | 55 | Learned and sinusoidal positions in 21–26; RoPE derivation and NoPos caveat in optional reading |
 | 56–57 | Consolidate architecture; retain jointly trained token/position tables; 24, 35 |
 | 58 | Retain teacher forcing and shifted targets using the shared toy corpus; 38–39 |
-| 59–61 | Teach scaling and mask-before-softmax explicitly; 9–11, 18, 39, E05 |
+| 59–61 | Teach scaling and mask-before-softmax explicitly; 7–11, 18, 39, E05 |
 | 62–63 | Move original attention visualizations to reading with interpretation limits |
 | 64 | Retain head-pruning study as optional reading, scoped to its experiments |
 | 65–67 | Retain residuals and LayerNorm; 27–30, 33; distinguish pre/post-LN and avoid stability guarantees |
@@ -244,7 +247,7 @@ uv run python -m pytest tests/
 ```
 
 Inspect every slide image and PDF page. Browser checks cover three viewport
-sizes, all four position/swap states, reset, keyboard activation, and answer
+sizes, query/mask/value controls, all four position/swap states, reset, keyboard activation, and answer
 fragments. Numerical tests execute the notebook offline, compare head outputs
 and gradients against PyTorch, and verify the model's count and causality.
 The measured curve preserves every update rather than hiding transient spikes.

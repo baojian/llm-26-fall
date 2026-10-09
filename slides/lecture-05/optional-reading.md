@@ -31,8 +31,8 @@ site cannot load, use the matching slide and notebook calculation.
 An encoder–decoder system maps a source sequence to a target sequence. In a
 recurrent system, using only the last encoder state forces that state to carry
 all the information needed by the decoder. Attention lets each decoder query
-combine several encoder states. Lecture 05 introduces this motivation and the weighted-context calculation,
-then distinguishes encoder self-attention, decoder self-attention, and
+combine several encoder states. Lecture 04 develops this recurrent motivation and the weighted-context calculation.
+Lecture 05 briefly recalls it, then distinguishes encoder self-attention, decoder self-attention, and
 decoder-to-encoder cross-attention. In cross-attention, Q comes from the
 decoder, while K and V come from the encoder. See
 [Vaswani et al., §§3.1–3.2.3](https://arxiv.org/abs/1706.03762).

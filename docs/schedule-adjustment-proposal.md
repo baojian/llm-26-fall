@@ -24,7 +24,7 @@ A1's September 30 deadline remains in place.
 
 | Lecture | Topic | Previous date | Approved date |
 | ---: | --- | --- | --- |
-| 04 | Neural language models and attention | Sep 30 | Sep 30 |
+| 04 | Neural language models and recurrent attention | Sep 30 | Sep 30 |
 | 05 | The Transformer as a working model | Oct 14 | **Sat, Oct 10** |
 | 06 | Pretraining and decoding | Oct 21 | Oct 14 |
 | 07 | Data preparation and quality | Oct 28 | Oct 21 |

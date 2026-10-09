@@ -237,19 +237,19 @@
       <tr data-start="2026-09-27">
         <td class="num">4</td>
         <td class="date">Sep 30</td>
-        <td><strong>Neural language models and attention</strong><span class="lens">How can a model select useful context instead of compressing everything into one state?</span></td>
-        <td>Feedforward LM training loop; a brief RNN/LSTM motivation; attention scores, softmax, weighted values, and masking.
-          <div class="practice"><strong>Practice:</strong> Overfit a tiny batch and verify an attention head's outputs and gradients against a reference.</div>
+        <td><strong>Neural language models and recurrent attention</strong><span class="lens">How can a model retain and select useful context?</span></td>
+        <td>Feedforward LM training; recurrent states and gradients; LSTM memory; additive alignment in an RNN encoder–decoder.
+          <div class="practice"><strong>Practice:</strong> Fit a tiny batch, trace recurrent memory and gates, and calculate a weighted source context.</div>
           <div class="materials"><strong>Slides:</strong> <a href="slides/lecture-04/" data-local-path="/slides/lecture-04/" target="_blank" rel="noopener noreferrer">lecture-04-slides</a></div>
           <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-04" data-local-path="/slides/shared/notebook.html?lecture=lecture-04" target="_blank" rel="noopener noreferrer">lecture-04-exercise.ipynb</a></div>
-          <div class="materials"><strong>References:</strong> <a href="https://www.jmlr.org/papers/v3/bengio03a.html" target="_blank" rel="noopener noreferrer">Bengio et al. (2003), Section 2</a> · <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener noreferrer">Attention Is All You Need, Sections 3.2.1 and 3.2.3</a> · <a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py" target="_blank" rel="noopener noreferrer">CS336 Lecture 2: PyTorch and resource accounting</a></div></td>
+          <div class="materials"><strong>References:</strong> <a href="https://www.jmlr.org/papers/v3/bengio03a.html" target="_blank" rel="noopener noreferrer">Bengio et al. (2003), Section 2</a> · <a href="https://arxiv.org/abs/1409.0473" target="_blank" rel="noopener noreferrer">Bahdanau et al. (2014/2015), Sections 2–3</a> · <a href="https://proceedings.mlr.press/v28/pascanu13.html" target="_blank" rel="noopener noreferrer">Pascanu et al. (2013), recurrent gradients</a></div></td>
         <td><a href="https://github.com/baojian/llm-26-fall/issues/140" target="_blank" rel="noopener noreferrer">A1 due</a><div class="materials">23:59 (Asia/Shanghai)<br><a href="https://elearning.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">Submit on eLearning</a></div></td>
       </tr>
       <tr id="lecture-05" data-start="2026-10-04">
         <td class="num">5</td>
         <td class="date">Oct 10<br><span class="muted">Saturday</span></td>
         <td><strong>Attention and the Transformer</strong><span class="lens">How does attention select useful context, and how does it lead to the Transformer?</span></td>
-        <td>From RNN/LSTM limitations and the encoder–decoder bottleneck to learned alignment; queries, keys, values, and softmax; causal self-attention; multi-head attention, positions, and Transformer blocks.
+        <td>Brief recurrent-alignment recap; queries, keys, values, and scaled dot products; causal self-attention; multi-head attention, positions, and Transformer blocks.
           <div class="practice"><strong>Practice:</strong> Compute attention weights and outputs on a small example, verify causal masking, and trace shapes through a decoder block.</div>
           <div class="materials"><strong>Slides:</strong> <a href="slides/lecture-05/" data-local-path="/slides/lecture-05/" target="_blank" rel="noopener noreferrer">lecture-05-slides</a></div>
           <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-05" data-local-path="/slides/shared/notebook.html?lecture=lecture-05" target="_blank" rel="noopener noreferrer">lecture-05-exercise.ipynb</a></div>

@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { initialState, computePositionExample, sinusoidalPositions, figureFor, describeState }
   from '../slides/lecture-05/position-demo.js';
-import { initialize } from '../slides/lecture-05/demo.js';
+import { initializePositionDemo as initialize } from '../slides/lecture-05/demo.js';
 
 const asset = name => new URL('../slides/lecture-05/assets/' + name, import.meta.url);
 const fixture = JSON.parse(await readFile(asset('position-values.json'), 'utf8'));

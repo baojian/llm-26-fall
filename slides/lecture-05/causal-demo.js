@@ -1,6 +1,6 @@
 import { initialState, computeAttention, figureFor, describeState } from './attention-demo.js';
 
-export async function initialize() {
+export async function initializeCausalDemo() {
   const graph = document.getElementById('attention-visual');
   const response = await fetch(new URL('./assets/attention-values.json', import.meta.url));
   if (!response.ok) throw new Error('The local attention example could not be loaded.');
@@ -29,8 +29,7 @@ export async function initialize() {
   function update(change) {
     state = { ...state, ...change };
     const snapshot = { ...state };
-    queue = queue.then(() => render(snapshot));
-    queue.catch(error => {
+    queue = queue.then(() => render(snapshot)).catch(error => {
       graph.setAttribute('aria-label', `The attention chart could not update: ${error.message}`);
       console.error(error);
     });

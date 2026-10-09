@@ -92,13 +92,6 @@ def test_toy_data_is_shifted_and_floor_is_log2_over_4(lesson):
     assert -sum(map(math.log, probabilities)) / 8 == pytest.approx(lesson["loss_floor"])
 
 
-def test_alignment_example_matches_the_independent_hand_calculation(lesson):
-    assert lesson["alignment_scores"].tolist() == [0.0, 1.0]
-    weight = math.e / (1 + math.e)
-    assert lesson["alignment_weights"].tolist() == pytest.approx([1 - weight, weight])
-    assert lesson["alignment_context"].tolist() == pytest.approx([weight, 1 - weight])
-
-
 def test_single_head_worked_example_matches_closed_form(lesson):
     denominator = 2 * math.e + 1
     assert lesson["head_scores"].tolist() == pytest.approx([1, 0, 1])
@@ -426,3 +419,15 @@ def test_browser_fixture_and_frequency_plot_agree_with_the_notebook(lesson):
     for trace, frequency in zip(figure["data"], [1, 0.1, 0.01]):
         assert trace["x"] == list(range(32))
         assert trace["y"] == pytest.approx([math.sin(p * frequency) for p in range(32)])
+
+
+def test_masked_practice_and_moved_browser_example(lesson):
+    assert lesson["practice_weights"].tolist() == pytest.approx([0.25, 0.75, 0])
+    assert lesson["practice_output"].tolist() == pytest.approx([0.5, 3])
+    fixture = json.loads((LECTURE / "assets/attention-values.json").read_text())
+    q, k, v = [torch.tensor(fixture[name], dtype=torch.float64) for name in ("query", "key", "value")]
+    allowed = torch.ones(3, 3, dtype=torch.bool).tril()
+    weights = ((q @ k.T / math.sqrt(2)).masked_fill(~allowed, -torch.inf)).softmax(-1)
+    assert weights[1].tolist() == pytest.approx([math.e / (1 + math.e), 1 / (1 + math.e), 0])
+    assert (weights @ v)[1].tolist() == pytest.approx([0.7310585786300049, 0.5378828427399903])
+    assert fixture["value"] == [[1, 0], [0, 2], [2, 1]]

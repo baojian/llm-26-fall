@@ -11,6 +11,7 @@ figure screenshots, datasets, model weights, or student submissions are copied.
 | `residual-block.svg` and `.excalidraw` | Two pre-LN residual sublayers; distinguishes normalization placement from the original post-LN model |
 | `decoder-model.svg` and `.excalidraw` | Token/position embeddings, two decoder blocks, final norm, and tied vocabulary readout used in the notebook |
 | `causal-mask.svg` and `.excalidraw` | The four input slots and shifted next-token targets; the diagonal is allowed |
+| `attention-values.json` and `attention-demo.json` | Three-position causal example moved from Lecture 04; values updated to match the Lecture 05 worked example |
 | `position-values.json` | Four word labels, identity-matrix vectors, and the permutation `[3,1,2,0]`; matches E02 |
 | `position-demo.json` | Printable initial Plotly state: original order, positions off |
 | `position-frequencies.json` | Formula-generated sine coordinates for width 8 over positions 0–31; frequencies 1, 0.1, and 0.01 radians per position |
@@ -26,6 +27,17 @@ classroom browser loads only the SVG. Sources for the adapted concepts are
 [Xiong et al. (2020)](https://proceedings.mlr.press/v119/xiong20b.html), and
 the instructor's 2025 Lecture 05. The [source map](../teaching-plan.md#map-from-all-85-source-slides)
 accounts for that whole deck.
+
+## Browser causal example
+
+[attention-demo.js](../attention-demo.js) computes the head and figure;
+[causal-demo.js](../causal-demo.js) wires the query/mask/value/reset controls.
+Query 2 uses one-based chart labels and corresponds to zero-based slot 1 in
+slides 8–9. Its scores are `(1,0,1)` and values `(1,0)`, `(0,2)`, `(2,1)`.
+The initial masked output is `(0.731059,0.537883)`. Changing V3 adds `(10,10)`;
+Q2 is unchanged with the mask and changes without it. Reset restores the initial
+state, also used for printing. All assets are local and both demos initialize
+through [demo.js](../demo.js).
 
 ## Browser position example
 

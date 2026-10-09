@@ -1,6 +1,12 @@
+import { initializeCausalDemo } from './causal-demo.js';
 import { initialState, computePositionExample, figureFor, describeState } from './position-demo.js';
 
 export async function initialize() {
+  await initializeCausalDemo();
+  await initializePositionDemo();
+}
+
+export async function initializePositionDemo() {
   const graph = document.getElementById('position-visual');
   const response = await fetch(new URL('./assets/position-values.json', import.meta.url));
   if (!response.ok) throw new Error('The local position example could not be loaded.');
