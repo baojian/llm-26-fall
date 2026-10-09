@@ -222,7 +222,7 @@ window.courseTranslations = {
   "Week 12 · Progress update (up to two pages), due November 25.": "第 12 周 · 进展报告（最多两页），11 月 25 日截止。",
   "A working baseline, inspected evaluation examples, initial measurements, and one controlled comparison. Discuss a finding or failure, a competing explanation, and the next experiment. Staff provide written feedback; incorporate it in the final report.": "提供可运行的基线、检查过的评测样例、初步测量结果和一次对照实验。讨论一项发现或失败、一种不同解释，以及下一步实验。教学团队提供书面反馈，需将其融入最终报告。",
   "Week 17 · Final submission, due December 30.": "第 17 周 · 最终提交，12 月 30 日截止。",
-  "The main report is limited to four pages; references and appendices have no page limit. Include code and a concise experiment record. Use the": "报告正文最多四页，参考文献与附录不限页数。另附代码和简明实验记录。使用",
+  "The main report is limited to six pages; references and appendices have no page limit. Include code and a concise experiment record. Use the": "报告正文最多六页，参考文献与附录不限页数。另附代码和简明实验记录。使用",
   "ACL template": "ACL 模板",
   ". Checkpoint text can be revised into the report.": "。阶段材料可修改后纳入最终报告。",
   "No slides, posters, oral defenses, or group deliverables are required. Peer discussion is welcome; each student submits and is assessed on their own work.": "不要求幻灯片、海报、口头答辩或小组交付物。欢迎同学间讨论，但每人提交个人工作并独立接受考核。",

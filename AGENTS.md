@@ -33,6 +33,11 @@ There are no starred parts, graduate-only extensions, extension bonus points, or
 
 Graded assignments and project deliverables are submitted privately through eLearning. Public assignment releases contain instructions, starter code, supplied data, and public tests. Reference solutions, hidden tests, and grading administration belong in the private instructor repository; student submissions and grades must not be committed to either repository.
 
+Instructor decision, October 9, 2026: the final individual-project report allows
+up to **six pages of main content**. References and appendices do not count
+toward this limit and have no page limit. Code and a concise experiment record
+are also required. Apply this limit equally to all students.
+
 ## Task Solution Merge Policy — Mandatory
 
 Instructor decision, September 20, 2026: merge student exercise solutions
