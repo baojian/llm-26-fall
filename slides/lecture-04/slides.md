@@ -807,11 +807,9 @@ Allow 3 minutes. The resulting contribution also depends on the vector being wei
 
 <p id="continuation"><strong>Lecture 05:</strong> Q/K/V, scaled dot products, causal self-attention, and Transformer blocks.</p>
 
-<p class="caption">A1: September 30, 23:59 (Asia/Shanghai) · Submit privately through eLearning.</p>
-
 Note:
 Allow 6 minutes: 3 for review, 1 for the continuation, and 2 for readings and questions. Expected responses: earlier inputs affect the carried state; the cell stores information and the output gate controls exposure; the previous decoder state changes alignment scores over the same source annotations. Ask students to distinguish the source and target sequences in the third answer.
 
-Lecture 05 uses a short recurrent-attention recap before developing Q/K/V projections, scaled dot products, causal self-attention, and complete decoder blocks. Preserve the published A1 deadline on this September 30 lecture; this reminder introduces no new requirement.
+Lecture 05 uses a short recurrent-attention recap before developing Q/K/V projections, scaled dot products, causal self-attention, and complete decoder blocks.
 
 Read Bengio §2 for neural language models; Pascanu §2 for recurrent gradients; Bahdanau §§2–3, Appendix A.1.2, and §6.1 for additive alignment and earlier work; and Graves for recurrent generation and handwriting alignment. The core notebook runs offline on CPU. Historical sources describe their own architectures and experiments; our small arithmetic examples are teaching constructions. The paper dates and earlier alignment reference support a scoped attribution rather than a claim that all attention began in 2014.
