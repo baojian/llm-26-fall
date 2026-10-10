@@ -61,3 +61,24 @@ and the regenerated progress board.
 
 The progress board records the final reviewed submissions, including approved
 teaching-team corrections; it is participation feedback, not a graded score.
+
+## October 10, 2026 instructor-demo exception
+
+**Status:** reviewed; awaiting merge of [PR #221](https://github.com/baojian/llm-26-fall/pull/221).
+
+- On October 10, 2026 (Asia/Shanghai), the instructor explicitly requested
+  fixing and merging PR #221 now that the Lecture 01 task has finished.
+  This authorizes this specific corrected instructor demonstration after the
+  completed student batch; the nine-student batch above remains complete.
+- Rechecked `task.toml`, `instruction.md`, and release issue #202: all specify
+  September 30, 2026, 23:59 Asia/Shanghai (UTC+08:00). The current date is
+  strictly after that cutoff. The release issue remains closed.
+- Reviewed PR head: `05e25826315368b8845c002f1b193deb1ff89851`.
+  Only `submissions/baojian.py` differs from `main` in the solution PR.
+- Restored the optional leading ASCII space in the word, digit, and punctuation
+  rules; replaced the intentional-failure comments. The original demo commit,
+  predictions, two personal cases, and explanation are preserved.
+- Validation: 22 selected task checks passed; all 23 isolated public-feedback
+  checks passed; nine focused whitespace, Unicode, and punctuation cases passed.
+  Supplied tests and data are unchanged. GitHub checks must pass on the reviewed
+  head before merge. Record completion and refresh the progress board afterward.
