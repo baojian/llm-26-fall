@@ -35,7 +35,7 @@ class NotebookLauncher:
         self.http = build_opener(ProxyHandler({}), NoRedirect())
 
     def prepare_notebook(self, lecture, notebook=None):
-        if not isinstance(lecture, str) or not re.fullmatch(r"example|lecture-[0-9]{2}|[0-9]{2}-[a-z0-9-]+", lecture):
+        if not isinstance(lecture, str) or not re.fullmatch(r"example|lecture-[0-9]{2}(?:-test)?|[0-9]{2}-[a-z0-9-]+", lecture):
             raise ValueError("Choose a lecture from the course slides.")
         deck = self.root / "slides" / lecture
         metadata_path = deck / "lecture.json"

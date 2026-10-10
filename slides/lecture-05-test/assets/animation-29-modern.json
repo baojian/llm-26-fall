@@ -1,0 +1,42 @@
+{
+  "source": "lecture-05-slides-transformers.pptx",
+  "source_slide": 29,
+  "effect": "Appear",
+  "steps": [
+    {
+      "click": 1,
+      "label": "Introduce the trainable query matrix",
+      "object_ids": [
+        "query-projection"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "Introduce the trainable key matrix",
+      "object_ids": [
+        "key-projection"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "Introduce the trainable value matrix",
+      "object_ids": [
+        "value-projection"
+      ]
+    },
+    {
+      "click": 4,
+      "label": "Emphasize that all three projection matrices are learned",
+      "object_ids": [
+        "trainable-projections"
+      ]
+    },
+    {
+      "click": 5,
+      "label": "Write the query, key, and value projections in matrix form",
+      "object_ids": [
+        "matrix-form"
+      ]
+    }
+  ]
+}

@@ -58,17 +58,22 @@ Longer micrograd and recurrent training remain in
 [optional reading](lecture-04/optional-reading.md). See
 [asset provenance](lecture-04/assets/README.md).
 
-[Lecture 05](lecture-05/index.html) develops Q/K/V, scaled dot products,
-causal self-attention, and a complete Transformer decoder in 55 slides.
-A four-minute recap connects Lecture 04's additive alignment to self-attention.
-The causal-matrix controls moved here from Lecture 04, followed by P01 practice.
-Its [teaching plan](lecture-05/teaching-plan.md) maps the instructor's 85-slide
-2025 source deck and preserves the final 15-minute Quiz 2 slot. The
-[notebook](lecture-05/lecture-05-exercise.ipynb) runs P01 and E01–E05 offline:
-masked outputs, multi-head references, positions, normalization, parameter
-counts, and full-model causality. Position controls and measured pre/post-LN
-curves support the explanations. See [optional reading](lecture-05/optional-reading.md)
-and [asset provenance](lecture-05/assets/README.md).
+[Lecture 05](lecture-05/index.html) combines the complete component test deck
+with the original runnable Transformer walkthrough. It covers self-attention,
+sinusoidal positions and RoPE, multi-head attention, residuals, LayerNorm, FFNs,
+and the original paper's experiments. The second revision uses “Noa can be
+annoying but she …” across the component diagrams, demos, and notebooks.
+All component topics and reveal sequences remain; the original test deck is
+kept unchanged as an archive. The [practice notebook](lecture-05/practice.ipynb)
+contains E01–E06 in slide order. The separate
+[implementation notebook](lecture-05/lecture-05-exercise.ipynb) covers
+P01 and E01–E05: masked outputs, tensor shapes, positions, normalization,
+parameter counts, complete-model causality, and measured training curves.
+Its [teaching plan](lecture-05/teaching-plan.md) distinguishes the full material
+bank from the classroom route and reserves the final 15 minutes for Quiz 2.
+See the [integration guide](lecture-05/README.md),
+[optional reading](lecture-05/optional-reading.md), and
+[asset provenance](lecture-05/assets/README.md).
 
 ## Teaching from a classroom browser
 
@@ -177,7 +182,7 @@ slides/
   lecture-02/             Lecture 02 deck and lecture-02-exercise.ipynb
   lecture-03/             Lecture 03 deck and lecture-03-exercise.ipynb
   lecture-04/             Lecture 04 deck and lecture-04-exercise.ipynb
-  lecture-05/             Lecture 05 deck and lecture-05-exercise.ipynb
+  lecture-05/             Lecture 05 deck, practice and implementation notebooks
   01-tokenization/        A lecture created when its content is ready
     index.html            Shared viewer shell
     lecture.json          Title, language, and optional demo module

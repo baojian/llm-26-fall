@@ -1,0 +1,26 @@
+{
+  "title": "Token identity and position",
+  "steps": [
+    {
+      "click": 1,
+      "label": "The same token uses the same embedding lookup.",
+      "object_ids": [
+        "position-inputs-0"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "Add a position vector to each token embedding.",
+      "object_ids": [
+        "position-inputs-1"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "Token identity and position together form the model input.",
+      "object_ids": [
+        "position-inputs-2"
+      ]
+    }
+  ]
+}

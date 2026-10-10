@@ -1,0 +1,40 @@
+{
+  "title": "From raw text to token embeddings",
+  "source_file": "lecture-05-slides-transformers.pptx",
+  "source_copy": "Desktop copy supplied by the instructor",
+  "source_pages": [
+    41,
+    42,
+    43
+  ],
+  "steps": [
+    {
+      "click": 1,
+      "label": "Convert text into token IDs, then look up trainable embeddings.",
+      "object_ids": [
+        "tokenizer-inputs-0"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "BPE, Unigram, and WordPiece are three subword approaches.",
+      "object_ids": [
+        "tokenizer-inputs-1"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "Fit the tokenizer on a corpus to obtain its vocabulary and rules.",
+      "object_ids": [
+        "tokenizer-inputs-2"
+      ]
+    },
+    {
+      "click": 4,
+      "label": "Use the fitted tokenizer to segment new text; the embedding table is learned separately with the model.",
+      "object_ids": [
+        "tokenizer-inputs-3"
+      ]
+    }
+  ]
+}

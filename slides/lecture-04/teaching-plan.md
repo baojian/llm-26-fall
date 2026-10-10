@@ -37,11 +37,11 @@ These old slide numbers refer to the deck before this revision.
 | 1–20: fixed-window LM and training | Retain; update objectives and outline |
 | 21–25: RNN/LSTM bridge | Expand into recurrent-state, gradient, and gate practice in current slides 21–30; combine cell memory with gates on slide 29, and E04 with remaining limitations on slide 30 |
 | 26: encoder context selection | Combine the encoder–decoder update with the source bottleneck illustration in current slide 32; develop additive alignment in current slides 33–38, including the context-vector illustration on slide 35 |
-| 27–37: weighted values, Q/K/V, scaling, matrix attention | Replace with recurrent alignment; self-attention is developed in Lecture 05's [attention and heads](../lecture-05/index.html#/attention-contract) section |
-| 38–42: causal masks and shifted targets | Remove from Lecture 04; covered by Lecture 05's [masking](../lecture-05/index.html#/mask-before-softmax) and [shifted targets](../lecture-05/index.html#/shifted-targets) |
-| 43: causal browser demonstration | Remove from the displayed Lecture 04 deck; retain its legacy assets and module for existing tests until the separate Lecture 05 revision migrates them |
+| 27–37: weighted values, Q/K/V, scaling, matrix attention | Replace with recurrent alignment; self-attention is developed in Lecture 05's [attention and heads](../lecture-05/index.html#/scaled-dot-product) section |
+| 38–42: causal masks and shifted targets | Remove from Lecture 04; covered by Lecture 05's [masking](../lecture-05/index.html#/attention-demo) and [shifted targets](../lecture-05/index.html#/logits-and-loss) |
+| 43: causal browser demonstration | Move code, fixtures, and interaction checks to Lecture 05's [numeric attention demonstration](../lecture-05/index.html#/attention-demo) |
 | 44–50: head implementation, output/gradient references, causality | Remove duplicate notebook section; covered by Lecture 05's references and E05 |
-| 51–53: attention cost, LM path, positions | Remove from Lecture 04; covered by Lecture 05's [positions](../lecture-05/index.html#/why-positions), [full model](../lecture-05/index.html#/full-model), and [attention cost](../lecture-05/index.html#/attention-cost) |
+| 51–53: attention cost, LM path, positions | Remove from Lecture 04; covered by Lecture 05's [positions](../lecture-05/index.html#/position-inputs), [full model](../lecture-05/index.html#/full-model), and [attention cost](../lecture-05/index.html#/attention-cost) |
 | 54–56: exit questions and reading | Combine recurrence review, continuation, and readings in current slide 39 |
 
 Lecture 04's former E03–E05 and optional P01–P02 attention tasks are replaced.
@@ -134,8 +134,8 @@ npm --prefix slides run check -- lecture-04
 npm --prefix slides run check -- lecture-05
 ```
 
-Inspect every slide screenshot. The legacy causal computation tests remain
-valid, but that demonstration is no longer registered in Lecture 04's metadata.
+Inspect every slide screenshot. Causal computation and interaction checks now
+run with Lecture 05.
 Lecture 04's loss curve uses the shared Plotly loader without a custom demo
 module. Export and inspect a PDF with the standard `pdf` script before
 distributing one. Review artifacts remain in ignored `slides/.checks/`.

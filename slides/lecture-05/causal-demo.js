@@ -22,7 +22,7 @@ export async function initializeCausalDemo() {
     queryButtons.forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.query) === snapshot.query)));
     maskButton.textContent = `Mask: ${snapshot.causal ? 'on' : 'off'}`;
     maskButton.setAttribute('aria-pressed', String(snapshot.causal));
-    valueButton.textContent = snapshot.changed ? 'Restore V3' : 'Change V3';
+    valueButton.textContent = snapshot.changed ? 'Restore V(is)' : 'Change V(is)';
     valueButton.setAttribute('aria-pressed', String(snapshot.changed));
   }
 

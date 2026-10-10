@@ -1,0 +1,51 @@
+{
+  "title": "Context for a token",
+  "source_file": "lecture-05-slides-transformers.pptx",
+  "source_copy": "Desktop copy, 49-slide revision inspected on October 10, 2026 (Asia/Shanghai)",
+  "source_pages": [
+    4,
+    5,
+    6
+  ],
+  "source_titles": [
+    "Get more context for text"
+  ],
+  "original_attribution": "https://www.youtube.com/watch?v=tIvKXrEDMhk",
+  "adaptation": "One animated language example with zero-based positions, explicit causal visibility, and an illustrative referent link.",
+  "tokens": [
+    "Noa",
+    "can",
+    "be",
+    "annoying",
+    "but",
+    "she",
+    "is",
+    "a",
+    "great",
+    "cat"
+  ],
+  "query_position": 5,
+  "steps": [
+    {
+      "click": 1,
+      "label": "The pronoun “she” refers back to Noa; relevance can span intervening words.",
+      "object_ids": [
+        "context-intuition-0"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "At “she”, causal attention can use the prefix including “she”; later words are masked.",
+      "object_ids": [
+        "context-intuition-1"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "Compute a context vector by weighting the available value vectors.",
+      "object_ids": [
+        "context-intuition-2"
+      ]
+    }
+  ]
+}

@@ -14,8 +14,8 @@ the lecture workflow.
 | Reading pages and navigation | Browser checks exercise the bilingual reader, mobile layouts, and shared navigation |
 
 Lecture changes recheck the example and all lecture decks because they share
-the renderer, navigation, and assets. Newly added folders named `lecture-NN` or
-`NN-topic` are discovered through their `lecture.json`. The unfinished
+the renderer, navigation, and assets. Newly added folders named `lecture-NN`,
+`lecture-NN-test`, or `NN-topic` are discovered through their `lecture.json`. The unfinished
 `slides/template/` is excluded. Add focused numerical tests in
 `tests/test_lecture_NN.py` when introducing a lecture; discovering a deck does
 not create tests for its teaching claims.
