@@ -33,6 +33,34 @@ There are no starred parts, graduate-only extensions, extension bonus points, or
 
 Graded assignments and project deliverables are submitted privately through eLearning. Public assignment releases contain instructions, starter code, supplied data, and public tests. Reference solutions, hidden tests, and grading administration belong in the private instructor repository; student submissions and grades must not be committed to either repository.
 
+Instructor decision, October 9, 2026: the final individual-project report allows
+up to **six pages of main content**. References and appendices do not count
+toward this limit and have no page limit. Code and a concise experiment record
+are also required. Apply this limit equally to all students.
+
+Instructor decision, October 9, 2026: students may propose an NLP or LLM project
+based on their own interests. Present this as the first project category, ahead
+of the suggested topics. Use the same individual scope, proposal process,
+checkpoints, and grading rubric for student-proposed and suggested projects.
+
+Instructor direction, October 9, 2026: offer relevant readings without a fixed
+reference-count requirement and make each project's compute needs explicit. Cover CPU,
+one-GPU, two-GPU, and larger requirements; distinguish minimum hardware from
+optional parallel runs. Prefer CPU studies and short GPU runs. Discourage
+projects that depend on many GPUs or long training runs in our small shared
+pool. State memory per GPU and total GPU-hours across all devices and runs.
+A cited paper's full compute scale is not the course project scope. Mark
+unmeasured budgets as planning estimates and preserve a smaller fallback;
+proposed hour limits are not resource allocations.
+
+The project page uses seven sections: preparation and overview, resource
+requirements, student-proposed projects, open-source contributions, previous
+projects and papers, the 48 candidates grouped by topic, and other guidance.
+Students may use resources they obtain outside the course pool; record their source and cost separately
+from any course-pool request. Survey-only projects are not allowed. Every
+project must include an implementation, experiment, or tested artifact with
+a meaningful comparison and analysis. Related work remains required background.
+
 ## Task Solution Merge Policy — Mandatory
 
 Instructor decision, September 20, 2026: merge student exercise solutions

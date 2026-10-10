@@ -70,8 +70,7 @@ cell-state derivative, with gates fixed, from the complete recurrent gradient.
 [Lecture 05](../lecture-05/index.html) develops Q/K/V, scaled dot products,
 causal masking, positions, and the Transformer decoder. Its
 [notebook](../lecture-05/lecture-05-exercise.ipynb) contains independent
-head references and complete-model causality checks. The interactive causal
-matrix now belongs to that lecture.
+head references and complete-model causality checks.
 
 [Vaswani et al. (2017), §3.2](https://arxiv.org/abs/1706.03762) is the primary
 reading. Compare the query source, context source, scoring function, and

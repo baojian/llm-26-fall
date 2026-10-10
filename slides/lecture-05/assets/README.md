@@ -32,9 +32,10 @@ accounts for that whole deck.
 
 The supplied recurrent-attention figure uses `i` for the target step,
 `h^d_(i-1)` for the preceding decoder state, and `h^e_j` for an encoder state.
-Slide 4 maps these to the lecture's notation. Its score annotation is a dot
+Slide 4's notes map these to the lecture's notation. Its score annotation is a dot
 product; the visible caption distinguishes this from Lecture 04's additive
-Bahdanau score. The source image is preserved, including its example weights.
+Bahdanau score and flags the figure's own decoder/output indexing.
+The source image is preserved, including its example weights.
 The source PowerPoint remains unchanged. Image SHA-256:
 `04cd8e95ea545dd51bf4a4b068253f2e4bc1010608380805a04aed136cab4014`.
 

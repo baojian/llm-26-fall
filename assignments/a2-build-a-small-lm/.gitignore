@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+.pytest_cache/
+outputs/
+results.json
+*.zip
+*.pt

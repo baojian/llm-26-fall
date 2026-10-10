@@ -23,8 +23,9 @@ controlled component comparison with stated limits.
 Lecture 04 develops recurrent memory and Bahdanau's additive alignment in an
 RNN encoder–decoder. Slides 4–5 retrieve that mechanism in four minutes.
 Slide 4 reuses the recurrent-attention image from slide 8 of the instructor's
-supplied 83-slide PowerPoint, with a visible notation mapping and a distinction
-between the figure's dot-product scores and Lecture 04's additive score.
+supplied 83-slide PowerPoint, with a notation mapping in the notes and a visible
+distinction between the figure's dot-product scores and Lecture 04's additive
+score. The caption also flags the figure's own decoder/output indexing.
 Q/K/V projections, scaled dot products, and causal self-attention are introduced
 here. Lecture 03 supplies embeddings, raw-logit loss, autograd, and weight tying.
 The two-sentence toy corpus is restated in full.

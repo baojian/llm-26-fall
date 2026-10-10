@@ -11,11 +11,13 @@ on:
       - 'index.html'
       - 'pipeline/**'
       - 'scripts/slides.py'
+      - 'scripts/build_project_candidates.py'
       - 'scripts/notebooks.py'
       - 'scripts/lecture02_experiments.py'
       - 'scripts/*notes.mjs'
       - 'tests/test_lecture_*.py'
       - 'tests/test_slides.py'
+      - 'tests/test_project_candidates.py'
       - 'tests/test_notebooks.py'
       - 'tests/test_tokenization_notebook.py'
       - 'tests/test_pipeline_ngram.py'
@@ -89,6 +91,7 @@ jobs:
           uv run --locked python -m pytest -q \
             tests/test_lecture_*.py tests/test_tokenization_notebook.py \
             tests/test_pipeline_ngram.py tests/test_notebooks.py tests/test_slides.py \
+            tests/test_project_candidates.py \
             --junitxml=slides/.checks/python/results.xml
       - name: Verify the browser's n-gram and position calculations
         if: ${{ !cancelled() }}

@@ -55,12 +55,12 @@ Allow 1 minute. Recall Lecture 04's additive alignment briefly, then teach Q/K/V
 
 <img class="diagram" src="assets/rnn-attention.png" alt="Recurrent encoder states receive attention weights 0.4, 0.3, 0.1, and 0.2 based on the previous decoder state. Their weighted sum forms a context vector for the recurrent decoder.">
 
-<p class="caption">Figure: $h^d_{i-1}\equiv s_{t-1}$, $h^e_j\equiv h_j$; dot-product scores (Lecture 04: additive).</p>
+<p class="caption">Generic RNN schematic with its own decoder/output indexing.<br>Dot-product scores here; Lecture 04 uses additive scoring.</p>
 
 Note:
 Allow 2 minutes. Retrieve Lecture 04's encoder–decoder story without rederiving recurrence or additive alignment. Bahdanau's alignment score is an additive network. Its source and target indices refer to different sequences. This lecture changes the score function and develops self-attention. Source: Bahdanau et al., §3 and Appendix A.1.2, https://arxiv.org/abs/1409.0473.
 
-The query comes from the previous decoder state; the source annotations come from the recurrent encoder. Softmax over all source scores gives alpha_(t,j), and the whole source is available at each target step. In the figure, i is the target-step index, h^d_(i-1) is the query state, and h^e_j is a source annotation. Trace the dashed score connections, normalized weights, weighted context, and its connection to the decoder. The supplied image uses dot-product scores and a schematic encoder; it illustrates recurrent attention generally rather than the exact bidirectional, additive Bahdanau architecture. The displayed weights are illustrative.
+The query comes from the previous decoder state; the source annotations come from the recurrent encoder. Softmax over all source scores gives alpha_(t,j), and the whole source is available at each target step. In the figure, h^d_(i-1) is the query state and h^e_j is a source annotation, corresponding to s_(t-1) and h_j in our equations. Trace the dashed score connections, normalized weights, weighted context, and its connection to the decoder. The figure uses its own decoder/output subscripts; use Lecture 04's decoder equations for our target indexing. The supplied image uses dot-product scores and a schematic encoder; it illustrates recurrent attention generally rather than the exact bidirectional, additive Bahdanau architecture. The displayed weights are illustrative.
 
 Illustration: the instructor-supplied 83-slide lecture-05-slides-transformers.pptx, slide 8 (Context vector), embedded ppt/media/image11.png, reused without modification.
 

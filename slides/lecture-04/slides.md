@@ -664,6 +664,25 @@ The softmax axis is the source sequence. In this unpadded example all source pos
 
 <!-- .slide: id="aligned-decoder-step" -->
 
+## Context vector for the decoder
+
+<p>$\alpha_{t,:}=\operatorname{softmax}(e_{t,:}),\qquad c_t=\sum_j\alpha_{t,j}h_j$</p>
+
+<img class="diagram" src="assets/rnn-attention.png" alt="Encoder states receive attention weights 0.4, 0.3, 0.1, and 0.2 according to the previous decoder state. Their weighted sum forms a context vector supplied to the next decoder update.">
+
+<p class="caption">Generic RNN schematic with dot-product scoring and its own decoder indexing.<br>Use the next slide's equations for our additive-attention model.</p>
+
+Note:
+Allow 1.5 minutes, sharing the existing three-minute decoder-update slot with the next slide. Trace the green paths from the previous decoder state to the alignment weights, then from the source states into the weighted context. The four illustrated weights sum to one; they are schematic values, not a measured translation result. A later target step can select a different combination of the same source states.
+
+Source: page 2, “Context vector c_i,” of the instructor's 57-slide Desktop lecture-05-slides-transformers.pptx snapshot used on October 10, 2026 (Asia/Shanghai). The original PNG is reused unchanged from ppt/media/image1.png. This same artwork was ppt/media/image11.png on page 8 of the earlier 83-slide saved copy. The prose and formula screenshots are rendered here as editable course text and KaTeX.
+
+Notation: the diagram's i corresponds to t, h_j^e to the encoder annotation h_j, and h_(i-1)^d to the previous decoder state s_(t-1). The dashed green label illustrates a dot-product score; the preceding slide and notebook use Bahdanau's learned additive score instead. Both normalize scores over source positions and form a weighted context. The figure is a generic recurrent-attention schematic, with a one-direction encoder and its own decoder/output indexing; it is not a literal diagram of the bidirectional Bahdanau model. Use the following slide's equations for this lecture's decoder dependencies and target indexing.
+
+---
+
+<!-- .slide: id="decoder-update" -->
+
 ## A context for the next decoder update
 
 $$s_{t-1},\lbrace h_j\rbrace\quad\longrightarrow\quad
@@ -676,7 +695,7 @@ $$p(y_t\mid y_{<t},x)=g(y_{t-1},s_t,c_t)$$
 The translation loss trains the encoder, alignment network, and decoder jointly.
 
 Note:
-Allow 3 minutes. The arrow chain shows dependencies, not extra discrete decisions. In the Bahdanau convention the score uses s_(t-1) before the new state is computed. In other attention architectures this ordering can differ. g includes the vocabulary probability computation. Gold word-alignment labels are not required for this objective. Source: Bahdanau et al., §3.1 and Appendix A.1.2.
+Allow 1.5 minutes after the context illustration. The arrow chain shows dependencies, not extra discrete decisions. In the Bahdanau convention the score uses s_(t-1) before the new state is computed. In other attention architectures this ordering can differ. g includes the vocabulary probability computation. Gold word-alignment labels are not required for this objective. Source: Bahdanau et al., §3.1 and Appendix A.1.2.
 
 ---
 
