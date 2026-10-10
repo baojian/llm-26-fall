@@ -1,0 +1,14 @@
+/* Layout only: reuse the course's vendored KaTeX fonts and formula styles. */
+.attention-math {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: inherit;
+  font-size: inherit;
+}
+.attention-math[data-align="middle"] { justify-content: center; }
+.attention-math[data-align="end"] { justify-content: flex-end; }
+.reveal .attention-math .katex, .attention-math .katex { font-size: 1em; }

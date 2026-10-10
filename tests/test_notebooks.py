@@ -40,18 +40,19 @@ def test_working_copy_preserves_answers_and_assets(course):
     assert json.loads((course / "slides/01-tokenization/practice.ipynb").read_text())["cells"] == []
 
 
-def test_named_lecture_notebook_preserves_student_work(course):
-    deck = course / "slides/lecture-01"
+@pytest.mark.parametrize("lecture", ["lecture-01", "lecture-05-test"])
+def test_named_lecture_notebook_preserves_student_work(course, lecture):
+    deck = course / "slides" / lecture
     deck.mkdir()
-    filename = "lecture-01-exercise.ipynb"
+    filename = f"{lecture}-exercise.ipynb"
     (deck / "lecture.json").write_text(json.dumps({"notebook": filename}))
     (deck / filename).write_text((course / "slides/01-tokenization/practice.ipynb").read_text())
     launcher = NotebookLauncher(course)
-    notebook = launcher.prepare_notebook("lecture-01")
-    assert notebook == course / "workspace/slides/lecture-01" / filename
+    notebook = launcher.prepare_notebook(lecture)
+    assert notebook == course / "workspace/slides" / lecture / filename
     assert json.loads(notebook.read_text())["metadata"]["kernelspec"]["name"] == "python3"
     notebook.write_text("Student's saved answers")
-    assert launcher.prepare_notebook("lecture-01").read_text() == "Student's saved answers"
+    assert launcher.prepare_notebook(lecture).read_text() == "Student's saved answers"
 
 
 def test_additional_notebook_gets_separate_copy_and_new_assets(course):

@@ -1,0 +1,63 @@
+{
+  "source": "lecture-05-slides-transformers.pptx",
+  "source_slide": 24,
+  "effect": "Appear",
+  "steps": [
+    {
+      "click": 1,
+      "label": "Compare the query embedding with all four embeddings",
+      "object_ids": [
+        "inputs"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "Show the four dot-product scores",
+      "object_ids": [
+        "scores"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "Normalize the scores with softmax",
+      "object_ids": [
+        "normalization"
+      ]
+    },
+    {
+      "click": 4,
+      "label": "Show the four attention weights",
+      "object_ids": [
+        "weights"
+      ]
+    },
+    {
+      "click": 5,
+      "label": "Bring in the embeddings to be combined",
+      "object_ids": [
+        "values"
+      ]
+    },
+    {
+      "click": 6,
+      "label": "Multiply each embedding by its weight",
+      "object_ids": [
+        "products"
+      ]
+    },
+    {
+      "click": 7,
+      "label": "Sum the weighted embeddings to obtain the third output",
+      "object_ids": [
+        "context"
+      ]
+    },
+    {
+      "click": 8,
+      "label": "Repeat for the other three outputs",
+      "object_ids": [
+        "other-outputs"
+      ]
+    }
+  ]
+}

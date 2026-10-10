@@ -41,36 +41,38 @@ export function describeState(fixture, state) {
   return 'Unmasked toy attention. Positions ' + (state.positions ? 'on' : 'off')
     + '. Order: ' + result.labels.join(', ')
     + '. Maximum output change after undoing the row permutation: ' + result.difference.toFixed(4)
-    + '. Q, K, and V use identity projections on invented four-dimensional inputs.';
+    + '. Columns are key tokens; rows are query tokens. '
+    + 'Q, K, and V use identity projections on invented six-dimensional inputs.';
 }
 
 export function figureFor(fixture, state) {
   const result = computePositionExample(fixture, state);
+  const positions = fixture.tokens.map((_, index) => index);
   const note = (y, text, size = 26) => ({
     x: 0.62, y, xref: 'paper', yref: 'paper', text, showarrow: false,
     xanchor: 'left', align: 'left', font: { family: 'Arial, sans-serif', size, color: '#142e4b' },
   });
   return {
     data: [{
-      type: 'heatmap', x: [0, 1, 2, 3], y: [0, 1, 2, 3], z: result.weights,
+      type: 'heatmap', x: positions, y: positions, z: result.weights,
       zmin: 0, zmax: 1, colorscale: [[0, '#f0f4f7'], [1, '#20578c']],
       showscale: false, text: result.weights.map(row => row.map(value => value.toFixed(2))),
-      texttemplate: '%{text}', textfont: { size: 28 },
+      texttemplate: '%{text}', textfont: { size: 26 },
       hovertemplate: 'Query slot %{y}<br>Key slot %{x}<br>Weight %{z:.4f}<extra></extra>',
     }],
     layout: {
-      width: 1152, height: 410, paper_bgcolor: '#fbfbf9', plot_bgcolor: '#fbfbf9',
+      width: 1152, height: 430, paper_bgcolor: '#fbfbf9', plot_bgcolor: '#fbfbf9',
       font: { family: 'Arial, sans-serif', size: 26, color: '#202b38' },
-      margin: { l: 90, r: 20, t: 40, b: 70 },
-      xaxis: { domain: [0, 0.51], tickvals: [0, 1, 2, 3], ticktext: result.labels,
-        title: { text: 'Key token' }, fixedrange: true },
-      yaxis: { range: [3.5, -0.5], tickvals: [0, 1, 2, 3], ticktext: result.labels,
+      margin: { l: 125, r: 20, t: 40, b: 100 },
+      xaxis: { domain: [0, 0.54], tickvals: positions, ticktext: result.labels, tickangle: -25,
+        fixedrange: true },
+      yaxis: { range: [positions.length - 0.5, -0.5], tickvals: positions, ticktext: result.labels,
         fixedrange: true },
       annotations: [
         { x: 0.255, y: 1.13, xref: 'paper', yref: 'paper', text: 'Attention weights',
           showarrow: false, font: { size: 28 } },
         note(1.04, state.positions ? 'Sinusoidal positions' : 'No position vectors', 28),
-        note(0.79, state.swapped ? 'bank / river swapped' : 'Original token order'),
+        note(0.79, state.swapped ? 'Noa / she swapped' : 'Original token order'),
         note(0.53, 'Compare the same token<br>after restoring row order'),
         note(0.21, 'Max change: ' + result.difference.toFixed(4), 28),
         note(-0.02, 'Unmasked; Q = K = V', 24),

@@ -1,115 +1,199 @@
 # Lecture 05 assets
 
-The editable diagrams and numerical figures are original course teaching assets.
-The recurrent-attention illustration is reused from the instructor-supplied
-PowerPoint as documented below. Sentences, token IDs, and browser vectors are
-invented toy data. No datasets, model weights, or student submissions are copied.
+The main lecture now uses one invented sentence: **Noa can be annoying but she
+is a great cat**. Prefix diagrams use positions 0–5, ending at she; the next
+target is is at position 6. Each word is one toy token. Real tokenizers may
+split it. Schematic vectors and illustrative head weights are not model outputs.
+
+The first integration copied the component test deck unchanged. A second,
+instructor-authorized revision adapted the main artwork, notebook examples,
+and measured experiment to this sentence. The test deck and source PowerPoint
+remain unchanged by that revision. Historical paper data/results retain their
+original scope; the parsing illustration now reuses the Noa sentence.
+
+## Asset sources and editable files
 
 | Files | Content and provenance |
 | --- | --- |
-| `rnn-attention.png` | Unmodified 1256 × 577 image from slide 8 (Context vector) of the instructor-supplied 83-slide `lecture-05-slides-transformers.pptx`; extracted from `ppt/media/image11.png` for the slide 4 recap |
-| `encoder-context.svg` and `.excalidraw` | Fixed context versus a context selected at each target step; follows Bahdanau et al. (2015), §§2–3 |
-| `multihead-path.svg` and `.excalidraw` | Q/K/V projections, head split, per-head attention, merge, and output projection; follows the mechanism in Vaswani et al., §3.2.2 |
-| `residual-block.svg` and `.excalidraw` | Two pre-LN residual sublayers; distinguishes normalization placement from the original post-LN model |
-| `decoder-model.svg` and `.excalidraw` | Token/position embeddings, two decoder blocks, final norm, and tied vocabulary readout used in the notebook |
-| `causal-mask.svg` and `.excalidraw` | The four input slots and shifted next-token targets; the diagonal is allowed |
-| `attention-values.json` and `attention-demo.json` | Three-position causal example moved from Lecture 04; values updated to match the Lecture 05 worked example |
-| `position-values.json` | Four word labels, identity-matrix vectors, and the permutation `[3,1,2,0]`; matches E02 |
-| `position-demo.json` | Printable initial Plotly state: original order, positions off |
-| `position-frequencies.json` | Formula-generated sine coordinates for width 8 over positions 0–31; frequencies 1, 0.1, and 0.01 radians per position |
-| `norm-comparison.json` | Measured pre/post-LN loss at every update 0–200, plus the `log(2)/4` floor; includes machine-readable provenance in `layout.meta` |
+| `rnn-attention.png` | Unmodified 1256 × 577 image from slide 8 (Context vector) of the instructor's 83-slide PowerPoint; extracted from `ppt/media/image11.png` for the recurrent recap |
+| `encoder-context.svg` and `.excalidraw` | Fixed context versus selected recurrent context; follows Bahdanau et al. (2015), §§2–3 |
+| `multihead-path.svg` and `.excalidraw` | Legacy editable schematic of projection, splitting, attention, joining, and output projection |
+| `residual-block.svg` and `.excalidraw` | Two pre-LN residual sublayers; distinguishes their order from the original post-LN model |
+| `decoder-model.svg` and `.excalidraw` | The Noa notebook's two-block model: ten input positions, twelve vocabulary entries, final norm, tied readout |
+| `causal-mask.svg` and `.excalidraw` | The Noa prefix and shifted targets; she at 5 predicts is at 6 and may use the diagonal |
+| `attention-values.json`, `attention-demo.json` | Seven displayed toy positions; she at 5 must mask the future is at 6 |
+| `position-values.json`, `position-demo.json` | Six prefix words, rows of I6, permutation [5,1,2,3,4,0], and the printable initial state |
+| `position-frequencies-legacy.json` | Original width-8 sine chart over positions 0–31; retained for numerical checks |
+| `position-frequencies.json` | Component width-8 sine chart over positions 0–64; formula-generated intermediate samples smooth the curves |
+| `norm-comparison.json` | New measured Noa pre/post-LN curves at updates 0–200 and the log(2)/10 floor; full provenance in `layout.meta` |
 
-The SVG diagrams are editable Excalidraw scenes, exported with
-`@excalidraw/excalidraw` 0.18.1. They follow the previous lectures' canvas,
-font sizes, and palette. Edit the scene and export its SVG alongside it; the
-classroom browser loads only the SVG. Sources for the adapted concepts are
-[Bahdanau et al. (2015), §3](https://arxiv.org/abs/1409.0473),
-[Luong et al. (2015), §3](https://aclanthology.org/D15-1166/),
-[Vaswani et al. (2017), §§3.1–3.5](https://arxiv.org/abs/1706.03762),
-[Xiong et al. (2020)](https://proceedings.mlr.press/v119/xiong20b.html), and
-the instructor's 2025 Lecture 05. The [source map](../teaching-plan.md#map-from-all-85-source-slides)
-accounts for that whole deck.
+The original course scenes were exported with `@excalidraw/excalidraw` 0.18.1.
+The revised causal-mask diagram is generated by
+[prepare-causal-mask.py](../prepare-causal-mask.py), which writes matching native
+SVG and editable Excalidraw files directly. Keep each scene beside its SVG.
+The current native component diagrams are generated from the lecture's
+`build-*.mjs` files using SVG shapes, text, and KaTeX. These builders are the
+editable sources; they do not need the source PowerPoint at presentation time.
 
-The supplied recurrent-attention figure uses `i` for the target step,
-`h^d_(i-1)` for the preceding decoder state, and `h^e_j` for an encoder state.
-Slide 4's notes map these to the lecture's notation. Its score annotation is a dot
-product; the visible caption distinguishes this from Lecture 04's additive
-Bahdanau score and flags the figure's own decoder/output indexing.
-The source image is preserved, including its example weights.
-The source PowerPoint remains unchanged. Image SHA-256:
+| Component artwork | Current teaching convention |
+| --- | --- |
+| `self-attention-modern.svg`, `animation-modern.json` | Query she at 5; six available prefix embeddings; eight reveals |
+| `self-attention-29-modern.svg`, `animation-29-modern.json` | X: 6 × d_model; Q/K: 6 × d_k; V: 6 × d_v, with projection-matrix dimensions |
+| `self-attention-40-modern.svg`, architecture manifests | GPT-style upward computation from the Noa prefix to next token is |
+| `gpt-architecture-reference.svg` | Full GPT reference retained for the architecture comparison |
+| `context-intuition.*`, `attention-roles.*` | Noa/she relation and the three uses of the same input vectors |
+| `position-*.svg` and manifests | Actual she at 5 versus hypothetical 2; RoPE she/Noa at 5/0, shifted comparison at 8/3 |
+| `multihead-intuition.*`, `mha-*` | Six token rows and three invented weight patterns; mechanism and architecture comparison |
+| `ffn-tokenwise.*`, `ffn-parameter-share.svg` | Tokenwise FFN on a subset Noa/can/she; two-thirds matrix-weight share at inner width 4d |
+| `tokenizer-inputs.*` | Six toy word tokens with IDs 0–5; distinguishes vocabulary learning, segmentation, and neural embedding lookup |
+| `math.css`, `positions.css` | Component equation and diagram styling |
+| `source-slide24.pptx`, `source-slide29.pptx`, original reproduction SVGs/manifests | Archival source comparison assets; the main self-attention/QKV teaching views use the Noa artwork in both query-design modes |
+
+The source-page citations in slide notes describe the PowerPoint revision used
+when each topic was prepared. The main Noa adaptations retain those conceptual
+sources while changing the illustrative sentence and indices. Related primary
+sources are [Bahdanau et al., §3](https://arxiv.org/abs/1409.0473),
+[Luong et al., §3](https://aclanthology.org/D15-1166/),
+[Vaswani et al., §§3.1–3.5](https://arxiv.org/abs/1706.03762),
+[Su et al., §3.2](https://arxiv.org/abs/2104.09864), and
+[Xiong et al.](https://proceedings.mlr.press/v119/xiong20b.html).
+
+The recurrent-attention source image uses i for the target step,
+h^d_(i−1) for the previous decoder state, and h^e_j for an encoder state.
+Its dot-product annotation is distinguished from Lecture 04's additive score.
+Its weights are illustrative. The image's SHA-256 remains:
 `04cd8e95ea545dd51bf4a4b068253f2e4bc1010608380805a04aed136cab4014`.
 
-## Browser causal example
+## Numerical causal example
 
 [attention-demo.js](../attention-demo.js) computes the head and figure;
-[causal-demo.js](../causal-demo.js) wires the query/mask/value/reset controls.
-Query 2 uses one-based chart labels and corresponds to zero-based slot 1 in
-slides 8–9. Its scores are `(1,0,1)` and values `(1,0)`, `(0,2)`, `(2,1)`.
-The initial masked output is `(0.731059,0.537883)`. Changing V3 adds `(10,10)`;
-Q2 is unchanged with the mask and changes without it. Reset restores the initial
-state, also used for printing. All assets are local and both demos initialize
-through [demo.js](../demo.js).
+[causal-demo.js](../causal-demo.js) wires query, mask, future-value, and reset
+controls. The displayed positions are Noa, can, be, annoying, but, she, is
+at indices 0–6. The selected query is she at 5; is at 6 is a negative control
+for future visibility. All projected vectors are invented.
 
-## Browser position example
+For q_she = (sqrt(2),0), d_k = 2, the scaled scores are
+(log 4,0,0,log 2,0,log 2,log 3). The value rows are:
 
-[position-demo.js](../position-demo.js) computes the attention values and
-figure. [demo.js](../demo.js) wires native buttons to Plotly. Reset restores
-both position and swap state, and the accessible description reports the
-current order and numerical difference.
+| Position / word | Value |
+| --- | --- |
+| 0 / Noa | (1,0) |
+| 1 / can | (0,1) |
+| 2 / be | (1,1) |
+| 3 / annoying | (2,0) |
+| 4 / but | (0,2) |
+| 5 / she | (1,2) |
+| 6 / is | (3,1) |
 
-The vectors are rows of `I4`, with identity Q/K/V projections, scale 2, and no
-mask. The initial self weight is `exp(0.5)/(exp(0.5)+3) ≈ 0.354661`, and each
-other weight is about 0.215113. Swapping bank/river and restoring output order
-gives zero change without positions. Adding sinusoidal vectors at fixed slots
-gives maximum change about 1.365050. The illustration tests order information;
-the word labels imply no trained semantics. `position-demo.json` is generated
-by `figureFor(fixture, initialState)`; the Node test verifies exact agreement.
+The causal she row is (4,1,1,2,1,2,0)/11, producing **(1,8/11)**.
+Without the mask it is (4,1,1,2,1,2,3)/14, producing **(10/7,11/14)**.
+Adding (10,10) only to V_is leaves the masked output unchanged, while the
+unmasked output increases by 15/7 in each coordinate, becoming (25/7,41/14).
+Reset restores the she query, enabled mask, and original values.
+
+Implementation P01 supplies a different toy head's scores over the same words
+and value rows: (log 2,0,0,log 2,0,log 3,log 4). Its masked weights are
+(2,1,1,2,1,3,0)/10 and its output is **(1,1)**. The supplied scores make this
+an arithmetic exercise, not a statement about a trained attention pattern.
+
+## Numerical position example
+
+[position-demo.js](../position-demo.js) uses rows of I6 as the Noa-prefix
+vectors, identity Q/K/V projections, scale sqrt(6), and no mask. Its initial
+self weight is exp(1/sqrt(6))/(exp(1/sqrt(6))+5) ≈ **0.231264**; each other
+weight is about 0.153747. Swap Noa and she with [5,1,2,3,4,0], then restore
+output order. Without positions the difference is zero up to rounding.
+Sinusoidal vectors attached to fixed slots give a maximum difference of
+**0.4492044856670271** in the PyTorch check (the JavaScript result agrees
+within floating-point tolerance). This isolates permutation equivariance;
+it does not apply the same arbitrary permutation to a fixed causal mask.
+
+The component RoPE example instead uses the actual she/Noa positions 5 and 0,
+with fixed content pairs (1,0) and toy frequency π/6 per position. Their score
+is −sqrt(3)/2. A shared shift to 8 and 3 preserves it. Changing their gap is a
+controlled hypothetical arrangement. Real models use their configured frequency
+schedule; the toy 30° frequency makes the calculation easy to inspect.
 
 ## Measured normalization comparison
 
 The [teaching plan](../teaching-plan.md#exact-teaching-model) states the complete
-configuration. Both variants receive the same copied initial parameters,
-including the final LayerNorm. Only block normalization order changes.
-The initial reference run used Python 3.11.14, PyTorch 2.14.0, macOS on arm64,
-CPU float32, one thread, seed 7, and 200 AdamW updates per variant. No model or
-data files are downloaded. Full-batch size is 2, sequence length 4, model width
-16, heads 4, FFN width 32, and depth 2. The learning rate is 0.02, betas are
-(0.9, 0.999), epsilon is 1e-8, and weight decay is zero.
+Noa configuration. Two documents share the words through great, then end cat
+or friend, followed by EOS. Data version: **noa-two-continuations-v1**. No BOS,
+padding, corpus downloads, or pretrained model are used.
+
+Both variants receive the same copied initial parameters, including final
+LayerNorm. Only the block's normalization order changes. The model has batch
+2, input length 10, width 16, four heads, FFN width 32, two blocks, learned
+absolute positions, tied readout, and 4,608 trainable parameters. It uses ReLU,
+no Linear biases, epsilon 1e−5 for affine norms, and no dropout. Parameters
+start with normal std 0.02 except norm scales/biases, which start at 1/0.
 
 | Update | Pre-LN loss (nats/token) | Post-LN loss (nats/token) |
 | ---: | ---: | ---: |
-| 0 | 1.9754 | 1.9730 |
-| 20 | 0.3644 | 0.3636 |
-| 50 | 0.3465 | 0.3473 |
-| 100 | 0.3599 | 0.1744 |
-| 200 | 0.1739 | 0.1735 |
+| 0 | 2.5092063 | 2.5095875 |
+| 20 | 0.1200672 | 0.1070025 |
+| 50 | 0.0712110 | 0.0706839 |
+| 100 | 0.0702813 | 0.0700862 |
+| 200 | 0.0698220 | 0.0697611 |
 
-Index 0 is before training; index 200 follows 200 completed updates. The figure
-retains all 201 points, including transient loss spikes. Post-LN reached a low
-loss earlier in this run. Neither this observation nor the final losses
-establishes a general ranking. The two equally frequent targets after BOS
-impose the loss floor `log(2)/4 ≈ 0.173287`. There is no held-out evaluation.
-Small numerical differences can change the trajectory around the plateaus;
-do not interpret one platform's exact transition update as a robust result.
+The two equally frequent continuations after great imply the mean-loss infimum
+**log(2)/10 ≈ 0.0693147181**. Both runs approach that floor. All eighteen
+deterministic transitions are correct; the pre-LN model's probabilities after
+great are approximately 0.499651 for cat and 0.499701 for friend. These are
+observations of this one fitting run, with no held-out evaluation. Their small
+loss difference establishes no general ranking of normalization orders.
+
+The figure retains all 201 loss samples, including transient behavior. Index 0
+precedes training and index 200 follows 200 updates. The raw record also retains
+the gradient-norm history. Cross-platform numerical differences can alter
+trajectories, so preserve the actual outcomes of each reproduction.
+
+### Run record
+
+- Command: `uv run --locked --no-sync python slides/lecture-05/prepare-figures.py`
+- Timestamp: `2026-10-10T02:14:46+08:00` (Asia/Shanghai).
+- Git revision: `ac7f86df2d05f6e796dbf099a710c3b46bc9a73a`; dirty working tree: **true**.
+- Environment: Python 3.11.14, PyTorch 2.14.0, macOS-26.4.1-arm64-arm-64bit; CPU, one thread; float32 training and float64 reference checks.
+- Seed: **7**. Budget: **200 full-batch updates per variant**, pre-LN and post-LN.
+- AdamW: learning rate **0.02**, betas **(0.9,0.999)**, epsilon **1e−8**, weight decay **0**.
+- Recorded elapsed time: **0.8876 s**; this is a reproduction aid, not a performance benchmark.
+- Notebook SHA-256: `21a645def58c11d98b1a2c2aa4e6fb834fe22d83bb1ff8b4832851b88f5fc56f`.
+- Data SHA-256: `091d4065662916206d4212fd9dd78dfbbe0fd2e3cb2fc057372120f913dbb662`.
+- Figure and metadata: `slides/lecture-05/assets/norm-comparison.json`.
+- Raw loss/gradient samples and cell outputs: ignored `slides/.checks/lecture-05/figure-run.json`.
+
+### Earlier experiment archive
+
+Before replacing the previous experiment, the old implementation notebook,
+core notebook, preparation script, and complete 201-point loss figure were
+copied into the ignored local archive
+`slides/.checks/lecture-05/pre-noa-20261010T020843+0800/`.
+Its `manifest.json` records hashes, revision/dirty state, and the archival
+Asia/Shanghai timestamp. The earlier raw execution record was not present;
+the archive records that absence instead of inventing a missing record.
+
+The archived implementation notebook hash is
+`2c74c9fdae10304384f41d6e6651a5fb8f74d8bba1acc520a67d9595859c173f`;
+the old figure hash is
+`93e6c9a72cef0a9f7d1e7278ae57c94fe1c2a7bc4e9a2a66500fbe847a875be9`.
+Those data used a different vocabulary and length, so their loss floor and
+curve must not be presented as the new Noa experiment. The archive is a local
+review artifact and is not served as a public course asset.
 
 ## Reproduce and review
 
 ```sh
-uv run python slides/lecture-05/prepare-figures.py
+uv run --locked --no-sync python slides/lecture-05/prepare-causal-mask.py
+uv run --locked --no-sync python slides/lecture-05/prepare-figures.py
 uv run python -m pytest tests/test_lecture_05.py
 node --test tests/test_position_demo.mjs
 npm --prefix slides run pdf -- lecture-05
 ```
 
-The preparation script executes the committed notebook and refreshes the loss
-figure. It records the command, Git revision and dirty state, notebook hash,
-Asia/Shanghai timestamp, environment, seed, compute budget, and elapsed time in
-the figure's metadata. Full loss/gradient histories and cell output stay in
-ignored `slides/.checks/lecture-05/figure-run.json`. This small CPU run usually
-takes a few seconds; that elapsed time is a reproduction aid, not a benchmark.
-Review the resulting chart before committing a regenerated asset.
-
-Numerical tests independently verify the position formula, outputs, shapes,
-parameter counts, PyTorch attention agreement, and full-model causal gradients.
-The browser checker verifies the controls and all three viewport sizes. The
-PDF retains the initial position example and measured training figure.
+The preparation script executes the implementation notebook and records the
+command, revision and dirty state, notebook/data hashes, timestamp, environment,
+seed, configuration, compute budget, and elapsed time. Review the generated
+curve before committing it. Numerical checks cover outputs, parameter counts,
+independent attention references, causality, position permutations, and the
+core exercises. Browser checks cover the adapted displays and controls at three
+viewport sizes. Inspect every screenshot and the 60-page PDF after regeneration.

@@ -22,7 +22,9 @@ on:
       - 'tests/test_tokenization_notebook.py'
       - 'tests/test_pipeline_ngram.py'
       - 'tests/test_ngram_review.mjs'
+      - 'tests/test_attention_demo.mjs'
       - 'tests/test_position_demo.mjs'
+      - 'tests/test_lecture_05_test_positions.mjs'
       - 'pyproject.toml'
       - 'uv.lock'
       - '.python-version'
@@ -57,7 +59,7 @@ jobs:
 
           folders = sorted(
               path.parent.name for path in Path('slides').glob('*/lecture.json')
-              if re.fullmatch(r'example|lecture-\d{2}|\d{2}-[a-z0-9-]+', path.parent.name)
+              if re.fullmatch(r'example|lecture-\d{2}(?:-test)?|\d{2}-[a-z0-9-]+', path.parent.name)
           )
           if not folders:
               raise SystemExit('No lecture decks found; refusing an empty check.')
@@ -93,9 +95,9 @@ jobs:
             tests/test_pipeline_ngram.py tests/test_notebooks.py tests/test_slides.py \
             tests/test_project_candidates.py \
             --junitxml=slides/.checks/python/results.xml
-      - name: Verify the browser's n-gram and position calculations
+      - name: Verify the browser's n-gram, attention, and position calculations
         if: ${{ !cancelled() }}
-        run: node --test tests/test_ngram_review.mjs tests/test_position_demo.mjs
+        run: node --test tests/test_ngram_review.mjs tests/test_attention_demo.mjs tests/test_position_demo.mjs tests/test_lecture_05_test_positions.mjs
       - name: Save numerical test results
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

@@ -2,17 +2,19 @@
 
 These notes retain background from the instructor's 2025 *Attention and
 Transformers* lecture. They supplement the [current slides](index.html) and
-[notebook](lecture-05-exercise.ipynb); they add no graded work.
+[implementation notebook](lecture-05-exercise.ipynb); they add no graded work.
+The [practice notebook](practice.ipynb) follows the integrated slides' E01–E06.
 
 ## Interactive Transformer walkthroughs
 
 Use these resources alongside the lecture's numerical examples. Each site
 illustrates its own model and parameter choices. Use the course notebook to
-reproduce the seven-token model and its 4,432-parameter count.
+reproduce the Noa model: a 12-entry vocabulary, two ten-token inputs, and
+4,608 tied parameters.
 
 | Resource | What to follow | Lecture connection |
 | --- | --- | --- |
-| [Transformer Explainer, Georgia Tech / Polo Club](https://poloclub.github.io/transformer-explainer/) | In GPT-2 small, follow one query through Q/K scores, the causal mask, softmax weights, and the weighted values. | [Masking before softmax](index.html#/mask-before-softmax), after the hand calculation |
+| [Transformer Explainer, Georgia Tech / Polo Club](https://poloclub.github.io/transformer-explainer/) | In GPT-2 small, follow one query through Q/K scores, the causal mask, softmax weights, and the weighted values. | [Masking before softmax](index.html#/scaled-dot-product), after the hand calculation |
 | [LLM Visualization, Brendan Bycroft](https://bbycroft.net/llm) | Explore a GPT-style network in 3D. The working small model sorts letters. Follow the token and feature axes through embeddings, attention, the feedforward computation, and readout. | [Complete decoder](index.html#/full-model), before the parameter-count exercise |
 | [LLM-Visualized](https://www.llm-visualized.com/?token=4&generation=0&kvCache=0) | Use the supplied starting view with KV caching off. Follow the matrix operations of one forward pass, then the next-token generation loop. | [Attention storage and generation](index.html#/attention-cost); caching is a later Lecture 13 topic |
 
@@ -43,30 +45,38 @@ uses the previous decoder state and source annotations. Compare it with
 [Luong et al., §3](https://aclanthology.org/D15-1166/): the current decoder
 state supplies the query, with dot, general, or concat scoring. Distinguish
 these recurrent update conventions from the shared score/softmax/weighted-sum
-mechanism. Our two-state worked example uses unscaled dot scoring.
+mechanism. The introductory Noa diagram first reuses the supplied embeddings
+as keys and values; learned projections, scaling, and masking are then made
+explicit for the same six-position prefix.
 
 The source lecture's noisy time-series example illustrates weighted averaging:
 weights can emphasize observations relevant to a query. A local smoothing
 kernel emphasizes nearby observations by design. Learned text attention can
 instead connect distant tokens. Neither physical proximity nor a predefined
-linguistic role determines the learned weights. Our `bank of the river` example
-illustrates contextualization; its browser vectors are invented, with no claim
-that they encode word meanings.
+linguistic role determines the learned weights. Our running prefix,
+`Noa can be annoying but she`, illustrates contextualization: she can use
+the earlier Noa while predicting the next word is. Its vectors and head
+patterns are invented, with no claim that they are learned semantic encodings.
+Keeping one sentence lets each new mechanism build on the previous diagram.
 
 ## Tokenization is a prerequisite
 
 The source's eight-slide BPE walkthrough is already covered in
 [Lecture 01](../lecture-01/index.html). Review how training learns an ordered
-merge list and how tokenization applies those merges to new text. Embedding
-lookup is a separate operation: token IDs select trainable rows. A Transformer
-does not require a separately pretrained word-vector model. The original
+merge list and how tokenization applies those merges to new text.
+
+The main lecture assigns one toy token to each displayed word; a real
+tokenizer can split these words differently. This convention makes positions
+and matrix rows easy to track. Embedding lookup is a separate operation:
+token IDs select trainable rows. A Transformer does not require a separately pretrained word-vector model. The original
 architecture describes learned embeddings in
 [Vaswani et al., §3.4](https://arxiv.org/abs/1706.03762).
 
 ## Position information and head behavior
 
 The notebook's permutation identity assumes **unmasked** attention with no
-position-dependent term. A causal mask already supplies an ordering constraint.
+position-dependent term. It swaps Noa and she in the six-word prefix,
+then restores output order. A causal mask already supplies an ordering constraint.
 Consequently, the identity does not prove that every causal language model
 needs explicit position embeddings. Haviv et al. study causal models trained
 without them and find that position information can still be learned. Our
@@ -79,8 +89,12 @@ relative offsets in Q/K dot products;
 For a pair of column-vector coordinates, let `R_p` rotate by a frequency
 times position `p`. Then `q'_p = R_p q_p` and `k'_s = R_s k_s` give
 `q'_p^T k'_s = q_p^T R_(s-p) k_s`, because `R_p^T R_s = R_(s-p)`.
-Standard RoPE rotates Q and K, while V is unchanged. This optional extension
-is separate from the notebook's learned absolute position table.
+Standard RoPE rotates Q and K, while V is unchanged. The core lecture now
+includes this mechanism with she at 5 and Noa at 0, followed by a
+controlled shared shift to 8 and 3. The content vectors remain fixed in that
+calculation; it does not assert that changing a complete prompt leaves a
+model's outputs unchanged. The implementation
+notebook retains its learned absolute position table.
 
 The original Transformer's appendix includes attention visualizations for
 particular encoder heads and sentences. Such examples can suggest a hypothesis
@@ -99,7 +113,7 @@ sublayers, dropout, and label smoothing. Our small pre-LN decoder omits the
 encoder and cross-attention, uses learned positions, and has no dropout or
 label smoothing. These choices must be stated when comparing results.
 
-This optional historical English–French comparison is pinned to
+The lecture's historical English–French comparison is pinned to
 [arXiv v7, Table 2](https://arxiv.org/html/1706.03762v7#S6.T2): single-model
 ConvS2S reports 40.46 BLEU and an estimated 1.5 × 10²⁰ training FLOPs;
 Transformer big reports 41.8 BLEU and 2.3 × 10¹⁹ FLOPs. The ratio of estimated
@@ -109,7 +123,7 @@ with a wall-clock claim.
 
 Read §6.2 for architecture variations and §6.3 for the English constituency
 parsing experiment. They extend the evidence beyond one translation result,
-but do not make the two-sentence notebook a benchmark or establish that every
+but do not make the two invented Noa sentences a benchmark or establish that every
 Transformer variant transfers equally well.
 
 ## Efficiency and transfer of modifications
@@ -135,5 +149,5 @@ Later course material treats efficiency and training at larger scales.
 is a useful companion implementation. Compare its encoder, decoder,
 cross-attention, and normalization conventions with the original paper before
 copying a component. Use the course notebook for the exact model counted and
-tested in E01–E05. The [teaching plan](teaching-plan.md) maps every source slide
-and explains the reductions in classroom scope.
+tested in Implementation E01–E05. The [teaching plan](teaching-plan.md) explains
+the integrated slide sequence and the classroom route through the material.

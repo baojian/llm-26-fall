@@ -74,53 +74,51 @@ def test_notebook_is_clean_and_exercises_follow_their_concepts():
 
 
 def test_exercise_order_matches_slides():
-    slides = LECTURE / "slides.md"
-    found = list(dict.fromkeys(re.findall(r"Exercise (E\d\d) ·", slides.read_text())))
-    assert found == list(EXERCISES)
+    metadata = json.loads((LECTURE / "lecture.json").read_text())
+    assert metadata["notebook"] == "practice.ipynb"
+    assert "lecture-05-exercise.ipynb" in metadata["additional_notebooks"]
+    practice = json.loads((LECTURE / metadata["notebook"]).read_text())
+    headings = [match.group(1) for cell in practice["cells"] if cell["cell_type"] == "markdown"
+                if (match := re.match(r"## Practice (E\d\d)", "".join(cell["source"])))]
+    slides = (LECTURE / "slides.md").read_text()
+    assert re.findall(r"Practice (E\d\d) ·", slides) == headings
+    assert headings == ["E01", "E02", "E03", "E04", "E05", "E06"]
+    implementation = []
+    for section in re.split(r"^---$", slides, flags=re.MULTILINE):
+        exercises = re.findall(r"Implementation (E\d\d) ·", section)
+        if exercises:
+            assert 'data-exercise-notebook="lecture-05-exercise.ipynb"' in section
+            implementation.extend(exercises)
+    assert sorted(implementation) == ["E01", "E02", "E04", "E05"]
 
 
-def test_toy_data_is_shifted_and_floor_is_log2_over_4(lesson):
-    assert lesson["vocabulary"] == ["BOS", "red", "blue", "key", "opens", "closes", "EOS"]
-    assert lesson["documents"].tolist() == [[0, 1, 3, 4, 6], [0, 2, 3, 5, 6]]
-    assert lesson["X"].tolist() == [[0, 1, 3, 4], [0, 2, 3, 5]]
-    assert lesson["y"].tolist() == [[1, 3, 4, 6], [2, 3, 5, 6]]
+def test_toy_data_is_shifted_and_floor_is_log2_over_10(lesson):
+    assert lesson["vocabulary"] == ["Noa", "can", "be", "annoying", "but", "she", "is", "a", "great", "cat", "friend", "EOS"]
+    assert lesson["documents"].tolist() == [list(range(10)) + [11], list(range(9)) + [10, 11]]
+    assert lesson["X"].tolist() == [list(range(10)), list(range(9)) + [10]]
+    assert lesson["y"].tolist() == [list(range(1, 10)) + [11], list(range(1, 9)) + [10, 11]]
     assert (lesson["B"], lesson["T"], lesson["d"], lesson["n_heads"], lesson["d_ff"],
-            lesson["n_layers"], lesson["V"], lesson["max_length"]) == (2, 4, 16, 4, 32, 2, 7, 4)
-    assert lesson["loss_floor"] == pytest.approx(0.173286795, abs=1e-9)
-    # The floor is attained by p=1/2 after BOS and certainty elsewhere.
-    probabilities = [0.5, 1, 1, 1, 0.5, 1, 1, 1]
-    assert -sum(map(math.log, probabilities)) / 8 == pytest.approx(lesson["loss_floor"])
+            lesson["n_layers"], lesson["V"], lesson["max_length"]) == (2, 10, 16, 4, 32, 2, 12, 10)
+    probabilities = ([1] * 8 + [0.5, 1]) * 2
+    assert -sum(map(math.log, probabilities)) / 20 == pytest.approx(lesson["loss_floor"])
+    assert lesson["loss_floor"] == pytest.approx(math.log(2) / 10)
 
 
 def test_single_head_worked_example_matches_closed_form(lesson):
-    denominator = 2 * math.e + 1
-    assert lesson["head_scores"].tolist() == pytest.approx([1, 0, 1])
-    assert lesson["head_weights"].tolist() == pytest.approx(
-        [math.e / denominator, 1 / denominator, math.e / denominator]
-    )
-    assert lesson["head_output"].tolist() == pytest.approx(
-        [3 * math.e / denominator, (math.e + 2) / denominator]
-    )
-    allowed_weight = math.e / (math.e + 1)
-    assert lesson["head_masked_weights"].tolist() == pytest.approx(
-        [allowed_weight, 1 - allowed_weight, 0]
-    )
-    assert lesson["head_masked_output"].tolist() == pytest.approx(
-        [allowed_weight, 2 * (1 - allowed_weight)]
-    )
+    assert lesson["head_scores"].tolist() == pytest.approx([math.log(4), 0, 0, math.log(2), 0, math.log(2), math.log(3)])
+    assert lesson["head_weights"].tolist() == pytest.approx([n / 14 for n in [4, 1, 1, 2, 1, 2, 3]])
+    assert lesson["head_output"].tolist() == pytest.approx([10 / 7, 11 / 14])
+    assert lesson["head_masked_weights"].tolist() == pytest.approx([n / 11 for n in [4, 1, 1, 2, 1, 2, 0]])
+    assert lesson["head_masked_output"].tolist() == pytest.approx([1, 8 / 11])
 
 
 def test_introductory_mask_blocks_future_values_and_gradients(lesson):
-    torch.testing.assert_close(lesson["head_masked_changed"], lesson["head_masked_output"],
-                               rtol=0, atol=0)
-    assert (lesson["head_unmasked_changed"] - lesson["head_output"]).abs().max() > 10
+    torch.testing.assert_close(lesson["head_masked_changed"], lesson["head_masked_output"], rtol=0, atol=0)
+    assert (lesson["head_unmasked_changed"] - lesson["head_output"]).tolist() == pytest.approx([15 / 7, 15 / 7])
     for gradients in (lesson["head_key_grad"], lesson["head_value_grad"]):
-        assert torch.count_nonzero(gradients[2]) == 0
-        assert gradients[:2].abs().sum() > 0
-    # Dropping probability mass after softmax leaves the allowed row unnormalized.
-    assert lesson["head_wrong_weights"].sum().item() == pytest.approx(
-        (math.e + 1) / (2 * math.e + 1)
-    )
+        assert torch.count_nonzero(gradients[6]) == 0
+        assert gradients[:6].abs().sum() > 0
+    assert lesson["head_wrong_weights"].sum().item() == pytest.approx(11 / 14)
     assert lesson["head_masked_weights"].sum().item() == pytest.approx(1)
 
 
@@ -132,8 +130,8 @@ def test_split_and_merge_heads_move_feature_chunks(lesson):
         assert torch.equal(split[:, head], x[..., 2 * head:2 * head + 2])
     assert torch.equal(lesson["merge_heads"](split), x)
     assert lesson["e01_shapes"] == {
-        "input": (2, 4, 16), "projected": (2, 4, 16), "split heads": (2, 4, 4, 4),
-        "scores": (2, 4, 4, 4), "merged": (2, 4, 16), "output": (2, 4, 16),
+        "input": (2, 10, 16), "projected": (2, 10, 16), "split heads": (2, 4, 10, 4),
+        "scores": (2, 4, 10, 10), "merged": (2, 10, 16), "output": (2, 10, 16),
     }
     with pytest.raises(ValueError, match="divisible"):
         lesson["split_heads"](torch.zeros(1, 2, 10), 4)
@@ -143,7 +141,7 @@ def test_split_and_merge_heads_move_feature_chunks(lesson):
 
 
 @pytest.mark.parametrize("causal", [True, False])
-@pytest.mark.parametrize("length", [1, 4])
+@pytest.mark.parametrize("length", [1, 6, 10])
 def test_multi_head_attention_matches_pytorch_reference(lesson, causal, length):
     torch.manual_seed(3)
     attention = lesson["MultiHeadAttention"](16, 4).double()
@@ -174,43 +172,41 @@ def test_multi_head_attention_matches_pytorch_reference(lesson, causal, length):
 def test_e01_reference_agreement_and_wrong_reshape_control(lesson):
     assert lesson["e01_forward_error"] < 1e-10
     assert lesson["e01_gradient_error"] < 1e-10
-    assert lesson["e01_wrong_shape"] == (2, 4, 16)
+    assert lesson["e01_wrong_shape"] == (2, 10, 16)
     assert lesson["e01_wrong_error"] > 0.1
     assert lesson["correct_change"] > 1e-3
     assert lesson["wrong_change"] == 0
 
 
 def test_e02_permutation_fixture_is_independently_reproduced(lesson):
-    table = [[math.sin(p / 10000 ** (i / 4)) if i % 2 == 0 else math.cos(p / 10000 ** ((i - 1) / 4))
-              for i in range(4)] for p in range(4)]
+    table = [[math.sin(p / 10000 ** (i / 6)) if i % 2 == 0 else math.cos(p / 10000 ** ((i - 1) / 6))
+              for i in range(6)] for p in range(6)]
     assert flat(lesson["e02_pe"].tolist()) == pytest.approx(flat(table), abs=1e-15)
-    assert table[1] == pytest.approx([math.sin(1), math.cos(1), math.sin(0.01), math.cos(0.01)])
 
     def attend(rows):
         output = []
         for query in rows:
-            scores = [sum(a * b for a, b in zip(query, key)) / 2 for key in rows]
+            scores = [sum(a * b for a, b in zip(query, key)) / math.sqrt(6) for key in rows]
             total = sum(math.exp(score) for score in scores)
-            output.append([sum(math.exp(s) / total * key[j] for s, key in zip(scores, rows))
-                           for j in range(4)])
+            output.append([sum(math.exp(score) / total * key[j] for score, key in zip(scores, rows))
+                           for j in range(6)])
         return output
 
-    identity = [[float(i == j) for j in range(4)] for i in range(4)]
-    permutation = [3, 1, 2, 0]
+    identity = [[float(i == j) for j in range(6)] for i in range(6)]
+    permutation = [5, 1, 2, 3, 4, 0]
     fixture = lesson["e02_fixture"]
-    assert fixture["tokens"] == ["bank", "of", "the", "river"]
+    assert fixture["tokens"] == ["Noa", "can", "be", "annoying", "but", "she"]
     assert fixture["permutation"] == permutation
     plain = attend(identity)
-    assert plain[0][0] == pytest.approx(math.exp(0.5) / (math.exp(0.5) + 3), abs=1e-12)
+    assert plain[0][0] == pytest.approx(math.exp(1 / math.sqrt(6)) / (math.exp(1 / math.sqrt(6)) + 5))
     assert flat(fixture["plain_output"]) == pytest.approx(flat(plain), abs=1e-12)
     positioned = attend([[a + b for a, b in zip(row, pe)] for row, pe in zip(identity, table)])
     assert flat(fixture["positioned_output"]) == pytest.approx(flat(positioned), abs=1e-12)
-    shuffled = attend([[a + b for a, b in zip(identity[source], pe)]
-                       for source, pe in zip(permutation, table)])
-    restored = [shuffled[permutation.index(i)] for i in range(4)]
+    shuffled = attend([[a + b for a, b in zip(identity[source], pe)] for source, pe in zip(permutation, table)])
+    restored = [shuffled[permutation.index(i)] for i in range(6)]
     assert flat(fixture["positioned_restored"]) == pytest.approx(flat(restored), abs=1e-12)
     assert fixture["plain_error"] < 1e-12
-    assert fixture["positioned_error"] > 0.1
+    assert fixture["positioned_error"] == pytest.approx(0.4492044856670271)
     with pytest.raises(ValueError, match="even"):
         lesson["sinusoidal_positions"](3, 5)
 
@@ -220,12 +216,12 @@ def test_e03_layer_norm_residual_and_axes(lesson):
     assert lesson["e03_residual"].tolist() == [3.0, 2.0]
     assert lesson["e03_feature_means"].abs().max().item() < 1e-12
     torch.testing.assert_close(lesson["e03_feature_variances"],
-                               torch.ones(2, 4, dtype=torch.float64), rtol=0, atol=1e-5)
-    assert lesson["e03_ffn_change"].tolist()[0] == 0
-    assert lesson["e03_ffn_change"][2:].tolist() == [0, 0]
-    assert lesson["e03_ffn_change"][1] > 0
-    assert lesson["e03_attention_change"][0] == 0
-    assert (lesson["e03_attention_change"][1:] > 1e-3).all()
+                               torch.ones(2, 10, dtype=torch.float64), rtol=0, atol=1e-5)
+    assert (lesson["e03_ffn_change"][:5] == 0).all()
+    assert (lesson["e03_ffn_change"][6:] == 0).all()
+    assert lesson["e03_ffn_change"][5] > 0
+    assert (lesson["e03_attention_change"][:5] == 0).all()
+    assert (lesson["e03_attention_change"][5:] > 1e-3).all()
     assert lesson["e03_pre_post_difference"] > 1
     assert abs(lesson["e03_post_output"].mean().item()) < 1e-12
     assert lesson["e03_pre_output"].mean().item() == pytest.approx(5, abs=0.5)
@@ -269,8 +265,8 @@ def test_e04_counts_are_independent_of_notebook_arithmetic(lesson):
     for _, parameter in model.named_parameters(remove_duplicate=False):
         registered += parameter.numel()
         unique[id(parameter)] = parameter.numel()
-    assert sum(unique.values()) == 4432
-    assert registered == 4544
+    assert sum(unique.values()) == 4608
+    assert registered == 4800
     block = model.blocks[0]
     by_part = {name: sum(p.numel() for p in module.parameters()) for name, module in
                [("attention", block.attention), ("ffn", block.ffn)]}
@@ -278,17 +274,17 @@ def test_e04_counts_are_independent_of_notebook_arithmetic(lesson):
     assert sum(p.numel() for p in block.attention_norm.parameters()) == 32
     assert lesson["e04_formula"] == {"attention": 1024, "ffn": 1024, "layer norms": 64}
     assert lesson["e04_counts"] == {
-        "block": 2112, "blocks": 4224, "token table": 112, "position table": 64,
-        "final norm": 32, "model tied": 4432, "model untied": 4544,
+        "block": 2112, "blocks": 4224, "token table": 192, "position table": 160,
+        "final norm": 32, "model tied": 4608, "model untied": 4800,
     }
     assert lesson["e04_tied"] is True and lesson["e04_copied_is_tied"] is False
     assert model.lm_head.weight is model.token_embedding.weight
     assert model.lm_head.bias is None
     assert isinstance(model.position_embedding, torch.nn.Embedding)
-    assert tuple(model.position_embedding.weight.shape) == (4, 16)
+    assert tuple(model.position_embedding.weight.shape) == (10, 16)
     assert not any(isinstance(module, torch.nn.Dropout) for module in model.modules())
     assert sum(isinstance(module, torch.nn.LayerNorm) for module in model.modules()) == 5
-    assert sum(p.numel() for p in lesson["DecoderLM"](n_heads=2).parameters()) == 4432
+    assert sum(p.numel() for p in lesson["DecoderLM"](n_heads=2).parameters()) == 4608
 
 
 def test_initialization_policy(lesson):
@@ -304,17 +300,17 @@ def test_initialization_policy(lesson):
 
 
 def test_e05_causality_and_negative_controls(lesson):
-    assert tuple(lesson["e05_logits"].shape) == (2, 4, 7)
+    assert tuple(lesson["e05_logits"].shape) == (2, 10, 12)
     assert lesson["e05_prefix_change"] == 0
-    assert lesson["e05_last_change"] > 1e-3
+    assert lesson["e05_future_change"] > 1e-3
     assert lesson["e05_unmasked_prefix_change"] > 1e-4
     gradient = lesson["e05_state_gradient"]
-    assert gradient[3].item() == 0 and (gradient[:3] > 0).all()
-    assert lesson["e05_unmasked_state_gradient"][3].item() > 0
+    assert (gradient[6:] == 0).all() and (gradient[:6] > 0).all()
+    assert (lesson["e05_unmasked_state_gradient"][6:] > 0).all()
     weights = lesson["e05_weights"]
     assert torch.equal(weights.triu(1), torch.zeros_like(weights))
     assert torch.equal(weights[..., 0, 0], torch.ones_like(weights[..., 0, 0]))
-    torch.testing.assert_close(weights.sum(-1), torch.ones(2, 4, 4))
+    torch.testing.assert_close(weights.sum(-1), torch.ones(2, 4, 10))
 
 
 def test_full_model_causality_in_float64(lesson):
@@ -323,16 +319,16 @@ def test_full_model_causality_in_float64(lesson):
     ids = lesson["X"]
     states = model.embed(ids).detach().requires_grad_()
     logits = model.lm_head(model.forward_hidden(states))
-    for position in range(4):
+    for position in range(10):
         gradient = torch.autograd.grad(logits[:, position].square().sum(), states, retain_graph=True)[0]
         per_position = gradient.abs().amax(dim=(0, 2))
         assert (per_position[position + 1:] == 0).all()
         assert (per_position[:position + 1] > 0).all()
     changed = ids.clone()
-    changed[:, 2] = 6
+    changed[:, 6] = 10
     with torch.no_grad():
-        assert torch.equal(model(changed)[:, :2], model(ids)[:, :2])
-        assert (model(changed, causal=False) - model(ids, causal=False))[:, :2].abs().max() > 0
+        assert torch.equal(model(changed)[:, :6], model(ids)[:, :6])
+        assert (model(changed, causal=False) - model(ids, causal=False))[:, :6].abs().max() > 0
 
 
 def test_model_input_edge_cases(lesson):
@@ -340,15 +336,15 @@ def test_model_input_edge_cases(lesson):
     X = lesson["X"]
     with torch.no_grad():
         single = model(X[:, :1])
-        assert tuple(single.shape) == (2, 1, 7)
+        assert tuple(single.shape) == (2, 1, 12)
         assert torch.isfinite(single).all()
         # One-token logits equal the first position of the longer sequence.
         torch.testing.assert_close(single, model(X)[:, :1], rtol=1e-6, atol=1e-6)
-    for bad in [lesson["documents"], X[:, :0], X[0], X.float(), torch.tensor([[0, 7]]),
+    for bad in [lesson["documents"], X[:, :0], X[0], X.float(), torch.tensor([[0, 12]]),
                 torch.tensor([[-1, 0]])]:
         with pytest.raises(ValueError):
             model(bad)
-    assert "between 1 and 4" in lesson["e05_length_error"]
+    assert "between 1 and 10" in lesson["e05_length_error"]
 
 
 def test_tiny_batch_fit_meets_criterion_without_beating_the_floor(lesson):
@@ -357,15 +353,16 @@ def test_tiny_batch_fit_meets_criterion_without_beating_the_floor(lesson):
         assert len(losses) == len(norms) == 201
         assert all(math.isfinite(value) for value in losses + norms)
         assert all(loss >= lesson["loss_floor"] - 1e-6 for loss in losses)
-        assert losses[0] == pytest.approx(math.log(7), abs=0.1)
-    assert lesson["pre_losses"][-1] < 0.20
+        assert losses[0] == pytest.approx(math.log(12), abs=0.1)
+        assert losses[-1] < 0.10
     assert lesson["checkpoints"] == CHECKPOINTS
+    deterministic = [i for i in range(10) if i != 8]
     y = lesson["y"]
-    assert torch.equal(lesson["e05_predictions"][:, 1:], y[:, 1:])
-    bos = lesson["e05_bos_probabilities"]
-    assert bos.sum(-1).min().item() > 0.95
-    assert (bos - 0.5).abs().max().item() < 0.05
-    assert torch.equal(lesson["post_predictions"][:, 1:], y[:, 1:])
+    assert torch.equal(lesson["e05_predictions"][:, deterministic], y[:, deterministic])
+    branch = lesson["e05_branch_probabilities"]
+    assert branch.sum(-1).min().item() > 0.95
+    assert (branch - 0.5).abs().max().item() < 0.05
+    assert torch.equal(lesson["post_predictions"][:, deterministic], y[:, deterministic])
     trained = lesson["model"]
     assert all(torch.isfinite(p.grad).all() for p in trained.parameters())
     assert trained.lm_head.weight is trained.token_embedding.weight
@@ -401,7 +398,7 @@ def test_teaching_curve_preserves_every_update_and_records_its_environment(lesso
         losses = trace["y"]
         assert len(losses) == 201 and all(math.isfinite(value) for value in losses)
         assert min(losses) >= lesson["loss_floor"] - 1e-6
-        assert losses[-1] < 0.20
+        assert losses[-1] < 0.10
         assert losses[:6] == pytest.approx(lesson[f"{prefix}_losses"][:6], rel=1e-4, abs=1e-5)
         # The float32 plateau exit can move across BLAS/platform versions.
         # On the recorded environment, verify the entire unsmoothed history.
@@ -414,20 +411,39 @@ def test_browser_fixture_and_frequency_plot_agree_with_the_notebook(lesson):
     fixture = json.loads((LECTURE / "assets/position-values.json").read_text())
     assert fixture["tokens"] == lesson["e02_fixture"]["tokens"]
     assert fixture["permutation"] == lesson["e02_fixture"]["permutation"]
-    assert fixture["vectors"] == torch.eye(4).tolist()
-    figure = json.loads((LECTURE / "assets/position-frequencies.json").read_text())
+    assert fixture["vectors"] == torch.eye(6).tolist()
+    figure = json.loads((LECTURE / "assets/position-frequencies-legacy.json").read_text())
     for trace, frequency in zip(figure["data"], [1, 0.1, 0.01]):
         assert trace["x"] == list(range(32))
         assert trace["y"] == pytest.approx([math.sin(p * frequency) for p in range(32)])
 
 
 def test_masked_practice_and_moved_browser_example(lesson):
-    assert lesson["practice_weights"].tolist() == pytest.approx([0.25, 0.75, 0])
-    assert lesson["practice_output"].tolist() == pytest.approx([0.5, 3])
+    assert lesson["practice_weights"].tolist() == pytest.approx([0.2, 0.1, 0.1, 0.2, 0.1, 0.3, 0])
+    assert lesson["practice_output"].tolist() == pytest.approx([1, 1])
     fixture = json.loads((LECTURE / "assets/attention-values.json").read_text())
+    assert fixture["labels"] == lesson["head_tokens"]
+    assert fixture["query_position"] == 5 and fixture["future_position"] == 6
     q, k, v = [torch.tensor(fixture[name], dtype=torch.float64) for name in ("query", "key", "value")]
-    allowed = torch.ones(3, 3, dtype=torch.bool).tril()
+    allowed = torch.ones(7, 7, dtype=torch.bool).tril()
     weights = ((q @ k.T / math.sqrt(2)).masked_fill(~allowed, -torch.inf)).softmax(-1)
-    assert weights[1].tolist() == pytest.approx([math.e / (1 + math.e), 1 / (1 + math.e), 0])
-    assert (weights @ v)[1].tolist() == pytest.approx([0.7310585786300049, 0.5378828427399903])
-    assert fixture["value"] == [[1, 0], [0, 2], [2, 1]]
+    assert weights[5].tolist() == pytest.approx([n / 11 for n in [4, 1, 1, 2, 1, 2, 0]])
+    assert (weights @ v)[5].tolist() == pytest.approx([1, 8 / 11])
+    torch.testing.assert_close(k, lesson["head_keys"])
+    torch.testing.assert_close(v, lesson["head_values"])
+
+
+def test_core_noa_exercises_run_and_preserve_the_declared_shapes():
+    core = json.loads((LECTURE / "practice.ipynb").read_text())
+    nbformat.validate(nbformat.from_dict(core))
+    namespace = {}
+    for cell in core["cells"]:
+        if cell["cell_type"] == "code":
+            assert cell["outputs"] == [] and cell["execution_count"] is None
+            exec(compile("".join(cell["source"]), cell["id"], "exec"), namespace)
+    assert namespace["output_shape"] == (6, 512)
+    theta = math.pi / 6
+    rotate = namespace["rotate_pair"]
+    dot = namespace["dot"]
+    assert dot(rotate([1, 0], 5 * theta), rotate([1, 0], 0)) == pytest.approx(-math.sqrt(3) / 2)
+    assert namespace["parameter_counts"]["total"] == 108_495_360

@@ -1,0 +1,16 @@
+/* Preserve the source slides and type sizes while fitting their paper tables
+   into the shared slide canvas. These spacing changes apply only in Lecture 05. */
+.reveal :is(#original-transformer-paper, [id^="paper-"]) h2 { margin-bottom: 24px; }
+.reveal :is(#original-transformer-paper, [id^="paper-"]) h3 { margin-bottom: 12px; }
+.reveal :is(#original-transformer-paper, [id^="paper-"]) p { margin-bottom: 16px; }
+.reveal :is(#original-transformer-paper, [id^="paper-"]) li { margin-bottom: 12px; }
+.reveal :is(#original-transformer-paper, [id^="paper-"]) table { margin-bottom: 16px; }
+.reveal :is(#original-transformer-paper, [id^="paper-"]) :is(th, td) { padding-top: 8px; padding-bottom: 8px; }
+.reveal :is(#original-transformer-paper, [id^="paper-"]) .columns { gap: 40px; }
+.reveal #paper-parameter-count .answer { margin-top: 0; padding-top: 12px; }
+.reveal #paper-efficient-attention h2 { margin-bottom: 16px; }
+.reveal #paper-efficient-attention table { table-layout: fixed; }
+.reveal #paper-efficient-attention :is(th, td) { padding-top: 6px; padding-bottom: 6px; }
+.reveal #paper-efficient-attention th:first-child { width: 20%; }
+.reveal #paper-efficient-attention th:nth-child(2) { width: 54%; }
+.reveal #paper-efficient-attention th:nth-child(3) { width: 26%; }

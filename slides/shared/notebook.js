@@ -16,7 +16,7 @@
   }
   window.addEventListener('course:language', updateTitle);
   updateTitle();
-  if (!/^(example|lecture-[0-9]{2}|[0-9]{2}-[a-z0-9-]+)$/.test(lecture || '')) {
+  if (!/^(example|lecture-[0-9]{2}(?:-test)?|[0-9]{2}-[a-z0-9-]+)$/.test(lecture || '')) {
     copy(title, 'Choose a lecture first', '请先选择一讲课件');
     copy(status, 'Open the lecture slides and use their Notebook link.', '打开课件，然后点击其中的“练习本”链接。');
     return;

@@ -1,8 +1,11 @@
 {
   "number": "05",
   "title": "Attention and the Transformer",
-  "subtitle": "Lecture 05 \u2013 NLP and LLMs",
+  "subtitle": "Lecture 05 – NLP and LLMs",
   "language": "en",
-  "notebook": "lecture-05-exercise.ipynb",
-  "demo": "demo.js"
+  "notebook": "practice.ipynb",
+  "demo": "demo.js",
+  "additional_notebooks": [
+    "lecture-05-exercise.ipynb"
+  ]
 }

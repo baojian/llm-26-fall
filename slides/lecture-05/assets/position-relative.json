@@ -1,0 +1,19 @@
+{
+  "title": "RoPE encodes the relative offset in a dot product",
+  "steps": [
+    {
+      "click": 1,
+      "label": "For fixed content vectors, a shared shift preserves the dot product.",
+      "object_ids": [
+        "position-relative-0"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "R(mθ)ᵀR(nθ) equals R((n−m)θ): the positions enter through their difference.",
+      "object_ids": [
+        "position-relative-1"
+      ]
+    }
+  ]
+}

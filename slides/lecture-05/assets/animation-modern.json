@@ -1,0 +1,73 @@
+{
+  "source": "lecture-05-slides-transformers.pptx",
+  "source_slide": 24,
+  "effect": "Appear",
+  "adaptation": "The source teaching sequence is retained with the six-token Noa prefix, zero-based positions, and a causal final-position query.",
+  "tokens": [
+    "Noa",
+    "can",
+    "be",
+    "annoying",
+    "but",
+    "she"
+  ],
+  "query_position": 5,
+  "steps": [
+    {
+      "click": 1,
+      "label": "The query is she at position 5; positions 0–5 form the available causal prefix.",
+      "object_ids": [
+        "inputs"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "Compare the she embedding with each of the six available embeddings.",
+      "object_ids": [
+        "scores"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "Normalize the six available scores with softmax.",
+      "object_ids": [
+        "normalization"
+      ]
+    },
+    {
+      "click": 4,
+      "label": "The query has one normalized weight for every prefix token.",
+      "object_ids": [
+        "weights"
+      ]
+    },
+    {
+      "click": 5,
+      "label": "For this first calculation, use the input embeddings themselves as values.",
+      "object_ids": [
+        "values"
+      ]
+    },
+    {
+      "click": 6,
+      "label": "Multiply each available value by its weight for she.",
+      "object_ids": [
+        "products"
+      ]
+    },
+    {
+      "click": 7,
+      "label": "The weighted sum is the contextual output z_5 for she.",
+      "object_ids": [
+        "context"
+      ]
+    },
+    {
+      "click": 8,
+      "label": "Repeat for positions 0–4; each query can use only its own available prefix.",
+      "object_ids": [
+        "other-outputs"
+      ]
+    }
+  ]
+}
