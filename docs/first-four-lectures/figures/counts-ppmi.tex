@@ -1,0 +1,18 @@
+% Values from L03 assets/counts-ppmi.json at course commit 1adbaa5.
+\begin{tikzpicture}[font=\small]
+\foreach \off/\title in {0/Counts,7/PPMI (bits)} {
+  \node[font=\small\bfseries] at (\off+2.2,1.2) {\title};
+  \foreach \x/\word in {0/drink,1/hot,2/drive}
+    \node[font=\footnotesize] at (\off+1.2*\x+1,0.5) {\word};
+  \foreach \y/\word in {0/tea,1/coffee,2/car}
+    \node[anchor=east,font=\footnotesize] at (\off+.3,-.8*\y-.1) {\word};}
+\foreach \x/\y/\v in {0/0/8,1/0/6,2/0/0,0/1/7,1/1/5,2/1/0,0/2/0,1/2/0,2/2/9} {
+  \pgfmathtruncatemacro{\cellshade}{7+6*\v}
+  \node[draw=white,fill=courseblue!\cellshade,minimum width=11mm,minimum height=7mm]
+    at (1.2*\x+1,-.8*\y-.1) {\v};}
+\foreach \x/\y/\v in {0/0/.415,1/0/.447,2/0/0,0/1/.445,1/1/.407,2/1/0,0/2/0,1/2/0,2/2/1.959} {
+  \pgfmathtruncatemacro{\cellshade}{7+27*\v}
+  \node[draw=white,fill=courseteal!\cellshade,minimum width=11mm,minimum height=7mm]
+    at (1.2*\x+8,-.8*\y-.1) {\pgfmathprintnumber[fixed,precision=2]{\v}};}
+\draw[arr] (4.2,-.9)--(5.4,-.9);
+\end{tikzpicture}

@@ -1,0 +1,20 @@
+% Right panel: L01 assets/heldout-chinese.json at course commit 1adbaa5.
+\begin{minipage}[c]{.40\linewidth}\centering
+\begin{tikzpicture}[node distance=5mm]
+\node[box,text width=48mm] (a) {more vocabulary rows $K$};
+\node[tbox,text width=48mm,below=of a] (b) {more table/readout storage};
+\node[box,text width=48mm,below=of b] (c) {potentially fewer positions $T$};
+\draw[arr] (a)--(b);
+\draw[flow] (a.west)--++(-.4,0)|-(c.west);
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[c]{.58\linewidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth,height=47mm,xlabel={Learned merges},ylabel={Tokens},
+  xmin=-1,xmax=33,ymin=30,ymax=60,xtick={0,8,32},legend pos=south west]
+\addplot[courseblue,thick,mark=*] coordinates {(0,54)(8,48)(32,35)};
+\addlegendentry{English + Chinese}
+\addplot[courseteal,thick,dashed,mark=square*] coordinates {(0,54)(8,54)(32,54)};
+\addlegendentry{English only}
+\end{axis}\end{tikzpicture}
+\end{minipage}

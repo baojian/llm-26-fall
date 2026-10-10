@@ -1,0 +1,593 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage[margin=20mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,tabularx,array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\pgfplotsset{compat=1.18}
+\usepackage{fancyhdr}
+\usepackage{natbib,bibentry}
+\usepackage[colorlinks=true,linkcolor=courseblue,urlcolor=courseblue]{hyperref}
+\definecolor{courseblue}{HTML}{1F4E8C}
+\definecolor{courseteal}{HTML}{247C78}
+\definecolor{muted}{HTML}{586575}
+\definecolor{softblue}{HTML}{EDF3FA}
+\definecolor{softteal}{HTML}{EAF5F1}
+\hypersetup{pdftitle={From Text to Recurrent Models: Outline, Figures, and Reading Guide},
+  pdfauthor={CS40008.01, Fudan University}}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small CS40008.01 \, / \, Fall 2026}
+\rhead{\small First four lectures: notes outline}
+\cfoot{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlist[itemize]{leftmargin=1.3em,itemsep=2pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=1.5em,itemsep=2pt,topsep=3pt}
+\setcounter{secnumdepth}{0}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\sectionplan}[3]{%
+  \section{\texorpdfstring{#1\quad #2}{#1 #2}}
+  {\small\color{muted}#3\par}}
+\newcommand{\tagline}[1]{\textcolor{courseblue}{\textbf{#1}}}
+\newcommand{\figids}[1]{\textcolor{courseteal}{\textbf{Figure plan:} #1}}
+\newcommand{\source}[2]{\href{https://github.com/baojian/llm-26-fall/blob/1adbaa5442a567cbd2ab65035b8e485778dd46a9/#1}{#2}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\softmax}{\operatorname{softmax}}
+\newcommand{\CE}{\operatorname{CE}}
+\newcommand{\BOS}{\textsc{bos}}
+\newcommand{\EOS}{\textsc{eos}}
+\newcommand{\doi}[1]{\href{https://doi.org/#1}{DOI}}
+\newcommand{\readingref}[1]{\hyperlink{reading:#1}{#1}}
+\newcommand{\paperentry}[7]{%
+  \par\addvspace{7pt}%
+  \hypertarget{reading:#1}{}%
+  {\color{courseblue}\bfseries #1\quad #2}\hfill
+  {\footnotesize\bfseries #3}\par
+  {\footnotesize\color{muted}#4\par}%
+  {\small\bibentry{#5}\par}%
+  \textbf{Why it matters.} #6\par
+  \textbf{Read for.} #7\par}
+\begin{document}
+\bibliographystyle{plainnat}
+\nobibliography{references}
+\thispagestyle{empty}
+{\small\color{courseblue}\bfseries COURSE NOTES \quad / \quad STRUCTURE AND FIGURE PLAN}
+
+\vspace{8pt}
+{\fontsize{26}{31}\selectfont\bfseries From Text to Recurrent Models\par}
+\vspace{5pt}
+{\large Tokenization, language modeling, and recurrent memory\par}
+{\color{muted}Lectures 01--04 \quad $\cdot$ \quad October 1, 2026\par}
+
+\textbf{Purpose.} Build a compact, illustrated reference for the first four
+lectures. The proposed finished notes have about
+\textbf{20--25 core pages}, with short supporting appendices. This document is
+the structure and figure plan, with three vector figure prototypes and an
+annotated guide to 15 papers published before the Transformer.
+
+\textbf{Scope.} End with RNNs, LSTMs, and the limitations of recurrent memory.
+The instructor's revised sequence starts attention ideas in Lecture 05.
+The closing discussion motivates that next step; attention mechanisms and
+the Transformer architecture belong to the following notes.
+
+\begin{center}
+\input{figures/course-map.tex}
+\end{center}
+{\small\color{muted}\textbf{Prototype F01.} The lectures progressively change
+the representation and context computation while retaining a normalized
+next-token objective and explicit checks.}
+
+\subsection{Proposed contents}
+\renewcommand{\arraystretch}{1.16}
+\begin{tabularx}{\textwidth}{@{}r Y l r@{}}
+\toprule
+& Section & Main source & Pages\\
+\midrule
+1 & Language modeling as a common task & L01--L02 & 1\\
+2 & From text to tokens & L01 & 3--4\\
+3 & Count-based language models & L02 & 2--3\\
+4 & Evaluating and sampling language models & L02 & 2--3\\
+5 & Learning token representations & L03 & 3\\
+6 & From token IDs to a trainable neural LM & L02--L04 & 4\\
+7 & Recurrent language models & L04 & 2--3\\
+8 & LSTMs and the limits of recurrent memory & L04 & 3--4\\
+\bottomrule
+\end{tabularx}
+
+\textbf{Writing pattern.} For each major idea, use a question, a diagram,
+one equation or algorithm, a small worked example, and a check that can fail.
+Group related panels to keep the finished notes near the page target.
+
+\textbf{Figure budget.} Specify 32 figures or panels: conceptual diagrams in
+TikZ and numerical plots exported as vector PDF. F01, F28, and F29 are prototyped
+here; the remaining entries are authoring plans.
+
+\clearpage
+\sectionplan{1}{Language modeling as a common task}{L01 introduction; L02 distribution matching and chain rule \quad / \quad about 1 page}
+\tagline{Question: What do all of these language models try to predict?}
+\begin{itemize}
+  \item Start with a short reminder of language tasks and the difference
+  between a fluent response and a checked answer. Compress the historical
+  survey to a paragraph.
+  \item Define a corpus, token sequence, model distribution, and prediction
+  event. State the sampling assumptions behind an empirical objective.
+  \item Connect KL minimization, expected log likelihood, empirical
+  negative log likelihood, and the exact chain-rule factorization.
+\end{itemize}
+\[
+p_\theta(x_{1:T})=\prod_{t=1}^{T}p_\theta(x_t\mid x_{<t}),
+\qquad
+\mathcal L(\theta)=-\frac{1}{N_{\rm pred}}
+\sum_{\text{scored events}}\log p_\theta(x_t\mid x_{<t}).
+\]
+Explain that sequence-averaged and token-averaged objectives use different
+weighting when document lengths vary. Use token averaging for the metric
+ledger in these notes.
+
+\textbf{Check.} Identify what is observed, what is predicted, which parameters
+are shared, and whether the stated conditional distribution sums to one.
+
+\figids{F01 course map; F08 chain-rule diagram shared with Section 3.}
+
+\sectionplan{2}{From text to tokens}{L01 preprocessing, Unicode, BPE, and held-out comparisons \quad / \quad 3--4 pages}
+\tagline{Question: What information reaches the model, and what can be recovered?}
+\begin{enumerate}
+  \item \textbf{Corpus and preprocessing.} Sources, coverage, train/dev/test
+  separation before fitting; extraction versus lossless partitioning; regular
+  expressions and allowed merge boundaries.
+  \item \textbf{Representations of text.} Visible symbols, Unicode code
+  points, UTF-8 bytes, token occurrences, token types, and token IDs.
+  Contrast NFC, NFKC, and lowercasing.
+  \item \textbf{Byte-level BPE training.} Weighted adjacent-pair counts,
+  deterministic tie handling, non-overlapping replacements, vocabulary
+  growth, and boundaries. Work through the existing
+  \texttt{low}$\times5$, \texttt{lower}$\times2$ example.
+  \item \textbf{Encoding with a frozen tokenizer.} Apply learned merge
+  ranks; concatenate token bytes before UTF-8 decoding; distinguish text
+  from special/control tokens. Briefly locate other tokenizer families.
+  \item \textbf{Vocabulary and sequence tradeoffs.} Coverage and held-out
+  token counts by language; connect vocabulary rows and sequence length
+  to costs developed later.
+\end{enumerate}
+\textbf{Checks.} The round trip recovers the original text only when no
+irreversible normalization was applied. Pair counts can include overlaps
+even though replacements cannot. The lecture's weighted token totals are
+$25\to18\to11$ after two merges; compression alone does not establish LM quality.
+
+\figids{F02--F07: pipeline, Unicode, boundaries, BPE, frozen encoding,
+and vocabulary/sequence tradeoffs.}
+
+\clearpage
+\sectionplan{3}{Count-based language models}{L02 estimation and smoothing \quad / \quad 2--3 pages}
+\tagline{Question: How can we estimate a next-token distribution from counts?}
+\begin{enumerate}
+  \item Contrast the exact chain rule with the finite-history approximation:
+  unigram, bigram, trigram, and the general $(n-1)$-token history.
+  \item Extract sentence-local events; define \BOS, \EOS, output vocabulary,
+  unknown tokens, counts, and maximum-likelihood estimates.
+  \item Explain the zero-probability problem, additive smoothing,
+  interpolation, and development-set tuning. Give backoff/Kneser--Ney
+  one short contextual paragraph, matching its limited lecture treatment.
+\end{enumerate}
+\[
+\widehat p_{\rm MLE}(w\mid h)=\frac{c(h,w)}{c(h)},\qquad
+p_\delta(w\mid h)=\frac{c(h,w)+\delta}{c(h)+\delta K}.
+\]
+Here $K$ is the number of possible output symbols, including \EOS\ when it
+is scored; the MLE expression requires $c(h)>0$. Specify behavior for unseen
+histories before using a mixture:
+\[
+p(w\mid h)=\sum_{r=0}^{n}\lambda_r p_r(w\mid h),
+\qquad \lambda_r\geq0,\quad \sum_r\lambda_r=1.
+\]
+Use $p_0$ for a uniform floor and $p_r$ for the order-$r$ component,
+with a normalized fallback for unseen histories.
+\textbf{Worked example.} Reuse the three-sentence corpus from L02 E01 and
+L03's opening recap: after \texttt{I}, counts are \texttt{am}:2 and
+\texttt{do}:1, yielding $2/3$ and $1/3$.
+
+\textbf{Checks.} Normalize each conditional distribution, prevent
+cross-document pairs, distinguish raw MLE zeros from a smoothed scorer,
+and use the same distribution for sampling and scoring.
+
+\figids{F08--F10: histories, counts-to-probabilities, and smoothing.}
+
+\sectionplan{4}{Evaluating and sampling language models}{L02 evaluation, sampling, and pipeline demonstrations \quad / \quad 2--3 pages}
+\tagline{Question: What does a better score mean, and what can it fail to show?}
+\begin{itemize}
+  \item Use development data for choices and a fixed test set for final
+  comparisons. Relate intrinsic likelihood to task-specific evaluation.
+  \item Derive the metric conversions from total negative log likelihood
+  $S=-\sum\ln p_\theta(x_t\mid x_{<t})$ in nats:
+  $N$ scored predictions and $B_{\rm utf8}$ evaluated text bytes.
+  \[
+  \ell=S/N,\quad {\rm PPL}=e^\ell,\quad
+  {\rm BPT}=\ell/\ln2,\quad {\rm BPB}=S/(B_{\rm utf8}\ln2).
+  \]
+  \item Interpret the uniform-distribution baseline, branching factor,
+  and why per-token perplexity cannot directly compare tokenizers.
+  Keep preprocessing, evaluated text, boundaries, and special-token
+  conventions identical for a BPB comparison.
+  \item Explain categorical sampling with cumulative intervals, then
+  autoregressive generation from \BOS\ to \EOS.
+\end{itemize}
+\textbf{Application box.} Retain the reference-LM data filter and the
+sample/retrain loop as concise demonstrations of experimental reasoning.
+The filter score is not a universal quality label. The self-training run
+changes token budget, truncation, and sampling; it does not isolate one cause.
+
+\figids{F11--F14: metric units, tokenizer comparison, sampling, and
+the two pipeline demonstrations.}
+
+\clearpage
+\sectionplan{5}{Learning token representations}{L03's bounded classical bridge and lookup material \quad / \quad about 3 pages}
+\tagline{Question: What makes representations useful, and what objective learns them?}
+\begin{enumerate}
+  \item Move from context-count rows to association:
+  $\operatorname{PPMI}(w,c)=\max\{0,\log_2[p(w,c)/(p(w)p(c))]\}$.
+  Reuse the \texttt{tea}/\texttt{coffee}/\texttt{car} table.
+  \item Show low-rank compression by SVD and briefly contrast GloVe's
+  weighted log-count objective. Avoid presenting them as the same method.
+  \item Contrast CBOW and skip-gram prediction directions, center/context
+  tables, and observed-versus-sampled pair discrimination.
+  \item Work one negative-sampling gradient by hand and check it with
+  autograd. Explain that this pairwise loss is not normalized LM likelihood.
+  \item Introduce fastText's character n-gram composition, with a small
+  comparison to BPE segmentation. Distinguish static token vectors,
+  context-dependent states, and retrieval vectors.
+\end{enumerate}
+\[
+\ell_{\rm NS}=-\log\sigma(\mathbf w^\top\mathbf c_+)
+             -\log\sigma(-\mathbf w^\top\mathbf c_-),\qquad
+\nabla_{\mathbf c_+}\ell_{\rm NS}
+=(\sigma(\mathbf w^\top\mathbf c_+)-1)\mathbf w .
+\]
+\textbf{Check.} A close neighbor or an analogy result is an observation
+about vector geometry; it does not substitute for held-out LM evaluation.
+Keep the bridge proportional to the ten slides actually taught.
+
+\figids{F15--F19: count geometry, prediction direction, gradient,
+representation types, and subword composition.}
+
+\sectionplan{6}{From token IDs to a trainable neural LM}{L02 NPLM introduction; L03 mechanics; L04 fixed-window model \quad / \quad about 4 pages}
+\tagline{Question: Can we trace every tensor and every update?}
+\begin{itemize}
+  \item Define lookup as selecting rows of $E\in\R^{K_{\rm in}\times d}$,
+  and show its one-hot matrix-product equivalent. State shape, dtype, and
+  device; distinguish input rows from the $K$ possible output symbols.
+  \item Trace the L03 neural bigram: selected vector, vocabulary readout,
+  raw logits, softmax, shifted targets, and cross-entropy.
+  \item Extend the same computation to L04's ordered $m$-token context:
+  \[
+  u=\operatorname{concat}(E[x_{t-m}],\ldots,E[x_{t-1}]),\quad
+  h=\tanh(W_hu+b_h),\quad z=W_oh+b_o .
+  \]
+  \item Explain stable log-sum-exp, label-preserving reshapes, autograd,
+  gradient clearing, backpropagation, and the optimizer step.
+  Use a detached-loss example and a compatible tiny-batch fit.
+  \item Contrast training fit with a held-out coverage probe; distinguish
+  evaluation mode from disabling gradient recording.
+  \item Explain weight tying with compatible row meanings and widths,
+  both gradient paths, unique parameter
+  counts, optimizer-state payload, logits storage, and projection work.
+\end{itemize}
+\textbf{Checks.} Zero logits give $\ln K$ loss. L03's model still conditions
+on one token. L04's fixed-window network can distinguish prefixes sharing
+the last token. An fp32 Adam parameter/gradient/two-moment subtotal uses
+16 bytes per parameter, excluding activations and other overhead.
+
+\figids{F20--F25: tensor path, stable loss, context capacity, fit/probe,
+weight tying, and resource ledger.}
+
+\clearpage
+\sectionplan{7}{Recurrent language models}{Revised L04 sequence; existing recurrence material \quad / \quad 2--3 pages}
+\tagline{Question: How can a model use information beyond a fixed window?}
+\begin{enumerate}
+  \item \textbf{From a window to a state.} Carry information through a
+  shared transition. Contrast theoretical access to the prefix with the
+  information actually retained in a finite-width state.
+  \[
+  e_t=E[x_t],\qquad h_t=\tanh(W_xe_t+W_hh_{t-1}+b),\qquad
+  p(\cdot\mid x_{\leq t})=\softmax(W_oh_t+b_o).
+  \]
+  \item \textbf{Unroll the computation.} Use a short next-token example
+  with the same parameters at every step. Keep inputs, hidden states,
+  logits, and shifted targets aligned.
+  \item \textbf{Train through time.} Trace backpropagation through time
+  (BPTT), contributions from several losses to shared parameters, and
+  products of local Jacobians:
+  $\partial h_t/\partial h_{t-k}=J_tJ_{t-1}\cdots J_{t-k+1}$.
+  Use $0.9^k$ and $1.1^k$ as scalar illustrations.
+  \item \textbf{Why long dependencies are hard.} Explain vanishing and
+  exploding gradients. Gradient clipping caps the gradient norm; it does
+  not restore a vanished learning signal. Truncated BPTT limits the
+  backward horizon even when the forward state is carried between chunks.
+\end{enumerate}
+\textbf{Checks.} State how document boundaries reset hidden state. A
+unidirectional next-token model uses only the available prefix. Distinguish
+carrying a state from retaining its complete gradient history.
+
+\figids{F26--F28: recurrent state, BPTT paths, and repeated multipliers.}
+
+\sectionplan{8}{LSTMs and the limits of recurrent memory}{Revised L04 sequence; gates and remaining bottlenecks \quad / \quad 3--4 pages}
+\tagline{Question: What do gates improve, and what difficulties remain?}
+\begin{enumerate}
+  \item \textbf{Separate storage from exposure.} Introduce the cell state
+  $c_t$, hidden state $h_t$, forget/input/output gates, and candidate $g_t$.
+  Each gate uses a learned affine map of $[e_t;h_{t-1}]$ followed by sigmoid;
+  the candidate uses $\tanh$.
+  \[
+  c_t=f_t\odot c_{t-1}+i_t\odot g_t,\qquad
+  h_t=o_t\odot\tanh(c_t).
+  \]
+  \item \textbf{Work through retain, write, and read.} Compute one scalar
+  update, then vary each gate. Trace the direct cell-state path with gates
+  held fixed; a product of forget gates is only this path's contribution.
+  Gates near one can help preserve a signal, without guaranteeing
+  successful long-range learning.
+  \item \textbf{What remains.} Standard RNN/LSTM state updates depend on
+  the previous step, limiting parallelism across sequence positions even
+  with known training inputs. Batches and matrix operations still
+  parallelize. Remote information must survive repeated updates in a
+  fixed-width, finite-precision state.
+  \item \textbf{End with a concrete bottleneck.} In a classic
+  encoder--decoder that passes only the encoder's final state, an entire
+  source sentence must be summarized for the decoder. Keep this
+  architecture-specific limitation distinct from recurrence itself.
+\end{enumerate}
+\textbf{Stopping point.} Students can explain an RNN, an LSTM cell, and
+three remaining difficulties: sequential computation, difficult long-range
+credit assignment, and compressing useful history into a state. Close with:
+\emph{How could a prediction access earlier information more directly?}
+Lecture 05 begins the attention story.
+
+\figids{F29--F32: LSTM cell, gate arithmetic, sequence dependence,
+and the encoder bottleneck.}
+
+\clearpage
+\section{Figure inventory: text, counts, and representations}
+{\small Each entry identifies the explanatory job and the existing source.
+\textit{PDF plot} means an original numerical plot generated from course data,
+not a screenshot of a slide.}
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.23}
+\begin{tabularx}{\textwidth}{@{}p{8mm} Y >{\raggedright\arraybackslash}p{32mm}@{}}
+\toprule
+ID & Figure or paired panels and the question they answer & Form / source\\
+\midrule
+F01 & Four-lecture map: what changes between representations, context computation, and prediction? & TikZ / course structure\\
+F02 & Raw bytes, decoding, normalization, chunking, IDs, and reconstruction. At which step can information be lost? & TikZ / L01 pipeline\\
+F03 & Visible symbol, code points, UTF-8 bytes, tokens: why can the counts differ? Include the accented-letter example. & TikZ / L01 E03\\
+F04 & Regex extraction versus a lossless partition, with allowed BPE boundaries. Which characters survive? & TikZ / L01 P01\\
+F05 & Weighted BPE pair table and two merge steps; an overlap inset. Why is pair count not always the token reduction? & TikZ / L01 E04\\
+F06 & Frozen merge ranks applied to an unseen word. Why does encoding differ from retraining? & TikZ / L01 E05\\
+F07 & Vocabulary/sequence cost sketch beside held-out language token counts. What changes with tokenizer training data? & TikZ + PDF / L01 E06\\
+F08 & Chain-rule factors above unigram, bigram, and trigram context windows. Which part is an approximation? & TikZ / L02 model\\
+F09 & Sentence-local pairs, count matrix, normalized row, and a next-token draw. How do counts become probabilities? & TikZ / L02 E01, L03 recap\\
+F10 & Raw counts, add-$\delta$, and an interpolated distribution. Where does probability mass for unseen events come from? & PDF plot / L02 P02--P03\\
+F11 & One total negative log likelihood converted into nats/token, bits/token, perplexity, and bits/byte. What is the denominator? & TikZ / L02 metrics note\\
+F12 & The same four bits over four versus two tokens, with a shared byte count. Why can perplexity comparisons mislead? & TikZ / L02 metrics note\\
+F13 & Cumulative sampling intervals, then the append-and-repeat loop. Does the sampler use the scored distribution? & TikZ / L02 P01\\
+F14 & Reference-score filtering and sample/retrain diagrams, with the actual token budgets shown. What would a controlled comparison hold fixed? & TikZ + PDF / L02 experiment JSON\\
+F15 & Context counts, PPMI heatmap, and rank-two table. What signal is retained or compressed? & PDF plot / L03 toy counts\\
+F16 & CBOW versus skip-gram arrows and two parameter tables. What predicts what? & TikZ / L03 classical bridge\\
+\bottomrule
+\end{tabularx}
+\endgroup
+
+\textbf{Use existing evidence.} L01's plots come from
+\path{sequence-length.json} and \path{heldout-chinese.json}.
+L02's numerical applications come from \path{lecture02-results.json},
+\path{lm-filter.json}, and \path{self-training-loop.json}.
+L03's count/PPMI fixture is \path{counts-ppmi.json}.
+These files live in the corresponding lecture's assets directory.
+
+\clearpage
+\section{Figure inventory: training and recurrent memory}
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.23}
+\begin{tabularx}{\textwidth}{@{}p{8mm} Y >{\raggedright\arraybackslash}p{32mm}@{}}
+\toprule
+ID & Figure or paired panels and the question they answer & Form / source\\
+\midrule
+F17 & One positive and one sampled pair, score, loss, and a gradient arrow. Which parameter moves, and why? & TikZ / L03 E02\\
+F18 & Token ID, selected embedding row, contextual state, and retrieval vector. Which representation changes with context? & TikZ / L03 E01 and bridge\\
+F19 & Character n-gram composition beside BPE segmentation. How are fastText subwords different from tokenizer output? & TikZ / L03 fastText slide\\
+F20 & IDs to lookup to context to vocabulary logits to shifted-target loss, with all tensor shapes. Where can alignment fail? & TikZ / L03 E01, E03\\
+F21 & Computation graph for stable log-sum-exp and cross-entropy, plus a disconnected-loss branch. Which operations preserve gradients? & TikZ / L03 stability, L04 E02\\
+F22 & Neural bigram versus a two-token NPLM on prefixes sharing the last token. Which model can separate the examples? & TikZ / L03 limitation, L04 E01\\
+F23 & Tiny-batch training curves beside a separate coverage probe. What has the fit established? & PDF plot / L03 E04, L04 E02\\
+F24 & Untied and tied tables with both gradient paths. Why do shared rows receive multiple contributions? & TikZ / L03 E05\\
+F25 & Parameter, gradient, Adam-moment, and logit-storage ledger; a projection-work panel. What does each subtotal omit? & PDF plot / L03 E06\\
+F26 & Fixed-window context beside an unrolled RNN with shared weights and shifted targets. How can earlier tokens affect a prediction? & TikZ / L04 recurrence\\
+F27 & Losses flowing back through shared recurrent steps; mark a truncated-BPTT boundary. Which parameters receive each contribution? & TikZ / recurrence reading\\
+F28 & Scalar powers $0.9^k$, $1$, and $1.1^k$ on a log scale. How can repeated multiplications shrink or amplify a signal? & PGFPlots / exact toy values\\
+F29 & Cell-state path, candidate, and forget/input/output gates. What gets retained, written, and exposed? & TikZ / modern LSTM equations\\
+F30 & A scalar gate update followed by retain/overwrite examples. Why do $c_t$ and $h_t$ serve different roles? & TikZ / worked gate arithmetic\\
+F31 & A timeline of dependent state updates, alongside parallel batches. Which work can proceed before the previous state is available? & TikZ / RNN dependency graph\\
+F32 & Source tokens compressed into the final encoder state, then passed to a decoder. What must this particular interface preserve? & TikZ / L04 encoder bottleneck\\
+\bottomrule
+\end{tabularx}
+\endgroup
+
+\textbf{Numerical provenance.} Use the two distinct
+\texttt{tiny-lm-loss.json} files for the L03 and L04 experiments; label
+their different models, vocabulary sizes, and training batches.
+F28 uses exact scalar powers; F29--F30 use explicitly chosen gate values.
+These illustrations are not training measurements. Attention examples are
+reserved for the notes beginning with Lecture 05.
+
+\clearpage
+\section{Prototype F28: repeated multiplication along a path}
+At 50 steps, $0.9^{50}\approx0.00515$ and $1.1^{50}\approx117.39$.
+These exact scalar powers illustrate sensitivity to repeated multiplication.
+Actual recurrent gradients involve products of Jacobians and sums over paths.
+
+\begin{center}
+\input{figures/recurrent-gradients.tex}
+\end{center}
+
+{\small\color{muted}\textbf{Reading.}
+\href{https://proceedings.mlr.press/v28/pascanu13.html}{Pascanu, Mikolov, and Bengio (2013)}
+analyze recurrent gradient difficulties. The plot is an original scalar
+illustration, not a reproduced experimental result.}
+
+\section{Prototype F29: retain, write, and read in an LSTM}
+\begin{center}
+\input{figures/lstm-cell.tex}
+\end{center}
+\textbf{Worked check.} For a scalar cell, choose $c_{t-1}=0.8$,
+$f_t=0.9$, $i_t=0.2$, $g_t=0.5$, and $o_t=0.75$. Then
+\[
+c_t=0.9(0.8)+0.2(0.5)=0.82,\qquad h_t=0.75\tanh(0.82)\approx0.5063.
+\]
+Holding the gates and candidate fixed, increasing $c_{t-1}$ by $0.1$
+increases $c_t$ by $0.09$. The full recurrent derivative also includes
+paths through hidden states and gates.
+
+{\small\color{muted}\textbf{Convention.} This is the common formulation
+with a forget gate and no peephole connections. The forget-gate extension
+followed the original 1997 LSTM; see \readingref{R10} and supporting references. Gate values here
+are hand-chosen, not learned measurements.}
+
+\clearpage
+\section{Notation and reusable source structure}
+\begin{tabularx}{\textwidth}{@{}l Y@{}}
+\toprule
+Symbol & Convention for the finished notes\\
+\midrule
+$x_t$ & Token ID at position $t$; prediction from position $t$ targets $x_{t+1}$\\
+$K_{\rm in},K$ & Input-table rows and possible output symbols; declare special-token conventions for each example\\
+$B,T$ & Batch size and sequence length; $B_{\rm utf8}$ counts evaluated bytes\\
+$d,m,H$ & Embedding width, fixed context length, and hidden width\\
+$E,W_o$ & Input table and vocabulary readout; state orientations beside shapes\\
+$h_t,c_t$ & Recurrent hidden state and LSTM cell state; both have width $H$ in the example\\
+$f_t,i_t,o_t,g_t$ & Forget, input, and output gates; candidate cell content\\
+$J_t$ & Local recurrent Jacobian $\partial h_t/\partial h_{t-1}$\\
+\bottomrule
+\end{tabularx}
+
+\subsection{Suggested layout when expanding this outline}
+\begin{verbatim}
+docs/first-four-lectures/
+  main.tex                 # finished notes
+  sections/
+    01-language-modeling.tex
+    02-text-and-tokenization.tex
+    03-count-language-models.tex
+    04-evaluation-and-sampling.tex
+    05-representation-learning.tex
+    06-neural-language-models.tex
+    07-recurrent-language-models.tex
+    08-lstm-and-recurrent-limits.tex
+  figures/                 # editable TikZ sources
+  plots/                   # deterministic vector-PDF generators
+  references.bib           # 15 selected papers
+  reading-guide.tex        # annotated reading route
+  outline.tex              # this reviewable plan
+\end{verbatim}
+Build products belong under the repository's ignored \texttt{output/pdf/}
+directory. The present draft includes \texttt{outline.tex}, the reading guide,
+the bibliography, three figure sources, a Makefile, and a README.
+The section files and plot generators above are the proposed layout.
+
+\subsection{Writing order and supporting appendices}
+\begin{enumerate}
+  \item Fix notation, evaluation conventions, and the running examples.
+  Draft Sections 1--4 and their representation/counting diagrams.
+  \item Draft Sections 5--6 around the checked token-to-loss computation,
+  keeping the classical bridge short.
+  \item Draft Sections 7--8 as the RNN-to-LSTM story. End with the
+  unresolved difficulties that motivate attention in Lecture 05.
+\end{enumerate}
+Supporting appendices can contain a regex/Unicode reference, extra
+count and smoothing arithmetic, longer classical-embedding and recurrent
+derivations, and a PyTorch debugging/shape checklist. Use the same notes and
+expectations for all students.
+
+\clearpage
+\section{Coverage and source map}
+The source baseline is the Fall course at commit \texttt{1adbaa5}.
+The instructor's September 30 revision expands recurrent models and LSTMs
+at the end of this recap; attention begins in Lecture 05. The older L04
+deck includes attention material, so it is a source baseline rather than
+a record of the revised sequence.
+
+\begin{tabularx}{\textwidth}{@{}l Y@{}}
+\toprule
+Lecture & Source and use in this outline\\
+\midrule
+L01 & \source{slides/lecture-01/teaching-plan.md}{Teaching plan},
+\source{slides/lecture-01/slides.md}{slides},
+\source{slides/lecture-01/lecture-01-exercise.ipynb}{classroom notebook}.
+Sections 1--2; retain preprocessing/BPE examples and held-out token counts.\\
+L02 & \source{slides/lecture-02/teaching-plan.md}{Teaching plan},
+\source{slides/lecture-02/slides.md}{slides},
+\source{slides/lecture-02/lecture-02-exercise.ipynb}{notebook}.
+Sections 1, 3--4, and the NPLM motivation in Section 6.\\
+L03 & \source{slides/lecture-03/teaching-plan.md}{Teaching plan},
+\source{slides/lecture-03/slides.md}{slides},
+\source{slides/lecture-03/lecture-03-exercise.ipynb}{notebook}.
+Sections 5--6; preserve the bounded classical bridge and neural-bigram limitation.\\
+L04 & \source{slides/lecture-04/teaching-plan.md}{Teaching plan},
+\source{slides/lecture-04/slides.md}{slides},
+\source{slides/lecture-04/lecture-04-exercise.ipynb}{notebook}.
+Section 6 uses fixed-window training. Sections 7--8 expand the recurrence,
+gradient, LSTM, and encoder-bottleneck material under the revised plan.\\
+\bottomrule
+\end{tabularx}
+
+\subsection{Existing supplementary course notes}
+\begin{itemize}
+  \item \source{docs/lecture-01-pre-tokenization.md}{Lecture 01 preprocessing reader}:
+  use selected explanations; keep the larger corpus-engineering inventory
+  as supporting reading.
+  \item \source{docs/lecture-02-lm-metrics.md}{Lecture 02 metrics note}:
+  use the unit conversions and evaluation conventions.
+  \item \source{slides/lecture-03/classical-reading.md}{Lecture 03 classical reading}
+  and \source{slides/lecture-04/optional-reading.md}{Lecture 04 optional reading}:
+  use the linked recurrence/BPTT/LSTM material to develop the revised ending;
+  longer derivations remain supporting reading.
+\end{itemize}
+
+\subsection{Reading route}
+The following four pages annotate 15 selected papers. Click a reading ID
+to see its citation, role, recommended focus, and figure connections.
+
+\begin{tabularx}{\textwidth}{@{}l Y@{}}
+\toprule
+Notes section & Reading IDs\\
+\midrule
+1--4: text, counts, and evaluation & \readingref{R01} Shannon;
+\readingref{R02} Kneser--Ney; \readingref{R03} subword BPE\\
+5--6: representations and neural LMs & \readingref{R04} neural LM;
+\readingref{R05}--\readingref{R06} word2vec; \readingref{R07} GloVe\\
+7: recurrent language models & \readingref{R08} Elman;
+\readingref{R09} long dependencies; \readingref{R11} RNN LM\\
+8: gated memory and bottlenecks & \readingref{R10} LSTM;
+\readingref{R12} RNN encoder--decoder; \readingref{R13} sequence to sequence\\
+Lecture 05 handoff & \readingref{R14} soft alignment;
+\readingref{R15} global and local attention\\
+\bottomrule
+\end{tabularx}
+
+\subsection{Supporting references outside the selected 15}
+\href{https://proceedings.mlr.press/v28/pascanu13.html}{Pascanu, Mikolov,
+and Bengio (2013)} supports the gradient and clipping discussion.
+\href{https://sferics.idsia.ch/pub/juergen/FgGates-NC.pdf}{Gers, Schmidhuber,
+and Cummins (2000)} supplies the forget-gate extension used in the modern
+LSTM prototype. The later
+\href{https://arxiv.org/abs/1706.03762}{Vaswani et al.\ (2017)} paper
+introduces the Transformer architecture after the attention readings.
+
+\input{reading-guide.tex}
+\end{document}

@@ -1,0 +1,11 @@
+\begin{tikzpicture}[node distance=5mm]
+\node[box,text width=23mm] (b) {raw bytes};
+\node[box,text width=26mm,right=of b] (d) {decode UTF-8};
+\node[box,text width=26mm,right=of d] (n) {normalize};
+\node[box,text width=26mm,right=of n] (p) {partition};
+\node[tbox,text width=22mm,right=of p] (i) {token IDs};
+\draw[arr] (b)--(d);\draw[arr] (d)--(n);\draw[arr] (n)--(p);\draw[arr] (p)--(i);
+\node[lab,below=5mm of n] (warn) {state which distinctions survive};
+\node[lab,below=5mm of i] (rec) {decode back};
+\draw[flow] (i.south)--(rec.north);
+\end{tikzpicture}
