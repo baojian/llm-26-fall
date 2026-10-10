@@ -272,6 +272,14 @@ try {
     if (folder === 'lecture-05-test') assert.equal(count, componentSources.length, 'Render every source component slide.');
     const showSlide = (id, fragment = -1) => page.evaluate(({ id, fragment }) =>
       Reveal.slide(Reveal.getIndices(document.getElementById(id)).h, 0, fragment), { id, fragment });
+    const openFragmentLink = async (id, fragment) => {
+      // A reset can precede Reveal's debounced URL update. Opening that same
+      // hash would then do nothing. Load a fresh document to test an incoming
+      // fragment link, including initialization of its fetched SVG artwork.
+      await page.goto('about:blank');
+      await page.goto(`${url}#/${id}/${fragment}`, { waitUntil: 'networkidle' });
+      await page.evaluate(() => window.courseReady);
+    };
     await page.setViewportSize({ width: 1440, height: 900 });
     for (const design of ['modern', 'original']) {
       await page.goto(`${url}${design === 'original' ? '?design=original' : ''}`, { waitUntil: 'networkidle' });
@@ -414,8 +422,7 @@ try {
         await page.setViewportSize({ width: 1440, height: 900 });
       }
     }
-    await page.goto(`${url}#/gpt-architecture/4`, { waitUntil: 'networkidle' });
-    await page.evaluate(() => window.courseReady);
+    await openFragmentLink('gpt-architecture', 4);
     assert.equal(await page.locator('#step-status').textContent(), 'Step 5 / 5', 'Opening a fragment link must restore the requested reveal after SVG loading.');
     // Reveal debounces URL writes; reload only after the restored fragment is
     // reflected in the address bar, and verify that URL as part of this check.
@@ -482,8 +489,7 @@ try {
         }
       }
     }
-    await page.goto(`${url}#/context-for-text/2`, { waitUntil: 'networkidle' });
-    await page.evaluate(() => window.courseReady);
+    await openFragmentLink('context-for-text', 2);
     assert.equal(await page.locator('#step-status').textContent(), 'Step 3 / 3');
     await page.waitForURL(url => url.hash === '#/context-for-text/2');
     await page.reload({ waitUntil: 'networkidle' });
@@ -515,8 +521,7 @@ try {
     assert.equal(await relative.getAttribute('data-shift'), '3');
     assert.equal(await relative.getAttribute('data-gap'), folder === 'lecture-05' ? '5' : '2');
     assert.equal(await page.locator('#step-status').textContent(), 'Step 0 / 2');
-    await page.goto(`${url}#/rope-relative-offset/1`, { waitUntil: 'networkidle' });
-    await page.evaluate(() => window.courseReady);
+    await openFragmentLink('rope-relative-offset', 1);
     assert.equal(await page.locator('#step-status').textContent(), 'Step 2 / 2');
     await showSlide('position-methods');
     assert.equal(await page.getByRole('button', { name: 'Next', exact: true }).isDisabled(), false);
@@ -531,8 +536,7 @@ try {
         labels.map(label => Number(label.dataset.tokenId))), [0, 1, 2, 3, 4, 5],
       'Keep the illustrated prefix IDs consistent with the notebook vocabulary.');
     }
-    await page.goto(`${url}#/multi-head-attention/4`, { waitUntil: 'networkidle' });
-    await page.evaluate(() => window.courseReady);
+    await openFragmentLink('multi-head-attention', 4);
     assert.equal(await page.locator('#step-status').textContent(), 'Step 5 / 5');
     await page.waitForURL(url => url.hash === '#/multi-head-attention/4');
     await page.reload({ waitUntil: 'networkidle' });
