@@ -64,7 +64,9 @@ teaching-team corrections; it is participation feedback, not a graded score.
 
 ## October 10, 2026 instructor-demo exception
 
-**Status:** reviewed; awaiting merge of [PR #221](https://github.com/baojian/llm-26-fall/pull/221).
+**Status:** complete. [PR #221](https://github.com/baojian/llm-26-fall/pull/221)
+merged on October 10, 2026 at 09:06:35 Asia/Shanghai (UTC+08:00), as
+[`c391124`](https://github.com/baojian/llm-26-fall/commit/c3911244e91cd21dd86c59802b5fb7d1e7d4fcdb).
 
 - On October 10, 2026 (Asia/Shanghai), the instructor explicitly requested
   fixing and merging PR #221 now that the Lecture 01 task has finished.
@@ -74,11 +76,15 @@ teaching-team corrections; it is participation feedback, not a graded score.
   September 30, 2026, 23:59 Asia/Shanghai (UTC+08:00). The current date is
   strictly after that cutoff. The release issue remains closed.
 - Reviewed PR head: `05e25826315368b8845c002f1b193deb1ff89851`.
-  Only `submissions/baojian.py` differs from `main` in the solution PR.
+  The solution PR changed only `submissions/baojian.py`.
 - Restored the optional leading ASCII space in the word, digit, and punctuation
   rules; replaced the intentional-failure comments. The original demo commit,
   predictions, two personal cases, and explanation are preserved.
 - Validation: 22 selected task checks passed; all 23 isolated public-feedback
   checks passed; nine focused whitespace, Unicode, and punctuation cases passed.
-  Supplied tests and data are unchanged. GitHub checks must pass on the reviewed
-  head before merge. Record completion and refresh the progress board afterward.
+  Supplied tests and data are unchanged. Both GitHub checks passed on the
+  reviewed head before merge.
+- The authorization and reviewed-head record were merged first through
+  [PR #285](https://github.com/baojian/llm-26-fall/pull/285). This completion
+  update regenerates the progress board from the merged submissions and actual
+  merged-PR counts, without changing the completed student batch or survey.
