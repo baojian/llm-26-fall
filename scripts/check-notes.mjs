@@ -161,8 +161,50 @@ try {
   assert.equal(await page.locator('.reading-article:visible').getAttribute('data-note-language'), 'zh');
   await page.locator('#tab-learning').click();
   assert.equal(await page.locator('#panel-learning-zh').isVisible(), true);
+  // Use real reset-button clicks: calling form.reset() from evaluate() misses
+  // the browser's event/default-action ordering that previously hid cards.
+  await page.goto(origin + '/docs/project-candidates.html');
+  await page.locator('.lang-toggle [data-lang="en"]').click();
+  const projectCards = page.locator('#project-list .project-card:visible');
+  assert.equal(await projectCards.count(), 48);
+  for (const [selector, value] of [
+    ['#project-category', 'Research problem'],
+    ['#project-topic', 'Retrieval and evidence'],
+    ['#project-compute', 'CPU'],
+  ]) {
+    await page.locator(selector).selectOption(value);
+    assert.ok(await projectCards.count() < 48);
+    await page.locator('#catalog-filters button[type="reset"]').click();
+    await page.waitForFunction(() => document.querySelector('#result-count').textContent === '48 of 48 projects');
+    assert.equal(await projectCards.count(), 48, 'Reset restores the complete candidate list.');
+  }
+  await page.locator('#project-search').fill('no-such-project-xyz');
+  assert.equal(await projectCards.count(), 0);
+  assert.equal(await page.locator('#no-results').isVisible(), true);
+  await page.locator('#catalog-filters button[type="reset"]').click();
+  await page.waitForFunction(() => document.querySelector('#result-count').textContent === '48 of 48 projects');
+  assert.equal(await projectCards.count(), 48, 'Reset recovers from an empty search.');
+  assert.equal(await page.locator('#no-results').isVisible(), false);
+  assert.equal(await page.locator('#expand-projects').isDisabled(), false);
+  const topicLinks = page.locator('.toc-topics a');
+  for (let i = 0; i < await topicLinks.count(); i++) {
+    const link = topicLinks.nth(i);
+    const href = await link.getAttribute('href');
+    const topicName = await page.locator(href).getAttribute('data-topic');
+    for (let repeat = 0; repeat < 2; repeat++) {
+      await page.locator('#project-search').fill('no-such-project-xyz');
+      await link.click();
+      await page.waitForFunction(topic => document.querySelector('#project-topic').value === topic && document.querySelector('#project-search').value === '', topicName);
+      assert.deepEqual(await projectCards.evaluateAll(cards => [...new Set(cards.map(card => card.dataset.topic))]), [topicName]);
+    }
+  }
+  await page.locator('.catalog-sidebar a[href="#catalog"]').click();
+  await page.waitForFunction(() => document.querySelector('#result-count').textContent === '48 of 48 projects');
+  assert.equal(await projectCards.count(), 48);
+  await page.evaluate(() => scrollTo(0, 0));
+  await page.screenshot({ path: path.join(output, 'project-catalog-desktop.png') });
   assert.deepEqual(errors, [], 'Browser errors or external runtime dependencies.');
-  console.log('Passed bilingual articles, six accessible diagrams, tabs, copying, anchors, mobile layout, print, offline viewing, and shared language controls.');
+  console.log('Passed bilingual articles, six accessible diagrams, tabs, copying, anchors, mobile layout, print, offline viewing, shared language controls, and project catalog filter/reset/topic navigation.');
   console.log('Review images: slides/.checks/notes/');
 } finally {
   await browser?.close();

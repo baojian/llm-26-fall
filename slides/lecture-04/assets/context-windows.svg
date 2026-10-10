@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1152 410" width="1152" height="410" role="img" aria-labelledby="title desc">
+  <title id="title">Context windows and next-token targets</title>
+  <desc id="desc">Three two-token windows: BOS red predicts key; red key predicts opens; key opens predicts EOS.</desc>
+  <!-- Editable source: context-windows.excalidraw -->
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 22 18" markerWidth="22" markerHeight="18" refX="20" refY="9" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M2 2 L20 9 L2 16" fill="none" stroke="#20578c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    </marker>
+  </defs>
+  <text x="355.0" y="22.25" text-anchor="middle" dominant-baseline="central" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#20578c" data-element-id="0Ln1Jv6HLsHQ6YSa2brgv">Observed context</text>
+  <text x="905.0" y="22.25" text-anchor="middle" dominant-baseline="central" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#28673f" data-element-id="7Xg6K8Iypt7_rH7l8z52S">Next-token target</text>
+  <rect x="165" y="76" width="180" height="64" fill="#e8f0f7" stroke="#20578c" stroke-width="2" data-element-id="OubTshA0sLz80GTsY10DM" />
+  <text x="255.0" y="108.0" text-anchor="middle" dominant-baseline="central" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="#142e4b" data-element-id="BhignoF6LEEwkNvRmfpcS">BOS</text>
+  <rect x="365" y="76" width="180" height="64" fill="#e8f0f7" stroke="#20578c" stroke-width="2" data-element-id="P-OJ75gUGmSeI0vYcbDRc" />
+  <text x="455.0" y="108.0" text-anchor="middle" dominant-baseline="central" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="#142e4b" data-element-id="t_kW6mltABMclnhPucvyg">red</text>
+  <line x1="595" y1="108" x2="765" y2="108" stroke="#20578c" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowhead)" data-element-id="azLoSwF5TUPIm6bbcUntr" />
+  <rect x="815" y="76" width="180" height="64" fill="#eaf3ed" stroke="#28673f" stroke-width="2" data-element-id="Fng6Msgyejj9cIT1Qw55J" />
+  <text x="905.0" y="108.0" text-anchor="middle" dominant-baseline="central" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="#28673f" data-element-id="hn2aI1x3HcBacKLOBqqge">key</text>
+  <rect x="165" y="184" width="180" height="64" fill="#e8f0f7" stroke="#20578c" stroke-width="2" data-element-id="n36Wme-N9hU-4hCTAf9sd" />
+  <text x="255.0" y="216.0" text-anchor="middle" dominant-baseline="central" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="#142e4b" data-element-id="lrKH0akT1Eg0N7qvU6RTj">red</text>
+  <rect x="365" y="184" width="180" height="64" fill="#e8f0f7" stroke="#20578c" stroke-width="2" data-element-id="z8dmLHdpbMzjwmhls1Frp" />
+  <text x="455.0" y="216.0" text-anchor="middle" dominant-baseline="central" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="#142e4b" data-element-id="5qwOpNCBGE9dNWdnIcp6l">key</text>
+  <line x1="595" y1="216" x2="765" y2="216" stroke="#20578c" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowhead)" data-element-id="ekqFqraFeLy3kNFp0WvKu" />
+  <rect x="815" y="184" width="180" height="64" fill="#eaf3ed" stroke="#28673f" stroke-width="2" data-element-id="ZYOZxWEl8Z-LPqzL45MQa" />
+  <text x="905.0" y="216.0" text-anchor="middle" dominant-baseline="central" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="#28673f" data-element-id="ug5DKmdmCeAsk5VMidL77">opens</text>
+  <rect x="165" y="292" width="180" height="64" fill="#e8f0f7" stroke="#20578c" stroke-width="2" data-element-id="M0CapxuLjziDIB_4x6eMS" />
+  <text x="255.0" y="324.0" text-anchor="middle" dominant-baseline="central" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="#142e4b" data-element-id="Tb_N2Uh6v7o9YLi7AtISX">key</text>
+  <rect x="365" y="292" width="180" height="64" fill="#e8f0f7" stroke="#20578c" stroke-width="2" data-element-id="qC5HdGfXerV6Dz0xQfAUO" />
+  <text x="455.0" y="324.0" text-anchor="middle" dominant-baseline="central" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="#142e4b" data-element-id="HAIWLapWBK1Hjz1X6WH6n">opens</text>
+  <line x1="595" y1="324" x2="765" y2="324" stroke="#20578c" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowhead)" data-element-id="genOy89vntL-Siq-czOdb" />
+  <rect x="815" y="292" width="180" height="64" fill="#eaf3ed" stroke="#28673f" stroke-width="2" data-element-id="8Jq7OYPja2paB-VUB8RrO" />
+  <text x="905.0" y="324.0" text-anchor="middle" dominant-baseline="central" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="#28673f" data-element-id="fdvZFAVRbBvbD0-Rq35hJ">EOS</text>
+</svg>

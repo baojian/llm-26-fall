@@ -61,42 +61,42 @@ gantt
     axisFormat %b %d
     todayMarker off
 
-    section Lectures (Wed)
+    section Lectures (Wed, except Oct 10)
     L01 Tokenization              :milestone, l01, 2026-09-09, 0d
     L02 N-gram LMs                :milestone, l02, 2026-09-16, 0d
     L03 Embeddings and PyTorch    :milestone, l03, 2026-09-23, 0d
     L04 Neural LMs and attention  :milestone, l04, 2026-09-30, 0d
-    L05 Make-up class (Sat)       :milestone, l05, 2026-10-10, 0d
-    L06 Transformer               :milestone, l06, 2026-10-14, 0d
-    L07 Pretraining and decoding  :milestone, l07, 2026-10-21, 0d
-    L08 Data preparation          :milestone, l08, 2026-10-28, 0d
-    L09 Compute and scaling       :milestone, l09, 2026-11-04, 0d
-    L10 Evaluation                :milestone, l10, 2026-11-11, 0d
-    L11 Supervised fine-tuning    :milestone, l11, 2026-11-18, 0d
-    L12 Preferences and alignment :milestone, l12, 2026-11-25, 0d
-    L13 Retrieval and RAG         :milestone, l13, 2026-12-02, 0d
-    L14 Efficient inference       :milestone, l14, 2026-12-09, 0d
-    L15 Diffusion LMs             :milestone, l15, 2026-12-16, 0d
-    L16 Agents and synthesis      :milestone, l16, 2026-12-23, 0d
+    L05 Transformer (Sat)         :milestone, l05, 2026-10-10, 0d
+    L06 Pretraining and decoding  :milestone, l06, 2026-10-14, 0d
+    L07 Data preparation          :milestone, l07, 2026-10-21, 0d
+    L08 Compute and scaling       :milestone, l08, 2026-10-28, 0d
+    L09 Evaluation                :milestone, l09, 2026-11-04, 0d
+    L10 Supervised fine-tuning    :milestone, l10, 2026-11-11, 0d
+    L11 Preferences and alignment :milestone, l11, 2026-11-18, 0d
+    L12 Retrieval and RAG         :milestone, l12, 2026-11-25, 0d
+    L13 Efficient inference       :milestone, l13, 2026-12-02, 0d
+    L14 Diffusion LMs             :milestone, l14, 2026-12-09, 0d
+    L15 Agents and tool use       :milestone, l15, 2026-12-16, 0d
+    L16 Synthesis and revision    :milestone, l16, 2026-12-23, 0d
 
     section Quizzes (in class, graded on eLearning)
     Quiz 1 :milestone, 2026-09-23, 0d
-    Quiz 2 :milestone, 2026-10-14, 0d
-    Quiz 3 :milestone, 2026-10-28, 0d
-    Quiz 4 :milestone, 2026-11-18, 0d
-    Quiz 5 :milestone, 2026-12-16, 0d
+    Quiz 2 :milestone, 2026-10-10, 0d
+    Quiz 3 :milestone, 2026-10-21, 0d
+    Quiz 4 :milestone, 2026-11-11, 0d
+    Quiz 5 :milestone, 2026-12-09, 0d
 
     section Assignments (submitted on eLearning)
     A1 Tokenization and language models :a1, 2026-09-16, 2026-09-30
-    A2                      :a2, 2026-10-14, 2026-11-04
-    A3                      :a3, 2026-11-18, 2026-12-09
+    A2                      :a2, 2026-10-10, 2026-10-31
+    A3                      :a3, 2026-11-11, 2026-12-02
 
     section Individual project (submitted on eLearning)
     Proposal due        :milestone, 2026-10-21, 0d
-    Progress update due :milestone, 2026-12-02, 0d
+    Progress update due :milestone, 2026-11-25, 0d
     Final report due    :milestone, 2026-12-30, 0d
 
-    section Weekly tasks on GitHub (issues open Wed, PRs close Tue 23:59)
+    section Weekly tasks on GitHub (issues open after class, PRs close Tue 23:59)
     W02 :t02, 2026-09-16, 2026-09-22
     W03 :t03, 2026-09-23, 2026-09-29
     W04 :t04, 2026-09-30, 2026-10-06
@@ -197,8 +197,11 @@ A student PR never closes a shared issue: PR bodies say `Related to #N`, not
 ## 4. Labels and naming rules (do not vary them)
 
 Every lecture activity issue carries **one lecture label and one type label**.
-Lecture labels are stable even when dates move (the Oct 7 class moved to
-Oct 10, but L05 is still L05), and zero-padding keeps them sorted.
+Lecture labels follow the numbered sequence in [schedule.md](schedule.md),
+and zero-padding keeps them sorted. Lecture 05 is the Transformer meeting on
+October 10; Lecture 16 is research synthesis and project revision. The
+[September 29 proposal](schedule-adjustment-proposal.md) records the migration
+from the earlier labels. Keep published task folders and submission paths stable.
 
 Assignment announcement issues use the `assignment` type label and the
 assignment ID in their title. Lecture labels are optional for these issues
@@ -206,7 +209,7 @@ because an assignment can cover several lectures.
 
 | Lecture labels (blue) | Type labels |
 | --- | --- |
-| `l01-tokenization`, `l02-ngram`, `l03-embeddings`, `l04-attention`, `l05-makeup`, `l06-transformer`, `l07-pretraining`, `l08-data`, `l09-scaling`, `l10-evaluation`, `l11-sft`, `l12-alignment`, `l13-rag`, `l14-inference`, `l15-diffusion`, `l16-agents` | `task` (student exercise, many submissions), `assignment` (graded assignment announcements and deadlines; submissions go through eLearning), `proposal` (a task suggested by a student through the issue form; relabelled `task` when accepted), `help wanted` (one student, improves the repo), `bug`, `figure`, `survey`, `prep` (teaching team's own lecture preparation, e.g. #39), `project` (teaching-team tracking only; project deliverables go through [eLearning](https://elearning.fudan.edu.cn/)), `not-done` |
+| `l01-tokenization`, `l02-ngram`, `l03-embeddings`, `l04-attention`, `l05-transformer`, `l06-pretraining`, `l07-data`, `l08-scaling`, `l09-evaluation`, `l10-sft`, `l11-alignment`, `l12-rag`, `l13-inference`, `l14-diffusion`, `l15-agents`, `l16-synthesis` | `task` (student exercise, many submissions), `assignment` (graded assignment announcements and deadlines; submissions go through eLearning), `proposal` (a task suggested by a student through the issue form; relabelled `task` when accepted), `help wanted` (one student, improves the repo), `bug`, `figure`, `survey`, `prep` (teaching team's own lecture preparation, e.g. #39), `project` (teaching-team tracking only; project deliverables go through [eLearning](https://elearning.fudan.edu.cn/)), `not-done` |
 
 For weekly tasks, use the following naming and submission rules:
 

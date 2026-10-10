@@ -53,9 +53,19 @@ plain Git files, not Git LFS, because GitHub Pages does not serve LFS objects.
 
 ## Lecture 02: N-gram language models and how LMs are measured
 
+- Yoshua Bengio, Réjean Ducharme, Pascal Vincent, and Christian Jauvin. 2003.
+  *A Neural Probabilistic Language Model*. Journal of Machine Learning Research,
+  3:1137-1155.
+  [Course PDF](2003-jmlr-bengio-neural-probabilistic-language-model.pdf) ·
+  [Original publication](https://www.jmlr.org/papers/v3/bengio03a.html).
+  Unmodified publisher PDF, retrieved September 23, 2026. Copyright belongs
+  to the authors; a specific license is not stated in the source PDF.
+  Figure 1 and Section 2 accompany the
+  [NPLM introduction](../slides/lecture-02/index.html#/nplm-1).
+
 Cited in the [Lecture 02 metrics note](../docs/lecture-02-lm-metrics.md),
-which says which figure or table of each paper reports loss, perplexity, or
-bits per byte. All ten are the authors' arXiv versions, retrieved on
+the following ten papers report loss, perplexity, bits per byte, or downstream
+results as detailed in that note. They are the authors' arXiv versions, retrieved on
 September 15, 2026, and redistributed under the license shown on each arXiv
 abstract page (linked below).
 
@@ -94,3 +104,17 @@ These PDFs are unmodified copies from the ACL Anthology, retrieved on
 September 8, 2026. Both are distributed under
 [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/),
 as stated by the original publication pages.
+
+## Lecture 04: Attention in recurrent machine translation
+
+- Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. 2015.
+  *Neural Machine Translation by Jointly Learning to Align and Translate*. ICLR.
+  [Course PDF](2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf) ·
+  [Original arXiv record, 1409.0473v7](https://arxiv.org/abs/1409.0473v7).
+  First preprint: September 1, 2014. This is the unmodified May 19, 2016
+  revision (v7), retrieved October 9, 2026 (Asia/Shanghai).
+  License recorded by arXiv:
+  [arXiv.org non-exclusive distribution license](https://arxiv.org/licenses/nonexclusive-distrib/1.0/).
+  Read §§2–3 and Appendix A.1.2 for the fixed-vector bottleneck, learned
+  source alignment, and recurrent decoder; §4 describes the English-to-French
+  translation experiments.

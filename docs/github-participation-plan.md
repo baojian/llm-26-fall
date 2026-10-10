@@ -2,8 +2,10 @@
 
 > **Historical proposal, superseded.** Follow the current
 > [participation workflow](participation-workflow.md) and course website.
-> The assessment weights, public project submission plan, early merge target,
-> and automatic late-merge policy below are not current instructions.
+> The lecture dates and topics, assessment weights, public project submission
+> plan, early merge target, and automatic late-merge policy below are not current
+> instructions. Use the [revised schedule](schedule.md) for the October 10
+> Transformer meeting and the later lecture sequence.
 > Student exercise solutions merge only after their published deadline, in
 > one batch per task; public PRs remain visible before merging. Graded
 > assignments and project deliverables are submitted privately through eLearning.

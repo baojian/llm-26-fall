@@ -203,6 +203,78 @@ try {
     assert.equal(await page.evaluate(() => Reveal.getCurrentSlide().id), 'exercise-01');
     assert.ok(await page.locator('.katex').count() > 0, 'Sample equations did not render.');
   }
+  if (folder === 'lecture-05') {
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('position-demo')).h));
+    const graph = page.locator('#position-visual');
+    const initialDescription = await graph.getAttribute('aria-label');
+    assert.equal(await graph.getAttribute('data-positions'), 'false');
+    assert.equal(await graph.getAttribute('data-swapped'), 'false');
+    assert.equal(Number(await graph.getAttribute('data-difference')), 0);
+    await page.locator('#position-swap').click();
+    await page.waitForFunction(() => document.getElementById('position-visual').dataset.swapped === 'true');
+    assert.equal(Number(await graph.getAttribute('data-difference')), 0);
+    assert.equal(await page.locator('#position-swap').getAttribute('aria-pressed'), 'true');
+    await page.locator('#position-toggle').focus();
+    await page.keyboard.press('Enter');
+    await page.waitForFunction(() => document.getElementById('position-visual').dataset.positions === 'true');
+    assert.ok(Math.abs(Number(await graph.getAttribute('data-difference')) - 1.3650501767846626) < 1e-12);
+    assert.equal(await page.locator('#position-toggle').getAttribute('aria-pressed'), 'true');
+    assert.match(await graph.getAttribute('aria-label'), /Positions on.*river, of, the, bank.*1\.3651/);
+    await page.locator('#position-swap').click();
+    await page.waitForFunction(() => document.getElementById('position-visual').dataset.swapped === 'false');
+    assert.equal(Number(await graph.getAttribute('data-difference')), 0);
+    await page.locator('#position-reset').click();
+    await page.waitForFunction(expected => document.getElementById('position-visual').getAttribute('aria-label') === expected, initialDescription);
+    assert.equal(await page.locator('#position-toggle').getAttribute('aria-pressed'), 'false');
+    assert.equal(await page.locator('#position-swap').getAttribute('aria-pressed'), 'false');
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('exercise-05')).h, 0, -1));
+    assert.equal(await page.locator('#exercise-05 .answer').evaluate(el => el.classList.contains('visible')), false);
+    await page.keyboard.press('Space');
+    assert.equal(await page.locator('#exercise-05 .answer').evaluate(el => el.classList.contains('visible')), true);
+  }
+  if (folder === 'lecture-04') {
+    assert.equal(await page.locator('#shape-ledger tbody tr:last-child td').count(), 2);
+    assert.equal(await page.locator('#shape-ledger tbody tr:last-child .katex').count(), 1, 'Render vocabulary bars inside the table as math.');
+    for (const id of ['exercise-01', 'exercise-02', 'exercise-03', 'exercise-04', 'exercise-05']) {
+      await page.evaluate(id => Reveal.slide(Reveal.getIndices(document.getElementById(id)).h, 0, -1), id);
+      assert.equal(await page.locator(`#${id} .answer`).evaluate(el => el.classList.contains('visible')), false);
+      await page.keyboard.press('Space');
+      assert.equal(await page.locator(`#${id} .answer`).evaluate(el => el.classList.contains('visible')), true);
+      if (id === 'exercise-04') {
+        const limitations = page.locator('#recurrent-limitations');
+        assert.equal(await limitations.evaluate(el => el.closest('.fragment').classList.contains('visible')), false);
+        await page.keyboard.press('Space');
+        assert.equal(await limitations.evaluate(el => el.closest('.fragment').classList.contains('visible')), true);
+        assert.equal(await page.evaluate(() => Reveal.getCurrentSlide().id), id);
+      }
+    }
+  }
+  if (await page.locator('#attention-visual').count()) {
+    await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('attention-demo')).h));
+    const graph = page.locator('#attention-visual');
+    const initialDescription = await graph.getAttribute('aria-label');
+    const initialOutput = JSON.parse(await graph.getAttribute('data-output'));
+    assert.equal(await graph.getAttribute('data-query'), '1');
+    assert.equal(await graph.getAttribute('data-causal'), 'true');
+    assert.ok(Math.abs(initialOutput[0] - 0.7310585786300049) < 1e-12);
+    await page.locator('#attention-value').click();
+    await page.waitForFunction(() => document.getElementById('attention-visual').dataset.changed === 'true');
+    assert.deepEqual(JSON.parse(await graph.getAttribute('data-output')), initialOutput);
+    await page.locator('#attention-mask').click();
+    await page.waitForFunction(() => document.getElementById('attention-visual').dataset.causal === 'false');
+    const leaked = JSON.parse(await graph.getAttribute('data-output'));
+    assert.ok(leaked[0] > initialOutput[0] + 4);
+    const query3 = page.getByRole('button', { name: 'Select query 3', exact: true });
+    await query3.focus();
+    await page.keyboard.press('Enter');
+    await page.waitForFunction(() => document.getElementById('attention-visual').dataset.query === '2');
+    assert.equal(await query3.getAttribute('aria-pressed'), 'true');
+    await page.locator('#attention-reset').click();
+    await page.waitForFunction(expected => document.getElementById('attention-visual').getAttribute('aria-label') === expected, initialDescription);
+    assert.deepEqual(JSON.parse(await graph.getAttribute('data-output')), initialOutput);
+    assert.equal(await page.locator('#attention-mask').getAttribute('aria-pressed'), 'true');
+    assert.equal(await page.locator('#attention-value').getAttribute('aria-pressed'), 'false');
+  }
   if (folder === 'lecture-03') {
     assert.equal(count, 60, 'Keep the revised lecture at 60 slides.');
     await page.evaluate(() => Reveal.slide(Reveal.getIndices(document.getElementById('lookup-table')).h));

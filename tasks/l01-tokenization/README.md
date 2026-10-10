@@ -4,14 +4,17 @@ All three exercises are **optional**. You are encouraged to complete **at least
 one**, and may complete any or all of them. The same expectations apply to
 every student. Submit **one separate PR per completed exercise** (up to three).
 
-**Deadline:** Sunday, September 27, 2026, 23:59 (Asia/Shanghai, UTC+08:00).
-This is seven calendar days after [release PR #131](https://github.com/baojian/llm-26-fall/pull/131)
-merged on September 20, 2026 (Shanghai date).
+**Extended deadline:** Wednesday, September 30, 2026, 23:59
+(Asia/Shanghai, UTC+08:00), confirmed by the instructor on October 1.
+The exercises were released in [PR #131](https://github.com/baojian/llm-26-fall/pull/131)
+on September 20, 2026 (Shanghai date).
 
-Open your solution PR by the deadline. The teaching team merges **one batch
-per exercise after the deadline**, no earlier than September 28, 2026, 00:00
-(Asia/Shanghai). Your PR may remain open until then. Public PRs and forks are
-still visible before merging.
+The instructor accepts late submissions in the October 1 review because these
+activities are optional. Late submissions included in that review count in
+the progress board using the same checks as other submissions. The teaching
+team merges **one batch per exercise after the deadline**, no earlier than
+October 1, 2026, 00:00 (Asia/Shanghai), and records any teaching-team corrections
+separately. Public PRs and forks remain visible before merging.
 
 | Exercise | Difficulty | Time | What you explore | Issue |
 | :--- | :--- | :--- | :--- | :--- |

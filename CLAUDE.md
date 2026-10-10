@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-Course materials for **Natural Language Processing and Large Language Models** (CS40008.01) at Fudan University, Fall 2026. The public course website is <https://baojian.github.io/llm-26-fall/>. All content (lecture notes, slides, notebooks, docs) is written in English, even though the course is taught in Chinese. The first class was September 9, 2026; the course runs on Wednesdays through December 23, with October 7 skipped for National Day (see `docs/schedule.md`).
+Course materials for **Natural Language Processing and Large Language Models** (CS40008.01) at Fudan University, Fall 2026. The public course website is <https://baojian.github.io/llm-26-fall/>. All content (lecture notes, slides, notebooks, docs) is written in English, even though the course is taught in Chinese. The first class was September 9, 2026; the course runs on Wednesdays through December 23, with the October 7 meeting moved to Saturday, October 10 for National Day (see `docs/schedule.md`). Lecture 05 covers Transformers on October 10; Lecture 16 covers research synthesis and project revision on December 23.
 
 ## Repository layout
 
@@ -12,7 +12,7 @@ Course materials for **Natural Language Processing and Large Language Models** (
 index.html                 Course website (GitHub Pages, served as-is from main)
 assets/                    translations.js (zh strings) and local-materials.js for the website
 docs/schedule.md           Class periods and the dated week table (source of truth for dates)
-docs/course-revision.md    Instructor's syllabus and assessment review draft (Sep 7, 2026)
+docs/course-revision.md    Instructor's syllabus and assessment review draft (Sep 29, 2026)
 papers/                    Course reading PDFs with a provenance README
 scripts/slides.py          `new`, `serve`, `vendor` commands for the slide framework
 scripts/notebooks.py       JupyterLab launcher used by `serve` (opens copies under workspace/)
@@ -32,7 +32,7 @@ A single hand-written page with inline CSS and vanilla JS. No build step; `.noje
 - **Bilingual by dictionary, not by paired spans.** Visible text is written once in English. `assets/translations.js` maps each English string to Chinese; the page script walks text nodes and swaps them when the EN/中文 button sets `zh` (remembered in `localStorage` as `course-language`). When you change any English text, update the matching key in `assets/translations.js`, or the Chinese view silently falls back to English. There is no `?lang=` URL parameter.
 - The schedule table highlights the current week from each row's `data-start` Sunday date. Keep those dates, the Coursework cards (quiz and assignment weeks), and `docs/schedule.md` consistent.
 - Material links in the table carry `data-local-path`; `assets/local-materials.js` rewrites them to the local preview server when the page is opened from `localhost`. Slide and notebook links point at `http://127.0.0.1:8000`, so students must run `scripts/slides.py serve` first.
-- The live assessment split is quizzes 10%, assignments 45%, individual project 45% (`index.html`, legend near the Assessment section). `docs/course-revision.md` still shows an older 5/15/40/40 proposal; the website is authoritative for students.
+- The live assessment split is quizzes 10%, assignments 45%, individual project 45% (`index.html`, legend near the Assessment section). `docs/course-revision.md` follows those weights; `docs/schedule-adjustment-proposal.md` records the proposed date changes for instructor review. The published website is authoritative for students.
 
 ## Python environment (uv)
 

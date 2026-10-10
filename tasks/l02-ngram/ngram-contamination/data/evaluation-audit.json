@@ -1,0 +1,35 @@
+{
+  "description": "Constructed teaching scores; these are not measured training results.",
+  "documents": [
+    {
+      "id": "train-copy",
+      "split": "train",
+      "tokens": ["red", "moon", "rises"]
+    },
+    {
+      "id": "eval-copy",
+      "split": "eval",
+      "tokens": ["red", "moon", "rises"]
+    },
+    {
+      "id": "eval-clean",
+      "split": "eval",
+      "tokens": ["blue", "river", "flows"]
+    }
+  ],
+  "scoring": "Three word predictions and one EOS prediction per evaluation document; BOS is context only.",
+  "scores": [
+    {
+      "id": "eval-copy",
+      "scored_tokens": 4,
+      "run_a_loss_bits": 2,
+      "run_b_loss_bits": 10
+    },
+    {
+      "id": "eval-clean",
+      "scored_tokens": 4,
+      "run_a_loss_bits": 18,
+      "run_b_loss_bits": 14
+    }
+  ]
+}
