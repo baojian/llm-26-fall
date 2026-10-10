@@ -1,7 +1,7 @@
-"""Intentionally incorrect instructor demo for the public task feedback.
+"""Corrected instructor demo of the task's simplified GPT-2 pre-tokenizer.
 
-The predictions describe the required behavior; solve deliberately disagrees.
-This example is for inspecting failed checks, not for merging as a solution.
+Prepared with coding assistance. PR #221 retains the original failing version
+for comparison with this implementation and the public feedback.
 """
 
 import re
@@ -27,18 +27,18 @@ word before it. Both choices create boundary-sensitive variants, but leading
 spaces distinguish a word after a space from the same spelling at the beginning
 of a text."""
 
-# Intentional bug: the word, digit, and punctuation rules omit the optional
-# leading ASCII space, so spaces become separate chunks instead of attaching.
+# Attach at most one ASCII space to a following word, digit, or punctuation run.
+# Keep rule order and whitespace backtracking consistent with the handout.
 _PATTERN = re.compile(
     r"'s|'t|'re|'ve|'m|'ll|'d"
-    r"|[^\W\d_]+"
-    r"|\d+"
-    r"|(?:(?![^\W\d_]|\d)\S)+"
+    r"| ?[^\W\d_]+"
+    r"| ?\d+"
+    r"| ?(?:(?![^\W\d_]|\d)\S)+"
     r"|\s+(?!\S)"
     r"|\s+"
 )
 
 
 def solve(text: str) -> list[str]:
-    """Preserve all characters but deliberately use incorrect space boundaries."""
+    """Return lossless chunks using the handout's ordered Unicode regex rules."""
     return _PATTERN.findall(text)
