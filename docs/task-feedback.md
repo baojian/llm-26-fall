@@ -19,7 +19,7 @@ may need a teaching-team member to approve the run before feedback appears.
 | Milestone | What it checks |
 | :--- | :--- |
 | Submission format | Your filename, PR title, issue reference, and one-file scope |
-| Examples and edge cases | Exact results on the supplied public cases, including whitespace and Unicode |
+| Examples and edge cases | Results on the supplied public cases, including required fields, ordering, and the task's numeric tolerances |
 | Your predictions | The three requested predictions agree with your implementation |
 | Your own tests | Your new test inputs satisfy the task's requirements and agree with your implementation |
 | Explanation completeness | `NOTES` meets the checker's text requirements; a human reviews its reasoning |
@@ -31,6 +31,14 @@ Input: '2026'
 Expected: ['202', '6']
 Actual: ['2026']
 ```
+
+Lecture 02 checks accept dictionary inputs and report the differing field,
+such as `output['selected_ids'][0]`. Large values are shortened in the report;
+use the named fixture in the task's `data/checks.json` for the full input.
+DSIR floating-point results use relative tolerance `1e-9` and absolute
+tolerance `1e-10`; non-finite numbers fail. The supplied experiment runners
+run locally. The action checks the small public cases and reflection
+completeness; the teaching team reviews experiment evidence in `NOTES`.
 
 Try that input locally and explain the difference before changing your code.
 Then rerun all checks. Keep `MY_CASES` distinct from the supplied cases: use

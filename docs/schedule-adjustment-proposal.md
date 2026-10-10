@@ -2,6 +2,13 @@
 
 **Prepared and approved:** September 29, 2026. **Status:** approved for publication.
 
+**October 9 update:** the instructor extended the project proposal deadline
+from October 14 to **October 21, 2026, 23:59 Asia/Shanghai (UTC+08:00)** to give
+students more time to consider their project questions. This supersedes the
+proposal date in the September 29 record below. The progress update remains
+November 25, now five weeks after the proposal; the final submission remains
+December 30. See the [current schedule](schedule.md#assessment-dates).
+
 The instructor requested that Lecture 04 remain on September 30, that the
 Transformer lecture move to the October 10 make-up meeting, and that later
 topics advance accordingly. The instructor also requested corresponding
@@ -17,7 +24,7 @@ A1's September 30 deadline remains in place.
 
 | Lecture | Topic | Previous date | Approved date |
 | ---: | --- | --- | --- |
-| 04 | Neural language models and attention | Sep 30 | Sep 30 |
+| 04 | Neural LMs and Recurrent Attention | Sep 30 | Sep 30 |
 | 05 | The Transformer as a working model | Oct 14 | **Sat, Oct 10** |
 | 06 | Pretraining and decoding | Oct 21 | Oct 14 |
 | 07 | Data preparation and quality | Oct 28 | Oct 21 |

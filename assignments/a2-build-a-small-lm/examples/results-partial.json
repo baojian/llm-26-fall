@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "submission_status": "partial",
+  "unavailable_evidence": {
+    "diagnostics": "Replace this example with the specific problem that prevented your evidence.",
+    "restart": "Replace this example with the specific problem that prevented your evidence.",
+    "runs": "Replace this example with the specific problem that prevented your evidence.",
+    "decoding": "Replace this example with the specific problem that prevented your evidence.",
+    "final_evaluation": "Replace this example with the specific problem that prevented your evidence."
+  },
+  "diagnostics": null,
+  "restart": null,
+  "runs": null,
+  "decoding": null,
+  "final_evaluation": null
+}

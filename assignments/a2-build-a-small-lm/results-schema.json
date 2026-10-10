@@ -1,0 +1,850 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/complete"
+    },
+    {
+      "$ref": "#/$defs/partial"
+    }
+  ],
+  "$defs": {
+    "run": {
+      "type": "object",
+      "required": [
+        "condition",
+        "config",
+        "environment",
+        "data_manifest_sha256",
+        "tokenizer_sha256",
+        "initial_model_sha256",
+        "final_model_sha256",
+        "checkpoint_sha256",
+        "parameters",
+        "completed_steps",
+        "tokens_processed",
+        "retained_documents",
+        "corpus_tokens",
+        "history",
+        "dev",
+        "removed_to_retained",
+        "resources"
+      ],
+      "properties": {
+        "condition": {
+          "enum": [
+            "baseline",
+            "post",
+            "dedup"
+          ]
+        },
+        "config": {
+          "type": "object",
+          "required": [
+            "model",
+            "steps",
+            "batch_size",
+            "warmup_steps",
+            "seed",
+            "threads",
+            "eval_every",
+            "max_lr",
+            "min_lr_ratio",
+            "max_grad_norm",
+            "weight_decay"
+          ],
+          "properties": {
+            "model": {
+              "type": "object",
+              "required": [
+                "vocab_size",
+                "context",
+                "width",
+                "heads",
+                "layers",
+                "ff_width",
+                "norm"
+              ],
+              "properties": {
+                "vocab_size": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "context": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "heads": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "layers": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "ff_width": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "norm": {
+                  "enum": [
+                    "pre",
+                    "post"
+                  ]
+                }
+              }
+            },
+            "steps": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "batch_size": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "warmup_steps": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "seed": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "threads": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "eval_every": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "max_lr": {
+              "type": "number",
+              "minimum": 0
+            },
+            "min_lr_ratio": {
+              "type": "number",
+              "minimum": 0
+            },
+            "max_grad_norm": {
+              "type": "number",
+              "minimum": 0
+            },
+            "weight_decay": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
+        "environment": {
+          "type": "object"
+        },
+        "data_manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "tokenizer_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "initial_model_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "final_model_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "checkpoint_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "parameters": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "completed_steps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tokens_processed": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "retained_documents": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "corpus_tokens": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "step",
+              "loss",
+              "grad_norm",
+              "lr"
+            ],
+            "properties": {
+              "step": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "loss": {
+                "type": "number",
+                "minimum": 0
+              },
+              "grad_norm": {
+                "type": "number",
+                "minimum": 0
+              },
+              "lr": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 2048
+        },
+        "dev": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "step",
+              "loss",
+              "tokens"
+            ],
+            "properties": {
+              "step": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "loss": {
+                "type": "number",
+                "minimum": 0
+              },
+              "tokens": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 2048
+        },
+        "removed_to_retained": {
+          "type": "object"
+        },
+        "resources": {
+          "type": "object",
+          "required": [
+            "seconds",
+            "peak_rss_bytes",
+            "memory_method"
+          ],
+          "properties": {
+            "seconds": {
+              "type": "number",
+              "minimum": 0
+            },
+            "peak_rss_bytes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "memory_method": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "complete": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "runs",
+        "diagnostics",
+        "restart",
+        "decoding",
+        "final_evaluation"
+      ],
+      "properties": {
+        "schema_version": {
+          "type": "integer",
+          "enum": [
+            1
+          ]
+        },
+        "runs": {
+          "type": "object",
+          "required": [
+            "baseline",
+            "post",
+            "dedup"
+          ],
+          "properties": {
+            "baseline": {
+              "$ref": "#/$defs/run"
+            },
+            "post": {
+              "$ref": "#/$defs/run"
+            },
+            "dedup": {
+              "$ref": "#/$defs/run"
+            }
+          },
+          "additionalProperties": false
+        },
+        "diagnostics": {
+          "type": "object",
+          "required": [
+            "prefix_error",
+            "future_gradient",
+            "unmasked_prefix_error",
+            "attainable_loss_floor",
+            "tiny_fit_losses"
+          ],
+          "properties": {
+            "prefix_error": {
+              "type": "number",
+              "minimum": 0
+            },
+            "future_gradient": {
+              "type": "number",
+              "minimum": 0
+            },
+            "unmasked_prefix_error": {
+              "type": "number",
+              "minimum": 0
+            },
+            "attainable_loss_floor": {
+              "type": "number",
+              "minimum": 0
+            },
+            "tiny_fit_losses": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0
+              },
+              "minItems": 200,
+              "maxItems": 200
+            }
+          }
+        },
+        "restart": {
+          "type": "object",
+          "required": [
+            "max_parameter_error",
+            "max_loss_error",
+            "weights_only_parameter_error",
+            "atol",
+            "fresh_process",
+            "continuous_updates",
+            "split_updates"
+          ],
+          "properties": {
+            "max_parameter_error": {
+              "type": "number",
+              "minimum": 0
+            },
+            "max_loss_error": {
+              "type": "number",
+              "minimum": 0
+            },
+            "weights_only_parameter_error": {
+              "type": "number",
+              "minimum": 0
+            },
+            "atol": {
+              "type": "number",
+              "minimum": 0
+            },
+            "fresh_process": {
+              "type": "boolean"
+            },
+            "continuous_updates": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "split_updates": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        },
+        "decoding": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "prompt",
+              "mode",
+              "temperature",
+              "top_p",
+              "seed",
+              "tokens",
+              "stop",
+              "text",
+              "repeated_bigram_fraction",
+              "checkpoint_sha256"
+            ],
+            "properties": {
+              "prompt": {
+                "type": "string"
+              },
+              "mode": {
+                "enum": [
+                  "greedy",
+                  "sample"
+                ]
+              },
+              "temperature": {
+                "type": "number",
+                "minimum": 0
+              },
+              "top_p": {
+                "type": "number",
+                "minimum": 0
+              },
+              "seed": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "tokens": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "minItems": 0,
+                "maxItems": 64
+              },
+              "stop": {
+                "enum": [
+                  "eos",
+                  "length"
+                ]
+              },
+              "text": {
+                "type": "string"
+              },
+              "repeated_bigram_fraction": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "checkpoint_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "minItems": 9,
+          "maxItems": 9
+        },
+        "final_evaluation": {
+          "type": "object",
+          "required": [
+            "checkpoint_sha256",
+            "losses"
+          ],
+          "properties": {
+            "checkpoint_sha256": {
+              "type": "object",
+              "required": [
+                "baseline",
+                "dedup"
+              ],
+              "properties": {
+                "baseline": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "dedup": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "losses": {
+              "type": "object",
+              "required": [
+                "baseline",
+                "dedup"
+              ],
+              "properties": {
+                "baseline": {
+                  "type": "object",
+                  "required": [
+                    "loss",
+                    "tokens"
+                  ],
+                  "properties": {
+                    "loss": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "tokens": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  }
+                },
+                "dedup": {
+                  "type": "object",
+                  "required": [
+                    "loss",
+                    "tokens"
+                  ],
+                  "properties": {
+                    "loss": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "tokens": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "submission_status": {
+          "type": "string",
+          "enum": [
+            "complete"
+          ]
+        }
+      }
+    },
+    "partial": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "runs",
+        "diagnostics",
+        "restart",
+        "decoding",
+        "final_evaluation",
+        "submission_status",
+        "unavailable_evidence"
+      ],
+      "properties": {
+        "schema_version": {
+          "type": "integer",
+          "enum": [
+            1
+          ]
+        },
+        "runs": {
+          "anyOf": [
+            {
+              "type": "object",
+              "required": [
+                "baseline",
+                "post",
+                "dedup"
+              ],
+              "properties": {
+                "baseline": {
+                  "$ref": "#/$defs/run"
+                },
+                "post": {
+                  "$ref": "#/$defs/run"
+                },
+                "dedup": {
+                  "$ref": "#/$defs/run"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "diagnostics": {
+          "anyOf": [
+            {
+              "type": "object",
+              "required": [
+                "prefix_error",
+                "future_gradient",
+                "unmasked_prefix_error",
+                "attainable_loss_floor",
+                "tiny_fit_losses"
+              ],
+              "properties": {
+                "prefix_error": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "future_gradient": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "unmasked_prefix_error": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "attainable_loss_floor": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "tiny_fit_losses": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "minItems": 200,
+                  "maxItems": 200
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "restart": {
+          "anyOf": [
+            {
+              "type": "object",
+              "required": [
+                "max_parameter_error",
+                "max_loss_error",
+                "weights_only_parameter_error",
+                "atol",
+                "fresh_process",
+                "continuous_updates",
+                "split_updates"
+              ],
+              "properties": {
+                "max_parameter_error": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "max_loss_error": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "weights_only_parameter_error": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "atol": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "fresh_process": {
+                  "type": "boolean"
+                },
+                "continuous_updates": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "split_updates": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "decoding": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "prompt",
+                  "mode",
+                  "temperature",
+                  "top_p",
+                  "seed",
+                  "tokens",
+                  "stop",
+                  "text",
+                  "repeated_bigram_fraction",
+                  "checkpoint_sha256"
+                ],
+                "properties": {
+                  "prompt": {
+                    "type": "string"
+                  },
+                  "mode": {
+                    "enum": [
+                      "greedy",
+                      "sample"
+                    ]
+                  },
+                  "temperature": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "top_p": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "seed": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "tokens": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "minItems": 0,
+                    "maxItems": 64
+                  },
+                  "stop": {
+                    "enum": [
+                      "eos",
+                      "length"
+                    ]
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "repeated_bigram_fraction": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "checkpoint_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "minItems": 9,
+              "maxItems": 9
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "final_evaluation": {
+          "anyOf": [
+            {
+              "type": "object",
+              "required": [
+                "checkpoint_sha256",
+                "losses"
+              ],
+              "properties": {
+                "checkpoint_sha256": {
+                  "type": "object",
+                  "required": [
+                    "baseline",
+                    "dedup"
+                  ],
+                  "properties": {
+                    "baseline": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "dedup": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  }
+                },
+                "losses": {
+                  "type": "object",
+                  "required": [
+                    "baseline",
+                    "dedup"
+                  ],
+                  "properties": {
+                    "baseline": {
+                      "type": "object",
+                      "required": [
+                        "loss",
+                        "tokens"
+                      ],
+                      "properties": {
+                        "loss": {
+                          "type": "number",
+                          "minimum": 0
+                        },
+                        "tokens": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      }
+                    },
+                    "dedup": {
+                      "type": "object",
+                      "required": [
+                        "loss",
+                        "tokens"
+                      ],
+                      "properties": {
+                        "loss": {
+                          "type": "number",
+                          "minimum": 0
+                        },
+                        "tokens": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "submission_status": {
+          "type": "string",
+          "enum": [
+            "partial"
+          ]
+        },
+        "unavailable_evidence": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 10
+          }
+        }
+      }
+    }
+  }
+}

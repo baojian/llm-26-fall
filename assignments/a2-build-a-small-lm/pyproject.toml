@@ -1,0 +1,19 @@
+[project]
+name = "llm-course-a2"
+version = "0.1.0"
+description = "A2: build and investigate a small language model"
+requires-python = ">=3.11"
+dependencies = [
+    "torch>=2.14.0",
+    "numpy>=2.4.6",
+    "matplotlib>=3.11.1",
+    "tokenizers>=0.23.2",
+    "psutil>=7.2.2",
+]
+
+[dependency-groups]
+dev = ["pytest>=9.1.1"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

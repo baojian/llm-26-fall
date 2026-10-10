@@ -1,0 +1,231 @@
+{
+  "data": [
+    {
+      "type": "heatmap",
+      "x": [
+        1,
+        2,
+        3
+      ],
+      "y": [
+        1,
+        2,
+        3
+      ],
+      "z": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0.7310585786300049,
+          0.2689414213699951,
+          0
+        ],
+        [
+          0.21194155761708544,
+          0.21194155761708544,
+          0.5761168847658291
+        ]
+      ],
+      "zmin": 0,
+      "zmax": 1,
+      "colorscale": [
+        [
+          0,
+          "#f0f4f7"
+        ],
+        [
+          1,
+          "#20578c"
+        ]
+      ],
+      "showscale": false,
+      "text": [
+        [
+          "1.000",
+          "0.000",
+          "0.000"
+        ],
+        [
+          "0.731",
+          "0.269",
+          "0.000"
+        ],
+        [
+          "0.212",
+          "0.212",
+          "0.576"
+        ]
+      ],
+      "texttemplate": "%{text}",
+      "textfont": {
+        "size": 28
+      },
+      "hovertemplate": "Query %{y}<br>Key %{x}<br>Weight %{z:.4f}<extra></extra>"
+    }
+  ],
+  "layout": {
+    "width": 1152,
+    "height": 410,
+    "paper_bgcolor": "#fbfbf9",
+    "plot_bgcolor": "#fbfbf9",
+    "font": {
+      "family": "Arial, sans-serif",
+      "size": 26,
+      "color": "#202b38"
+    },
+    "margin": {
+      "l": 75,
+      "r": 15,
+      "t": 65,
+      "b": 75
+    },
+    "xaxis": {
+      "domain": [
+        0,
+        0.49
+      ],
+      "tickvals": [
+        1,
+        2,
+        3
+      ],
+      "ticktext": [
+        "1: red",
+        "2: key",
+        "3: opens"
+      ],
+      "title": {
+        "text": "Key position"
+      },
+      "fixedrange": true
+    },
+    "yaxis": {
+      "range": [
+        3.5,
+        0.5
+      ],
+      "tickvals": [
+        1,
+        2,
+        3
+      ],
+      "ticktext": [
+        "Q1",
+        "Q2",
+        "Q3"
+      ],
+      "fixedrange": true
+    },
+    "annotations": [
+      {
+        "x": 0.245,
+        "y": 1.2,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "Attention weights",
+        "showarrow": false,
+        "font": {
+          "size": 28
+        }
+      },
+      {
+        "x": 0.59,
+        "y": 1.2,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "Selected query: 2",
+        "xanchor": "left",
+        "align": "left",
+        "showarrow": false,
+        "font": {
+          "family": "Arial, sans-serif",
+          "size": 28,
+          "color": "#142e4b"
+        }
+      },
+      {
+        "x": 0.59,
+        "y": 0.9,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "Scores: (1, 0, 1)",
+        "xanchor": "left",
+        "align": "left",
+        "showarrow": false,
+        "font": {
+          "family": "Arial, sans-serif",
+          "size": 26,
+          "color": "#142e4b"
+        }
+      },
+      {
+        "x": 0.59,
+        "y": 0.63,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "Weights: (0.73, 0.27, 0.00)",
+        "xanchor": "left",
+        "align": "left",
+        "showarrow": false,
+        "font": {
+          "family": "Arial, sans-serif",
+          "size": 26,
+          "color": "#142e4b"
+        }
+      },
+      {
+        "x": 0.59,
+        "y": 0.3,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "Output: (0.731, 0.538)",
+        "xanchor": "left",
+        "align": "left",
+        "showarrow": false,
+        "font": {
+          "family": "Arial, sans-serif",
+          "size": 28,
+          "color": "#142e4b"
+        }
+      },
+      {
+        "x": 0.59,
+        "y": -0.02,
+        "xref": "paper",
+        "yref": "paper",
+        "text": "V3 = (2, 1)",
+        "xanchor": "left",
+        "align": "left",
+        "showarrow": false,
+        "font": {
+          "family": "Arial, sans-serif",
+          "size": 26,
+          "color": "#142e4b"
+        }
+      }
+    ],
+    "shapes": [
+      {
+        "type": "rect",
+        "x0": 0.5,
+        "x1": 3.5,
+        "y0": 1.5,
+        "y1": 2.5,
+        "line": {
+          "color": "#28673f",
+          "width": 4
+        },
+        "fillcolor": "rgba(0,0,0,0)"
+      }
+    ]
+  },
+  "config": {
+    "displayModeBar": false,
+    "displaylogo": false,
+    "scrollZoom": false,
+    "responsive": false
+  }
+}

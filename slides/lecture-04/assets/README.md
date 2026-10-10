@@ -1,25 +1,35 @@
 # Lecture 04 assets
 
-All figures are original course teaching assets. The text corpus and numerical
-vectors are invented toy data. There are no model weights, student submissions,
-or benchmark results in this folder.
+The figures include original course diagrams and two illustrations reused from
+the instructor's source slides. The text corpus and numerical vectors are
+invented toy data. There are no model weights, student submissions, or benchmark
+results in this folder.
 
 | Files | Content and provenance |
 | --- | --- |
-| `context-windows.svg` and `.excalidraw` | Three sentence-local windows in the notebook's `BOS red key opens EOS` example |
+| `context-windows.svg` and `.excalidraw` | Three sentence-local windows in the notebook's `BOS red key opens EOS` example; compact 180×64 token boxes with centered labels |
 | `feedforward-lm.svg` and `.excalidraw` | Embedding lookup, ordered concatenation, a tanh hidden layer, and vocabulary logits; follows the NPLM mechanism in the instructor's Spring Lecture 04, pages 17–20, and Bengio et al. (2003), §2 |
 | `recurrent-state.svg` and `.excalidraw` | Shared recurrent transition across three inputs; follows the Spring lecture's recurrence explanation, pages 38–44 |
-| `context-selection.svg` and `.excalidraw` | A query selects among stored encoder states; an original schematic of the motivation in Bahdanau et al. (ICLR 2015), §§2–3 |
-| `qkv-path.svg` and `.excalidraw` | Learned Q/K/V projections, score normalization, and value aggregation; see Vaswani et al. (2017), §3.2 |
-| `attention-lm.svg` and `.excalidraw` | The checked causal head placed between embeddings and a vocabulary readout; a schematic continuation, not a trained Transformer |
+| `encoder-bottleneck.png` | The encoder–decoder diagram from slide 7 of the instructor's `lecture-05-slides-transformers.pptx`; extracted unchanged from `ppt/media/image10.png` (1419×230 pixels) |
+| `rnn-attention.png` | The recurrent-attention diagram from page 2, “Context vector c_i,” of the 57-slide Desktop `lecture-05-slides-transformers.pptx` snapshot used on October 10; extracted unchanged from `ppt/media/image1.png` (1256×577 pixels) |
 | `tiny-lm-loss.json` | Editable Plotly figure sampled from notebook E02 at updates 0, 1, 5, 10, 20, 40, 60, 100, 150, and 200; includes the uniform-logit baseline `log(7)` |
-| `attention-values.json` | Hand-chosen Q, K, V and position labels, matching notebook E03–E04 exactly |
-| `attention-demo.json` | Initial Plotly view from `figureFor(fixture, initialState)` in `attention-demo.js`; query 2, causal mask on, original values |
 
-The diagrams were authored as editable Excalidraw scenes and exported with
-`@excalidraw/excalidraw` 0.18.1. Their dimensions, fonts, and colors follow the
-existing course diagrams. Open a scene in Excalidraw to revise it, then export
-its SVG alongside it. The classroom browser uses only the SVG files.
+The original editable diagrams were authored with `@excalidraw/excalidraw`
+0.18.1. The compact context-window layout keeps its rectangles, centered text,
+and arrows synchronized between the editable scene and native SVG. Their
+dimensions, fonts, and colors follow the existing course diagrams. Open a scene
+in Excalidraw to revise it, then export its SVG alongside it. The bottleneck
+illustration retains the original raster artwork from the PowerPoint. The
+classroom browser uses the SVG and PNG assets without authoring dependencies.
+
+The context-vector page was inspected in the open PowerPoint and the newly saved
+57-slide Desktop file on October 10, 2026 (Asia/Shanghai). Its attention PNG is
+identical to `ppt/media/image11.png` on page 8 of the earlier 83-slide copy.
+The bottleneck provenance above refers to that earlier copy. The context-vector
+page's text and formula screenshots are transcribed as editable text and KaTeX.
+The figure's score is a dot product; a visible caption distinguishes its scoring
+and decoder indexing from the lecture's additive model. Speaker notes map its
+notation to the lecture and explain that its encoder and decoder are schematic.
 
 ## Numerical examples
 
@@ -31,16 +41,13 @@ loss moves from about 2.172859 to 0.006996 nats. This is a fit/debugging check,
 with no held-out evaluation. The automated test recomputes the curve and allows
 small platform-dependent floating-point differences.
 
-The attention fixture uses key width 2 and value width 2. Query 2 is
-`(sqrt(2), 0)`, keys are `(1,0)`, `(0,1)`, `(1,1)`, and values are `(1,0)`,
-`(0,2)`, `(3,1)`. Its unmasked scores are `(1,0,1)`. The masked query-2 output
-is approximately `(0.731059, 0.537883)`. `Change V3` adds `(10,10)` to only
-the last value. The row outline and adjacent numbers follow the selected query.
-
-[demo.js](../demo.js) connects native buttons to the Plotly view.
-[attention-demo.js](../attention-demo.js) computes scores, weights, outputs,
-and the figure specification. Reset restores query, mask, and values. The
-initial view is also the PDF example. All browser runtime assets are local.
+The earlier causal-attention fixture, computation module, interactive controls,
+and related figures remain as legacy files for existing computation tests.
+They are not loaded by the revised Lecture 04 deck. Their migration belongs to
+the separate Lecture 05 revision. Lecture 04 uses the source encoder–decoder
+illustration to motivate alignment.
+The notebook now supplies deterministic recurrence, LSTM, and additive-score
+calculations in addition to the existing NPLM fitting example.
 
 ## Sources
 
@@ -48,9 +55,8 @@ initial view is also the PDF example. All browser runtime assets are local.
   and [Spring notebook](https://github.com/baojian/llm-26/blob/main/lecture-04-neural-lms/lecture-04-neural-lms.ipynb)
 - [Bengio et al. (2003)](https://www.jmlr.org/papers/v3/bengio03a.html)
 - [Bahdanau et al. (ICLR 2015)](https://arxiv.org/abs/1409.0473)
-- [Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762)
 - [CS336 Lecture 2](https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py)
   and [Assignment 1](https://github.com/stanford-cs336/assignment1-basics)
 
 Precise source sections and qualifications appear in the slide notes and
-notebook. No screenshots of third-party figures were copied into this deck.
+notebook. The source PowerPoint remains with the instructor's original materials.

@@ -1,7 +1,7 @@
 # Lecture 04 optional reading
 
-The core lecture follows a fixed-window neural LM, then builds and checks one
-causal attention head. These readings extend the same material. They are
+The core lecture develops a fixed-window neural LM, recurrent memory, and
+additive alignment in an RNN encoder–decoder. These readings extend the same material. They are
 ungraded and available to every student.
 
 ## The original Spring materials
@@ -38,26 +38,40 @@ training budget fixed. Construct any train/dev split at the document level
 before making windows. Successful fitting of our six examples is a debugging
 result, not an estimate of generalization.
 
-## Attention and implementation
+## Additive alignment in recurrent translation
 
-[Bahdanau et al. (ICLR 2015), Sections 2–3](https://arxiv.org/abs/1409.0473)
-motivate selecting source states in an encoder–decoder system. This is the
-historical bridge to our self-attention computation, not the same score
-function or architecture.
+[Bahdanau et al.](../../papers/2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf), §§2–3 and Appendix A.1.2,
+develops the fixed-vector bottleneck, bidirectional source annotations, additive
+alignment, and a decoder-dependent context. The preprint appeared in September
+2014 and the paper at ICLR 2015. The model uses GRUs; the LSTM section teaches
+a separate recurrent memory mechanism.
 
-[Vaswani et al. (2017), Sections 3.2.1 and 3.2.3](https://arxiv.org/abs/1706.03762)
-specify scaled dot-product attention and the model's attention masks. Section
-3.5 previews position information. Lecture 05 assembles the full Transformer
-on October 10.
+Read §6.1 for the connection to [Graves's 2013 handwriting alignment](https://arxiv.org/abs/1308.0850).
+[Mnih et al.'s visual-attention model](https://arxiv.org/abs/1406.6247) also
+predates the NMT preprint. Attribute additive soft alignment for NMT to
+Bahdanau et al., without claiming the first attention mechanism of every kind.
 
-[CS336 Lecture 2](https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py)
-provides examples of named tensor axes, explicit matrix-product gradients,
-memory, and FLOPs. Apply those methods to the head in our notebook before
-moving to larger models. [CS336 Assignment 1](https://github.com/stanford-cs336/assignment1-basics)
-shows how component interfaces and correctness tests support an implementation
-from scratch. Consult its own course instructions if completing that assignment.
+Explain why target step 2 can read source position 5: the complete source is
+already supplied. Future target words remain unknown. Source and target
+indices refer to different sequences.
 
-Our notebook's P01 computes dense score storage and product FLOPs. P02 verifies
-that reordering paired allowed keys and values leaves one fixed query's output
-unchanged. Neither claim says that a complete causally masked network ignores
-order, nor that every attention implementation stores the full score matrix.
+## Recurrent gradients and modern LSTM
+
+[Pascanu et al. (2013), §2](https://proceedings.mlr.press/v28/pascanu13.html)
+analyzes recurrent gradient paths. Expand the linear E03 recurrence before
+locating the tanh derivatives in its nonlinear counterpart.
+
+Our gate calculation uses the [modern LSTM equations](https://docs.pytorch.org/docs/stable/generated/torch.nn.LSTM.html).
+The forget gate was added after the original 1997 LSTM. Distinguish the direct
+cell-state derivative, with gates fixed, from the complete recurrent gradient.
+
+## Continuing in Lecture 05
+
+[Lecture 05](../lecture-05/index.html) develops Q/K/V, scaled dot products,
+causal masking, positions, and the Transformer decoder. Its
+[notebook](../lecture-05/lecture-05-exercise.ipynb) contains independent
+head references and complete-model causality checks.
+
+[Vaswani et al. (2017), §3.2](https://arxiv.org/abs/1706.03762) is the primary
+reading. Compare the query source, context source, scoring function, and
+available positions with Bahdanau's recurrent alignment.

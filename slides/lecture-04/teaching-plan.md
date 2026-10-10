@@ -1,137 +1,141 @@
-# Lecture 04: Neural LMs and Attention
+# Lecture 04: Neural LMs and Recurrent Attention
 
-**Date:** Wednesday, September 30, 2026
+**Class date:** September 30, 2026 (Asia/Shanghai).
+**Revision:** October 10, 2026 (Asia/Shanghai), following the instructor's decision
+to teach attention within recurrent translation and leave causal self-attention
+to Lecture 05.
 
-**Central question:** How can a model select useful context instead of
-compressing everything into one state?
+The context-vector illustration reuses page 2 of the 57-slide Desktop Lecture 05
+PowerPoint snapshot used on October 10, before the decoder update. These two slides share the existing
+three-minute explanation slot, keeping the three-period timing intact.
 
-This first version contains **56 slides**, five ungraded classroom exercises,
-and a companion notebook that runs offline on CPU. It follows the accepted
-Lecture 01–03 Reveal.js shell, typography, section outlines, answer fragments,
-speaker notes, and notebook launcher. Preparation is tracked in
-[issue #234](https://github.com/baojian/llm-26-fall/issues/234).
+**Central question:** How can a model retain and select useful context?
 
-## Learning objectives
+The revised package has **39 slides**, five ungraded exercises, and an offline
+CPU notebook. All students have the same practices and expectations. The
+shared course theme, notebook launcher, and original NPLM fitting example
+are retained. Original preparation: [issue #234](https://github.com/baojian/llm-26-fall/issues/234).
 
-Students should be able to:
+## Learning objectives and lecture boundary
 
-- Extend Lecture 03's one-token `TinyLM` with a fixed-window context network.
-- Trace the tensor shapes, run a training loop, and fit a consistent tiny batch.
-- Explain the motivation for recurrence, gated memory, and attention.
-- Compute and implement scaled dot-product attention with a causal mask.
-- Verify forward outputs, gradients, and future-input independence.
-- Estimate the storage of a materialized attention score matrix.
+Students train a fixed-window neural LM, trace recurrent states and gradients,
+calculate a modern LSTM cell update, and explain additive alignment in an RNN
+encoder–decoder. They distinguish the full source sentence from the target
+prefix available at a decoding step.
 
-Full Transformer architecture follows in Lecture 05 on October 10. This
-notebook trains an NPLM and verifies a single attention head; it does not
-train a Transformer.
-All students use the same practices and expectations. These practices introduce
-no graded submissions, extra credit, or changes to the assessment policy.
+Lecture 05 revisits recurrent context, then develops Q/K/V,
+scaled dot products, causal self-attention, multiple heads, positions,
+Transformer blocks, and complete-model verification. It does not require a
+Lecture 04 self-attention implementation.
+
+## Changes from the original 56-slide deck
+
+These old slide numbers refer to the deck before this revision.
+
+| Original slides | Revision and destination |
+| --- | --- |
+| 1–20: fixed-window LM and training | Retain; update objectives and outline |
+| 21–25: RNN/LSTM bridge | Expand into recurrent-state, gradient, and gate practice in current slides 21–30; combine cell memory with gates on slide 29, and E04 with remaining limitations on slide 30 |
+| 26: encoder context selection | Combine the encoder–decoder update with the source bottleneck illustration in current slide 32; develop additive alignment in current slides 33–38, including the context-vector illustration on slide 35 |
+| 27–37: weighted values, Q/K/V, scaling, matrix attention | Replace with recurrent alignment; self-attention is developed in Lecture 05's [attention and heads](../lecture-05/index.html#/attention-contract) section |
+| 38–42: causal masks and shifted targets | Remove from Lecture 04; covered by Lecture 05's [masking](../lecture-05/index.html#/mask-before-softmax) and [shifted targets](../lecture-05/index.html#/shifted-targets) |
+| 43: causal browser demonstration | Remove from the displayed Lecture 04 deck; retain its legacy assets and module for existing tests until the separate Lecture 05 revision migrates them |
+| 44–50: head implementation, output/gradient references, causality | Remove duplicate notebook section; covered by Lecture 05's references and E05 |
+| 51–53: attention cost, LM path, positions | Remove from Lecture 04; covered by Lecture 05's [positions](../lecture-05/index.html#/why-positions), [full model](../lecture-05/index.html#/full-model), and [attention cost](../lecture-05/index.html#/attention-cost) |
+| 54–56: exit questions and reading | Combine recurrence review, continuation, and readings in current slide 39 |
+
+Lecture 04's former E03–E05 and optional P01–P02 attention tasks are replaced.
+Current E03 traces memory, E04 calculates a gated update, and E05 calculates
+source alignment. Existing personal notebooks are preserved by the launcher;
+rename an old working copy before requesting the revised one.
 
 ## Three-period sequence
 
-Times include activities. Breaks are outside the 135 teaching minutes.
+Each period is 45 minutes including exercises. Breaks are separate. These are
+planning allocations, not measured classroom completion times.
 
 | Period | Minutes | Slides | Teaching and activity |
 | --- | --- | --- | --- |
 | 1 | 0–5 | 1–5 | Objectives, bigram recap, and two prefixes sharing the last token |
-| 1 | 5–15 | 6–10 | Vocabulary, sentence-local windows, feedforward path, nonlinearity, and shapes |
-| 1 | 15–19 | 11 | **E01, 4 min:** contexts and tensor shapes |
-| 1 | 19–29 | 12–15 | PyTorch forward path, raw-logit loss, numerical stability, and one update |
-| 1 | 29–35 | 16 | **E02, 6 min:** repair a detached loss and fit the tiny batch |
-| 1 | 35–45 | 17–20 | Loss curve, predictions, diagnosis, and fitting versus generalization |
-| 2 | 0–8 | 21–26 | Fixed windows, recurrence, gradient paths, LSTM purpose, and the encoder bottleneck |
-| 2 | 8–20 | 27–30 | Weighted context, Q/K/V projections, shapes, and score scaling |
-| 2 | 20–25 | 31–32 | Stable row-wise softmax and the hand-chosen numerical example |
-| 2 | 25–30 | 33 | **E03, 5 min:** one attention output |
-| 2 | 30–42 | 34–36 | Value contributions, the matrix expression, and batched tensor operations |
-| 2 | 42–45 | 37 | Interpretation limits and catch-up |
-| 3 | 0–6 | 38–41 | Shifted targets, the causal mask, and mask-before-softmax |
-| 3 | 6–10 | 42 | **E04, 4 min:** allowed connections and future-value changes |
-| 3 | 10–14 | 43 | Interactive query, mask, and value controls |
-| 3 | 14–22 | 44–47 | Learned projections, explicit reference, and output/gradient comparisons |
-| 3 | 22–28 | 48 | **E05, 6 min:** implementation and correctness checks |
-| 3 | 28–35 | 49–51 | Causal perturbations, failure cases, and score-matrix storage |
-| 3 | 35–43 | 52–54 | Position in the LM path, order information, and exit questions |
-| 3 | 43–45 | 55–56 | Published A1 reminder and selected reading |
+| 1 | 5–15 | 6–10 | Vocabulary, windows, feedforward path, and shapes |
+| 1 | 15–19 | 11 | E01, 4 min: context windows and shapes |
+| 1 | 19–29 | 12–15 | PyTorch, loss, stability, and one update |
+| 1 | 29–35 | 16 | E02, 6 min: repair the detached loss and fit the batch |
+| 1 | 35–45 | 17–20 | Loss curve, predictions, diagnosis, and generalization |
+| 2 | 0–10 | 21–24 | Fixed windows, recurrent states, and update shapes |
+| 2 | 10–17 | 25 | E03, 7 min: state trace and input derivative |
+| 2 | 17–29 | 26–28 | Recurrent LM, gradient products, and shared-weight derivatives |
+| 2 | 29–35 | 29 | Cell memory, gates, and exposure |
+| 2 | 35–42 | 30 | E04, 7 min: memory, exposure, and direct derivative |
+| 2 | 42–45 | 30 | Reveal the remaining recurrent limitations after the exercise answer |
+| 3 | 0–7 | 31–32 | Machine translation task; encoder–decoder update and bottleneck |
+| 3 | 7–12 | 33 | Paper attribution and bidirectional source annotations |
+| 3 | 12–19 | 34 | Additive scores, normalization, and weighted context |
+| 3 | 19–22 | 35–36 | Source context-vector illustration, decoder update, and joint training |
+| 3 | 22–25 | 37 | Numerical alignment example |
+| 3 | 25–32 | 37 | E05, 7 min: two contexts from the same annotations; reveal answers after calculation |
+| 3 | 32–39 | 38 | Source versus target visibility and interpretation |
+| 3 | 39–45 | 39 | Combined recap, continuation, and readings |
 
-If students need more implementation time, shorten the recurrence discussion
-to its diagrams and keep the LSTM derivation in optional reading. Use the
-prepared training curve if live execution is delayed. Preserve the five
-exercise prompts and their checked explanations.
+Preserve practice and feedback. If discussion runs long, leave the supplied
+library-comparison code for reading rather than typing it in class.
 
-## Notebook correspondence
+## Notebook correspondence and computation
 
-The [notebook](lecture-04-exercise.ipynb) uses E01–E05 in the slide order.
-Its explanations are executable and contain no stored outputs. Predict first,
-then reveal or run. Optional P01 recomputes storage/FLOPs; P02 verifies a paired
-key/value permutation. Neither adds a required submission.
+| Exercise | Cells | Expected evidence |
+| --- | --- | --- |
+| E01 | `window-data`, `context-model` | Six sentence-local windows; lookup/flat/hidden/logit shapes `(2,2,4)`, `(2,8)`, `(2,8)`, `(2,7)` |
+| E02 | `broken-loop`, `fit-tiny-batch` | Detached loss fails; connected training fits all six targets |
+| E03 | `recurrent-trace`, `rnn-reference` | States `(1,0.5,1.25)`; input derivatives `(0.25,0.5,1)`; shared-weight derivative 1 |
+| E04 | `lstm-update`, `lstm-cell-reference` | Cell 1.25, hidden state about 0.4241, direct cell derivative 0.75 |
+| E05 | `alignment-numbers`, `additive-attention` | Weights `(1/4,3/4)` give context `(2.5,0.5)`; reversed weights give `(1.5,1.5)` |
 
-| Exercise | Slide | Notebook cells | Expected result |
-| --- | ---: | --- | --- |
-| E01 | 11 | `window-data`, `context-model` | Six sentence-local windows; lookup/flat/hidden/logit shapes `(2,2,4)`, `(2,8)`, `(2,8)`, `(2,7)` for the two-row probe |
-| E02 | 16 | `broken-loop`, `fit-tiny-batch` | Detach error is explained; all six targets fit after 200 updates, with mean loss below 0.03 nats |
-| E03 | 33 | `attention-numbers` | Query-2 scores `(1,0,1)`, weights about `(0.4223,0.1554,0.4223)`, output `(1.6893,0.7330)` |
-| E04 | 42 | `causal-numbers` | Lower-triangular allowed mask; query-2 output `(0.7311,0.5379)` is independent of V3 |
-| E05 | 48 | `attention-implementation` through `causality-check` | Forward/gradient comparisons pass, finite differences agree, and a prefix-only loss has no gradient to future inputs |
+E03's scalar recurrence is deliberately linear. A separate tanh recurrence
+matches `torch.nn.RNN`. E04 holds supplied gates fixed for its direct-path
+derivative, then compares a full modern cell with `torch.nn.LSTMCell`. Tests
+compare outputs and gradients. Additive attention has an independent scalar
+reference, finite-difference checks, and a one-source edge case.
 
-Use separate documents before extracting overlapping windows when extending
-the corpus into a train/dev experiment. The provided six-window fit has **no
-held-out evaluation** and must not be presented as a quality benchmark.
+The NPLM fit retains CPU float32, seed 7, vocabulary 7, context 2, embedding
+width 4, hidden width 8, and 200 SGD updates at learning rate 0.5 on six windows.
+There is no held-out evaluation. New reference examples use float64, seeds
+23 and 29, and no training. No external data or models are downloaded.
 
-## Continuity with the Spring lecture
+## Historical and technical precision
 
-The original [84-page Lecture 04 PDF](https://github.com/baojian/llm-26/blob/main/slides/lecture-04-slides/lecture-04-slides.pdf)
+[Bahdanau, Cho, and Bengio](../../papers/2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf) introduced additive
+soft alignment for neural machine translation: September 2014 preprint, ICLR
+2015. Avoid a universal first-attention claim. The paper's §6.1 discusses
+[Graves's earlier handwriting alignment](https://arxiv.org/abs/1308.0850);
+[Mnih et al.'s visual-attention preprint](https://arxiv.org/abs/1406.6247) also
+appeared earlier, in June 2014.
+
+Use the paper's actual dependencies: a bidirectional gated RNN produces source
+annotations, the previous decoder state scores them, and their weighted context
+feeds the decoder update. The paper uses GRUs; the LSTM section is a separate
+memory lesson. Its additive score differs from the Transformer's scaled dot product.
+
+All valid source annotations are available at each target step. Source and
+target indices refer to different sequences. A target-index triangular mask
+would wrongly hide available source words. Padding masks are separate.
+
+## Spring continuity and validation
+
+The [Spring slides](https://github.com/baojian/llm-26/blob/main/slides/lecture-04-slides/lecture-04-slides.pdf)
 and [notebook](https://github.com/baojian/llm-26/blob/main/lecture-04-neural-lms/lecture-04-neural-lms.ipynb)
-were inspected for this version. The source deck is titled *Neural networks
-and sequence learning*. The map below documents the teaching choices.
-
-| Spring material | Treatment here |
-| --- | --- |
-| Slides 2–14: units, nonlinearities, XOR, and hidden representations | Retain the hidden-layer/nonlinearity explanation; longer logic-gate and XOR work is optional |
-| Slides 15–16: feedforward text classifiers | Optional comparison; the main task stays next-token prediction |
-| Slides 17–24 and notebook §3: NPLM | Retain the context window and learned embedding/hidden/readout path; simplify to plain PyTorch and a local vocabulary |
-| Slides 25–35 and notebook §§1–2: training, graphs, micrograd | Reuse Lecture 03 prerequisites; add a short numerical-stability example and a broken-loop debugging exercise; link full micrograd work as optional |
-| Slides 38–46, 60–73, and notebook §4: recurrence and LSTM | Retain an eight-minute motivation; link full BPTT, gates, and training as optional |
-| Slides 47–59 and 74–83: historical comparisons, variants, and applications | Keep accessible in the original source; do not treat historical benchmark numbers as current model comparisons |
-
-The new attention and verification portion adopts CS336's explicit tensor
-reasoning and component-testing approach. It adds original small examples,
-rather than importing a complete CS336 assignment. Relevant sources are
-[Lecture 2](https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py)
-(`tensor_einops`, gradient examples, and resource accounting) and
-[Assignment 1's component contracts](https://github.com/stanford-cs336/assignment1-basics/blob/main/tests/adapters.py).
-The full Transformer, GPU kernels, and optimizer/schedule experiments remain
-in their later course topics.
-
-## Browser demonstration
-
-Slide 43 starts at query 2, with the mask on and original values. `Change V3`
-adds `(10,10)` to the third value vector. This leaves query 2 unchanged until
-the mask is turned off. Query 3 may use its own value. `Reset` restores query,
-mask, and values. Native buttons support keyboard activation and expose their
-pressed state; the chart has an updated accessible numerical description.
-
-The matrix shows all three rows. The green outline identifies the selected
-query. The right-hand values show its unmasked scores, final weights, and
-output. The PDF retains the original masked example. All assets and plotting
-libraries are local. See [asset provenance](assets/README.md).
-
-## Preparation and validation
+remain optional. Current material retains NPLM (source slides 17–24) and gives
+more room to recurrence/BPTT/gates (38–46 and 60–73). Long micrograd and LSTM
+training remain optional. Bahdanau §§2–3 and Appendix A.1.2 ground period 3.
 
 ```sh
-uv run python -m pytest tests/test_lecture_04.py
-node --test tests/test_attention_demo.mjs
+uv run python -m pytest tests/test_lecture_04.py tests/test_lecture_05.py
+node --test tests/test_attention_demo.mjs tests/test_position_demo.mjs
 npm --prefix slides run check -- lecture-04
-npm --prefix slides run pdf -- lecture-04
-uv run python -m pytest tests/
+npm --prefix slides run check -- lecture-05
 ```
 
-Inspect every generated slide image and PDF page. The browser check covers
-all three framework viewport sizes, query/mask/value/reset controls, and
-exercise answer fragments. The tests execute the notebook with network calls
-disabled and compare its numerical examples with the chart data. Review
-artifacts belong under ignored `slides/.checks/lecture-04/`.
-
-The shared course server opens the companion notebook through its normal
-launcher and preserves student working copies under `workspace/`.
+Inspect every slide screenshot. The legacy causal computation tests remain
+valid, but that demonstration is no longer registered in Lecture 04's metadata.
+Lecture 04's loss curve uses the shared Plotly loader without a custom demo
+module. Export and inspect a PDF with the standard `pdf` script before
+distributing one. Review artifacts remain in ignored `slides/.checks/`.

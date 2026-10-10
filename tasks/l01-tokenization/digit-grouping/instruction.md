@@ -1,9 +1,11 @@
 # Group digits into chunks of at most three
 
 **Lecture:** l01-tokenization · **Difficulty:** easy · **Time:** about 30 minutes ·
-**Deadline:** Sunday, September 27, 2026, 23:59 (Asia/Shanghai, UTC+08:00).
+**Deadline:** Wednesday, September 30, 2026, 23:59 (Asia/Shanghai, UTC+08:00).
 
-**Participation:** Optional; see [Lecture 01 activities](../README.md).
+**Participation:** Optional; see [Lecture 01 activities](../README.md). The instructor
+confirmed the deadline extension and acceptance of late submissions in the
+October 1 review.
 
 ## Goal
 
@@ -103,5 +105,6 @@ Your PR runs the public checks automatically. Open **Checks → Public task
 feedback** for failed cases and a milestone report; push fixes to the same
 branch to try again. See the [feedback guide](../../../docs/task-feedback.md).
 
-Open your PR by the deadline. Solutions merge in **one batch per task after
-the deadline**; public PRs and forks remain visible before merging.
+Solutions merge in **one batch per task after the deadline**. The instructor
+also accepts late submissions in the October 1 review; public PRs and forks
+remain visible before merging.

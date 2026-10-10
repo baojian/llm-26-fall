@@ -1,0 +1,147 @@
+<!doctype html>
+<!-- Generated from project-candidates.json and this template by scripts/build_project_candidates.py. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Choose an individual NLP or LLM project with a concrete question, suggested readings, and explicit CPU, one-GPU, or two-GPU resource requirements.">
+  <title>Individual project candidates · NLP and LLMs · Fall 2026</title>
+  <link rel="stylesheet" href="../assets/notes.css">
+  <link rel="stylesheet" href="../assets/course-language.css">
+  <link rel="stylesheet" href="../assets/project-candidates.css">
+  <script src="../assets/course-language.js" defer></script>
+  <script src="../assets/project-candidates.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#catalog">Skip to project candidates</a>
+<header class="reading-header">
+  <nav aria-label="Course navigation">
+    <a class="course-home" href="../index.html#project">NLP and LLMs · Fall 2026</a>
+    <a href="#catalog">Browse projects</a>
+    <a href="#how-to-choose">Proposal checklist</a>
+    <a href="#compute-guide">Compute guide</a>
+    <div class="lang-toggle" role="group" aria-label="Course interface language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="zh" aria-pressed="false">中文</button>
+    </div>
+  </nav>
+</header>
+<div class="catalog-layout">
+<aside class="catalog-sidebar">
+  <details class="catalog-toc" open>
+    <summary>On this page</summary>
+    <nav aria-label="Project proposal contents">
+      <ol class="toc-sections">
+        <li><a href="#overview">1. Prepare and overview</a></li>
+        <li><a href="#compute-guide">2. Resource requirements</a></li>
+        <li><a href="#choose-your-own">3. Choose your own project</a></li>
+        <li><a href="#upstream">4. Open-source contributions</a></li>
+        <li><a href="#previous-projects">5. Previous projects</a></li>
+        <li><a href="#catalog">6. Candidate projects</a><ol class="toc-topics">{{TOPIC_LINKS}}</ol></li>
+        <li><a href="#others">7. Others</a></li>
+      </ol>
+    </nav>
+  </details>
+</aside>
+<main class="catalog-main" lang="en">
+<section id="overview" aria-labelledby="overview-title">
+  <div class="catalog-hero">
+    <p class="reading-kicker">INDIVIDUAL PROJECT · FALL 2026</p>
+    <h1 id="overview-title">Choose a project that interests you</h1>
+    <p class="catalog-intro">Work individually on <a href="#student-proposed-project">your own project</a> or <a href="#catalog">one of {{COUNT}} candidates</a>, with a small experiment, CPU or 1–{{RECOMMENDED_GPUS}} GPU requirements, and a fallback.</p>
+  </div>
+
+  <section class="guide-panel" id="how-to-choose" aria-labelledby="choose-title">
+    <h2 id="choose-title">1. Prepare and overview</h2>
+    <p>Prepare a one-page proposal for an individual investigation. <strong>Survey-only projects are not allowed.</strong> Include an implementation, experiment, or tested artifact, with evidence that answers your question.</p>
+    <ol class="proposal-checklist">
+      <li><strong>Question and motivation.</strong> Explain what you want to learn, why it matters, and what prior work leaves unclear.</li>
+      <li><strong>First experiment.</strong> Name accessible data or a generator, a simple baseline, one comparison, and an evaluation that can answer the question. Keep development and evaluation examples separate.</li>
+      <li><strong>Feasibility.</strong> State CPU cores and RAM, GPU count and model, memory per GPU, storage, runtime per run, and total runs. Separate minimum hardware from optional parallel runs; total GPU-hours must include baselines and retries. Give a smaller CPU, one-GPU, or cached-output fallback and plan an early timing/memory pilot.</li>
+    </ol>
+    <div class="milestones">
+      <div><strong>October 21</strong><span>One-page proposal</span></div>
+      <div><strong>November 25</strong><span>Progress update, up to two pages</span></div>
+      <div><strong>December 30</strong><span>Main report, up to six pages; code and experiment record</span></div>
+    </div>
+    <p>Submit privately through <a href="https://elearning.fudan.edu.cn/">eLearning</a> by <strong>23:59, Asia/Shanghai (UTC+08:00)</strong>. References and appendices are outside the final report’s six-page limit. All students use the same <a href="../index.html#project">requirements and rubric</a>. A sound negative result can receive full credit.</p>
+    <p>Use the <a href="https://www.overleaf.com/latex/templates/association-for-computational-linguistics-acl-conference/jvxskxpnznfj">ACL template</a> for the final report. Record commands, code/data/model versions, seeds, configurations, compute use, and artifact locations; disclose material AI assistance and how you checked it. If reusing assignment work, identify the additional project question and experiments. No presentation, poster, or oral defense is required.</p>
+  </section>
+
+  </section>
+
+  <section class="guide-panel compute-guide" id="compute-guide" aria-labelledby="compute-title">
+    <h2 id="compute-title">2. Resource requirements</h2>
+    <p><strong>Prefer CPU studies and short inference runs.</strong> Our GPU pool is shared. Choose the smallest hardware setup that can answer your question; one- and two-GPU plans should keep total use modest.</p>
+    <div class="compute-options">
+      <div><h3>CPU · recommended starting point</h3><p>Tokenizer and data audits, retrieval, verifier tests, or a measured cache-storage experiment. State CPU cores, RAM, and elapsed time; the minimum study needs no GPU.</p></div>
+      <div><h3>1 GPU · inference or short training</h3><p>Reuse a small checkpoint, train a 5M–30M teaching model, or fit adapters on a 0.6B model. Cards give a memory target per device and a total time estimate to check in a pilot.</p></div>
+      <div><h3>2 GPUs · a bounded alternative</h3><p>Run independent seeds or conditions in parallel, or test a supported draft/target split. Explain each device’s role and keep a one-GPU fallback. Two GPUs are optional in the suggested studies.</p></div>
+      <div><h3>{{HIGH_DEMAND_GPUS}}+ GPUs · high demand</h3><p>A project that needs this many devices is a poor fit for our small shared pool. Reduce the model, data, or number of runs before selecting it. Larger plans can use resources you obtain yourself; state their source and availability in the proposal.</p></div>
+    </div>
+    <p>Be careful with GPU usage; our course pool is limited.</p>
+    <p>Card budgets are <strong>unpiloted planning estimates, not confirmed allocations</strong>. The proposed shared-pool ceiling is {{MAX_GPU_HOURS}} GPU-hours; it does not limit resources you obtain elsewhere. Count every device, baseline, comparison, and retry: two GPUs for two hours use four GPU-hours. Memory targets are per device; two GPUs do not automatically combine their memory.</p>
+    <details><summary>Low-compute starting points</summary><ul class="featured-list">{{FEATURED}}</ul></details>
+  </section>
+
+  <section class="custom-project-section" id="choose-your-own" aria-labelledby="custom-title">
+    <h2 id="custom-title">3. Choose your own project</h2>
+    <p>Start with a question you care about, plan a working baseline, and explain how you will test your idea.</p>
+    {{OPEN_CHOICE}}
+  </section>
+
+  <section class="guide-panel upstream-panel" id="upstream" aria-labelledby="upstream-title">
+    <h2 id="upstream-title">4. Open-source contributions</h2>
+    <p>Build and evaluate a useful contribution to an existing project: a task, verifier repair, model adapter, or tool. Include tests or a controlled comparison and describe your individual work.</p>
+    <details><summary>Contribution routes and current limits</summary>
+    <p><strong>Grading:</strong> open-source projects use the same requirements, rubric, and maximum score as every other individual project. External acceptance can support the evidence of usefulness and quality; it does not earn extra points under the current policy. A well-supported local investigation can receive full credit even if an upstream contribution is not merged.</p>
+    <p>A new benchmark task, a verified evaluator repair, a useful model adapter, or a reusable dataset/tool can be a strong project. Agree on a useful contribution with upstream maintainers early. Keep a local experiment and report that answer the project question even if review takes longer than the semester.</p>
+    <p>When reporting an upstream contribution, include its PR link and review status, a merge-commit link if accepted, your individual contribution, tests and before/after evidence, and how review changed the work. A self-merged personal fork, raw PR count, or repository star count is not evidence of substantive external acceptance. This guidance does not promise a maintainer decision or paper authorship.</p>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Destination</th><th>Feasible contribution</th><th>Current route and constraint</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://github.com/harbor-framework/terminal-bench-science">Terminal-Bench-Science</a></td><td>One real scientific workflow task, or an evidence-backed verifier/environment repair.</td><td>The <a href="https://github.com/harbor-framework/terminal-bench-science/blob/8ef49c8a64cf57f9913755b41ed6a0fe1a667192/CONTRIBUTING.md">October 9 guide</a> lists <strong>October 5</strong> as the 0.2 PR cutoff. New tasks need an approved proposal and confirmation of a future intake. Task-fix requests have a documented route.</td></tr>
+        <tr><td><a href="https://github.com/rdi-berkeley/agents-last-exam">Agents' Last Exam</a></td><td>One agent adapter, trajectory fix, or task-grading repair on a small public subset.</td><td>Follow the <a href="https://agents-last-exam.org/docs?p=pages/add-agent.html">agent integration guide</a> and confirm maintainer interest. Many tasks need full VMs or GUI tools; choose a compatible bounded subset.</td></tr>
+        <tr><td><a href="https://lastexam.ai/">Humanity's Last Exam</a></td><td>Scoring/calibration robustness, a code fix, or a well-supported question correction.</td><td>Question feedback uses the official form; HLE-Rolling contributions go through maintainers. Question acceptance and GitHub code merges are different outcomes; document the actual outcome. Preserve canaries and do not use benchmark answers for training.</td></tr>
+        <tr><td><a href="https://github.com/benchflow-ai/skillsbench">SkillsBench</a> / <a href="https://github.com/embeddings-benchmark/mteb">MTEB</a></td><td>One reviewed task, dataset integration, evaluator fix, or useful documentation backed by a working example.</td><td>Check the current contribution guide, licenses, existing issues, and maintainer interest before building a duplicate contribution.</td></tr>
+      </tbody>
+    </table></div>
+    <p>These are contribution destinations, not guaranteed openings. Check current rules again before submitting. The instructor's requested public-contribution route concerns an agreed upstream artifact; proposals, graded reports, experiment records, grades, and course assignment solutions still belong on eLearning. Keep upstream reference solutions and evaluation material in the channels required by that project's maintainers, not in this public course repository.</p>
+    </details>
+  </section>
+  <section class="guide-panel" id="previous-projects" aria-labelledby="previous-projects-title">
+    <h2 id="previous-projects-title">5. Previous projects</h2>
+    <p>For more ideas, see the <a href="https://baojian.github.io/llm-26/slides/final-project/index.html">previous projects and papers</a>. You may implement a paper’s method and evaluate it with a small experiment, following this semester’s requirements. Earlier team sizes, deadlines, report lengths, and grading rules do not apply.</p>
+  </section>
+  <section id="catalog" aria-labelledby="catalog-title">
+    <h2 id="catalog-title">6. Candidate projects</h2>
+    <p>Choose a topic from the sidebar or filter these {{COUNT}} suggestions by approach, topic, or compute. Your own proposal has a separate section above. Each card shows suggested readings and its resource plan before the detailed experiment. “Unreviewed” means the scope still needs proposal feedback and a small resource pilot.</p>
+    <form id="catalog-filters" class="catalog-filters" role="search" hidden>
+      <div class="search-control"><label for="project-search">Search title, question, paper or keyword</label><input id="project-search" name="q" type="search" placeholder="Try context, tokenizer, verifier, Chinese…" autocomplete="off"></div>
+      <div><label for="project-category">Project approach</label><select id="project-category" name="category"><option value="">All approaches</option>{{CATEGORY_OPTIONS}}</select></div>
+      <div><label for="project-topic">Topic</label><select id="project-topic" name="topic"><option value="">All topics</option>{{TOPIC_OPTIONS}}</select></div>
+      <div><label for="project-compute">Compute</label><select id="project-compute" name="compute"><option value="">All resources</option>{{COMPUTE_OPTIONS}}</select></div>
+      <button type="reset" class="reset-filters">Clear filters</button>
+    </form>
+    <noscript><p>All candidates are shown below. Use your browser’s Find command to search without JavaScript.</p></noscript>
+    <div class="results-line"><p id="result-count" role="status" aria-live="polite">{{COUNT}} of {{COUNT}} projects</p><button id="expand-projects" type="button" hidden>Expand visible project details</button></div>
+    <p id="no-results" hidden>No projects match these filters. Try a broader term or clear the filters.</p>
+    <div id="project-list">{{CARDS}}</div>
+  </section>
+  <section class="guide-panel" id="others" aria-labelledby="others-title">
+    <h2 id="others-title">7. Others</h2>
+    <h3>Use other resources you can access</h3>
+    <p>You may use your own computers or GPUs, laboratory or research-group machines, cloud credits, hosted APIs, and other resources you can obtain. You are not limited to the course pool or its proposed GPU-hour budget. State the resource source, availability, estimated cost, and total use in your proposal and experiment record.</p>
+    <p>Request only the portion you need from the shared course pool. Keep a smaller fallback if outside access is uncertain. The same rubric applies to everyone; a larger compute budget does not itself earn a higher grade.</p>
+    <h3>Complete practical or experimental work</h3>
+    <p><strong>Students may not submit a survey-only project.</strong> Related work provides background. Your own contribution must include an implementation, experiment, tested dataset or benchmark, or evaluated repair, together with a baseline or other meaningful comparison and analysis. CPU projects qualify when they produce this evidence.</p>
+  </section>
+
+  <footer class="reading-footer">
+    <p>CS40008.01 · Fudan University · Fall 2026 · <a href="../index.html#project">Project requirements and rubric</a> · <a href="https://elearning.fudan.edu.cn/">Submit through eLearning</a>.</p>
+    <p>References checked {{VERIFIED_ON}}. Proposed experiments and resource budgets have not been piloted; published results do not guarantee the same outcomes at this scale.</p>
+  </footer>
+</main>
+</div>
+</body>
+</html>

@@ -48,10 +48,10 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
 | 1 | Wed, Sep 9, 2026 | Introduction and tokenization | First class |
 | 2 | Wed, Sep 16, 2026 | N-gram language models | A1 released |
 | 3 | Wed, Sep 23, 2026 | Embeddings and PyTorch for language models | Quiz 1 |
-| 4 | Wed, Sep 30, 2026 | Neural language models and attention | A1 due |
-| 5 | **Sat, Oct 10, 2026** | **The Transformer as a working model** | **Make-up class**; Quiz 2; A2 released |
-| 6 | Wed, Oct 14, 2026 | Pretraining and decoding in practice | Project proposal due |
-| 7 | Wed, Oct 21, 2026 | Data preparation and quality | Quiz 3 |
+| 4 | Wed, Sep 30, 2026 | Neural LMs and Recurrent Attention | A1 due |
+| 5 | **Sat, Oct 10, 2026** | **Attention and the Transformer** | **Make-up class**; Quiz 2; [A2 released](../assignments/a2-build-a-small-lm/README.md); [candidate projects](project-candidates.html) |
+| 6 | Wed, Oct 14, 2026 | Pretraining and decoding in practice | — |
+| 7 | Wed, Oct 21, 2026 | Data preparation and quality | Quiz 3; Project proposal due |
 | 8 | Wed, Oct 28, 2026 | Compute budgets and scaling | A2 due **Sat, Oct 31** |
 | 9 | Wed, Nov 4, 2026 | Evaluation and experimental design | — |
 | 10 | Wed, Nov 11, 2026 | Supervised fine-tuning | Quiz 4; A3 released |
@@ -88,16 +88,18 @@ have the same requirements, points, and deadlines.
 | Quiz 4 | November 11 | In class |
 | Quiz 5 | December 9 | In class |
 | A1: Tokenization and language models | September 16 | September 30 |
-| A2: Build a small LM | October 10 | October 31 |
+| [A2: Build and investigate a small language model](../assignments/a2-build-a-small-lm/README.md) | October 10 | October 31, 23:59 (Asia/Shanghai) |
 | A3: Adapt and evaluate | November 11 | December 2 |
-| Project proposal | Project introduced September 9 | October 14 |
+| Project proposal | Project introduced September 9 | October 21 |
 | Project progress update | Follows proposal feedback | November 25 |
 | Final report, code, and experiment record | Builds on project checkpoints | December 30 |
 
-The [September 29 review proposal](schedule-adjustment-proposal.md) compares
-these dates with the previous schedule and explains the three-week assignment
-windows. Assessment weights are quizzes 10%, assignments 45%, and the
-individual project 45%.
+The [September 29 review proposal](schedule-adjustment-proposal.md) records
+the schedule adjustment and explains the three-week assignment windows.
+On October 9, the instructor extended the project proposal deadline to
+October 21 to give students more time to consider their project questions.
+Assessment weights are quizzes 10%, assignments 45%, and the individual
+project 45%.
 
 ## Sources
 
