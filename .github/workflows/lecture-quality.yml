@@ -25,6 +25,7 @@ on:
       - 'tests/test_attention_demo.mjs'
       - 'tests/test_position_demo.mjs'
       - 'tests/test_lecture_05_test_positions.mjs'
+      - 'tests/test_lecture_06_sampling.mjs'
       - 'pyproject.toml'
       - 'uv.lock'
       - '.python-version'
@@ -95,9 +96,9 @@ jobs:
             tests/test_pipeline_ngram.py tests/test_notebooks.py tests/test_slides.py \
             tests/test_project_candidates.py \
             --junitxml=slides/.checks/python/results.xml
-      - name: Verify the browser's n-gram, attention, and position calculations
+      - name: Verify browser calculations
         if: ${{ !cancelled() }}
-        run: node --test tests/test_ngram_review.mjs tests/test_attention_demo.mjs tests/test_position_demo.mjs tests/test_lecture_05_test_positions.mjs
+        run: node --test tests/test_ngram_review.mjs tests/test_attention_demo.mjs tests/test_position_demo.mjs tests/test_lecture_05_test_positions.mjs tests/test_lecture_06_sampling.mjs
       - name: Save numerical test results
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

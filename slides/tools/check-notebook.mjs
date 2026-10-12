@@ -31,16 +31,18 @@ try {
   const page = await context.newPage();
   await page.goto(new URL(fromCoursePage ? '/index.html' : `/slides/${folder}/`, preview).href, { waitUntil: 'networkidle' });
   if (!fromCoursePage) await page.evaluate(() => window.courseReady);
+  let courseRow;
   if (fromCoursePage) {
     await page.locator('[data-lang="en"]').click();
     const row = page.locator('#week-table tbody tr').filter({ has: page.getByRole('link', { name: `${folder}-slides`, exact: true }) });
+    courseRow = row;
     await row.screenshot({ path: path.join(output, 'course-materials-en.png'), animations: 'disabled' });
     await page.locator('[data-lang="zh"]').click();
     await row.screenshot({ path: path.join(output, 'course-materials-zh.png'), animations: 'disabled' });
     await page.locator('[data-lang="en"]').click();
   }
   const link = fromCoursePage
-    ? page.getByRole('link', { name: filename, exact: true })
+    ? courseRow.getByRole('link', { name: filename, exact: true })
     : requestedNotebook
       ? page.locator(`a[href*="notebook=${filename}"]`).first()
       : page.getByRole('link', { name: 'Notebook', exact: true });

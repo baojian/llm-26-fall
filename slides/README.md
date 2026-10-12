@@ -75,6 +75,15 @@ See the [integration guide](lecture-05/README.md),
 [optional reading](lecture-05/optional-reading.md), and
 [asset provenance](lecture-05/assets/README.md).
 
+[Lecture 06](lecture-06/index.html) continues the Noa decoder through shifted
+batches, AdamW, learning-rate schedules, clipping, validation, checkpoint
+recovery, and greedy/temperature/top-p decoding. Its 48-slide deck has a
+43-slide classroom route and five optional appendix pages. The
+[notebook](lecture-06/practice.ipynb) follows E01–E06 and runs offline on CPU
+after `uv sync --extra tokenization`. It includes a real fresh-process restart
+comparison and a weights-only control. See the [teaching plan](lecture-06/teaching-plan.md),
+[reading guide](lecture-06/optional-reading.md), and [asset provenance](lecture-06/assets/README.md).
+
 ## Teaching from a classroom browser
 
 Once the slide files reach the branch published by GitHub Pages, open the deck
