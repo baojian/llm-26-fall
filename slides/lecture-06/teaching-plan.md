@@ -6,9 +6,11 @@
 
 ## Teaching package
 
-The deck has **48 slides**. Present slides 1–42 and 48; slides 43–47 are optional
+The deck has **52 slides**. Present slides 1–46 and 52; slides 47–51 are optional
 appendix material. The six ungraded exercises share one `practice.ipynb` and
-appear in order. There is no quiz in this class. The scope follows the approved
+appear in order. The cover, learning objectives, repeated outlines, and exercise
+headers follow Lecture 05 and the shared course layouts. There is no quiz in
+this class. The scope follows the approved
 [preparation issue #293](https://github.com/baojian/llm-26-fall/issues/293).
 
 Students trace batches into optimizer updates, check fitting and development
@@ -30,27 +32,27 @@ Times below are minutes **within each 45-minute period**. Breaks are outside the
 
 | Period | Minutes | Slides | Teaching activity |
 | --- | --- | --- | --- |
-| 1 | 0–6 | 1–4 | Question, pretraining motivation, Noa model, training versus generation. |
-| 1 | 6–13 | 5–6 | Shifted batches and E01, including four minutes of student work. |
-| 1 | 13–20 | 7–9 | Mean loss, one update, and autograd checks. |
-| 1 | 20–30 | 10–11 | AdamW intuition and decoupled weight decay. |
-| 1 | 30–39 | 12–13 | Microbatches, accumulation, and four-minute E02. |
-| 1 | 39–45 | 14 | Read a run record, questions, and transition buffer. |
-| 2 | 0–7 | 15–16 | Warmup, cosine decay, and update indexing. |
-| 2 | 7–10 | 17 | Global gradient clipping. |
-| 2 | 10–15 | 18 | E03: learning-rate endpoints and clipping calculation. |
-| 2 | 15–22 | 19–21 | Tiny fitting check, held-out data, token-weighted evaluation. |
-| 2 | 22–28 | 22–23 | Read loss/norm curves and choose a diagnostic control. |
-| 2 | 28–35 | 24–26 | Checkpoint contents, restart order, and comparison protocol. |
-| 2 | 35–41 | 27 | E04: run or inspect a fresh-process restart check. |
-| 2 | 41–45 | 28 | Interpret the result, questions, and transition buffer. |
-| 3 | 0–6 | 29–30 | Five-minute E05 diagnostic retrieval practice and debrief. |
-| 3 | 6–14 | 31–33 | Generation loop, greedy choice, and sequence-probability counterexample. |
-| 3 | 14–19 | 34–35 | Temperature and fixed-k versus adaptive-mass filtering. |
-| 3 | 19–27 | 36–37 | Top-p mechanism and five-minute E06. |
-| 3 | 27–34 | 38–39 | Controlled sampling demonstration and stopping/context behavior. |
-| 3 | 34–40 | 40–41 | Interpret generation evidence and connect to A2. |
-| 3 | 40–45 | 42, 48 | Exit check, readings, questions, and buffer. |
+| 1 | 0–6 | 1–6 | Title, objectives, outline, pretraining motivation, and the Noa model. |
+| 1 | 6–13 | 7–8 | Shifted batches and E01, including four minutes of student work. |
+| 1 | 13–20 | 9–11 | Mean loss, one update, and autograd checks. |
+| 1 | 20–30 | 12–13 | AdamW intuition and decoupled weight decay. |
+| 1 | 30–39 | 14–15 | Microbatches, accumulation, and four-minute E02. |
+| 1 | 39–45 | 16 | Read a run record, questions, and transition buffer. |
+| 2 | 0–7 | 17–19 | Outline, warmup, cosine decay, and update indexing. |
+| 2 | 7–10 | 20 | Global gradient clipping. |
+| 2 | 10–15 | 21 | E03: learning-rate endpoints and clipping calculation. |
+| 2 | 15–22 | 22–24 | Tiny fitting check, held-out data, token-weighted evaluation. |
+| 2 | 22–28 | 25–26 | Read loss/norm curves and choose a diagnostic control. |
+| 2 | 28–35 | 27–29 | Checkpoint contents, restart order, and comparison protocol. |
+| 2 | 35–41 | 30 | E04: run or inspect a fresh-process restart check. |
+| 2 | 41–45 | 31 | Interpret the result, questions, and transition buffer. |
+| 3 | 0–6 | 32–34 | Outline, five-minute E05 retrieval practice, and brief debrief. |
+| 3 | 6–14 | 35–37 | Generation loop, greedy choice, and sequence-probability counterexample. |
+| 3 | 14–19 | 38–39 | Temperature and fixed-k versus adaptive-mass filtering. |
+| 3 | 19–27 | 40–41 | Top-p mechanism and five-minute E06. |
+| 3 | 27–34 | 42–43 | Controlled sampling demonstration and stopping/context behavior. |
+| 3 | 34–40 | 44–45 | Interpret generation evidence and connect to A2. |
+| 3 | 40–45 | 46, 52 | Exit check, readings, questions, and buffer. |
 
 If discussion takes longer, shorten the historical motivation and show the prepared restart evidence instead of waiting for a live process. Retain the shift, clipping, checkpoint, and top-p exercises. Appendix slides remain outside the timed route. Rehearse before treating these allocations as feasible classroom timings.
 

@@ -1,17 +1,48 @@
-<!-- .slide: class="title-slide" id="training-evidence" -->
+<!-- .slide: class="title-slide" id="title" -->
 
-<p class="eyebrow">CS40008.01 · Lecture 06</p>
+<p class="eyebrow">CS40008.01</p>
 
-# Pretraining and decoding
+# Pretraining and decoding in practice
 
-<p class="subtitle">What evidence shows that a training run is working?</p>
+<p class="subtitle">Lecture 06 – NLP and LLMs</p>
 
-<p>Updates → training evidence → generation</p>
-
-<p class="byline">Baojian Zhou · School of Data Science<br>Fudan University · October 14, 2026</p>
+<p class="byline">Baojian Zhou<br>School of Data Science<br>Fudan University<br>October 14, 2026</p>
 
 Note:
-Period 1, opening six-minute group (slides 1–4). Three 45-minute periods, including six ungraded exercises; no quiz today. Students will trace one optimizer update, interpret loss and gradient records, restart a run, and compare decoding policies. Default Notebook opens the single companion practice.ipynb; E01–E06 appear in slide order. All required examples run on CPU with supplied toy data. The 48-slide bank has five optional appendix slides (43–47); after the exit check jump to references. Adapted from the instructor's April 16, 2026 GPT deck, source SHA and page map in teaching-plan.md. All practices have the same expectations for all students.
+Period 1, opening six-minute group (slides 1–6). Three 45-minute periods, including six ungraded exercises; no quiz today. Students will trace one optimizer update, interpret loss and gradient records, restart a run, and compare decoding policies. Default Notebook opens the single companion practice.ipynb; E01–E06 appear in slide order. All required examples run on CPU with supplied toy data. The 52-slide bank has five optional appendix slides (47–51); after the exit check jump to references. Adapted from the instructor's April 16, 2026 GPT deck, source SHA and page map in teaching-plan.md. All practices have the same expectations for all students.
+
+---
+
+<!-- .slide: id="learning-objectives" -->
+
+## What you will be able to do
+
+**What evidence shows that a training run is working?**
+
+- Build shifted batches and trace an optimizer update.
+- Interpret loss curves, learning rates, and gradient norms.
+- Check that a restarted run reproduces the next updates.
+- Compare greedy, temperature, and top-p decoding.
+
+Note:
+Allow 30 seconds within the six-minute opening group. Follow Lecture 05's objectives layout: the central question precedes four concrete outcomes. E01–E06 in the default notebook check these outcomes in order. All exercises are ungraded and use the supplied CPU examples.
+
+---
+
+<!-- .slide: class="outline-slide" id="outline-training" -->
+
+## Outline
+
+<ul class="outline-topics">
+<li aria-current="step">Batches and optimizer updates</li>
+<li>Training evidence and checkpoints</li>
+<li>Generation and decoding</li>
+</ul>
+
+<p class="caption">Period 1 · shifted targets, AdamW, and accumulation</p>
+
+Note:
+Allow 30 seconds within the six-minute opening group. Reuse this outline at each period boundary and highlight only the current topic. E01 builds the batch; E02 counts tokens and optimizer updates.
 
 ---
 
@@ -71,22 +102,22 @@ Finish the six-minute opening group. Training computes many conditional predicti
 <p class="caption">A $(B,T+1)$ window produces input and target arrays of shape $(B,T)$.</p>
 
 Note:
-Slides 5–6 occupy seven minutes: about three minutes of explanation and four for E01. The arrows identify prediction targets, not attention edges. Input annoying at position 3 may use Noa, can, be, and annoying; it cannot use its target but. Redrawn from the mechanism in Spring slide 12 with the Lecture 05 Noa convention. We score four transitions from five tokens. EOS, when present as a target, is an ordinary scored token. In this toy demonstration windows remain inside a document; the A2 released protocol specifies its own data stream convention.
+Slides 7–8 occupy seven minutes: about three minutes of explanation and four for E01. The arrows identify prediction targets, not attention edges. Input annoying at position 3 may use Noa, can, be, and annoying; it cannot use its target but. Redrawn from the mechanism in Spring slide 12 with the Lecture 05 Noa convention. We score four transitions from five tokens. EOS, when present as a target, is an ordinary scored token. In this toy demonstration windows remain inside a document; the A2 released protocol specifies its own data stream convention.
 
 ---
 
 <!-- .slide: class="exercise" id="exercise-01" -->
 
-## Exercise E01 · Build the batch
+<p class="exercise-meta">Exercise E01 · 4 minutes · Notebook E01</p>
 
-<p class="exercise-meta">4 minutes · two windows · every target is scored</p>
+## Build the batch
 
 ```python
 windows = [[0, 1, 2, 3, 4],
            [4, 5, 6, 7, 8]]
 ```
 
-Write the input array, target array, and number of loss terms.
+Every target is scored. Write the input array, target array, and number of loss terms.
 
 <div class="answer fragment">
 <p>Inputs: <code>[[0,1,2,3], [4,5,6,7]]</code><br>Targets: <code>[[1,2,3,4], [5,6,7,8]]</code></p>
@@ -112,7 +143,7 @@ $$L=-\frac{1}{BT}\sum_{b=1}^{B}\sum_{t=1}^{T}
 <p class="caption">This batch has no padding. With ignored targets, divide by the number actually scored.</p>
 
 Note:
-Slides 7–9 use seven minutes. This equation uses one-based t for readability; array indices remain zero-based in code. PyTorch cross_entropy performs the log-softmax and target lookup; applying softmax first changes the computation. Vocabulary size determines the logits axis, not the number of observations being averaged. We assume every B×T target is valid on this slide. Different tokenizations or scored positions change the interpretation of the number. This retrieves Lecture 03's raw-logit loss and Lecture 05's shifted targets. Formula and toy batch are course-authored.
+Slides 9–11 use seven minutes. This equation uses one-based t for readability; array indices remain zero-based in code. PyTorch cross_entropy performs the log-softmax and target lookup; applying softmax first changes the computation. Vocabulary size determines the logits axis, not the number of observations being averaged. We assume every B×T target is valid on this slide. Different tokenizations or scored positions change the interpretation of the number. This retrieves Lecture 03's raw-logit loss and Lecture 05's shifted targets. Formula and toy batch are course-authored.
 
 ---
 
@@ -163,7 +194,7 @@ $$v_t=\beta_2v_{t-1}+(1-\beta_2)g_t^2$$
 | $v_t$ | Smoothed squared-gradient scale |
 
 Note:
-Slides 10–11 use ten minutes. These are elementwise recurrences; t here counts optimizer updates. The full update uses bias-corrected moments and epsilon, shown in optional adamw-equations. Unlike plain SGD without momentum, the next AdamW update depends on history as well as the current gradient. This motivates saving optimizer state later. A scalar sequence +1,+1,-1 can be used orally: with beta1=0.9 and zero initial m, m evolves 0.1,0.19,0.071. The last smoothed direction remains positive. These are teaching values, not the run's measured gradients. Source: https://docs.pytorch.org/docs/2.14/generated/torch.optim.AdamW.html and Loshchilov & Hutter, https://arxiv.org/abs/1711.05101.
+Slides 12–13 use ten minutes. These are elementwise recurrences; t here counts optimizer updates. The full update uses bias-corrected moments and epsilon, shown in optional adamw-equations. Unlike plain SGD without momentum, the next AdamW update depends on history as well as the current gradient. This motivates saving optimizer state later. A scalar sequence +1,+1,-1 can be used orally: with beta1=0.9 and zero initial m, m evolves 0.1,0.19,0.071. The last smoothed direction remains positive. These are teaching values, not the run's measured gradients. Source: https://docs.pytorch.org/docs/2.14/generated/torch.optim.AdamW.html and Loshchilov & Hutter, https://arxiv.org/abs/1711.05101.
 
 ---
 
@@ -204,19 +235,19 @@ optimizer.step()
 <p class="caption">One process; $K=2$ equal-size microbatches; every position is scored.</p>
 
 Note:
-Slides 12–13 use nine minutes, including E02's four minutes. This is illustrative pseudocode: mean_loss and the microbatch collection denote supplied data operations. The independent test compares accumulated gradients with a full-batch linear model. Dividing by K is correct for equally weighted microbatch means with equal scored-token counts. For unequal counts, weight by actual target counts. Clip after all microbatches, and advance the learning-rate schedule once per optimizer update. No optimizer state change occurs at an intermediate backward call. Distributed world size would add another factor under a specified protocol; it is outside today's single-process calculation.
+Slides 14–15 use nine minutes, including E02's four minutes. This is illustrative pseudocode: mean_loss and the microbatch collection denote supplied data operations. The independent test compares accumulated gradients with a full-batch linear model. Dividing by K is correct for equally weighted microbatch means with equal scored-token counts. For unequal counts, weight by actual target counts. Clip after all microbatches, and advance the learning-rate schedule once per optimizer update. No optimizer state change occurs at an intermediate backward call. Distributed world size would add another factor under a specified protocol; it is outside today's single-process calculation.
 
 ---
 
 <!-- .slide: class="exercise" id="exercise-02" -->
 
-## Exercise E02 · Count tokens and updates
+<p class="exercise-meta">Exercise E02 · 4 minutes · Notebook E02</p>
 
-<p class="exercise-meta">4 minutes · one process · no padding</p>
+## Count tokens and updates
 
 Microbatch size $B=4$, length $T=8$, accumulation $K=2$.
 
-The run completes **32 optimizer updates**.
+A single process completes **32 optimizer updates**, with no padding.
 
 1. How many tokens contribute to one update?
 2. How many microbatches and tokens are processed in total?
@@ -248,6 +279,23 @@ Last six minutes of Period 1, including questions and transition buffer. Demonst
 
 ---
 
+<!-- .slide: class="outline-slide" id="outline-evidence" -->
+
+## Outline
+
+<ul class="outline-topics">
+<li>Batches and optimizer updates</li>
+<li aria-current="step">Training evidence and checkpoints</li>
+<li>Generation and decoding</li>
+</ul>
+
+<p class="caption">Period 2 · schedules, clipping, validation, and restart</p>
+
+Note:
+Allow 30 seconds within Period 2's seven-minute opening group. E03 checks learning-rate endpoints and clipping. E04 compares a continuous run with a fresh-process restart and a reset-optimizer control. The outline uses the same topic order as Periods 1 and 3.
+
+---
+
 <!-- .slide: id="lr-schedule" -->
 
 ## Change the step size over training
@@ -257,7 +305,7 @@ Last six minutes of Period 1, including questions and transition buffer. Demonst
 <p class="caption">Restart demo: 40 updates, four warmup updates, maximum 0.02, minimum 0.002.</p>
 
 Note:
-Period 2 opens with seven minutes for slides 15–16. Linear warmup increases the early step size; cosine decay reduces it smoothly later. These choices are experiment settings, not a guarantee of stable optimization. This figure is calculated from the stated schedule, not fitted to an observed curve. A restart should continue at the next schedule position. Read the horizontal axis carefully: it is the zero-based index of the update that will use this rate. Current A2 convention: https://github.com/baojian/llm-26-fall/blob/main/assignments/a2-build-a-small-lm/README.md#3-part-2--what-evidence-shows-training-works-30-points.
+Period 2 opens with seven minutes for the outline and schedule on slides 17–19. Linear warmup increases the early step size; cosine decay reduces it smoothly later. These choices are experiment settings, not a guarantee of stable optimization. This figure is calculated from the stated schedule, not fitted to an observed curve. A restart should continue at the next schedule position. Read the horizontal axis carefully: it is the zero-based index of the update that will use this rate. Current A2 convention: https://github.com/baojian/llm-26-fall/blob/main/assignments/a2-build-a-small-lm/README.md#3-part-2--what-evidence-shows-training-works-30-points.
 
 ---
 
@@ -300,13 +348,13 @@ Three minutes. Clipping rescales all participating gradients together, preservin
 
 <!-- .slide: class="exercise" id="exercise-03" -->
 
-## Exercise E03 · LR and clipping
+<p class="exercise-meta">Exercise E03 · 5 minutes · Notebook E03</p>
 
-<p class="exercise-meta">5 minutes · zero-based update indices</p>
+## Learning rate and clipping
 
 $N=8$, $w=2$, $\eta_{\max}=0.001$, $\eta_{\min}=0.0001$.
 
-Find the LR at updates **0, 1, and 7**.
+Find the LR at zero-based updates **0, 1, and 7**.
 
 Then clip gradient $(3,4)$ to global norm **1**.
 
@@ -328,7 +376,7 @@ Expected arithmetic follows the preceding formulas. The clipping answer uses the
 <p class="caption">Measured final NLL: 0.069822. The two-document floor is $\ln(2)/10\approx0.069315$.</p>
 
 Note:
-Slides 19–21 use seven minutes. This reproduces the Lecture 05 pre-LN fitting fixture: the two documents differ only in cat/friend after great. Two ambiguous targets among twenty contribute 2 ln(2)/20; all other deterministic targets can approach zero loss. The floor is an infimum, not a finite-weight promise. CPU float32, seed 7, B=2,T=10, 200 full-batch updates, AdamW lr=.02, betas .9/.999, epsilon 1e-8, zero decay, no clipping, no schedule, no dropout. 4000 processed target tokens. These settings deliberately differ from the 40-update restart run. There is no development set here. A2's tiny fixture has a different floor. Provenance: assets/README.md and evidence-summary.json. The y-axis is logarithmic and includes every recorded update.
+Slides 22–24 use seven minutes. This reproduces the Lecture 05 pre-LN fitting fixture: the two documents differ only in cat/friend after great. Two ambiguous targets among twenty contribute 2 ln(2)/20; all other deterministic targets can approach zero loss. The floor is an infimum, not a finite-weight promise. CPU float32, seed 7, B=2,T=10, 200 full-batch updates, AdamW lr=.02, betas .9/.999, epsilon 1e-8, zero decay, no clipping, no schedule, no dropout. 4000 processed target tokens. These settings deliberately differ from the 40-update restart run. There is no development set here. A2's tiny fixture has a different floor. Provenance: assets/README.md and evidence-summary.json. The y-axis is logarithmic and includes every recorded update.
 
 ---
 
@@ -378,7 +426,7 @@ Finish the seven-minute fitting/evaluation group. These two chunks are a hand ca
 <p class="caption">At 200 updates: train 0.5153, dev 1.4027 nats/token. Full-split evaluations every 10 updates.</p>
 
 Note:
-Slides 22–23 use six minutes. These are measurements, not schematic overfitting curves. Uniform document sampling, B=1 with variable lengths; 200 updates process 1021 tokens in this seeded run. Same small architecture, AdamW with maximum LR .02, 20 warmup updates, minimum ratio .1, clip 1, zero decay, sampler seed 17. The plot displays the complete recorded interval, including fluctuations. At each checkpoint both curves are token-weighted full-split evaluation, not a smoothed minibatch training loss. The companion notebook puts loss, learning rate, and pre-clipping norm on aligned update axes. The separate gradient-norm figure is linked in optional reading. A train/dev gap suggests questions about fitting and distribution; it does not identify one cause by itself.
+Slides 25–26 use six minutes. These are measurements, not schematic overfitting curves. Uniform document sampling, B=1 with variable lengths; 200 updates process 1021 tokens in this seeded run. Same small architecture, AdamW with maximum LR .02, 20 warmup updates, minimum ratio .1, clip 1, zero decay, sampler seed 17. The plot displays the complete recorded interval, including fluctuations. At each checkpoint both curves are token-weighted full-split evaluation, not a smoothed minibatch training loss. The companion notebook puts loss, learning rate, and pre-clipping norm on aligned update axes. The separate gradient-norm figure is linked in optional reading. A train/dev gap suggests questions about fitting and distribution; it does not identify one cause by itself.
 
 ---
 
@@ -407,7 +455,7 @@ Finish the six-minute curve-reading group. Each row gives a check, not a diagnos
 <p class="caption">Weights support prediction. Continuing the same run also needs its training state.</p>
 
 Note:
-Slides 24–26 use seven minutes. The experiment records model weights, optimizer moments and counters, completed updates and token count, config, data/vocabulary hashes, Python and CPU torch RNG, and the dedicated sampler RNG. Our toy has no dropout, but randomized document sampling makes RNG restoration observable. There are no active accelerator RNG states in this CPU-only protocol. A GPU extension must save the states it uses. A serialized checkpoint is written after a completed update, with no partially accumulated gradients. PyTorch general-checkpoint tutorial: https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html#saving-loading-a-general-checkpoint-for-inference-and-or-resuming-training. RNG/data identity checks are additional course protocol.
+Slides 27–29 use seven minutes. The experiment records model weights, optimizer moments and counters, completed updates and token count, config, data/vocabulary hashes, Python and CPU torch RNG, and the dedicated sampler RNG. Our toy has no dropout, but randomized document sampling makes RNG restoration observable. There are no active accelerator RNG states in this CPU-only protocol. A GPU extension must save the states it uses. A serialized checkpoint is written after a completed update, with no partially accumulated gradients. PyTorch general-checkpoint tutorial: https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html#saving-loading-a-general-checkpoint-for-inference-and-or-resuming-training. RNG/data identity checks are additional course protocol.
 
 ---
 
@@ -443,9 +491,9 @@ Finish the seven-minute checkpoint explanation. Both paths use the same initiali
 
 <!-- .slide: class="exercise" id="exercise-04" -->
 
-## Exercise E04 · Check the restart
+<p class="exercise-meta">Exercise E04 · 6 minutes · Notebook E04</p>
 
-<p class="exercise-meta">6 minutes · supplied CPU runner or prepared evidence</p>
+## Check the restart
 
 ```python
 from resume_demo import run_comparison
@@ -482,11 +530,30 @@ Final four minutes of Period 2, including questions and transition buffer. The f
 
 ---
 
+<!-- .slide: class="outline-slide" id="outline-decoding" -->
+
+## Outline
+
+<ul class="outline-topics">
+<li>Batches and optimizer updates</li>
+<li>Training evidence and checkpoints</li>
+<li aria-current="step">Generation and decoding</li>
+</ul>
+
+<p class="caption">Period 3 · diagnostics, greedy choice, and sampling</p>
+
+Note:
+Give a brief transition before E05. The outline and E05 debrief share one minute; preserve five minutes for the exercise. Then freeze the model and change the decoding policy. E06 checks top-p before the interactive demonstration.
+
+---
+
 <!-- .slide: class="exercise" id="exercise-05" -->
 
-## Exercise E05 · Diagnose the evidence
+<p class="exercise-meta">Exercise E05 · 5 minutes · Notebook E05</p>
 
-<p class="exercise-meta">5 minutes · schematic cases, not measured Noa runs</p>
+## Diagnose the evidence
+
+<p class="caption">Schematic diagnostic cases</p>
 
 | Record | Observation |
 | --- | --- |
@@ -497,7 +564,7 @@ Final four minutes of Period 2, including questions and transition buffer. The f
 For each, name **one hypothesis and one next check**.
 
 Note:
-Period 3 starts with this five-minute retrieval exercise and a one-minute debrief on the next slide. A: overfitting or a train/dev mismatch; repeat the fixed evaluation and inspect examples/checkpoints. B: optimization or numerical instability; inspect the first bad batch and LR/norm, then test a controlled lower-LR run. C: leakage is directly suggested by overlapping IDs; audit the split and reconstruct a disjoint evaluation before claiming generalization. Other well-supported hypotheses are acceptable. The notebook plots the labeled schematic A/B curves, marks the nonfinite point rather than replacing it with zero, and lists C's overlapping IDs. These curves are invented teaching data. Detailed answers appear after the notebook prompt.
+This five-minute retrieval exercise follows the outline. The outline and the next slide's debrief share one minute. A: overfitting or a train/dev mismatch; repeat the fixed evaluation and inspect examples/checkpoints. B: optimization or numerical instability; inspect the first bad batch and LR/norm, then test a controlled lower-LR run. C: leakage is directly suggested by overlapping IDs; audit the split and reconstruct a disjoint evaluation before claiming generalization. Other well-supported hypotheses are acceptable. The notebook plots the labeled schematic A/B curves, marks the nonfinite point rather than replacing it with zero, and lists C's overlapping IDs. These curves are invented teaching data. Detailed answers appear after the notebook prompt.
 
 ---
 
@@ -514,7 +581,7 @@ Period 3 starts with this five-minute retrieval exercise and a one-minute debrie
 Low training loss alone does not establish the other two.
 
 Note:
-One-minute debrief. None of these is a complete guarantee: a fitting test can miss bugs, the held-out set may have limited coverage, and a few samples can be unrepresentative. Keep the evidence proportional to the claim. We now freeze a checkpoint and change only its decoding policy. The same model can produce different sequences without any additional training. This connects the second and third periods without introducing a new model or dataset.
+Brief debrief within the opening six-minute group. None of these is a complete guarantee: a fitting test can miss bugs, the held-out set may have limited coverage, and a few samples can be unrepresentative. Keep the evidence proportional to the claim. We now freeze a checkpoint and change only its decoding policy. The same model can produce different sequences without any additional training. This connects the second and third periods without introducing a new model or dataset.
 
 ---
 
@@ -527,7 +594,7 @@ One-minute debrief. None of these is a complete guarantee: a fitting test can mi
 <p class="caption">Use the final input position's logits; the model weights remain fixed.</p>
 
 Note:
-Slides 31–33 use eight minutes. The prefix has nine words ending at great. The next token can be cat or friend in the fitting fixture; the illustrated cat is a schematic example. All earlier context is observed or previously generated. For each iteration, crop if necessary, assign learned positions from zero under our stated policy, obtain the final logits, choose one token, append it, and check stopping. The CPU notebook runs this loop on the fitted model. KV caching is intentionally left to Lecture 13. Source mechanism: Spring slides 20–24.
+Slides 35–37 use eight minutes. The prefix has nine words ending at great. The next token can be cat or friend in the fitting fixture; the illustrated cat is a schematic example. All earlier context is observed or previously generated. For each iteration, crop if necessary, assign learned positions from zero under our stated policy, obtain the final logits, choose one token, append it, and check stopping. The CPU notebook runs this loop on the fitted model. KV caching is intentionally left to Lecture 13. Source mechanism: Spring slides 20–24.
 
 ---
 
@@ -572,7 +639,7 @@ Finish the eight-minute greedy group. Branch labels after the first token are co
 <p class="caption">$p_i=\operatorname{softmax}(z/\tau)_i$, with $\tau>0$. Positive temperature preserves argmax.</p>
 
 Note:
-Slides 34–35 use five minutes. Smaller positive tau concentrates mass, larger tau spreads it. These calculated bars use natural logs of [.4,.3,.2,.1] as fixed logits; no model is trained for this figure. Temperature changes sampling probabilities but not which finite logit is largest. Greedy is implemented separately: do not divide by zero and hope to obtain it. The limit as tau approaches zero can still involve tied maxima, whereas our greedy rule picks the lowest ID. Hold the logits fixed when comparing temperatures.
+Slides 38–39 use five minutes. Smaller positive tau concentrates mass, larger tau spreads it. These calculated bars use natural logs of [.4,.3,.2,.1] as fixed logits; no model is trained for this figure. Temperature changes sampling probabilities but not which finite logit is largest. Greedy is implemented separately: do not divide by zero and hope to obtain it. The limit as tau approaches zero can still involve tied maxima, whereas our greedy rule picks the lowest ID. Hold the logits fixed when comparing temperatures.
 
 ---
 
@@ -606,17 +673,17 @@ Finish the five-minute temperature/filtering group. Top-k retains a fixed number
 At $p=0.6$, include **B**, the token that crosses the threshold.
 
 Note:
-Slides 36–37 use eight minutes, including five-minute E06. Sort decreasing probability, with smaller token ID first on ties. Find the first cumulative mass at least p; include that entry and every earlier entry. Renormalize their original probabilities. Retain all tokens when p=1. Use the threshold on probabilities after temperature adjustment. A frequent bug is removing the crossing token, which would retain only A here and make the actual retained mass .4 rather than reaching .6. At an exact boundary such as cumulative .5 with p=.5, the first reaching prefix suffices. These semantics match the current public A2 handout. Source: Holtzman et al. and the released course contract.
+Slides 40–41 use eight minutes, including five-minute E06. Sort decreasing probability, with smaller token ID first on ties. Find the first cumulative mass at least p; include that entry and every earlier entry. Renormalize their original probabilities. Retain all tokens when p=1. Use the threshold on probabilities after temperature adjustment. A frequent bug is removing the crossing token, which would retain only A here and make the actual retained mass .4 rather than reaching .6. At an exact boundary such as cumulative .5 with p=.5, the first reaching prefix suffices. These semantics match the current public A2 handout. Source: Holtzman et al. and the released course contract.
 
 ---
 
 <!-- .slide: class="exercise" id="exercise-06" -->
 
-## Exercise E06 · Compute the nucleus
+<p class="exercise-meta">Exercise E06 · 5 minutes · Notebook E06</p>
 
-<p class="exercise-meta">5 minutes · probabilities already include temperature</p>
+## Compute the nucleus
 
-For $(0.4,0.3,0.2,0.1)$ and top-p $=0.6$:
+After temperature adjustment, probabilities are $(0.4,0.3,0.2,0.1)$. Use top-p $=0.6$.
 
 1. Which tokens remain?
 2. What are their renormalized probabilities?
@@ -647,7 +714,7 @@ The denominator is the retained mass .7, not the threshold .6. Sampling can now 
 <p id="sampling-status" class="caption" aria-live="polite">Toy logits fixed; A and B retained. Reset reproduces the browser draw sequence.</p>
 
 Note:
-Slides 38–39 use seven minutes. Initial state is tau=1, p=.6 and seed29. Click temperature to cycle 1, .7, 1.5; top-p cycles .6,.9,1. Controls recompute the distribution while keeping the logits fixed. Draw token advances a small seeded browser generator; Reset restores all settings and the seed. This probability mechanism uses four invented token logits. It is distinct from the PyTorch model and its RNG; do not compare browser token identities with torch.multinomial as if their algorithms were the same. The prepared Noa generations appear on generation-comparison. Print includes the initial probability chart and a static interpretation. Source algorithm: Holtzman et al., https://arxiv.org/abs/1904.09751. No external runtime asset is loaded.
+Slides 42–43 use seven minutes. Initial state is tau=1, p=.6 and seed29. Click temperature to cycle 1, .7, 1.5; top-p cycles .6,.9,1. Controls recompute the distribution while keeping the logits fixed. Draw token advances a small seeded browser generator; Reset restores all settings and the seed. This probability mechanism uses four invented token logits. It is distinct from the PyTorch model and its RNG; do not compare browser token identities with torch.multinomial as if their algorithms were the same. The prepared Noa generations appear on generation-comparison. Print includes the initial probability chart and a static interpretation. Source algorithm: Holtzman et al., https://arxiv.org/abs/1904.09751. No external runtime asset is loaded.
 
 ---
 
@@ -682,7 +749,7 @@ Prefix: **Noa can be annoying but she is a great**
 <p class="caption">Measured 200-update fitting checkpoint; sampling seed 29; budget 12 new tokens.</p>
 
 Note:
-Slides 40–41 use six minutes. These strings are actual recorded CPU generations, including the EOS marker. The checkpoint comes from the two-document full-batch fitting experiment, not the separate development run. The model learns an almost equal cat/friend branch, so the deterministic argmax can depend on a tiny difference. Sampling seed29 chooses cat in both shown settings; different policies need not produce different text on every draw. Two-token completions provide little evidence about repetition, long-form coherence, or real language quality. Keep checkpoint identity, prompt, seed, and budget in the record. The purpose is a controlled comparison, not a claim that one policy is best. Provenance: assets/evidence-summary.json.
+Slides 44–45 use six minutes. These strings are actual recorded CPU generations, including the EOS marker. The checkpoint comes from the two-document full-batch fitting experiment, not the separate development run. The model learns an almost equal cat/friend branch, so the deterministic argmax can depend on a tiny difference. Sampling seed29 chooses cat in both shown settings; different policies need not produce different text on every draw. Two-token completions provide little evidence about repetition, long-form coherence, or real language quality. Keep checkpoint identity, prompt, seed, and budget in the record. The purpose is a controlled comparison, not a claim that one policy is best. Provenance: assets/evidence-summary.json.
 
 ---
 
@@ -717,7 +784,7 @@ Finish the six-minute handoff group. Point students to the released A2 README fo
 [Open the notebook](../shared/notebook.html?lecture=lecture-06&notebook=practice.ipynb) · [Go to readings](#/references)
 
 Note:
-Final five minutes of Period 3 include this exit check, references, questions, and buffer. Ask students to name one piece of evidence they would collect before increasing a training budget. No new written submission is required. Slides 43–47 are optional; use the readings link to skip them during the timed route. The six core notebook activities remain available after class. Suggested allocations total 135 minutes, but actual student discussion and completion time need a classroom rehearsal; the CPU demonstrations themselves have been timed.
+Final five minutes of Period 3 include this exit check, references, questions, and buffer. Ask students to name one piece of evidence they would collect before increasing a training budget. No new written submission is required. Slides 47–51 are optional; use the readings link to skip them during the timed route. The six core notebook activities remain available after class. Suggested allocations total 135 minutes, but actual student discussion and completion time need a classroom rehearsal; the CPU demonstrations themselves have been timed.
 
 ---
 
@@ -731,7 +798,7 @@ Final five minutes of Period 3 include this exit check, references, questions, a
 | GPT-2 · 2019 | Task behavior through language-model prompting |
 | GPT-3 · 2020 | Few-shot examples inside the context |
 
-The distinction on slide 2 is **whether weights change during use**.
+The distinction on slide 4 is **whether weights change during use**.
 
 Note:
 Optional appendix, outside the timed route. This compresses Spring slides 43–63. Avoid mixing model sizes, datasets, evaluation protocols, and benchmark scores into a single ranking. Relevant primary sections: GPT-1 §§3.1–3.2, https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf; GPT-2 §§2–3, https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf; GPT-3 §2.1, https://arxiv.org/abs/2005.14165. These are historical descriptions rather than current state-of-the-art claims. Dataset inventories move to Lecture 07; scale and compute to Lecture 08.
