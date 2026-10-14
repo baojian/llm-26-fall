@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+\node[box,text width=40mm,minimum height=18mm] (a) at (0,0)
+  {$\texttt{l o w}\times5$\\$\texttt{l o w e r}\times2$};
+\node[box,text width=40mm,minimum height=18mm] (b) at (5.3,0)
+  {$\texttt{lo w}\times5$\\$\texttt{lo w e r}\times2$};
+\node[tbox,text width=40mm,minimum height=18mm] (c) at (10.6,0)
+  {$\texttt{low}\times5$\\$\texttt{low e r}\times2$};
+\draw[arr] (a)--node[above,font=\footnotesize]{rank 1}(b);
+\draw[arr] (b)--node[above,font=\footnotesize]{rank 2}(c);
+\node[lab] at (0,-1.45) {25 tokens\\256 byte entries};
+\node[lab] at (5.3,-1.45) {18 tokens\\add ID 256: \texttt{lo}};
+\node[lab] at (10.6,-1.45) {11 tokens\\add ID 257: \texttt{low}};
+\end{tikzpicture}

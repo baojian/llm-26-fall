@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+\node[box,text width=26mm] (p) at (0,0) {parameters};
+\node[box,text width=23mm] (z) at (3.4,0) {logits};
+\node[box,text width=30mm] (c) at (7,0) {cross-entropy};
+\node[tbox,text width=25mm] (l) at (10.8,0) {tensor loss};
+\draw[arr] (p)--(z);\draw[arr] (z)--(c);\draw[arr] (c)--(l);
+\draw[flow] (l.south)--++(0,-.8)-|node[pos=.25,below,font=\small]{backward: chain rule} (p.south);
+\node[box,draw=courseorange,text width=32mm] (d) at (10.8,-2.1) {detached value};
+\draw[courseorange,dashed,-{Latex}] (l.east)--++(.9,0)|-(d.east);
+\node[lab,anchor=east,text=courseorange] at (8.8,-2.1) {no parameter path through this value};
+\end{tikzpicture}

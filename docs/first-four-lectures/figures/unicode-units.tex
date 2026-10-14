@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+\node[lab,anchor=east] at (0,0.7) {precomposed};
+\node[lab,anchor=east] at (0,-0.5) {decomposed};
+\node[box,text width=35mm] (a) at (2.3,0.7) {U+00E9 / one code point};
+\node[box,text width=35mm] (b) at (2.3,-0.5) {U+0065, U+0301\\two code points};
+\node[tbox,text width=38mm] (c) at (7.2,0.7) {C3 A9\\two UTF-8 bytes};
+\node[tbox,text width=38mm] (d) at (7.2,-0.5) {65 CC 81\\three UTF-8 bytes};
+\draw[arr] (a)--(c);\draw[arr] (b)--(d);
+\end{tikzpicture}

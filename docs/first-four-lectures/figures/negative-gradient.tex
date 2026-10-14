@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+\node[box,text width=25mm] (w) at (0,0) {$w=(1,0.5)$};
+\node[box,text width=33mm] (p) at (4,.75) {$c_+=(0.5,1)$};
+\node[box,text width=33mm] (n) at (4,-.75) {$c_-=(1,-1)$};
+\node[tbox,text width=37mm] (sp) at (9,.75) {$w^\top c_+=1$\\$-\log\sigma(1)$};
+\node[tbox,text width=37mm] (sn) at (9,-.75) {$w^\top c_-=0.5$\\$-\log\sigma(-0.5)$};
+\draw[arr] (w)--(p);\draw[arr] (w)--(n);\draw[arr] (p)--(sp);\draw[arr] (n)--(sn);
+\node[lab] at (4.5,-1.7) {positive-context update: $c_+\leftarrow c_+-\eta(\sigma(1)-1)w$};
+\end{tikzpicture}

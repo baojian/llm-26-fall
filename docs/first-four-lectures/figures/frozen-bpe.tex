@@ -1,0 +1,8 @@
+\begin{tikzpicture}[node distance=9mm]
+\node[box,text width=30mm] (a) {\texttt{l o w e s t}};
+\node[box,text width=30mm,right=of a] (b) {\texttt{lo w e s t}};
+\node[tbox,text width=30mm,right=of b] (c) {\texttt{low e s t}};
+\draw[arr] (a)--node[above,font=\footnotesize]{1}(b);
+\draw[arr] (b)--node[above,font=\footnotesize]{2}(c);
+\node[lab,below=5mm of c] {IDs: 257, 101, 115, 116};
+\end{tikzpicture}

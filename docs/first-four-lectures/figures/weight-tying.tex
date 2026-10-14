@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+\node[font=\small\bfseries] at (2.5,1.7) {Untied: two parameters};
+\node[box,text width=19mm] (e) at (0,0) {$E$\\lookup};
+\node[box] (h) at (2.5,0) {$h$};
+\node[tbox,text width=19mm] (w) at (5,0) {$W_o$\\readout};
+\draw[arr] (e)--(h);\draw[arr] (h)--(w);
+\node[lab,text width=58mm] at (2.5,-1) {lookup and readout gradients\\update separate tensors};
+\node[font=\small\bfseries] at (10,1.7) {Tied: one shared parameter};
+\node[box,text width=20mm] (et) at (10,.65) {$E=W_o$};
+\node[box,text width=19mm] (l) at (8,-.7) {lookup};
+\node[tbox,text width=19mm] (o) at (12,-.7) {readout};
+\draw[arr] (et)--(l);\draw[arr] (et)--(o);
+\draw[flow] (l)--node[below,font=\small]{$h$}(o);
+\node[lab] at (10,-1.55) {$\nabla E=\nabla E_{\rm input}+\nabla E_{\rm output}$};
+\end{tikzpicture}

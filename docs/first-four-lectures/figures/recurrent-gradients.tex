@@ -1,0 +1,22 @@
+% Exact scalar powers for an illustration, not a measured training result.
+\begin{tikzpicture}
+\begin{semilogyaxis}[
+  width=.91\textwidth,height=53mm,
+  xmin=0,xmax=50,ymin=.001,ymax=200,
+  xlabel={Number of repeated steps $k$},
+  ylabel={Scalar multiplier $a^k$},
+  xtick={0,10,20,30,40,50},
+  ytick={.001,.01,.1,1,10,100},
+  tick label style={font=\small},label style={font=\small},
+  legend style={font=\small,at={(.5,1.03)},anchor=south,
+    legend columns=3,column sep=9pt,draw=none,fill=none},
+  axis line style={draw=muted!60},tick style={draw=muted!60},
+  ymajorgrids,grid style={draw=muted!15},
+  domain=0:50,samples=51,
+]
+\addplot[courseblue,thick] {pow(.9,x)};
+\addplot[muted,densely dotted,thick] {1};
+\addplot[courseteal,dashed,thick] {pow(1.1,x)};
+\legend{$a=0.9$,$a=1$,$a=1.1$}
+\end{semilogyaxis}
+\end{tikzpicture}
