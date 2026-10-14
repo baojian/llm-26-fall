@@ -8,11 +8,12 @@ Transformer, and what evidence supports the design?
 
 ## Package and teaching boundary
 
-The deck is a **60-slide material bank**. It integrates all **31 component and
-paper topics** from lecture-05-test, plus 29 original or consolidated pages.
+The deck is a **62-slide material bank**. It integrates all **31 component and
+paper topics** from lecture-05-test, plus 29 original or consolidated pages
+and two explanations accompanying EleutherAI’s RoPE blog.
 The first merge integrated the source verbatim. The instructor then authorized
 adapting the main deck and notebooks to a single Noa example. The current
-revision keeps all 60 IDs, topics, citations, and reveal sequences; the test
+revision keeps all prior 60 IDs, topics, citations, and reveal sequences; the test
 deck stays unchanged. The [README](README.md) records this revision boundary.
 
 ### Running-example convention
@@ -64,24 +65,25 @@ class; do not type or train the full model during the timed route.
 | 1 | 0–5 | 1–4 | Objectives, outline, recurrent-attention recall |
 | 1 | 5–19 | 5–9 | Context, self-attention, roles, projections, GPT overview |
 | 1 | 19–26 | 10–12 | Position inputs, sinusoidal frequencies, core E01 |
-| 1 | 26–29 | 13, `position-demo` | Predict the permutation result; prepared Implementation E02 demonstration |
-| 1 | 29–40 | 14–16 | RoPE rotation, core E02, insertion-point comparison |
+| 1 | 26–40 | 14–18; skip 13 | RoPE rotation, complex-number bridge, pair frequencies, core E02, insertion-point comparison |
 | 1 | 40–45 | Current component diagrams | Questions and transition buffer |
-| 2 | 0–9 | 17–20 | Single head, numeric causal demonstration, Implementation P01 |
-| 2 | 9–19 | 21–23 | Multiple-head intuition, mechanism, core E03, architecture uses |
-| 2 | 19–27 | 24–27 | Residuals, LayerNorm, norm order, core E04 |
-| 2 | 27–34 | 28–30 | FFN mechanism, parameter share, core E05 |
-| 2 | 34–43.5 | 34–39; skip 31–33 | Block code, input recap, tiny configuration, learned table, block ledger |
+| 2 | 0–9 | 19–22 | Single head, numeric causal demonstration, Implementation P01 |
+| 2 | 9–19 | 23–25 | Multiple-head intuition, mechanism, core E03, architecture uses |
+| 2 | 19–27 | 26–29 | Residuals, LayerNorm, norm order, core E04 |
+| 2 | 27–34 | 30–32 | FFN mechanism, parameter share, core E05 |
+| 2 | 34–43.5 | 36–41; skip 33–35 | Block code, input recap, tiny configuration, learned table, block ledger |
 | 2 | 43.5–45 | Current block diagram | Questions and transition buffer |
-| 3 | 0–7 | 40, 42–44; skip 41 | Complete model, shifted targets, loss, prepared Implementation E05 causality check |
-| 3 | 7–25 | 50–56; skip 45–49 | Original paper, experiment setup, core E06, results, ablations, parsing, later efficiency work |
-| 3 | 25–29 | 57–58, 60; skip 59 | Recap, course dates, final evidence and reading slide |
+| 3 | 0–7 | 42, 44–46; skip 43 | Complete model, shifted targets, loss, prepared Implementation E05 causality check |
+| 3 | 7–25 | 52–58; skip 47–51 | Original paper, experiment setup, core E06, results, ablations, parsing, later efficiency work |
+| 3 | 25–29 | 59–60, 62; skip 61 | Recap, course dates, final evidence and reading slide |
 | 3 | 29–30 | Questions | Finish the teaching route |
 | 3 | 30–45 | Separate private material | **Quiz 2 — 15 minutes** |
 
 Implementation E05 uses three minutes for a prediction and prepared evidence
 in this route; another three minutes of notebook work remain for follow-up.
-Implementation E02 similarly uses a three-minute prepared browser comparison.
+The two new RoPE explanations use 1.5 minutes each. Implementation E02’s
+three-minute permutation comparison moves to follow-up; the core E02 exercise
+keeps its five-minute allocation, with the added notebook checks for later use.
 Keep the component explanations and core practices when allocating time for extra implementation work.
 If discussion consumes the buffers, defer original implementation details to
 the supplied notebook and begin the quiz on time. A full rehearsal is needed
@@ -89,11 +91,12 @@ to establish whether this route fits the class's actual discussion pace.
 
 ### Follow-up pages
 
-- **31–33:** batched tensor axes, split/join code, and Implementation E01.
-- **41:** Implementation E04, counting the tied complete model.
-- **45–49:** irreducible toy loss, fitting loop, measured norm comparison,
+- **13:** permutation demonstration and Implementation E02.
+- **33–35:** batched tensor axes, split/join code, and Implementation E01.
+- **43:** Implementation E04, counting the tied complete model.
+- **47–51:** irreducible toy loss, fitting loop, measured norm comparison,
   materialized attention storage, and the three architecture configurations.
-- **59:** implementation and further reading links.
+- **61:** implementation and further reading links.
 
 These pages preserve the executable-course detail without requiring a live
 coding session inside the same class as the full component and paper sequence.
@@ -104,16 +107,17 @@ The code is already supplied; the activities ask for predictions and checks.
 The default [core notebook](../shared/notebook.html?lecture=lecture-05&notebook=practice.ipynb)
 retains E01–E06 and their order from lecture-05-test, with the main lecture's
 Noa positions, six-row head example, and supplied she states. It needs Python's
-standard library and no trained model.
+standard library and no trained model. E02 includes follow-up checks for the
+complex-plane and per-pair-frequency slides; these do not add a new exercise.
 
 | Core exercise | Slide / ID | Expected evidence |
 | --- | --- | --- |
 | E01 | 12 / `sinusoidal-example` | PE(0) = (0,1,0,1); PE(1) added coordinate-wise to the supplied can embedding |
-| E02 | 15 / `rope-relative-offset` | she at 5 and Noa at 0 give −√3/2 for the toy pair; shared shifts preserve the fixed-content dot product |
-| E03 | 22 / `multi-head-attention` | Width 512 split into 8 heads gives 64 per head; six prefix rows stay six rows |
-| E04 | 27 / `add-norm-practice` | Mean 2, variance 1, LN approximately (−1,1), residual output (3,2), per-token feature statistics |
-| E05 | 30 / `ffn-practice` | (1,−3,4) → ReLU (1,0,4) → (5,−4); isolated token independence; nonlinearity and parameter-share checks |
-| E06 | 52 / `paper-parameter-count` | Encoder count under the slide's explicit bias, normalization, vocabulary, and position assumptions |
+| E02 | 17 / `rope-relative-offset` | she at 5 and Noa at 0 give −√3/2 for the toy pair; shared shifts preserve the fixed-content dot product |
+| E03 | 24 / `multi-head-attention` | Width 512 split into 8 heads gives 64 per head; six prefix rows stay six rows |
+| E04 | 29 / `add-norm-practice` | Mean 2, variance 1, LN approximately (−1,1), residual output (3,2), per-token feature statistics |
+| E05 | 32 / `ffn-practice` | (1,−3,4) → ReLU (1,0,4) → (5,−4); isolated token independence; nonlinearity and parameter-share checks |
+| E06 | 54 / `paper-parameter-count` | Encoder count under the slide's explicit bias, normalization, vocabulary, and position assumptions |
 
 The separate [implementation notebook](../shared/notebook.html?lecture=lecture-05&notebook=lecture-05-exercise.ipynb)
 now uses the same Noa vocabulary and sentences. Its learning objectives, cell
@@ -126,10 +130,10 @@ previous notebook and figure retain their own hashes. Slide labels say
 | Implementation activity | Slide / ID | Code cells and evidence |
 | --- | --- | --- |
 | E02 | 13 / `position-demo` | `e02-permutation`: unmasked restored outputs agree without positions; fixed positions give max difference about 0.449204 |
-| P01 | 20 / `practice-01` | `single-head-practice`: causal weights (2,1,1,2,1,3,0)/10, output (1,1), zero future-is contribution |
-| E01 | 33 / `exercise-01` | `multi-head-attention`, `e01-trace`, `e01-wrong-reshape`: shapes (2,4,10,4), (2,4,10,10), (2,10,16); values/gradients agree with a head loop; wrong reshape fails |
-| E04 | 41 / `exercise-04` | `decoder-model`, `e04-count`: 2,112 per block; 4,608 tied or 4,800 untied; tying reuses the Parameter object |
-| E05 | 44 / `exercise-05` | `e05-causality`, `e05-fit`: changing is at 6 leaves prefix logits 0–5 unchanged and their gradients to states 6–9 zero; an unmasked control leaks |
+| P01 | 22 / `practice-01` | `single-head-practice`: causal weights (2,1,1,2,1,3,0)/10, output (1,1), zero future-is contribution |
+| E01 | 35 / `exercise-01` | `multi-head-attention`, `e01-trace`, `e01-wrong-reshape`: shapes (2,4,10,4), (2,4,10,10), (2,10,16); values/gradients agree with a head loop; wrong reshape fails |
+| E04 | 43 / `exercise-04` | `decoder-model`, `e04-count`: 2,112 per block; 4,608 tied or 4,800 untied; tying reuses the Parameter object |
+| E05 | 46 / `exercise-05` | `e05-causality`, `e05-fit`: changing is at 6 leaves prefix logits 0–5 unchanged and their gradients to states 6–9 zero; an unmasked control leaks |
 
 The duplicated original Implementation E03 slide is removed because core E04
 uses the same calculation. Its `e03-block` cells remain in the implementation notebook

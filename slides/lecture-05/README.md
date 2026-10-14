@@ -1,9 +1,10 @@
 # Lecture 05: Attention and the Transformer
 
-The deck contains **60 slides**: 31 component and paper topics integrated from
-`lecture-05-test`, plus 29 original or consolidated Lecture 05 pages. The first
+The deck contains **62 slides**: 31 component and paper topics integrated from
+`lecture-05-test`, 29 original or consolidated Lecture 05 pages, and two
+visual explanations accompanying EleutherAI’s RoPE blog. The first
 merge copied the test content verbatim. The instructor then authorized a second
-revision of the main deck to use **one Noa example throughout**. All 60 stable
+revision of the main deck to use **one Noa example throughout**. All prior 60 stable
 IDs, topics, source citations, and reveal sequences remain. The test deck is left unchanged during this revision.
 
 ## One running example
@@ -110,52 +111,54 @@ BERT count or the tiny decoder count.
 | 12 | `sinusoidal-example` | Component / paper source |
 | 13 | `position-demo` | Original / consolidated |
 | 14 | `rope-rotation` | Component / paper source |
-| 15 | `rope-relative-offset` | Component / paper source |
-| 16 | `position-methods` | Component / paper source |
-| 17 | `outline-blocks` | Original / consolidated |
-| 18 | `scaled-dot-product` | Component / paper source |
-| 19 | `attention-demo` | Original / consolidated |
-| 20 | `practice-01` | Original / consolidated |
-| 21 | `why-multiple-heads` | Component / paper source |
-| 22 | `multi-head-attention` | Component / paper source |
-| 23 | `attention-in-architecture` | Component / paper source |
-| 24 | `residual-addition` | Component / paper source |
-| 25 | `layernorm-features` | Component / paper source |
-| 26 | `normalization-order` | Component / paper source |
-| 27 | `add-norm-practice` | Component / paper source |
-| 28 | `feedforward-network` | Component / paper source |
-| 29 | `why-ffn` | Component / paper source |
-| 30 | `ffn-practice` | Component / paper source |
-| 31 | `head-shapes` | Original / consolidated |
-| 32 | `split-heads` | Original / consolidated |
-| 33 | `exercise-01` | Original / consolidated |
-| 34 | `block-code` | Original / consolidated |
-| 35 | `outline-working` | Original / consolidated |
-| 36 | `input-tokenization` | Component / paper source |
-| 37 | `toy-configuration` | Original / consolidated |
-| 38 | `learned-positions` | Original / consolidated |
-| 39 | `block-parameters` | Original / consolidated |
-| 40 | `full-model` | Original / consolidated |
-| 41 | `exercise-04` | Original / consolidated |
-| 42 | `causal-visibility` | Original / consolidated |
-| 43 | `logits-and-loss` | Original / consolidated |
-| 44 | `exercise-05` | Original / consolidated |
-| 45 | `irreducible-toy-loss` | Original / consolidated |
-| 46 | `tiny-training-loop` | Original / consolidated |
-| 47 | `norm-comparison` | Original / consolidated |
-| 48 | `attention-cost` | Original / consolidated |
-| 49 | `original-and-baseline` | Original / consolidated |
-| 50 | `original-transformer-paper` | Component / paper source |
-| 51 | `paper-experimental-setup` | Component / paper source |
-| 52 | `paper-parameter-count` | Component / paper source |
-| 53 | `paper-translation-results` | Component / paper source |
-| 54 | `paper-ablations` | Component / paper source |
-| 55 | `paper-constituency-parsing` | Component / paper source |
-| 56 | `paper-efficient-attention` | Component / paper source |
-| 57 | `recap` | Original / consolidated |
-| 58 | `next-steps` | Original / consolidated |
-| 59 | `implementation-readings` | Original / consolidated |
-| 60 | `references` | Component / paper source |
+| 15 | `rope-complex-pairs` | RoPE reading extension |
+| 16 | `rope-pair-frequencies` | RoPE reading extension |
+| 17 | `rope-relative-offset` | Component / paper source |
+| 18 | `position-methods` | Component / paper source |
+| 19 | `outline-blocks` | Original / consolidated |
+| 20 | `scaled-dot-product` | Component / paper source |
+| 21 | `attention-demo` | Original / consolidated |
+| 22 | `practice-01` | Original / consolidated |
+| 23 | `why-multiple-heads` | Component / paper source |
+| 24 | `multi-head-attention` | Component / paper source |
+| 25 | `attention-in-architecture` | Component / paper source |
+| 26 | `residual-addition` | Component / paper source |
+| 27 | `layernorm-features` | Component / paper source |
+| 28 | `normalization-order` | Component / paper source |
+| 29 | `add-norm-practice` | Component / paper source |
+| 30 | `feedforward-network` | Component / paper source |
+| 31 | `why-ffn` | Component / paper source |
+| 32 | `ffn-practice` | Component / paper source |
+| 33 | `head-shapes` | Original / consolidated |
+| 34 | `split-heads` | Original / consolidated |
+| 35 | `exercise-01` | Original / consolidated |
+| 36 | `block-code` | Original / consolidated |
+| 37 | `outline-working` | Original / consolidated |
+| 38 | `input-tokenization` | Component / paper source |
+| 39 | `toy-configuration` | Original / consolidated |
+| 40 | `learned-positions` | Original / consolidated |
+| 41 | `block-parameters` | Original / consolidated |
+| 42 | `full-model` | Original / consolidated |
+| 43 | `exercise-04` | Original / consolidated |
+| 44 | `causal-visibility` | Original / consolidated |
+| 45 | `logits-and-loss` | Original / consolidated |
+| 46 | `exercise-05` | Original / consolidated |
+| 47 | `irreducible-toy-loss` | Original / consolidated |
+| 48 | `tiny-training-loop` | Original / consolidated |
+| 49 | `norm-comparison` | Original / consolidated |
+| 50 | `attention-cost` | Original / consolidated |
+| 51 | `original-and-baseline` | Original / consolidated |
+| 52 | `original-transformer-paper` | Component / paper source |
+| 53 | `paper-experimental-setup` | Component / paper source |
+| 54 | `paper-parameter-count` | Component / paper source |
+| 55 | `paper-translation-results` | Component / paper source |
+| 56 | `paper-ablations` | Component / paper source |
+| 57 | `paper-constituency-parsing` | Component / paper source |
+| 58 | `paper-efficient-attention` | Component / paper source |
+| 59 | `recap` | Original / consolidated |
+| 60 | `next-steps` | Original / consolidated |
+| 61 | `implementation-readings` | Original / consolidated |
+| 62 | `references` | Component / paper source |
 
 ## Revision record and validation
 
@@ -170,7 +173,7 @@ The source-deck SHA-256 for that historical snapshot is:
 **Second revision, same date:** the instructor authorized adapting the main
 deck and its notebooks to the Noa example. Source-deck equality is therefore a
 historical first-merge result, not a requirement for the adapted sections.
-Current checks retain the 60 IDs and source-topic order, required adjacent
+Current checks retain all prior 60 IDs and source-topic order, required adjacent
 bundles, exercise routing, reveal counts, and unchanged historical evidence.
 The original test deck remains untouched by the Noa revision. Its second-round
 baseline SHA-256 is `72c7c1b0c9432f103ac5c0893084ee3da7e830250153fe11dfd3b83c8921dc14`.
@@ -192,10 +195,17 @@ uv run python -m pytest tests/test_lecture_05.py
 node --test tests/test_lecture_05_test_positions.mjs
 ```
 
-Numerical and launcher validation for this revision passes **67 Python checks
-and 14 JavaScript checks**. Browser/PDF review follows the completed artwork.
-Review the second revision's screenshots, complete reveal states, notebook
-launchers, and 60-page PDF. Review output belongs under ignored
-`slides/.checks/lecture-05/`. The first merge's passing test totals do not establish
-validation of the revised fixtures; rerun the checks after adaptation.
-Classroom timing still needs a rehearsal.
+**RoPE reading extension, October 14, 2026 (Asia/Shanghai):** two new slides
+connect complex multiplication and per-pair frequencies to the existing
+Noa/she example. Core E02 adds independent complex-arithmetic checks; the
+implementation model and recorded training curves are unchanged. The timed
+route moves the permutation demonstration to follow-up to make room.
+
+Validation: 75 focused Python checks and 10 JavaScript checks passed. Both
+notebooks ran in fresh kernels (14 core and 15 implementation code cells).
+Browser checks passed for all 62 slides at three viewport sizes, including
+the new reveals, Previous, and Reset. All slide images and the 62-page PDF
+were reviewed. The original 60 IDs retain their order, and the archived
+source, implementation notebook, and training curves are unchanged.
+Review output belongs under ignored `slides/.checks/lecture-05/` and
+`slides/.checks/lecture-05-rope/`. Classroom timing still needs a rehearsal.

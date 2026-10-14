@@ -343,7 +343,7 @@ Source formula: [Attention Is All You Need, §§3.4–3.5](https://arxiv.org/htm
 <div id="position-visual" class="plot" data-plotly="assets/position-demo.json" role="img" aria-label="An unmasked six-token Noa-prefix experiment, initially without positions."></div>
 
 Note:
-Allow 3 minutes for predictions and the prepared browser comparison; the original notebook activity can be completed separately. This combines why-positions, position-demo, and exercise-02 from the previous main deck. Keep this distinct from core E02, which tests RoPE relative offsets in the default notebook.
+Follow-up: allow 3 minutes for predictions and the prepared browser comparison. The current timed route uses this slot for the two RoPE explanation pages. This combines why-positions, position-demo, and exercise-02 from the previous main deck. Keep this distinct from core E02, which tests RoPE relative offsets in the default notebook.
 
 Ask students to swap Noa at position 0 and she at position 5 and then undo the permutation on the outputs. Without any position mechanism or mask, shared self-attention projections satisfy SA(PX) = P SA(X). This is permutation equivariance, not equality of tensors before undoing the permutation. With fixed sinusoidal position vectors attached to slots, moving a token changes its input and its output.
 
@@ -384,6 +384,89 @@ the previous sinusoidal addition and the GPT-2 architecture's learned table.
 
 Source: [Su et al., RoFormer, §§3.2.1–3.2.2, equations 13–16](https://arxiv.org/html/2104.09864v5).
 
+The next two pages connect this rotation to the complex-number explanation in
+[EleutherAI's RoPE blog](https://blog.eleuther.ai/rotary-embeddings/).
+
+---
+
+<!-- .slide: id="rope-complex-pairs" -->
+
+## Two coordinates, one complex number
+
+<div class="columns" data-source-url="https://blog.eleuther.ai/rotary-embeddings/#intuition">
+<div>
+<p>Write $(a,b)$ as $z=a+ib$.</p>
+<div class="fragment" data-fragment-index="0">
+<p>At position $p$, let $\phi=p\theta$:</p>
+<p>$$z'=z\,e^{i\phi}$$</p>
+<p>$$a'=a\cos\phi-b\sin\phi$$</p>
+<p>$$b'=a\sin\phi+b\cos\phi$$</p>
+</div>
+<p class="fragment" data-fragment-index="1">Same length: $|z'|=|z|$. The real-valued calculation is the rotation we just saw.</p>
+</div>
+<div>
+<img class="diagram" src="assets/rope-complex-plane.svg" data-excalidraw-source="assets/rope-complex-plane.excalidraw" alt="The invented query pair for she rotates from 1 plus 0i to minus square root of three over two plus i over two, preserving its unit length.">
+<p class="caption">Toy frequency $\theta=\pi/6$; she at $p=5$.</p>
+</div>
+</div>
+
+<p class="source">Reading: <a href="https://blog.eleuther.ai/rotary-embeddings/#derivation">EleutherAI · Rotary Embeddings: A Relative Revolution</a> (2021).</p>
+
+Note:
+Allow 1.5 minutes. Interpret i as the imaginary unit, with i² = −1; it is not
+the coordinate-pair index used elsewhere. Expanding (a+ib)(cosφ+i sinφ)
+produces the two real equations on the slide. Complex arithmetic is a useful
+description; implementations can use real multiplications and additions.
+
+The drawing retains the same invented query for she, (1,0), the same position
+5, and the same toy frequency π/6. Its result is (−√3/2,1/2). The arrow at
+angle zero is this query before applying position, not a second token. The
+new notebook check compares complex multiplication with rotate_pair on
+non-axis-aligned pairs as well. No model parameters or training change here.
+
+Adapted concept: EleutherAI, April 20, 2021, “Intuition” and “Derivation.” The
+diagram and numerical checks are course-authored. Formal source: RoFormer
+§§3.2.1–3.2.2. Use the existing two-click reveal and Reset controls.
+
+---
+
+<!-- .slide: id="rope-pair-frequencies" -->
+
+## One head, several rotation speeds
+
+<div data-source-url="https://blog.eleuther.ai/rotary-embeddings/#derivation">
+<p>$d_h=8$: four coordinate pairs, with $\theta_j=10000^{-2j/d_h}$.</p>
+
+<img class="diagram" src="assets/rope-pair-frequencies.svg" data-excalidraw-source="assets/rope-pair-frequencies.excalidraw" alt="Four coordinate pairs in one head rotate she at position five by 5, 0.5, 0.05, and 0.005 radians. Noa at position zero stays at angle zero. Each supplied pair begins at 1,0.">
+
+<p class="fragment" data-fragment-index="0">Add the four pairwise dot products to obtain one head's raw attention score.</p>
+</div>
+
+Note:
+Allow 1.5 minutes. There are four two-dimensional planes inside one
+eight-dimensional head. Each plane mixes only its two coordinates. For
+baseline base 10000, the rates are 1, .1, .01, .001 radians per token.
+Multiplying by she’s position 5 gives 5, .5, .05, .005 radians. Noa at zero
+has zero positional rotation in every pair. The repeated unit content pairs
+are invented to isolate the frequency differences; real projected pairs can
+have different lengths and starting angles. Nearly coincident arrows in the
+slow planes are expected. The first angle wraps around the circle.
+
+This uses the standard frequency formula; the preceding single-pair diagram
+deliberately uses π/6 to make its hand calculation simple. The existing E02
+keeps that toy frequency. Its added follow-up checks the standard multi-pair
+case and an independent complex-number calculation.
+
+For each pair, a common shift adds the same angle to query and key. Its dot
+product is unchanged; summing the pair contributions preserves the full
+head score for fixed content. Repeated phase patterns do not guarantee useful
+behavior beyond the training context or a monotonically decreasing score.
+RoPE keeps the head width unchanged and standard V remains unrotated.
+
+Sources: EleutherAI blog, “Derivation” and “Implementation”;
+[RoFormer §3.2.2](https://arxiv.org/html/2104.09864v5). The figure is calculated
+from the course's existing position-math.js functions, with editable artwork.
+
 ---
 
 <!-- .slide: id="rope-relative-offset" -->
@@ -401,8 +484,8 @@ Source: [Su et al., RoFormer, §§3.2.1–3.2.2, equations 13–16](https://arxi
 Note:
 Practice E02 · 2 minutes for prediction, then 3 minutes for the explanation.
 Ask students to predict both dot products before the first reveal. The
-content vectors q = k = (1, 0) are held fixed. Use the same toy θ = 30° as
-the preceding slide. The query is purple and the key is teal.
+content vectors q = k = (1, 0) are held fixed. Return to the toy θ = 30° from
+the single-pair rotation demonstration. The query is purple and the key is teal.
 
 Initially the query is she at m = 5 and the key is Noa at n = 0. The hypothetical shared shift s = 3 gives (m+s,n+s) = (8,3). In the first circle, q rotates to (−sqrt(3)/2,1/2) and k remains (1,0). In the second, q is (−1/2,−sqrt(3)/2) and k is (0,1). Both raw dot products equal −sqrt(3)/2, approximately −0.866. The key precedes the query, so both relative arrangements are allowed by a causal mask. Negative raw scores are valid; softmax later produces nonnegative weights.
 
@@ -422,6 +505,8 @@ outputs when the prompt content or context changes. Notebook E02 checks
 norm preservation and the multi-pair identity on nonidentical vectors.
 
 Source: [RoFormer, §3.2, especially equation 16](https://arxiv.org/html/2104.09864v5).
+
+Geometric reading from [EleutherAI's “Intuition” section](https://blog.eleuther.ai/rotary-embeddings/#intuition): a dot product is the product of the vector lengths and the cosine of their angle. A common rotation preserves all three. In complex notation use Re(conj(z_q) z_k), so the positional factor is exp(i(n−m)θ), matching our column-vector convention. The blog also writes the opposite signed offset under its conjugation convention; keep conventions consistent rather than copying an isolated sign.
 
 ---
 
@@ -1694,6 +1779,7 @@ Allow 1 minute. These are the published course dates at authoring; the slide int
 - [Xiong et al., LayerNorm in Transformers](https://proceedings.mlr.press/v119/xiong20b.html): pre-LN and post-LN.
 - [Bahdanau et al.](https://arxiv.org/abs/1409.0473) and [Luong et al.](https://aclanthology.org/D15-1166/): learned alignment.
 - [Devlin et al., BERT](https://aclanthology.org/N19-1423/): §3.1, masked prediction.
+- [EleutherAI: Rotary Embeddings](https://blog.eleuther.ai/rotary-embeddings/): geometric intuition and implementation.
 - [Further reading and interactive walkthroughs](optional-reading.md)
 
 Note:

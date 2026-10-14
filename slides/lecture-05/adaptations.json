@@ -28,8 +28,8 @@
     "gpt-architecture": "Trace the Noa prefix upward and use is as the illustrative next-token prediction.",
     "position-inputs": "Compare she at its actual position 5 with an explicitly hypothetical position 2.",
     "sinusoidal-example": "Identify the worked position-1 example as can in the running prefix.",
-    "rope-rotation": "Start the rotation control at she, position 5, with the existing toy frequency.",
-    "rope-relative-offset": "Use query she at 5, key Noa at 0, and an explicitly hypothetical shared shift of 3.",
+    "rope-rotation": "Start the rotation control at she, position 5, with the existing toy frequency. Connect the explanation to the instructor-requested EleutherAI reading.",
+    "rope-relative-offset": "Use query she at 5, key Noa at 0, and an explicitly hypothetical shared shift of 3. Connect the explanation to the instructor-requested EleutherAI reading.",
     "scaled-dot-product": "Use six prefix positions in the single-head attention explanation.",
     "why-multiple-heads": "Replace the Charlie sentence with three illustrative attention rows for she over the Noa prefix.",
     "multi-head-attention": "Carry the six token rows and dimensions through parallel heads and concatenation.",
@@ -75,7 +75,7 @@
     "build-positions.mjs": "Generate the Noa teaching example, zero-based token positions, and corresponding dimensions while retaining reveal stages.",
     "position-interactions.js": "Use she at 5 and Noa at 0 as the default and reset state; keep the same positional mathematics.",
     "position-math.js": "Use she at 5 and Noa at 0 as the default and reset state; keep the same positional mathematics.",
-    "practice.ipynb": "Align E01–E06 with the Noa prefix, six token rows, and she/Noa RoPE positions; preserve the exercise topics.",
+    "practice.ipynb": "Align E01–E06 with the Noa prefix, six token rows, and she/Noa RoPE positions; preserve the exercise topics. Add E02 follow-ups for complex rotation and standard width-8 pair frequencies.",
     "component-demo.js": "Keep the Noa self-attention and QKV diagrams in either URL design mode; retain the GPT Reference toggle."
   },
   "follow_up_clarifications": {
@@ -92,5 +92,20 @@
       "Distinguish input positions 0–9 from target document positions 1–10, ending at EOS."
     ],
     "preserved": "60 slide IDs, reveal sequences, notebook computations, and historical paper results."
+  },
+  "rope_reading_extension": {
+    "authorization": "Instructor requested incorporating the EleutherAI rotary-embeddings blog into Lecture 05.",
+    "date": "2026-10-14",
+    "timezone": "Asia/Shanghai",
+    "source": "https://blog.eleuther.ai/rotary-embeddings/",
+    "added_slide_ids": [
+      "rope-complex-pairs",
+      "rope-pair-frequencies"
+    ],
+    "changes": [
+      "Add original editable diagrams for complex multiplication and per-pair frequencies.",
+      "Extend core E02 with independent real/complex numerical checks and a guided reading."
+    ],
+    "preserved": "All prior 60 slide IDs and their order, existing reveal sequences, the archived test deck, implementation notebook, and measured training results."
   }
 }

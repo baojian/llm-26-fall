@@ -96,6 +96,36 @@ calculation; it does not assert that changing a complete prompt leaves a
 model's outputs unchanged. The implementation
 notebook retains its learned absolute position table.
 
+### Guided RoPE reading
+
+Read [EleutherAI, *Rotary Embeddings: A Relative Revolution*](https://blog.eleuther.ai/rotary-embeddings/)
+(April 20, 2021) alongside the two new lecture diagrams:
+
+1. **Intuition:** explain why rotating both vectors by the same angle preserves
+   their dot product. Track she at 5 and Noa at 0, then shift both by three.
+2. **Derivation:** identify each coordinate pair with a complex number. In our
+   convention the score is the real part of `conj(z_q) * z_k`; its positional
+   factor uses `n − m`. Match conjugation and rotation conventions throughout.
+3. **Implementation:** compare the blog's pair layout with the notebook's
+   adjacent pairs. Its PyTorch example pairs the two feature halves; its JAX
+   example pairs adjacent coordinates. Reorder coordinates and frequencies
+   consistently when translating code, and check tensor-axis order.
+
+The new [complex-plane slide](index.html#/rope-complex-pairs) uses the existing
+toy frequency π/6. The [four-pair slide](index.html#/rope-pair-frequencies)
+uses standard base-10000 frequencies in one width-8 head. Follow-up cells in
+core E02 independently check real and complex implementations, pair norms,
+and the summed score after a shared position shift. Implementations need
+only elementwise operations; they need not construct a dense rotation matrix.
+
+The blog's optional [optical animation](https://blog.eleuther.ai/images/blog/rotary-embeddings/waveplate.html)
+offers another rotation analogy. The lecture's own diagrams work offline.
+Treat the blog's reported experiments as evidence for their stated historical
+setups. RoPE alone promises neither monotonic score decay nor reliable
+extrapolation beyond the training context.
+
+### Inspecting attention heads
+
 The original Transformer's appendix includes attention visualizations for
 particular encoder heads and sentences. Such examples can suggest a hypothesis
 about a head; they do not establish a fixed grammatical role for every head.

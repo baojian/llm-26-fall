@@ -43,6 +43,8 @@ editable sources; they do not need the source PowerPoint at presentation time.
 | `gpt-architecture-reference.svg` | Full GPT reference retained for the architecture comparison |
 | `context-intuition.*`, `attention-roles.*` | Noa/she relation and the three uses of the same input vectors |
 | `position-*.svg` and manifests | Actual she at 5 versus hypothetical 2; RoPE she/Noa at 5/0, shifted comparison at 8/3 |
+| `rope-complex-plane.svg` and `.excalidraw` | Original complex-plane drawing of the supplied she query at position 5, using the toy frequency π/6 |
+| `rope-pair-frequencies.svg` and `.excalidraw` | Original four-plane drawing for one width-8 head; base-10000 frequencies with she at 5 and Noa at 0 |
 | `multihead-intuition.*`, `mha-*` | Six token rows and three invented weight patterns; mechanism and architecture comparison |
 | `ffn-tokenwise.*`, `ffn-parameter-share.svg` | Tokenwise FFN on a subset Noa/can/she; two-thirds matrix-weight share at inner width 4d |
 | `tokenizer-inputs.*` | Six toy word tokens with IDs 0–5; distinguishes vocabulary learning, segmentation, and neural embedding lookup |
@@ -113,6 +115,30 @@ with fixed content pairs (1,0) and toy frequency π/6 per position. Their score
 is −sqrt(3)/2. A shared shift to 8 and 3 preserves it. Changing their gap is a
 controlled hypothetical arrangement. Real models use their configured frequency
 schedule; the toy 30° frequency makes the calculation easy to inspect.
+
+### RoPE reading diagrams
+
+The October 14, 2026 addition follows the geometric and complex-number
+explanation in [EleutherAI's *Rotary Embeddings: A Relative Revolution*](https://blog.eleuther.ai/rotary-embeddings/)
+(April 20, 2021). The formal construction is in
+[RoFormer, §§3.2.1–3.2.2](https://arxiv.org/html/2104.09864v5).
+The course drawings and numerical examples are original; no blog artwork
+or remote animation is embedded in the lecture.
+
+Regenerate both SVGs and their editable Excalidraw scenes with:
+
+```sh
+node slides/lecture-05/build-rope-blog.mjs
+```
+
+The builder reuses `position-math.js`. The first figure rotates (1,0) by
+5π/6, giving (−√3/2,1/2). The second uses four supplied unit pairs with rates
+1, 0.1, 0.01, and 0.001 radians per token. Query angles at position 5 are
+5, 0.5, 0.05, and 0.005 radians; all key angles at position 0 are zero.
+These are deterministic formula illustrations, with no learned states,
+training run, random seed, or empirical performance claim. Core E02 compares
+real and complex implementations on additional non-unit vectors and checks
+norms, the signed relative offset, and a common shift.
 
 ## Measured normalization comparison
 
@@ -196,4 +222,4 @@ seed, configuration, compute budget, and elapsed time. Review the generated
 curve before committing it. Numerical checks cover outputs, parameter counts,
 independent attention references, causality, position permutations, and the
 core exercises. Browser checks cover the adapted displays and controls at three
-viewport sizes. Inspect every screenshot and the 60-page PDF after regeneration.
+viewport sizes. Inspect every screenshot and the 62-page PDF after regeneration.

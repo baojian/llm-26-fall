@@ -57,6 +57,7 @@ if (folder === 'lecture-05') {
   for (const bundle of [
     ['context-for-text', 'self-attention', 'attention-roles', 'learned-projections'],
     ['gpt-architecture', 'position-inputs'],
+    ['rope-rotation', 'rope-complex-pairs', 'rope-pair-frequencies', 'rope-relative-offset', 'position-methods'],
     ['why-multiple-heads', 'multi-head-attention', 'attention-in-architecture'],
     ['feedforward-network', 'why-ffn', 'ffn-practice'],
     ['paper-experimental-setup', 'paper-parameter-count'],
@@ -141,7 +142,7 @@ try {
   const count = await page.evaluate(() => Reveal.getTotalSlides());
   assert.ok(count > 0, 'No slides rendered.');
   if (folder === 'lecture-05') {
-    assert.equal(count, 60, 'Retain the complete integrated topic sequence.');
+    assert.equal(count, 62, 'Retain the 60 integrated topics and two RoPE reading explanations.');
     assert.deepEqual(adaptations.running_example.tokens, ['Noa', 'can', 'be', 'annoying', 'but', 'she']);
     const causal = JSON.parse(await readFile(path.join(deck, 'assets/attention-values.json'), 'utf8'));
     const positions = JSON.parse(await readFile(path.join(deck, 'assets/position-values.json'), 'utf8'));
@@ -436,6 +437,7 @@ try {
       await page.evaluate(() => window.courseReady);
       const screenshotPrefix = design === 'modern' ? '' : 'original-';
       for (const [id, steps] of [['context-for-text', 3], ['attention-roles', 2], ['position-inputs', 3], ['sinusoidal-example', 2], ['rope-relative-offset', 2],
+        ...(folder === 'lecture-05' ? [['rope-complex-pairs', 2], ['rope-pair-frequencies', 1]] : []),
         ['scaled-dot-product', 4], ['why-multiple-heads', 2], ['multi-head-attention', 5], ['attention-in-architecture', 3],
         ['residual-addition', 1], ['layernorm-features', 1], ['normalization-order', 1], ['add-norm-practice', 1],
         ['feedforward-network', 3], ['why-ffn', 1], ['ffn-practice', 1], ['input-tokenization', 4],
@@ -474,12 +476,17 @@ try {
             }
             await page.screenshot({ path: path.join(output, `${screenshotPrefix}why-multiple-heads-step-${step}.png`), animations: 'disabled' });
           }
-          if (['feedforward-network', 'why-ffn', 'ffn-practice'].includes(id)) {
+          if (['feedforward-network', 'why-ffn', 'ffn-practice', 'rope-complex-pairs', 'rope-pair-frequencies'].includes(id)) {
             await page.screenshot({ path: path.join(output, `${screenshotPrefix}${id}-step-${step}.png`), animations: 'disabled' });
           }
         }
         await page.getByRole('button', { name: 'Previous', exact: true }).click();
         assert.equal(await page.locator('#step-status').textContent(), `Step ${steps - 1} / ${steps}`);
+        if (['rope-complex-pairs', 'rope-pair-frequencies'].includes(id)) {
+          await page.getByRole('button', { name: 'Reset', exact: true }).click();
+          assert.equal(await page.locator('#step-status').textContent(), `Step 0 / ${steps}`);
+          assert.equal(await page.locator(`#${id} .fragment.visible`).count(), 0);
+        }
         if (['context-for-text', 'attention-roles', 'scaled-dot-product', 'why-multiple-heads', 'multi-head-attention', 'attention-in-architecture', 'feedforward-network', 'input-tokenization'].includes(id)) {
           await page.getByRole('button', { name: 'Reset', exact: true }).click();
           assert.equal(await page.locator('#step-status').textContent(), `Step 0 / ${steps}`);

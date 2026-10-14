@@ -69,6 +69,9 @@ contains E01–E06 in slide order. The separate
 [implementation notebook](lecture-05/lecture-05-exercise.ipynb) covers
 P01 and E01–E05: masked outputs, tensor shapes, positions, normalization,
 parameter counts, complete-model causality, and measured training curves.
+The 62-slide deck includes two visual bridges to EleutherAI's RoPE blog:
+complex multiplication and different rotation speeds within one head.
+Core E02 adds independent numerical checks for these explanations.
 Its [teaching plan](lecture-05/teaching-plan.md) distinguishes the full material
 bank from the classroom route and reserves the final 15 minutes for Quiz 2.
 See the [integration guide](lecture-05/README.md),
