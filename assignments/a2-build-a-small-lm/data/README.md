@@ -34,5 +34,9 @@ scores every next token including the final short block, and aggregates loss
 by token count. See the handout for the budget and final-evaluation procedure.
 
 Do not modify these files. The driver verifies artifact checksums before use.
+The JSON and JSONL artifacts use UTF-8. Their SHA-256 values are computed with
+LF line endings; verification restores CRLF checkout line endings to LF before
+hashing. Other byte changes still fail verification. Run metadata uses the same
+rule for the data manifest; checkpoint hashes always cover the original bytes.
 Preparation code and instructor results remain in the private repository;
 all data and tokenizer artifacts needed for student commands are included here.

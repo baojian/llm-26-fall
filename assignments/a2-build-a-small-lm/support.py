@@ -22,19 +22,25 @@ def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def text_sha256(path):
+    """Hash supplied text artifacts after restoring LF line endings."""
+    content = Path(path).read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(content).hexdigest()
+
+
 def dump(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
+    path.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n", encoding="utf-8")
 
 
 def load_data(splits=("train", "dev")):
-    manifest = json.loads((HERE / "data/manifest.json").read_text())
+    manifest = json.loads((HERE / "data/manifest.json").read_text(encoding="utf-8"))
     for filename, spec in manifest["files"].items():
-        if sha256(HERE / "data" / filename) != spec["sha256"]:
+        if text_sha256(HERE / "data" / filename) != spec["sha256"]:
             raise ValueError(f"data/tokenizer checksum mismatch: {filename}")
     tokenizer = Tokenizer.from_file(str(HERE / "data/tokenizer.json"))
-    documents = {name: [json.loads(line) for line in (HERE / f"data/{name}.jsonl").read_text().splitlines()]
+    documents = {name: [json.loads(line) for line in (HERE / f"data/{name}.jsonl").read_text(encoding="utf-8").splitlines()]
                  for name in splits}
     return manifest, tokenizer, documents
 

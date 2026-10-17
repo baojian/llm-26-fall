@@ -15,7 +15,7 @@ from a2.generate import generate
 from a2.model import ModelConfig, TinyLM
 from a2.train import learning_rate, load_checkpoint, save_checkpoint, train_step
 from support import (HERE, ResourceMeter, configure, dump, environment, evaluate, load_data,
-                     sample_windows, sha256, token_stream)
+                     sample_windows, sha256, text_sha256, token_stream)
 
 
 def model_hash(model):
@@ -43,7 +43,7 @@ def train_condition(config_path, condition, out, stop_after=None, resume=False):
     initial_hash = model_hash(model)
     optimizer = torch.optim.AdamW(model.parameters(), lr=config["max_lr"], weight_decay=config["weight_decay"])
     sampler = torch.Generator().manual_seed(config["seed"] + 1)
-    checkpoint_config = {**config, "condition": condition, "data_manifest_sha256": sha256(HERE / "data/manifest.json")}
+    checkpoint_config = {**config, "condition": condition, "data_manifest_sha256": text_sha256(HERE / "data/manifest.json")}
     out.mkdir(parents=True, exist_ok=True)
     checkpoint = out / "checkpoint.pt"
     step = 0
@@ -80,7 +80,7 @@ def train_condition(config_path, condition, out, stop_after=None, resume=False):
                  "peak_rss_bytes": max(session["resources"]["peak_rss_bytes"] for session in sessions),
                  "memory_method": meter.result()["memory_method"]}
     result = {"condition": condition, "config": config, "environment": execution,
-              "data_manifest_sha256": sha256(HERE / "data/manifest.json"),
+              "data_manifest_sha256": text_sha256(HERE / "data/manifest.json"),
               "tokenizer_sha256": manifest["files"]["tokenizer.json"]["sha256"],
               "initial_model_sha256": initial_hash, "final_model_sha256": model_hash(model),
               "parameters": sum(p.numel() for p in model.parameters()), "completed_steps": end,
