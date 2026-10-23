@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "runtime_versions": {
+    "tiktoken": "0.14.0",
+    "tokenizers": "0.23.2",
+    "regex": "2026.9.3"
+  },
+  "tokenizers": [
+    {
+      "id": "r50k_base",
+      "label": "r50k_base",
+      "backend": "tiktoken",
+      "repository": "openai/tiktoken",
+      "revision": "0.14.0",
+      "url": "https://openaipublic.blob.core.windows.net/encodings/r50k_base.tiktoken",
+      "sha256": "306cd27f03c1a714eca7108e03d66b7dc042abe8c258b44c199a7ed9838dd930",
+      "pattern": "'(?:[sdmt]|ll|ve|re)| ?\\p{L}++| ?\\p{N}++| ?[^\\s\\p{L}\\p{N}]++|\\s++$|\\s+(?!\\S)|\\s",
+      "special_tokens": {
+        "<|endoftext|>": 50256
+      },
+      "sources_and_notes": "https://github.com/openai/tiktoken/blob/0.14.0/tiktoken_ext/openai_public.py — published encoding name; model-to-encoding mappings must be sourced separately."
+    },
+    {
+      "id": "cl100k_base",
+      "label": "cl100k_base",
+      "backend": "tiktoken",
+      "repository": "openai/tiktoken",
+      "revision": "0.14.0",
+      "url": "https://openaipublic.blob.core.windows.net/encodings/cl100k_base.tiktoken",
+      "sha256": "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7",
+      "pattern": "'(?i:[sdmt]|ll|ve|re)|[^\\r\\n\\p{L}\\p{N}]?+\\p{L}++|\\p{N}{1,3}+| ?[^\\s\\p{L}\\p{N}]++[\\r\\n]*+|\\s++$|\\s*[\\r\\n]|\\s+(?!\\S)|\\s",
+      "special_tokens": {
+        "<|endoftext|>": 100257,
+        "<|fim_prefix|>": 100258,
+        "<|fim_middle|>": 100259,
+        "<|fim_suffix|>": 100260,
+        "<|endofprompt|>": 100276
+      },
+      "sources_and_notes": "https://github.com/openai/tiktoken/blob/0.14.0/tiktoken_ext/openai_public.py — published encoding name; model-to-encoding mappings must be sourced separately."
+    },
+    {
+      "id": "o200k_base",
+      "label": "o200k_base",
+      "backend": "tiktoken",
+      "repository": "openai/tiktoken",
+      "revision": "0.14.0",
+      "url": "https://openaipublic.blob.core.windows.net/encodings/o200k_base.tiktoken",
+      "sha256": "446a9538cb6c348e3516120d7c08b09f57c36495e2acfffe59a5bf8b0cfb1a2d",
+      "pattern": "[^\\r\\n\\p{L}\\p{N}]?[\\p{Lu}\\p{Lt}\\p{Lm}\\p{Lo}\\p{M}]*[\\p{Ll}\\p{Lm}\\p{Lo}\\p{M}]+(?i:'s|'t|'re|'ve|'m|'ll|'d)?|[^\\r\\n\\p{L}\\p{N}]?[\\p{Lu}\\p{Lt}\\p{Lm}\\p{Lo}\\p{M}]+[\\p{Ll}\\p{Lm}\\p{Lo}\\p{M}]*(?i:'s|'t|'re|'ve|'m|'ll|'d)?|\\p{N}{1,3}| ?[^\\s\\p{L}\\p{N}]+[\\r\\n/]*|\\s*[\\r\\n]+|\\s+(?!\\S)|\\s+",
+      "special_tokens": {
+        "<|endoftext|>": 199999,
+        "<|endofprompt|>": 200018
+      },
+      "sources_and_notes": "https://github.com/openai/tiktoken/blob/0.14.0/tiktoken_ext/openai_public.py — published encoding name; model-to-encoding mappings must be sourced separately."
+    },
+    {
+      "id": "qwen3",
+      "label": "Qwen/Qwen3-8B",
+      "backend": "huggingface",
+      "repository": "Qwen/Qwen3-8B",
+      "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+      "url": "https://huggingface.co/Qwen/Qwen3-8B/resolve/b968826d9c46dd6066d109eabc6255188de91218/tokenizer.json",
+      "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "sources_and_notes": "https://huggingface.co/Qwen/Qwen3-8B/blob/b968826d9c46dd6066d109eabc6255188de91218/tokenizer.json — public tokenizer artifact pinned independently of model weights."
+    },
+    {
+      "id": "bert",
+      "label": "google-bert/bert-base-uncased",
+      "backend": "huggingface",
+      "repository": "google-bert/bert-base-uncased",
+      "revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+      "url": "https://huggingface.co/google-bert/bert-base-uncased/resolve/86b5e0934494bd15c9632b12f734a8a67f723594/tokenizer.json",
+      "sha256": "ce64fce797c24f68df90b40a3f74f579b336a493db14bd583fd520ea0d8c9a98",
+      "sources_and_notes": "https://huggingface.co/google-bert/bert-base-uncased/blob/86b5e0934494bd15c9632b12f734a8a67f723594/tokenizer.json — public tokenizer artifact pinned independently of model weights."
+    },
+    {
+      "id": "t5",
+      "label": "google-t5/t5-small",
+      "backend": "huggingface",
+      "repository": "google-t5/t5-small",
+      "revision": "df1b051c49625cf57a3d0d8d3863ed4d13564fe4",
+      "url": "https://huggingface.co/google-t5/t5-small/resolve/df1b051c49625cf57a3d0d8d3863ed4d13564fe4/tokenizer.json",
+      "sha256": "d2acde0d8d71dd30a711834b07781b9c89feaac33fd332f60507699282740066",
+      "sources_and_notes": "https://huggingface.co/google-t5/t5-small/blob/df1b051c49625cf57a3d0d8d3863ed4d13564fe4/tokenizer.json — public tokenizer artifact pinned independently of model weights."
+    }
+  ]
+}

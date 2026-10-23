@@ -1955,6 +1955,9 @@ tokenization = [
     { name = "torch" },
     { name = "transformers" },
 ]
+tokenizer-comparison = [
+    { name = "tokenizers" },
+]
 
 [package.dev-dependencies]
 dev = [
@@ -1981,10 +1984,11 @@ requires-dist = [
     { name = "spacy", marker = "extra == 'tokenization'", specifier = ">=3.8.16" },
     { name = "tiktoken", specifier = ">=0.12.0" },
     { name = "tokenizers", marker = "extra == 'tokenization'", specifier = ">=0.23.2" },
+    { name = "tokenizers", marker = "extra == 'tokenizer-comparison'", specifier = ">=0.23.2" },
     { name = "torch", marker = "extra == 'tokenization'", specifier = ">=2.14.0" },
     { name = "transformers", marker = "extra == 'tokenization'", specifier = ">=5.16.1" },
 ]
-provides-extras = ["tokenization", "multimodal"]
+provides-extras = ["tokenization", "multimodal", "tokenizer-comparison"]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pytest", specifier = ">=9.1.1" }]

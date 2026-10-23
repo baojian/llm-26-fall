@@ -52,6 +52,7 @@ The one-page proposal is due **October 21, 2026,
 | --- | --- |
 | [slides/](slides/README.md) | Lecture decks, companion notebooks, and teaching notes. |
 | [docs/](docs/README.md) | Course schedule, reading guides, and reference notes. |
+| [explorations/](explorations/README.md) | Instructor-authored investigations with explorable examples, measured results, and analysis. |
 | [papers/](papers/README.md) | PDFs and citations for the course readings. |
 | [tasks/](tasks/README.md) | Optional participation activities, instructions, and the [progress board](tasks/PROGRESS.md). |
 | [assignments/](assignments/README.md) | Assignment handouts, starter code, supplied data, and public tests. |
