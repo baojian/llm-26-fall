@@ -1,0 +1,89 @@
+{
+  "data": [
+    {
+      "type": "bar",
+      "name": "SWAG",
+      "x": [
+        "Default",
+        "Ending only",
+        "Shuffled",
+        "Shuffled +<br>ending only"
+      ],
+      "y": [
+        86.7,
+        74.8,
+        77.0,
+        60.4
+      ],
+      "marker": {
+        "color": "#285b8e"
+      },
+      "text": [
+        "86.7",
+        "74.8",
+        "77.0",
+        "60.4"
+      ],
+      "textposition": "outside",
+      "cliponaxis": false
+    },
+    {
+      "type": "bar",
+      "name": "HellaSwag",
+      "x": [
+        "Default",
+        "Ending only",
+        "Shuffled",
+        "Shuffled +<br>ending only"
+      ],
+      "y": [
+        46.7,
+        41.4,
+        36.2,
+        31.6
+      ],
+      "marker": {
+        "color": "#b45a32"
+      },
+      "text": [
+        "46.7",
+        "41.4",
+        "36.2",
+        "31.6"
+      ],
+      "textposition": "outside",
+      "cliponaxis": false
+    }
+  ],
+  "layout": {
+    "barmode": "group",
+    "yaxis": {
+      "title": {
+        "text": "Accuracy (%)"
+      },
+      "range": [
+        0,
+        100
+      ]
+    },
+    "xaxis": {
+      "automargin": true
+    },
+    "showlegend": true,
+    "legend": {
+      "orientation": "h",
+      "y": 1.16,
+      "x": 0.05
+    },
+    "margin": {
+      "l": 100,
+      "r": 35,
+      "t": 55,
+      "b": 100
+    }
+  },
+  "config": {
+    "displayModeBar": false,
+    "responsive": true
+  }
+}

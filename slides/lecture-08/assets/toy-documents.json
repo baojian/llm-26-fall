@@ -1,0 +1,12 @@
+{
+  "kind": "course-authored teaching data",
+  "normalization": "Unicode NFC, CRLF/CR to LF, strip outer whitespace",
+  "records": [
+    {"id": "train-1", "split": "train", "text": "Noa reads the red book."},
+    {"id": "train-2", "split": "train", "text": "  Noa reads the red book.\r\n"},
+    {"id": "train-3", "split": "train", "text": "Noa reads the blue book."},
+    {"id": "train-4", "split": "train", "text": "The cafe\u0301 closes at six."},
+    {"id": "dev-1", "split": "dev", "text": "The café closes at six."},
+    {"id": "dev-2", "split": "dev", "text": "Noa returns the book tomorrow."}
+  ]
+}

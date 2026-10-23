@@ -1,0 +1,59 @@
+{
+  "data": [
+    {
+      "type": "bar",
+      "name": "Accuracy",
+      "x": [
+        "Raw data",
+        "Deduplicated data"
+      ],
+      "y": [
+        65.83333333333333,
+        62.5
+      ],
+      "marker": {
+        "color": [
+          "#285b8e",
+          "#b45a32"
+        ]
+      },
+      "text": [
+        "65.8",
+        "62.5"
+      ],
+      "textposition": "outside",
+      "cliponaxis": false
+    }
+  ],
+  "layout": {
+    "barmode": "group",
+    "yaxis": {
+      "title": {
+        "text": "Accuracy (%)"
+      },
+      "range": [
+        0,
+        100
+      ]
+    },
+    "xaxis": {
+      "automargin": true
+    },
+    "showlegend": false,
+    "legend": {
+      "orientation": "h",
+      "y": 1.16,
+      "x": 0.05
+    },
+    "margin": {
+      "l": 100,
+      "r": 35,
+      "t": 55,
+      "b": 100
+    }
+  },
+  "config": {
+    "displayModeBar": false,
+    "responsive": true
+  }
+}
