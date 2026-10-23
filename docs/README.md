@@ -1,5 +1,41 @@
 # Course reading pages
 
+The [course explorations](../explorations/README.md) collect instructor-authored
+investigations, one topic per folder. Start with [the same text, six
+tokenizers](../explorations/tokenizer-comparison/index.html): inspect 32 examples,
+compare token boundaries and decoding, and read the measured analysis.
+
+The [Lecture 07 board notes](lecture-07-scaling-laws/README.md) provide a
+standalone 90-minute lesson on Kaplan, Chinchilla, and Porian. The LaTeX source
+includes a step-by-step allocation derivation, original vector figures,
+worked examples, discussion answers, and an independent prediction check.
+
+The [individual project catalog](project-candidates.html) puts student-proposed
+projects first, followed by 48 suggested projects for the October 10 Lecture 05
+release. A left contents panel links the seven guidance sections and nine topic
+groups; it becomes a collapsible menu on narrow screens. The 48 candidates
+support search and filters by category, topic, and resources.
+Each candidate includes suggested readings, prerequisites, a question,
+baseline, evaluation, minimum outcome, and fallback. Compute badges distinguish
+CPU studies, one-GPU plans, and optional two-GPU plans. The compute guide also
+flags larger requirements as a poor fit for the shared pool. GPU memory is
+listed per device; total GPU-hours include every device and run.
+Students may use resources obtained outside the course pool. Every project
+requires practical or experimental work; survey-only projects are not allowed.
+The page prioritizes proposal preparation and resource choices; comparisons
+with other universities are retained in the maintenance notes. See the
+[editable data](project-candidates.json) and
+[maintenance notes](project-candidates-maintenance.md) for review status,
+source checks, upstream contribution routes, and rebuilding instructions.
+
+The [NanoGPT training speed record](nanogpt-training-speed-record.md) preserves
+the September 2026 result of reaching a fixed validation-loss target in
+39.9 seconds on eight H100 GPUs, with sources, hardware, and timing context
+for classroom discussion.
+
+The [MiMo RL archive guide](mimo-rl-archive.md) documents the public training
+history preserved for the post-training lectures and how to retrieve it.
+
 The [Lecture 01 reader](lecture-01-pre-tokenization.html) explains text
 preprocessing before tokenization. Its English and Chinese versions share
 section links, code samples, citations, and three illustrated stages:
@@ -13,11 +49,6 @@ section links, code samples, citations, and three illustrated stages:
 
 The diagrams synthesize common practices described in the lecture's sources.
 They do not assert a single mandatory order or an undisclosed company recipe.
-
-For a hands-on companion, try the voluntary
-[public tokenizer comparison](../tasks/l01-tokenization/tokenizer-comparison/instruction.md):
-predict how two published tokenizers handle the same text, measure their
-outputs, and contribute an example for class discussion.
 
 ## Source files
 

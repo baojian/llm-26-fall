@@ -57,11 +57,17 @@ before opening the PR:
 uv run python scripts/tasks.py check tasks/{{LECTURE}}/{{SLUG}} <username>
 ```
 
+Your PR also runs these public checks automatically. Open **Checks → Public
+task feedback** for the milestone report and failed cases; push to the same
+branch to try again. Passing checks does not trigger a merge.
+
 ## Rules
 
 - Standard library only unless the instruction says otherwise.
 - Use your own words and code; discussing the approach with classmates is fine.
 - PR title `{{LECTURE}}/{{SLUG}}: <username>`, body `Related to #<issue>`.
+- Open your PR by the deadline; solutions merge in one batch per task only
+  after the deadline. Public PRs and forks remain visible before merging.
 
 ## Why this matters
 

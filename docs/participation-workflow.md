@@ -9,9 +9,12 @@ submitted on [Fudan eLearning](https://elearning.fudan.edu.cn/), not here; secti
 change them. Dates come from [schedule.md](schedule.md) and the
 [course website](../index.html); change them there first, then here.
 
-Related: the Week 1 survey ([surveys/lecture-01](../surveys/lecture-01/)),
-which is the template for every weekly activity: one file per student, a
-mechanical check, nothing to leak, and a chart shown at the next lecture.
+Related: the [closed Week 1 survey archive](../tasks/l01-tokenization/llm-app-survey/README.md)
+records the first-PR activity and its results. Collection closed on September 20,
+2026, at 23:59 (Asia/Shanghai); new responses are not accepted. Accepted responses
+retain one survey participation entry, separate from coding-task correctness,
+and require no resubmission. Exercise solutions
+follow the deadline and batch rule below; public PRs are visible before merging.
 
 ## 0. Where each piece of work is submitted
 
@@ -58,42 +61,42 @@ gantt
     axisFormat %b %d
     todayMarker off
 
-    section Lectures (Wed)
+    section Lectures (Wed, except Oct 10)
     L01 Tokenization              :milestone, l01, 2026-09-09, 0d
     L02 N-gram LMs                :milestone, l02, 2026-09-16, 0d
     L03 Embeddings and PyTorch    :milestone, l03, 2026-09-23, 0d
     L04 Neural LMs and attention  :milestone, l04, 2026-09-30, 0d
-    L05 Make-up class (Sat)       :milestone, l05, 2026-10-10, 0d
-    L06 Transformer               :milestone, l06, 2026-10-14, 0d
-    L07 Pretraining and decoding  :milestone, l07, 2026-10-21, 0d
-    L08 Data preparation          :milestone, l08, 2026-10-28, 0d
-    L09 Compute and scaling       :milestone, l09, 2026-11-04, 0d
-    L10 Evaluation                :milestone, l10, 2026-11-11, 0d
-    L11 Supervised fine-tuning    :milestone, l11, 2026-11-18, 0d
-    L12 Preferences and alignment :milestone, l12, 2026-11-25, 0d
-    L13 Retrieval and RAG         :milestone, l13, 2026-12-02, 0d
-    L14 Efficient inference       :milestone, l14, 2026-12-09, 0d
-    L15 Diffusion LMs             :milestone, l15, 2026-12-16, 0d
-    L16 Agents and synthesis      :milestone, l16, 2026-12-23, 0d
+    L05 Transformer (Sat)         :milestone, l05, 2026-10-10, 0d
+    L06 Pretraining and decoding  :milestone, l06, 2026-10-14, 0d
+    L07 Data preparation          :milestone, l07, 2026-10-21, 0d
+    L08 Compute and scaling       :milestone, l08, 2026-10-28, 0d
+    L09 Evaluation                :milestone, l09, 2026-11-04, 0d
+    L10 Supervised fine-tuning    :milestone, l10, 2026-11-11, 0d
+    L11 Preferences and alignment :milestone, l11, 2026-11-18, 0d
+    L12 Retrieval and RAG         :milestone, l12, 2026-11-25, 0d
+    L13 Efficient inference       :milestone, l13, 2026-12-02, 0d
+    L14 Diffusion LMs             :milestone, l14, 2026-12-09, 0d
+    L15 Agents and tool use       :milestone, l15, 2026-12-16, 0d
+    L16 Synthesis and revision    :milestone, l16, 2026-12-23, 0d
 
     section Quizzes (in class, graded on eLearning)
     Quiz 1 :milestone, 2026-09-23, 0d
-    Quiz 2 :milestone, 2026-10-14, 0d
-    Quiz 3 :milestone, 2026-10-28, 0d
-    Quiz 4 :milestone, 2026-11-18, 0d
-    Quiz 5 :milestone, 2026-12-16, 0d
+    Quiz 2 :milestone, 2026-10-10, 0d
+    Quiz 3 :milestone, 2026-10-21, 0d
+    Quiz 4 :milestone, 2026-11-11, 0d
+    Quiz 5 :milestone, 2026-12-09, 0d
 
     section Assignments (submitted on eLearning)
     A1 Tokenization and language models :a1, 2026-09-16, 2026-09-30
-    A2                      :a2, 2026-10-14, 2026-11-04
-    A3                      :a3, 2026-11-18, 2026-12-09
+    A2                      :a2, 2026-10-10, 2026-10-31
+    A3                      :a3, 2026-11-11, 2026-12-02
 
     section Individual project (submitted on eLearning)
     Proposal due        :milestone, 2026-10-21, 0d
-    Progress update due :milestone, 2026-12-02, 0d
+    Progress update due :milestone, 2026-11-25, 0d
     Final report due    :milestone, 2026-12-30, 0d
 
-    section Weekly tasks on GitHub (issues open Wed, PRs close Tue 23:59)
+    section Weekly tasks on GitHub (issues open after class, PRs close Tue 23:59)
     W02 :t02, 2026-09-16, 2026-09-22
     W03 :t03, 2026-09-23, 2026-09-29
     W04 :t04, 2026-09-30, 2026-10-06
@@ -123,7 +126,7 @@ for the *next* week overlaps with the students' task window for *this* week.
 flowchart TB
     subgraph I[Instructor and TAs]
         direction LR
-        I1[Wed: lecture ends;\nopen 3–5 task issues\nlabelled l02-ngram + task] --> I2[Thu–Sun: prepare next lecture;\nslides, notes, notebook\nby Sun 23:59] --> I3[Mon–Tue: check and PDF the deck;\nreview and merge green PRs] --> I4[Next Wed: show the\nresults chart, 5 minutes]
+        I1[Wed: lecture ends;\nopen 3–5 task issues\nlabelled l02-ngram + task] --> I2[Thu–Sun: prepare next lecture;\nslides, notes, notebook\nby Sun 23:59] --> I3[Mon–Tue: check and PDF the deck;\nreview solution PRs] --> I5[After the task deadline:\nmerge one batch per task] --> I4[Next Wed: show the\nresults chart, 5 minutes]
     end
     subgraph S[Students]
         direction LR
@@ -138,17 +141,18 @@ flowchart TB
     S4 --> C1
     C2 -- no --> S4
     C2 -- yes --> I3
-    I3 -- merged files --> R[(tasks/l02-ngram/)]
+    I5 -- merged files --> R[(tasks/l02-ngram/)]
     R -- results script --> I4
 ```
 
-Deadlines inside one week:
+Default deadlines inside one week (a task's published deadline takes precedence):
 
 | Day | Instructor and TAs | Students |
 | --- | --- | --- |
 | Wed (lecture) | Open the lecture's task issues (labels `lNN-topic` + `task`); announce the deadline | Pick a task; comment to claim |
 | Thu–Sun | Prepare next week's lecture: slides, notes, notebook by **Sun 23:59** (a tracking issue like #39 per lecture) | Work on the task; open the PR early so CI can run |
-| Mon–Tue | Run `npm --prefix slides run check` and `pdf` on the new deck; merge green task PRs | Fix red checks; final push by **Tue 23:59** |
+| Mon–Tue | Run `npm --prefix slides run check` and `pdf` on the new deck; review task PRs without merging | Fix red checks; final push by **Tue 23:59** |
+| After the task deadline | Finish reviews, then merge one batch per task | Wait for the batch; a timely PR need not be merged by the deadline |
 | Wed (next lecture) | Regenerate the chart from `tasks/lNN-topic/`; show it | See the class result |
 
 ## 3. Life of a task issue
@@ -160,7 +164,8 @@ stateDiagram-v2
     Claimed --> InReview: PR opened with Related to #N
     InReview --> Red: CI check fails
     Red --> InReview: fix pushed to the same branch
-    InReview --> Merged: CI green and team approves
+    InReview --> Ready: checks pass and team approves
+    Ready --> Merged: deadline passed; included in the task's single batch
     Merged --> Counted: results script runs after Tue 23:59
     Counted --> [*]
     Open --> Expired: unclaimed by Tue 23:59
@@ -168,15 +173,35 @@ stateDiagram-v2
     Expired --> [*]: closed with label not-done
 ```
 
-Late PRs are merged if correct but not counted for that week. An issue is
-never closed by a student PR: PR bodies say `Related to #N`, not `Fixes #N`,
-so several students can submit to the same issue.
+**Mandatory merge policy (September 20, 2026):** exercise solutions and
+corrections merge only after the published deadline, in one batch per task.
+Review and run checks before then, but do not merge or enable auto-merge.
+Verify the current time against the matching deadline and time zone in
+`task.toml`, `instruction.md`, and the release issue; unclear deadlines block
+merging. Finish reviewing all on-time PRs, record the batch and reviewed
+commits in the task's `merge-batch.md`, and check for an existing batch before
+merging. See the [teaching-team checklist](../tasks/README.md#teaching-team-merge-solutions-once-after-the-deadline).
+
+Late submissions, later solution fixes, and exceptions need an explicit
+instructor decision naming the task and exception. A general request to merge
+student PRs does not waive the rule. Survey responses and course-material
+fixes without student exercise solutions follow their own policies.
+
+Public PRs and forks remain visible before merge. Delaying a merge keeps
+solutions off `main` during the exercise, but does not make them private.
+Use eLearning or an instructor-approved private channel when privacy is needed.
+
+A student PR never closes a shared issue: PR bodies say `Related to #N`, not
+`Fixes #N`, so several students can submit to the same issue.
 
 ## 4. Labels and naming rules (do not vary them)
 
 Every lecture activity issue carries **one lecture label and one type label**.
-Lecture labels are stable even when dates move (the Oct 7 class moved to
-Oct 10, but L05 is still L05), and zero-padding keeps them sorted.
+Lecture labels follow the numbered sequence in [schedule.md](schedule.md),
+and zero-padding keeps them sorted. Lecture 05 is the Transformer meeting on
+October 10; Lecture 16 is research synthesis and project revision. The
+[September 29 proposal](schedule-adjustment-proposal.md) records the migration
+from the earlier labels. Keep published task folders and submission paths stable.
 
 Assignment announcement issues use the `assignment` type label and the
 assignment ID in their title. Lecture labels are optional for these issues
@@ -184,7 +209,7 @@ because an assignment can cover several lectures.
 
 | Lecture labels (blue) | Type labels |
 | --- | --- |
-| `l01-tokenization`, `l02-ngram`, `l03-embeddings`, `l04-attention`, `l05-makeup`, `l06-transformer`, `l07-pretraining`, `l08-data`, `l09-scaling`, `l10-evaluation`, `l11-sft`, `l12-alignment`, `l13-rag`, `l14-inference`, `l15-diffusion`, `l16-agents` | `task` (student exercise, many submissions), `assignment` (graded assignment announcements and deadlines; submissions go through eLearning), `proposal` (a task suggested by a student through the issue form; relabelled `task` when accepted), `help wanted` (one student, improves the repo), `bug`, `figure`, `survey`, `prep` (teaching team's own lecture preparation, e.g. #39), `project` (teaching-team tracking only; project deliverables go through [eLearning](https://elearning.fudan.edu.cn/)), `not-done` |
+| `l01-tokenization`, `l02-ngram`, `l03-embeddings`, `l04-attention`, `l05-transformer`, `l06-pretraining`, `l07-data`, `l08-scaling`, `l09-evaluation`, `l10-sft`, `l11-alignment`, `l12-rag`, `l13-inference`, `l14-diffusion`, `l15-agents`, `l16-synthesis` | `task` (student exercise, many submissions), `assignment` (graded assignment announcements and deadlines; submissions go through eLearning), `proposal` (a task suggested by a student through the issue form; relabelled `task` when accepted), `help wanted` (one student, improves the repo), `bug`, `figure`, `survey`, `prep` (teaching team's own lecture preparation, e.g. #39), `project` (teaching-team tracking only; project deliverables go through [eLearning](https://elearning.fudan.edu.cn/)), `not-done` |
 
 For weekly tasks, use the following naming and submission rules:
 
@@ -205,9 +230,10 @@ An accepted proposal is credited in the task's `instruction.md`.
 
 Privacy: GitHub username only, no real names or student IDs; the same rule as
 the survey. Quizzes, assignments A1–A3, and the individual project are
-submitted on [Fudan eLearning](https://elearning.fudan.edu.cn/), never through GitHub, because their solutions
-are shared across students; weekly tasks are public because every answer
-differs (see section 0).
+submitted on [Fudan eLearning](https://elearning.fudan.edu.cn/), never through GitHub,
+because those submissions must remain private. Weekly participation tasks
+use public PRs, which may contain overlapping solutions; the batch rule
+delays their publication on `main` (see section 0).
 
 ## 5. Kinds of task that check themselves
 
@@ -229,7 +255,9 @@ Aim for at most one review-heavy task per week.
    unchanged; scripts and CI depend on them.
 3. Recreate the lecture and type labels from section 4 (rename the lecture
    slugs if topics change) and one milestone per lecture.
-4. Re-run the survey flow in Week 1 as the first PR exercise; the results
-   script `scripts/survey_results.py` shows the closed loop.
+4. Create a new survey with its own collection issue and deadline for the next
+   semester. Keep the Fall 2026 archive closed and preserve its accepted files.
+   `scripts/survey_results.py` currently reads that archive; use the new survey
+   paths explicitly when preparing another collection.
 5. Open a lecture-preparation issue per week for the instructor with the
    Sunday 23:59 deadline (issue #39 is the first one).

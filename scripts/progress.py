@@ -1,6 +1,6 @@
 """Build the student progress board from merged task submissions.
 
-Runs every task's checker, reads the survey responses, optionally counts
+Runs every task's checker, reads the archived survey responses, optionally counts
 merged pull requests through ``gh``, and writes ``tasks/PROGRESS.md`` and
 ``tasks/progress.svg``. Usernames listed in ``tasks/.progress-optout`` are left
 off the board.
@@ -28,9 +28,10 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts import tasks as task_tools  # noqa: E402
+from scripts.survey_results import SURVEY  # noqa: E402
 
 TASKS = ROOT / "tasks"
-SURVEY_RESPONSES = ROOT / "surveys/lecture-01/responses"
+SURVEY_RESPONSES = SURVEY / "responses"
 REPO = "baojian/llm-26-fall"
 BADGES = [
     ("🥇", "first merged PR", lambda s: (s.merged_prs or 0) >= 1 or s.submitted >= 1 or s.survey),

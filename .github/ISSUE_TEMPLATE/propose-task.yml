@@ -17,18 +17,18 @@ body:
         - l02-ngram
         - l03-embeddings
         - l04-attention
-        - l05-makeup
-        - l06-transformer
-        - l07-pretraining
-        - l08-data
-        - l09-scaling
-        - l10-evaluation
-        - l11-sft
-        - l12-alignment
-        - l13-rag
-        - l14-inference
-        - l15-diffusion
-        - l16-agents
+        - l05-transformer
+        - l06-pretraining
+        - l07-data
+        - l08-scaling
+        - l09-evaluation
+        - l10-sft
+        - l11-alignment
+        - l12-rag
+        - l13-inference
+        - l14-diffusion
+        - l15-agents
+        - l16-synthesis
     validations:
       required: true
   - type: input

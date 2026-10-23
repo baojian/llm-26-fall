@@ -1,5 +1,15 @@
 # Teaching with GitHub: semester participation plan
 
+> **Historical proposal, superseded.** Follow the current
+> [participation workflow](participation-workflow.md) and course website.
+> The lecture dates and topics, assessment weights, public project submission
+> plan, early merge target, and automatic late-merge policy below are not current
+> instructions. Use the [revised schedule](schedule.md) for the October 10
+> Transformer meeting and the later lecture sequence.
+> Student exercise solutions merge only after their published deadline, in
+> one batch per task; public PRs remain visible before merging. Graded
+> assignments and project deliverables are submitted privately through eLearning.
+
 Review draft dated September 10, 2026. This plan describes how the course uses
 GitHub so that students participate every week and leave the course with
 skills they will use in research and industry: working from a fork, writing a
@@ -104,7 +114,8 @@ These are the habits a research lab or an engineering team expects on day one.
 1. `CONTRIBUTING.md` at the repo root: the weekly rhythm, filename and title
    rules, the "no `Closes #N`" rule, privacy rule (GitHub username only, no
    real names or student IDs), and how to claim a task. The survey guide in
-   `surveys/lecture-01/README.md` is most of this text already.
+   [Lecture 01 survey archive](../tasks/l01-tokenization/llm-app-survey/README.md)
+   now records that completed first-PR activity.
 2. `.github/ISSUE_TEMPLATE/`: `weekly-report.md` (for the teaching team),
    `claimable-task.md`, and `bug.md`.
 3. `.github/pull_request_template.md`: three checkboxes (only my file changed,
@@ -171,4 +182,6 @@ These are the habits a research lab or an engineering team expects on day one.
 2. Open the Week 2 report issue at the end of that lecture and demonstrate the
    command-line PR live, as the survey was demonstrated in Week 1.
 3. Show the Week 1 survey chart in the first five minutes of Week 2.
-4. Merge the two open survey PRs (#34, #36) and close #6 once responses stop.
+4. Historical survey follow-up: collection issue #6 is closed, outstanding
+   responses were resolved, and the accepted work is in the
+   [survey archive](../tasks/l01-tokenization/llm-app-survey/README.md).

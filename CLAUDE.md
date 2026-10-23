@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-Course materials for **Natural Language Processing and Large Language Models** (CS40008.01) at Fudan University, Fall 2026. The public course website is <https://baojian.github.io/llm-26-fall/>. All content (lecture notes, slides, notebooks, docs) is written in English, even though the course is taught in Chinese. The first class was September 9, 2026; the course runs on Wednesdays through December 23, with October 7 skipped for National Day (see `docs/schedule.md`).
+Course materials for **Natural Language Processing and Large Language Models** (CS40008.01) at Fudan University, Fall 2026. The public course website is <https://baojian.github.io/llm-26-fall/>. All content (lecture notes, slides, notebooks, docs) is written in English, even though the course is taught in Chinese. The first class was September 9, 2026; the course runs on Wednesdays through December 23, with the October 7 meeting moved to Saturday, October 10 for National Day (see `docs/schedule.md`). Lecture 05 covers Transformers on October 10; Lecture 16 covers research synthesis and project revision on December 23.
 
 ## Repository layout
 
@@ -12,13 +12,13 @@ Course materials for **Natural Language Processing and Large Language Models** (
 index.html                 Course website (GitHub Pages, served as-is from main)
 assets/                    translations.js (zh strings) and local-materials.js for the website
 docs/schedule.md           Class periods and the dated week table (source of truth for dates)
-docs/course-revision.md    Instructor's syllabus and assessment review draft (Sep 7, 2026)
+docs/course-revision.md    Instructor's syllabus and assessment review draft (Sep 29, 2026)
 papers/                    Course reading PDFs with a provenance README
 scripts/slides.py          `new`, `serve`, `vendor` commands for the slide framework
 scripts/notebooks.py       JupyterLab launcher used by `serve` (opens copies under workspace/)
 slides/                    Reveal.js lecture framework: shared/, template/, example/, lecture-01/, vendor/
 slides/tools/              Playwright-based checkers (check.mjs, check-notebook.mjs), run via npm
-surveys/lecture-01/        Student LLM-app survey: README, template, responses/<username>.md
+tasks/l01-tokenization/llm-app-survey/  Closed survey archive and results
 tests/                     pytest suite for scripts, notebooks, and the lecture-01 material
 workspace/                 Student scratch area, git-ignored except its README
 ```
@@ -32,7 +32,7 @@ A single hand-written page with inline CSS and vanilla JS. No build step; `.noje
 - **Bilingual by dictionary, not by paired spans.** Visible text is written once in English. `assets/translations.js` maps each English string to Chinese; the page script walks text nodes and swaps them when the EN/中文 button sets `zh` (remembered in `localStorage` as `course-language`). When you change any English text, update the matching key in `assets/translations.js`, or the Chinese view silently falls back to English. There is no `?lang=` URL parameter.
 - The schedule table highlights the current week from each row's `data-start` Sunday date. Keep those dates, the Coursework cards (quiz and assignment weeks), and `docs/schedule.md` consistent.
 - Material links in the table carry `data-local-path`; `assets/local-materials.js` rewrites them to the local preview server when the page is opened from `localhost`. Slide and notebook links point at `http://127.0.0.1:8000`, so students must run `scripts/slides.py serve` first.
-- The live assessment split is quizzes 10%, assignments 45%, individual project 45% (`index.html`, legend near the Assessment section). `docs/course-revision.md` still shows an older 5/15/40/40 proposal; the website is authoritative for students.
+- The live assessment split is quizzes 10%, assignments 45%, individual project 45% (`index.html`, legend near the Assessment section). `docs/course-revision.md` follows those weights; `docs/schedule-adjustment-proposal.md` records the proposed date changes for instructor review. The published website is authoritative for students.
 
 ## Python environment (uv)
 
@@ -67,9 +67,57 @@ npm --prefix slides run check:notebook -- http://127.0.0.1:8000 lecture-01   # n
 
 Output goes to the ignored `slides/.checks/`. Vendored Reveal.js, KaTeX, and Plotly live in `slides/vendor/` and are tracked on purpose so GitHub Pages needs no build; refresh them only with `uv run python scripts/slides.py vendor` after `npm ci`.
 
-## Student survey pull requests
+## Task Solution Merge Policy — Mandatory
 
-Students submit `surveys/lecture-01/responses/<github-username>.md` through PRs titled `survey: <username>` (instructions in `surveys/lecture-01/README.md`). When asked to review or triage these PRs, check three things: the file is inside `responses/` with the lowercase username as its name, the `GitHub username:` line is filled in, and an app name is supplied if Other is selected. Any number of selections, including zero, is valid. The instructor removed the two-app limit on September 16, 2026; include responses with more than two selections in the results. Students often leave `YOUR_USERNAME` in place or put the file at the repo root. Do not fix such mistakes yourself, even after merge; the survey is a first-PR exercise, so draft a comment asking the student to correct it in a follow-up PR. PRs should say `Related to #6`, never `Fixes #6`, so the shared issue stays open.
+Instructor decision, September 20, 2026: merge student exercise solutions
+**only after the task's published deadline, in one batch per task**.
+
+- Apply this to every PR containing a student task solution or a correction
+  to one, regardless of its title, author, or file location. Review and run
+  checks before the deadline, but do not merge or enable auto-merge.
+- Before any merge, read the task's `task.toml`, `instruction.md`, and release
+  issue; verify that their deadlines agree and that the current time is
+  strictly after the cutoff in its stated time zone. A missing, ambiguous,
+  or conflicting deadline blocks merging. Passing tests does not waive this
+  rule. The three released Lecture 01 exercises cannot merge before
+  **September 28, 2026, 00:00 (Asia/Shanghai, UTC+08:00)**.
+- After the deadline, review all on-time PRs for that task before starting
+  its single batch. Resolve outstanding reviews or obtain the instructor's
+  decision on them first. Keep individual student PRs for attribution; merge
+  the accepted PRs together in that batch, then refresh the progress board.
+- Record the batch's PR numbers, reviewed head commits, deadline, and status
+  in the task's `merge-batch.md` through a PR before merging solutions;
+  record completion afterward. Check this record and the task's merge
+  history before starting. An interrupted batch may resume; do not start a
+  second batch or add submissions to a completed batch.
+- Late submissions, later solution fixes, and any exception to the deadline
+  or single-batch rule require an explicit instructor decision naming the
+  task and exception. A general request to "merge student PRs" does not
+  override this policy. Do not change a deadline to bypass it.
+
+Survey responses and course-material fixes containing no student exercise
+solutions follow their own review rules. Public PRs and forks remain visible
+before merge; this policy delays publication on `main`, not access to the
+PRs. Work requiring private submissions must use eLearning or another
+instructor-approved private channel.
+
+## Archived Lecture 01 survey
+
+Collection issue #6 is closed. The deadline was **September 20, 2026, 23:59
+(Asia/Shanghai, UTC+08:00)**; on-time PRs were reviewed even when merged later.
+After those reviews, #139 moved the accepted survey on September 21 to
+`tasks/l01-tokenization/llm-app-survey/`. The instructor then removed the old
+`surveys/` directory; its closure notice and migration information are retained
+in the archive README. Keep the survey in this archive.
+
+Keep accepted response contents, filenames, totals, and participation intact.
+Do not accept new responses or ask accepted students to resubmit.
+Any number of app selections, including zero or more than two, is
+valid under the instructor's September 16 policy. The archive has a separate
+Markdown-response tally, no Python task interface, and one survey participation
+entry per student; it does not affect coding-task correctness. Regenerate the
+archive results with `uv run python scripts/survey_results.py` and participation
+with `uv run python scripts/progress.py`.
 
 ## Conventions
 

@@ -1,7 +1,6 @@
 """Check the survey tally and keep the committed results in sync with the responses."""
 
 import re
-from pathlib import Path
 
 from scripts import survey_results as survey
 
@@ -45,7 +44,7 @@ def test_bars_are_sorted_by_count_then_listing_order():
 
 
 def test_committed_results_match_the_responses():
-    """Rerun scripts/survey_results.py after merging survey PRs."""
+    """The archive results must still match every accepted response."""
     counts, responses = survey.tally(survey.SURVEY / "responses")
     readme = (survey.SURVEY / "README.md").read_text(encoding="utf-8")
     block = readme[readme.index(survey.START):readme.index(survey.END)]

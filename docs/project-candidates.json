@@ -1,0 +1,2577 @@
+{
+  "title": "Individual project candidates",
+  "release_date": "2026-10-10",
+  "verified_on": "2026-10-09",
+  "categories": [
+    "Student-proposed project",
+    "Case study",
+    "Paper replication",
+    "New task",
+    "Research problem"
+  ],
+  "topics": [
+    "Student-defined topic",
+    "Data and tokenization",
+    "Adaptation and training",
+    "Reasoning and evaluation",
+    "Retrieval and evidence",
+    "Agents and memory",
+    "Efficient inference",
+    "Interpretability and language",
+    "Diffusion and multimodal",
+    "Open-source contributions"
+  ],
+  "compute": {
+    "CPU": "A laptop with roughly 8–16 GB RAM. Use bounded data and cache repeated work. The minimum study needs no GPU; time a small CPU pilot before fixing the scope.",
+    "Inference": "Start with one shared GPU, usually 12–24 GB, or a suitable local quantized runtime. Reuse a released 0.6B–2B model, cap context/output lengths, and cache generations. A card may also offer a two-GPU plan. Its total GPU-hours include every device, comparison, and rerun.",
+    "Training": "Start with one shared GPU, usually 16–24 GB. Limit training to a 5M–30M teaching model or adapters on a 0.6B checkpoint. Where a card offers two GPUs, independent seeds or configurations can run in parallel. Count all devices and runs toward the same total GPU-hours; pilot memory and time first.",
+    "Propose a budget": "Describe a CPU, one-GPU, two-GPU, or larger setup, separating the minimum from optional hardware. Identify CPU cores/RAM, GPU models and memory per device, storage, total runs, total GPU-hours, and a smaller fallback. State which resources you can obtain yourself and which you would request from the shared course pool."
+  },
+  "featured": [
+    "student-proposed-project",
+    "multilingual-tokenizer-audit",
+    "adaptive-byte-patches",
+    "verifier-reward-quality",
+    "hybrid-retrieval",
+    "ngram-overlap-audit",
+    "science-verifier-repair"
+  ],
+  "sources": {
+    "qwen35": {
+      "title": "Qwen3.5 small model release",
+      "authors": "Qwen Team",
+      "year": "2026",
+      "url": "https://huggingface.co/Qwen/Qwen3.5-0.8B",
+      "kind": "Model card"
+    },
+    "qwen3": {
+      "title": "Qwen3-0.6B",
+      "authors": "Qwen Team",
+      "year": "2025",
+      "url": "https://huggingface.co/Qwen/Qwen3-0.6B",
+      "kind": "Model card"
+    },
+    "fineweb2": {
+      "title": "FineWeb2: One Pipeline to Scale Them All — Adapting Pre-Training Data Processing to Every Language",
+      "authors": "Penedo et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2506.20920",
+      "artifact": "https://huggingface.co/datasets/HuggingFaceFW/fineweb-2",
+      "kind": "Paper"
+    },
+    "numbers": {
+      "title": "Language Models Encode Numbers Using Digit Representations in Base 10",
+      "authors": "Levy and Geva",
+      "year": "NAACL 2025",
+      "url": "https://aclanthology.org/2025.naacl-short.33/",
+      "kind": "Paper"
+    },
+    "blt": {
+      "title": "Byte Latent Transformer: Patches Scale Better Than Tokens",
+      "authors": "Pagnoni et al.",
+      "year": "2024 preprint / ACL 2025",
+      "url": "https://github.com/facebookresearch/blt",
+      "kind": "Paper and official code"
+    },
+    "engram": {
+      "title": "Conditional Memory via Scalable Lookup: A New Axis of Sparsity for Large Language Models",
+      "authors": "Cheng et al.",
+      "year": "2026 preprint",
+      "url": "https://arxiv.org/abs/2601.07372",
+      "kind": "Paper",
+      "artifact": "https://github.com/deepseek-ai/Engram"
+    },
+    "byte-engram": {
+      "title": "Tokenizer-Agnostic Engram Module",
+      "authors": "Lim and Chieu",
+      "year": "2026 preprint",
+      "url": "https://arxiv.org/abs/2607.29065",
+      "kind": "Paper"
+    },
+    "smollm3": {
+      "title": "SmolLM3-3B: open training recipe and model",
+      "authors": "Hugging Face Smol Models team",
+      "year": "2025",
+      "url": "https://huggingface.co/HuggingFaceTB/SmolLM3-3B",
+      "kind": "Model card",
+      "artifact": "https://huggingface.co/datasets/HuggingFaceTB/smoltalk2"
+    },
+    "classifiers": {
+      "title": "Generative or Discriminative? Revisiting Text Classification in the Era of Transformers",
+      "authors": "Kasa et al.",
+      "year": "EMNLP 2025",
+      "url": "https://aclanthology.org/2025.emnlp-main.486/",
+      "kind": "Paper",
+      "artifact": "https://github.com/amazon-science/Generative-vs-Discriminative-Classifiers"
+    },
+    "drgrpo": {
+      "title": "Understanding R1-Zero-Like Training: A Critical Perspective",
+      "authors": "Liu et al.",
+      "year": "2025 preprint",
+      "url": "https://arxiv.org/abs/2503.20783",
+      "kind": "Paper",
+      "artifact": "https://github.com/sail-sg/understand-r1-zero"
+    },
+    "s1": {
+      "title": "s1: Simple test-time scaling",
+      "authors": "Muennighoff et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2501.19393",
+      "kind": "Paper",
+      "artifact": "https://github.com/simplescaling/s1"
+    },
+    "early-exit": {
+      "title": "When Is Thinking Enough? Early Exit via Sufficiency Assessment for Efficient Reasoning",
+      "authors": "Xiang et al.",
+      "year": "2026; arXiv lists ACL 2026",
+      "url": "https://arxiv.org/abs/2604.06787",
+      "kind": "Paper"
+    },
+    "faithfulness": {
+      "title": "Measuring Chain of Thought Faithfulness by Unlearning Reasoning Steps",
+      "authors": "Tutek et al.",
+      "year": "EMNLP 2025",
+      "url": "https://aclanthology.org/2025.emnlp-main.504/",
+      "kind": "Paper",
+      "artifact": "https://github.com/technion-cs-nlp/parametric-faithfulness"
+    },
+    "faithfulness-controls": {
+      "title": "Disentangling the Effects of Unlearning in Measuring Parametric Faithfulness of Chain-of-Thought",
+      "authors": "Mitsuhashi et al.",
+      "year": "ACL SRW 2026",
+      "url": "https://aclanthology.org/2026.acl-srw.36/",
+      "kind": "Paper"
+    },
+    "judgebench": {
+      "title": "JudgeBench: A Benchmark for Evaluating LLM-based Judges",
+      "authors": "Tan et al.",
+      "year": "2024 preprint / ICLR 2025",
+      "url": "https://arxiv.org/abs/2410.12784",
+      "kind": "Paper",
+      "artifact": "https://github.com/ScalerLab/JudgeBench"
+    },
+    "livecode": {
+      "title": "LiveCodeBench: Holistic and Contamination Free Evaluation of Large Language Models for Code",
+      "authors": "Jain et al.",
+      "year": "2024 preprint; versioned releases through 2025+",
+      "url": "https://arxiv.org/abs/2403.07974",
+      "kind": "Paper",
+      "artifact": "https://github.com/LiveCodeBench/LiveCodeBench"
+    },
+    "qwen-embedding": {
+      "title": "Qwen3 Embedding: Advancing Text Embedding and Reranking Through Foundation Models",
+      "authors": "Zhang et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2506.05176",
+      "kind": "Paper",
+      "artifact": "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B"
+    },
+    "mmteb": {
+      "title": "MMTEB: Massive Multilingual Text Embedding Benchmark",
+      "authors": "Enevoldsen et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2502.13595",
+      "kind": "Paper",
+      "artifact": "https://github.com/embeddings-benchmark/mteb"
+    },
+    "sufficient": {
+      "title": "Sufficient Context: A New Lens on Retrieval Augmented Generation Systems",
+      "authors": "Joren et al.",
+      "year": "2024 preprint / ICLR 2025",
+      "url": "https://arxiv.org/abs/2411.06037",
+      "kind": "Paper"
+    },
+    "csir": {
+      "title": "Code-Switching Information Retrieval: Benchmarks, Analysis, and the Limits of Current Retrievers",
+      "authors": "Zeng et al.",
+      "year": "Findings of ACL 2026",
+      "url": "https://aclanthology.org/2026.findings-acl.636/",
+      "kind": "Paper"
+    },
+    "bfcl": {
+      "title": "The Berkeley Function Calling Leaderboard: From Tool Use to Agentic Evaluation of Large Language Models",
+      "authors": "Patil et al.",
+      "year": "ICML 2025; V4 evaluation",
+      "url": "https://gorilla.cs.berkeley.edu/leaderboard",
+      "kind": "Paper, code and benchmark links"
+    },
+    "simplemem": {
+      "title": "SimpleMem: Efficient Lifelong Memory for LLM Agents",
+      "authors": "Liu et al.",
+      "year": "2026 preprint",
+      "url": "https://arxiv.org/abs/2601.02553",
+      "kind": "Paper"
+    },
+    "agentdyn": {
+      "title": "AgentDyn: Are Your Agent Security Defenses Deployable in Real-World Dynamic Environments?",
+      "authors": "Li et al.",
+      "year": "2026 preprint; repository title",
+      "url": "https://github.com/SaFo-Lab/AgentDyn",
+      "kind": "Official code and paper links"
+    },
+    "clm": {
+      "title": "Context Language Models",
+      "authors": "Shao et al.",
+      "year": "September 2026 preprint",
+      "url": "https://arxiv.org/abs/2609.37725v1",
+      "kind": "Paper",
+      "artifact": "https://github.com/facebookresearch/context-language-models/tree/18dc11115f50f261233c5bba7937834491e307e8"
+    },
+    "llamacpp": {
+      "title": "llama.cpp: local inference and quantization",
+      "authors": "llama.cpp contributors",
+      "year": "Ongoing software; checked October 2026",
+      "url": "https://github.com/ggml-org/llama.cpp",
+      "kind": "Official software"
+    },
+    "turboquant": {
+      "title": "TurboQuant: Online Vector Quantization with Near-optimal Distortion Rate",
+      "authors": "Zandieh et al.",
+      "year": "2025 preprint / ICLR 2026",
+      "url": "https://arxiv.org/abs/2504.19874",
+      "kind": "Paper"
+    },
+    "eagle3": {
+      "title": "EAGLE-3: Scaling up Inference Acceleration of Large Language Models via Training-Time Test",
+      "authors": "Li et al.",
+      "year": "NeurIPS 2025",
+      "url": "https://github.com/SafeAILab/EAGLE",
+      "kind": "Paper and official code"
+    },
+    "nsa": {
+      "title": "Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention",
+      "authors": "Yuan et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2502.11089",
+      "kind": "Paper",
+      "artifact": "https://github.com/fla-org/native-sparse-attention"
+    },
+    "qwen-scope": {
+      "title": "Qwen-Scope: Turning Sparse Features into Development Tools for Large Language Models",
+      "authors": "Deng et al. / Qwen Team",
+      "year": "2026 preprint and release",
+      "url": "https://arxiv.org/abs/2605.11887",
+      "kind": "Paper",
+      "artifact": "https://huggingface.co/Qwen/SAE-Res-Qwen3.5-2B-Base-W32K-L0_100"
+    },
+    "incline": {
+      "title": "Bridging the Language Gaps in Large Language Models with Inference-Time Cross-Lingual Intervention",
+      "authors": "Wang et al.",
+      "year": "ACL 2025",
+      "url": "https://aclanthology.org/2025.acl-long.270/",
+      "kind": "Paper",
+      "artifact": "https://github.com/weixuan-wang123/INCLINE"
+    },
+    "fairness": {
+      "title": "Fairness through Difference Awareness: Measuring Desired Group Discrimination in LLMs",
+      "authors": "Wang et al.",
+      "year": "ACL 2025",
+      "url": "https://aclanthology.org/2025.acl-long.341/",
+      "kind": "Paper",
+      "artifact": "https://github.com/Angelina-Wang/difference_awareness"
+    },
+    "formal": {
+      "title": "Between Circuits and Chomsky: Pre-pretraining on Formal Languages Imparts Linguistic Biases",
+      "authors": "Hu et al.",
+      "year": "ACL 2025",
+      "url": "https://aclanthology.org/2025.acl-long.478/",
+      "kind": "Paper",
+      "artifact": "https://github.com/michahu/pre-pretraining"
+    },
+    "infinigram": {
+      "title": "Infini-gram mini: Exact n-gram Search at the Internet Scale with FM-Index",
+      "authors": "Xu et al.",
+      "year": "EMNLP 2025",
+      "url": "https://aclanthology.org/2025.emnlp-main.1268/",
+      "kind": "Paper",
+      "artifact": "https://infini-gram-mini.io/"
+    },
+    "dllm": {
+      "title": "dLLM: Simple Diffusion Language Modeling",
+      "authors": "Zhou et al.",
+      "year": "2026 preprint; Tiny-A2D released December 2025",
+      "url": "https://arxiv.org/abs/2602.22661",
+      "kind": "Paper",
+      "artifact": "https://github.com/ZHZisZZ/dllm"
+    },
+    "block-diffusion": {
+      "title": "Block Diffusion: Interpolating Between Autoregressive and Diffusion Language Models",
+      "authors": "Arriola et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2503.09573",
+      "kind": "Paper",
+      "artifact": "https://huggingface.co/dllm-hub/Qwen3-0.6B-diffusion-bd3lm-v0.1"
+    },
+    "smolvlm": {
+      "title": "SmolVLM: Redefining small and efficient multimodal models",
+      "authors": "Marafioti et al.",
+      "year": "2025",
+      "url": "https://arxiv.org/abs/2504.05299",
+      "kind": "Paper",
+      "artifact": "https://huggingface.co/HuggingFaceTB/SmolVLM-500M-Instruct"
+    },
+    "vl-embedding": {
+      "title": "Qwen3-VL-Embedding-2B",
+      "authors": "Qwen Team",
+      "year": "2026",
+      "url": "https://huggingface.co/Qwen/Qwen3-VL-Embedding-2B",
+      "kind": "Model card and technical report"
+    },
+    "asr": {
+      "title": "Qwen3-ASR Technical Report",
+      "authors": "Shi et al.",
+      "year": "2026 preprint",
+      "url": "https://arxiv.org/abs/2601.21337",
+      "kind": "Paper",
+      "artifact": "https://github.com/QwenLM/Qwen3-ASR"
+    },
+    "skillsbench": {
+      "title": "SkillsBench: agent skills evaluation",
+      "authors": "SkillsBench maintainers",
+      "year": "2026",
+      "url": "https://github.com/benchflow-ai/skillsbench",
+      "kind": "Official benchmark and contribution guide"
+    },
+    "tb-science": {
+      "title": "Terminal-Bench-Science: contribution requirements",
+      "authors": "Harbor / Terminal-Bench-Science maintainers",
+      "year": "Checked October 9, 2026",
+      "url": "https://github.com/harbor-framework/terminal-bench-science/blob/8ef49c8a64cf57f9913755b41ed6a0fe1a667192/CONTRIBUTING.md",
+      "kind": "Versioned contribution guide",
+      "artifact": "https://github.com/harbor-framework/terminal-bench-science"
+    },
+    "tb-rubric": {
+      "title": "Terminal-Bench-Science task proposal rubric",
+      "authors": "Terminal-Bench-Science maintainers",
+      "year": "Checked October 9, 2026",
+      "url": "https://github.com/harbor-framework/terminal-bench-science/blob/8ef49c8a64cf57f9913755b41ed6a0fe1a667192/rubrics/task-proposal.md",
+      "kind": "Versioned rubric"
+    },
+    "ale": {
+      "title": "Agents' Last Exam",
+      "authors": "Sun et al.",
+      "year": "2026 preprint",
+      "url": "https://arxiv.org/abs/2606.05405",
+      "kind": "Paper",
+      "artifact": "https://github.com/rdi-berkeley/agents-last-exam"
+    },
+    "hle": {
+      "title": "Humanity's Last Exam",
+      "authors": "Phan et al.",
+      "year": "2025 preprint / Nature 2026; rolling updates",
+      "url": "https://lastexam.ai/",
+      "kind": "Official paper, dataset and submission routes",
+      "artifact": "https://github.com/centerforaisafety/hle"
+    },
+    "cs336-scaling": {
+      "title": "CS336 Assignment 3: Scaling",
+      "authors": "Stanford CS336 course staff",
+      "year": "Spring 2026",
+      "url": "https://github.com/stanford-cs336/assignment3-scaling",
+      "kind": "Official assignment and local-training code"
+    },
+    "cs336-systems": {
+      "title": "CS336 Assignment 2: Systems",
+      "authors": "Stanford CS336 course staff",
+      "year": "Spring 2026",
+      "url": "https://github.com/stanford-cs336/assignment2-systems",
+      "kind": "Official assignment and starter code"
+    },
+    "cs224n-projects": {
+      "title": "CS224N project gallery: clarification for code generation",
+      "authors": "Stanford CS224N students; clarification project by Alexandra Suriya Kim, Julia Xi, and Ria Garg",
+      "year": "Winter 2026",
+      "url": "https://web.stanford.edu/class/cs224n/project.html",
+      "kind": "Course project listing; inspiration, not a verified research result"
+    },
+    "umd-proposal": {
+      "title": "CMSC 723 project proposal guidance",
+      "authors": "Mohit Iyyer and the UMD CMSC 723 course staff",
+      "year": "Fall 2026 course; proposal template supplied by the instructor",
+      "url": "https://www.cs.umd.edu/~miyyer/cmsc723/schedule.html",
+      "artifact": "https://www.overleaf.com/read/jrxnkfqvkjfm",
+      "artifact_label": "UMD proposal template",
+      "kind": "Course planning reference; our course requirements apply"
+    },
+    "byt5": {
+      "title": "ByT5: Towards a token-free future with pre-trained byte-to-byte models",
+      "authors": "Xue et al.",
+      "year": "2021 arXiv release",
+      "url": "https://arxiv.org/abs/2105.13626",
+      "kind": "Research paper"
+    },
+    "dedup": {
+      "title": "Deduplicating Training Data Makes Language Models Better",
+      "authors": "Lee et al.",
+      "year": "2021 arXiv release",
+      "url": "https://arxiv.org/abs/2107.06499",
+      "kind": "Research paper"
+    },
+    "setfit": {
+      "title": "Efficient Few-Shot Learning Without Prompts",
+      "authors": "Tunstall et al.",
+      "year": "2022 arXiv release",
+      "url": "https://arxiv.org/abs/2209.11055",
+      "kind": "Research paper"
+    },
+    "dpo": {
+      "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+      "authors": "Rafailov et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2305.18290",
+      "kind": "Research paper"
+    },
+    "dpo-length": {
+      "title": "Disentangling Length from Quality in Direct Preference Optimization",
+      "authors": "Park et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2403.19159",
+      "kind": "Research paper"
+    },
+    "deita": {
+      "title": "What Makes Good Data for Alignment? A Comprehensive Study of Automatic Data Selection in Instruction Tuning",
+      "authors": "Liu et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2312.15685",
+      "kind": "Research paper"
+    },
+    "deepseekmath": {
+      "title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models",
+      "authors": "Shao et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2402.03300",
+      "kind": "Research paper"
+    },
+    "step-distillation": {
+      "title": "Distilling Step-by-Step! Outperforming Larger Language Models with Less Training Data and Smaller Model Sizes",
+      "authors": "Hsieh et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2305.02301",
+      "kind": "Research paper"
+    },
+    "self-consistency": {
+      "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+      "authors": "Wang et al.",
+      "year": "2022 arXiv release",
+      "url": "https://arxiv.org/abs/2203.11171",
+      "kind": "Research paper"
+    },
+    "mtbench": {
+      "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+      "authors": "Zheng et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2306.05685",
+      "kind": "Research paper"
+    },
+    "evalplus": {
+      "title": "Is Your Code Generated by ChatGPT Really Correct? Rigorous Evaluation of Large Language Models for Code Generation",
+      "authors": "Liu et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2305.01210",
+      "kind": "Research paper"
+    },
+    "beir": {
+      "title": "BEIR: A Heterogenous Benchmark for Zero-shot Evaluation of Information Retrieval Models",
+      "authors": "Thakur et al.",
+      "year": "2021 arXiv release",
+      "url": "https://arxiv.org/abs/2104.08663",
+      "kind": "Research paper"
+    },
+    "lost-middle": {
+      "title": "Lost in the Middle: How Language Models Use Long Contexts",
+      "authors": "Liu et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2307.03172",
+      "kind": "Research paper"
+    },
+    "matryoshka": {
+      "title": "Matryoshka Representation Learning",
+      "authors": "Kusupati et al.",
+      "year": "2022 arXiv release",
+      "url": "https://arxiv.org/abs/2205.13147",
+      "kind": "Research paper"
+    },
+    "self-refine": {
+      "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+      "authors": "Madaan et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2303.17651",
+      "kind": "Research paper"
+    },
+    "reflexion": {
+      "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+      "authors": "Shinn et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2303.11366",
+      "kind": "Research paper"
+    },
+    "memgpt": {
+      "title": "MemGPT: Towards LLMs as Operating Systems",
+      "authors": "Packer et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2310.08560",
+      "kind": "Research paper"
+    },
+    "agentdojo": {
+      "title": "AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents",
+      "authors": "Debenedetti et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2406.13352",
+      "kind": "Research paper"
+    },
+    "kivi": {
+      "title": "KIVI: A Tuning-Free Asymmetric 2bit Quantization for KV Cache",
+      "authors": "Liu et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2402.02750",
+      "kind": "Research paper"
+    },
+    "speculative": {
+      "title": "Fast Inference from Transformers via Speculative Decoding",
+      "authors": "Leviathan et al.",
+      "year": "2022 arXiv release",
+      "url": "https://arxiv.org/abs/2211.17192",
+      "kind": "Research paper"
+    },
+    "longformer": {
+      "title": "Longformer: The Long-Document Transformer",
+      "authors": "Beltagy et al.",
+      "year": "2020 arXiv release",
+      "url": "https://arxiv.org/abs/2004.05150",
+      "kind": "Research paper"
+    },
+    "sae-evaluation": {
+      "title": "Scaling and evaluating sparse autoencoders",
+      "authors": "Gao et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2406.04093",
+      "kind": "Research paper"
+    },
+    "mkqa": {
+      "title": "MKQA: A Linguistically Diverse Benchmark for Multilingual Open Domain Question Answering",
+      "authors": "Longpre et al.",
+      "year": "2020 arXiv release",
+      "url": "https://arxiv.org/abs/2007.15207",
+      "kind": "Research paper"
+    },
+    "bbq": {
+      "title": "BBQ: A Hand-Built Bias Benchmark for Question Answering",
+      "authors": "Parrish et al.",
+      "year": "2021 arXiv release",
+      "url": "https://arxiv.org/abs/2110.08193",
+      "kind": "Research paper"
+    },
+    "babylm": {
+      "title": "Call for Papers — The BabyLM Challenge: Sample-efficient pretraining on a developmentally plausible corpus",
+      "authors": "Warstadt et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2301.11796",
+      "kind": "Challenge proposal"
+    },
+    "mdlm": {
+      "title": "Simple and Effective Masked Diffusion Language Models",
+      "authors": "Sahoo et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2406.07524",
+      "kind": "Research paper"
+    },
+    "whisper": {
+      "title": "Robust Speech Recognition via Large-Scale Weak Supervision",
+      "authors": "Radford et al.",
+      "year": "2022 arXiv release",
+      "url": "https://arxiv.org/abs/2212.04356",
+      "kind": "Research paper"
+    },
+    "voyager": {
+      "title": "Voyager: An Open-Ended Embodied Agent with Large Language Models",
+      "authors": "Wang et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2305.16291",
+      "kind": "Research paper"
+    },
+    "scienceagentbench": {
+      "title": "ScienceAgentBench: Toward Rigorous Assessment of Language Agents for Data-Driven Scientific Discovery",
+      "authors": "Chen et al.",
+      "year": "2024 arXiv release",
+      "url": "https://arxiv.org/abs/2410.05080",
+      "kind": "Research paper"
+    },
+    "agentbench": {
+      "title": "AgentBench: Evaluating LLMs as Agents",
+      "authors": "Liu et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2308.03688",
+      "kind": "Research paper"
+    },
+    "chinchilla": {
+      "title": "Training Compute-Optimal Large Language Models",
+      "authors": "Hoffmann et al.",
+      "year": "2022 arXiv release",
+      "url": "https://arxiv.org/abs/2203.15556",
+      "kind": "Research paper"
+    },
+    "scaling-laws": {
+      "title": "Scaling Laws for Neural Language Models",
+      "authors": "Kaplan et al.",
+      "year": "2020 arXiv release",
+      "url": "https://arxiv.org/abs/2001.08361",
+      "kind": "Research paper"
+    },
+    "clarifygpt": {
+      "title": "ClarifyGPT: Empowering LLM-based Code Generation with Intention Clarification",
+      "authors": "Mu et al.",
+      "year": "2023 arXiv release",
+      "url": "https://arxiv.org/abs/2310.10996",
+      "kind": "Research paper"
+    },
+    "torch-compile": {
+      "title": "Introduction to torch.compile",
+      "authors": "PyTorch contributors",
+      "year": "Documentation checked October 9, 2026",
+      "kind": "Official tutorial",
+      "url": "https://docs.pytorch.org/tutorials/intermediate/torch_compile_tutorial.html"
+    },
+    "course-project": {
+      "title": "Fudan NLP and LLMs: individual-project requirements",
+      "authors": "Course staff",
+      "year": "Fall 2026",
+      "kind": "Course requirements",
+      "url": "https://baojian.github.io/llm-26-fall/#project"
+    }
+  },
+  "projects": [
+    {
+      "number": 1,
+      "id": "multilingual-tokenizer-audit",
+      "title": "Whose text costs more tokens?",
+      "topic": "Data and tokenization",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "CPU",
+      "summary": "Audit modern tokenizers on English, Chinese, code, and mixed text.",
+      "question": "Which tokenization gaps persist when document type and meaning are controlled?",
+      "scope": "Freeze 1,000 short documents from two languages and code; compare three released tokenizers including Qwen3.5. Add a 100-pair, manually checked English/Chinese parallel subset.",
+      "baseline": "Byte and character counts, plus the course BPE tokenizer. Keep normalization and documents fixed.",
+      "evaluation": "Tokens per UTF-8 byte, tokens per character, paired token counts, round-trip failures, and robustness to spaces or Unicode variants. Token counts alone do not measure model quality.",
+      "outcome": "A reproducible tokenizer audit with paired plots and 20 explained outliers.",
+      "preparation": "L01 tokenization; Python text processing and sampling.",
+      "fallback": "Use 200 documents and two tokenizers; no model inference or training is needed.",
+      "sources": [
+        "qwen35",
+        "fineweb2",
+        "byt5"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "qwen35": "Inspect a current tokenizer and its exact configuration.",
+        "fineweb2": "Plan multilingual sampling and document-quality controls.",
+        "byt5": "Understand the byte-level alternative and noise-robustness question."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Tokenizer files only; do not download model weights. Stream a small corpus sample.",
+        "note_zh": "只下载分词器文件，不下载模型权重。对小型语料样本进行流式处理。"
+      },
+      "title_zh": "谁的文本更费 token？",
+      "summary_zh": "审查现代分词器处理英语、中文、代码和混合文本时的差异。",
+      "question_zh": "控制文档类型和含义后，哪些分词差异仍然存在？"
+    },
+    {
+      "number": 2,
+      "id": "number-format-robustness",
+      "title": "Does number formatting change the answer?",
+      "topic": "Data and tokenization",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Separate numeric token boundaries from changes to the mathematical problem.",
+      "question": "Do digit grouping, leading zeros, or equivalent decimal notation systematically change small-model accuracy?",
+      "scope": "Generate 200 exact arithmetic problems with three meaning-preserving renderings. Use a 0.6B-1.7B model, at most 512 output tokens per problem.",
+      "baseline": "Canonical numeral formatting and a Python exact-arithmetic oracle; pair every variant with its original.",
+      "evaluation": "Exact answer accuracy, consistency within pairs, token count, and errors by digit length. Do not attribute every formatting effect to tokenization alone.",
+      "outcome": "A paired error analysis and one tested formatting intervention.",
+      "preparation": "L01 tokenization; L02 evaluation; learn model inference and robust answer parsing.",
+      "fallback": "Restrict to integer addition and multiplication, 100 examples, one model.",
+      "sources": [
+        "numbers",
+        "qwen3"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "numbers": "Motivate the digit-representation question.",
+        "qwen3": "Choose the small checkpoint, tokenizer, and inference settings."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Start with 100 integer problems and one 0.6B model. Keep three renderings and cap each answer at 128 tokens.",
+        "note_zh": "从 100 道整数题和一个 0.6B 模型开始。保留三种写法，每个回答最多 128 个 token。"
+      },
+      "title_zh": "数字格式会改变答案吗？",
+      "summary_zh": "区分数字 token 边界变化与数学题本身的变化。",
+      "question_zh": "数字分组、前导零或等价小数写法会系统性地影响小模型准确率吗？"
+    },
+    {
+      "number": 3,
+      "id": "dedup-quality-budget",
+      "title": "Deduplication or quality filtering under a fixed budget?",
+      "topic": "Data and tokenization",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Adapt the FineWeb2 data-curation question to a tiny model.",
+      "question": "Does additional deduplication or quality filtering help on an already curated corpus at a fixed training-token budget?",
+      "scope": "Sample a small, versioned FineWeb2 slice in one language. FineWeb2 is already filtered and deduplicated: compare the as-released slice, additional deduplication, and additional quality filtering. Audit residual duplicates and removed examples before training a 10M-30M decoder on at most 5M tokens per run; use two seeds if the pilot fits.",
+      "baseline": "Identical architecture, tokenizer, optimizer, token budget, and a document-disjoint evaluation set formed before filtering. Deduplicate across splits first.",
+      "evaluation": "Held-out bits per byte, loss by document type, unique training bytes, residual duplicate rate, and wall time; distinguish additional curation from extra resampling. If further deduplication removes almost nothing, report that limitation rather than treating this as an experiment on raw web data.",
+      "outcome": "One controlled three-condition result with uncertainty and examples of removed documents.",
+      "preparation": "L01 preprocessing and L02 loss; learn a small Transformer training loop after L05-L06.",
+      "fallback": "Use a 5M model and 1M tokens; a corpus-only audit is a pilot, not a claim about model improvement.",
+      "sources": [
+        "fineweb2",
+        "dedup"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "fineweb2": "Choose a documented corpus slice and filtering methods.",
+        "dedup": "Understand duplicate detection and train/test overlap controls."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Training cost grows with every data condition and seed. Begin with 5M parameters and 1M tokens per run; scale only within the same total budget.",
+        "note_zh": "不同数据条件和随机种子都会增加训练成本。先用 5M 参数、每次运行 1M token；扩展时仍须遵守同一总预算。"
+      },
+      "title_zh": "固定预算下，去重还是质量过滤更有效？",
+      "summary_zh": "用小模型研究 FineWeb2 数据整理中的一个问题。",
+      "question_zh": "在已经整理过的语料上，额外去重或质量过滤能否在固定训练 token 预算下带来收益？"
+    },
+    {
+      "number": 4,
+      "id": "adaptive-byte-patches",
+      "title": "Where do adaptive byte patches spend their resolution?",
+      "topic": "Data and tokenization",
+      "categories": [
+        "Paper replication"
+      ],
+      "compute": "CPU",
+      "summary": "Study the BLT boundary rule using a CPU byte predictor.",
+      "question": "At the same average patch length, which code and multilingual patterns receive finer segments under entropy-based patching?",
+      "scope": "Fit a smoothed byte n-gram predictor on a separate training slice, then apply fixed-length and entropy-threshold patching to 1M held-out bytes. Use disjoint development text to match average patch length.",
+      "baseline": "Fixed-size byte blocks at the same average patch length. Hold predictor and text fixed; count the predictor and patcher runtime.",
+      "evaluation": "Patch-length distribution, boundary locations around code/Unicode, allocation near high-surprisal bytes, round-trip correctness, and CPU time. These measurements do not establish downstream model quality.",
+      "outcome": "A working patcher, a paired boundary audit, and an explanation of where it allocates finer segments. Label the n-gram predictor as an adaptation of BLT.",
+      "preparation": "L01 bytes and L02 n-grams; learn conditional entropy and development-set threshold selection.",
+      "fallback": "Use 200 KB of text and a byte bigram predictor. Keep the boundary-allocation question; do not train a BLT model.",
+      "sources": [
+        "blt",
+        "byt5"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "blt": "Read the entropy-based patching mechanism; scope the study to boundaries.",
+        "byt5": "Compare byte-level processing with learned token boundaries."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Use a smoothed byte n-gram predictor on CPU. Study patch boundaries without training a BLT model.",
+        "note_zh": "在 CPU 上使用平滑字节 N-gram 预测器，只研究分块边界，不训练 BLT 模型。"
+      },
+      "title_zh": "自适应字节分块把精细度用在哪里？",
+      "summary_zh": "用 CPU 字节预测器研究 BLT 的边界规则。",
+      "question_zh": "在平均分块长度相同时，基于熵的分块会在哪些代码和多语言模式上切得更细？"
+    },
+    {
+      "number": 5,
+      "id": "tiny-engram",
+      "title": "Can a tiny language model benefit from lookup memory?",
+      "topic": "Data and tokenization",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Connect course n-grams to Engram conditional memory.",
+      "question": "Does a small hashed n-gram memory help on repeated local patterns beyond simply adding parameters?",
+      "scope": "Add a modest lookup table to a 10M-30M decoder; train on at most 5M tokens. Compare ordinary token hashing with the 2026 byte-based proposal only if the first comparison works.",
+      "baseline": "No-memory model and a parameter-matched wider model; identical corpus, tokenizer, training tokens, and seeds.",
+      "evaluation": "Held-out loss, rare/frequent n-gram performance, lookup collisions, parameter memory, and runtime.",
+      "outcome": "An ablation that distinguishes memory benefit from capacity or data leakage.",
+      "preparation": "L01-L02 tokenization and n-grams; PyTorch; learn residual model components.",
+      "fallback": "Use synthetic local-dependency sequences and a 5M model; upstream supplies a demo, not a turnkey small-model training recipe.",
+      "sources": [
+        "engram",
+        "byte-engram"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "engram": "Study hashed n-gram lookup and the capacity comparison.",
+        "byte-engram": "Understand how byte hashing changes tokenizer dependence."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Use a small lookup table and a 5M model first. Include the wider-model baseline in both memory and time accounting.",
+        "note_zh": "先使用小型查找表和 5M 参数模型。显存与运行时间都要计入参数匹配的加宽模型基线。"
+      },
+      "title_zh": "小型语言模型能从查表记忆中获益吗？",
+      "summary_zh": "将课程中的 N-gram 与 Engram 条件记忆联系起来。",
+      "question_zh": "对重复的局部模式而言，小型哈希 N-gram 记忆能否带来超出增加参数量本身的收益？"
+    },
+    {
+      "number": 6,
+      "id": "sft-data-selection",
+      "title": "Which 1,000 instruction examples should we train on?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Compare selection policies using an open post-training data recipe.",
+      "question": "Does diversity selection improve held-out instruction following over a random subset of the same size?",
+      "scope": "Use one documented SmolTalk2 subset and LoRA on Qwen3-0.6B. Compare 500-1,000 random, length-balanced, and embedding-diverse examples.",
+      "baseline": "Untuned checkpoint and random selection; match training tokens and training steps, and exclude evaluation prompts before selection.",
+      "evaluation": "Exact checks on 100 verifiable held-out prompts, domain coverage, output length, and regressions on a separate general set.",
+      "outcome": "A data-selection experiment with selected IDs, fixed splits, and an explanation of tradeoffs.",
+      "preparation": "L01-L04 data and neural training; learn chat templates, response masking, and LoRA.",
+      "fallback": "Use 300 examples and two selection policies; reduce context to 1,024 tokens.",
+      "sources": [
+        "smollm3",
+        "deita",
+        "qwen3"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "smollm3": "Locate the SmolTalk2 data recipe and documented subsets.",
+        "deita": "Study selection by quality, complexity, and diversity.",
+        "qwen3": "Use the 0.6B student rather than reproducing a large training recipe."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Cache selection embeddings once. Use 300–500 examples and 1,024-token contexts for the first two-policy comparison.",
+        "note_zh": "只缓存一次样本选择用的嵌入。第一轮两种策略比较使用 300–500 条样本和 1,024-token 上下文。"
+      },
+      "title_zh": "应该挑哪 1,000 条指令样本来训练？",
+      "summary_zh": "基于公开的后训练数据方案比较样本选择策略。",
+      "question_zh": "与同样大小的随机子集相比，多样性采样能提升留出集上的指令遵循能力吗？"
+    },
+    {
+      "number": 7,
+      "id": "encoder-decoder-classification",
+      "title": "When is a small classifier better than a prompted LLM?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Paper replication",
+        "Case study"
+      ],
+      "compute": "CPU",
+      "summary": "Update classic text classification with a sample-efficiency and cost question.",
+      "question": "At which label budget does a small encoder overtake a prompted decoder?",
+      "scope": "Choose one public dataset from the authors with at most five classes. Use 8, 32, and 128 labeled examples per class for TF-IDF and a frozen small encoder plus linear head. Compare a quantized 0.6B prompted decoder on 100 fixed test examples with a documented few-shot selection rule.",
+      "baseline": "TF-IDF plus logistic regression. Keep splits and label access fixed; state the decoder’s few-shot/context limit rather than assuming all training examples fit into its prompt.",
+      "evaluation": "Macro-F1, calibration, latency, training/inference cost, and performance under one controlled domain shift.",
+      "outcome": "Learning curves that support a concrete deployment decision; a leaderboard score alone is insufficient.",
+      "preparation": "L03 embeddings and classification; learn pretrained encoders and dataset splits.",
+      "fallback": "Use three classes and 50 test examples. Cache decoder outputs on CPU and keep the encoder frozen.",
+      "sources": [
+        "classifiers",
+        "setfit"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "classifiers": "Frame the encoder/decoder classification comparison.",
+        "setfit": "Read the small-data classification design; distinguish a frozen probe from SetFit training."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Use a frozen small encoder and a CPU linear classifier. Run the 0.6B quantized decoder on a small fixed test subset; cache all predictions.",
+        "note_zh": "使用冻结的小型编码器和 CPU 线性分类器。量化后的 0.6B 解码器只跑固定的小测试集，并缓存预测。"
+      },
+      "title_zh": "什么时候小型分类器比提示式大模型更好？",
+      "summary_zh": "从样本效率和成本角度重新研究经典文本分类。",
+      "question_zh": "标注样本量达到多少时，小型编码器的表现会超过提示式解码器？"
+    },
+    {
+      "number": 8,
+      "id": "preference-shortcuts",
+      "title": "Does preference tuning learn correctness or verbosity?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Test a preference-data shortcut on verifiable tasks.",
+      "question": "Does DPO follow answer correctness when length and correctness disagree?",
+      "scope": "Construct 500 synthetic preference pairs from arithmetic or structured extraction in two conditions: correct-short versus incorrect-long, and correct-long versus incorrect-short. Prefer the correct answer in both conditions. Apply one small LoRA DPO run per condition; isolate any deliberately flipped labels in a separate noise ablation.",
+      "baseline": "Untuned model and an SFT model trained on the same preferred answers; control training tokens and preference-pair content.",
+      "evaluation": "Held-out exact correctness, response length, sensitivity to 10% flipped preferences, and invalid output rate.",
+      "outcome": "A shortcut audit with balanced evaluation pairs and examples where the tuning objective fails.",
+      "preparation": "Neural LM loss; learn preference pairs and the DPO loss before beginning training.",
+      "fallback": "Reduce to 200 pairs and a 0.6B model; do not run a large online preference collection.",
+      "sources": [
+        "dpo",
+        "dpo-length",
+        "qwen3"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "dpo": "Understand the preference loss and reference policy.",
+        "dpo-length": "Identify verbosity as a confound and design length controls.",
+        "qwen3": "Start with one small student checkpoint."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Start with 200 short preference pairs and 0.6B adapters. Count the SFT control and each preference condition in the same total.",
+        "note_zh": "从 200 对简短偏好样本和 0.6B 模型的适配器开始。SFT 对照和每个偏好条件都计入总预算。"
+      },
+      "title_zh": "偏好微调学到的是正确性还是冗长？",
+      "summary_zh": "在可验证任务上检查偏好数据带来的捷径。",
+      "question_zh": "当答案长度与正确性冲突时，DPO 会优先遵循正确性吗？"
+    },
+    {
+      "number": 9,
+      "id": "verifier-reward-quality",
+      "title": "Can a weak verifier select the wrong solution?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Research problem",
+        "Case study"
+      ],
+      "compute": "CPU",
+      "summary": "Audit reward mistakes with checked candidate expressions before considering reinforcement learning.",
+      "question": "How often does a final-number check reward an invalid calculation, and how does this affect candidate selection?",
+      "scope": "Generate 100 fresh Countdown-style problems with known valid solutions. Create controlled invalid candidates by changing allowed numbers, operations, or expression structure. Score the same candidates with permissive and strict verifiers; optionally add a small cached model-output set with documented provenance.",
+      "baseline": "Strict-oracle scoring, random candidate selection, and permissive scoring. Keep problem-generation seeds disjoint between development and evaluation.",
+      "evaluation": "False accepts/rejects by error type, true validity of the selected expression, reward/validity disagreement, and CPU runtime. Controlled invalid examples measure verifier behavior, not the frequency of real model errors.",
+      "outcome": "A tested verifier, a controlled selection comparison, and concrete reward-hacking cases. This is an offline verifier study, not an RL training result.",
+      "preparation": "Python tests, exact arithmetic, and restricted expression parsing; read the reward/GRPO motivation without implementing training.",
+      "fallback": "Use 50 problems and three invalid-candidate families. No model training or fresh rollout collection is required.",
+      "sources": [
+        "drgrpo",
+        "deepseekmath"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "drgrpo": "Read the critique of reward and optimization behavior.",
+        "deepseekmath": "Understand the GRPO setting that motivates verifier auditing; no RL run is required."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Audit generated or cached candidate expressions with a CPU verifier. Online RL and fresh large rollout collections are outside the minimum project.",
+        "note_zh": "用 CPU 验证器审计生成或缓存的候选表达式。在线强化学习和新采集的大规模 rollout 不属于最低项目范围。"
+      },
+      "title_zh": "较弱的验证器会选错答案吗？",
+      "summary_zh": "先用已核验的候选表达式审计奖励错误，再考虑强化学习。",
+      "question_zh": "只检查最终数字时，错误计算有多常会被判为正确？这会怎样影响候选选择？"
+    },
+    {
+      "number": 10,
+      "id": "concise-reasoning-distillation",
+      "title": "Do longer teaching traces make a better small model?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Distill a small, verified subset of reasoning traces.",
+      "question": "Does concise reasoning retain accuracy better per training token than full reasoning traces?",
+      "scope": "Choose 30–50 short, verifiable public s1 examples or an original exact-arithmetic generator. Document the source and inspect all traces. Compare full reasoning, checked shortened reasoning, and answers only using adapters on one 0.6B student; cap the initial context at 1,024 tokens.",
+      "baseline": "Untuned student; run both an equal-example comparison and a clearly labeled equal-token comparison.",
+      "evaluation": "Held-out answer accuracy, generated length, training tokens, and error types. Avoid using s1 training questions as test examples.",
+      "outcome": "A distillation ablation that separates supervision content from training-budget effects.",
+      "preparation": "LM training; learn response masking, adapter tuning, and exact mathematical answer checks.",
+      "fallback": "Use 20 short generated problems and two supervision conditions. If the available traces cannot fit without losing essential steps, change the task before training.",
+      "sources": [
+        "s1",
+        "step-distillation"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "s1": "Inspect public reasoning traces and supervision choices.",
+        "step-distillation": "Compare rationale supervision with answers-only supervision."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Manual trace checking and sequence length are the main risks. Begin with 30–50 short verified examples, one 0.6B student, and two supervision conditions.",
+        "note_zh": "人工核验推理过程和序列长度是主要风险。先用 30–50 条经过核验的短样本、一个 0.6B 学生模型和两种监督条件。"
+      },
+      "title_zh": "更长的教师推理过程能教出更好的小模型吗？",
+      "summary_zh": "从经过核验的小规模推理样本中蒸馏模型。",
+      "question_zh": "与完整推理过程相比，简洁推理能否以更少训练 token 保持准确率？"
+    },
+    {
+      "number": 11,
+      "id": "reasoning-budget-allocation",
+      "title": "One long attempt or several short attempts?",
+      "topic": "Reasoning and evaluation",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Compare reasoning strategies under an explicit total generation budget.",
+      "question": "How should a small model spend a fixed number of output tokens on a problem?",
+      "scope": "Use 150 generated math/logic problems at two difficulty levels. Compare one long sample, several short samples with majority vote, and answer-verified selection.",
+      "baseline": "Greedy direct answer. Match total sampled tokens, including failed attempts; report verifier access separately.",
+      "evaluation": "Exact accuracy versus total tokens and wall time, abstentions, and uncertainty over problems.",
+      "outcome": "A budget/accuracy curve with cases where extra reasoning hurts.",
+      "preparation": "L02 probability and evaluation; learn generation settings and answer normalization.",
+      "fallback": "Use 80 easy problems and two strategies; cap each total problem budget at 2,048 tokens.",
+      "sources": [
+        "s1",
+        "self-consistency"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "s1": "Study inference-time budget allocation.",
+        "self-consistency": "Implement the multiple-sample voting comparison."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Sampling multiplies cost. Begin with 80 problems and at most 2,048 output tokens per problem across all attempts in each condition.",
+        "note_zh": "多次采样会成倍增加成本。先用 80 道题；每种条件下每题所有尝试合计最多生成 2,048 个 token。"
+      },
+      "title_zh": "一次长推理，还是多次短尝试？",
+      "summary_zh": "在明确的生成总预算下比较不同推理策略。",
+      "question_zh": "面对一道题，小模型应该如何分配固定数量的输出 token？"
+    },
+    {
+      "number": 12,
+      "id": "reasoning-early-exit",
+      "title": "When should a reasoning model stop thinking?",
+      "topic": "Reasoning and evaluation",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Adapt the 2026 thought-sufficiency question to a small open model.",
+      "question": "Can an inexpensive stopping rule save tokens without abandoning solvable problems?",
+      "scope": "Use 150 exact-answer problems and a Qwen3 0.6B-1.7B reasoning checkpoint. Compare a fixed budget with answer-stability and a small thought-sufficiency check.",
+      "baseline": "Direct answer and full-budget reasoning; select thresholds only on a development split.",
+      "evaluation": "Accuracy, early-stop error, all generated tokens including sufficiency checks, and latency.",
+      "outcome": "A calibrated stopping policy and a failure analysis of premature confidence.",
+      "preparation": "Sampling and evaluation; learn how the selected model separates reasoning from its final answer.",
+      "fallback": "Use answer-stability checks at two fixed cutoffs. Label this as an adaptation, not an exact DTSR implementation.",
+      "sources": [
+        "early-exit",
+        "s1"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "early-exit": "Read the thought-sufficiency stopping mechanism.",
+        "s1": "Define a fixed-budget reasoning baseline."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Count every sufficiency check, not just final answers. Begin with 80 problems and two stopping checkpoints.",
+        "note_zh": "每次充分性检查都计入成本，而不只统计最终回答。先用 80 道题和两个停止检查点。"
+      },
+      "title_zh": "推理模型应该什么时候停止思考？",
+      "summary_zh": "将 2026 年的思考充分性问题改编为小型开源模型实验。",
+      "question_zh": "低成本的停止规则能否节省 token，同时不放弃原本可解的问题？"
+    },
+    {
+      "number": 13,
+      "id": "faithfulness-with-controls",
+      "title": "Does a faithfulness score survive its control experiments?",
+      "topic": "Reasoning and evaluation",
+      "categories": [
+        "Paper replication"
+      ],
+      "compute": "Training",
+      "summary": "Revisit a 2025 candidate using its 2026 methodological critique.",
+      "question": "Does targeted reasoning-step unlearning change answers more than irrelevant or shuffled-text unlearning?",
+      "scope": "Begin with 12–20 short reasoning examples on one 0.6B checkpoint and one layer or adapter. Compare targeted, irrelevant, and shuffled interventions with matched update counts. Pilot five examples with 10 updates per intervention first.",
+      "baseline": "Unmodified checkpoint and unrelated-question retention checks. Freeze the tuning protocol before the held-out comparison.",
+      "evaluation": "Answer/log-probability changes, intervention success, and general capability damage. A changed answer alone does not establish faithful reasoning.",
+      "outcome": "A controlled assessment of the metric and a clear account of collateral model changes.",
+      "preparation": "PyTorch gradients and LM loss; learn unlearning objectives and intervention controls.",
+      "fallback": "Use a descriptive pilot with five examples and one layer, reporting uncertainty and unsuccessful interventions. If only text perturbation is feasible, rename the question because it measures a different notion.",
+      "sources": [
+        "faithfulness",
+        "faithfulness-controls"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "faithfulness": "Understand the targeted-unlearning measurement.",
+        "faithfulness-controls": "Choose irrelevant-text controls and measure collateral damage."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Repeated unlearning runs are costly. Pilot five examples with 10 updates per intervention; restrict updates to one layer or adapters and use 12–20 examples initially.",
+        "note_zh": "重复遗忘实验成本较高。先用 5 个样例、每种干预更新 10 次；将更新限制在一层或适配器，并先用 12–20 个样例。"
+      },
+      "title_zh": "加入对照实验后，忠实性分数还成立吗？",
+      "summary_zh": "结合 2026 年的方法学批评，重新审视 2025 年的一项研究。",
+      "question_zh": "与无关文本或打乱文本的遗忘相比，针对推理步骤的遗忘是否更能改变答案？"
+    },
+    {
+      "number": 14,
+      "id": "judge-order-and-length",
+      "title": "Can we trust a small LLM judge?",
+      "topic": "Reasoning and evaluation",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Test answer-order and verbosity effects with objective reference labels.",
+      "question": "Does a judge prefer a longer wrong answer over a shorter correct one, and can order averaging help?",
+      "scope": "Select 100 objective answer pairs from JudgeBench or generate checked math pairs. Swap A/B order and add meaning-preserving verbosity to one answer.",
+      "baseline": "Exact verifier where available, random choice, and the unmodified judge prompt.",
+      "evaluation": "Agreement with verified labels, swap consistency, verbosity-induced reversals, and judge-token cost.",
+      "outcome": "An evaluator audit and one validated mitigation; keep ambiguous pairs separate.",
+      "preparation": "L02 evaluation; learn paired experimental design and judge prompt formatting.",
+      "fallback": "Use one local 0.6B judge and 50 math pairs; stronger performance is not needed to study failure.",
+      "sources": [
+        "judgebench",
+        "mtbench"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "judgebench": "Start from objectively checked answer pairs.",
+        "mtbench": "Read about position and verbosity bias in model judges."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "One 0.6B judge and 50–100 answer pairs suffice. Cache the original, swapped, and length-perturbed judgments.",
+        "note_zh": "一个 0.6B 评审模型和 50–100 对答案就够。缓存原始、交换顺序和调整长度后的评审结果。"
+      },
+      "title_zh": "小型大模型评审员可信吗？",
+      "summary_zh": "用有客观标准的答案对测试答案顺序和冗长度的影响。",
+      "question_zh": "评审模型会偏好较长但错误的答案，而不是较短但正确的答案吗？平均不同顺序的结果有帮助吗？"
+    },
+    {
+      "number": 15,
+      "id": "benchmark-perturbation-audit",
+      "title": "Does a coding score survive a changed problem surface?",
+      "topic": "Reasoning and evaluation",
+      "categories": [
+        "New task",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Use paired tests to separate brittle pattern matching from problem solving.",
+      "question": "How robust is a model to equivalent variable names, story details, and reordered input descriptions?",
+      "scope": "Pin a LiveCodeBench release and select 30 easy problems, or author 30 small programming tasks. Create one meaning-preserving variant each and verify both with the same tests.",
+      "baseline": "Original statements, fixed generation budget, and known-correct reference programs.",
+      "evaluation": "Paired pass@1, timeout/error categories, and confidence intervals. A drop is evidence of brittleness, not proof of training contamination.",
+      "outcome": "A versioned robustness set, correctness evidence for transformations, and a paired result table.",
+      "preparation": "Python and tests; learn sandboxed execution, parsing, and benchmark versioning.",
+      "fallback": "Use 15 original small tasks with a deterministic generator; do not copy competition problems without checking reuse terms.",
+      "sources": [
+        "livecode",
+        "evalplus"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "livecode": "Pin the coding task release and evaluation protocol.",
+        "evalplus": "Strengthen tests and check semantic equivalence of task variants."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use 15–30 short tasks and one generation per variant. Bound sandbox CPU time as well as output tokens.",
+        "note_zh": "先用 15–30 道短题，每种变体只生成一次。除输出 token 外，也要限制沙箱 CPU 时间。"
+      },
+      "title_zh": "改变题目表面后，代码得分还稳吗？",
+      "summary_zh": "通过成对测试区分脆弱的模式匹配与真正的问题求解。",
+      "question_zh": "变量名、故事背景和输入描述顺序改变后，模型表现有多稳健？"
+    },
+    {
+      "number": 16,
+      "id": "hybrid-retrieval",
+      "title": "When does lexical retrieval beat a modern embedding?",
+      "topic": "Retrieval and evidence",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Measure where hybrid retrieval helps on technical course material.",
+      "question": "Do formulas, identifiers, and rare terminology change the best retriever?",
+      "scope": "Index 200-500 public course-note passages and author 100 questions with evidence labels. Compare BM25, Qwen3-Embedding-0.6B, and reciprocal-rank fusion.",
+      "baseline": "BM25; keep documents, chunk boundaries, and evaluation questions fixed.",
+      "evaluation": "Recall@5, MRR, query latency, index bytes, and results by query type; no answer generator is needed.",
+      "outcome": "A retrieval benchmark with audited relevance labels and a practical recommendation.",
+      "preparation": "L01 tokenization and L03 embeddings; learn BM25 and vector similarity.",
+      "fallback": "Use 100 passages and 50 queries; embeddings can be precomputed once on a shared GPU.",
+      "sources": [
+        "qwen-embedding",
+        "beir"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "qwen-embedding": "Use a released small retriever with its required input format.",
+        "beir": "Compare lexical and dense retrieval using a consistent evaluation."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 2,
+        "gpu_memory_gb": 12,
+        "note": "Encode the corpus once, then reuse cached embeddings for every query and fusion setting. No answer generation is needed.",
+        "note_zh": "语料只编码一次，之后所有查询和融合设置都复用缓存的嵌入。无需生成答案。"
+      },
+      "title_zh": "什么时候词法检索胜过现代嵌入？",
+      "summary_zh": "在技术课程材料上测量混合检索的适用场景。",
+      "question_zh": "公式、标识符和罕见术语会改变哪种检索器最合适吗？"
+    },
+    {
+      "number": 17,
+      "id": "chunking-evidence-loss",
+      "title": "Which chunk boundaries destroy the evidence?",
+      "topic": "Retrieval and evidence",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "CPU",
+      "summary": "Study document segmentation while holding the retrieval model fixed.",
+      "question": "Do section-aware chunks reduce failures caused by separating a claim from its conditions?",
+      "scope": "Use public course notes with 80 evidence-labeled questions, including cross-paragraph cases. Compare fixed 128/256-token chunks and heading-aware chunks using the same BM25 retriever.",
+      "baseline": "Fixed-token chunking; compare both fixed top-k and fixed retrieved-token budget so larger chunks do not win merely by supplying more text.",
+      "evaluation": "Evidence recall under fixed top-k and fixed retrieved-token budgets, missing conditions at boundaries, redundancy, and CPU latency. Inspect 20 failures manually.",
+      "outcome": "A chunking ablation with annotated boundary failures.",
+      "preparation": "Text processing and embeddings; learn retrieval evaluation and document-level splits.",
+      "fallback": "Use 40 questions and two chunking settings. Evidence retrieval is a complete study; no answer model is required.",
+      "sources": [
+        "sufficient",
+        "lost-middle"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "sufficient": "Distinguish retrieved text from sufficient answer evidence.",
+        "lost-middle": "Motivate position and evidence-location controls."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Use BM25 and evidence labels as the complete first study. Chunking and retrieval need no language-model generation.",
+        "note_zh": "首轮实验用 BM25 和证据标签即可完成。分块与检索都不需要大语言模型生成。"
+      },
+      "title_zh": "哪些分块边界会切断关键证据？",
+      "summary_zh": "固定检索模型，研究文档切分方式的影响。",
+      "question_zh": "按章节结构分块，能减少因结论与其适用条件被分开而造成的失败吗？"
+    },
+    {
+      "number": 18,
+      "id": "embedding-size-tradeoff",
+      "title": "How small can a retrieval index become?",
+      "topic": "Retrieval and evidence",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Use supported embedding dimensions and compression instead of retraining an encoder.",
+      "question": "Which dimension or precision reduction gives the best retrieval quality per stored byte?",
+      "scope": "Use one small English or Chinese MMTEB retrieval subset and Qwen3-Embedding-0.6B. Compare three supported output dimensions and float versus integer storage.",
+      "baseline": "Full-dimensional, full-precision exact search with the same encoder and document embeddings.",
+      "evaluation": "nDCG@10, recall, total index bytes, query latency, and quality by query length; re-normalize after truncation.",
+      "outcome": "A quality/storage frontier and a reproducible encoding manifest.",
+      "preparation": "L03 vector representations; learn retrieval metrics and quantization.",
+      "fallback": "Use 1,000 documents and 100 queries; omit approximate nearest-neighbor indexing.",
+      "sources": [
+        "qwen-embedding",
+        "matryoshka",
+        "mmteb"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "qwen-embedding": "Check supported embedding dimensions.",
+        "matryoshka": "Understand representations that support truncation.",
+        "mmteb": "Choose one documented retrieval subset and metric."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 2,
+        "gpu_memory_gb": 12,
+        "note": "Encode documents and queries once. Truncation, quantization, and exact-search comparisons run on CPU.",
+        "note_zh": "文档和查询只编码一次。截断、量化和精确搜索比较都可在 CPU 上运行。"
+      },
+      "title_zh": "检索索引可以压缩到多小？",
+      "summary_zh": "使用受支持的嵌入维度与压缩方法，而不重新训练编码器。",
+      "question_zh": "降低维度或精度时，哪种方式能以最少存储空间保留最佳检索质量？"
+    },
+    {
+      "number": 19,
+      "id": "rag-abstention",
+      "title": "When should a course assistant say it lacks evidence?",
+      "topic": "Retrieval and evidence",
+      "categories": [
+        "Research problem",
+        "New task"
+      ],
+      "compute": "Inference",
+      "summary": "Make unanswerable questions a first-class part of RAG evaluation.",
+      "question": "Can an evidence-sufficiency check reduce unsupported answers without rejecting too many answerable questions?",
+      "scope": "Author 120 questions over public notes: sufficient, incomplete, and absent evidence. Include an oracle-context condition and ordinary retrieval.",
+      "baseline": "Always answer and always abstain; compare retrieval-score thresholding with a model-based sufficiency check.",
+      "evaluation": "Accuracy among answered questions versus coverage, unsupported-answer rate, citation support, and checking cost.",
+      "outcome": "A risk/coverage curve and separate diagnoses of retrieval and generation failure.",
+      "preparation": "Embeddings and evaluation; learn retrieval, evidence annotation, and development-set threshold selection.",
+      "fallback": "Use 60 questions and fixed supplied contexts, retaining the same abstention question.",
+      "sources": [
+        "sufficient",
+        "judgebench",
+        "qwen35"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "sufficient": "Define sufficient, incomplete, and missing evidence.",
+        "judgebench": "Plan an audit of any model-based evidence judge.",
+        "qwen35": "Use a small answer model with a fixed prompt format."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Begin with 60 questions and supplied contexts. Cache answer and sufficiency-check outputs; include both in the budget.",
+        "note_zh": "先用 60 个问题和给定上下文。缓存答案与充分性检查的输出，并将两者计入预算。"
+      },
+      "title_zh": "课程助手什么时候该承认证据不足？",
+      "summary_zh": "把无法回答的问题作为 RAG 评测的重要部分。",
+      "question_zh": "证据充分性检查能减少无依据回答，同时避免过多拒答可回答的问题吗？"
+    },
+    {
+      "number": 20,
+      "id": "code-switched-retrieval",
+      "title": "Can a retriever understand Chinese-English technical queries?",
+      "topic": "Retrieval and evidence",
+      "categories": [
+        "Paper replication",
+        "New task"
+      ],
+      "compute": "Inference",
+      "summary": "Extend retrieval evaluation to the language mixture students actually use.",
+      "question": "Does mixing English technical terms into Chinese queries hurt retrieval beyond a monolingual translation?",
+      "scope": "Use 100 human-checked Chinese, English, and mixed query triplets over one fixed corpus, following the 2026 code-switching study.",
+      "baseline": "BM25, a multilingual dense encoder, and translating the query before retrieval.",
+      "evaluation": "Paired recall@5 and nDCG, errors by terminology type, translation errors, and added latency.",
+      "outcome": "A small auditable query set and evidence about when translation helps or loses intent.",
+      "preparation": "L01 multilingual tokenization and L03 embeddings; bilingual annotation and retrieval metrics.",
+      "fallback": "Use 50 course-note queries; no need to rebuild the full CS-MTEB suite.",
+      "sources": [
+        "csir",
+        "qwen-embedding",
+        "mmteb"
+      ],
+      "upstream": "A carefully licensed dataset or evaluator improvement may fit MTEB; check current contribution requirements before proposing it.",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "csir": "Read the code-switching evaluation design.",
+        "qwen-embedding": "Choose the multilingual dense retriever.",
+        "mmteb": "Check retrieval metrics and dataset conventions."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 2,
+        "gpu_memory_gb": 12,
+        "note": "Cache document embeddings. Reuse the same checked query triplets and account separately for any translation model calls.",
+        "note_zh": "文档嵌入只缓存一次。复用同一组已核验查询三元组；翻译模型调用另行计费。"
+      },
+      "title_zh": "检索器能理解中英混杂的技术问题吗？",
+      "summary_zh": "针对学生实际使用的语言混合扩展检索评测。",
+      "question_zh": "中文查询中加入英文技术术语，会比先翻译成单一语言更影响检索吗？"
+    },
+    {
+      "number": 21,
+      "id": "tool-schema-reliability",
+      "title": "Valid JSON is not the same as a correct tool call",
+      "topic": "Agents and memory",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Measure schema validity, tool choice, and argument semantics separately.",
+      "question": "Does constrained output improve end-to-end task success or only parseability?",
+      "scope": "Choose 100 BFCL-style single-turn cases over five local mock tools. Compare ordinary prompting, schema-constrained decoding, and one repair attempt.",
+      "baseline": "The same model, tool definitions, and token budget; include cases where no tool should be called.",
+      "evaluation": "Parse/schema validity, tool-choice accuracy, argument correctness, execution success, and repair tokens.",
+      "outcome": "A tool-call error taxonomy and a controlled decoding comparison.",
+      "preparation": "Python functions and JSON; learn chat/tool templates and constrained generation.",
+      "fallback": "Use 50 locally generated cases and prompt/repair only if the inference backend lacks grammar support.",
+      "sources": [
+        "bfcl",
+        "qwen35"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "bfcl": "Separate tool selection, argument correctness, and execution.",
+        "qwen35": "Inspect the chosen model’s tool-use interface."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use five mock tools and a 0.6B model. Limit repairs to one additional call and include its tokens.",
+        "note_zh": "使用五种模拟工具和一个 0.6B 模型。最多允许额外修正一次，并计入修正所用 token。"
+      },
+      "title_zh": "JSON 格式正确，不等于工具调用正确",
+      "summary_zh": "分别测量格式合法性、工具选择和参数语义。",
+      "question_zh": "受约束的输出能提升任务最终成功率，还是只让结果更容易解析？"
+    },
+    {
+      "number": 22,
+      "id": "bounded-code-repair",
+      "title": "Which feedback makes a coding agent improve?",
+      "topic": "Agents and memory",
+      "categories": [
+        "Research problem",
+        "Case study"
+      ],
+      "compute": "Inference",
+      "summary": "Evaluate a small code-repair loop with a strict stopping rule.",
+      "question": "Does an informative failing test help more than a generic request to try again?",
+      "scope": "Use 30 small Python tasks with flawed candidate solutions. Compare direct repair, generic retry, and execution feedback, with at most three attempts.",
+      "baseline": "Equal total output budget; separate feedback tests from final evaluation tests; run all candidate code in a sandbox.",
+      "evaluation": "Final pass rate, regression rate, tool calls, elapsed time, and failure-trace categories.",
+      "outcome": "A reproducible repair loop with hidden-to-the-agent evaluation tests and explained failures.",
+      "preparation": "Python debugging and tests; learn bounded agent loops and process isolation.",
+      "fallback": "Use 15 deterministic seeded bugs and one repair round.",
+      "sources": [
+        "livecode",
+        "self-refine",
+        "reflexion"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "livecode": "Define isolated execution and coding-task correctness.",
+        "self-refine": "Compare iterative feedback with direct generation.",
+        "reflexion": "Understand feedback-driven agent retries without weight updates."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "At most three attempts per task; start with 15 tasks and one repair. Set a CPU timeout for every generated program.",
+        "note_zh": "每题最多尝试三次；先做 15 道题、每题修复一次。每个生成程序都设置 CPU 超时。"
+      },
+      "title_zh": "哪种反馈最能帮助编程智能体改进？",
+      "summary_zh": "在严格停止条件下评估小型代码修复循环。",
+      "question_zh": "有信息量的失败测试，比笼统要求“再试一次”更有帮助吗？"
+    },
+    {
+      "number": 23,
+      "id": "memory-updated-facts",
+      "title": "Can an agent forget an outdated fact?",
+      "topic": "Agents and memory",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Compare memory stores on revised facts rather than simple recall alone.",
+      "question": "Which memory policy keeps current information without losing useful history?",
+      "scope": "Generate 100 short episodes with dated updates and delayed queries. Compare append-only retrieval, summary memory, and an update-on-write fact store.",
+      "baseline": "No memory and full-history replay when the complete history fits the cap; use the same model, visible facts, context cap, and query budget for the main comparison. If full-history replay needs a larger context, label it as a separate higher-budget reference and account for its tokens.",
+      "evaluation": "Current-fact accuracy, stale-fact use, justified historical recall, memory-update tokens, and latency.",
+      "outcome": "A memory benchmark and a policy comparison with inspectable write/read traces.",
+      "preparation": "Python records and retrieval; learn agent state, timestamp semantics, and memory accounting.",
+      "fallback": "Use 50 synthetic key-value episodes with exact scoring; label this as an adaptation of the memory question.",
+      "sources": [
+        "simplemem",
+        "memgpt"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "simplemem": "Study compact memory construction and retrieval.",
+        "memgpt": "Compare explicit memory management with ordinary context replay."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Start with 50 short episodes and capped memories. Memory writing, retrieval prompts, and final queries all consume inference time.",
+        "note_zh": "先用 50 段简短交互和有长度上限的记忆。写入记忆、检索提示和最终提问都会消耗推理时间。"
+      },
+      "title_zh": "智能体能忘掉过时事实吗？",
+      "summary_zh": "评估记忆策略对修订事实的处理，而不只看简单回忆。",
+      "question_zh": "哪种记忆策略能保留最新信息，同时不丢失有用历史？"
+    },
+    {
+      "number": 24,
+      "id": "injection-defense-utility",
+      "title": "Can an agent reject injections while still completing the task?",
+      "topic": "Agents and memory",
+      "categories": [
+        "Paper replication",
+        "Case study"
+      ],
+      "compute": "Inference",
+      "summary": "Use AgentDyn to study the security/utility tradeoff in a local mock environment.",
+      "question": "Does a defensive prompt stop injected instructions at the cost of ignoring legitimate tool data?",
+      "scope": "Select 20-30 public AgentDyn cases and paired benign controls, or adapt them to mocked local tools. Compare no defense, clear data boundaries, and tool-output filtering.",
+      "baseline": "Fixed model, task set, and action budget. Use synthetic secrets and simulated destinations only.",
+      "evaluation": "Benign task success, attack success, unnecessary refusals, and trace-level failure causes.",
+      "outcome": "A paired security/utility evaluation; a refusal-rate number alone is insufficient.",
+      "preparation": "Tool calls and evaluation; learn trusted instructions versus external tool data.",
+      "fallback": "Use a 20-case local retrieval assistant without network actions; do not claim full AgentDyn replication.",
+      "sources": [
+        "agentdyn",
+        "agentdojo"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "agentdyn": "Choose dynamic tasks with paired benign controls.",
+        "agentdojo": "Study attack-success and legitimate-task-success evaluation together."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use 20–30 mocked cases with capped action counts. Run benign controls under the same budget; no external network actions are needed.",
+        "note_zh": "使用 20–30 个模拟案例并限制操作次数。善意输入对照使用同一预算；无需访问外部网络。"
+      },
+      "title_zh": "智能体拒绝提示注入时，还能完成任务吗？",
+      "summary_zh": "在本地模拟环境中研究 AgentDyn 安全性与可用性的权衡。",
+      "question_zh": "防御提示能阻止注入指令，同时避免忽略合法工具数据吗？"
+    },
+    {
+      "number": 25,
+      "id": "clm-context-management",
+      "title": "Editable context versus summary compaction",
+      "topic": "Agents and memory",
+      "categories": [
+        "Paper replication",
+        "Case study"
+      ],
+      "compute": "Inference",
+      "summary": "Investigate the Context Language Models direction requested by the instructor.",
+      "question": "When does editing a context file preserve evidence better than a sliding window or summary at the same budget?",
+      "scope": "Generate 100 retention/update episodes at three input lengths. Give each method the same model, file access, context cap, and turn/output limits; log every context edit.",
+      "baseline": "Sliding window, summary compaction, and editable context; use ordinary inference without retraining or custom cache serving.",
+      "evaluation": "Exact retention/task success, evidence deletions, total input/output tokens, elapsed time, and actual API cost if used. Keep modeled FLOPs separate from observed latency.",
+      "outcome": "A three-method comparison and an explanation of which edits preserve or lose decisive evidence.",
+      "preparation": "Python, token counting, and evaluation; learn context budgets and a bounded file-editing tool.",
+      "fallback": "ContextBench is still listed as coming soon at the checked October 9 revision. Use an original synthetic generator and label this an adapted experiment; begin with 30 episodes.",
+      "sources": [
+        "clm",
+        "memgpt",
+        "lost-middle"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "clm": "Read editable-context operations and the controlled-task setup.",
+        "memgpt": "Compare another explicit memory-management design.",
+        "lost-middle": "Control the position of decisive evidence."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Start with 30 episodes at 512, 1,024, and 2,048 tokens. Summaries and context edits count toward cost; avoid long agent trajectories.",
+        "note_zh": "先用 30 段交互，输入长度为 512、1,024 和 2,048 token。摘要与上下文编辑都计入成本，避免过长智能体轨迹。"
+      },
+      "title_zh": "可编辑上下文，还是摘要压缩？",
+      "summary_zh": "研究教师要求关注的 Context Language Models 方向。",
+      "question_zh": "在相同预算下，与滑动窗口或摘要相比，编辑上下文文件何时更能保留证据？"
+    },
+    {
+      "number": 26,
+      "id": "quantization-task-regressions",
+      "title": "Which small-model abilities break first under quantization?",
+      "topic": "Efficient inference",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Evaluate practical quantization on a current small checkpoint.",
+      "question": "Does lower memory cost preserve structured extraction, arithmetic, and multilingual output equally well?",
+      "scope": "Use Qwen3.5-0.8B or Qwen3-0.6B and 150 short prompts. Compare a high-precision reference with supported 8-bit and 4-bit variants from the same weights.",
+      "baseline": "Same prompts, chat template, backend where possible, and decoding. If kernels differ, describe a system comparison rather than attributing all changes to precision.",
+      "evaluation": "Exact task scores, peak memory, prefill/decode latency, cold versus warm runs, and per-task regressions.",
+      "outcome": "A measured quality/memory tradeoff and a list of brittle behaviors.",
+      "preparation": "Model inference; learn quantization formats and reliable timing.",
+      "fallback": "Two precisions and one task; a CPU run is valid if hardware and runtime are documented.",
+      "sources": [
+        "qwen35",
+        "llamacpp"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "qwen35": "Identify the exact starting checkpoint and architecture.",
+        "llamacpp": "Check supported quantization formats and timing tools."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 2,
+        "gpu_memory_gb": 12,
+        "note": "Load one precision at a time. Use one small checkpoint and short prompts; compare on the same hardware.",
+        "note_zh": "每次只加载一种精度。使用一个小型检查点和短提示，并在同一硬件上比较。"
+      },
+      "title_zh": "量化最先损害小模型的哪些能力？",
+      "summary_zh": "在当前小型检查点上评估实用量化方案。",
+      "question_zh": "降低显存占用后，结构化抽取、算术和多语言输出能否同样保持？"
+    },
+    {
+      "number": 27,
+      "id": "kv-quantization",
+      "title": "How much KV-cache compression is useful?",
+      "topic": "Efficient inference",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Connect TurboQuant to a small attention-cache experiment.",
+      "question": "Which compression errors matter for retrieval accuracy under growing context?",
+      "scope": "On a conventional-attention small model, compare full precision, scalar KV quantization, and a rotation-based quantizer on synthetic retrieval at 1K, 2K, and 4K context.",
+      "baseline": "Uncompressed cache; identical weights, prompts, and output lengths. Count scale/rotation metadata in stored bytes.",
+      "evaluation": "Actual cache bytes, vector/dot-product distortion, retrieval accuracy, and end-to-end latency where an integrated implementation exists.",
+      "outcome": "A compression/quality comparison with a clear distinction between mathematical simulation and realized memory savings.",
+      "preparation": "L03 vectors; learn attention, KV caching, and quantization.",
+      "fallback": "Quantize cached vectors offline and analyze attention error; do not claim a serving speedup from fake quantization.",
+      "sources": [
+        "turboquant",
+        "kivi"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "turboquant": "Study rotation-based vector compression.",
+        "kivi": "Compare a KV-specific asymmetric quantization method."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Begin with offline cache-vector quantization and attention-error analysis. Integrated serving is optional and must fit the same budget.",
+        "note_zh": "先离线量化缓存向量并分析注意力误差。集成到推理服务是可选项，且必须计入同一预算。"
+      },
+      "title_zh": "KV cache 压缩到什么程度才有用？",
+      "summary_zh": "将 TurboQuant 与小型注意力缓存实验结合起来。",
+      "question_zh": "上下文增长时，哪些压缩误差会影响检索准确率？"
+    },
+    {
+      "number": 28,
+      "id": "speculative-decoding-break-even",
+      "title": "When does speculative decoding actually save time?",
+      "topic": "Efficient inference",
+      "categories": [
+        "Paper replication",
+        "Case study"
+      ],
+      "compute": "Inference",
+      "summary": "Study the draft-and-verify tradeoff behind modern speculative decoders.",
+      "question": "At what draft length and acceptance rate does verification pay for its overhead?",
+      "scope": "Use a compatible small draft/target pair with identical tokenization on 100 short prompts. Implement greedy speculative verification or use a supported existing implementation.",
+      "baseline": "Target-only greedy generation; first verify identical outputs and account for draft and verification time.",
+      "evaluation": "Output equality, accepted tokens per iteration, wall time, memory per device, total GPU-hours, and variation by prompt domain. If testing two devices, include transfer overhead and the one-device baseline.",
+      "outcome": "A break-even plot and a correctness-tested implementation; EAGLE-3 is a recent reference, not a required drafter-training reproduction.",
+      "preparation": "Learn causal attention, KV caching, and batching; comfortable debugging tensor shapes.",
+      "fallback": "Use n-gram proposals with a small target, or a correctness-first CPU study; do not promise acceleration.",
+      "sources": [
+        "speculative",
+        "eagle3"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "speculative": "Understand draft verification and output preservation.",
+        "eagle3": "Read a modern acceleration design; drafter training is outside this study."
+      },
+      "resources": {
+        "max_gpus": 2,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Minimum: one GPU holding a 0.6B draft and at most 1.7B target, or using n-gram proposals. Optional: place draft and target on two GPUs if the implementation supports it; measure transfer overhead and compare with the one-GPU baseline. All runs share the four-GPU-hour planning total; drafter training is outside the scope.",
+        "min_gpus": 1,
+        "note_zh": "最低配置是一张 GPU 上运行 0.6B 草稿模型和不超过 1.7B 的目标模型，或使用 N-gram 草稿。若实现支持，可将两模型放在两张卡上，并测量传输开销；所有运行合计按四 GPU 小时规划，不训练草稿模型。"
+      },
+      "title_zh": "推测解码什么时候真正省时间？",
+      "summary_zh": "研究现代推测解码中的草稿生成与验证权衡。",
+      "question_zh": "草稿长度和接受率达到什么条件时，验证开销才值得？"
+    },
+    {
+      "number": 29,
+      "id": "sparse-attention-mechanism",
+      "title": "Which sparse attention pattern preserves retrieval?",
+      "topic": "Efficient inference",
+      "categories": [
+        "Paper replication"
+      ],
+      "compute": "Training",
+      "summary": "Retain sparse attention as a narrowly scoped mechanism study.",
+      "question": "Does combining local attention with selected global blocks outperform local attention alone at a matched token-access budget?",
+      "scope": "Train a 5M-15M decoder on synthetic associative recall. Compare full, local-window, and simple selected-block attention across two sequence lengths.",
+      "baseline": "Same training examples, parameters, and optimization; report different attention/FLOP budgets explicitly.",
+      "evaluation": "Held-out retrieval accuracy, extrapolation to longer inputs, memory, and runtime.",
+      "outcome": "An accuracy/access-budget ablation and a faithful description of how the simplified pattern differs from NSA.",
+      "preparation": "Learn Transformer attention/masks and training; suitable for students who enjoy implementation.",
+      "fallback": "Use dense masked attention at short lengths to test the idea. Dense masking does not demonstrate sparse-kernel speedups.",
+      "sources": [
+        "nsa",
+        "longformer"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "nsa": "Read the combination of local and selected attention.",
+        "longformer": "Compare a simpler local/global attention pattern."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Begin with a 5M decoder and short synthetic sequences. Dense masks suffice for accuracy; sparse CUDA kernels are not required.",
+        "note_zh": "先用 5M 参数解码器和短合成序列。准确率实验可使用稠密掩码，无需编写稀疏 CUDA kernel。"
+      },
+      "title_zh": "哪种稀疏注意力模式更能保留检索能力？",
+      "summary_zh": "将稀疏注意力保留为范围明确的机制研究。",
+      "question_zh": "在 token 访问预算相同时，局部注意力结合选定的全局块，是否优于仅使用局部注意力？"
+    },
+    {
+      "number": 30,
+      "id": "hybrid-attention-evidence-map",
+      "title": "Can a cache-memory estimator predict measured allocations?",
+      "topic": "Efficient inference",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "CPU",
+      "summary": "Build and test a cache-memory estimator using controlled CPU tensor experiments.",
+      "question": "When does a simple cache-size formula predict live tensor storage, and what explains its errors?",
+      "scope": "Implement a cache-memory calculator and a CPU harness that allocates and updates tiny key/value caches. Sweep batch size, context length, KV-head count, and dtype across at least 12 bounded configurations. Test a dense cache and a sliding-window cache under identical dimensions; document each storage layout.",
+      "baseline": "Use an explicit dense key/value cache as the reference. Compare predicted byte counts with deduplicated live tensor storage; distinguish allocated capacity from logical sequence length. Hold batch size, head dimensions, and dtype fixed when comparing cache layouts.",
+      "evaluation": "Report absolute and relative prediction error, boundary cases where the window fills, and memory-versus-context plots. Add regression tests for an incorrect dtype size, an omitted key/value factor, and shared storage counted twice. Separate tensor bytes from process memory and measured results from estimates.",
+      "outcome": "A working estimator, executable allocation harness, regression tests, and a measured explanation of when each estimate succeeds or fails. Reading papers alone does not complete this project.",
+      "preparation": "L03 memory/parameter accounting; learn attention, KV caching, tensor storage, and model configuration fields. Use the references to define assumptions before running the measurements.",
+      "fallback": "Use one layer, two cache layouts, and shorter contexts on CPU while retaining the measured comparison and regression tests. Do not infer end-to-end GPU speed or model quality from storage measurements.",
+      "sources": [
+        "qwen35",
+        "nsa",
+        "turboquant"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "qwen35": "Inspect layer types and KV-head dimensions; explain which configuration fields your calculator supports.",
+        "nsa": "Distinguish an attention pattern from the cache storage an implementation actually retains.",
+        "turboquant": "Understand cache precision and why theoretical bits per value may differ from allocated bytes."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Use small CPU tensors and cap the entire sweep’s live allocations at 256 MB. Keep measured storage and process-memory observations separate. No model download, training, or GPU run is required.",
+        "note_zh": "使用小型 CPU 张量，整个扫描过程中的存活分配量限制在 256 MB。区分实测张量存储与进程内存；无需下载或训练模型，也不需要 GPU。"
+      },
+      "title_zh": "缓存内存估算器能预测实测分配量吗？",
+      "summary_zh": "用受控的 CPU 张量实验构建并测试缓存内存估算器。",
+      "question_zh": "简单的缓存大小公式何时能预测实际存活张量的存储量？偏差来自哪里？"
+    },
+    {
+      "number": 31,
+      "id": "sae-feature-controls",
+      "title": "Does an interpretable feature control the intended behavior?",
+      "topic": "Interpretability and language",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Use released Qwen-Scope autoencoders instead of training a large SAE.",
+      "question": "Does steering a language-related feature change output language without destroying answer correctness?",
+      "scope": "Use the exact Qwen3.5-2B-Base checkpoint matched to a released SAE, one layer, and 100 short bilingual continuation prompts. Compare three intervention strengths.",
+      "baseline": "No intervention and a norm-matched random feature/direction; include unrelated control prompts.",
+      "evaluation": "Language adherence, answer/content preservation, perplexity change, activation sparsity, and off-target effects.",
+      "outcome": "A controlled feature-intervention result with both successes and failures.",
+      "preparation": "L03 embeddings and PyTorch; learn residual streams, hooks, and SAE reconstruction.",
+      "fallback": "Analyze activation specificity without intervention if steering is incompatible, and rename the question to feature association: this fallback cannot establish causal control. Never apply a base-model SAE to an unrelated instruct checkpoint.",
+      "sources": [
+        "qwen-scope",
+        "sae-evaluation"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "qwen-scope": "Load the SAE matched to the exact base model and layer.",
+        "sae-evaluation": "Read reconstruction, sparsity, and intervention evaluation criteria."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 24,
+        "note": "Load one released SAE layer with the matched 2B base model. Begin with 50 short prompts; training a new SAE is outside the scope.",
+        "note_zh": "加载与 2B 基础模型匹配的单层 SAE，从 50 个短提示开始；不训练新的 SAE。"
+      },
+      "title_zh": "可解释特征能控制预期行为吗？",
+      "summary_zh": "使用已发布的 Qwen-Scope 自编码器，避免训练大型 SAE。",
+      "question_zh": "操控一种语言相关特征能改变输出语言，同时保持答案正确吗？"
+    },
+    {
+      "number": 32,
+      "id": "cross-lingual-intervention",
+      "title": "Can an inference-time intervention transfer across languages?",
+      "topic": "Interpretability and language",
+      "categories": [
+        "Paper replication"
+      ],
+      "compute": "Inference",
+      "summary": "Retain INCLINE with a two-language, one-layer study.",
+      "question": "Does a cross-lingual intervention improve Chinese answers without merely forcing English output?",
+      "scope": "Use 100 parallel, objectively scored English/Chinese questions and one small open model. Implement one intervention from the official code and tune it on a separate development set.",
+      "baseline": "No intervention and translate-to-English prompting; use paired questions and matched generation budgets.",
+      "evaluation": "Accuracy, output-language compliance, translation errors, and sensitivity to intervention strength.",
+      "outcome": "A bilingual comparison with a clear accounting of where transfer helps or fails.",
+      "preparation": "Bilingual evaluation and PyTorch hooks; learn Transformer hidden states and the selected intervention.",
+      "fallback": "Use 50 pairs and one layer; switch to a supported older checkpoint if the latest architecture is incompatible.",
+      "sources": [
+        "incline",
+        "mkqa"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "incline": "Implement one supported cross-lingual intervention.",
+        "mkqa": "Plan aligned questions and language-independent answer checks."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use one supported small checkpoint and one layer. If the official code needs a larger model or unsupported hooks, choose a simpler prompting comparison and rename the claim.",
+        "note_zh": "使用一个受支持的小型检查点和一层。如果官方代码需要更大的模型或不支持的钩子，就改做更简单的提示比较，并相应调整题目表述。"
+      },
+      "title_zh": "推理时干预能跨语言迁移吗？",
+      "summary_zh": "用两种语言和单层设置研究 INCLINE。",
+      "question_zh": "跨语言干预能提升中文回答，而不只是强迫模型输出英文吗？"
+    },
+    {
+      "number": 33,
+      "id": "difference-aware-fairness",
+      "title": "When is treating two cases identically the wrong criterion?",
+      "topic": "Interpretability and language",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Retain a recent fairness paper while keeping the assessment question precise.",
+      "question": "Does a generic fairness prompt improve one kind of distinction while damaging another?",
+      "scope": "Select two documented scenarios and 100-200 examples from the authors' benchmark. Compare a neutral prompt with a difference-unaware and a context-sensitive prompt.",
+      "baseline": "Unmodified prompt and original benchmark labels; distinguish descriptive, normative, and associative judgments.",
+      "evaluation": "Scenario-specific accuracy/agreement, paired changes, inconsistent responses, and limitations of the reference labels.",
+      "outcome": "An evidence-based analysis of the evaluation criterion, avoiding a single unqualified fairness score.",
+      "preparation": "Evaluation and careful reading; learn paired analysis and limitations of normative annotations.",
+      "fallback": "One scenario and 80 examples, with manual inspection of ambiguous labels.",
+      "sources": [
+        "fairness",
+        "bbq"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "fairness": "Distinguish desired differences from unwanted discrimination.",
+        "bbq": "Compare how question context changes the intended bias criterion."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 2,
+        "gpu_memory_gb": 12,
+        "note": "One model and one or two scenarios suffice. Reuse the same examples across prompts and keep responses short.",
+        "note_zh": "一个模型和一两个场景就够。不同提示复用同一组样例，并保持回答简短。"
+      },
+      "title_zh": "把两种情况一视同仁，何时反而不公平？",
+      "summary_zh": "保留一项近期公平性研究，同时让评测问题保持明确。",
+      "question_zh": "通用公平提示是否会改善一种区分，同时损害另一种区分？"
+    },
+    {
+      "number": 34,
+      "id": "formal-language-warmup",
+      "title": "Does a formal-language warm-up teach useful structure?",
+      "topic": "Interpretability and language",
+      "categories": [
+        "Paper replication"
+      ],
+      "compute": "Training",
+      "summary": "Test one pre-pretraining hypothesis using a tiny Transformer.",
+      "question": "Does bracket-structured pretraining help later language learning more than equally long random-symbol pretraining?",
+      "scope": "Train a 5M-15M model on matched short formal sequences, then the same small natural-language corpus. Include direct natural-language training with matched total compute.",
+      "baseline": "Random-symbol warm-up and no formal warm-up; report natural-language tokens and total training tokens separately.",
+      "evaluation": "Held-out language loss, a small syntax test, convergence curves, and two seeds if feasible.",
+      "outcome": "A controlled transfer experiment that separates structure from extra optimization.",
+      "preparation": "L04 recurrent limitations and language modeling; learn Transformer training and synthetic generators.",
+      "fallback": "A 5M model with at most 1M tokens per stage and a single formal grammar.",
+      "sources": [
+        "formal",
+        "babylm"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "formal": "Select one formal-language warm-up and its controls.",
+        "babylm": "Read the motivation for data-limited language learning; use a much smaller course experiment."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Use a 5M model, one grammar, and at most 1M tokens per stage initially. Count the direct-training control and all seeds.",
+        "note_zh": "先用 5M 参数模型、一种语法；每个阶段最多 1M token。直接训练对照和所有随机种子都计入总量。"
+      },
+      "title_zh": "形式语言预热能教会模型有用结构吗？",
+      "summary_zh": "用小型 Transformer 检验一项预训练假设。",
+      "question_zh": "与等长的随机符号预训练相比，括号结构预训练更有利于后续语言学习吗？"
+    },
+    {
+      "number": 35,
+      "id": "ngram-overlap-audit",
+      "title": "Can exact text search expose evaluation leakage?",
+      "topic": "Interpretability and language",
+      "categories": [
+        "Paper replication",
+        "New task"
+      ],
+      "compute": "CPU",
+      "summary": "Bring Infini-gram mini down to a local, inspectable corpus.",
+      "question": "Which overlap thresholds catch planted leakage while avoiding ordinary shared phrases?",
+      "scope": "Index 10-50 MB of licensed text and inject a separate, labeled set of exact, paraphrased, and boilerplate overlaps. Compare exact n-gram search with a simple near-duplicate baseline.",
+      "baseline": "Substring/hash-based search; evaluate on planted cases and manually inspect natural matches.",
+      "evaluation": "Precision/recall for each overlap type, index size, query time, and false-positive causes.",
+      "outcome": "An overlap auditor and an explanation of why corpus overlap alone cannot prove a model saw a benchmark.",
+      "preparation": "L01 preprocessing and L02 n-grams; learn indexing and retrieval precision/recall.",
+      "fallback": "Use 5 MB and exact search if FM-index installation fails; label the implementation change.",
+      "sources": [
+        "infinigram",
+        "dedup"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "infinigram": "Understand exact n-gram indexing.",
+        "dedup": "Plan overlap detection and false-positive analysis."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Use a 5–50 MB corpus and a CPU index. Internet-scale indexing is outside this study.",
+        "note_zh": "使用 5–50 MB 语料和 CPU 索引；本项目不做互联网规模索引。"
+      },
+      "title_zh": "精确文本检索能发现评测数据泄漏吗？",
+      "summary_zh": "将 Infini-gram mini 用于本地且可检查的小型语料。",
+      "question_zh": "哪些重叠阈值能发现人为植入的泄漏，同时避免误报普通共用短语？"
+    },
+    {
+      "number": 36,
+      "id": "diffusion-unmasking-order",
+      "title": "Which tokens should a diffusion model fill first?",
+      "topic": "Diffusion and multimodal",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Use a released Tiny-A2D checkpoint for a sampling-only project.",
+      "question": "Does confidence-based unmasking improve quality per forward pass over random order?",
+      "scope": "Use the Qwen3-0.6B-derived Tiny-A2D masked-diffusion checkpoint, 100 short exact-answer or completion prompts, and three step budgets.",
+      "baseline": "Random unmasking with the same checkpoint, output length, and number of forward passes; include the corresponding AR model as a separately qualified reference.",
+      "evaluation": "Exact correctness, repetition, wall time, model calls, and output length. Do not compare diffusion likelihood directly with AR perplexity without matching definitions.",
+      "outcome": "A sampler comparison and failure cases showing the step/quality tradeoff.",
+      "preparation": "Learn masked prediction, iterative unmasking, and the released sampler interface.",
+      "fallback": "Use 50 prompts and outputs capped at 64 tokens; no conversion training or 8B model is needed.",
+      "sources": [
+        "dllm",
+        "mdlm"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "dllm": "Load Tiny-A2D and inspect the released sampler.",
+        "mdlm": "Understand masked prediction and unmasking schedules."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use the released 0.6B checkpoint, 50 prompts, and outputs of at most 64 tokens first. Count all denoising forward passes.",
+        "note_zh": "先使用已发布的 0.6B 检查点、50 条提示和最多 64 个输出 token，并统计所有去噪前向计算。"
+      },
+      "title_zh": "扩散语言模型应该先填哪些 token？",
+      "summary_zh": "使用已发布的 Tiny-A2D 检查点，只研究采样策略。",
+      "question_zh": "与随机顺序相比，按置信度逐步揭示 token 能否以相同前向次数获得更好质量？"
+    },
+    {
+      "number": 37,
+      "id": "block-diffusion-size",
+      "title": "How does diffusion block size change generation?",
+      "topic": "Diffusion and multimodal",
+      "categories": [
+        "Paper replication",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Study block diffusion using a small released checkpoint.",
+      "question": "Where does block size trade parallel generation for consistency across a sequence?",
+      "scope": "Use the Tiny-A2D block-diffusion checkpoint and 100 short structured completions. Compare only block sizes supported by its published inference recipe.",
+      "baseline": "Default block size; hold total forward-pass budget and maximum output length fixed, and separately report supported cache behavior.",
+      "evaluation": "Constraint satisfaction, exact answer accuracy, repetition, throughput, and actual latency.",
+      "outcome": "A block-size ablation with clear checkpoint/training-distribution caveats.",
+      "preparation": "Learn autoregressive versus masked generation, attention masks, and inference timing.",
+      "fallback": "Two supported block settings and 50 prompts; if changing blocks is unsupported, compare step allocation within the documented default.",
+      "sources": [
+        "block-diffusion",
+        "dllm"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "block-diffusion": "Read blockwise denoising and supported cache behavior.",
+        "dllm": "Use the small released checkpoint and sampler interface."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use two supported block settings and 50 short prompts initially. Count all denoising passes and cache setup.",
+        "note_zh": "先比较两种受支持的块设置和 50 条短提示。统计所有去噪步骤并缓存初始化开销。"
+      },
+      "title_zh": "扩散块大小会怎样改变生成效果？",
+      "summary_zh": "使用已发布的小型检查点研究块扩散。",
+      "question_zh": "块大小会如何在并行生成能力与序列一致性之间权衡？"
+    },
+    {
+      "number": 38,
+      "id": "small-vlm-document-qa",
+      "title": "Which image preparation helps a small vision model?",
+      "topic": "Diffusion and multimodal",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Evaluate small vision-language models on readable document questions.",
+      "question": "Do question-independent tiling or OCR preserve document evidence better than a resized whole page at a bounded input cost?",
+      "scope": "Create 60 original document/table images with exact questions and source values. Compare whole-page resize, question-independent tiling, and OCR-text input on SmolVLM-500M or Qwen3.5-0.8B.",
+      "baseline": "Whole-page input and a text-only oracle supplied with the actual page text; preserve the same question and output budget.",
+      "evaluation": "Exact field/number accuracy, errors by font size/layout, total image and text input size, tile count, and latency. Use question-independent tiling to avoid supplying answer-location information.",
+      "outcome": "A reproducible document-QA study with annotated visual failure cases.",
+      "preparation": "Python image/data handling; learn image preprocessing and multimodal prompts.",
+      "fallback": "Use 30 single-page tables and one model. Avoid projects requiring large VLM fine-tuning.",
+      "sources": [
+        "smolvlm",
+        "qwen35"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "smolvlm": "Inspect the small vision model’s image-processing interface.",
+        "qwen35": "Consider an alternative small multimodal checkpoint; run only one model family."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use one 500M–0.8B VLM and 30 original pages first. Cap image resolution and tile count; no larger-model comparison or VLM tuning is required.",
+        "note_zh": "先用一个 500M–0.8B 视觉语言模型和 30 页自制文档。限制图像分辨率和切块数量；无需比较更大模型或微调 VLM。"
+      },
+      "title_zh": "怎样处理图片更利于小型视觉模型读文档？",
+      "summary_zh": "评估小型视觉语言模型回答文档问题的能力。",
+      "question_zh": "在限定输入成本下，与整页缩放相比，与问题无关的切块或 OCR 哪种更能保留文档证据？"
+    },
+    {
+      "number": 39,
+      "id": "visual-document-retrieval",
+      "title": "Should we retrieve a document as text or as an image?",
+      "topic": "Diffusion and multimodal",
+      "categories": [
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Use a 2026 multimodal embedding release on mixed text/layout evidence.",
+      "question": "Do page images recover diagram/table evidence that a text index misses?",
+      "scope": "Use 100 public course pages or original figures and 60 evidence-labeled queries. Compare extracted-text BM25, text embeddings, and Qwen3-VL-Embedding-2B page embeddings.",
+      "baseline": "Use fixed pages and labels. Within Qwen3-VL-Embedding-2B compare page images with clean extracted text to study modality. Report BM25 and Qwen3 text embeddings separately as system comparisons; they also change the encoder.",
+      "evaluation": "Recall@5, nDCG, errors by text/table/diagram query, encoding time, and index size.",
+      "outcome": "A modality comparison and an explanation of which visual information changes retrieval.",
+      "preparation": "L03 embeddings; learn document rendering, multimodal encoders, and retrieval labels.",
+      "fallback": "Use 40 pages and one-time shared-GPU embeddings; generation is outside the minimum scope.",
+      "sources": [
+        "vl-embedding",
+        "qwen-embedding"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "vl-embedding": "Encode page images and compare its text-only input route.",
+        "qwen-embedding": "Use a text retriever as a separately labeled system baseline."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 24,
+        "note": "Encode 40–100 pages once and cache all vectors. Compare image/text inputs within the same VL encoder before adding a different text model.",
+        "note_zh": "先编码 40–100 页并缓存所有向量。先在同一个视觉语言编码器内比较图片和文本输入，再加入其他文本模型。"
+      },
+      "title_zh": "检索文档时应使用文本还是图片？",
+      "summary_zh": "用 2026 年发布的多模态嵌入模型处理文本与版面混合证据。",
+      "question_zh": "页面图像能找回文本索引遗漏的图表和表格证据吗？"
+    },
+    {
+      "number": 40,
+      "id": "asr-terminology-context",
+      "title": "Does a glossary help speech recognition or create hallucinations?",
+      "topic": "Diffusion and multimodal",
+      "categories": [
+        "Research problem",
+        "New task"
+      ],
+      "compute": "Inference",
+      "summary": "Test a small 2026 ASR model on English-Chinese technical terminology.",
+      "question": "Does domain context correct rare terms without inserting terms that were never spoken?",
+      "scope": "Record 60-100 short consented or self-recorded clips with manually checked transcripts. Compare Qwen3-ASR-0.6B with no context, a relevant glossary, and a distractor glossary using supported context input.",
+      "baseline": "No-context ASR with the same audio. Split by sentence template and speaker when possible; preserve uncued controls.",
+      "evaluation": "Chinese character error rate, English word error rate, terminology recall, false term insertions, and runtime.",
+      "outcome": "An annotated terminology benchmark and a measured context/faithfulness tradeoff.",
+      "preparation": "Text normalization and evaluation; learn audio loading, transcript alignment, and ASR context formatting.",
+      "fallback": "Use 30 self-recorded clips and two glossary conditions; keep private voices and transcripts out of the course repository.",
+      "sources": [
+        "asr",
+        "whisper"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "asr": "Read the selected ASR model and use its supported context input.",
+        "whisper": "Compare ASR evaluation and text-conditioning design; no second model run is required."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 2,
+        "gpu_memory_gb": 12,
+        "note": "Use 30 short self-recorded clips first and the 0.6B ASR checkpoint. Cache each glossary condition; no speech-model training is needed.",
+        "note_zh": "先用 30 段自己录制的短音频和 0.6B ASR 检查点。缓存每种术语表条件；无需训练语音模型。"
+      },
+      "title_zh": "术语表能改善语音识别，还是会制造幻觉？",
+      "summary_zh": "用 2026 年的小型 ASR 模型测试中英技术术语。",
+      "question_zh": "领域上下文能纠正罕见术语，同时不凭空插入未说出的词吗？"
+    },
+    {
+      "number": 41,
+      "id": "agent-skill-transfer",
+      "title": "Do reusable agent skills transfer to unseen tasks?",
+      "topic": "Open-source contributions",
+      "categories": [
+        "Research problem",
+        "New task"
+      ],
+      "compute": "Inference",
+      "summary": "Build and evaluate one reusable skill with a possible SkillsBench contribution.",
+      "question": "Does a concise tested skill improve held-out workflow success beyond generic instructions at a matched budget?",
+      "scope": "Choose one local workflow such as structured file conversion. Create 10 development and 20 held-out instances with deterministic checks. Compare no skill, a concise relevant skill, a generic workflow prompt, and an irrelevant skill.",
+      "baseline": "Use the same model, tools, tasks, and total token cap. Construct a generic prompt at the same prompt length as the relevant skill, then optionally a longer version within the same total cap. Match the irrelevant skill’s length too. Keep task answers out of all prompts.",
+      "evaluation": "Artifact correctness, tool calls, total tokens, generalization failures, and skill-induced regressions.",
+      "outcome": "A useful skill, held-out tests, a comparison report, and a reviewable contribution if it matches the upstream scope.",
+      "preparation": "Python tooling and tests; learn agent traces, skill loading, and contribution etiquette.",
+      "fallback": "Use 10 held-out instances and one 0.6B model with at most three tool calls. Keep the generic-prompt control; frontier-agent trials are outside the local minimum.",
+      "sources": [
+        "skillsbench",
+        "voyager"
+      ],
+      "upstream": "SkillsBench: inspect the current task registry and contribution guide, agree on an unclaimed need, and propose one task or verifier improvement. Merge is an external decision.",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "skillsbench": "Inspect task checks, skill packaging, and upstream contribution requirements.",
+        "voyager": "Study reusable skills and transfer; adapt the idea to a local file workflow."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "One local model, one workflow, and 30 instances. Cap tool calls and include all four prompt conditions; upstream frontier-model trials need a separate plan.",
+        "note_zh": "一个本地模型、一种工作流和 30 个实例即可。限制工具调用并包含全部四种提示条件；调用前沿模型进行测试须另行规划。"
+      },
+      "title_zh": "可复用的智能体技能能迁移到新任务吗？",
+      "summary_zh": "构建并评估一个可复用技能，并考虑向 SkillsBench 贡献。",
+      "question_zh": "在 token 预算相同的条件下，经过测试的精简技能能比通用指令更好地完成留出工作流吗？"
+    },
+    {
+      "number": 42,
+      "id": "science-workflow-task",
+      "title": "Design one verifiable scientific-agent task",
+      "topic": "Open-source contributions",
+      "categories": [
+        "New task",
+        "Case study"
+      ],
+      "compute": "Inference",
+      "summary": "Develop a Terminal-Bench-Science-style task from a real research workflow.",
+      "question": "Can an agent complete a scientifically meaningful workflow whose result can be verified independently?",
+      "scope": "Choose a CPU-only workflow in a domain you already understand, such as checking a numerical convergence result from a small published dataset. Package inputs, a bounded environment, an independently checked solution, and a verifier; analyze two small agent baselines sequentially.",
+      "baseline": "Known-correct solution and a no-op/invalid solution; include plausible wrong outputs so the verifier cannot pass superficial artifacts.",
+      "evaluation": "Oracle solvability, false accepts/rejects, repeated agent success, resource use, and scientific failure analysis.",
+      "outcome": "One well-specified task and a defensible verifier; an upstream-quality result requires maintainer/domain review.",
+      "preparation": "Scientific-domain knowledge, Python and Docker; learn Harbor task packaging and agent evaluation.",
+      "fallback": "Complete the local CPU task and a small-model pilot as the course project. If the scientific workload itself needs GPUs, select a different task. The posted TB-Science 0.2 cutoff was October 5; confirm a future intake before promising submission.",
+      "sources": [
+        "tb-science",
+        "tb-rubric",
+        "scienceagentbench"
+      ],
+      "upstream": "New TB-Science tasks require a proposal approved by maintainers before full implementation. Toy textbook exercises do not satisfy the scientific-workflow scope. A future intake is unconfirmed as of October 9.",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "tb-science": "Check task packaging, proposal approval, and intake dates.",
+        "tb-rubric": "Check scientific relevance and verification requirements.",
+        "scienceagentbench": "Read how scientific agent outputs are evaluated."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Choose a CPU scientific workflow and two small agent baselines run sequentially. A task requiring GPU simulation, model training, or full benchmark reruns is unsuitable.",
+        "note_zh": "选择 CPU 科学工作流，并依次运行两个小型智能体基线。依赖 GPU 模拟、模型训练或完整基准复跑的任务不适合本项目。"
+      },
+      "title_zh": "设计一个可验证的科学智能体任务",
+      "summary_zh": "基于真实科研工作流开发 Terminal-Bench-Science 风格任务。",
+      "question_zh": "智能体能否完成一个有科学意义、且结果可独立验证的工作流？"
+    },
+    {
+      "number": 43,
+      "id": "science-verifier-repair",
+      "title": "Repair a scientific benchmark verifier",
+      "topic": "Open-source contributions",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "CPU",
+      "summary": "Make an existing scientific task more trustworthy through one evidence-backed repair.",
+      "question": "Can a verifier accept a scientifically wrong answer or reject an equivalent correct one?",
+      "scope": "Choose one existing TB-Science task with CPU-only local oracle and verifier checks. Reproduce one numerical-tolerance, unit, schema, or environment bug; build a minimal failing case and a focused fix.",
+      "baseline": "Current verifier, independently valid solutions, and deliberately wrong outputs; rerun the oracle and no-op checks.",
+      "evaluation": "False accepts/rejects, robustness across equivalent outputs, runtime, and preserved task difficulty.",
+      "outcome": "A reproducible bug report, regression tests, focused patch, and evidence explaining why the task meaning is preserved.",
+      "preparation": "Python testing, numerical reasoning, Docker; learn the chosen task domain and upstream repair process.",
+      "fallback": "Use a CPU reproduction of the verifier defect if the complete environment is too costly. State the checks not rerun; maintainer response and any required frontier-agent trials are outside the local minimum.",
+      "sources": [
+        "tb-science",
+        "scienceagentbench",
+        "evalplus"
+      ],
+      "upstream": "The current guide explicitly supports task-fix requests. Discuss the defect with maintainers and follow the repair workflow; do not publish hidden solutions or exploit details beyond their approved channel.",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "tb-science": "Follow the documented task-repair route.",
+        "scienceagentbench": "Study scientific artifact verification and failure analysis.",
+        "evalplus": "Design regression cases that expose weak correctness checks."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Choose a CPU-only verifier defect. Local correctness cases and regression tests are the minimum; expensive upstream agent trials are a separate dependency.",
+        "note_zh": "选择一个纯 CPU 验证器缺陷。最低要求是本地正确性案例和回归测试；昂贵的上游智能体评测属于额外依赖。"
+      },
+      "title_zh": "修复一个科学基准的验证器",
+      "summary_zh": "通过一项有证据支撑的修复，提高科学任务的可信度。",
+      "question_zh": "验证器会接受科学上错误的答案，或拒绝等价的正确答案吗？"
+    },
+    {
+      "number": 44,
+      "id": "ale-agent-adapter",
+      "title": "Make agent traces and grading reproducible",
+      "topic": "Open-source contributions",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "CPU",
+      "summary": "Contribute a narrow adapter, trace, or grading fix instead of running the full benchmark.",
+      "question": "Can a task integration reliably preserve artifacts, traces, and grading across success, failure, and timeout?",
+      "scope": "Choose one Linux/CLI-compatible public ALE task with CPU-only dependencies. Use a mock agent that emits known valid and invalid outputs, then repair one timeout, trajectory, or grading path after identifying a maintainer need. A small real-agent run is optional.",
+      "baseline": "Existing integration plus valid/invalid-artifact and timeout cases. Keep references unavailable during the mock or real agent run, then stage them for grading.",
+      "evaluation": "End-to-end reproducibility, task results, missing trace fields, timeout recovery, and CPU/GPU/API cost.",
+      "outcome": "A focused infrastructure patch, regression tests, and a reproducible lifecycle comparison. Mock-agent results establish infrastructure behavior, not agent intelligence.",
+      "preparation": "Python processes, containers, and tests; learn ALE deployment and task lifecycle.",
+      "fallback": "Use the task lifecycle with small local fixtures if the full task requires a VM, GUI, or expensive dependencies. Document what was adapted.",
+      "sources": [
+        "ale",
+        "agentbench"
+      ],
+      "upstream": "ALE documents how to add an agent. Confirm maintainer interest in the specific patch; many full benchmark tasks need VMs or GUI software, so the complete benchmark is outside this project.",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "ale": "Understand the task lifecycle, grading, and trajectory artifacts.",
+        "agentbench": "Compare agent evaluation interfaces and failure categories."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Choose one CPU/Linux CLI task and a mock agent for lifecycle checks. Avoid GUI VMs, GPU-dependent environments, and full ALE evaluation.",
+        "note_zh": "选择一个 CPU/Linux 命令行任务和模拟智能体做生命周期检查。避开图形界面虚拟机、依赖 GPU 的环境和完整 ALE 评测。"
+      },
+      "title_zh": "让智能体轨迹和评分过程可复现",
+      "summary_zh": "贡献一个小型适配器、轨迹或评分修复，不必运行整个基准。",
+      "question_zh": "任务集成能否在成功、失败和超时时可靠保留产物、轨迹与评分？"
+    },
+    {
+      "number": 45,
+      "id": "hle-evaluation-audit",
+      "title": "Audit answer extraction and calibration in Humanity's Last Exam",
+      "topic": "Open-source contributions",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "CPU",
+      "summary": "Contribute evaluation reliability rather than treating a benchmark score as a mergeable artifact.",
+      "question": "Can answer formatting or confidence parsing change the measured score without changing the substantive answer?",
+      "scope": "Use 20–30 public, domain-understood HLE examples and synthetic answer/confidence strings. Audit one local parsing or calibration path using equivalent formatting and known incorrect variants. A model-judge audit is optional only when a bounded cached-output set is available.",
+      "baseline": "Current scorer, manually verified equivalence classes, and deliberately incorrect answers. Use only the public split and pin dataset revision.",
+      "evaluation": "Parsing false accepts/rejects, score changes under equivalent formatting, and correctness of confidence/calibration calculations. Report small-sample uncertainty; no model capability claim follows from synthetic strings.",
+      "outcome": "An evaluation bug reproduction or well-supported correction, regression cases, and a small empirical analysis.",
+      "preparation": "Evaluation, Python tests, and subject knowledge; learn HLE answer formats and calibration.",
+      "fallback": "Audit parsing with synthetic outputs when small-model accuracy is too low. No full HLE run, frontier API spend, or new expert question is required.",
+      "sources": [
+        "hle",
+        "judgebench"
+      ],
+      "upstream": "HLE question feedback uses its official form; rolling contributions are coordinated with maintainers. Its GitHub repository has issues disabled. Confirm a code-PR route before assuming that question acceptance will be represented by a merge; preserve benchmark canaries and keep evaluation data out of training.",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "hle": "Check public-data, answer-format, and feedback rules.",
+        "judgebench": "Plan false-accept and false-reject checks for an evaluator."
+      },
+      "resources": {
+        "max_gpus": 0,
+        "gpu_hours": 0,
+        "gpu_memory_gb": 0,
+        "note": "Use synthetic answer/confidence strings and public reference examples for local parsing tests. Requiring paid frontier judges or a full HLE run would change the scope.",
+        "note_zh": "用合成答案/置信度字符串和公开参考样例做本地解析测试。若需要付费前沿评审模型或完整 HLE 运行，项目范围就已改变。"
+      },
+      "title_zh": "审查 Humanity's Last Exam 的答案提取与校准",
+      "summary_zh": "研究评测可靠性，而不是把一个基准分数当成可合并的代码产物。",
+      "question_zh": "不改变答案实质时，仅改变答案格式或置信度解析，会影响测得的分数吗？"
+    },
+    {
+      "number": 46,
+      "id": "small-scale-scaling-prediction",
+      "title": "Can small training runs predict the next scale?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Test the reliability of a scaling prediction on tiny models before using it to allocate a larger budget.",
+      "question": "How well does a curve fitted to smaller runs predict a held-out larger configuration, and how sensitive is that prediction to the fitting choices?",
+      "scope": "Train one decoder family at roughly 5M, 8M, 12M, and 20M parameters on one fixed licensed corpus. Save checkpoints at 0.5M, 1M, and 2M training tokens; use two seeds if the pilot fits. Reserve the largest model for evaluating predictions rather than choosing the fitted curve.",
+      "baseline": "Compare a predeclared low-parameter power-law fit with a simple log-linear extrapolation and a constant-loss predictor. Keep tokenizer, validation set, data order, and optimizer policy fixed; report any size-specific tuning.",
+      "evaluation": "Held-out loss-prediction error, ranking of candidate allocations, sensitivity to omitted fitting points and seeds, actual training time, and approximate FLOPs. Report uncertainty and distinguish interpolation from extrapolation.",
+      "outcome": "An auditable run table, an out-of-sample prediction, and evidence explaining whether the prediction is useful within the measured range.",
+      "preparation": "Course language-model training and evaluation; learn nonlinear fitting, log-scale plots, compute accounting, and uncertainty estimation. CS336 supplies a larger reference exercise.",
+      "fallback": "Use four smaller models and fewer tokens, preserving the held-out configuration. Run locally: Stanford student API access is not assumed. A narrow tiny-model fit cannot establish a frontier-model scaling law.",
+      "sources": [
+        "cs336-scaling",
+        "scaling-laws",
+        "chinchilla"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "cs336-scaling": "Use the local scaling exercise as a starting point.",
+        "scaling-laws": "Understand the form and limitations of a fitted scaling curve.",
+        "chinchilla": "Distinguish model size, training tokens, and compute allocation."
+      },
+      "resources": {
+        "max_gpus": 2,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Minimum: one GPU running the four tiny configurations sequentially. Optional: use two GPUs for independent configurations or seeds. Two devices for two hours consume four GPU-hours; all runs share the eight-GPU-hour planning total. Pilot the smallest model and reduce token counts if needed.",
+        "min_gpus": 1,
+        "note_zh": "最低配置是一张 GPU，顺序运行四个微型配置。可选用两张 GPU 并行测试不同配置或随机种子；两张卡运行两小时共计四 GPU 小时，所有运行共用八 GPU 小时的规划预算。先试最小模型，必要时减少 token 数。"
+      },
+      "title_zh": "小规模训练能预测更大规模的结果吗？",
+      "summary_zh": "先在微型模型上检验缩放预测可靠性，再用它分配更大的预算。",
+      "question_zh": "根据小规模运行拟合的曲线，能否预测留出的较大配置？预测对拟合选择有多敏感？"
+    },
+    {
+      "number": 47,
+      "id": "training-profile-break-even",
+      "title": "Which optimization actually shortens a small training run?",
+      "topic": "Adaptation and training",
+      "categories": [
+        "Case study",
+        "Research problem"
+      ],
+      "compute": "Training",
+      "summary": "Use a profiler to identify the bottleneck, then test one optimization including its setup cost.",
+      "question": "When do faster attention or graph compilation repay their overhead in the short training runs a student actually performs?",
+      "scope": "Use a 5M-20M decoder, one fixed input batch stream, and two sequence lengths. Profile a baseline, then choose either supported optimized attention or graph compilation. Compare runs of 20, 100, and 500 steps on one GPU; check the installed backend supports the chosen method.",
+      "baseline": "Unoptimized execution with identical weights, batches, precision, optimizer, and hardware. Check outputs and gradients within documented numerical tolerances, and compare short loss trajectories before interpreting speed.",
+      "evaluation": "End-to-end elapsed time including compilation, steady-state tokens/second, peak allocated memory, repeated-run variation, and time spent in attention, optimizer, and data loading. Synchronize accelerator timing and separate warm-up from measurement.",
+      "outcome": "A profiler-backed bottleneck diagnosis, a correctness-checked change, and a break-even estimate showing when it helps or fails.",
+      "preparation": "PyTorch training and tensor shapes; learn profiling, asynchronous GPU timing, warm-up effects, and numerical equivalence checks.",
+      "fallback": "Use the smaller model and one sequence length. If GPU kernels are unavailable, analyze CPU execution and one supported optimization; do not report it as a GPU speedup. Distributed training and writing a Triton kernel are outside the minimum scope.",
+      "sources": [
+        "cs336-systems",
+        "torch-compile"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "cs336-systems": "Plan profiling, correctness checks, and fair timing.",
+        "torch-compile": "Measure compilation overhead using the installed backend."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "One GPU, one optimization, and a fixed set of short step counts. Include compilation and profiling in the total; no distributed training or custom kernel is needed.",
+        "note_zh": "使用一张 GPU、一种优化和固定的短步数设置。将编译与性能分析计入预算；无需分布式训练或自定义 kernel。"
+      },
+      "title_zh": "哪种优化真的能缩短一次小型训练？",
+      "summary_zh": "先用性能分析器找出瓶颈，再计入准备成本测试一种优化。",
+      "question_zh": "在学生实际进行的短训练中，注意力加速或图编译何时能抵消自身开销？"
+    },
+    {
+      "number": 48,
+      "id": "clarification-before-coding",
+      "title": "When should a coding assistant ask a question first?",
+      "topic": "Agents and memory",
+      "categories": [
+        "New task",
+        "Research problem"
+      ],
+      "compute": "Inference",
+      "summary": "Measure the value and cost of one clarification on an underspecified programming request.",
+      "question": "Can a small model recognize missing requirements and ask a useful question without burdening users whose requests are already clear?",
+      "scope": "Author 40 small Python tasks with hidden specification fields such as tie-breaking, units, or case handling. Create paired complete and incomplete requests. Use a deterministic simulated user that reveals only the field explicitly requested, and allow at most one clarification.",
+      "baseline": "Answer immediately, always ask a fixed question, selectively ask, and an oracle given the full specification. Use the same model and total generation-token cap. Keep development templates separate from evaluation tasks and run code in a sandbox.",
+      "evaluation": "Hidden-test pass rate, useful and unnecessary question rates, unresolved ambiguities, interaction count, and total tokens. Inspect whether questions reveal task requirements rather than reference implementations.",
+      "outcome": "A paired task generator, a reproducible clarification policy comparison, and an analysis of when the additional interaction earns its cost.",
+      "preparation": "Python tests, basic prompting, and evaluation; learn controlled user simulation and ambiguity annotation. The CS224N gallery supplies topic inspiration; this is an original reduced protocol.",
+      "fallback": "Use 20 tasks, two ambiguity types, and a 0.6B model. Human user studies, unrestricted dialogue, and a full replication of the Stanford project are outside the minimum scope.",
+      "sources": [
+        "clarifygpt",
+        "cs224n-projects",
+        "qwen3"
+      ],
+      "upstream": "",
+      "status": "Unreviewed",
+      "reading_notes": {
+        "clarifygpt": "Read ambiguity detection and targeted clarification.",
+        "cs224n-projects": "See a student-scale topic example; the gallery is not evidence of results.",
+        "qwen3": "Use a small local checkpoint for the bounded comparison."
+      },
+      "resources": {
+        "max_gpus": 1,
+        "gpu_hours": 4,
+        "gpu_memory_gb": 12,
+        "note": "Use 20–40 short Python tasks, one 0.6B model, and one clarification. Count question and answer tokens and cap program execution time.",
+        "note_zh": "使用 20–40 个简短 Python 任务、一个 0.6B 模型和一次澄清。统计提问与回答 token，并限制程序运行时间。"
+      },
+      "title_zh": "编程助手什么时候应该先提问？",
+      "summary_zh": "测量面对需求不明确的编程请求时，澄清问题带来的价值和成本。",
+      "question_zh": "小模型能识别缺失需求并提出有用问题，同时不打扰需求已清楚的用户吗？"
+    },
+    {
+      "number": 49,
+      "id": "student-proposed-project",
+      "display_priority": 0,
+      "display_label": "Open choice",
+      "title": "Propose your own NLP or LLM project",
+      "topic": "Student-defined topic",
+      "categories": [
+        "Student-proposed project"
+      ],
+      "compute": "Propose a budget",
+      "summary": "Start with a topic you care about: a hobby, language, research question, community, or practical problem. The suggested projects are starting points, and you are welcome to propose a different idea.",
+      "question": "Which specific question about language processing would you be excited to investigate, and what evidence would change your mind?",
+      "scope": "Choose one question with a clear NLP or LLM component that one student can investigate this semester. Explain its motivation and connection to related work, identify accessible data or a small generator, and define one main comparison. For example, study terminology preservation in translations, search over historical documents, or a language tool for a hobby you know well.",
+      "baseline": "Begin with the simplest credible solution: a rule, majority prediction, lexical retrieval, or an existing small model. Identify one change to compare against it, and explain which outcome would support or weaken your hypothesis.",
+      "evaluation": "Define a held-out set, relevant quantitative or qualitative criteria, a baseline comparison, and an error analysis. Implement and test the proposed method, system, or audit; a literature survey or app demonstration alone is insufficient. Record the time and resources used.",
+      "outcome": "An individual investigation with a reproducible implementation or tested artifact, a meaningful comparison, and a clear explanation of findings and limitations. A well-supported negative result is valid and uses the same course rubric as a listed topic.",
+      "preparation": "Use the one-page proposal to cover motivation, related work, approach and baseline, data access, evaluation, compute, tools, and a short schedule. Identify what you will implement and what you will reuse, including AI coding assistance. Plan an early baseline and reserve time for analysis and writing. Connect your question to relevant prior work; the links below provide planning guidance.",
+      "fallback": "Narrow to one language, one dataset, fewer examples, or a smaller model if data or compute access is uncertain. Discuss feasibility with the instructor through the normal proposal feedback process. Submit the proposal by October 21; the final report has up to six pages of main content, excluding references and appendices.",
+      "sources": [
+        "course-project",
+        "umd-proposal"
+      ],
+      "upstream": "A custom project may also produce an upstream contribution if it meets a real maintainer need. Document its review or acceptance status; the same course rubric and maximum score apply, with no merge requirement or extra-credit track.",
+      "status": "Scope to be proposed",
+      "reading_notes": {
+        "course-project": "Follow this course’s individual scope, checkpoints, and rubric.",
+        "umd-proposal": "Use the planning questions only; Fudan’s dates and page limits apply."
+      },
+      "resources": {
+        "max_gpus": 2,
+        "gpu_hours": 8,
+        "gpu_memory_gb": 24,
+        "note": "Propose CPU, one-GPU, or two-GPU use and distinguish necessary devices from optional parallel runs. Larger setups are possible with resources you can obtain yourself. State the source, access, and total cost of all baselines, ablations, and reruns; scope any request to the small course pool separately. The displayed budget is an initial shared-pool planning target.",
+        "min_gpus": 0,
+        "note_zh": "请说明 CPU、单卡、双卡或更大配置，并区分必需设备与可选并行计算。若使用自有资源，请记录来源、可用性以及所有基线、消融和重跑的总成本；课程池申请单独列出。"
+      },
+      "title_zh": "自拟项目：提出一个 NLP 或大语言模型选题",
+      "summary_zh": "从自己感兴趣的主题出发，例如爱好、语言、研究问题、社群或实际需求。候选题仅供启发，也欢迎提出不同方向。",
+      "question_zh": "你最想研究哪个具体的语言处理问题？什么证据会改变你的判断？"
+    }
+  ],
+  "resource_policy": {
+    "recommended_max_gpus": 2,
+    "max_gpu_hours": 8,
+    "status": "proposed"
+  }
+}

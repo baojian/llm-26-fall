@@ -1,0 +1,23 @@
+% Source assets: lecture-03 and lecture-04 tiny-lm-loss.json at 1adbaa5.
+% No new training. Each panel retains its own vocabulary, batch, and seed.
+\begin{minipage}{.49\linewidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth,height=48mm,title={L03: neural bigram},
+  xlabel={SGD updates},ylabel={Loss (nats)},xmin=0,xmax=200,ymin=0,ymax=2.5]
+\addplot[courseblue,thick,mark=*,mark size=1.4pt] coordinates {
+ (0,2.3025853634)(1,2.3024687767)(5,2.3019752502)(10,2.3011488914)
+ (20,2.2973804474)(50,2.1183993816)(100,.2849825025)(150,.0404513143)(200,.0186697822)};
+\end{axis}\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}{.49\linewidth}\centering
+\begin{tikzpicture}
+\begin{axis}[width=\linewidth,height=48mm,title={L04: two-token NPLM},
+  xlabel={SGD updates},xmin=0,xmax=200,ymin=0,ymax=2.5,legend pos=north east]
+\addplot[courseteal,thick,mark=square*,mark size=1.4pt] coordinates {
+ (0,2.1728594303)(1,1.7254977226)(5,.7692455649)(10,.3901106417)
+ (20,.2411859632)(40,.0786330849)(60,.0378915705)(100,.0175147206)(150,.0101162679)(200,.0069956407)};
+\addlegendentry{Training}
+\addplot[courseorange,dashed] coordinates {(0,1.9459101491)(200,1.9459101491)};
+\addlegendentry{$\log7$}
+\end{axis}\end{tikzpicture}
+\end{minipage}

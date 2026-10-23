@@ -5,17 +5,19 @@ Set TOKENIZER_COMPARISON_INTEGRATION=1 after fetch to verify the six real files.
 """
 
 import base64
-import copy
 import hashlib
 import io
 import json
 import os
-import sys
+import importlib.util
 from pathlib import Path
 
 import pytest
 
-from scripts import tokenizer_comparison as comparison
+TOPIC = Path(__file__).resolve().parents[1] / "explorations/tokenizer-comparison"
+spec = importlib.util.spec_from_file_location("tokenizer_comparison", TOPIC / "run.py")
+comparison = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(comparison)
 
 
 def byte_fixture(tmp_path, name="bytes"):
@@ -26,13 +28,6 @@ def byte_fixture(tmp_path, name="bytes"):
         "sha256": hashlib.sha256(content).hexdigest(), "revision": "test-fixture",
         "pattern": r"\S+|\s+", "special_tokens": {"<|end|>": 300},
     }
-
-
-def contribution(names):
-    record = comparison.read_json(comparison.TASK / "contribution-template.json")
-    record.update(contributors=["alice"], tokenizers=names)
-    record["cases"][-1].update(text="A1β", prediction="A byte tokenizer will split β into two byte tokens.")
-    return record
 
 
 def test_missing_or_corrupt_cache_fails_without_network(tmp_path, monkeypatch):
@@ -103,56 +98,35 @@ def test_huggingface_pipeline_normalizes_and_disables_wrappers_padding_truncatio
     assert observed["token_ids"] == [2, 3]  # no padding, wrappers, or truncation to one content token
     assert observed["decoded_text"] == "hello cafe" and not observed["round_trip_exact"]
     assert engine.observe("[SEP]")["token_ids"] == [4, 6, 5]
-    assert not engine.observe("🙂")["round_trip_exact"]
+    unknown = engine.observe("🙂")
+    assert unknown["fidelity"] == "unknown-tokens"
+    assert unknown["unknown_token_count"] == 1
+    assert observed["fidelity"] == "text-changed"
     # Added special tokens may already be entries in the base vocabulary.
     assert engine.metadata["base_vocabulary_entries"] == engine.metadata["vocabulary_entries"] == 7
     assert engine.metadata["special_token_entries"] == 1
 
 
-def test_measure_preserves_predictions_and_check_rejects_self_consistent_wrong_results(tmp_path, monkeypatch):
-    specs = [byte_fixture(tmp_path, name) for name in ("first", "second")]
-    data = {"tokenizers": specs, "runtime_versions": {}}
-    monkeypatch.setattr(comparison, "manifest", lambda: data)
-    record = contribution([spec["id"] for spec in specs])
-    predictions = [case["prediction"] for case in record["cases"]]
-    notes = record["notes"]
-    path = tmp_path / "alice.json"
-    comparison.write_json(path, record)
-    monkeypatch.setattr(sys, "argv", ["runner", "--cache", str(tmp_path), "measure", str(path)])
-    comparison.main()
-    measured = comparison.read_json(path)
-    assert [case["prediction"] for case in measured["cases"]] == predictions
-    assert measured["notes"] == notes
-    comparison.check_contribution(measured, data, tmp_path)
-    wrong = copy.deepcopy(measured)
-    observation = wrong["cases"][0]["observed"]["first"]
-    observation.update(token_ids=[], token_pieces=[], token_count=0, input_bytes_per_token=None,
-                       decoded_text="", round_trip_exact=False)
-    with pytest.raises(ValueError, match="independent re-encoding"):
-        comparison.check_contribution(wrong, data, tmp_path)
-    measured["provenance"]["artifacts"]["first"]["sha256"] = "0" * 64
-    with pytest.raises(ValueError, match="Provenance"):
-        comparison.check_contribution(measured, data, tmp_path)
-
-
-@pytest.mark.parametrize("change, message", [
-    (lambda r: r["tokenizers"].__setitem__(1, r["tokenizers"][0]), "distinct tokenizer"),
-    (lambda r: r["cases"][0].update(text="changed"), "shared case"),
-    (lambda r: r["cases"][-1].update(text=r["cases"][0]["text"]), "distinct strings"),
-    (lambda r: r["cases"][-1].update(text=""), "original input"),
-    (lambda r: r["cases"][0].update(prediction=""), "prediction"),
-    (lambda r: r.update(contributors=["Alice"]), "lowercase GitHub"),
-])
-def test_invalid_contributions_are_rejected(change, message):
-    record = contribution(["r50k_base", "qwen3"])
-    change(record)
-    with pytest.raises(ValueError, match=message):
-        comparison.validate_contribution(record, comparison.manifest())
-
-
 def test_runtime_drift_is_explicit():
     with pytest.raises(ValueError, match="expected.*uv sync --locked"):
         comparison.check_runtime({"runtime_versions": {"tiktoken": "wrong-version"}})
+
+
+def test_canonical_normalization_is_distinguished_from_unknown_content(tmp_path):
+    tokenizers = pytest.importorskip("tokenizers")
+    tokenizer = tokenizers.Tokenizer(tokenizers.models.WordLevel({"café": 0, "[UNK]": 1}, unk_token="[UNK]"))
+    tokenizer.normalizer = tokenizers.normalizers.NFC()
+    content = tokenizer.to_str().encode()
+    (tmp_path / "nfc.artifact").write_bytes(content)
+    engine = comparison.Engine({"id": "nfc", "backend": "huggingface",
+                                "sha256": hashlib.sha256(content).hexdigest()}, tmp_path)
+    composed = engine.observe("café")
+    decomposed = engine.observe("cafe\u0301")
+    assert composed["fidelity"] == "exact"
+    assert decomposed["fidelity"] == "nfc-equivalent"
+    assert decomposed["decoded_text"] == "café"
+    assert decomposed["unknown_token_count"] == 0
+    assert engine.observe("unseen")["fidelity"] == "unknown-tokens"
 
 
 @pytest.mark.skipif(os.environ.get("TOKENIZER_COMPARISON_INTEGRATION") != "1",
@@ -164,15 +138,30 @@ def test_pinned_pilot_matches_worked_example_without_network(monkeypatch):
     data = comparison.manifest()
     comparison.check_runtime(data)
     engines = {spec["id"]: comparison.Engine(spec, comparison.DEFAULT_CACHE) for spec in data["tokenizers"]}
-    example = comparison.read_json(comparison.TASK / "worked-example.json")
-    assert example["provenance"] == comparison.provenance(data, data["tokenizers"])
-    for name, expected in example["vocabulary_entries"].items():
-        assert engines[name].metadata["vocabulary_entries"] == expected
-    for case in example["cases"]:
-        for name, expected in case["observed"].items():
-            actual = engines[name].observe(case["text"])
-            assert {key: actual[key] for key in expected} == expected
-    for case in comparison.read_json(comparison.TASK / "inputs.json"):
-        for engine in engines.values():
-            observed = engine.observe(case["text"])
+    expected_counts = {
+        "digits": [5, 4, 4, 10, 7, 5],
+        "mixed-script": [19, 10, 6, 6, 9, 7],
+        "normalization": [6, 4, 4, 3, 2, 4],
+        "emoji": [12, 12, 8, 6, 1, 4],
+    }
+    assert [e.metadata["vocabulary_entries"] for e in engines.values()] == [50257, 100261, 200000, 151669, 30522, 32100]
+    cases = comparison.load_cases()
+    assert len(cases) == 32
+    report = comparison.compare(data, data["tokenizers"], cases, comparison.DEFAULT_CACHE)
+    for case in report["cases"]:
+        observations = case["observed"]
+        if case["id"] in expected_counts:
+            assert [v["token_count"] for v in observations.values()] == expected_counts[case["id"]]
+        for observed in observations.values():
             assert observed["token_count"] == len(observed["token_ids"]) == len(observed["token_pieces"])
+        if case["id"] == "normalization":
+            assert [v["fidelity"] for v in observations.values()] == ["exact", "exact", "exact", "nfc-equivalent", "text-changed", "nfc-equivalent"]
+        if case["id"] == "emoji":
+            assert observations["bert"]["unknown_token_count"] == 1
+            assert observations["bert"]["fidelity"] == "unknown-tokens"
+            assert observations["t5"]["unknown_token_count"] == 2
+        if case["id"] == "empty":
+            assert all(v["fidelity"] == "exact" and v["input_bytes_per_token"] is None for v in observations.values())
+        if case["id"] == "literal-special":
+            assert 50256 not in observations["r50k_base"]["token_ids"]
+    assert len(report["provenance"]["inputs_sha256"]) == 64

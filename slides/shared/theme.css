@@ -120,7 +120,8 @@ body { margin: 0; font-family: var(--r-main-font); color: var(--r-main-color); }
   .course-toolbar .lang-toggle button { padding: 4px 7px; font-size: 12px; }
   .course-language-note { top: 38px; right: 8px; max-width: calc(100vw - 34px); }
 }
-html.reveal-print .reveal .slides section { height: 720px !important; padding: 54px 64px 58px !important; }
+/* Use the same content area on screen and paper so a checked deck still fits. */
+html.reveal-print .reveal .slides section { height: 720px !important; padding: 20px 64px 58px !important; }
 html.reveal-print .reveal .slides section.title-slide,
 html.reveal-print .reveal .slides section.section-slide { display: flex !important; }
 html.reveal-print .reveal .animation,

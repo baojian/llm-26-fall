@@ -1,0 +1,128 @@
+{
+  "source": "lecture-05-slides-transformers.pptx",
+  "source_sha256": "75c11bded30658b00785c6a320f763ff97019daab4e7b4882e3d372df4ca3e9f",
+  "slide": 24,
+  "slide_part": "ppt/slides/slide24.xml",
+  "slide_sha256": "dac37610756aade69fda4f4f41b2bb6916def578f5af9c936f0ad722d21a3c19",
+  "effect": "Appear",
+  "steps": [
+    {
+      "click": 1,
+      "label": "Compare the query embedding with all four embeddings",
+      "shape_ids": [
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "121"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "Show the four dot-product scores",
+      "shape_ids": [
+        "92",
+        "93",
+        "94",
+        "95",
+        "68"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "Normalize the scores with softmax",
+      "shape_ids": [
+        "34",
+        "33",
+        "97",
+        "98",
+        "99",
+        "100",
+        "120"
+      ]
+    },
+    {
+      "click": 4,
+      "label": "Show the four attention weights",
+      "shape_ids": [
+        "101",
+        "102",
+        "103",
+        "104",
+        "67"
+      ]
+    },
+    {
+      "click": 5,
+      "label": "Bring in the embeddings to be combined",
+      "shape_ids": [
+        "39",
+        "105",
+        "106",
+        "107",
+        "108"
+      ]
+    },
+    {
+      "click": 6,
+      "label": "Multiply each embedding by its weight",
+      "shape_ids": [
+        "40",
+        "41",
+        "42",
+        "43",
+        "44",
+        "45",
+        "46",
+        "47",
+        "48",
+        "49",
+        "50",
+        "51",
+        "54",
+        "55",
+        "53",
+        "52",
+        "7"
+      ]
+    },
+    {
+      "click": 7,
+      "label": "Sum the weighted embeddings to obtain the third output",
+      "shape_ids": [
+        "56",
+        "57",
+        "58",
+        "59",
+        "65",
+        "122",
+        "11",
+        "10",
+        "9",
+        "8"
+      ]
+    },
+    {
+      "click": 8,
+      "label": "Repeat for the other three outputs",
+      "shape_ids": [
+        "63",
+        "64",
+        "66",
+        "60",
+        "61",
+        "62"
+      ]
+    }
+  ],
+  "attribution": "https://www.youtube.com/watch?v=tIvKXrEDMhk"
+}

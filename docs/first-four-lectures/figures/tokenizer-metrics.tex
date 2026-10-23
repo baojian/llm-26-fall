@@ -1,0 +1,13 @@
+\begin{tikzpicture}[font=\small]
+\node[anchor=east] at (0,.6) {four tokens};
+\node[anchor=east] at (0,-.6) {two tokens};
+\foreach \x in {0,1,2,3} {
+  \draw[fill=softblue,draw=courseblue] (1.5*\x+.2,.25) rectangle +(1.45,.7);
+  \node at (1.5*\x+.925,.6) {1 bit};}
+\foreach \x in {0,1} {
+  \draw[fill=softteal,draw=courseteal] (3*\x+.2,-.95) rectangle +(2.95,.7);
+  \node at (3*\x+1.675,-.6) {2 bits};}
+\node[anchor=west] at (6.7,.6) {PPL $=2^{4/4}=2$};
+\node[anchor=west] at (6.7,-.6) {PPL $=2^{4/2}=4$};
+\node at (4,-1.65) {same text: 4 bytes\qquad same total loss: 4 bits\qquad BPB $=1$};
+\end{tikzpicture}

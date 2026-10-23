@@ -49,6 +49,14 @@
       throwOnError: true,
       strict: 'warn'
     });
+    // Reveal replaces slide nodes while preparing print pages. Initialize
+    // charts and controls on the final nodes, after that replacement finishes.
+    if (Reveal.isPrintView() && !document.querySelector('.pdf-page')) {
+      await new Promise(resolve => {
+        const ready = () => { Reveal.off('pdf-ready', ready); resolve(); };
+        Reveal.on('pdf-ready', ready);
+      });
+    }
     const visuals = await import(new URL('shared/visuals.js', base));
     await visuals.initialize(Reveal);
     if (metadata.demo) {

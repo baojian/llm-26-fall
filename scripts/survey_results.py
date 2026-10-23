@@ -1,9 +1,9 @@
-"""Tally the lecture-01 LLM-app survey and draw the first course figure.
+"""Tally the archived Lecture 01 LLM-app survey and refresh its figure.
 
-Reads every ``surveys/lecture-01/responses/*.md``, counts the checked apps, and
-writes ``results.svg`` (a bar chart, one bar per app) next to the responses and
-refreshes the results block of ``surveys/lecture-01/README.md``, which GitHub
-shows on the folder page. Standard library only.
+Reads every response under ``tasks/l01-tokenization/llm-app-survey/responses/``
+and counts the checked apps. Writes ``results.svg`` and refreshes the results
+block in the archive README. Collection is closed; regenerating the reports
+does not reopen submissions. Standard library only.
 
     uv run python scripts/survey_results.py
 """
@@ -18,7 +18,7 @@ from pathlib import Path
 from xml.sax.saxutils import escape
 
 ROOT = Path(__file__).resolve().parents[1]
-SURVEY = ROOT / "surveys/lecture-01"
+SURVEY = ROOT / "tasks/l01-tokenization/llm-app-survey"
 LISTED_APPS = ["ChatGPT", "Claude", "Gemini", "DeepSeek", "Doubao (豆包)", "Qwen (千问)",
                "Kimi", "Tencent Yuanbao (腾讯元宝)", "Zhipu Qingyan (智谱清言)"]
 CHECKED = re.compile(r"^- \[\s*[xX]\s*\] (.+?)\s*$", re.MULTILINE)

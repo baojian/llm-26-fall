@@ -1,0 +1,69 @@
+{
+  "title": "Why use multiple heads?",
+  "source_file": "lecture-05-slides-transformers.pptx",
+  "source_copy": "Desktop copy, 26-slide revision inspected on October 10, 2026 (Asia/Shanghai)",
+  "source_pages": [
+    2,
+    3
+  ],
+  "source_titles": [
+    "Is one self-attention enough?",
+    "Multi-attention"
+  ],
+  "adaptation": "Retain the sentence and three relation questions; move the query from gave to food so every shown position is causally available. All weights are invented.",
+  "query_position": 7,
+  "tokens": [
+    "I",
+    "gave",
+    "my",
+    "dog",
+    "Charlie",
+    "some",
+    "food"
+  ],
+  "illustrative_weights": [
+    [
+      0.7,
+      0.08,
+      0.03,
+      0.04,
+      0.05,
+      0.03,
+      0.07
+    ],
+    [
+      0.03,
+      0.07,
+      0.03,
+      0.13,
+      0.62,
+      0.04,
+      0.08
+    ],
+    [
+      0.03,
+      0.08,
+      0.02,
+      0.04,
+      0.06,
+      0.09,
+      0.68
+    ]
+  ],
+  "steps": [
+    {
+      "click": 1,
+      "label": "One head forms one weighting of the available positions for this query. Its row sums to one.",
+      "object_ids": [
+        "multihead-intuition-0"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "Other heads can form different context mixtures for the same query position, in parallel.",
+      "object_ids": [
+        "multihead-intuition-1"
+      ]
+    }
+  ]
+}

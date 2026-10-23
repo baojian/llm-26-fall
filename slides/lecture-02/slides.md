@@ -123,8 +123,7 @@ The empirical average replaces the expectation. The factorization is exact by th
 <li>$\mathbf{w}^{(2)}$ : <code>#include &lt;stdio.h&gt;<br>int main(void) { printf("Hello, world!\n"); }</code></li>
 <li>$\mathbf{w}^{(3)}$ : 今天我们学习如何用语言模型预测下一个词。</li>
 <li>$\mathbf{w}^{(4)}$ : Prove that $1+3+\cdots+(2n-1)=n^2$ for every integer $n\ge1$.</li>
-<li>$\vdots$</li>
-<li>$\mathbf{w}^{(i)}$ : <code>{"city": "Shanghai", "temperature_c": 22}</code></li>
+<li>$\ldots,\mathbf{w}^{(i)}$ : <code>{"city": "Shanghai", "temperature_c": 22}</code></li>
 </ul>
 <p>Anything represented as a token sequence can be a training sample.</p>
 
@@ -560,7 +559,7 @@ Source: Spring Lecture 02 slide 29, https://baojian.github.io/llm-26/slides/lect
 
 <img class="diagram" src="assets/nplm-1.png" alt="Left: language modeling calculates the probability of the next word; we have seen N-gram LMs; neural network LMs far outperform N-gram LMs, with Figure 1 of Bengio et al. (2003) showing table look-up in C, a tanh layer, and a softmax output. Right: NPLM is the same task as the N-gram model, predicting w_t from the last N-1 words, but represents words in the prior context by their embeddings; the header of the JMLR 2003 paper A Neural Probabilistic Language Model.">
 
-<p class="caption">Bengio et al. (2003): NPLM. Same task as the $N$-gram model; words are represented by embeddings.</p>
+<p class="caption"><a href="../../papers/2003-jmlr-bengio-neural-probabilistic-language-model.pdf" target="_blank" rel="noopener noreferrer">Bengio et al. (2003), paper PDF</a>: NPLM. Same task as the $N$-gram model; words are represented by embeddings.</p>
 
 Note:
 The figure and text are the Spring slide image, kept unchanged. Source: Spring Lecture 02 slide 30, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/29.
@@ -599,7 +598,7 @@ Diagram from an earlier Jurafsky and Martin draft, then Chapter 7; the current f
 
 <img class="diagram" src="assets/nplm-4.png" alt="Improvements over N-gram LM: tackles the sparsity problem; model size is relatively small, O(d times |V|), compared with O(|V| to the N) where N is the window size. Table of perplexities on the AP News corpus: MLP10 (n = 6) valid 104, test 109; deleted interpolation (n = 3) 126 and 132; back-off Kneser-Ney with n = 3, 4, 5 gives test 127, 119, 117. Right: a diagram with context words and, our, problems, turning in a window of size 4, lookup embeddings, concatenate, W1, a hidden layer, W2, softmax, and a probability bar chart over mat, table, bed, desk, chair for the target word into.">
 
-<p class="caption">MLP10 = NPLM. Comparative results on the AP News corpus (Bengio et al., 2003). Week 9 repeats this comparison on our shards: n-gram, NPLM, and the 30M–350M ladder on one bits-per-byte axis.</p>
+<p class="caption">MLP10 = NPLM. Comparative results on the AP News corpus (Bengio et al., 2003). Week 8 repeats this comparison on our shards: n-gram, NPLM, and the 30M–350M ladder on one bits-per-byte axis.</p>
 
 Note:
 NPLM already beat the best smoothed $N$-gram models in 2003; the gap widened with RNNs and Transformers. Source: Spring Lecture 02 slide 33, https://baojian.github.io/llm-26/slides/lecture-02-slides/index.html#/32.

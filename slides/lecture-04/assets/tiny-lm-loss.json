@@ -1,0 +1,107 @@
+{
+  "data": [
+    {
+      "type": "scatter",
+      "mode": "lines+markers",
+      "x": [
+        0,
+        1,
+        5,
+        10,
+        20,
+        40,
+        60,
+        100,
+        150,
+        200
+      ],
+      "y": [
+        2.1728594303131104,
+        1.7254977226257324,
+        0.7692455649375916,
+        0.39011064171791077,
+        0.2411859631538391,
+        0.07863308489322662,
+        0.03789157047867775,
+        0.017514720559120178,
+        0.010116267949342728,
+        0.006995640695095062
+      ],
+      "name": "Training batch",
+      "line": {
+        "color": "#20578c",
+        "width": 4
+      },
+      "marker": {
+        "size": 9
+      }
+    },
+    {
+      "type": "scatter",
+      "mode": "lines",
+      "x": [
+        0,
+        200
+      ],
+      "y": [
+        1.9459101490553132,
+        1.9459101490553132
+      ],
+      "name": "Uniform logits",
+      "line": {
+        "color": "#a85a29",
+        "width": 3,
+        "dash": "dash"
+      }
+    }
+  ],
+  "layout": {
+    "margin": {
+      "l": 100,
+      "r": 35,
+      "t": 30,
+      "b": 90
+    },
+    "xaxis": {
+      "title": {
+        "text": "Completed SGD updates"
+      },
+      "range": [
+        0,
+        200
+      ],
+      "dtick": 50
+    },
+    "yaxis": {
+      "title": {
+        "text": "Mean loss (nats)"
+      },
+      "range": [
+        0,
+        2.5
+      ],
+      "dtick": 0.5
+    },
+    "legend": {
+      "x": 0.98,
+      "y": 0.98,
+      "xanchor": "right",
+      "font": {
+        "size": 24
+      }
+    },
+    "meta": {
+      "seed": 7,
+      "learning_rate": 0.5,
+      "context_size": 2,
+      "embedding_width": 4,
+      "hidden_width": 8,
+      "vocabulary_size": 7,
+      "batch_size": 6,
+      "steps": 200
+    }
+  },
+  "config": {
+    "displayModeBar": false
+  }
+}

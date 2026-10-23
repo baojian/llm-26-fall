@@ -48,8 +48,7 @@ def manifest(folder: Path) -> dict:
 
 
 def submissions(folder: Path) -> list[str]:
-    suffix = Path(manifest(folder)["submission"]["file"]).suffix
-    return sorted(p.stem for p in (folder / "submissions").glob(f"*{suffix}") if not p.name.startswith((".", "_")))
+    return sorted(p.stem for p in (folder / "submissions").glob("*.py") if not p.name.startswith((".", "_")))
 
 
 def check(folder: Path, username: str | None = None) -> int:
@@ -65,8 +64,7 @@ def list_tasks(tasks_root: Path = TASKS) -> str:
     rows = ["| Task | Title | Difficulty | Deadline | Submissions |", "| :--- | :--- | :--- | :--- | ---: |"]
     for folder in task_folders(tasks_root):
         info = manifest(folder)["task"]
-        deadline = str(info["deadline"])[:10] or "—"
-        rows.append(f"| {info['id']} | {info['title']} | {info['difficulty']} | {deadline} | {len(submissions(folder))} |")
+        rows.append(f"| {info['id']} | {info['title']} | {info['difficulty']} | {info['deadline']} | {len(submissions(folder))} |")
     return "\n".join(rows)
 
 

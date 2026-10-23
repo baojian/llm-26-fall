@@ -1,0 +1,78 @@
+{
+  "data": [
+    {
+      "x": [
+        0.25,
+        1,
+        4,
+        16
+      ],
+      "y": [
+        2.2627416997969525,
+        1.6,
+        1.1313708498984765,
+        0.7999999999999998
+      ],
+      "type": "scatter",
+      "mode": "lines+markers",
+      "name": "Synthetic example",
+      "line": {
+        "color": "#20578c",
+        "width": 4
+      },
+      "marker": {
+        "color": "#20578c",
+        "size": 12
+      }
+    }
+  ],
+  "layout": {
+    "xaxis": {
+      "title": {
+        "text": "Training compute / C\u2080 (log scale)"
+      },
+      "type": "log",
+      "tickmode": "array",
+      "tickvals": [
+        0.25,
+        1,
+        4,
+        16
+      ],
+      "ticktext": [
+        "0.25",
+        "1",
+        "4",
+        "16"
+      ]
+    },
+    "yaxis": {
+      "title": {
+        "text": "L \u2212 1.5 (nats/token)"
+      },
+      "type": "log",
+      "tickmode": "array",
+      "tickvals": [
+        0.5,
+        0.8,
+        1.2,
+        1.6,
+        2.4
+      ],
+      "ticktext": [
+        "0.5",
+        "0.8",
+        "1.2",
+        "1.6",
+        "2.4"
+      ]
+    },
+    "showlegend": false,
+    "margin": {
+      "l": 110,
+      "r": 40,
+      "t": 25,
+      "b": 90
+    }
+  }
+}

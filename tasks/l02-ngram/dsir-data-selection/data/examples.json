@@ -1,0 +1,89 @@
+{
+  "same_models": {
+    "raw_fit": [
+      ["red"],
+      ["blue"]
+    ],
+    "target_fit": [
+      ["red"],
+      ["blue"]
+    ],
+    "pool": [
+      {
+        "id": "r",
+        "tokens": ["red"]
+      },
+      {
+        "id": "b",
+        "tokens": ["blue"]
+      }
+    ],
+    "num_buckets": 2,
+    "alpha": 1.0,
+    "k": 1,
+    "uniforms": {
+      "r": 0.25,
+      "b": 0.75
+    }
+  },
+  "ratio_beats_likelihood": {
+    "raw_fit": [
+      ["red"],
+      ["red"],
+      ["red"],
+      ["red"]
+    ],
+    "target_fit": [
+      ["red"],
+      ["red"],
+      ["blue"]
+    ],
+    "pool": [
+      {
+        "id": "r",
+        "tokens": ["red"]
+      },
+      {
+        "id": "b",
+        "tokens": ["blue"]
+      }
+    ],
+    "num_buckets": 2,
+    "alpha": 1.0,
+    "k": 1,
+    "uniforms": {
+      "r": 0.5,
+      "b": 0.5
+    }
+  },
+  "sampling_is_not_topk": {
+    "raw_fit": [
+      ["red"],
+      ["red"],
+      ["red"],
+      ["red"]
+    ],
+    "target_fit": [
+      ["red"],
+      ["red"],
+      ["blue"]
+    ],
+    "pool": [
+      {
+        "id": "r",
+        "tokens": ["red"]
+      },
+      {
+        "id": "b",
+        "tokens": ["blue"]
+      }
+    ],
+    "num_buckets": 2,
+    "alpha": 1.0,
+    "k": 1,
+    "uniforms": {
+      "r": 0.99,
+      "b": 0.01
+    }
+  }
+}

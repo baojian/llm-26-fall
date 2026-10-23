@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+\node[lab] (init) at (-1.9,0) {$h_0$};
+\foreach \i in {1,2,3,4} {
+ \node[box,minimum width=16mm] (h\i) at (3*\i-3,0) {$h_\i$};
+ \node[lab] (x\i) at (3*\i-3,-1.2) {$e_\i=E[x_\i]$};
+ \node[lab] (y\i) at (3*\i-3,1.2) {$p(x_{\the\numexpr\i+1}\mid x_{\le\i})$};
+ \draw[arr] (x\i)--(h\i);\draw[arr] (h\i)--(y\i);}
+\draw[arr] (init)--(h1);
+\foreach \i/\j in {1/2,2/3,3/4} \draw[arr] (h\i)--node[above,font=\footnotesize]{same rule}(h\j);
+\end{tikzpicture}

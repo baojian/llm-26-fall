@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+\node[box,text width=25mm] (r) at (0,.55) {red key};
+\node[box,text width=25mm] (b) at (0,-.55) {blue key};
+\node[box,text width=25mm] (k) at (4,0) {last token: key};
+\node[tbox,text width=37mm] (out) at (9,0) {same bigram\\distribution};
+\draw[arr] (r)--(k);\draw[arr] (b)--(k);\draw[arr] (k)--(out);
+\node[box,text width=31mm] (rr) at (0,-2.1) {$[E[\texttt{red}];E[\texttt{key}]]$};
+\node[box,text width=31mm] (bb) at (0,-3.2) {$[E[\texttt{blue}];E[\texttt{key}]]$};
+\node[box,text width=29mm] (h) at (5,-2.65) {shared nonlinear\\hidden layer};
+\node[tbox,text width=37mm] (o) at (10,-2.65) {potentially different\\distributions};
+\draw[arr] (rr)--(h);\draw[arr] (bb)--(h);\draw[arr] (h)--(o);
+\end{tikzpicture}

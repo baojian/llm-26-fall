@@ -8,7 +8,7 @@ import { chromium } from 'playwright';
 const slides = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const preview = new URL(process.argv[2] || 'http://127.0.0.1:8000');
 const folder = process.argv[3] || 'example';
-assert.match(folder, /^(example|lecture-\d{2}|\d{2}-[a-z0-9-]+)$/);
+assert.match(folder, /^(example|lecture-\d{2}(?:-test)?|\d{2}-[a-z0-9-]+)$/);
 const metadata = JSON.parse(await readFile(path.join(slides, folder, 'lecture.json'), 'utf8'));
 const requestedNotebook = process.argv.find(arg => arg.startsWith('--notebook='))?.slice('--notebook='.length);
 const filename = requestedNotebook || metadata.notebook || 'practice.ipynb';
@@ -31,22 +31,24 @@ try {
   const page = await context.newPage();
   await page.goto(new URL(fromCoursePage ? '/index.html' : `/slides/${folder}/`, preview).href, { waitUntil: 'networkidle' });
   if (!fromCoursePage) await page.evaluate(() => window.courseReady);
+  let courseRow;
   if (fromCoursePage) {
     await page.locator('[data-lang="en"]').click();
     const row = page.locator('#week-table tbody tr').filter({ has: page.getByRole('link', { name: `${folder}-slides`, exact: true }) });
+    courseRow = row;
     await row.screenshot({ path: path.join(output, 'course-materials-en.png'), animations: 'disabled' });
     await page.locator('[data-lang="zh"]').click();
     await row.screenshot({ path: path.join(output, 'course-materials-zh.png'), animations: 'disabled' });
     await page.locator('[data-lang="en"]').click();
   }
   const link = fromCoursePage
-    ? page.getByRole('link', { name: filename, exact: true })
+    ? courseRow.getByRole('link', { name: filename, exact: true })
     : requestedNotebook
-      ? page.locator(`a[href*="notebook=${filename}"]`)
+      ? page.locator(`a[href*="notebook=${filename}"]`).first()
       : page.getByRole('link', { name: 'Notebook', exact: true });
   if (!fromCoursePage && requestedNotebook) {
-    const slideId = await link.evaluate(el => el.closest('section').id);
-    await page.goto(new URL(`/slides/${folder}/#/${slideId}`, preview).href);
+    const slideId = await link.evaluate(el => el.closest('section')?.id);
+    if (slideId) await page.goto(new URL(`/slides/${folder}/#/${slideId}`, preview).href);
   }
   assert.equal(await link.getAttribute('target'), '_blank');
   assert.equal(await link.getAttribute('download'), null);

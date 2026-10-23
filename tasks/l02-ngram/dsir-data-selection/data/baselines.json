@@ -1,0 +1,156 @@
+[
+  {
+    "method": "uniform",
+    "num_buckets": 16,
+    "seed": 0,
+    "selected_ids": ["pool-1808", "pool-1585", "pool-2018", "pool-1516", "pool-945", "pool-085", "pool-183", "pool-1473", "pool-2028", "pool-1368", "pool-1268", "pool-864", "pool-1198", "pool-1039", "pool-219", "pool-081", "pool-075", "pool-329", "pool-1556", "pool-098", "pool-220", "pool-623", "pool-711", "pool-124", "pool-082", "pool-1489", "pool-635", "pool-1570", "pool-1028", "pool-1962", "pool-425", "pool-1325", "pool-1094", "pool-764", "pool-894", "pool-943", "pool-1943", "pool-2004", "pool-788", "pool-363", "pool-685", "pool-1689", "pool-1870", "pool-661", "pool-364", "pool-1421", "pool-946", "pool-1615", "pool-1920", "pool-450", "pool-320", "pool-1287", "pool-614", "pool-1641", "pool-1075", "pool-1338", "pool-1888", "pool-1682", "pool-1999", "pool-1544", "pool-300", "pool-1153", "pool-1239", "pool-1476"],
+    "max_weight": 0.00048828125
+  },
+  {
+    "method": "uniform",
+    "num_buckets": 16,
+    "seed": 1,
+    "selected_ids": ["pool-184", "pool-1356", "pool-388", "pool-261", "pool-1522", "pool-1220", "pool-613", "pool-1573", "pool-418", "pool-561", "pool-923", "pool-409", "pool-1521", "pool-1239", "pool-1241", "pool-1847", "pool-734", "pool-1418", "pool-763", "pool-187", "pool-1950", "pool-936", "pool-206", "pool-614", "pool-1542", "pool-1001", "pool-635", "pool-1627", "pool-1372", "pool-1507", "pool-1854", "pool-1851", "pool-1099", "pool-1768", "pool-1609", "pool-556", "pool-1578", "pool-1826", "pool-739", "pool-1939", "pool-1014", "pool-893", "pool-1565", "pool-819", "pool-569", "pool-344", "pool-458", "pool-080", "pool-140", "pool-1282", "pool-562", "pool-1304", "pool-604", "pool-1441", "pool-062", "pool-1428", "pool-986", "pool-621", "pool-829", "pool-1051", "pool-1696", "pool-1849", "pool-1909", "pool-1908"],
+    "max_weight": 0.00048828125
+  },
+  {
+    "method": "uniform",
+    "num_buckets": 16,
+    "seed": 2,
+    "selected_ids": ["pool-1639", "pool-428", "pool-1250", "pool-1149", "pool-759", "pool-151", "pool-1624", "pool-655", "pool-1905", "pool-2037", "pool-1172", "pool-1512", "pool-403", "pool-686", "pool-1253", "pool-323", "pool-1557", "pool-1964", "pool-1446", "pool-257", "pool-729", "pool-884", "pool-1803", "pool-603", "pool-251", "pool-1643", "pool-2042", "pool-1746", "pool-1107", "pool-465", "pool-1593", "pool-549", "pool-680", "pool-992", "pool-1495", "pool-1650", "pool-1927", "pool-1554", "pool-1741", "pool-1470", "pool-988", "pool-234", "pool-612", "pool-827", "pool-1032", "pool-1350", "pool-1316", "pool-1911", "pool-1641", "pool-1436", "pool-087", "pool-357", "pool-1891", "pool-1186", "pool-503", "pool-1850", "pool-480", "pool-1699", "pool-1045", "pool-716", "pool-629", "pool-1799", "pool-563", "pool-410"],
+    "max_weight": 0.00048828125
+  },
+  {
+    "method": "uniform",
+    "num_buckets": 16,
+    "seed": 3,
+    "selected_ids": ["pool-508", "pool-834", "pool-1308", "pool-1902", "pool-1968", "pool-744", "pool-1138", "pool-1827", "pool-1779", "pool-1580", "pool-1252", "pool-1578", "pool-329", "pool-1322", "pool-1004", "pool-1064", "pool-2047", "pool-1845", "pool-050", "pool-1795", "pool-1984", "pool-038", "pool-2045", "pool-199", "pool-1918", "pool-1111", "pool-970", "pool-1137", "pool-1135", "pool-1632", "pool-209", "pool-969", "pool-1546", "pool-268", "pool-983", "pool-1171", "pool-2029", "pool-700", "pool-873", "pool-1418", "pool-713", "pool-327", "pool-1144", "pool-518", "pool-1925", "pool-1354", "pool-1217", "pool-1160", "pool-1906", "pool-1872", "pool-1703", "pool-2024", "pool-1953", "pool-1441", "pool-955", "pool-1216", "pool-1747", "pool-908", "pool-452", "pool-1856", "pool-1024", "pool-383", "pool-422", "pool-1072"],
+    "max_weight": 0.00048828125
+  },
+  {
+    "method": "uniform",
+    "num_buckets": 16,
+    "seed": 4,
+    "selected_ids": ["pool-1847", "pool-110", "pool-1366", "pool-1724", "pool-1138", "pool-1641", "pool-1493", "pool-1522", "pool-1385", "pool-1052", "pool-932", "pool-703", "pool-1278", "pool-423", "pool-1782", "pool-1292", "pool-1935", "pool-106", "pool-774", "pool-985", "pool-1406", "pool-2016", "pool-296", "pool-730", "pool-1418", "pool-645", "pool-812", "pool-1488", "pool-1955", "pool-514", "pool-1370", "pool-362", "pool-401", "pool-1208", "pool-1178", "pool-1014", "pool-1311", "pool-1324", "pool-617", "pool-925", "pool-1537", "pool-1840", "pool-1010", "pool-1355", "pool-1880", "pool-1877", "pool-576", "pool-2036", "pool-1344", "pool-281", "pool-646", "pool-1767", "pool-1280", "pool-1129", "pool-542", "pool-467", "pool-756", "pool-1819", "pool-1510", "pool-1634", "pool-664", "pool-792", "pool-764", "pool-1684"],
+    "max_weight": 0.00048828125
+  },
+  {
+    "method": "target-only",
+    "num_buckets": 16,
+    "seed": 0,
+    "selected_ids": ["pool-512", "pool-711", "pool-1555", "pool-1925", "pool-1390", "pool-1883", "pool-1599", "pool-598", "pool-1978", "pool-794", "pool-1983", "pool-292", "pool-125", "pool-620", "pool-493", "pool-581", "pool-1120", "pool-905", "pool-277", "pool-949", "pool-468", "pool-1735", "pool-314", "pool-248", "pool-1367", "pool-1374", "pool-299", "pool-2007", "pool-165", "pool-534", "pool-060", "pool-789", "pool-544", "pool-1785", "pool-376", "pool-748", "pool-556", "pool-1830", "pool-182", "pool-1029", "pool-1299", "pool-828", "pool-371", "pool-658", "pool-685", "pool-995", "pool-1200", "pool-663", "pool-247", "pool-770", "pool-364", "pool-1615", "pool-010", "pool-1220", "pool-1362", "pool-1176", "pool-073", "pool-1832", "pool-479", "pool-397", "pool-1314", "pool-823", "pool-1985", "pool-1920"],
+    "max_weight": 0.9211411555728894
+  },
+  {
+    "method": "target-only",
+    "num_buckets": 16,
+    "seed": 1,
+    "selected_ids": ["pool-512", "pool-1390", "pool-1883", "pool-613", "pool-1599", "pool-1925", "pool-1220", "pool-556", "pool-292", "pool-1555", "pool-794", "pool-1200", "pool-905", "pool-598", "pool-711", "pool-1565", "pool-125", "pool-060", "pool-299", "pool-1978", "pool-995", "pool-1374", "pool-1389", "pool-949", "pool-823", "pool-1983", "pool-1627", "pool-165", "pool-493", "pool-544", "pool-184", "pool-1120", "pool-020", "pool-2007", "pool-397", "pool-1367", "pool-1029", "pool-1042", "pool-1314", "pool-1830", "pool-439", "pool-318", "pool-1985", "pool-986", "pool-620", "pool-376", "pool-1300", "pool-371", "pool-1735", "pool-1362", "pool-277", "pool-478", "pool-094", "pool-399", "pool-012", "pool-770", "pool-581", "pool-458", "pool-1085", "pool-247", "pool-314", "pool-828", "pool-321", "pool-015"],
+    "max_weight": 0.9211411555728894
+  },
+  {
+    "method": "target-only",
+    "num_buckets": 16,
+    "seed": 2,
+    "selected_ids": ["pool-512", "pool-1599", "pool-1925", "pool-598", "pool-1390", "pool-1367", "pool-1883", "pool-949", "pool-1555", "pool-1983", "pool-292", "pool-1029", "pool-1120", "pool-581", "pool-534", "pool-125", "pool-789", "pool-2007", "pool-165", "pool-794", "pool-493", "pool-1374", "pool-905", "pool-658", "pool-060", "pool-686", "pool-544", "pool-620", "pool-1978", "pool-711", "pool-1565", "pool-010", "pool-182", "pool-1830", "pool-151", "pool-268", "pool-1735", "pool-1176", "pool-318", "pool-1299", "pool-299", "pool-397", "pool-1362", "pool-1200", "pool-613", "pool-289", "pool-376", "pool-823", "pool-995", "pool-1300", "pool-073", "pool-1741", "pool-955", "pool-556", "pool-1627", "pool-020", "pool-468", "pool-1389", "pool-277", "pool-770", "pool-371", "pool-247", "pool-1074", "pool-015"],
+    "max_weight": 0.9211411555728894
+  },
+  {
+    "method": "target-only",
+    "num_buckets": 16,
+    "seed": 3,
+    "selected_ids": ["pool-1925", "pool-512", "pool-1555", "pool-1390", "pool-1883", "pool-1978", "pool-125", "pool-905", "pool-598", "pool-1599", "pool-1983", "pool-1120", "pool-292", "pool-060", "pool-299", "pool-794", "pool-1787", "pool-1362", "pool-277", "pool-268", "pool-165", "pool-949", "pool-020", "pool-823", "pool-1374", "pool-711", "pool-493", "pool-658", "pool-556", "pool-789", "pool-318", "pool-1029", "pool-1200", "pool-371", "pool-1779", "pool-828", "pool-248", "pool-1830", "pool-620", "pool-1953", "pool-1367", "pool-1220", "pool-955", "pool-397", "pool-478", "pool-613", "pool-376", "pool-2007", "pool-544", "pool-1085", "pool-926", "pool-247", "pool-289", "pool-1176", "pool-1299", "pool-534", "pool-770", "pool-321", "pool-1735", "pool-1314", "pool-550", "pool-1389", "pool-182", "pool-015"],
+    "max_weight": 0.9211411555728894
+  },
+  {
+    "method": "target-only",
+    "num_buckets": 16,
+    "seed": 4,
+    "selected_ids": ["pool-512", "pool-1925", "pool-1390", "pool-1555", "pool-493", "pool-598", "pool-1599", "pool-1883", "pool-125", "pool-1978", "pool-1830", "pool-1983", "pool-1200", "pool-794", "pool-1367", "pool-299", "pool-1374", "pool-620", "pool-711", "pool-949", "pool-789", "pool-321", "pool-318", "pool-073", "pool-1120", "pool-556", "pool-1085", "pool-060", "pool-468", "pool-165", "pool-247", "pool-664", "pool-1389", "pool-905", "pool-229", "pool-292", "pool-2007", "pool-544", "pool-658", "pool-1029", "pool-534", "pool-581", "pool-090", "pool-397", "pool-478", "pool-1314", "pool-371", "pool-376", "pool-1869", "pool-020", "pool-828", "pool-1985", "pool-1362", "pool-439", "pool-1255", "pool-1565", "pool-1299", "pool-362", "pool-995", "pool-248", "pool-010", "pool-1832", "pool-1525", "pool-277"],
+    "max_weight": 0.9211411555728894
+  },
+  {
+    "method": "ratio-top-k",
+    "num_buckets": 16,
+    "seed": null,
+    "selected_ids": ["pool-567", "pool-1380", "pool-126", "pool-234", "pool-853", "pool-112", "pool-1148", "pool-780", "pool-1360", "pool-1292", "pool-1140", "pool-1957", "pool-1661", "pool-1155", "pool-221", "pool-727", "pool-1335", "pool-587", "pool-2046", "pool-1611", "pool-728", "pool-1593", "pool-1825", "pool-1248", "pool-753", "pool-388", "pool-1575", "pool-1034", "pool-819", "pool-435", "pool-1277", "pool-1395", "pool-1583", "pool-173", "pool-1645", "pool-372", "pool-254", "pool-1640", "pool-586", "pool-921", "pool-506", "pool-044", "pool-1109", "pool-1509", "pool-2026", "pool-1634", "pool-1856", "pool-1507", "pool-197", "pool-1326", "pool-072", "pool-1619", "pool-452", "pool-1884", "pool-701", "pool-1089", "pool-1090", "pool-1527", "pool-851", "pool-061", "pool-260", "pool-1573", "pool-1717", "pool-386"],
+    "max_weight": 0.19510867946523913
+  },
+  {
+    "method": "uniform",
+    "num_buckets": 256,
+    "seed": 0,
+    "selected_ids": ["pool-1808", "pool-1585", "pool-2018", "pool-1516", "pool-945", "pool-085", "pool-183", "pool-1473", "pool-2028", "pool-1368", "pool-1268", "pool-864", "pool-1198", "pool-1039", "pool-219", "pool-081", "pool-075", "pool-329", "pool-1556", "pool-098", "pool-220", "pool-623", "pool-711", "pool-124", "pool-082", "pool-1489", "pool-635", "pool-1570", "pool-1028", "pool-1962", "pool-425", "pool-1325", "pool-1094", "pool-764", "pool-894", "pool-943", "pool-1943", "pool-2004", "pool-788", "pool-363", "pool-685", "pool-1689", "pool-1870", "pool-661", "pool-364", "pool-1421", "pool-946", "pool-1615", "pool-1920", "pool-450", "pool-320", "pool-1287", "pool-614", "pool-1641", "pool-1075", "pool-1338", "pool-1888", "pool-1682", "pool-1999", "pool-1544", "pool-300", "pool-1153", "pool-1239", "pool-1476"],
+    "max_weight": 0.00048828125
+  },
+  {
+    "method": "uniform",
+    "num_buckets": 256,
+    "seed": 1,
+    "selected_ids": ["pool-184", "pool-1356", "pool-388", "pool-261", "pool-1522", "pool-1220", "pool-613", "pool-1573", "pool-418", "pool-561", "pool-923", "pool-409", "pool-1521", "pool-1239", "pool-1241", "pool-1847", "pool-734", "pool-1418", "pool-763", "pool-187", "pool-1950", "pool-936", "pool-206", "pool-614", "pool-1542", "pool-1001", "pool-635", "pool-1627", "pool-1372", "pool-1507", "pool-1854", "pool-1851", "pool-1099", "pool-1768", "pool-1609", "pool-556", "pool-1578", "pool-1826", "pool-739", "pool-1939", "pool-1014", "pool-893", "pool-1565", "pool-819", "pool-569", "pool-344", "pool-458", "pool-080", "pool-140", "pool-1282", "pool-562", "pool-1304", "pool-604", "pool-1441", "pool-062", "pool-1428", "pool-986", "pool-621", "pool-829", "pool-1051", "pool-1696", "pool-1849", "pool-1909", "pool-1908"],
+    "max_weight": 0.00048828125
+  },
+  {
+    "method": "uniform",
+    "num_buckets": 256,
+    "seed": 2,
+    "selected_ids": ["pool-1639", "pool-428", "pool-1250", "pool-1149", "pool-759", "pool-151", "pool-1624", "pool-655", "pool-1905", "pool-2037", "pool-1172", "pool-1512", "pool-403", "pool-686", "pool-1253", "pool-323", "pool-1557", "pool-1964", "pool-1446", "pool-257", "pool-729", "pool-884", "pool-1803", "pool-603", "pool-251", "pool-1643", "pool-2042", "pool-1746", "pool-1107", "pool-465", "pool-1593", "pool-549", "pool-680", "pool-992", "pool-1495", "pool-1650", "pool-1927", "pool-1554", "pool-1741", "pool-1470", "pool-988", "pool-234", "pool-612", "pool-827", "pool-1032", "pool-1350", "pool-1316", "pool-1911", "pool-1641", "pool-1436", "pool-087", "pool-357", "pool-1891", "pool-1186", "pool-503", "pool-1850", "pool-480", "pool-1699", "pool-1045", "pool-716", "pool-629", "pool-1799", "pool-563", "pool-410"],
+    "max_weight": 0.00048828125
+  },
+  {
+    "method": "uniform",
+    "num_buckets": 256,
+    "seed": 3,
+    "selected_ids": ["pool-508", "pool-834", "pool-1308", "pool-1902", "pool-1968", "pool-744", "pool-1138", "pool-1827", "pool-1779", "pool-1580", "pool-1252", "pool-1578", "pool-329", "pool-1322", "pool-1004", "pool-1064", "pool-2047", "pool-1845", "pool-050", "pool-1795", "pool-1984", "pool-038", "pool-2045", "pool-199", "pool-1918", "pool-1111", "pool-970", "pool-1137", "pool-1135", "pool-1632", "pool-209", "pool-969", "pool-1546", "pool-268", "pool-983", "pool-1171", "pool-2029", "pool-700", "pool-873", "pool-1418", "pool-713", "pool-327", "pool-1144", "pool-518", "pool-1925", "pool-1354", "pool-1217", "pool-1160", "pool-1906", "pool-1872", "pool-1703", "pool-2024", "pool-1953", "pool-1441", "pool-955", "pool-1216", "pool-1747", "pool-908", "pool-452", "pool-1856", "pool-1024", "pool-383", "pool-422", "pool-1072"],
+    "max_weight": 0.00048828125
+  },
+  {
+    "method": "uniform",
+    "num_buckets": 256,
+    "seed": 4,
+    "selected_ids": ["pool-1847", "pool-110", "pool-1366", "pool-1724", "pool-1138", "pool-1641", "pool-1493", "pool-1522", "pool-1385", "pool-1052", "pool-932", "pool-703", "pool-1278", "pool-423", "pool-1782", "pool-1292", "pool-1935", "pool-106", "pool-774", "pool-985", "pool-1406", "pool-2016", "pool-296", "pool-730", "pool-1418", "pool-645", "pool-812", "pool-1488", "pool-1955", "pool-514", "pool-1370", "pool-362", "pool-401", "pool-1208", "pool-1178", "pool-1014", "pool-1311", "pool-1324", "pool-617", "pool-925", "pool-1537", "pool-1840", "pool-1010", "pool-1355", "pool-1880", "pool-1877", "pool-576", "pool-2036", "pool-1344", "pool-281", "pool-646", "pool-1767", "pool-1280", "pool-1129", "pool-542", "pool-467", "pool-756", "pool-1819", "pool-1510", "pool-1634", "pool-664", "pool-792", "pool-764", "pool-1684"],
+    "max_weight": 0.00048828125
+  },
+  {
+    "method": "target-only",
+    "num_buckets": 256,
+    "seed": 0,
+    "selected_ids": ["pool-1369", "pool-986", "pool-1872", "pool-658", "pool-1220", "pool-1272", "pool-441", "pool-1223", "pool-1374", "pool-581", "pool-125", "pool-1029", "pool-1101", "pool-2015", "pool-380", "pool-115", "pool-1526", "pool-1936", "pool-462", "pool-2003", "pool-1725", "pool-140", "pool-1599", "pool-1992", "pool-299", "pool-1761", "pool-318", "pool-2028", "pool-946", "pool-1547", "pool-995", "pool-493", "pool-326", "pool-045", "pool-678", "pool-1870", "pool-1633", "pool-094", "pool-1362", "pool-1095", "pool-981", "pool-1134", "pool-1044", "pool-955", "pool-755", "pool-133", "pool-1019", "pool-1647", "pool-289", "pool-875", "pool-1158", "pool-082", "pool-279", "pool-1928", "pool-1198", "pool-073", "pool-2004", "pool-1735", "pool-102", "pool-426", "pool-314", "pool-1890", "pool-021", "pool-1980"],
+    "max_weight": 0.9392463220384453
+  },
+  {
+    "method": "target-only",
+    "num_buckets": 256,
+    "seed": 1,
+    "selected_ids": ["pool-986", "pool-1369", "pool-1220", "pool-1872", "pool-1272", "pool-1223", "pool-441", "pool-658", "pool-140", "pool-1374", "pool-115", "pool-1029", "pool-1936", "pool-2003", "pool-1101", "pool-1725", "pool-125", "pool-995", "pool-613", "pool-094", "pool-1992", "pool-318", "pool-380", "pool-299", "pool-1599", "pool-1761", "pool-462", "pool-1095", "pool-2015", "pool-581", "pool-326", "pool-045", "pool-1362", "pool-755", "pool-1044", "pool-823", "pool-1647", "pool-1633", "pool-946", "pool-1547", "pool-1526", "pool-678", "pool-493", "pool-1890", "pool-133", "pool-1605", "pool-1928", "pool-102", "pool-1134", "pool-591", "pool-955", "pool-1019", "pool-279", "pool-108", "pool-512", "pool-1085", "pool-1980", "pool-981", "pool-018", "pool-744", "pool-289", "pool-1390", "pool-397", "pool-1385"],
+    "max_weight": 0.9392463220384453
+  },
+  {
+    "method": "target-only",
+    "num_buckets": 256,
+    "seed": 2,
+    "selected_ids": ["pool-1369", "pool-658", "pool-986", "pool-441", "pool-1223", "pool-1029", "pool-1272", "pool-2003", "pool-1374", "pool-1220", "pool-1725", "pool-581", "pool-1101", "pool-1872", "pool-115", "pool-1599", "pool-125", "pool-318", "pool-140", "pool-462", "pool-1633", "pool-380", "pool-326", "pool-1761", "pool-1936", "pool-279", "pool-995", "pool-1362", "pool-1526", "pool-289", "pool-981", "pool-955", "pool-299", "pool-2015", "pool-1095", "pool-1928", "pool-1647", "pool-102", "pool-045", "pool-1992", "pool-493", "pool-021", "pool-755", "pool-094", "pool-018", "pool-1158", "pool-1019", "pool-1547", "pool-678", "pool-1134", "pool-073", "pool-1032", "pool-133", "pool-823", "pool-946", "pool-1044", "pool-512", "pool-2007", "pool-1523", "pool-613", "pool-1980", "pool-925", "pool-2028", "pool-1735"],
+    "max_weight": 0.9392463220384453
+  },
+  {
+    "method": "target-only",
+    "num_buckets": 256,
+    "seed": 3,
+    "selected_ids": ["pool-1369", "pool-986", "pool-658", "pool-1872", "pool-1220", "pool-1272", "pool-441", "pool-1223", "pool-1374", "pool-125", "pool-1029", "pool-1725", "pool-1101", "pool-2003", "pool-318", "pool-115", "pool-1362", "pool-299", "pool-1633", "pool-1936", "pool-2015", "pool-462", "pool-744", "pool-1547", "pool-955", "pool-1980", "pool-1992", "pool-1019", "pool-140", "pool-581", "pool-1599", "pool-289", "pool-1761", "pool-1095", "pool-995", "pool-133", "pool-1526", "pool-1928", "pool-823", "pool-326", "pool-045", "pool-380", "pool-1647", "pool-493", "pool-1134", "pool-1870", "pool-094", "pool-1686", "pool-678", "pool-856", "pool-555", "pool-755", "pool-1085", "pool-981", "pool-018", "pool-279", "pool-102", "pool-021", "pool-1158", "pool-1890", "pool-946", "pool-1605", "pool-1044", "pool-613"],
+    "max_weight": 0.9392463220384453
+  },
+  {
+    "method": "target-only",
+    "num_buckets": 256,
+    "seed": 4,
+    "selected_ids": ["pool-1369", "pool-986", "pool-1272", "pool-658", "pool-441", "pool-1223", "pool-1374", "pool-1220", "pool-2003", "pool-1872", "pool-125", "pool-1936", "pool-318", "pool-1029", "pool-1101", "pool-1547", "pool-2015", "pool-493", "pool-115", "pool-299", "pool-1725", "pool-1493", "pool-140", "pool-1992", "pool-581", "pool-380", "pool-045", "pool-094", "pool-1599", "pool-1385", "pool-462", "pool-1761", "pool-1019", "pool-1526", "pool-1928", "pool-1647", "pool-995", "pool-1362", "pool-1095", "pool-073", "pool-875", "pool-755", "pool-326", "pool-1134", "pool-1633", "pool-102", "pool-925", "pool-1085", "pool-279", "pool-1980", "pool-1158", "pool-1890", "pool-1870", "pool-1044", "pool-1255", "pool-591", "pool-814", "pool-289", "pool-981", "pool-133", "pool-856", "pool-1605", "pool-678", "pool-955"],
+    "max_weight": 0.9392463220384453
+  },
+  {
+    "method": "ratio-top-k",
+    "num_buckets": 256,
+    "seed": null,
+    "selected_ids": ["pool-936", "pool-472", "pool-377", "pool-1000", "pool-1898", "pool-1185", "pool-416", "pool-1678", "pool-1691", "pool-750", "pool-1668", "pool-083", "pool-1613", "pool-1888", "pool-1343", "pool-579", "pool-878", "pool-1206", "pool-1425", "pool-432", "pool-732", "pool-1142", "pool-505", "pool-487", "pool-1981", "pool-996", "pool-1410", "pool-1035", "pool-2040", "pool-866", "pool-197", "pool-1053", "pool-442", "pool-1049", "pool-1773", "pool-459", "pool-1260", "pool-1371", "pool-550", "pool-980", "pool-627", "pool-1340", "pool-1653", "pool-1612", "pool-1491", "pool-1222", "pool-1377", "pool-1160", "pool-1951", "pool-1887", "pool-310", "pool-1591", "pool-1929", "pool-1314", "pool-446", "pool-948", "pool-168", "pool-1711", "pool-266", "pool-1446", "pool-1398", "pool-057", "pool-1280", "pool-1682"],
+    "max_weight": 0.9999699000416598
+  }
+]

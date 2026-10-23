@@ -1,0 +1,405 @@
+[
+  {
+    "name": "copy-with-directional-ids",
+    "case": {
+      "documents": [
+        {
+          "id": "z-train",
+          "split": "train",
+          "tokens": ["oak", "birch", "pine", "ash"]
+        },
+        {
+          "id": "a-eval",
+          "split": "eval",
+          "tokens": ["oak", "birch", "pine", "ash"]
+        }
+      ],
+      "n": 2,
+      "num_hashes": 4,
+      "num_bands": 2,
+      "jaccard_threshold": 0.8,
+      "containment_threshold": 1.0
+    },
+    "expected": {
+      "candidate_pairs": [
+        ["a-eval", "z-train"]
+      ],
+      "verified_pairs": [
+        ["a-eval", "z-train"]
+      ],
+      "contamination_pairs": [
+        ["z-train", "a-eval"]
+      ],
+      "unscorable_ids": []
+    }
+  },
+  {
+    "name": "empty-input",
+    "case": {
+      "documents": [],
+      "n": 2,
+      "num_hashes": 4,
+      "num_bands": 2,
+      "jaccard_threshold": 0.8,
+      "containment_threshold": 1.0
+    },
+    "expected": {
+      "candidate_pairs": [],
+      "verified_pairs": [],
+      "contamination_pairs": [],
+      "unscorable_ids": []
+    }
+  },
+  {
+    "name": "short-and-empty",
+    "case": {
+      "documents": [
+        {
+          "id": "z-train",
+          "split": "train",
+          "tokens": ["oak", "birch", "pine", "ash"]
+        },
+        {
+          "id": "a-eval",
+          "split": "eval",
+          "tokens": ["oak", "birch", "pine", "ash"]
+        },
+        {
+          "id": "empty",
+          "split": "eval",
+          "tokens": []
+        }
+      ],
+      "n": 8,
+      "num_hashes": 4,
+      "num_bands": 2,
+      "jaccard_threshold": 0.8,
+      "containment_threshold": 1.0
+    },
+    "expected": {
+      "candidate_pairs": [],
+      "verified_pairs": [],
+      "contamination_pairs": [],
+      "unscorable_ids": ["a-eval", "empty", "z-train"]
+    }
+  },
+  {
+    "name": "set-not-multiset",
+    "case": {
+      "documents": [
+        {
+          "id": "t",
+          "split": "train",
+          "tokens": ["water", "water", "water", "water", "water", "water", "water", "water"]
+        },
+        {
+          "id": "e",
+          "split": "eval",
+          "tokens": ["water"]
+        }
+      ],
+      "n": 1,
+      "num_hashes": 4,
+      "num_bands": 2,
+      "jaccard_threshold": 0.8,
+      "containment_threshold": 1.0
+    },
+    "expected": {
+      "candidate_pairs": [
+        ["e", "t"]
+      ],
+      "verified_pairs": [
+        ["e", "t"]
+      ],
+      "contamination_pairs": [
+        ["t", "e"]
+      ],
+      "unscorable_ids": []
+    }
+  },
+  {
+    "name": "three-copies-deduplicate-candidates",
+    "case": {
+      "documents": [
+        {
+          "id": "z-train",
+          "split": "train",
+          "tokens": ["oak", "birch", "pine", "ash"]
+        },
+        {
+          "id": "a-eval",
+          "split": "eval",
+          "tokens": ["oak", "birch", "pine", "ash"]
+        },
+        {
+          "id": "second-train",
+          "split": "train",
+          "tokens": ["oak", "birch", "pine", "ash"]
+        }
+      ],
+      "n": 2,
+      "num_hashes": 4,
+      "num_bands": 4,
+      "jaccard_threshold": 0.8,
+      "containment_threshold": 1.0
+    },
+    "expected": {
+      "candidate_pairs": [
+        ["a-eval", "second-train"],
+        ["a-eval", "z-train"],
+        ["second-train", "z-train"]
+      ],
+      "verified_pairs": [
+        ["a-eval", "second-train"],
+        ["a-eval", "z-train"],
+        ["second-train", "z-train"]
+      ],
+      "contamination_pairs": [
+        ["second-train", "a-eval"],
+        ["z-train", "a-eval"]
+      ],
+      "unscorable_ids": []
+    }
+  },
+  {
+    "name": "unrelated",
+    "case": {
+      "documents": [
+        {
+          "id": "z-train",
+          "split": "train",
+          "tokens": ["oak", "birch", "pine", "ash"]
+        },
+        {
+          "id": "e",
+          "split": "eval",
+          "tokens": ["sand", "tide", "shore"]
+        }
+      ],
+      "n": 2,
+      "num_hashes": 4,
+      "num_bands": 2,
+      "jaccard_threshold": 0.8,
+      "containment_threshold": 1.0
+    },
+    "expected": {
+      "candidate_pairs": [],
+      "verified_pairs": [],
+      "contamination_pairs": [],
+      "unscorable_ids": []
+    }
+  },
+  {
+    "name": "containment-outside-candidates",
+    "case": {
+      "documents": [
+        {
+          "id": "t",
+          "split": "train",
+          "tokens": ["x", "a", "b", "c", "y"]
+        },
+        {
+          "id": "e",
+          "split": "eval",
+          "tokens": ["a", "b", "c"]
+        }
+      ],
+      "n": 2,
+      "num_hashes": 4,
+      "num_bands": 2,
+      "jaccard_threshold": 0.8,
+      "containment_threshold": 1.0
+    },
+    "expected": {
+      "candidate_pairs": [],
+      "verified_pairs": [],
+      "contamination_pairs": [
+        ["t", "e"]
+      ],
+      "unscorable_ids": []
+    }
+  },
+  {
+    "name": "reject-false-candidate",
+    "case": {
+      "documents": [
+        {
+          "id": "t",
+          "split": "train",
+          "tokens": ["x", "a", "b", "c", "y"]
+        },
+        {
+          "id": "e",
+          "split": "eval",
+          "tokens": ["a", "b", "c"]
+        }
+      ],
+      "n": 2,
+      "num_hashes": 4,
+      "num_bands": 4,
+      "jaccard_threshold": 0.8,
+      "containment_threshold": 1.0
+    },
+    "expected": {
+      "candidate_pairs": [
+        ["e", "t"]
+      ],
+      "verified_pairs": [],
+      "contamination_pairs": [
+        ["t", "e"]
+      ],
+      "unscorable_ids": []
+    }
+  },
+  {
+    "name": "inclusive-jaccard-threshold",
+    "case": {
+      "documents": [
+        {
+          "id": "t",
+          "split": "train",
+          "tokens": ["x", "a", "b", "c", "y"]
+        },
+        {
+          "id": "e",
+          "split": "eval",
+          "tokens": ["a", "b", "c"]
+        }
+      ],
+      "n": 2,
+      "num_hashes": 4,
+      "num_bands": 4,
+      "jaccard_threshold": 0.5,
+      "containment_threshold": 1.0
+    },
+    "expected": {
+      "candidate_pairs": [
+        ["e", "t"]
+      ],
+      "verified_pairs": [
+        ["e", "t"]
+      ],
+      "contamination_pairs": [
+        ["t", "e"]
+      ],
+      "unscorable_ids": []
+    }
+  },
+  {
+    "name": "inclusive-containment-threshold",
+    "case": {
+      "documents": [
+        {
+          "id": "t",
+          "split": "train",
+          "tokens": ["a", "b", "c"]
+        },
+        {
+          "id": "e",
+          "split": "eval",
+          "tokens": ["a", "b", "c", "d", "e"]
+        }
+      ],
+      "n": 2,
+      "num_hashes": 4,
+      "num_bands": 4,
+      "jaccard_threshold": 0.8,
+      "containment_threshold": 0.5
+    },
+    "expected": {
+      "candidate_pairs": [],
+      "verified_pairs": [],
+      "contamination_pairs": [
+        ["t", "e"]
+      ],
+      "unscorable_ids": []
+    }
+  },
+  {
+    "name": "within-training-split",
+    "case": {
+      "documents": [
+        {
+          "id": "z-train",
+          "split": "train",
+          "tokens": ["oak", "birch", "pine", "ash"]
+        },
+        {
+          "id": "a-eval",
+          "split": "train",
+          "tokens": ["oak", "birch", "pine", "ash"]
+        }
+      ],
+      "n": 2,
+      "num_hashes": 4,
+      "num_bands": 2,
+      "jaccard_threshold": 0.8,
+      "containment_threshold": 1.0
+    },
+    "expected": {
+      "candidate_pairs": [
+        ["a-eval", "z-train"]
+      ],
+      "verified_pairs": [
+        ["a-eval", "z-train"]
+      ],
+      "contamination_pairs": [],
+      "unscorable_ids": []
+    }
+  },
+  {
+    "name": "one-document",
+    "case": {
+      "documents": [
+        {
+          "id": "z-train",
+          "split": "train",
+          "tokens": ["oak", "birch", "pine", "ash"]
+        }
+      ],
+      "n": 2,
+      "num_hashes": 4,
+      "num_bands": 2,
+      "jaccard_threshold": 0.8,
+      "containment_threshold": 1.0
+    },
+    "expected": {
+      "candidate_pairs": [],
+      "verified_pairs": [],
+      "contamination_pairs": [],
+      "unscorable_ids": []
+    }
+  },
+  {
+    "name": "scattered-trigrams-without-contiguous-copy",
+    "case": {
+      "documents": [
+        {
+          "id": "t",
+          "split": "train",
+          "tokens": ["a", "b", "c", "separator", "b", "c", "d"]
+        },
+        {
+          "id": "e",
+          "split": "eval",
+          "tokens": ["a", "b", "c", "d"]
+        }
+      ],
+      "n": 3,
+      "num_hashes": 4,
+      "num_bands": 2,
+      "jaccard_threshold": 0.8,
+      "containment_threshold": 1.0
+    },
+    "expected": {
+      "candidate_pairs": [
+        ["e", "t"]
+      ],
+      "verified_pairs": [],
+      "contamination_pairs": [
+        ["t", "e"]
+      ],
+      "unscorable_ids": []
+    }
+  }
+]

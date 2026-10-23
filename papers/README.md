@@ -22,15 +22,50 @@ plain Git files, not Git LFS, because GitHub Pages does not serve LFS objects.
   [Course PDF](2018-emnlp-kudo-sentencepiece-language-independent-subword-tokenizer.pdf) ·
   [Original publication](https://aclanthology.org/D18-2012/).
   Further reading on tokenizer implementation and language independence.
-- Beyond these two, the [tokenizer reading list](../docs/tokenizer-reading-list.md)
+- Alec Radford, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, and
+  Ilya Sutskever. 2019. *Language Models are Unsupervised Multitask Learners*
+  (GPT-2). OpenAI technical report.
+  [Course PDF](2019-openai-radford-language-models-unsupervised-multitask-learners-gpt2.pdf) ·
+  [Original report](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf).
+  Unmodified PDF, retrieved September 20, 2026. License: not specified in the
+  source PDF.
+  Section 2.2 explains the character-category boundaries and space exception
+  used in the [GPT-2 pre-tokenizer task](../tasks/l01-tokenization/gpt2-pretokenizer/instruction.md).
+- Aaditya K. Singh and DJ Strouse. 2024.
+  *Tokenization counts: the impact of tokenization on arithmetic in frontier LLMs*.
+  arXiv preprint.
+  [Course PDF](2024-arxiv-singh-tokenization-counts-arithmetic-frontier-llms.pdf) ·
+  [arXiv 2402.14903v1](https://arxiv.org/abs/2402.14903v1).
+  Unmodified arXiv PDF, retrieved September 20, 2026, under
+  [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/).
+  Reading for the [digit-grouping task](../tasks/l01-tokenization/digit-grouping/instruction.md).
+- Kimi Team. 2025. *Kimi K2: Open Agentic Intelligence*. arXiv technical report.
+  [Course PDF](2025-arxiv-kimi-team-kimi-k2-open-agentic-intelligence.pdf) ·
+  [arXiv 2507.20534v2](https://arxiv.org/abs/2507.20534v2).
+  Unmodified arXiv PDF (February 3, 2026 revision), retrieved September 20,
+  2026, under [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+  Model background for the [Han-runs task](../tasks/l01-tokenization/han-runs/instruction.md);
+  the exact Han rule is documented in the
+  [tokenizer code](https://huggingface.co/moonshotai/Kimi-K2-Instruct/blob/main/tokenization_kimi.py).
+- The [tokenizer reading list](../docs/tokenizer-reading-list.md)
   links recent papers (2022–2026) on whether the tokenizer changes model
   quality and what text to train it on. It links to the papers; it holds no PDFs.
 
 ## Lecture 02: N-gram language models and how LMs are measured
 
+- Yoshua Bengio, Réjean Ducharme, Pascal Vincent, and Christian Jauvin. 2003.
+  *A Neural Probabilistic Language Model*. Journal of Machine Learning Research,
+  3:1137-1155.
+  [Course PDF](2003-jmlr-bengio-neural-probabilistic-language-model.pdf) ·
+  [Original publication](https://www.jmlr.org/papers/v3/bengio03a.html).
+  Unmodified publisher PDF, retrieved September 23, 2026. Copyright belongs
+  to the authors; a specific license is not stated in the source PDF.
+  Figure 1 and Section 2 accompany the
+  [NPLM introduction](../slides/lecture-02/index.html#/nplm-1).
+
 Cited in the [Lecture 02 metrics note](../docs/lecture-02-lm-metrics.md),
-which says which figure or table of each paper reports loss, perplexity, or
-bits per byte. All ten are the authors' arXiv versions, retrieved on
+the following ten papers report loss, perplexity, bits per byte, or downstream
+results as detailed in that note. They are the authors' arXiv versions, retrieved on
 September 15, 2026, and redistributed under the license shown on each arXiv
 abstract page (linked below).
 
@@ -69,3 +104,17 @@ These PDFs are unmodified copies from the ACL Anthology, retrieved on
 September 8, 2026. Both are distributed under
 [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/),
 as stated by the original publication pages.
+
+## Lecture 04: Attention in recurrent machine translation
+
+- Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. 2015.
+  *Neural Machine Translation by Jointly Learning to Align and Translate*. ICLR.
+  [Course PDF](2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf) ·
+  [Original arXiv record, 1409.0473v7](https://arxiv.org/abs/1409.0473v7).
+  First preprint: September 1, 2014. This is the unmodified May 19, 2016
+  revision (v7), retrieved October 9, 2026 (Asia/Shanghai).
+  License recorded by arXiv:
+  [arXiv.org non-exclusive distribution license](https://arxiv.org/licenses/nonexclusive-distrib/1.0/).
+  Read §§2–3 and Appendix A.1.2 for the fixed-vector bottleneck, learned
+  source alignment, and recurrent decoder; §4 describes the English-to-French
+  translation experiments.

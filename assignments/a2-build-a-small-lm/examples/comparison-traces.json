@@ -1,0 +1,244 @@
+{
+  "description": "Measured instructor development traces; label use as supplied evidence. Final test scores are deliberately omitted.",
+  "source_revision": "07673fde1059d3a1b65b6ae8b42ee678292f30d0",
+  "hardware": "Apple M3 Pro; 18 GiB RAM; two torch CPU threads",
+  "conditions": {
+    "baseline": {
+      "config": {
+        "model": {
+          "vocab_size": 4096,
+          "context": 128,
+          "width": 128,
+          "heads": 4,
+          "layers": 2,
+          "ff_width": 512,
+          "norm": "pre"
+        },
+        "steps": 512,
+        "batch_size": 16,
+        "warmup_steps": 32,
+        "max_lr": 0.001,
+        "min_lr_ratio": 0.1,
+        "max_grad_norm": 1.0,
+        "weight_decay": 0.01,
+        "seed": 20261009,
+        "threads": 2,
+        "eval_every": 64
+      },
+      "parameters": 935168,
+      "tokens_processed": 1048576,
+      "corpus_tokens": 577449,
+      "retained_documents": 2816,
+      "dev": [
+        {
+          "step": 0,
+          "loss": 8.333381563413344,
+          "tokens": 25426
+        },
+        {
+          "step": 64,
+          "loss": 5.2754613269766,
+          "tokens": 25426
+        },
+        {
+          "step": 128,
+          "loss": 4.33700573525946,
+          "tokens": 25426
+        },
+        {
+          "step": 192,
+          "loss": 4.106836942350012,
+          "tokens": 25426
+        },
+        {
+          "step": 256,
+          "loss": 3.966496467815379,
+          "tokens": 25426
+        },
+        {
+          "step": 320,
+          "loss": 3.861814367023805,
+          "tokens": 25426
+        },
+        {
+          "step": 384,
+          "loss": 3.780370440573487,
+          "tokens": 25426
+        },
+        {
+          "step": 448,
+          "loss": 3.730844468124487,
+          "tokens": 25426
+        },
+        {
+          "step": 512,
+          "loss": 3.7024313162212,
+          "tokens": 25426
+        }
+      ],
+      "resources": {
+        "seconds": 18.724299749999773,
+        "peak_rss_bytes": 534134784,
+        "memory_method": "psutil process RSS sampled at setup, updates, evaluation, and finish; sampled peak"
+      }
+    },
+    "post": {
+      "config": {
+        "model": {
+          "vocab_size": 4096,
+          "context": 128,
+          "width": 128,
+          "heads": 4,
+          "layers": 2,
+          "ff_width": 512,
+          "norm": "post"
+        },
+        "steps": 512,
+        "batch_size": 16,
+        "warmup_steps": 32,
+        "max_lr": 0.001,
+        "min_lr_ratio": 0.1,
+        "max_grad_norm": 1.0,
+        "weight_decay": 0.01,
+        "seed": 20261009,
+        "threads": 2,
+        "eval_every": 64
+      },
+      "parameters": 935168,
+      "tokens_processed": 1048576,
+      "corpus_tokens": 577449,
+      "retained_documents": 2816,
+      "dev": [
+        {
+          "step": 0,
+          "loss": 8.341779188103468,
+          "tokens": 25426
+        },
+        {
+          "step": 64,
+          "loss": 5.954543526069679,
+          "tokens": 25426
+        },
+        {
+          "step": 128,
+          "loss": 5.929921203243604,
+          "tokens": 25426
+        },
+        {
+          "step": 192,
+          "loss": 5.926341577507553,
+          "tokens": 25426
+        },
+        {
+          "step": 256,
+          "loss": 5.922606711326496,
+          "tokens": 25426
+        },
+        {
+          "step": 320,
+          "loss": 5.827928730179922,
+          "tokens": 25426
+        },
+        {
+          "step": 384,
+          "loss": 5.200110637202998,
+          "tokens": 25426
+        },
+        {
+          "step": 448,
+          "loss": 4.865799477105436,
+          "tokens": 25426
+        },
+        {
+          "step": 512,
+          "loss": 4.713650463004927,
+          "tokens": 25426
+        }
+      ],
+      "resources": {
+        "seconds": 18.19868079101434,
+        "peak_rss_bytes": 555008000,
+        "memory_method": "psutil process RSS sampled at setup, updates, evaluation, and finish; sampled peak"
+      }
+    },
+    "dedup": {
+      "config": {
+        "model": {
+          "vocab_size": 4096,
+          "context": 128,
+          "width": 128,
+          "heads": 4,
+          "layers": 2,
+          "ff_width": 512,
+          "norm": "pre"
+        },
+        "steps": 512,
+        "batch_size": 16,
+        "warmup_steps": 32,
+        "max_lr": 0.001,
+        "min_lr_ratio": 0.1,
+        "max_grad_norm": 1.0,
+        "weight_decay": 0.01,
+        "seed": 20261009,
+        "threads": 2,
+        "eval_every": 64
+      },
+      "parameters": 935168,
+      "tokens_processed": 1048576,
+      "corpus_tokens": 419874,
+      "retained_documents": 2048,
+      "dev": [
+        {
+          "step": 0,
+          "loss": 8.333381563413344,
+          "tokens": 25426
+        },
+        {
+          "step": 64,
+          "loss": 5.268367027079273,
+          "tokens": 25426
+        },
+        {
+          "step": 128,
+          "loss": 4.322774629781184,
+          "tokens": 25426
+        },
+        {
+          "step": 192,
+          "loss": 4.088816512909092,
+          "tokens": 25426
+        },
+        {
+          "step": 256,
+          "loss": 3.957236068006636,
+          "tokens": 25426
+        },
+        {
+          "step": 320,
+          "loss": 3.8510917292096583,
+          "tokens": 25426
+        },
+        {
+          "step": 384,
+          "loss": 3.7684965737543203,
+          "tokens": 25426
+        },
+        {
+          "step": 448,
+          "loss": 3.7211810024756278,
+          "tokens": 25426
+        },
+        {
+          "step": 512,
+          "loss": 3.6934953310145895,
+          "tokens": 25426
+        }
+      ],
+      "resources": {
+        "seconds": 17.952671791019384,
+        "peak_rss_bytes": 561758208,
+        "memory_method": "psutil process RSS sampled at setup, updates, evaluation, and finish; sampled peak"
+      }
+    }
+  }
+}

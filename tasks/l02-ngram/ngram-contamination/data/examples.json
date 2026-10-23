@@ -1,0 +1,59 @@
+{
+  "exact_copy": {
+    "documents": [
+      {
+        "id": "train-copy",
+        "split": "train",
+        "tokens": ["red", "moon", "rises"]
+      },
+      {
+        "id": "eval-copy",
+        "split": "eval",
+        "tokens": ["red", "moon", "rises"]
+      }
+    ],
+    "n": 2,
+    "num_hashes": 4,
+    "num_bands": 2,
+    "jaccard_threshold": 0.8,
+    "containment_threshold": 1.0
+  },
+  "short_documents": {
+    "documents": [
+      {
+        "id": "train-short",
+        "split": "train",
+        "tokens": ["red"]
+      },
+      {
+        "id": "eval-short",
+        "split": "eval",
+        "tokens": ["blue"]
+      }
+    ],
+    "n": 2,
+    "num_hashes": 4,
+    "num_bands": 2,
+    "jaccard_threshold": 0.8,
+    "containment_threshold": 1.0
+  },
+  "contained_passage": {
+    "documents": [
+      {
+        "id": "train-long",
+        "split": "train",
+        "tokens": ["x", "a", "b", "c", "y"]
+      },
+      {
+        "id": "eval-short",
+        "split": "eval",
+        "tokens": ["a", "b", "c"]
+      }
+    ],
+    "n": 2,
+    "num_hashes": 4,
+    "num_bands": 2,
+    "jaccard_threshold": 0.8,
+    "containment_threshold": 1.0
+  }
+}

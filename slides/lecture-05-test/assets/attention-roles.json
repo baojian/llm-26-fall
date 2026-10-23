@@ -1,0 +1,32 @@
+{
+  "title": "One input, three roles",
+  "source_file": "lecture-05-slides-transformers.pptx",
+  "source_copy": "Desktop copy, 43-slide revision inspected on October 10, 2026 (Asia/Shanghai)",
+  "source_pages": [
+    5,
+    6,
+    7
+  ],
+  "source_titles": [
+    "Self-Attention Whole block",
+    "Self-Attention Adding parameters"
+  ],
+  "original_attribution": "https://www.youtube.com/watch?v=tIvKXrEDMhk",
+  "adaptation": "Name the three roles in the existing four-word example, then motivate learned projections. Qualify the source claim about having no trainable weights.",
+  "steps": [
+    {
+      "click": 1,
+      "label": "Name the three uses of the same input vectors: query, key, and value.",
+      "object_ids": [
+        "attention-roles-0"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "The simplified operation has no learned Q/K/V projections; learn a representation for each role next.",
+      "object_ids": [
+        "attention-roles-1"
+      ]
+    }
+  ]
+}

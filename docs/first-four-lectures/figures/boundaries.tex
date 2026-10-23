@@ -1,0 +1,9 @@
+\begin{tikzpicture}[font=\small]
+\node[anchor=east] at (0,0.55) {extract letters};
+\node[box,minimum width=15mm] at (1,0.55) {hi};
+\node[lab,anchor=west] at (2.2,0.55) {comma, space, digit, punctuation omitted};
+\node[anchor=east] at (0,-0.55) {partition};
+\foreach \x/\s in {1/hi,2.5/{,},4/space,5.5/3,7/!}
+  \node[tbox,minimum width=13mm] at (\x,-0.55) {\s};
+\node[lab,anchor=west] at (8,-0.55) {concatenate to recover input};
+\end{tikzpicture}

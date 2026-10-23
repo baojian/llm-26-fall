@@ -1,0 +1,112 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage[margin=20mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,mathtools,booktabs,tabularx,array}
+\usepackage{enumitem,xcolor,tikz,pgfplots,caption,listings}
+\usetikzlibrary{arrows.meta,positioning,calc,matrix,fit,decorations.pathreplacing}
+\pgfplotsset{compat=1.18}
+\usepackage{fancyhdr,natbib,bibentry}
+\definecolor{courseblue}{HTML}{1F4E8C}
+\definecolor{courseteal}{HTML}{247C78}
+\definecolor{muted}{HTML}{586575}
+\definecolor{softblue}{HTML}{EDF3FA}
+\definecolor{softteal}{HTML}{EAF5F1}
+\definecolor{courseorange}{HTML}{A85A29}
+\usepackage[colorlinks=true,linkcolor=courseblue,urlcolor=courseblue]{hyperref}
+\hypersetup{pdftitle={From Text to Recurrent Models: Lectures 01--04},pdfauthor={CS40008.01, Fudan University}}
+\pagestyle{fancy}\fancyhf{}
+\lhead{\small CS40008.01 / Fall 2026}
+\rhead{\small Lecture notes / first draft}
+\cfoot{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\setlist[itemize]{leftmargin=1.3em,itemsep=2pt,topsep=2pt}
+\setlist[enumerate]{leftmargin=1.5em,itemsep=2pt,topsep=2pt}
+\setcounter{secnumdepth}{1}
+\captionsetup{font=small,labelfont=bf,skip=5pt,hypcap=false}
+\renewcommand{\thefigure}{F\ifnum\value{figure}<10\relax0\fi\arabic{figure}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\BOS}{\textsc{bos}}
+\newcommand{\EOS}{\textsc{eos}}
+\newcommand{\UNK}{\textsc{unk}}
+\newcommand{\softmax}{\operatorname{softmax}}
+\newcommand{\sigmoid}{\sigma}
+\newcommand{\readingref}[1]{\hyperlink{reading:#1}{#1}}
+\newcommand{\doi}[1]{\href{https://doi.org/#1}{DOI}}
+\newcommand{\paperentry}[7]{%
+  \par\addvspace{7pt}\hypertarget{reading:#1}{}%
+  {\color{courseblue}\bfseries #1\quad #2}\hfill{\footnotesize\bfseries #3}\par
+  {\footnotesize\color{muted}#4\par}{\small\bibentry{#5}\par}%
+  \textbf{Why it matters.} #6\par\textbf{Read for.} #7\par}
+\newcommand{\nextpage}[1]{\clearpage\subsection*{#1}}
+\newcommand{\takeaway}[1]{\par\textcolor{courseteal}{\textbf{Takeaway.}} #1\par}
+\newcommand{\selfcheck}[1]{\par\textcolor{courseblue}{\textbf{Check your understanding.}} #1\par}
+\newcommand{\fig}[2]{\begin{center}\input{figures/#1.tex}\captionof{figure}{#2}\label{fig:#1}\end{center}}
+\tikzset{box/.style={draw=courseblue,fill=softblue,rounded corners=2pt,align=center,minimum height=8mm,font=\small},
+  tbox/.style={box,draw=courseteal,fill=softteal},
+  arr/.style={-{Latex[length=2mm]},thick,courseblue},
+  flow/.style={-{Latex[length=2mm]},thick,courseteal},
+  lab/.style={font=\small,align=center}}
+\pgfplotsset{every axis/.append style={font=\small,tick label style={font=\footnotesize},
+  grid=major,grid style={gray!15},axis line style={gray!60},legend style={draw=none,font=\footnotesize}}}
+\lstset{language=Python,basicstyle=\ttfamily\small,keywordstyle=\color{courseblue},
+  commentstyle=\color{muted},showstringspaces=false,columns=fullflexible,
+  frame=single,rulecolor=\color{gray!30},breaklines=true,aboveskip=8pt,belowskip=8pt}
+\begin{document}
+\bibliographystyle{plainnat}\nobibliography{references}
+\thispagestyle{empty}
+{\small\color{courseblue}\bfseries CS40008.01 / FUDAN UNIVERSITY / FALL 2026\par}
+\vspace{12pt}
+{\fontsize{26}{31}\selectfont\bfseries From Text to Recurrent Models\par}
+\vspace{6pt}
+{\large Lecture notes for Lectures 01--04\par}
+{\color{muted}First draft / October 1, 2026\par}
+
+Language modeling connects several ideas that initially look separate:
+representing text, estimating probabilities, learning vectors, and remembering
+context. These notes develop that connection from a sequence of small,
+inspectable examples. The common task is to predict the next token from the
+information available so far.
+
+\fig{course-map}{The four lectures share a prediction task. Tokenization determines
+the symbols; the model determines how context becomes a probability distribution.}
+
+\section*{A route through the notes}
+\begin{tabularx}{\textwidth}{@{}r Y r@{}}\toprule
+& Topic & Page\\\midrule
+1 & \hyperref[sec:task]{Language modeling as a common task} & \pageref{sec:task}\\
+2 & \hyperref[sec:tokens]{From text to tokens} & \pageref{sec:tokens}\\
+3 & \hyperref[sec:counts]{Count-based language models} & \pageref{sec:counts}\\
+4 & \hyperref[sec:evaluation]{Evaluating and sampling language models} & \pageref{sec:evaluation}\\
+5 & \hyperref[sec:embeddings]{Learning token representations} & \pageref{sec:embeddings}\\
+6 & \hyperref[sec:neural]{From token IDs to a trainable neural LM} & \pageref{sec:neural}\\
+7 & \hyperref[sec:rnn]{Recurrent language models} & \pageref{sec:rnn}\\
+8 & \hyperref[sec:lstm]{LSTMs and the limits of recurrent memory} & \pageref{sec:lstm}\\
+& \hyperref[sec:review]{Review, notation, and sources} & \pageref{sec:review}\\
+& \hyperref[sec:readings]{Guide to 15 papers before the Transformer} & \pageref{sec:readings}\\\bottomrule
+\end{tabularx}
+
+\textbf{How to read.} Follow each worked example with pencil and paper.
+The checks ask you to explain a boundary condition, identify an assumption,
+or recompute a value. The course notebooks provide executable companions.
+All diagrams are editable vector figures; measured examples are labeled with
+their source and limitations.
+
+\textbf{Scope.} The revised Lecture 04 ending develops RNNs and LSTMs.
+Attention begins in Lecture 05. The final section prepares that transition
+by identifying the limitations that remain after gated memory.
+
+\input{sections/01-language-modeling.tex}
+\input{sections/02-text-and-tokenization.tex}
+\input{sections/03-count-language-models.tex}
+\input{sections/04-evaluation-and-sampling.tex}
+\input{sections/05-representation-learning.tex}
+\input{sections/06-neural-language-models.tex}
+\input{sections/07-recurrent-language-models.tex}
+\input{sections/08-lstm-and-recurrent-limits.tex}
+\input{sections/09-review-and-sources.tex}
+\setcounter{secnumdepth}{0}
+\input{reading-guide.tex}
+\end{document}

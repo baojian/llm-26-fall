@@ -1,0 +1,562 @@
+[
+  {
+    "name": "two-domains",
+    "case": {
+      "raw_fit": [
+        ["sun"],
+        ["sun"],
+        ["rain"]
+      ],
+      "target_fit": [
+        ["rain"],
+        ["wind"]
+      ],
+      "pool": [
+        {
+          "id": "a",
+          "tokens": ["sun"]
+        },
+        {
+          "id": "b",
+          "tokens": ["rain"]
+        }
+      ],
+      "num_buckets": 4,
+      "alpha": 1.0,
+      "k": 1,
+      "uniforms": {
+        "a": 0.3,
+        "b": 0.7
+      }
+    },
+    "expected": {
+      "raw_probs": [0.28571428571428575, 0.14285714285714288, 0.4285714285714286, 0.14285714285714288],
+      "target_probs": [0.3333333333333333, 0.3333333333333333, 0.16666666666666666, 0.16666666666666666],
+      "log_weights": {
+        "a": -0.9444616088408514,
+        "b": 0.15415067982725805
+      },
+      "weights": {
+        "a": 0.25,
+        "b": 0.7499999999999999
+      },
+      "selected_ids": ["b"]
+    }
+  },
+  {
+    "name": "shared-bucket-tie",
+    "case": {
+      "raw_fit": [
+        ["sun"],
+        ["sun"],
+        ["rain"]
+      ],
+      "target_fit": [
+        ["rain"],
+        ["wind"]
+      ],
+      "pool": [
+        {
+          "id": "a",
+          "tokens": ["sun"]
+        },
+        {
+          "id": "b",
+          "tokens": ["rain"]
+        }
+      ],
+      "num_buckets": 1,
+      "alpha": 1.0,
+      "k": 1,
+      "uniforms": {
+        "a": 0.5,
+        "b": 0.5
+      }
+    },
+    "expected": {
+      "raw_probs": [1.0],
+      "target_probs": [1.0],
+      "log_weights": {
+        "a": 0.0,
+        "b": 0.0
+      },
+      "weights": {
+        "a": 0.5,
+        "b": 0.5
+      },
+      "selected_ids": ["a"]
+    }
+  },
+  {
+    "name": "select-none",
+    "case": {
+      "raw_fit": [
+        ["sun"],
+        ["sun"],
+        ["rain"]
+      ],
+      "target_fit": [
+        ["rain"],
+        ["wind"]
+      ],
+      "pool": [
+        {
+          "id": "a",
+          "tokens": ["sun"]
+        },
+        {
+          "id": "b",
+          "tokens": ["rain"]
+        }
+      ],
+      "num_buckets": 4,
+      "alpha": 1.0,
+      "k": 0,
+      "uniforms": {
+        "a": 0.3,
+        "b": 0.7
+      }
+    },
+    "expected": {
+      "raw_probs": [0.28571428571428575, 0.14285714285714288, 0.4285714285714286, 0.14285714285714288],
+      "target_probs": [0.3333333333333333, 0.3333333333333333, 0.16666666666666666, 0.16666666666666666],
+      "log_weights": {
+        "a": -0.9444616088408514,
+        "b": 0.15415067982725805
+      },
+      "weights": {
+        "a": 0.25,
+        "b": 0.7499999999999999
+      },
+      "selected_ids": []
+    }
+  },
+  {
+    "name": "select-every-document",
+    "case": {
+      "raw_fit": [
+        ["sun"],
+        ["sun"],
+        ["rain"]
+      ],
+      "target_fit": [
+        ["rain"],
+        ["wind"]
+      ],
+      "pool": [
+        {
+          "id": "a",
+          "tokens": ["sun"]
+        },
+        {
+          "id": "b",
+          "tokens": ["rain"]
+        }
+      ],
+      "num_buckets": 4,
+      "alpha": 1.0,
+      "k": 2,
+      "uniforms": {
+        "a": 0.3,
+        "b": 0.7
+      }
+    },
+    "expected": {
+      "raw_probs": [0.28571428571428575, 0.14285714285714288, 0.4285714285714286, 0.14285714285714288],
+      "target_probs": [0.3333333333333333, 0.3333333333333333, 0.16666666666666666, 0.16666666666666666],
+      "log_weights": {
+        "a": -0.9444616088408514,
+        "b": 0.15415067982725805
+      },
+      "weights": {
+        "a": 0.25,
+        "b": 0.7499999999999999
+      },
+      "selected_ids": ["b", "a"]
+    }
+  },
+  {
+    "name": "empty-pool",
+    "case": {
+      "raw_fit": [
+        ["sun"],
+        ["sun"],
+        ["rain"]
+      ],
+      "target_fit": [
+        ["rain"],
+        ["wind"]
+      ],
+      "pool": [],
+      "num_buckets": 4,
+      "alpha": 1.0,
+      "k": 0,
+      "uniforms": {}
+    },
+    "expected": {
+      "raw_probs": [0.28571428571428575, 0.14285714285714288, 0.4285714285714286, 0.14285714285714288],
+      "target_probs": [0.3333333333333333, 0.3333333333333333, 0.16666666666666666, 0.16666666666666666],
+      "log_weights": {},
+      "weights": {},
+      "selected_ids": []
+    }
+  },
+  {
+    "name": "empty-candidate",
+    "case": {
+      "raw_fit": [
+        ["sun"],
+        ["sun"],
+        ["rain"]
+      ],
+      "target_fit": [
+        ["rain"],
+        ["wind"]
+      ],
+      "pool": [
+        {
+          "id": "a",
+          "tokens": []
+        },
+        {
+          "id": "b",
+          "tokens": ["rain"]
+        }
+      ],
+      "num_buckets": 4,
+      "alpha": 1.0,
+      "k": 1,
+      "uniforms": {
+        "a": 0.3,
+        "b": 0.7
+      }
+    },
+    "expected": {
+      "raw_probs": [0.28571428571428575, 0.14285714285714288, 0.4285714285714286, 0.14285714285714288],
+      "target_probs": [0.3333333333333333, 0.3333333333333333, 0.16666666666666666, 0.16666666666666666],
+      "log_weights": {
+        "a": 0.0,
+        "b": 0.15415067982725805
+      },
+      "weights": {
+        "a": 0.4615384615384616,
+        "b": 0.5384615384615384
+      },
+      "selected_ids": ["b"]
+    }
+  },
+  {
+    "name": "multiplicity-and-boundaries",
+    "case": {
+      "raw_fit": [
+        ["sun", "sun", "rain"],
+        ["wind"]
+      ],
+      "target_fit": [
+        ["rain", "sun"],
+        ["wind", "wind"]
+      ],
+      "pool": [
+        {
+          "id": "a",
+          "tokens": ["sun"]
+        },
+        {
+          "id": "b",
+          "tokens": ["rain"]
+        }
+      ],
+      "num_buckets": 8,
+      "alpha": 1.0,
+      "k": 1,
+      "uniforms": {
+        "a": 0.3,
+        "b": 0.7
+      }
+    },
+    "expected": {
+      "raw_probs": [0.07142857142857144, 0.07142857142857144, 0.14285714285714288, 0.07142857142857144, 0.14285714285714288, 0.2142857142857143, 0.2142857142857143, 0.07142857142857144],
+      "target_probs": [0.07142857142857144, 0.07142857142857144, 0.14285714285714288, 0.07142857142857144, 0.14285714285714288, 0.2142857142857143, 0.2142857142857143, 0.07142857142857144],
+      "log_weights": {
+        "a": 0.0,
+        "b": 0.0
+      },
+      "weights": {
+        "a": 0.5,
+        "b": 0.5
+      },
+      "selected_ids": ["b"]
+    }
+  },
+  {
+    "name": "bigram-order",
+    "case": {
+      "raw_fit": [
+        ["sun", "rain"]
+      ],
+      "target_fit": [
+        ["rain", "sun"]
+      ],
+      "pool": [
+        {
+          "id": "a",
+          "tokens": ["sun", "rain"]
+        },
+        {
+          "id": "b",
+          "tokens": ["rain", "sun"]
+        }
+      ],
+      "num_buckets": 8,
+      "alpha": 1.0,
+      "k": 1,
+      "uniforms": {
+        "a": 0.3,
+        "b": 0.7
+      }
+    },
+    "expected": {
+      "raw_probs": [0.09090909090909091, 0.09090909090909091, 0.09090909090909091, 0.09090909090909091, 0.18181818181818182, 0.18181818181818182, 0.18181818181818182, 0.09090909090909091],
+      "target_probs": [0.09090909090909091, 0.09090909090909091, 0.09090909090909091, 0.09090909090909091, 0.18181818181818182, 0.09090909090909091, 0.27272727272727276, 0.09090909090909091],
+      "log_weights": {
+        "a": -0.2876820724517808,
+        "b": 0.8109302162163292
+      },
+      "weights": {
+        "a": 0.24999999999999992,
+        "b": 0.75
+      },
+      "selected_ids": ["b"]
+    }
+  },
+  {
+    "name": "fractional-smoothing",
+    "case": {
+      "raw_fit": [
+        ["sun"],
+        ["sun"],
+        ["rain"]
+      ],
+      "target_fit": [
+        ["rain"],
+        ["wind"]
+      ],
+      "pool": [
+        {
+          "id": "a",
+          "tokens": ["sun"]
+        },
+        {
+          "id": "b",
+          "tokens": ["rain"]
+        }
+      ],
+      "num_buckets": 4,
+      "alpha": 0.25,
+      "k": 1,
+      "uniforms": {
+        "a": 0.3,
+        "b": 0.7
+      }
+    },
+    "expected": {
+      "raw_probs": [0.3125, 0.0625, 0.5625, 0.0625],
+      "target_probs": [0.4166666666666667, 0.4166666666666667, 0.08333333333333333, 0.08333333333333333],
+      "log_weights": {
+        "a": -1.9095425048844386,
+        "b": 0.287682072451781
+      },
+      "weights": {
+        "a": 0.09999999999999998,
+        "b": 0.8999999999999999
+      },
+      "selected_ids": ["b"]
+    }
+  },
+  {
+    "name": "large-finite-smoothing",
+    "case": {
+      "raw_fit": [
+        ["sun"],
+        ["sun"],
+        ["rain"]
+      ],
+      "target_fit": [
+        ["rain"],
+        ["wind"]
+      ],
+      "pool": [
+        {
+          "id": "a",
+          "tokens": ["sun"]
+        },
+        {
+          "id": "b",
+          "tokens": ["rain"]
+        }
+      ],
+      "num_buckets": 4,
+      "alpha": 1e+308,
+      "k": 1,
+      "uniforms": {
+        "a": 0.3,
+        "b": 0.7
+      }
+    },
+    "expected": {
+      "raw_probs": [0.25, 0.25, 0.25, 0.25],
+      "target_probs": [0.25, 0.25, 0.25, 0.25],
+      "log_weights": {
+        "a": 0.0,
+        "b": 0.0
+      },
+      "weights": {
+        "a": 0.5,
+        "b": 0.5
+      },
+      "selected_ids": ["b"]
+    }
+  },
+  {
+    "name": "all-empty-candidates",
+    "case": {
+      "raw_fit": [
+        ["sun"],
+        ["sun"],
+        ["rain"]
+      ],
+      "target_fit": [
+        ["rain"],
+        ["wind"]
+      ],
+      "pool": [
+        {
+          "id": "a",
+          "tokens": []
+        },
+        {
+          "id": "b",
+          "tokens": []
+        }
+      ],
+      "num_buckets": 4,
+      "alpha": 1.0,
+      "k": 1,
+      "uniforms": {
+        "a": 0.3,
+        "b": 0.7
+      }
+    },
+    "expected": {
+      "raw_probs": [0.28571428571428575, 0.14285714285714288, 0.4285714285714286, 0.14285714285714288],
+      "target_probs": [0.3333333333333333, 0.3333333333333333, 0.16666666666666666, 0.16666666666666666],
+      "log_weights": {
+        "a": 0.0,
+        "b": 0.0
+      },
+      "weights": {
+        "a": 0.5,
+        "b": 0.5
+      },
+      "selected_ids": ["b"]
+    }
+  },
+  {
+    "name": "stable-large-log-weights",
+    "case": {
+      "raw_fit": [
+        ["sun"],
+        ["sun"],
+        ["sun"],
+        ["sun"],
+        ["sun"],
+        ["sun"],
+        ["sun"],
+        ["sun"]
+      ],
+      "target_fit": [
+        ["rain"],
+        ["rain"],
+        ["rain"],
+        ["rain"],
+        ["rain"],
+        ["rain"],
+        ["rain"],
+        ["rain"]
+      ],
+      "pool": [
+        {
+          "id": "a",
+          "tokens": ["sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun", "sun"]
+        },
+        {
+          "id": "b",
+          "tokens": ["rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain", "rain"]
+        }
+      ],
+      "num_buckets": 4,
+      "alpha": 1.0,
+      "k": 1,
+      "uniforms": {
+        "a": 0.3,
+        "b": 0.7
+      }
+    },
+    "expected": {
+      "raw_probs": [0.08333333333333333, 0.08333333333333333, 0.75, 0.08333333333333333],
+      "target_probs": [0.75, 0.08333333333333333, 0.08333333333333333, 0.08333333333333333],
+      "log_weights": {
+        "a": -3073.917183693371,
+        "b": 1538.0572041353537
+      },
+      "weights": {
+        "a": 0.0,
+        "b": 1.0
+      },
+      "selected_ids": ["b"]
+    }
+  },
+  {
+    "name": "unicode-and-token-boundaries",
+    "case": {
+      "raw_fit": [
+        ["水", "波"],
+        ["water wave"]
+      ],
+      "target_fit": [
+        ["水", "水"],
+        ["water", "wave"]
+      ],
+      "pool": [
+        {
+          "id": "a",
+          "tokens": ["sun"]
+        },
+        {
+          "id": "b",
+          "tokens": ["rain"]
+        }
+      ],
+      "num_buckets": 8,
+      "alpha": 1.0,
+      "k": 1,
+      "uniforms": {
+        "a": 0.3,
+        "b": 0.7
+      }
+    },
+    "expected": {
+      "raw_probs": [0.08333333333333333, 0.16666666666666666, 0.08333333333333333, 0.3333333333333333, 0.08333333333333333, 0.08333333333333333, 0.08333333333333333, 0.08333333333333333],
+      "target_probs": [0.14285714285714288, 0.07142857142857144, 0.07142857142857144, 0.2142857142857143, 0.07142857142857144, 0.07142857142857144, 0.2142857142857143, 0.14285714285714288],
+      "log_weights": {
+        "a": 0.9444616088408515,
+        "b": -0.15415067982725805
+      },
+      "weights": {
+        "a": 0.7499999999999999,
+        "b": 0.25
+      },
+      "selected_ids": ["b"]
+    }
+  }
+]

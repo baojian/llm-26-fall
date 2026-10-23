@@ -1,0 +1,11 @@
+\begin{tikzpicture}[font=\small]
+\foreach \x/\s in {0/{x_1},2/{\cdots},4/{x_{t-2}},6/{x_{t-1}},8/{x_t}}
+  \node[box,minimum width=15mm] at (\x,0) {$\s$};
+\draw[arr] (6.85,0)--(7.15,0);
+\draw[courseblue,thick] (5.2,-.6)--(5.2,-.85)--(6.8,-.85)--(6.8,-.6);
+\node[anchor=west] at (8.9,-.85) {bigram: one previous token};
+\draw[courseteal,thick] (3.2,-1.1)--(3.2,-1.35)--(6.8,-1.35)--(6.8,-1.1);
+\node[anchor=west] at (8.9,-1.35) {trigram: two};
+\draw[courseorange,thick] (-.8,-1.6)--(-.8,-1.85)--(6.8,-1.85)--(6.8,-1.6);
+\node[anchor=west] at (8.9,-1.85) {full prefix};
+\end{tikzpicture}
