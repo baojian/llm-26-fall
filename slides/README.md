@@ -98,16 +98,17 @@ use explicitly synthetic data. Three editable diagrams explain compute and
 validation; see the [reading guide](lecture-07/optional-reading.md) and
 [provenance](lecture-07/assets/README.md).
 
-[Lecture 08](lecture-08/index.html) connects data preparation with reliable
-evaluation in a 45-slide preparation draft. It adapts the Spring benchmark
-material and adds current benchmark protocols, a historical shortcut ablation,
-and an interactive evaluation audit. Five ungraded exercises in the
-[notebook](lecture-08/practice.ipynb) run offline on CPU: duplicate families,
-candidate scoring, pass@k, overlap, and paired uncertainty. See the
+[Lecture 08](lecture-08/index.html) follows data from extraction and filtering
+through duplicate matching, split construction, and training mixtures. Its
+40-slide classroom route has five editable diagrams and five ungraded offline
+CPU exercises: exact matches, MinHash, split groups, sampling exposure, and an
+evaluation audit. A 20-slide optional extension retains the Spring benchmark
+adaptation and three further exercises in the
+[notebook](lecture-08/practice.ipynb). See the
 [teaching plan](lecture-08/teaching-plan.md),
 [reading guide](lecture-08/optional-reading.md), and
-[asset provenance](lecture-08/assets/README.md). This draft does not reassign
-the published Lecture 09 schedule.
+[asset provenance](lecture-08/assets/README.md). The core fits three 45-minute
+periods; evaluation remains the published Lecture 09 topic.
 
 ## Teaching from a classroom browser
 

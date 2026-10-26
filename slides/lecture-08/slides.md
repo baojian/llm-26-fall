@@ -2,14 +2,14 @@
 
 <p class="eyebrow">CS40008.01</p>
 
-# Data quality and model evaluation
+# Data preparation and quality
 
 <p class="subtitle">Lecture 08 · NLP and LLMs</p>
 
 <p class="byline">Baojian Zhou<br>School of Data Science<br>Fudan University<br>October 28, 2026</p>
 
 Note:
-Three 45-minute periods, with the usual breaks. The central question is whether a change to training data produces an improvement we can trust. This lecture connects data preparation with evaluation. The benchmark examples update the instructor's Spring Lecture 07, which credits Anoop Sarkar. The five exercises are ungraded and run offline on CPU. The modern benchmark protocols were checked on October 23, 2026. Sources and the adaptation map are in teaching-plan.md and optional-reading.md.
+Three 45-minute periods on October 28, with the usual breaks. Follow the published Lecture 08 topic: can better data improve a fixed model at a fixed training budget? Five ungraded exercises run offline on CPU. The final evaluation audit bridges to Lecture 09. Benchmark catalogs, scoring interfaces, and paired bootstrap remain in an optional extension after the main summary, with P01–P03 practice. Source dates and the Spring adaptation are documented in the teaching plan and reading guide.
 
 ---
 
@@ -17,15 +17,15 @@ Three 45-minute periods, with the usual breaks. The central question is whether 
 
 ## What you will be able to do
 
-**Did better training data actually improve the model?**
+**Can better data improve a fixed model under a fixed training budget?**
 
-- Audit duplicates and overlap between data splits.
-- Compare data policies under a fixed training budget.
-- Explain what a benchmark score measures.
-- Check whether an apparent improvement survives an evaluation audit.
+- Inspect extraction and filtering decisions.
+- Explain exact matching, MinHash, and duplicate families.
+- Build splits and sampling weights with explicit assumptions.
+- Design a controlled data-policy comparison.
 
 Note:
-Connect Lecture 07's fixed compute comparison to this lecture's fixed model and tokenizer. The goal is to justify a claim with inspectable evidence. Students should leave with an evaluation plan they can use for A2 and their individual project. A2's published requirements and deadline remain the authority for the assignment. The classroom calculations do not require another training run.
+Retrieve Lecture 07: N and D do not fully describe the data distribution. Today the model, tokenizer, and processed-token budget stay fixed. A2 already contains a data-policy comparison; the exercises develop its concepts without changing the assignment. The short evaluation audit prepares the next lecture.
 
 ---
 
@@ -34,15 +34,15 @@ Connect Lecture 07's fixed compute comparison to this lecture's fixed model and 
 ## Lecture outline
 
 <ol class="outline-topics">
-  <li aria-current="step">Training data and clean splits</li>
-  <li>Benchmarks and scoring protocols</li>
-  <li>Controlled comparisons and uncertainty</li>
+  <li aria-current="step">Sources, extraction, and exact matches</li>
+  <li>Near duplicates and split construction</li>
+  <li>Sampling budgets and a controlled comparison</li>
 </ol>
 
 <p class="caption">First period · 13:30–14:15</p>
 
 Note:
-The same data-policy comparison returns in period 3. First establish what data can enter each stage. Keep the model, tokenizer, and token budget fixed before comparing quality policies.
+The core route follows the course schedule. All benchmark catalogs and optional statistical calculations are after the main summary.
 
 ---
 
@@ -68,17 +68,48 @@ Use the same initial weights, optimizer settings, and training schedule for a si
 
 ## A traceable data pipeline
 
-| Stage | Record |
-| --- | --- |
-| Acquire and extract | Source, date, license, document ID |
-| Normalize and group | Rules, duplicate family, language |
-| Assign splits | Group boundaries and held-out IDs |
-| Build training mixture | Filters, sampling weights, token counts |
+<img class="diagram" src="assets/data-lineage.svg" data-excalidraw-source="assets/data-lineage.excalidraw" alt="Extract and retain source IDs; normalize, filter, and match using versioned rules; group related records and assign splits; sample a declared training-token mixture.">
 
-The same source family should stay within one split.
+<p class="caption">Keep source IDs, policy versions, and retained counts. Freeze final evaluation examples.</p>
 
 Note:
-Distinguish creating a new dataset from using an externally fixed benchmark. For a new collection, group related documents before assigning splits. For an established benchmark, preserve its split and audit training data against the held-out identifiers or texts under a fixed policy. Never use test answers to tune filters. Record the versions that produced each artifact. This is a course workflow informed by FineWeb's documented extraction, filtering, and deduplication ablations: https://arxiv.org/abs/2406.17557, dataset construction sections.
+This is an original course workflow. Extraction, normalization, language/quality selection, and matching make distinct decisions. Keep the mapping from raw records to retained records. A newly constructed dataset groups related records before splitting. An existing benchmark keeps its published split; audit training overlap against it using a declared policy. Source: FineWeb, https://arxiv.org/abs/2406.17557, Section 3. Exact ordering is a policy to evaluate rather than a universal recipe.
+
+---
+
+<!-- .slide: id="source-card" -->
+
+## A source record students can audit
+
+| Field | Example value |
+| --- | --- |
+| Source and revision | Course fixture, revision 1 |
+| Document and parent IDs | `article-17`, `site-a` |
+| Extraction and filter rules | `extract-v1`, `policy-b` |
+| Rights and access metadata | Course-authored text |
+| Counts | Raw bytes, retained documents, tokenizer tokens |
+
+<p class="caption">A dataset name alone does not identify the training mixture.</p>
+
+Note:
+Use an authored record so no rights or provenance claim is inferred from a real URL. Preserve dates, source licenses or terms, language metadata, and removal decisions when constructing a real dataset. A permissive toolkit license does not automatically describe every source document. Byte, document, and token counts answer different questions; token counts depend on the tokenizer. This is a metadata design exercise, not legal advice.
+
+---
+
+<!-- .slide: id="open-data-cases" -->
+
+## Open data projects to inspect
+
+| Project | Useful evidence to read |
+| --- | --- |
+| FineWeb / FineWeb-Edu | Extraction, filtering, and deduplication ablations |
+| Dolma | Source composition and an inspectable curation toolkit |
+| DataComp-LM | Data-policy comparisons with a shared training setup |
+
+Read a named release and its recipe before choosing data.
+
+Note:
+These are examples for studying methods, not a ranking of the best or latest corpora. FineWeb: https://arxiv.org/abs/2406.17557. Dolma: https://arxiv.org/abs/2402.00159 and https://github.com/allenai/dolma. DataComp-LM: https://arxiv.org/abs/2406.11794. Match language, domain, access, and available tokens to the project. The classroom uses small authored data and downloads none of these corpora.
 
 ---
 
@@ -100,6 +131,19 @@ These are authored failure examples. Parsing HTML is only one step: preserving t
 
 ---
 
+<!-- .slide: id="extraction-example" -->
+
+## Content extraction on one page
+
+<img class="diagram" src="assets/text-extraction.svg" data-excalidraw-source="assets/text-extraction.excalidraw" alt="An authored page contains navigation, two sentences about Noa, and cookie text; the intended extraction keeps the two sentences in order.">
+
+<p class="caption">Toy page. Code indentation and table relationships need their own checks.</p>
+
+Note:
+Ask students which parts they would keep and which extraction errors would change meaning. Navigation may recur on thousands of pages. Removing every short line would also remove useful headings or code. This illustration is the desired result for one authored page, not a general extraction algorithm. Do not present stripping tags with a regex as a reliable HTML extractor.
+
+---
+
 <!-- .slide: id="quality-filters" -->
 
 ## Quality depends on the intended use
@@ -113,6 +157,23 @@ Compare the resulting models on relevant held-out tasks.
 
 Note:
 Ask students for an example of useful repetition, such as definitions in textbooks or common code syntax. A filtering score is a selection rule, and its effectiveness is an empirical question for a target task and budget. A held-out development set can guide threshold selection. Preserve a final set for the selected policy. Relevant ablations: FineWeb, https://arxiv.org/abs/2406.17557. The language-coverage cautions here are experimental design considerations rather than universal measured effects of every filter.
+
+---
+
+<!-- .slide: id="filter-audit" -->
+
+## A filter needs retained and rejected examples
+
+| Toy rule | Useful rejection | Possible false rejection |
+| --- | --- | --- |
+| Many repeated lines | Repeated navigation | A poem or code pattern |
+| Few words | An empty page | A short definition |
+| Low reference-model likelihood | Broken text | A different domain or language |
+
+Measure retained tokens and inspect errors by source and language.
+
+Note:
+Use development evidence to choose a policy, then preserve a final evaluation. A heuristic score is not a gold quality label. English whitespace word counts do not transfer unchanged to Chinese. This table contains authored failure possibilities, not measured rates. FineWeb Sections 3.5–3.6 documents controlled filter ablations; generalize the method rather than copying every threshold.
 
 ---
 
@@ -151,7 +212,7 @@ Two shared bigrams, six in the union: **$J=1/3$**.
 <p class="caption">A similarity threshold flags candidates for review.</p>
 
 Note:
-The two shared bigrams are “Noa reads” and “reads the.” These are whitespace word shingles for this English toy example, not model BPE tokens. Shingle size and normalization affect the score. A color substitution may change the answer to a question, so similarity alone does not establish semantic equivalence. Large collections can use approximate matching methods, whose algorithmic details are optional reading. Source: Lee et al., https://aclanthology.org/2022.acl-long.577/, deduplication methods.
+The two shared bigrams are “Noa reads” and “reads the.” These are whitespace word shingles for this English toy example, not model BPE tokens. Shingle size and normalization affect the score. A color substitution may change the answer to a question, so similarity alone does not establish semantic equivalence. The next period introduces MinHash for finding candidates efficiently. Source: Lee et al., https://aclanthology.org/2022.acl-long.577/, deduplication methods.
 
 ---
 
@@ -174,6 +235,87 @@ Expected response: Unicode normalization equates the decomposed accent in train-
 
 ---
 
+<!-- .slide: class="outline-slide" id="outline-curation" -->
+
+## Lecture outline
+
+<ol class="outline-topics">
+  <li>Sources, extraction, and exact matches</li>
+  <li aria-current="step">Near duplicates and split construction</li>
+  <li>Sampling budgets and a controlled comparison</li>
+</ol>
+
+<p class="caption">Second period · 14:25–15:10</p>
+
+Note:
+The core route follows the course schedule. All benchmark catalogs and optional statistical calculations are after the main summary.
+
+---
+
+<!-- .slide: id="minhash-mechanism" -->
+
+## MinHash turns overlap into matching signatures
+
+<img class="diagram" src="assets/minhash-orders.svg" data-excalidraw-source="assets/minhash-orders.excalidraw" alt="Sets A equals a,b,c and B equals b,c,d. Four shared shingle orders give two equal minimum elements and two unequal ones.">
+
+<p class="caption">Under a uniform random order, $P[\min(A)=\min(B)]=J(A,B)$.</p>
+
+Note:
+The first element of A union B in a uniform random permutation is equally likely to be any union element. The minima agree exactly when it lies in the intersection. This proves the ideal collision probability. The four displayed orders are hand-chosen, so their average need not equal Jaccard for arbitrary inputs. The notebook can enumerate all 24 orders to check this example. Real systems approximate permutations with hash functions. FineWeb documents its MinHash implementation and choices; https://huggingfacefw-blogpost-fineweb-v1.static.hf.space/index.html, Deduplicating the data.
+
+---
+
+<!-- .slide: id="lsh-candidates" -->
+
+## Banding selects candidate pairs
+
+With $b$ bands of $r$ independent MinHash rows:
+
+$$P(\text{candidate}\mid J=s)=1-(1-s^r)^b.$$
+
+- All $r$ rows must match within a band.
+- A match in any of $b$ bands generates a candidate.
+- The probability changes smoothly with similarity.
+
+<p class="caption">A candidate is an algorithmic match, not a proof of semantic equivalence.</p>
+
+Note:
+Derive one band probability s^r, then probability all bands miss. The independence and ideal MinHash assumptions matter. Show b=2, r=2 as a tiny example. FineWeb uses 14 bands of 8 rows in the cited 2024 recipe, but this is not a universal best setting. Some pipelines directly merge candidates; others verify exact shingle overlap. Measure missed matches and false matches on a sample. The formula does not imply a hard 75 percent cutoff. Source: official FineWeb blog, Deduplicating the data.
+
+---
+
+<!-- .slide: class="exercise" id="data-exercise-02" -->
+
+<p class="exercise-meta">Exercise E02 · 5 minutes · Notebook E02</p>
+
+## How does matching probability differ from similarity?
+
+$A=\lbrace a,b,c\rbrace$ and $B=\lbrace b,c,d\rbrace$.
+
+1. Calculate their Jaccard similarity.
+2. Count matching signature positions in the four orders.
+3. With two bands of two rows, compute the ideal candidate probability.
+
+<div class="answer fragment"><p>$J=1/2$; 2/4 positions match; $1-(1-1/4)^2=7/16$.</p></div>
+
+Note:
+The last answer is a probability under independent random rows, not a count from these particular four hand-chosen rows. Students should distinguish document overlap, a finite signature estimate, and the chance of a band match. The optional exhaustive check averages all 24 uniform orders. No external corpus or model is required.
+
+---
+
+<!-- .slide: id="duplicate-families" -->
+
+## A match family can contain nonmatching endpoints
+
+<img class="diagram" src="assets/duplicate-families.svg" data-excalidraw-source="assets/duplicate-families.excalidraw" alt="A and B have Jaccard 0.8, B and C have 0.8, but A and C have 0.6. At threshold 0.75 all three are in one connected component.">
+
+<p class="caption">Connected components define split groups. Choosing which records to retain is a separate policy.</p>
+
+Note:
+These are shingle sets, not literal document IDs. Draw edges for pairwise Jaccard at least 0.75. Connectivity is transitive but pairwise similarity at this threshold is not. Keeping this component within one split blocks these declared match edges from crossing splits. It does not prove every member is redundant, and it does not detect every semantic paraphrase. A connected component is not automatically a justification to delete all but one record.
+
+---
+
 <!-- .slide: id="split-construction" -->
 
 ## A random row split can leak source content
@@ -192,6 +334,27 @@ Rows are not always independent examples. A chunk split asks a different questio
 
 ---
 
+<!-- .slide: class="exercise" id="data-exercise-03" -->
+
+<p class="exercise-meta">Exercise E03 · 6 minutes · Notebook E03</p>
+
+## Which proposed split leaks a match family?
+
+Declared matches: A–B and B–C. Record D is unrelated.
+
+| Proposed training | Proposed development |
+| --- | --- |
+| A, C | B, D |
+
+Find the components and suggest a split with no match edge crossing.
+
+<div class="answer fragment"><p>Components: {A, B, C}, {D}. One feasible split: train A/B/C; development D.</p></div>
+
+Note:
+This four-record split is only an illustration of the invariant; one development record cannot support a useful real estimate. Discuss group imbalance and the deployment question before using a real partition. Keep chunks and revisions under their parent grouping. The notebook detects the original violation and verifies the corrected assignment without deleting records.
+
+---
+
 <!-- .slide: id="contamination-paths" -->
 
 ## Evaluation information can enter several stages
@@ -206,6 +369,54 @@ The audit must cover the full evaluated system.
 
 Note:
 Direct text overlap is only one route. Paraphrases and derived examples may escape exact matching. Repeated use of a public test set can also bias model selection without literal memorization. A permitted web search is part of a tool-enabled protocol, but looking up a benchmark solution may violate the intended task. State the tool policy before running. Lee et al. supports train/evaluation overlap analysis; the tool and grading case returns in the SWE-Bench Pro V2 slide.
+
+---
+
+<!-- .slide: id="pipeline-order" -->
+
+## Chunking preserves parent and family IDs
+
+| Record | Parent document | Duplicate family | Split |
+| --- | --- | --- | --- |
+| `A-1`, `A-2` | A | family-1 | train |
+| `B-1`, `B-2` | B | family-1 | train |
+| `D-1` | D | family-2 | development |
+
+Tokenize and pack within the assigned split.
+
+Note:
+A random chunk split can move near-identical context across partitions even after document matching was done correctly. Carry parent and family IDs to chunks and packed sequences. Record tokenizer revision, document boundaries, scored token positions, and packing rules. Training shuffle and evaluation grouping serve different purposes. This is an authored example, not a prescribed ratio for real dataset sizes.
+
+---
+
+<!-- .slide: id="data-evidence" -->
+
+## Data policies need controlled evidence
+
+**Lee et al., 2022:** investigate deduplication, memorization, and evaluation overlap.
+
+**FineWeb, 2024:** document extraction, filtering, and deduplication ablations.
+
+For our course: change one data policy and keep a comparable training budget.
+
+Note:
+These papers provide methods and empirical case studies. Their findings do not guarantee that every deduplication or quality threshold improves every model. Students can get a sound negative result. Read Lee et al., methods and experimental sections, https://aclanthology.org/2022.acl-long.577/; FineWeb, dataset-construction ablations, https://arxiv.org/abs/2406.17557. Full paper training budgets are outside the classroom scope. Allow a short transition before the break.
+
+---
+
+<!-- .slide: id="fineweb-case" -->
+
+## FineWeb: stronger deduplication changed the data mixture
+
+| Reported 2024 comparison | Observation |
+| --- | --- |
+| Global deduplication across crawls | Removed more data, but did not give the best aggregate result |
+| Deduplication within each crawl | Performed better in the reported comparison |
+
+A data policy changes which documents remain and how often they appear.
+
+Note:
+Source: FineWeb Section 3.4 and Appendix E, https://arxiv.org/html/2406.17557v2; official blog, More deduplication is always better, right? and individual dump dedup. This is a reported empirical case under the authors' model, budget, and evaluation mixture. Their explanation about low-frequency residual data quality is a hypothesis supported by their inspection and ablations, not a general theorem. We do not fabricate a numerical reproduction or claim global deduplication is always worse.
 
 ---
 
@@ -227,6 +438,75 @@ Processed tokens count repeated exposures. The retained corpus size measures a d
 
 ---
 
+<!-- .slide: class="outline-slide" id="outline-evidence" -->
+
+## Lecture outline
+
+<ol class="outline-topics">
+  <li>Sources, extraction, and exact matches</li>
+  <li>Near duplicates and split construction</li>
+  <li aria-current="step">Sampling budgets and a controlled comparison</li>
+</ol>
+
+<p class="caption">Third period · 15:25–16:10</p>
+
+Note:
+The core route follows the course schedule. All benchmark catalogs and optional statistical calculations are after the main summary.
+
+---
+
+<!-- .slide: id="training-mixture" -->
+
+## Sampling weights determine the training distribution
+
+Available source shares: $q_i=n_i/\sum_j n_j$.
+
+$$p_i=\frac{q_i^\tau}{\sum_j q_j^\tau},\qquad
+ D_i=D\,p_i,\qquad e_i=\frac{D_i}{n_i}.$$
+
+- $p_i$: share of processed training tokens.
+- $e_i$: expected passes over source $i$.
+- $\tau=1$: natural shares; $\tau=0$: equal source weights.
+
+<p class="caption">Illustrative sampling family. Source weights refer to tokens, not documents.</p>
+
+Note:
+This is an explicitly chosen classroom policy. It is not a claim that every named corpus uses this formula or that one exponent is optimal. Exposures assume uniform sampling within each source with replacement, ignoring packing overhead. Long documents make document-weighted sampling different from token-weighted sampling. For 0<tau<1, source probabilities become more balanced, which may repeatedly expose a small pool. Evaluate the policy rather than treating balance as automatically better.
+
+---
+
+<!-- .slide: id="mixture-exposure" -->
+
+## More weight can mean more repetition
+
+<img class="diagram" src="assets/mixture-exposure.svg" data-excalidraw-source="assets/mixture-exposure.excalidraw" alt="With 9 million English and 1 million Chinese tokens and a 60-million-token training budget, natural weights give six expected passes each. Square-root weights give five English and fifteen Chinese passes.">
+
+<p class="caption">Synthetic counts. Blue: English. Orange: Chinese. Both runs process 60M tokens.</p>
+
+Note:
+Work through sqrt(0.9)/(sqrt(0.9)+sqrt(0.1))=0.75. The smaller source receives one quarter of the processed tokens despite providing one tenth of the unique pool. More repeated exposure is not the same as more unique data. No measured loss or accuracy is implied by this arithmetic. A cap, more source data, or a different mixture is a policy to study under a declared budget.
+
+---
+
+<!-- .slide: class="exercise" id="data-exercise-04" -->
+
+<p class="exercise-meta">Exercise E04 · 7 minutes · Notebook E04</p>
+
+## How often does each source repeat?
+
+English: 9M tokens. Chinese: 1M tokens. Total processed budget: 60M.
+
+1. Calculate $p_i$ for $\tau=1/2$.
+2. Calculate the processed tokens and expected passes per source.
+3. Compare with natural sampling, $\tau=1$.
+
+<div class="answer fragment"><p>Weights 75%/25%; processed tokens 45M/15M; expected passes 5/15. Natural sampling gives 6/6.</p></div>
+
+Note:
+Seven minutes includes arithmetic and debrief. State the within-source sampling assumption. The two language names label a toy mixture and do not recommend a language ratio for this course. Ask which experimental evidence would justify paying for the extra repetition. If changing the total token budget, it is a different comparison.
+
+---
+
 <!-- .slide: id="mixtures" -->
 
 ## An aggregate score reflects the language mixture
@@ -243,35 +523,177 @@ Compute A's 80/20 score as 0.8 times 90 plus 0.2 times 40. These are constructed
 
 ---
 
-<!-- .slide: id="data-evidence" -->
+<!-- .slide: id="comparison-record" -->
 
-## Data policies need controlled evidence
+## A comparison needs a frozen record
 
-**Lee et al., 2022:** investigate deduplication, memorization, and evaluation overlap.
+| Training record | Evaluation record |
+| --- | --- |
+| Data policy and source revision | Dataset revision and item IDs |
+| Model, tokenizer, initialization | Prompt and answer parser |
+| Processed tokens and schedule | Sampling and tool budget |
+| Training seeds | Metric, slices, and aggregation |
 
-**FineWeb, 2024:** document extraction, filtering, and deduplication ablations.
-
-For our course: change one data policy and keep a comparable training budget.
+Use development evidence for choices, then run the declared final evaluation.
 
 Note:
-These papers provide methods and empirical case studies. Their findings do not guarantee that every deduplication or quality threshold improves every model. Students can get a sound negative result. Read Lee et al., methods and experimental sections, https://aclanthology.org/2022.acl-long.577/; FineWeb, dataset-construction ablations, https://arxiv.org/abs/2406.17557. Full paper training budgets are outside the classroom scope. Allow a short transition before the break.
+Fixing a record is a procedural decision, not a claim that files cannot change. Record hashes where useful and retain predictions by item ID. If a bug invalidates the final evaluation, document it and design a fresh valid comparison rather than silently treating a repeatedly optimized score as untouched evidence. This extends Lecture 07's separation of fitting and validation to data policies and task evaluation.
+
+---
+
+<!-- .slide: class="exercise" id="exercise-04" -->
+
+<p class="exercise-meta">Exercise E05 · 6 minutes · Notebook E05</p>
+
+## Does the evaluation set change the conclusion?
+
+| Synthetic outcomes | Raw data A | Deduplicated data B |
+| --- | ---: | ---: |
+| 100 clean items | 60 correct | 64 correct |
+| 20 exposed items | 19 correct | 11 correct |
+
+Compute accuracy on all 120 items and on the clean 100.
+
+<div class="answer fragment"><p>All: A 65.8%, B 62.5%. Clean: A 60%, B 64%.</p></div>
+
+Note:
+An independent audit has already marked the exposed items in this constructed example. The numbers show how sample composition can reverse the ranking. They do not establish how much of a real score is caused by memorization. Students must not exclude examples because a preferred model gets them wrong. Exclusion needs an independently justified rule, and changing the evaluated population must be reported. Full item-level correctness vectors are constructed in assets/evaluation.py.
+
+---
+
+<!-- .slide: id="evaluation-demo" -->
+
+## The ranking changes with the evaluated items
+
+<div class="demo-form">
+  <button id="evaluation-toggle" type="button" aria-pressed="false">Mixed evaluation</button>
+  <button id="reset-button" type="button">Reset</button>
+</div>
+
+<div id="evaluation-plot" class="plot" data-plotly="assets/contamination.json" role="img" aria-label="Synthetic accuracies for raw and deduplicated training data. Toggle between a mixed evaluation with 120 items and a clean evaluation with 100 items."></div>
+
+<p class="caption" id="evaluation-status" aria-live="polite">Synthetic: 100 clean items plus 20 exposed items. Raw 65.8%, deduplicated 62.5%.</p>
+
+Note:
+Toggle once after students calculate both results, then reset. The chart uses a zero baseline and a fixed 0–100 percent scale. The evaluation size changes, while the predictions on the clean items stay fixed. This demonstration does not run inference or remove any files. In the PDF, the initial mixed set appears; the preceding exercise gives both outcomes.
+
+---
+
+<!-- .slide: id="loss-and-task" -->
+
+## Language-model loss and task accuracy answer different questions
+
+| Measure | What contributes |
+| --- | --- |
+| Held-out NLL or PPL | Probabilities of observed text tokens |
+| Task accuracy | Whether the selected answer is correct |
+| Per-language score | Behavior on a specified language slice |
+| Cost per task | Resources consumed under the protocol |
+
+A lower average loss does not guarantee every task improves.
+
+Note:
+Retrieve Lecture 02's units: PPL is exp(mean NLL in nats per scored token). Its direct comparison requires compatible tokenization and evaluation conventions. BPB changes the normalization unit but still requires the same text and scoring scope. Task metrics may use a subset of outputs and a discontinuous decision rule. A model can change answer probabilities without changing its selected answer, or improve one domain while losing another. Source: ../../docs/lecture-02-lm-metrics.md. No loss values are invented for the synthetic accuracy fixtures.
+
+---
+
+<!-- .slide: id="uncertainty-sources" -->
+
+## What uncertainty does a result include?
+
+| Source | Useful evidence |
+| --- | --- |
+| Which evaluation items appear | Item or cluster resampling |
+| Training randomness | Independent training seeds |
+| Generation randomness | Repeated samples with fixed settings |
+| Prompt or grader choices | Prespecified robustness checks |
+
+One interval cannot automatically cover all four.
+
+Note:
+The optional appendix bootstrap conditions on two fixed fitted systems and their fixed prompts. It estimates sampling uncertainty across independent items drawn from the same population. It does not include training-run variation. Related examples may require resampling document or task groups rather than individual rows. Source: Dror et al., https://aclanthology.org/P18-1128/, statistical testing assumptions and test selection. The resampling implementation and limitations are documented in assets/evaluation.py.
+
+---
+
+<!-- .slide: id="error-analysis" -->
+
+## Error analysis turns a score into a hypothesis
+
+| Inspect | Possible next comparison |
+| --- | --- |
+| Both systems fail the same items | Review labels and missing skills |
+| One language loses after filtering | Audit retained language coverage |
+| Answer text is right but parsing fails | Test a corrected parser on development data |
+| Only long inputs fail | Check truncation and context limits |
+
+Note:
+These are hypotheses to investigate, not diagnoses guaranteed by the observed pattern. Inspect raw predictions alongside labels and item metadata. Avoid changing many parts of the pipeline at once. If label errors are discovered, keep an audit trail and report the revised dataset version. The purpose is to decide which evidence would discriminate among explanations, building on the course's individual-project requirements.
+
+---
+
+<!-- .slide: id="project-evaluation" -->
+
+## A data-policy comparison for your project
+
+Write down:
+
+- The claim and a relevant baseline.
+- Evaluation examples, provenance, and split boundaries.
+- The fixed model, tokenizer, processed tokens, and training recipe.
+- One controlled comparison and its resource cost.
+- An uncertainty estimate and examples of failures.
+
+Note:
+Students can adapt the notebook's final short template to the existing project plan. This creates no new graded submission or reference-count requirement. A CPU study or a small supplied-result analysis can be useful if it tests a meaningful claim. A frontier benchmark may be too expensive or poorly matched to the project; use a smaller relevant comparison and state the scope. Keep the same learning goals and expectations for all students.
+
+---
+
+<!-- .slide: id="summary" -->
+
+## Data quality is an experimental question
+
+- A data policy with inspectable examples and provenance.
+- A comparable training and evaluation budget.
+- A split audit and a declared evaluation protocol.
+- Retained examples, source coverage, and a qualified conclusion.
+
+**The result should answer the question the experiment was designed to test.**
+
+[Optional benchmark extension](#/outline-benchmarks) · [References](#/references)
+
+Note:
+Return to the original question. Deduplication can change exposure frequency and content coverage. Evaluation quality determines whether the comparison supports a claim. The synthetic audit demonstrates why evaluation composition matters. Lecture 09 expands evaluation protocols and experimental design. Leave time for students to name one change they will make to their own comparison record.
+
+---
+
+<!-- .slide: class="references" id="methods-reading" -->
+
+## Reading: data preparation methods
+
+- [Lee et al., 2022](https://aclanthology.org/2022.acl-long.577/): deduplication and overlap.
+- [FineWeb, 2024](https://arxiv.org/abs/2406.17557): controlled extraction and filtering ablations.
+- [Dolma, 2024](https://arxiv.org/abs/2402.00159): source composition and curation tools.
+- [DataComp-LM, 2024](https://arxiv.org/abs/2406.11794): comparisons under shared training conditions.
+
+[Full reading guide](optional-reading.md)
+
+Note:
+End the 135-minute classroom route here. The following benchmark and statistical material remains available as an optional extension and for Lecture 09 planning. Reading choices follow the project question; there is no reference-count requirement and no new graded work.
 
 ---
 
 <!-- .slide: class="outline-slide" id="outline-benchmarks" -->
 
-## Lecture outline
+## Optional extension: evaluation protocols
 
-<ol class="outline-topics">
-  <li>Training data and clean splits</li>
-  <li aria-current="step">Benchmarks and scoring protocols</li>
-  <li>Controlled comparisons and uncertainty</li>
-</ol>
+- Task interfaces and candidate scoring: P01.
+- Benchmark versions and the attempt budget: P02.
+- Paired comparisons and uncertainty: P03.
 
-<p class="caption">Second period · 14:25–15:10</p>
+<p class="caption">Outside the Lecture 08 classroom route. Supports preparation for Lecture 09.</p>
 
 Note:
-Use a few familiar tasks to explain the scoring interfaces, then introduce current benchmark versions. Avoid treating the list as vocabulary students must memorize.
+This retains the original draft's evaluation material and its Spring adaptation. It is not a reassignment of the published Lecture 09 schedule. Students can revisit these slides independently; the optional notebook sections have P identifiers.
 
 ---
 
@@ -361,7 +783,7 @@ The sum is the candidate's conditional log probability under the token sequence 
 
 <!-- .slide: class="exercise" id="exercise-02" -->
 
-<p class="exercise-meta">Exercise E02 · 6 minutes · Notebook E02</p>
+<p class="exercise-meta">Optional practice P01 · 6 minutes · Notebook P01</p>
 
 ## Which candidate wins under each rule?
 
@@ -483,7 +905,7 @@ This is the HumanEval estimator, with n at least k. The probability of selecting
 
 <!-- .slide: class="exercise" id="exercise-03" -->
 
-<p class="exercise-meta">Exercise E03 · 5 minutes · Notebook E03</p>
+<p class="exercise-meta">Optional practice P02 · 5 minutes · Notebook P02</p>
 
 ## How much does the attempt budget matter?
 
@@ -517,97 +939,6 @@ These are possibilities to audit, not measured error rates for a named grader. U
 
 ---
 
-<!-- .slide: class="outline-slide" id="outline-evidence" -->
-
-## Lecture outline
-
-<ol class="outline-topics">
-  <li>Training data and clean splits</li>
-  <li>Benchmarks and scoring protocols</li>
-  <li aria-current="step">Controlled comparisons and uncertainty</li>
-</ol>
-
-<p class="caption">Third period · 15:25–16:10</p>
-
-Note:
-Return to the original versus deduplicated data comparison. We now have enough vocabulary to audit the result. Keep the exercise outcomes clearly labeled synthetic throughout.
-
----
-
-<!-- .slide: id="comparison-record" -->
-
-## A comparison needs a frozen record
-
-| Training record | Evaluation record |
-| --- | --- |
-| Data policy and source revision | Dataset revision and item IDs |
-| Model, tokenizer, initialization | Prompt and answer parser |
-| Processed tokens and schedule | Sampling and tool budget |
-| Training seeds | Metric, slices, and aggregation |
-
-Use development evidence for choices, then run the declared final evaluation.
-
-Note:
-Fixing a record is a procedural decision, not a claim that files cannot change. Record hashes where useful and retain predictions by item ID. If a bug invalidates the final evaluation, document it and design a fresh valid comparison rather than silently treating a repeatedly optimized score as untouched evidence. This extends Lecture 07's separation of fitting and validation to data policies and task evaluation.
-
----
-
-<!-- .slide: class="exercise" id="exercise-04" -->
-
-<p class="exercise-meta">Exercise E04 · 6 minutes · Notebook E04</p>
-
-## Does the evaluation set change the conclusion?
-
-| Synthetic outcomes | Raw data A | Deduplicated data B |
-| --- | ---: | ---: |
-| 100 clean items | 60 correct | 64 correct |
-| 20 exposed items | 19 correct | 11 correct |
-
-Compute accuracy on all 120 items and on the clean 100.
-
-<div class="answer fragment"><p>All: A 65.8%, B 62.5%. Clean: A 60%, B 64%.</p></div>
-
-Note:
-An independent audit has already marked the exposed items in this constructed example. The numbers show how sample composition can reverse the ranking. They do not establish how much of a real score is caused by memorization. Students must not exclude examples because a preferred model gets them wrong. Exclusion needs an independently justified rule, and changing the evaluated population must be reported. Full item-level correctness vectors are constructed in assets/evaluation.py.
-
----
-
-<!-- .slide: id="evaluation-demo" -->
-
-## The ranking changes with the evaluated items
-
-<div class="demo-form">
-  <button id="evaluation-toggle" type="button" aria-pressed="false">Mixed evaluation</button>
-  <button id="reset-button" type="button">Reset</button>
-</div>
-
-<div id="evaluation-plot" class="plot" data-plotly="assets/contamination.json" role="img" aria-label="Synthetic accuracies for raw and deduplicated training data. Toggle between a mixed evaluation with 120 items and a clean evaluation with 100 items."></div>
-
-<p class="caption" id="evaluation-status" aria-live="polite">Synthetic: 100 clean items plus 20 exposed items. Raw 65.8%, deduplicated 62.5%.</p>
-
-Note:
-Toggle once after students calculate both results, then reset. The chart uses a zero baseline and a fixed 0–100 percent scale. The evaluation size changes, while the predictions on the clean items stay fixed. This demonstration does not run inference or remove any files. In the PDF, the initial mixed set appears; the preceding exercise gives both outcomes.
-
----
-
-<!-- .slide: id="loss-and-task" -->
-
-## Language-model loss and task accuracy answer different questions
-
-| Measure | What contributes |
-| --- | --- |
-| Held-out NLL or PPL | Probabilities of observed text tokens |
-| Task accuracy | Whether the selected answer is correct |
-| Per-language score | Behavior on a specified language slice |
-| Cost per task | Resources consumed under the protocol |
-
-A lower average loss does not guarantee every task improves.
-
-Note:
-Retrieve Lecture 02's units: PPL is exp(mean NLL in nats per scored token). Its direct comparison requires compatible tokenization and evaluation conventions. BPB changes the normalization unit but still requires the same text and scoring scope. Task metrics may use a subset of outputs and a discontinuous decision rule. A model can change answer probabilities without changing its selected answer, or improve one domain while losing another. Source: ../../docs/lecture-02-lm-metrics.md. No loss values are invented for the synthetic accuracy fixtures.
-
----
-
 <!-- .slide: id="prompt-sensitivity" -->
 
 ## Prompt selection is part of model selection
@@ -626,24 +957,6 @@ The table is a constructed counterexample, not empirical evidence about a model 
 
 ---
 
-<!-- .slide: id="uncertainty-sources" -->
-
-## What uncertainty does a result include?
-
-| Source | Useful evidence |
-| --- | --- |
-| Which evaluation items appear | Item or cluster resampling |
-| Training randomness | Independent training seeds |
-| Generation randomness | Repeated samples with fixed settings |
-| Prompt or grader choices | Prespecified robustness checks |
-
-One interval cannot automatically cover all four.
-
-Note:
-The next bootstrap conditions on two fixed fitted systems and their fixed prompts. It estimates sampling uncertainty across independent items drawn from the same population. It does not include training-run variation. Related examples may require resampling document or task groups rather than individual rows. Source: Dror et al., https://aclanthology.org/P18-1128/, statistical testing assumptions and test selection. The resampling implementation and limitations are documented in assets/evaluation.py.
-
----
-
 <!-- .slide: id="paired-items" -->
 
 ## Compare the same items together
@@ -658,13 +971,13 @@ The next bootstrap conditions on two fixed fitted systems and their fixed prompt
 $$\Delta=\mathrm{accuracy}(B)-\mathrm{accuracy}(A)=\frac{14-10}{100}=4\text{ percentage points}$$
 
 Note:
-Students often compare two independent error bars even though both models answer the same questions. The paired difference uses the joint outcomes. Here 24 items disagree. Pair each item's two predictions before resampling; independent resampling of A and B loses that dependence. All counts derive from the explicit synthetic vectors used by E04.
+Students often compare two independent error bars even though both models answer the same questions. The paired difference uses the joint outcomes. Here 24 items disagree. Pair each item's two predictions before resampling; independent resampling of A and B loses that dependence. All counts derive from the explicit synthetic vectors used by E05.
 
 ---
 
 <!-- .slide: class="exercise" id="exercise-05" -->
 
-<p class="exercise-meta">Exercise E05 · 8 minutes · Notebook E05</p>
+<p class="exercise-meta">Optional practice P03 · 8 minutes · Notebook P03</p>
 
 ## How strong is the four-point improvement?
 
@@ -690,70 +1003,7 @@ The notebook fixes the seed at 20261028 and uses a transparent percentile implem
 <p class="caption">95% interval: −5 to +13 points. Dashed line: zero. Synthetic items; fixed systems.</p>
 
 Note:
-Read the units as percentage points, not relative percent improvement. The plot is generated directly from the same seeded samples as Notebook E05. The density is a distribution of resampled differences, not a Bayesian posterior probability that B is better. More representative independent evaluation items or repeated training runs answer different uncertainty questions; choose the next experiment based on the dominant uncertainty and compute budget.
-
----
-
-<!-- .slide: id="error-analysis" -->
-
-## Error analysis turns a score into a hypothesis
-
-| Inspect | Possible next comparison |
-| --- | --- |
-| Both systems fail the same items | Review labels and missing skills |
-| One language loses after filtering | Audit retained language coverage |
-| Answer text is right but parsing fails | Test a corrected parser on development data |
-| Only long inputs fail | Check truncation and context limits |
-
-Note:
-These are hypotheses to investigate, not diagnoses guaranteed by the observed pattern. Inspect raw predictions alongside labels and item metadata. Avoid changing many parts of the pipeline at once. If label errors are discovered, keep an audit trail and report the revised dataset version. The purpose is to decide which evidence would discriminate among explanations, building on the course's individual-project requirements.
-
----
-
-<!-- .slide: id="project-evaluation" -->
-
-## An evaluation plan for your project
-
-Write down:
-
-- The claim and a relevant baseline.
-- Evaluation examples, provenance, and split boundaries.
-- The exact prompt, tool budget, and scoring rule.
-- One controlled comparison and its resource cost.
-- An uncertainty estimate and examples of failures.
-
-Note:
-Students can adapt the notebook's final short template to the existing project plan. This creates no new graded submission or reference-count requirement. A CPU study or a small supplied-result analysis can be useful if it tests a meaningful claim. A frontier benchmark may be too expensive or poorly matched to the project; use a smaller relevant comparison and state the scope. Keep the same learning goals and expectations for all students.
-
----
-
-<!-- .slide: id="summary" -->
-
-## What makes an improvement credible?
-
-- A data policy with inspectable examples and provenance.
-- A comparable training and evaluation budget.
-- A versioned benchmark and explicit scoring protocol.
-- A conclusion supported by uncertainty and error analysis.
-
-**The result should answer the question the experiment was designed to test.**
-
-Note:
-Return to the original question. Deduplication can change exposure frequency and content coverage. Evaluation quality determines whether the comparison supports a claim. The synthetic example demonstrates how leakage and finite samples can undermine a tempting conclusion. Future sessions apply the same principles to adapting pretrained models. Leave time for students to name one change they will make to their own evaluation record.
-
----
-
-<!-- .slide: class="references" id="methods-reading" -->
-
-## Reading: data and evaluation methods
-
-- [Lee et al., 2022](https://aclanthology.org/2022.acl-long.577/): deduplication methods and overlap analysis.
-- [FineWeb, 2024](https://arxiv.org/abs/2406.17557): data-construction ablations.
-- [Dror et al., 2018](https://aclanthology.org/P18-1128/): assumptions behind statistical comparisons.
-- [EleutherAI evaluation harness](https://github.com/EleutherAI/lm-evaluation-harness): task definitions and scoring interfaces.
-
-Note:
-Choose sections that support the student's question. These are relevant readings, not a fixed reference-count requirement or an invitation to reproduce full-scale training. The reading guide provides the Spring adaptation map and additional task-specific sources.
+Read the units as percentage points, not relative percent improvement. The plot is generated directly from the same seeded samples as Notebook P03. The histogram counts resampled differences; it is not a Bayesian posterior probability that B is better. More representative independent evaluation items or repeated training runs answer different uncertainty questions; choose the next experiment based on the dominant uncertainty and compute budget.
 
 ---
 
@@ -767,7 +1017,7 @@ Choose sections that support the student's question. These are relevant readings
 - [LiveBench](https://livebench.ai/): dated benchmark releases.
 - [Full reading guide](optional-reading.md): historical tasks, model interfaces, and code evaluation.
 
-<p class="caption">Sources checked October 23, 2026. Preserve the exact benchmark version in any reported result.</p>
+<p class="caption">Sources checked October 26, 2026. Preserve the exact benchmark version in any reported result.</p>
 
 Note:
 All named current releases have primary publisher references. Read protocols and dataset versions before consulting rankings. The course does not promise that a current leaderboard remains unchanged, or that benchmark access and full-suite runs fit the course pool. The reproducible classroom examples require no network, model download, or external API.

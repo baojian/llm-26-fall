@@ -1,24 +1,46 @@
 # Lecture 08 reading guide
 
 Read for a question you want to investigate; there is no fixed reference count.
-Primary sources were checked on **October 23, 2026**. Pin the actual dataset,
+Data sources and dated benchmark releases were checked on **October 26, 2026**.
+Pin the actual dataset,
 model, task configuration, and scorer revisions when running an experiment.
 A release date or a benchmark name alone does not fully specify a result.
 
-## Data preparation and statistical comparisons
+## Core: data preparation and quality
 
 | Reading | Focus |
 | --- | --- |
 | [Lee et al., Deduplicating Training Data Makes Language Models Better (2022)](https://aclanthology.org/2022.acl-long.577/) | Deduplication methods and experiments on memorization and train/evaluation overlap. Ask which findings transfer to your own corpus and budget. |
 | [Penedo et al., The FineWeb Datasets (2024)](https://arxiv.org/abs/2406.17557) | Dataset-construction ablations: extraction, filtering, and deduplication. Study the comparison method rather than reproducing the full training scale. |
+| [Soldaini et al., Dolma (2024)](https://arxiv.org/abs/2402.00159) and [curation toolkit](https://github.com/allenai/dolma) | Inspect source composition, transformation rules, and intermediate data states. A toolkit license and the underlying documents' rights are different metadata. |
+| [Li et al., DataComp-LM (2024)](https://arxiv.org/abs/2406.11794) | Compare data policies under shared training and evaluation recipes. A full-scale benchmark run is outside the classroom budget. |
+
+Start with FineWeb Section 3 and its [illustrated author report](https://huggingfacefw-blogpost-fineweb-v1.static.hf.space/index.html).
+Trace one ablation from its changed data policy to its retained corpus and model
+comparison. Then use Lee et al. to examine overlap and memorization. Dolma and
+DCLM provide alternative designs to compare, not a ranking of the latest corpora.
+No external data download is required for the lecture.
+
+The core notebook exercises E01–E05 cover exact keys, MinHash probabilities,
+connected split groups, token exposure, and an evaluation audit. The sampling
+numbers and outcomes are authored examples. More exposure to a source is not
+evidence that it improves a model; a controlled run must test that hypothesis.
+
+## Optional: evaluation methods
+
+| Reading | Focus |
+| --- | --- |
 | [Dror et al., The Hitchhiker's Guide to Testing Statistical Significance in NLP (2018)](https://aclanthology.org/P18-1128/) | Test selection and assumptions, especially dependence between predictions and the evaluation unit. |
 | [EleutherAI language-model evaluation harness](https://github.com/EleutherAI/lm-evaluation-harness) | Read the model interface and the exact task configuration: likelihood requests, generation, normalization, and aggregation. |
 
-The notebook's seeded paired percentile bootstrap is a small teaching example.
+The optional P03 seeded paired percentile bootstrap is a small teaching example.
 It does not account for training-run variation. For related examples, decide
 whether documents, repositories, or another grouping should be the sampling unit.
 
-## From the Spring examples to current protocols
+## Appendix: from the Spring examples to current protocols
+
+These readings support slides 41–60, outside the 135-minute classroom route.
+Evaluation and experimental design remain the published Lecture 09 topic.
 
 | Source | Version used in the discussion | What to inspect |
 | --- | --- | --- |
