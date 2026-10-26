@@ -170,7 +170,7 @@ Allow one minute to label individually, two to run notebook E01, and two to comp
 
 ---
 
-<!-- .slide: class="exercise" id="example-translation-stats" -->
+<!-- .slide: class="exercise" id="exercise-02" -->
 
 ## Task 2: Machine translation
 
@@ -795,7 +795,7 @@ For a decomposed accent, compare the precomposed é with e followed by a combini
 
 ---
 
-<!-- .slide: class="exercise" id="exercise-02" -->
+<!-- .slide: class="exercise" id="exercise-03" -->
 
 ## Same appearance, different strings
 
@@ -1017,7 +1017,7 @@ Note:
 
 ---
 
-<!-- .slide: class="exercise" id="exercise-03" -->
+<!-- .slide: class="exercise" id="exercise-04" -->
 
 ## Counting overlaps; applying a merge
 
@@ -1109,7 +1109,7 @@ Source: CS336 Lecture 1 BPETokenizer and train_bpe. Our simple implementation sc
 
 ---
 
-<!-- .slide: class="exercise" id="exercise-04" -->
+<!-- .slide: class="exercise" id="exercise-05" -->
 
 ## Encode a word we did not train on
 
@@ -1258,7 +1258,7 @@ Toy count of all pairs. Causal attention masks future positions, but its pair co
 
 ---
 
-<!-- .slide: class="exercise" id="exercise-05" -->
+<!-- .slide: class="exercise" id="exercise-06" -->
 
 ## Test on held-out English and Chinese
 
