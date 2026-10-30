@@ -1,0 +1,20 @@
+[
+  {
+    "label": "Mixed evaluation",
+    "size": 120,
+    "scores": [
+      65.83333333333333,
+      62.5
+    ],
+    "description": "Synthetic: 100 clean items plus 20 exposed items. Raw 65.8%, deduplicated 62.5%."
+  },
+  {
+    "label": "Clean evaluation",
+    "size": 100,
+    "scores": [
+      60.0,
+      64.0
+    ],
+    "description": "Synthetic: the 100 clean items only. Raw 60.0%, deduplicated 64.0%."
+  }
+]

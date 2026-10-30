@@ -1,0 +1,26 @@
+{
+  "kind": "synthetic teaching fixtures; no language-model training or inference",
+  "clean": {
+    "n": 100,
+    "baseline_correct": 60,
+    "candidate_correct": 64
+  },
+  "exposed": {
+    "n": 20,
+    "baseline_correct": 19,
+    "candidate_correct": 11
+  },
+  "bootstrap": {
+    "difference": 0.04,
+    "low": -0.05,
+    "high": 0.13,
+    "draws": 5000,
+    "seed": 20261028
+  },
+  "pass_at_k": {
+    "n": 10,
+    "c": 2,
+    "pass1": 0.19999999999999996,
+    "pass5": 0.7777777777777778
+  }
+}
