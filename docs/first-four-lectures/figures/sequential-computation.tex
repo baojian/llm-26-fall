@@ -1,0 +1,10 @@
+\begin{tikzpicture}[font=\small]
+\foreach \i in {1,2,3,4}
+  \draw[gray,dashed] (2.7*\i-2.7,0.7)--(2.7*\i-2.7,-2);
+\foreach \y/\row in {0/A,-1.3/B} {
+ \node[anchor=east] at (-1,\y) {sequence \row};
+ \foreach \i in {1,2,3,4}
+   \node[box,minimum width=16mm] (\row\i) at (2.7*\i-2.7,\y) {$h_\i^{(\row)}$};
+ \foreach \i/\j in {1/2,2/3,3/4} \draw[arr] (\row\i)--(\row\j);}
+\node[lab] at (4,-2.5) {same column: batch parallelism\qquad arrows: time dependency};
+\end{tikzpicture}

@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+\node[box,text width=24mm] (w) at (0,0) {word: \texttt{low}};
+\node[box,text width=52mm] (ng) at (5,0) {\texttt{<lo}, \texttt{low}, \texttt{ow>}\\overlapping feature vectors};
+\node[tbox,text width=32mm] (s) at (11,0) {sum with\\word vector};
+\draw[arr] (w)--(ng);\draw[arr] (ng)--(s);
+\node[box,text width=24mm] (b) at (0,-1.65) {text: \texttt{lowest}};
+\node[box,text width=52mm] (tok) at (5,-1.65) {BPE: \texttt{low | e | s | t}\\ordered token sequence};
+\node[tbox,text width=32mm] (m) at (11,-1.65) {lookup each ID;\\process sequence};
+\draw[arr] (b)--(tok);\draw[arr] (tok)--(m);
+\end{tikzpicture}

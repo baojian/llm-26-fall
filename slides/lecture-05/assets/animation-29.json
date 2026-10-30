@@ -1,0 +1,58 @@
+{
+  "source": "lecture-05-slides-transformers.pptx",
+  "source_sha256": "75c11bded30658b00785c6a320f763ff97019daab4e7b4882e3d372df4ca3e9f",
+  "slide": 29,
+  "slide_part": "ppt/slides/slide29.xml",
+  "slide_sha256": "6a7405b8e092b13777392f72e67a40df067ae84ab1fa0e57bc15d17070a073df",
+  "effect": "Appear",
+  "steps": [
+    {
+      "click": 1,
+      "label": "Introduce the trainable query matrix",
+      "shape_ids": [
+        "68",
+        "67",
+        "77"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "Introduce the trainable key matrix",
+      "shape_ids": [
+        "70",
+        "69",
+        "76",
+        "75",
+        "74",
+        "73"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "Introduce the trainable value matrix",
+      "shape_ids": [
+        "72",
+        "71",
+        "78",
+        "79",
+        "80",
+        "81"
+      ]
+    },
+    {
+      "click": 4,
+      "label": "Emphasize that all three projection matrices are learned",
+      "shape_ids": [
+        "82"
+      ]
+    },
+    {
+      "click": 5,
+      "label": "Write the query, key, and value projections in matrix form",
+      "shape_ids": [
+        "83"
+      ]
+    }
+  ],
+  "attribution": "https://www.youtube.com/watch?v=tIvKXrEDMhk"
+}

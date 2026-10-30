@@ -1,0 +1,23 @@
+flowchart TB
+accTitle: 在训练与推理中复用冻结的分词器
+accDescr: 准备好的训练文本与应用输入汇入同一套分词器规则。应用按需先做文件提取或消息格式化。冻结的分词器进行配置好的归一化、预分词和已学习规则的应用，产生 token ID，再构建训练序列及掩码，或送入模型推理。每条提示词不会重新进行整套语料筛选与去重。
+ A["准备好的 LLM 训练文本"] --> C["模型要求的输入格式<br/>文档或消息边界"]
+ B["用户文本、文件、消息"] --> P["应用按需处理<br/>提取、对话与工具序列化"]
+ C --> N["配置好的归一化<br/>可以不做任何改写"]
+ P --> N
+ N --> Q["配置好的预分词<br/>应用已学习的词表与切分规则"]
+ T["冻结的分词器"] -. "相同版本与文本规则" .-> Q
+ Q --> I["Token ID 序列"]
+ I --> L["LLM 训练<br/>构建序列、拼接、注意力与损失掩码"]
+ I --> R["推理<br/>上下文与批处理、执行模型"]
+ class A,B source;
+ class C,P corpus;
+ class T learning;
+ class N,Q encoding;
+ class I,L,R output;
+
+classDef source fill:#edf1f5,stroke:#8495a5,color:#202b38;
+classDef corpus fill:#e8f0fa,stroke:#386998,color:#142e4b;
+classDef learning fill:#fff3da,stroke:#aa7a25,color:#583b0e;
+classDef encoding fill:#e7f3ee,stroke:#3c7e66,color:#173e30;
+classDef output fill:#ffffff,stroke:#386998,stroke-width:2px,color:#142e4b;

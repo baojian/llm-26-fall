@@ -1,0 +1,5 @@
+# Keep dataset checksums stable on Windows, macOS, and Linux.
+# A final blank line is the intentional document separator in the text files.
+data/** -text whitespace=-blank-at-eof
+# Preserve upstream source cards byte for byte, including their whitespace.
+data/sources/** whitespace=-blank-at-eof,-blank-at-eol

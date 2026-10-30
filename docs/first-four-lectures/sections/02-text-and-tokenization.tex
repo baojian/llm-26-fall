@@ -1,0 +1,118 @@
+\clearpage
+\section{From text to tokens}\label{sec:tokens}
+\subsection*{Text processing makes modeling decisions}
+A tokenizer maps text to integer IDs; its decoder maps those IDs back to
+text. The complete pipeline includes earlier decisions about decoding,
+normalization, and splitting. A later decoder cannot reconstruct distinctions
+that an earlier step has discarded. Split documents into training,
+development, and test sets before fitting vocabulary or preprocessing choices.
+
+\fig{text-pipeline}{Every arrow has a contract. Normalization may intentionally
+lose information; lossless tokenization applies to the text after that step.}
+
+A visible symbol, a Unicode code point, and a UTF-8 byte are different
+units. The precomposed letter \texttt{\'e} is one code point and two bytes.
+The visually similar sequence \texttt{e} followed by a combining acute accent
+uses two code points and three bytes. Rendering alone cannot identify the
+stored sequence.
+
+\fig{unicode-units}{Two encodings of an accented letter. Hexadecimal byte values
+describe storage; grapheme appearance describes what a reader sees.}
+
+NFC normalization can compose canonically equivalent sequences. NFKC also
+applies compatibility mappings, which may remove distinctions useful to a
+task. Lowercasing is another transformation: it maps both \texttt{A} and
+\texttt{a} to the same string. None is a universal requirement for modeling.
+Document the intended transformation and evaluate on text processed the same way.
+
+\fig{boundaries}{Extraction can omit punctuation and spaces. A lossless partition
+covers the complete string and can also constrain which adjacent pieces may merge.}
+
+For the input \texttt{hi, 3!}, extracting alphabetic runs produces only
+\texttt{hi}. A partition into \texttt{hi}, \texttt{,}, a space, \texttt{3},
+and \texttt{!} preserves every character. A regular expression can implement
+either behavior; the word ``regex'' alone says nothing about reversibility.
+
+\selfcheck{If a tokenizer round-trips lowercased text, does it also recover the
+original capitalization? No: test the complete preprocessing pipeline separately.}
+
+\nextpage{Learning a vocabulary with byte-pair encoding}
+Word occurrences count positions, while word types count distinct forms.
+For \texttt{low low lower}, whitespace splitting gives three occurrences
+and two types; UTF-8 storage uses 13 bytes, including two spaces. Token IDs
+are arbitrary labels, not numerical measurements of meaning.
+
+Byte-pair encoding (BPE) begins from a base alphabet and repeatedly adds a
+token formed by merging a frequent adjacent pair. In the course's byte-level
+example the base vocabulary contains all 256 byte values. Each training
+sequence has a frequency weight; boundaries prevent merges between sequences.
+The toy corpus is \texttt{low}$\times5$ and \texttt{lower}$\times2$.
+
+\fig{bpe-merges}{Two weighted merges. Both initial winning pairs have count seven;
+the course's deterministic tie rule selects \texttt{l o} first.}
+
+The initial weighted length is $5(3)+2(5)=25$. The pair
+$(\texttt{l},\texttt{o})$ occurs once in each of seven weighted words, so
+its merge reduces the total to 18. Merging $(\texttt{lo},\texttt{w})$
+reduces it to 11. The new IDs are 256 for \texttt{lo} and 257 for
+\texttt{low}; two merges give 258 vocabulary entries.
+
+\textbf{Training algorithm.}
+\begin{enumerate}
+\item Count adjacent pairs inside each current sequence and multiply by
+the sequence's corpus frequency.
+\item Select the most frequent pair, resolving ties deterministically.
+Assign its concatenation a new token ID and a merge rank.
+\item Replace non-overlapping occurrences of that pair, then recount.
+Stop after the requested number of merges or when no eligible pair remains.
+\end{enumerate}
+Counting and replacement are different operations. In \texttt{aaa}, the
+pair \texttt{a a} occurs at two overlapping positions, but one replacement
+can consume only two of the three symbols. For \texttt{aaa}$\times2$ and
+\texttt{bc}$\times2$, its weighted pair count is four while the token total
+decreases only from ten to eight.
+
+\takeaway{Vocabulary growth is learned from training text. Deterministic
+ties, allowed boundaries, and overlap handling are part of the algorithm.}
+\selfcheck{Recompute the second merge counts after the first replacement.
+Why would merging across spaces change what the vocabulary can represent?}
+\textbf{Reading connection.} \readingref{R03} applies BPE to subword units
+within words. Its character-based setup differs from this byte-level example.
+
+\nextpage{Encoding new text and choosing a vocabulary}
+Encoding freezes the learned merge list. Begin with the new text's base
+symbols, find an eligible adjacent pair with the earliest learned rank,
+merge it, and repeat. Do not count new-text frequencies to learn new rules:
+the model's embedding rows already correspond to a fixed vocabulary.
+
+\fig{frozen-bpe}{The learned \texttt{lo} and \texttt{low} merges apply to
+\texttt{lowest}; the remaining bytes have no learned merges in this example.}
+
+The resulting IDs are $[257,101,115,116]$. Decoding concatenates each
+token's byte string and then decodes the complete UTF-8 byte stream.
+A single token can end inside a multibyte character, so decoding tokens
+independently may fail. Byte coverage ensures that valid input bytes can be
+represented; it does not ensure efficient segmentation for every language.
+Special tokens such as \BOS{} and \EOS{} have separate control meanings
+and need an explicit policy when similar strings appear in ordinary text.
+
+\fig{vocabulary-tradeoff}{Left: larger vocabularies increase table rows while often
+shortening sequences. Right: held-out Chinese token counts from the L01 toy
+experiment, using the same two sentences at every merge budget.}
+
+At 0, 8, and 32 merges, mixed English/Chinese training gives 54, 48, and 35
+tokens on those Chinese sentences. English-only training gives 54 each time.
+The tokenizer still covers the text, but its merges offer no compression there.
+These small constructed corpora demonstrate a mechanism; they do not rank
+tokenizers on broad language-model quality.
+
+For a table with $K$ rows and width $d$, storage grows as $Kd$. A materialized
+output distribution at $BT$ positions has $BTK$ entries. Shorter sequences
+may reduce position-dependent work, while a larger vocabulary increases
+table and readout costs. The resulting tradeoff depends on the model and
+text distribution; token compression alone cannot settle it.
+
+\takeaway{Fit the tokenizer on training data, freeze it for evaluation, and
+report both representation behavior and downstream modeling results.}
+\selfcheck{Why can a tokenizer with fewer tokens have higher per-token perplexity?
+Section 4 will separate the prediction unit from the amount of text scored.}

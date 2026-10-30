@@ -1,0 +1,30 @@
+name: Report a problem in course material
+description: A typo, a broken link, a notebook cell that fails, or a slide that is unclear.
+title: "<lecture>: <what is wrong>"
+labels: ["bug"]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: File and slide or cell, or a URL.
+      placeholder: slides/lecture-02/slides.md, slide "Perplexity"; or http://127.0.0.1:8000/slides/lecture-02/#/24
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What is wrong
+      description: What you saw, and what you expected. Paste the error text if there is one.
+    validations:
+      required: true
+  - type: dropdown
+    id: fix
+    attributes:
+      label: Would you like to fix it yourself in a PR?
+      description: Fixes are welcome and count as a task.
+      options:
+        - "Yes, assign me"
+        - "No, just reporting"
+    validations:
+      required: true

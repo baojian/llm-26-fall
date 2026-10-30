@@ -1,0 +1,16 @@
+# One task = one folder. Students add one file each under submissions/.
+
+[task]
+id = "l01-tokenization/digit-grouping"
+title = "Group digits into chunks of at most three"
+lecture = "l01-tokenization"
+type = "task"
+difficulty = "easy"
+time_minutes = 30
+deadline = "2026-09-30T23:59:00+08:00"
+issue = 201
+proposed_by = ""
+
+[submission]
+file = "submissions/<username>.py"
+function = "solve"

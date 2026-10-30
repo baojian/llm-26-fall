@@ -1,0 +1,43 @@
+# Lecture 01: Tokenization activities
+
+All three exercises are **optional**. You are encouraged to complete **at least
+one**, and may complete any or all of them. The same expectations apply to
+every student. Submit **one separate PR per completed exercise** (up to three).
+
+**Extended deadline:** Wednesday, September 30, 2026, 23:59
+(Asia/Shanghai, UTC+08:00), confirmed by the instructor on October 1.
+The exercises were released in [PR #131](https://github.com/baojian/llm-26-fall/pull/131)
+on September 20, 2026 (Shanghai date).
+
+The instructor accepts late submissions in the October 1 review because these
+activities are optional. Late submissions included in that review count in
+the progress board using the same checks as other submissions. The teaching
+team merges **one batch per exercise after the deadline**, no earlier than
+October 1, 2026, 00:00 (Asia/Shanghai), and records any teaching-team corrections
+separately. Public PRs and forks remain visible before merging.
+
+| Exercise | Difficulty | Time | What you explore | Issue |
+| :--- | :--- | :--- | :--- | :--- |
+| [Digit grouping](digit-grouping/instruction.md) | Easy | 30 minutes | Vocabulary size versus sequence length | [#201](https://github.com/baojian/llm-26-fall/issues/201) |
+| [GPT-2 pre-tokenizer](gpt2-pretokenizer/instruction.md) | Medium | 45 minutes | How spaces and character categories constrain BPE | [#202](https://github.com/baojian/llm-26-fall/issues/202) |
+| [Han runs](han-runs/instruction.md) | Medium | 40 minutes | Boundaries between Han characters and other scripts | [#203](https://github.com/baojian/llm-26-fall/issues/203) |
+
+Each task issue accepts submissions from **many students**. A comment or
+assignment does not reserve the exercise. Follow the task's instructions,
+run its public checker, and open a PR changing only
+`tasks/l01-tokenization/<slug>/submissions/<your-lowercase-github-username>.py`.
+Use `Related to #<task-issue>` in the PR body so other students can continue
+using the issue. See the [task workflow](../README.md) for the full process.
+
+These are public participation activities. Graded assignments and project
+deliverables are submitted privately through [eLearning](https://elearning.fudan.edu.cn/).
+
+## Closed survey
+
+The [Lecture 01 LLM-app survey archive](llm-app-survey/README.md) contains the
+accepted responses and results. Its deadline was **September 20, 2026, 23:59
+(Asia/Shanghai)**. Each student submitted one Markdown response in one PR;
+existing responses and participation are preserved, and no new response or
+resubmission PR is needed or accepted. This was a public participation activity,
+with no Python checker or coding-task correctness score. The exercise deadlines
+above do not reopen the survey.

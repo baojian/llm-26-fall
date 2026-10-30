@@ -1,0 +1,33 @@
+.lang-toggle {
+  display: inline-flex;
+  align-items: stretch;
+  flex: 0 0 auto;
+  border: 1px solid var(--line, #cbd5df);
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--card, #fff);
+}
+.lang-toggle button,
+.course-toolbar .lang-toggle button {
+  border: 0;
+  margin: 0;
+  padding: 5px 12px;
+  background: transparent;
+  color: var(--muted, #566471);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+}
+.lang-toggle button[aria-pressed="true"],
+.course-toolbar .lang-toggle button[aria-pressed="true"] {
+  background: var(--accent, #20578c);
+  color: #fff;
+}
+.lang-toggle button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -4px;
+}
+@media print { .lang-toggle { display: none !important; } }

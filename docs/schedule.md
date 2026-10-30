@@ -43,35 +43,70 @@ Breaks are 10 minutes between consecutive periods, except 15 minutes before peri
 
 Weeks follow the university academic calendar: they run Sunday through Saturday, and week 0 is the registration and orientation week.
 
-| Week | Date              | Notes                                                                                                    |
-| ----:| ----------------- | -------------------------------------------------------------------------------------------------------- |
-| 1    | Wed, Sep 9, 2026  | First class                                                                                              |
-| 2    | Wed, Sep 16, 2026 |                                                                                                          |
-| 3    | Wed, Sep 23, 2026 |                                                                                                          |
-| 4    | Wed, Sep 30, 2026 |                                                                                                          |
-| 5    | Wed, Oct 7, 2026  | **skip** — National Day holiday. No lecture, quiz, or submission deadline. |
-| 6    | Wed, Oct 14, 2026 |                                                                                                          |
-| 7    | Wed, Oct 21, 2026 |                                                                                                          |
-| 8    | Wed, Oct 28, 2026 |                                                                                                          |
-| 9    | Wed, Nov 4, 2026  |                                                                                                          |
-| 10   | Wed, Nov 11, 2026 |                                                                                                          |
-| 11   | Wed, Nov 18, 2026 |                                                                                                          |
-| 12   | Wed, Nov 25, 2026 |                                                                                                          |
-| 13   | Wed, Dec 2, 2026  |                                                                                                          |
-| 14   | Wed, Dec 9, 2026  |                                                                                                          |
-| 15   | Wed, Dec 16, 2026 |                                                                                                          |
-| 16   | Wed, Dec 23, 2026 | Last class                                                                                               |
+| Week / lecture | Date | Topic | Coursework |
+| ---: | --- | --- | --- |
+| 1 | Wed, Sep 9, 2026 | Introduction and tokenization | First class |
+| 2 | Wed, Sep 16, 2026 | N-gram language models | A1 released |
+| 3 | Wed, Sep 23, 2026 | Embeddings and PyTorch for language models | Quiz 1 |
+| 4 | Wed, Sep 30, 2026 | Neural LMs and Recurrent Attention | A1 due |
+| 5 | **Sat, Oct 10, 2026** | **Attention and the Transformer** | **Make-up class**; Quiz 2; [A2 released](../assignments/a2-build-a-small-lm/README.md); [candidate projects](project-candidates.html) |
+| 6 | Wed, Oct 14, 2026 | Pretraining and decoding in practice | — |
+| 7 | Wed, Oct 21, 2026 | Compute budgets and scaling; guest talk by Jiaxuan Zou | Quiz 3; Project proposal due |
+| 8 | Wed, Oct 28, 2026 | Data preparation and quality | A2 due **Sat, Oct 31** |
+| 9 | Wed, Nov 4, 2026 | Evaluation and experimental design | — |
+| 10 | Wed, Nov 11, 2026 | Supervised fine-tuning | Quiz 4; A3 released |
+| 11 | Wed, Nov 18, 2026 | Preferences, rewards, and alignment | — |
+| 12 | Wed, Nov 25, 2026 | Retrieval and retrieval-augmented generation | Project progress update due |
+| 13 | Wed, Dec 2, 2026 | Efficient inference | A3 due |
+| 14 | Wed, Dec 9, 2026 | Diffusion language models | Quiz 5 |
+| 15 | Wed, Dec 16, 2026 | Agents and tool use | — |
+| 16 | Wed, Dec 23, 2026 | Research synthesis and project revision | Last class |
 
+- October 7 falls on the National Day holiday. Its meeting moves to Saturday,
+  October 10; time and room follow the university make-up-day notice.
+- There are 16 meetings of three 45-minute periods: 48 academic periods,
+  matching the registered allocation. Lecture numbers follow these meetings.
+- Lecture 07 and Lecture 08 exchange topics to align with
+  [Jiaxuan Zou's](https://jiaxuanzou0714.github.io/) guest session on
+  **October 21, 15:25–16:10 (Asia/Shanghai), period 8**, in HGX103.
+  The topic is [How to Build a Scientific Scaling Ladder](https://jiaxuanzou0714.github.io/blog/2026/how-to-build-scientific-scaling-ladder/).
+  The first two periods introduce compute budgets and scaling laws, with
+  the existing 15-minute Quiz 3 slot in the first period. Quiz 3, the project
+  proposal deadline, and the A2 deadline retain their published dates.
+- December 23 includes guided revision of project claims and evidence.
+  Project checkpoints remain individual written submissions through eLearning.
 - Weeks 17–18 (Dec 27, 2026 – Jan 9, 2027) are exam weeks with no classes.
-  Final exam arrangements for this course will be announced separately.
-- The review draft schedules 15 meetings of three 45-minute periods: 45 academic
-  periods, or 33 hours 45 minutes of instruction excluding breaks. The registered
-  allocation is 48 academic periods. Any arrangement for the remaining three
-  periods is outside this draft; the core lecture sequence uses only these 15
-  meetings. See [the curriculum revision](course-revision.md).
+  The final project report, code, and experiment record are due December 30.
 - Holiday dates follow the university administration office's notices. The
   Mid-Autumn Festival (Sep 25–27, 2026) and New Year's Day (Jan 1, 2027) do
   not fall on a Wednesday in weeks 1–16.
+
+## Assessment dates
+
+All submission deadlines below are **23:59, Asia/Shanghai (UTC+08:00)**.
+Quizzes take place in class and assess material already taught. All students
+have the same requirements, points, and deadlines.
+
+| Item | Release / quiz date | Submission deadline |
+| --- | --- | --- |
+| Quiz 1 | September 23 | In class |
+| Quiz 2 | October 10 | In class |
+| Quiz 3 | October 21 | In class |
+| Quiz 4 | November 11 | In class |
+| Quiz 5 | December 9 | In class |
+| A1: Tokenization and language models | September 16 | September 30 |
+| [A2: Build and investigate a small language model](../assignments/a2-build-a-small-lm/README.md) | October 10 | October 31, 23:59 (Asia/Shanghai) |
+| A3: Adapt and evaluate | November 11 | December 2 |
+| Project proposal | Project introduced September 9 | October 21 |
+| Project progress update | Follows proposal feedback | November 25 |
+| Final report, code, and experiment record | Builds on project checkpoints | December 30 |
+
+The [September 29 review proposal](schedule-adjustment-proposal.md) records
+the schedule adjustment and explains the three-week assignment windows.
+On October 9, the instructor extended the project proposal deadline to
+October 21 to give students more time to consider their project questions.
+Assessment weights are quizzes 10%, assignments 45%, and the individual
+project 45%.
 
 ## Sources
 

@@ -1,0 +1,53 @@
+{
+  "source_slide": 40,
+  "source": "https://commons.wikimedia.org/wiki/File:Full_GPT_architecture.svg",
+  "effect": "Appear",
+  "adaptation": "Five-stage GPT-2-style diagram with the Noa prefix at positions 0–5 and the illustrative next token is at position 6.",
+  "tokens": [
+    "Noa",
+    "can",
+    "be",
+    "annoying",
+    "but",
+    "she"
+  ],
+  "next_token": "is",
+  "next_position": 6,
+  "steps": [
+    {
+      "click": 1,
+      "label": "Embed each input token and add its position embedding",
+      "object_ids": [
+        "gpt-embeddings"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "Normalize, apply causal multi-head attention, then add the residual",
+      "object_ids": [
+        "gpt-attention"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "Normalize, apply the position-wise MLP, then add the residual",
+      "object_ids": [
+        "gpt-mlp"
+      ]
+    },
+    {
+      "click": 4,
+      "label": "Repeat the complete block L times, with separate parameters at each layer",
+      "object_ids": [
+        "gpt-stack"
+      ]
+    },
+    {
+      "click": 5,
+      "label": "At she in position 5, predict is at position 6; append it and repeat during generation",
+      "object_ids": [
+        "gpt-prediction"
+      ]
+    }
+  ]
+}

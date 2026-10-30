@@ -1,0 +1,87 @@
+{
+  "data": [
+    {
+      "type": "scatter",
+      "mode": "lines+markers",
+      "name": "Toy training loss",
+      "x": [
+        0,
+        1,
+        5,
+        10,
+        20,
+        50,
+        100,
+        150,
+        200
+      ],
+      "y": [
+        2.3025853633880615,
+        2.302468776702881,
+        2.3019752502441406,
+        2.3011488914489746,
+        2.2973804473876953,
+        2.1183993816375732,
+        0.28498250246047974,
+        0.04045131430029869,
+        0.01866978220641613
+      ],
+      "line": {
+        "color": "#20578c",
+        "width": 4
+      },
+      "marker": {
+        "size": 8
+      },
+      "hovertemplate": "Updates: %{x}<br>Cross-entropy: %{y:.4f} nats<extra></extra>"
+    }
+  ],
+  "layout": {
+    "margin": {
+      "l": 100,
+      "r": 30,
+      "t": 15,
+      "b": 85
+    },
+    "font": {
+      "family": "Arial",
+      "size": 24,
+      "color": "#202b38"
+    },
+    "xaxis": {
+      "title": {
+        "text": "SGD updates"
+      },
+      "range": [
+        0,
+        205
+      ],
+      "dtick": 50
+    },
+    "yaxis": {
+      "title": {
+        "text": "Loss (nats)"
+      },
+      "range": [
+        0,
+        2.5
+      ]
+    },
+    "paper_bgcolor": "#ffffff",
+    "plot_bgcolor": "#ffffff",
+    "showlegend": false
+  },
+  "config": {
+    "displayModeBar": false,
+    "responsive": true
+  },
+  "course_source": {
+    "notebook": "lecture-03-exercise.ipynb",
+    "cell": "e04-train",
+    "seed": 0,
+    "steps": 200,
+    "optimizer": "SGD",
+    "learning_rate": 0.5,
+    "note": "A reproducible teaching illustration on eight toy bigram pairs, not a model benchmark."
+  }
+}

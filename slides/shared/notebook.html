@@ -6,20 +6,23 @@
   <meta name="referrer" content="no-referrer">
   <title>Open course notebook</title>
   <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="../../assets/course-language.css">
 </head>
 <body class="notebook-launcher">
+  <nav class="course-toolbar" aria-label="Language / 语言"><div class="lang-toggle" role="group" aria-label="Language / 语言"><button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button><button type="button" data-lang="zh" lang="zh-CN" aria-pressed="false">中文</button></div></nav>
   <main>
-    <p class="notebook-label">CS40008.01 · Practice</p>
-    <h1 id="notebook-title">Opening your notebook…</h1>
-    <p id="notebook-status" role="status">Looking for JupyterLab. Starting it for the first time may take a few seconds.</p>
+    <p class="notebook-label"><span data-en="CS40008.01 · Practice" data-zh="CS40008.01 · 实践练习">CS40008.01 · Practice</span></p>
+    <h1 id="notebook-title" data-en="Opening your notebook…" data-zh="正在打开练习本…">Opening your notebook…</h1>
+    <p id="notebook-status" role="status" data-en="Looking for JupyterLab. Starting it for the first time may take a few seconds." data-zh="正在查找 JupyterLab，首次启动可能需要几秒钟。">Looking for JupyterLab. Starting it for the first time may take a few seconds.</p>
     <div id="notebook-setup" hidden>
-      <p>From your local copy of the course repository, run:</p>
+      <p><span data-en="From your local copy of the course repository, run:" data-zh="在本地课程仓库目录中运行：">From your local copy of the course repository, run:</span></p>
       <pre><code>uv sync
 uv run python scripts/slides.py serve</code></pre>
-      <p>Open the local slides and click <strong>Notebook</strong> there.</p>
+      <p><span data-en="Open the local slides and click Notebook there." data-zh="打开本地课件，并点击“练习本”。">Open the local slides and click <strong>Notebook</strong> there.</span></p>
     </div>
-    <p><a id="notebook-back" href="../../index.html">Back to slides</a></p>
+    <p><a id="notebook-back" href="../../index.html"><span data-en="Back to slides" data-zh="返回课件">Back to slides</span></a></p>
   </main>
+  <script src="../../assets/course-language.js"></script>
   <script src="notebook.js"></script>
 </body>
 </html>

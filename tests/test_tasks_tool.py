@@ -1,0 +1,111 @@
+"""Check the task template, the example task, and scripts/tasks.py."""
+
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+import pytest
+
+from scripts import tasks
+
+ROOT = Path(__file__).resolve().parents[1]
+GOOD = (
+    "def solve(text):\n    return ['REPLACE'] if text else []\n"
+    "PREDICTIONS = {'REPLACE 1': ['REPLACE'], 'REPLACE 2': ['REPLACE'], 'REPLACE 3': ['REPLACE']}\n"
+    "MY_CASES = [('a', ['REPLACE']), ('b', ['REPLACE'])]\n"
+    "NOTES = 'This answers the why-question in a few sentences. ' * 6\n"
+)
+REQUIRED = ["task.toml", "instruction.md", "tests/test_task.py", "submissions/README.md"]
+
+
+@pytest.fixture
+def tasks_root(tmp_path):
+    shutil.copytree(ROOT / "tasks/TEMPLATE", tmp_path / "TEMPLATE")
+    return tmp_path
+
+
+def test_every_task_folder_has_the_required_files():
+    folders = tasks.task_folders()
+    assert folders, "no tasks found"
+    for folder in folders + [ROOT / "tasks/TEMPLATE"]:
+        for name in REQUIRED:
+            assert (folder / name).exists(), f"{folder.name} is missing {name}"
+        info = tasks.manifest(folder)
+        assert set(info) == {"task", "submission"}
+        assert info["task"]["difficulty"] in {"easy", "medium", "hard"}
+
+
+def test_example_submission_passes_its_checker():
+    result = subprocess.run([sys.executable, "-m", "pytest", "-q", "tasks/example/word-count/tests", "-k", "octocat"],
+                            cwd=ROOT, capture_output=True, text=True)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert " passed" in result.stdout and "failed" not in result.stdout
+
+
+def test_new_task_fills_placeholders_and_checks_a_submission(tasks_root):
+    folder = tasks.create_task("l02-ngram", "split-sentences", "Split text into sentences", tasks_root)
+    assert folder == tasks_root / "l02-ngram/split-sentences"
+    text = "".join(p.read_text() for p in folder.rglob("*") if p.is_file())
+    assert "{{" not in text
+    info = tasks.manifest(folder)["task"]
+    assert info == {**info, "id": "l02-ngram/split-sentences", "lecture": "l02-ngram", "title": "Split text into sentences"}
+    assert "l02-ngram/split-sentences: <username>" in (folder / "instruction.md").read_text()
+    with pytest.raises(FileExistsError):
+        tasks.create_task("l02-ngram", "split-sentences", "again", tasks_root)
+    with pytest.raises(ValueError):
+        tasks.create_task("L02 ngram", "x", "bad label", tasks_root)
+
+
+def test_template_checker_rejects_uppercase_filenames_and_wrong_answers(tasks_root):
+    folder = tasks.create_task("l02-ngram", "demo", "Demo", tasks_root)
+    (folder / "submissions/Octocat.py").write_text(GOOD)
+    (folder / "submissions/wrong.py").write_text("def solve(text):\n    return []\n")
+    (folder / "submissions/good.py").write_text(GOOD)
+    result = subprocess.run([sys.executable, "-m", "pytest", "-q", str(folder / "tests")], cwd=ROOT,
+                            capture_output=True, text=True)
+    assert result.returncode != 0
+    failed = {line.split("::")[-1].split(" ")[0] for line in result.stdout.splitlines() if line.startswith("FAILED")}
+    assert failed == {
+        "test_filename_is_a_lowercase_username[user.Octocat]",
+        "test_cases[REPLACE-expected0-user.wrong]",
+        "test_predictions_match_solve[user.wrong]",
+        "test_own_cases_are_new_and_pass[user.wrong]",
+        "test_notes_answer_the_question[user.wrong]",
+    }, result.stdout
+
+
+def test_list_and_progress_tables(tasks_root):
+    folder = tasks.create_task("l02-ngram", "demo", "Demo", tasks_root)
+    (folder / "submissions/alice.py").write_text(GOOD)
+    (folder / "submissions/bob.py").write_text(GOOD)
+    assert "| l02-ngram/demo | Demo | easy | 2026-09-22T23:59:00+08:00 | 2 |" in tasks.list_tasks(tasks_root)
+    assert tasks.progress(tasks_root).splitlines()[2:] == ["| alice | 1 |", "| bob | 1 |"]
+
+
+def test_list_preserves_merge_relative_deadline(tasks_root):
+    folder = tasks.create_task("l02-ngram", "demo", "Demo", tasks_root)
+    path = folder / "task.toml"
+    deadline = "23:59 (Asia/Shanghai), 7 calendar days after PR #131 merges into main, using its Shanghai merge date"
+    path.write_text(path.read_text().replace("2026-09-22T23:59:00+08:00", deadline))
+    assert f"| l02-ngram/demo | Demo | easy | {deadline} | 0 |" in tasks.list_tasks(tasks_root)
+
+
+def test_check_accepts_github_style_usernames_and_selects_exactly_one(tasks_root):
+    folder = tasks.create_task("l02-ngram", "demo", "Demo", tasks_root)
+    for name in ["760zhang", "d-shy", "alice", "alice2", "a" * 39]:
+        (folder / f"submissions/{name}.py").write_text(GOOD)
+    assert tasks.check(folder) == 0
+    result = subprocess.run([sys.executable, "-m", "pytest", "-q", str(folder / "tests"), "-k", "user.alice]"],
+                            cwd=ROOT, capture_output=True, text=True)
+    assert "6 passed" in result.stdout and "deselected" in result.stdout
+    assert tasks.check(folder, "d-shy") == 0 and tasks.check(folder, "760zhang") == 0
+
+
+def test_hidden_and_apple_double_files_are_not_submissions(tasks_root):
+    folder = tasks.create_task("l02-ngram", "demo", "Demo", tasks_root)
+    (folder / "submissions/alice.py").write_text(GOOD)
+    (folder / "submissions/._alice.py").write_bytes(b"\x00\x05\x16\x07 not python")
+    (folder / "submissions/__init__.py").write_text("")
+    assert tasks.submissions(folder) == ["alice"]
+    assert tasks.check(folder) == 0

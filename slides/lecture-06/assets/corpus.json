@@ -1,0 +1,31 @@
+{
+  "description": "Instructor-written toy documents. Document IDs are split before windowing. Token IDs follow Lecture 05. Each document receives EOS; there is no BOS or padding.",
+  "train": [
+    "Noa can be annoying but she is a great cat",
+    "Noa can be annoying but she is a great friend",
+    "Noa is a great cat",
+    "Noa is a great friend",
+    "she is a great cat",
+    "she is a great friend",
+    "Noa can be a cat",
+    "Noa can be a friend",
+    "she can be a cat",
+    "she can be a friend",
+    "Noa can be annoying",
+    "she can be annoying",
+    "Noa is annoying",
+    "she is annoying",
+    "Noa is a cat",
+    "she is a friend"
+  ],
+  "dev": [
+    "Noa can be a great cat",
+    "Noa can be a great friend",
+    "she can be a great cat",
+    "she can be a great friend",
+    "Noa is a friend",
+    "she is a cat",
+    "Noa can be annoying but she is great",
+    "she can be annoying but Noa is great"
+  ]
+}

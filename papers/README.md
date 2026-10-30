@@ -1,25 +1,120 @@
 # Course papers
 
 Keep one PDF per paper in this shared folder so multiple lectures can link to
-the same file. Use descriptive names such as `author-year-short-title.pdf`.
+the same file. Name files `YYYY-venue-firstauthor-short-title.pdf`, all
+lowercase with hyphens, so a listing sorts into a timeline and shows the venue:
+for example `2020-neurips-brown-language-models-few-shot-learners-gpt3.pdf` or
+`2025-arxiv-qwen-team-qwen3-technical-report.pdf` (use `arxiv` for preprints).
 Record the authors, publication, original URL, and license below when adding
-a paper. Keep published filenames stable for existing lecture links.
+a paper. Keep published filenames stable for existing lecture links; PDFs stay
+plain Git files, not Git LFS, because GitHub Pages does not serve LFS objects.
 
 ## Lecture 01: Tokenization
 
 - Rico Sennrich, Barry Haddow, and Alexandra Birch. 2016.
   *Neural Machine Translation of Rare Words with Subword Units*. ACL.
-  [Course PDF](sennrich-2016-subword-units.pdf) ·
+  [Course PDF](2016-acl-sennrich-neural-machine-translation-rare-words-subword-units.pdf) ·
   [Original publication](https://aclanthology.org/P16-1162/).
   Focus on Section 3.2 for BPE.
 - Taku Kudo and John Richardson. 2018.
   *SentencePiece: A simple and language independent subword tokenizer and
   detokenizer for Neural Text Processing*. EMNLP System Demonstrations.
-  [Course PDF](kudo-2018-sentencepiece.pdf) ·
+  [Course PDF](2018-emnlp-kudo-sentencepiece-language-independent-subword-tokenizer.pdf) ·
   [Original publication](https://aclanthology.org/D18-2012/).
   Further reading on tokenizer implementation and language independence.
+- Alec Radford, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, and
+  Ilya Sutskever. 2019. *Language Models are Unsupervised Multitask Learners*
+  (GPT-2). OpenAI technical report.
+  [Course PDF](2019-openai-radford-language-models-unsupervised-multitask-learners-gpt2.pdf) ·
+  [Original report](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf).
+  Unmodified PDF, retrieved September 20, 2026. License: not specified in the
+  source PDF.
+  Section 2.2 explains the character-category boundaries and space exception
+  used in the [GPT-2 pre-tokenizer task](../tasks/l01-tokenization/gpt2-pretokenizer/instruction.md).
+- Aaditya K. Singh and DJ Strouse. 2024.
+  *Tokenization counts: the impact of tokenization on arithmetic in frontier LLMs*.
+  arXiv preprint.
+  [Course PDF](2024-arxiv-singh-tokenization-counts-arithmetic-frontier-llms.pdf) ·
+  [arXiv 2402.14903v1](https://arxiv.org/abs/2402.14903v1).
+  Unmodified arXiv PDF, retrieved September 20, 2026, under
+  [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/).
+  Reading for the [digit-grouping task](../tasks/l01-tokenization/digit-grouping/instruction.md).
+- Kimi Team. 2025. *Kimi K2: Open Agentic Intelligence*. arXiv technical report.
+  [Course PDF](2025-arxiv-kimi-team-kimi-k2-open-agentic-intelligence.pdf) ·
+  [arXiv 2507.20534v2](https://arxiv.org/abs/2507.20534v2).
+  Unmodified arXiv PDF (February 3, 2026 revision), retrieved September 20,
+  2026, under [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+  Model background for the [Han-runs task](../tasks/l01-tokenization/han-runs/instruction.md);
+  the exact Han rule is documented in the
+  [tokenizer code](https://huggingface.co/moonshotai/Kimi-K2-Instruct/blob/main/tokenization_kimi.py).
+- The [tokenizer reading list](../docs/tokenizer-reading-list.md)
+  links recent papers (2022–2026) on whether the tokenizer changes model
+  quality and what text to train it on. It links to the papers; it holds no PDFs.
+
+## Lecture 02: N-gram language models and how LMs are measured
+
+- Yoshua Bengio, Réjean Ducharme, Pascal Vincent, and Christian Jauvin. 2003.
+  *A Neural Probabilistic Language Model*. Journal of Machine Learning Research,
+  3:1137-1155.
+  [Course PDF](2003-jmlr-bengio-neural-probabilistic-language-model.pdf) ·
+  [Original publication](https://www.jmlr.org/papers/v3/bengio03a.html).
+  Unmodified publisher PDF, retrieved September 23, 2026. Copyright belongs
+  to the authors; a specific license is not stated in the source PDF.
+  Figure 1 and Section 2 accompany the
+  [NPLM introduction](../slides/lecture-02/index.html#/nplm-1).
+
+Cited in the [Lecture 02 metrics note](../docs/lecture-02-lm-metrics.md),
+the following ten papers report loss, perplexity, bits per byte, or downstream
+results as detailed in that note. They are the authors' arXiv versions, retrieved on
+September 15, 2026, and redistributed under the license shown on each arXiv
+abstract page (linked below).
+
+- Tom B. Brown et al. 2020. *Language Models are Few-Shot Learners* (GPT-3). NeurIPS.
+  [Course PDF](2020-neurips-brown-language-models-few-shot-learners-gpt3.pdf) · [arXiv 2005.14165](https://arxiv.org/abs/2005.14165).
+  Figure 3.1 (validation loss vs. compute), Section 3.1.1 (PTB perplexity).
+- Jared Kaplan et al. 2020. *Scaling Laws for Neural Language Models*.
+  [Course PDF](2020-arxiv-kaplan-scaling-laws-neural-language-models.pdf) · [arXiv 2001.08361](https://arxiv.org/abs/2001.08361).
+  Figure 1, Section 1.3 (loss in nats as the metric).
+- Leo Gao et al. 2020. *The Pile: An 800GB Dataset of Diverse Text for Language Modeling*.
+  [Course PDF](2020-arxiv-gao-the-pile-800gb-dataset-diverse-text.pdf) · [arXiv 2101.00027](https://arxiv.org/abs/2101.00027).
+  Section 3.1 (bits per byte and its conversion formula).
+- Jordan Hoffmann et al. 2022. *Training Compute-Optimal Large Language Models* (Chinchilla). NeurIPS.
+  [Course PDF](2022-neurips-hoffmann-training-compute-optimal-large-language-models-chinchilla.pdf) · [arXiv 2203.15556](https://arxiv.org/abs/2203.15556).
+  Figures 2–3 (training loss vs. FLOPs), Figure 5 (Pile bits per byte).
+- DeepSeek-AI. 2024. *DeepSeek LLM: Scaling Open-Source Language Models with Longtermism*.
+  [Course PDF](2024-arxiv-deepseek-deepseek-llm-scaling-open-source-language-models.pdf) · [arXiv 2401.02954](https://arxiv.org/abs/2401.02954).
+  Figures 4–6 (bits per byte as the scaling-law metric), Table 4 (Pile-test BPB).
+- Llama Team, AI @ Meta. 2024. *The Llama 3 Herd of Models*.
+  [Course PDF](2024-arxiv-llama-team-llama-3-herd-of-models.pdf) · [arXiv 2407.21783](https://arxiv.org/abs/2407.21783).
+  Figure 2 (IsoFLOP validation loss), Figure 4 (normalized NLL per character vs. accuracy).
+- Jeffrey Li et al. 2024. *DataComp-LM: In Search of the Next Generation of Training Sets for Language Models*. NeurIPS.
+  [Course PDF](2024-neurips-li-datacomp-lm-next-generation-training-sets.pdf) · [arXiv 2406.11794](https://arxiv.org/abs/2406.11794).
+  Section 4.2 and Table 3 (perplexity filtering among the quality filters).
+- DeepSeek-AI. 2024. *DeepSeek-V3 Technical Report*.
+  [Course PDF](2024-arxiv-deepseek-deepseek-v3-technical-report.pdf) · [arXiv 2412.19437](https://arxiv.org/abs/2412.19437).
+  Section 4.4.1 and Table 3 (Pile-test BPB), Section 4.5.1 (validation loss ablations).
+- Team OLMo. 2025. *2 OLMo 2 Furious*.
+  [Course PDF](2025-arxiv-olmo-team-2-olmo-2-furious.pdf) · [arXiv 2501.00656](https://arxiv.org/abs/2501.00656).
+  Figures 2 and 9 (training loss and gradient norm as stability diagnostics).
+- Qwen Team. 2025. *Qwen3 Technical Report*.
+  [Course PDF](2025-arxiv-qwen-team-qwen3-technical-report.pdf) · [arXiv 2505.09388](https://arxiv.org/abs/2505.09388).
+  Downstream benchmark tables only; no loss or perplexity curve.
 
 These PDFs are unmodified copies from the ACL Anthology, retrieved on
 September 8, 2026. Both are distributed under
 [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0/),
 as stated by the original publication pages.
+
+## Lecture 04: Attention in recurrent machine translation
+
+- Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. 2015.
+  *Neural Machine Translation by Jointly Learning to Align and Translate*. ICLR.
+  [Course PDF](2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf) ·
+  [Original arXiv record, 1409.0473v7](https://arxiv.org/abs/1409.0473v7).
+  First preprint: September 1, 2014. This is the unmodified May 19, 2016
+  revision (v7), retrieved October 9, 2026 (Asia/Shanghai).
+  License recorded by arXiv:
+  [arXiv.org non-exclusive distribution license](https://arxiv.org/licenses/nonexclusive-distrib/1.0/).
+  Read §§2–3 and Appendix A.1.2 for the fixed-vector bottleneck, learned
+  source alignment, and recurrent decoder; §4 describes the English-to-French
+  translation experiments.

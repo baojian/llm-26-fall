@@ -4,18 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CS40008.01 LLMs · Fall 2026 · Fudan University</title>
+<link rel="stylesheet" href="assets/course-language.css">
 <meta name="description" content="Large Language Models, Fall 2026 at Fudan University. Wednesdays 13:30–16:10, HGX103.">
 <style>
   :root {
     --bg: #fbfbf9; --fg: #1d1f24; --muted: #5b6270; --line: #e2e4e8;
     --card: #ffffff; --accent: #1f4e8c; --accent-soft: #e8eef7;
     --now: #eef8ee; --holiday: #faf0f0;
+    --event: #a51d2d; --event-bg: #fff1f2;
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #14161a; --fg: #e7e9ee; --muted: #a0a7b4; --line: #2b2f37;
       --card: #1b1e24; --accent: #7fb0f0; --accent-soft: #1d2a3d;
       --now: #1c2b1c; --holiday: #2c1d1d;
+      --event: #ff9da7; --event-bg: #301d23;
     }
   }
   * { box-sizing: border-box; }
@@ -55,10 +58,7 @@
   nav.top .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 18px; padding: 8px 20px; font-size: 0.95rem; }
   nav.top a { color: var(--fg); font-weight: 500; }
   nav.top a:hover { color: var(--accent); text-decoration: none; }
-  .lang-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--card); }
-  .lang-toggle button { background: none; border: 0; padding: 3px 12px; cursor: pointer; color: var(--muted); font: inherit; font-size: 0.85rem; font-weight: 600; }
-  .lang-toggle button[aria-pressed="true"] { background: var(--accent); color: #fff; }
-  .lang-toggle button:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+
 
   main section { padding: 36px 0 8px; border-bottom: 1px solid var(--line); }
   main section:last-of-type { border-bottom: none; }
@@ -70,6 +70,9 @@
   .muted { color: var(--muted); }
   .lead { font-size: 1.07rem; }
   .callout { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 8px; padding: 12px 16px; margin: 14px 0; }
+  .guest-talk a { color: var(--event); text-decoration: underline; text-underline-offset: 3px; }
+  .guest-talk { margin-top: 10px; padding: 8px 10px; border-left: 3px solid var(--event); background: var(--event-bg); }
+  .guest-talk strong { color: var(--event); }
 
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 14px 0; }
   #dates .grid { grid-template-columns: minmax(0, 0.8fr) repeat(2, minmax(0, 1.1fr)); }
@@ -175,26 +178,27 @@
   <h2>Coursework</h2>
   <div class="grid">
     <div class="card"><h3>Quizzes</h3><p>Five 15-minute quizzes; all count equally (2% each).</p><ul>
-      <li>Quiz 1 · Week 3</li><li>Quiz 2 · Week 6</li>
-      <li>Quiz 3 · Week 8</li><li>Quiz 4 · Week 11</li>
-      <li>Quiz 5 · Week 15</li>
+      <li>Quiz 1 · Sep 23 (Week 3)</li><li>Quiz 2 · Oct 10 (Week 5)</li>
+      <li>Quiz 3 · Oct 21 (Week 7)</li><li>Quiz 4 · Nov 11 (Week 10)</li>
+      <li>Quiz 5 · Dec 9 (Week 14)</li>
     </ul></div>
-    <div class="card"><h3>Assignments</h3><p>All count equally (15% each); due weeks are listed below.</p><ul>
-      <li>A1 · Text and probability · Week 4</li>
-      <li>A2 · Build a small LM · Week 9</li>
-      <li>A3 · Adapt and evaluate · Week 14</li>
-    </ul></div>
+    <div class="card"><h3>Assignments</h3><p>All count equally (15% each); submission dates are listed below.</p><ul>
+      <li><a href="https://github.com/baojian/llm-26-fall/tree/main/assignments/a1-tokenization-and-language-models" target="_blank" rel="noopener noreferrer">A1 · Tokenization and language models</a><br><span class="muted">Due Sep 30, 23:59 (Asia/Shanghai)</span></li>
+      <li><a href="https://github.com/baojian/llm-26-fall/tree/main/assignments/a2-build-a-small-lm" target="_blank" rel="noopener noreferrer">A2 · Build and investigate a small language model</a><br><span class="muted">Due Oct 31, 23:59 (Asia/Shanghai)</span></li>
+      <li>A3 · Adapt and evaluate · Dec 2 (Week 13)</li>
+    </ul><p><a href="https://github.com/baojian/llm-26-fall/issues?q=is%3Aissue%20label%3Aassignment" target="_blank" rel="noopener noreferrer">Assignment announcements</a></p></div>
     <div class="card"><h3>Individual project</h3><ul>
-      <li>Proposal · Week 7</li>
-      <li>Progress update · Week 13</li>
-      <li>Final submission · Week 17</li>
+      <li><a href="#project-candidates">Candidate projects released · Oct 10 (Week 5)</a></li>
+      <li>Proposal · Oct 21 (Week 7)</li>
+      <li>Progress update · Nov 25 (Week 12)</li>
+      <li>Final submission · Dec 30 (Week 17)</li>
     </ul></div>
   </div>
-  <p>All deadlines are at 23:59. There are no classes or quizzes in Week 5. All project checkpoints are written submissions through <a href="https://elearning.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">eLearning</a>. No project presentations, posters, or oral defenses are required.</p>
+  <p>All deadlines are at 23:59 (Asia/Shanghai). The October 7 class meets on Saturday, October 10; time and room follow the university make-up notice. All project checkpoints are written submissions through <a href="https://elearning.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">eLearning</a>. No project presentations, posters, or oral defenses are required.</p>
 </section>
 <section id="schedule">
   <h2>Weekly schedule</h2>
-  <p><span>Before opening local slides or notebooks, run</span> <code>uv sync</code>, <span>then</span> <code>uv run python scripts/slides.py serve</code>.</p>
+  <p><span>Before opening local slides or notebooks, run</span> <code>uv sync</code>, <span>then</span> <code>uv run python scripts/slides.py serve</code>. <a href="https://github.com/baojian/llm-26-fall/tree/main/tasks" target="_blank" rel="noopener noreferrer">Weekly tasks</a> · <a href="https://github.com/baojian/llm-26-fall/blob/main/tasks/PROGRESS.md" target="_blank" rel="noopener noreferrer">Progress board</a></p>
   <div class="table-wrap"><table id="week-table">
     <thead><tr><th scope="col">Week</th><th scope="col">Date</th><th scope="col">Topic and question</th><th scope="col">Content and materials</th><th scope="col">Milestone</th></tr></thead>
     <tbody>
@@ -205,19 +209,24 @@
         <td>Brief introduction to LLMs; bytes and Unicode; BPE; special tokens; vocabulary choices for Chinese and English.
           <div class="practice"><strong>Practice:</strong> Trace BPE merges, check encode/decode round trips, and compare Chinese and English tokenization at different vocabulary sizes.</div>
           <div class="materials"><strong>Slides:</strong> <a href="http://127.0.0.1:8000/slides/lecture-01/" data-local-path="/slides/lecture-01/" target="_blank" rel="noopener noreferrer">lecture-01-slides</a></div>
+          <div class="materials"><strong>Reading:</strong> <a href="docs/lecture-01-pre-tokenization.html" target="_blank" rel="noopener noreferrer">Text preprocessing and tokenizer pipelines</a></div>
           <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-01" data-local-path="/slides/shared/notebook.html?lecture=lecture-01" target="_blank" rel="noopener noreferrer">lecture-01-exercise.ipynb</a></div>
           <div class="materials"><strong>Extended practice:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-01&amp;notebook=lecture-01-exercise-tokenization.ipynb" data-local-path="/slides/shared/notebook.html?lecture=lecture-01&amp;notebook=lecture-01-exercise-tokenization.ipynb" target="_blank" rel="noopener noreferrer">lecture-01-exercise-tokenization.ipynb</a></div>
-          <div class="materials"><strong>Papers:</strong> <a href="papers/sennrich-2016-subword-units.pdf" target="_blank" rel="noopener noreferrer">BPE (Sennrich et al., 2016)</a> · <a href="papers/kudo-2018-sentencepiece.pdf" target="_blank" rel="noopener noreferrer">SentencePiece (Kudo and Richardson, 2018)</a></div></td>
+          <div class="materials"><strong>Papers:</strong> <a href="papers/2016-acl-sennrich-neural-machine-translation-rare-words-subword-units.pdf" target="_blank" rel="noopener noreferrer">BPE (Sennrich et al., 2016)</a> · <a href="papers/2018-emnlp-kudo-sentencepiece-language-independent-subword-tokenizer.pdf" target="_blank" rel="noopener noreferrer">SentencePiece (Kudo and Richardson, 2018)</a> · <a href="https://github.com/baojian/llm-26-fall/blob/main/docs/tokenizer-reading-list.md" target="_blank" rel="noopener noreferrer">Tokenizer reading list</a> · <a href="docs/tokenizer-papers.html" target="_blank" rel="noopener noreferrer">Interactive version</a></div>
+          <div class="materials"><strong>Survey results:</strong> <a href="tasks/l01-tokenization/llm-app-survey/results.svg" target="_blank" rel="noopener noreferrer">Which LLM apps do you use most?</a> · <a href="https://github.com/baojian/llm-26-fall/tree/main/tasks/l01-tokenization/llm-app-survey" target="_blank" rel="noopener noreferrer">counts</a></div></td>
         <td>—</td>
       </tr>
       <tr data-start="2026-09-13">
         <td class="num">2</td>
         <td class="date">Sep 16</td>
-        <td><strong>Language models, cross-entropy, and perplexity</strong><span class="lens">What does a language-model loss measure, and what can a simple baseline tell us?</span></td>
-        <td>Chain rule; bigram MLE; additive smoothing and interpolation; NLL, cross-entropy, perplexity; held-out splits and sampling.
-          <div class="practice"><strong>Practice:</strong> Build a bigram model, check its loss by hand, and compare domains using the same tokenizer.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
-        <td>A1 released</td>
+        <td><strong>N-gram language models</strong><span class="lens">How do we build, evaluate, and use a language model?</span></td>
+        <td>N-gram LMs and smoothing; held-out loss, perplexity, and bits per byte; sampling; reference-model data filtering; neural probabilistic LMs.
+          <div class="practice"><strong>Practice:</strong> Estimate a bigram model, compare evaluation metrics, tune interpolation on development data, and sample from a smoothed model.</div>
+          <div class="materials"><strong>Slides:</strong> <a href="http://127.0.0.1:8000/slides/lecture-02/" data-local-path="/slides/lecture-02/" target="_blank" rel="noopener noreferrer">lecture-02-slides</a></div>
+          <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-02" data-local-path="/slides/shared/notebook.html?lecture=lecture-02" target="_blank" rel="noopener noreferrer">lecture-02-exercise.ipynb</a></div>
+          <div class="materials"><strong>Reading:</strong> <a href="https://github.com/baojian/llm-26-fall/blob/main/docs/lecture-02-lm-metrics.md" target="_blank" rel="noopener noreferrer">Language-model metrics: loss, perplexity, and bits per byte</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://web.stanford.edu/~jurafsky/slp3/3.pdf" target="_blank" rel="noopener noreferrer">Jurafsky and Martin, Chapter 3: N-gram Language Models</a></div></td>
+        <td><a href="https://github.com/baojian/llm-26-fall/tree/main/assignments/a1-tokenization-and-language-models" target="_blank" rel="noopener noreferrer">A1 released</a><div class="materials"><a href="https://github.com/baojian/llm-26-fall/issues/140" target="_blank" rel="noopener noreferrer">Announcement and questions</a><br><span>Due Sep 30, 23:59 (Asia/Shanghai)</span></div></td>
       </tr>
       <tr data-start="2026-09-20">
         <td class="num">3</td>
@@ -225,121 +234,135 @@
         <td><strong>Embeddings and PyTorch for language models</strong><span class="lens">How do discrete tokens become trainable representations?</span></td>
         <td>Embedding lookup; distributional hypothesis; one skip-gram example; tensor shapes, batching, autograd, and output projections.
           <div class="practice"><strong>Practice:</strong> Trace tensors and gradients through a small language model; compare parameter counts with and without weight sharing.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+          <div class="materials"><strong>Slides:</strong> <a href="http://127.0.0.1:8000/slides/lecture-03/" data-local-path="/slides/lecture-03/" target="_blank" rel="noopener noreferrer">lecture-03-slides</a></div>
+          <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-03" data-local-path="/slides/shared/notebook.html?lecture=lecture-03" target="_blank" rel="noopener noreferrer">lecture-03-exercise.ipynb</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://web.stanford.edu/~jurafsky/slp3/5.pdf" target="_blank" rel="noopener noreferrer">Jurafsky and Martin, Chapter 5: Embeddings</a> · <a href="https://github.com/stanford-cs336/lectures/blob/main/lecture_02.py" target="_blank" rel="noopener noreferrer">CS336 Lecture 2: PyTorch and resource accounting</a> · <a href="https://aclanthology.org/E17-2025/" target="_blank" rel="noopener noreferrer">Weight tying (Press and Wolf, 2017)</a></div></td>
         <td>Quiz 1</td>
       </tr>
       <tr data-start="2026-09-27">
         <td class="num">4</td>
         <td class="date">Sep 30</td>
-        <td><strong>Neural language models and attention</strong><span class="lens">How can a model select useful context instead of compressing everything into one state?</span></td>
-        <td>Feedforward LM training loop; a brief RNN/LSTM motivation; attention scores, softmax, weighted values, and masking.
-          <div class="practice"><strong>Practice:</strong> Overfit a tiny batch and verify an attention head's outputs and gradients against a reference.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
-        <td>A1 due</td>
+        <td><strong>Neural LMs and Recurrent Attention</strong><span class="lens">How can a model retain and select useful context?</span></td>
+        <td>Feedforward LM training; recurrent states and gradients; LSTM memory; additive alignment in an RNN encoder–decoder.
+          <div class="practice"><strong>Practice:</strong> Fit a tiny batch, trace recurrent memory and gates, and calculate a weighted source context.</div>
+          <div class="materials"><strong>Slides:</strong> <a href="slides/lecture-04/" data-local-path="/slides/lecture-04/" target="_blank" rel="noopener noreferrer">lecture-04-slides</a></div>
+          <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-04" data-local-path="/slides/shared/notebook.html?lecture=lecture-04" target="_blank" rel="noopener noreferrer">lecture-04-exercise.ipynb</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://www.jmlr.org/papers/v3/bengio03a.html" target="_blank" rel="noopener noreferrer">Bengio et al. (2003), Section 2</a> · <a href="papers/2015-iclr-bahdanau-neural-machine-translation-align-translate.pdf" target="_blank" rel="noopener noreferrer">Bahdanau et al. (2014/2015), Sections 2–3</a> · <a href="https://proceedings.mlr.press/v28/pascanu13.html" target="_blank" rel="noopener noreferrer">Pascanu et al. (2013), recurrent gradients</a></div></td>
+        <td><a href="https://github.com/baojian/llm-26-fall/issues/140" target="_blank" rel="noopener noreferrer">A1 due</a><div class="materials">23:59 (Asia/Shanghai)<br><a href="https://elearning.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">Submit on eLearning</a></div></td>
       </tr>
-      <tr data-start="2026-10-04" class="holiday">
+      <tr id="lecture-05" data-start="2026-10-04">
         <td class="num">5</td>
-        <td class="date">Oct 7</td>
-        <td><strong>No class</strong><span class="flag">National Day</span></td>
-        <td>—</td>
-        <td>—</td>
+        <td class="date">Oct 10<br><span class="muted">Saturday</span></td>
+        <td><strong>Attention and the Transformer</strong><span class="lens">How does attention select useful context, and how does it lead to the Transformer?</span></td>
+        <td>Brief recurrent-alignment recap; queries, keys, values, and scaled dot products; causal self-attention; multi-head attention, positions, and Transformer blocks.
+          <div class="practice"><strong>Practice:</strong> Compute attention weights and outputs on a small example, verify causal masking, and trace shapes through a decoder block.</div>
+          <div class="materials"><strong>Slides:</strong> <a href="slides/lecture-05/" data-local-path="/slides/lecture-05/" target="_blank" rel="noopener noreferrer">lecture-05-slides</a></div>
+          <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-05" data-local-path="/slides/shared/notebook.html?lecture=lecture-05" target="_blank" rel="noopener noreferrer">practice.ipynb</a></div>
+          <div class="materials"><strong>Extended practice:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-05&amp;notebook=lecture-05-exercise.ipynb" data-local-path="/slides/shared/notebook.html?lecture=lecture-05&amp;notebook=lecture-05-exercise.ipynb" target="_blank" rel="noopener noreferrer">lecture-05-exercise.ipynb</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/1409.0473" target="_blank" rel="noopener noreferrer">Bahdanau et al. (2015), Section 3</a> · <a href="https://aclanthology.org/D15-1166/" target="_blank" rel="noopener noreferrer">Luong et al. (2015), Section 3</a> · <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener noreferrer">Vaswani et al. (2017), Sections 3–4</a></div></td>
+        <td><span>Quiz 2;</span> <a href="https://github.com/baojian/llm-26-fall/tree/main/assignments/a2-build-a-small-lm" target="_blank" rel="noopener noreferrer">A2 released</a><br><a href="#project-candidates">Candidate projects released</a></td>
       </tr>
-      <tr data-start="2026-10-11">
+      <tr id="lecture-06" data-start="2026-10-11">
         <td class="num">6</td>
         <td class="date">Oct 14</td>
-        <td><strong>The Transformer as a working model</strong><span class="lens">Which components are needed to turn attention into a trainable language model?</span></td>
-        <td>Decoder blocks; multi-head attention; residual paths; normalization; feedforward layers; positions; causal versus bidirectional masks. Introduce BERT masked prediction as an encoder contrast.
-          <div class="practice"><strong>Practice:</strong> Assemble a small Transformer, check shapes and causal masking, and compare one component choice.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
-        <td>Quiz 2; A2 released</td>
-      </tr>
-      <tr data-start="2026-10-18">
-        <td class="num">7</td>
-        <td class="date">Oct 21</td>
         <td><strong>Pretraining and decoding in practice</strong><span class="lens">What evidence shows that a training run is working?</span></td>
         <td>Data batches and shifted targets; AdamW; learning-rate schedules; gradient clipping; checkpoints; train/validation curves; greedy, temperature, and top-p decoding.
           <div class="practice"><strong>Practice:</strong> Run and resume a small GPT training job; use training curves to diagnose instability.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
-        <td>Project proposal due</td>
+          <div class="materials"><strong>Slides:</strong> <a href="slides/lecture-06/" data-local-path="/slides/lecture-06/" target="_blank" rel="noopener noreferrer">lecture-06-slides</a></div>
+          <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-06" data-local-path="/slides/shared/notebook.html?lecture=lecture-06" target="_blank" rel="noopener noreferrer">practice.ipynb</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/1711.05101" target="_blank" rel="noopener noreferrer">Loshchilov and Hutter, AdamW</a> · <a href="https://arxiv.org/abs/1904.09751" target="_blank" rel="noopener noreferrer">Holtzman et al., nucleus sampling</a> · <a href="slides/lecture-06/optional-reading.md">Reading guide</a></div></td>
+        <td>—</td>
       </tr>
-      <tr data-start="2026-10-25">
+      <tr id="lecture-07" data-start="2026-10-18">
+        <td class="num">7</td>
+        <td class="date">Oct 21</td>
+        <td><strong>Compute budgets and scaling</strong><span class="lens">How should we spend a limited GPU budget?</span></td>
+        <td>Training FLOPs and memory; model-size/data tradeoffs; power laws; compute-optimal allocation; controlled experiments and extrapolation.
+          <div class="practice"><strong>Practice:</strong> Compare equal-compute runs, fit a toy scaling curve, and test a prediction at a held-out scale.</div>
+          <div class="materials"><strong>Slides:</strong> <a href="slides/lecture-07/" data-local-path="/slides/lecture-07/" target="_blank" rel="noopener noreferrer">lecture-07-slides</a></div>
+          <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-07" data-local-path="/slides/shared/notebook.html?lecture=lecture-07" target="_blank" rel="noopener noreferrer">practice.ipynb</a></div>
+          <div class="guest-talk"><strong>Guest talk · 15:25–16:10:</strong> <a href="https://jiaxuanzou0714.github.io/" target="_blank" rel="noopener noreferrer">Jiaxuan Zou</a><br><a href="https://jiaxuanzou0714.github.io/blog/2026/how-to-build-scientific-scaling-ladder/" target="_blank" rel="noopener noreferrer">How to Build a Scientific Scaling Ladder</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2001.08361" target="_blank" rel="noopener noreferrer">Kaplan et al. (2020), scaling laws</a> · <a href="https://arxiv.org/abs/2203.15556" target="_blank" rel="noopener noreferrer">Hoffmann et al. (2022), Chinchilla</a></div></td>
+        <td><span>Quiz 3</span><br><span>Project proposal due</span></td>
+      </tr>
+      <tr id="lecture-08" data-start="2026-10-25">
         <td class="num">8</td>
         <td class="date">Oct 28</td>
         <td><strong>Data preparation and quality</strong><span class="lens">Can better data improve a fixed model under a fixed training budget?</span></td>
         <td>Text extraction; source documentation; quality filtering; exact and near duplicates; language mixtures; contamination and split construction.
           <div class="practice"><strong>Practice:</strong> Compare filtering, deduplication, or language mixtures under a fixed model, tokenizer, and training-token budget.</div>
           <div class="materials"><strong>References:</strong> To be updated.</div></td>
-        <td>Quiz 3</td>
+        <td>A2 due Oct 31</td>
       </tr>
       <tr data-start="2026-11-01">
         <td class="num">9</td>
         <td class="date">Nov 4</td>
-        <td><strong>Compute budgets and scaling</strong><span class="lens">How should we spend a limited GPU budget?</span></td>
-        <td>Parameter, gradient, activation, and optimizer memory; approximate FLOPs; batch and sequence length; compute versus memory bottlenecks; model-size/data tradeoffs.
-          <div class="practice"><strong>Practice:</strong> Profile a small run's memory and compute; fit supplied scaling results and discuss uncertainty.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
-        <td>A2 due</td>
-      </tr>
-      <tr data-start="2026-11-08">
-        <td class="num">10</td>
-        <td class="date">Nov 11</td>
         <td><strong>Evaluation and experimental design</strong><span class="lens">Does a measured improvement answer the question we care about?</span></td>
         <td>Task and metric selection; loss versus downstream performance; prompt sensitivity; uncertainty; leakage; error analysis. Use a BERT classification example and one decoder evaluation.
           <div class="practice"><strong>Practice:</strong> Audit an evaluation set, test a claim, and examine uncertainty or evaluator disagreement.</div>
           <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>—</td>
       </tr>
-      <tr data-start="2026-11-15">
-        <td class="num">11</td>
-        <td class="date">Nov 18</td>
+      <tr data-start="2026-11-08">
+        <td class="num">10</td>
+        <td class="date">Nov 11</td>
         <td><strong>Supervised fine-tuning</strong><span class="lens">When does task-specific training improve a pretrained model?</span></td>
         <td>Instruction data; chat templates; response-token loss masking; optimization and forgetting; evaluate before and after adaptation.
           <div class="practice"><strong>Practice:</strong> Adapt a supplied pretrained model using parameter-efficient tuning or a data-quality comparison; inspect improvements and regressions.</div>
           <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>Quiz 4; A3 released</td>
       </tr>
-      <tr data-start="2026-11-22">
-        <td class="num">12</td>
-        <td class="date">Nov 25</td>
+      <tr data-start="2026-11-15">
+        <td class="num">11</td>
+        <td class="date">Nov 18</td>
         <td><strong>Preferences, rewards, and alignment</strong><span class="lens">What happens when the optimization target differs from what we actually want?</span></td>
         <td>Preference pairs and reward models; DPO intuition and loss; RLHF/RLVR overview; verifiable rewards; reward hacking and safety evaluation.
           <div class="practice"><strong>Practice:</strong> Compute a DPO loss and inspect a preference-learning or verifiable-reward example for reward hacking.</div>
           <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>—</td>
       </tr>
-      <tr data-start="2026-11-29">
-        <td class="num">13</td>
-        <td class="date">Dec 2</td>
+      <tr data-start="2026-11-22">
+        <td class="num">12</td>
+        <td class="date">Nov 25</td>
         <td><strong>Retrieval and retrieval-augmented generation</strong><span class="lens">When should a system retrieve evidence, and when should it abstain?</span></td>
         <td>TF-IDF/BM25; dense retrieval; reranking; chunking; context construction; retrieval recall, answer support, and unanswerable questions.
           <div class="practice"><strong>Practice:</strong> Compare retrieval or chunking choices in a course-notes RAG system; distinguish retrieval failures from generation failures.</div>
           <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>Project progress update due</td>
       </tr>
-      <tr data-start="2026-12-06">
-        <td class="num">14</td>
-        <td class="date">Dec 9</td>
+      <tr data-start="2026-11-29">
+        <td class="num">13</td>
+        <td class="date">Dec 2</td>
         <td><strong>Efficient inference</strong><span class="lens">Which speed improvement matters for a particular workload?</span></td>
         <td>Prefill and decoding; KV caching; batching; latency versus throughput; quantization tradeoffs; FlashAttention intuition.
           <div class="practice"><strong>Practice:</strong> Profile a cache or batching change; compare speed and memory while checking output correctness.</div>
           <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>A3 due</td>
       </tr>
-      <tr data-start="2026-12-13">
-        <td class="num">15</td>
-        <td class="date">Dec 16</td>
+      <tr data-start="2026-12-06">
+        <td class="num">14</td>
+        <td class="date">Dec 9</td>
         <td><strong>Diffusion language models</strong><span class="lens">What changes when generation can update multiple token positions?</span></td>
         <td>Review BERT masked prediction; corruption and iterative unmasking; compare sampling order, conditioning, and compute with autoregression. State assumptions behind the connections.
           <div class="practice"><strong>Practice:</strong> Compare masked-generation samplers in a supplied demo, measuring quality and latency.</div>
           <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>Quiz 5</td>
       </tr>
+      <tr data-start="2026-12-13">
+        <td class="num">15</td>
+        <td class="date">Dec 16</td>
+        <td><strong>Agents and tool use</strong><span class="lens">When does a tool-use loop improve an outcome enough to justify its cost?</span></td>
+        <td>Bounded tool use; stopping conditions; trace inspection; prompt injection and tool permissions; compare with direct generation.
+          <div class="practice"><strong>Practice:</strong> Compare an agent with direct generation and inspect its tool-use trace, stopping behavior, and cost.</div>
+          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+        <td>—</td>
+      </tr>
       <tr data-start="2026-12-20">
         <td class="num">16</td>
         <td class="date">Dec 23</td>
-        <td><strong>Agents and research synthesis</strong><span class="lens">When does a tool-use loop improve an outcome enough to justify its cost?</span></td>
-        <td>Bounded tool use; stopping conditions; trace inspection; prompt injection and tool permissions; compare with direct generation. Revisit the course through project findings.
-          <div class="practice"><strong>Practice:</strong> Compare an agent with direct generation, inspect its tool-use trace, and refine one project claim.</div>
+        <td><strong>Research synthesis and project revision</strong><span class="lens">Which claims are supported by our experiments, and what still needs to be checked?</span></td>
+        <td>Connect course methods to project findings; inspect baselines, controlled comparisons, uncertainty, and failure cases. Use written feedback to revise the final report and experiment record.
+          <div class="practice"><strong>Practice:</strong> Trace one project claim to its evidence, identify a limitation, and plan the final revision.</div>
           <div class="materials"><strong>References:</strong> To be updated.</div></td>
         <td>—</td>
       </tr>
@@ -351,7 +374,7 @@
         <td>Final report, code, and experiment record due</td>
       </tr>
     </tbody></table></div>
-    <p>There are 15 teaching sessions across 16 calendar weeks, with no class in Week 5. References will be added for each week and will remain permanently available on this course page. Weeks 12 and 16 retain teaching and practice time. Individual questions can be discussed in office hours; project feedback does not require a presentation session.</p>
+    <p>There are 16 teaching sessions, including the Saturday make-up class on October 10. References will remain available on this course page. December 23 is reserved for research synthesis and project revision. Individual project feedback is provided through written comments and office hours.</p>
 </section>
 <section id="assessment">
   <h2>Assessment</h2>
@@ -364,13 +387,14 @@
     <div class="card">
       <p><strong>Assignments:</strong> Assignments establish common skills and can seed the individual project. Reuse the code and data preparation, but identify the additional question and experiments credited to the project. Staff reference code/checkpoints are planned so an early implementation failure does not block later work. The tiny model in A2 teaches training mechanics; the supplied pretrained model supports meaningful adaptation experiments. The three practical assignments are:</p>
       <ul>
-        <li>A1 · Text and probability (15%). Released Week 2, due Week 4. A small tokenizer exercise, a bigram baseline, and held-out evaluation. Explain one representation or smoothing choice.</li>
-        <li>A2 · Build a small LM (15%). Released Week 6, due Week 9. Complete selected components in a supplied Transformer framework, train a tiny model, and compare one data or training intervention with a baseline. Submit correctness checks, training curves, and an interpretation.</li>
-        <li>A3 · Adapt and evaluate (15%). Released Week 11, due Week 14. SFT on a supplied pretrained checkpoint with correct response-token masking; compare with the unadapted model on a held-out task. Inspect both improvements and regressions. DPO or GRPO is an extension.</li>
+        <li><strong>A1 · Tokenization and language models (15%).</strong> <span>Released September 16; due September 30, 2026, 23:59 (Asia/Shanghai).</span> <span>Build a byte-level BPE tokenizer, smoothed n-gram baselines, and a small neural language model; evaluate on held-out English and Chinese text.</span> <a href="https://github.com/baojian/llm-26-fall/tree/main/assignments/a1-tokenization-and-language-models" target="_blank" rel="noopener noreferrer">Handout, starter code, and data</a> · <a href="https://github.com/baojian/llm-26-fall/issues/140" target="_blank" rel="noopener noreferrer">Announcement and questions</a>. <a href="https://elearning.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">Submit privately through eLearning</a>.</li>
+        <li><strong>A2 · Build and investigate a small language model (15%).</strong> <span>Released October 10; due October 31, 2026, 23:59 (Asia/Shanghai).</span> <span>Build a causal Transformer, verify training and checkpoint restart, compare decoding settings, and investigate exact-document deduplication at a fixed training budget.</span> <a href="https://github.com/baojian/llm-26-fall/tree/main/assignments/a2-build-a-small-lm" target="_blank" rel="noopener noreferrer">Handout, starter code, and data</a>. <a href="https://elearning.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">Submit privately through eLearning</a>.</li>
+        <li>A3 · Adapt and evaluate (15%). Released November 11; due December 2, 2026, 23:59 (Asia/Shanghai). SFT on a supplied pretrained checkpoint with correct response-token masking; compare with the unadapted model on a held-out task. Inspect both improvements and regressions. DPO or GRPO is an extension.</li>
       </ul>
     </div>
     <div class="card">
       <p id="project"><strong>Individual project:</strong> One project per student, centered on an important, interesting, and answerable question. Ambitious AI-assisted work is welcome. A strong project develops evidence through successive experiments and explains what changed in the student's understanding.</p>
+      <p class="callout" id="project-candidates"><a href="docs/project-candidates.html">Propose your own project or explore 48 candidates</a> · October 10, 2026. Start with a topic that interests you, or browse recent papers, concrete experiments, and open-source contribution opportunities. Student-proposed projects follow the same individual-project requirements and rubric.</p>
       <h3>Choosing a question</h3>
       <ol>
         <li><span>Importance:</span> who needs the answer, and which decision could it change?</li>
@@ -378,13 +402,14 @@
         <li><span>Evidence:</span> which baseline, dataset, metric, and controlled comparison can distinguish those explanations?</li>
         <li><span>Feasibility:</span> what can be learned with the available compute, data, and semester time?</li>
       </ol>
-      <p>Projects may investigate data, tokenization, training, evaluation, adaptation, retrieval, inference, diffusion, or agents. Building a system, reproducing a result, and analyzing a failure are all valid approaches. Novelty is not required for the undergraduate core. A useful negative result can receive full credit when the experiment and analysis are sound.</p>
+      <p>Projects may investigate data, tokenization, training, evaluation, adaptation, retrieval, inference, diffusion, or agents. Building a system, reproducing a result, and analyzing a failure are all valid approaches. Novelty is not required for the common core. A useful negative result can receive full credit when the experiment and analysis are sound.</p>
+      <p>Survey-only projects are not allowed. Every project must include an implementation, experiment, or tested artifact with a meaningful comparison and analysis. Students may use their own hardware, laboratory resources, cloud credits, hosted APIs, or other resources they can obtain. Document their source and cost separately from any course-pool request; the same rubric applies to everyone.</p>
       <p>Example questions: Does filtering improve a fixed model under a fixed token budget? When should a course-notes RAG system abstain? How does a decoding policy change accuracy and cost? These are starting points to narrow after reading related work, not claims of novelty.</p>
       <h3>Written checkpoints</h3>
       <ol>
-        <li><span>Week 7 · Proposal (one page).</span> Motivation, relevant prior work, an uncertain question, baseline, evaluation plan, and approximate compute budget. Later-topic projects may use a supplied baseline before those lectures occur.</li>
-        <li><span>Week 13 · Progress update (up to two pages).</span> A working baseline, inspected evaluation examples, initial measurements, and one controlled comparison. Discuss a finding or failure, a competing explanation, and the next experiment. Staff provide written feedback; incorporate it in the final report.</li>
-        <li><span>Week 17 · Final submission.</span> The main report is limited to four pages; references and appendices have no page limit. Include code and a concise experiment record. Use the <a href="https://www.overleaf.com/latex/templates/association-for-computational-linguistics-acl-conference/jvxskxpnznfj" target="_blank" rel="noopener noreferrer">ACL template</a>. Checkpoint text can be revised into the report.</li>
+        <li><span>Week 7 · Proposal (one page), due October 21.</span> Motivation, relevant prior work, an uncertain question, baseline, evaluation plan, and approximate compute budget. Later-topic projects may use a supplied baseline before those lectures occur.</li>
+        <li><span>Week 12 · Progress update (up to two pages), due November 25.</span> A working baseline, inspected evaluation examples, initial measurements, and one controlled comparison. Discuss a finding or failure, a competing explanation, and the next experiment. Staff provide written feedback; incorporate it in the final report.</li>
+        <li><span>Week 17 · Final submission, due December 30.</span> The main report is limited to six pages; references and appendices have no page limit. Include code and a concise experiment record. Use the <a href="https://www.overleaf.com/latex/templates/association-for-computational-linguistics-acl-conference/jvxskxpnznfj" target="_blank" rel="noopener noreferrer">ACL template</a>. Checkpoint text can be revised into the report.</li>
       </ol>
       <p>No slides, posters, oral defenses, or group deliverables are required. Peer discussion is welcome; each student submits and is assessed on their own work.</p>
       <h3>Experiment record and proposed rubric</h3>
@@ -417,6 +442,7 @@
 </section>
 </main>
 <footer><div class="wrap"><p>CS40008.01 · LLMs · Fall 2026 · Fudan University. Maintained by <a href="https://github.com/baojian" target="_blank" rel="noopener noreferrer">Baojian Zhou</a>, Claude Code and Codex.</p></div></footer>
+<script src="assets/course-language.js"></script>
 <script src="assets/translations.js"></script>
 <script src="assets/local-materials.js"></script>
 <script>
@@ -468,14 +494,9 @@
           ? (chinese ? '期末提交周' : 'Final submission week')
           : (chinese ? '本周：第 ' + currentWeek + ' 周' : 'This week: ' + currentWeek) + (isHoliday ? (chinese ? ' · 停课' : ' · no class') : '');
       }
-      try { localStorage.setItem('course-language', language); } catch (error) { /* Storage may be unavailable for local files. */ }
     }
-    document.querySelectorAll('.lang-toggle button').forEach(function (button) {
-      button.addEventListener('click', function () { setLanguage(button.dataset.lang); });
-    });
-    var savedLanguage = 'en';
-    try { if (localStorage.getItem('course-language') === 'zh') savedLanguage = 'zh'; } catch (error) { /* Default to English. */ }
-    setLanguage(savedLanguage);
+    window.addEventListener('course:language', function (event) { setLanguage(event.detail.language); });
+    setLanguage(CourseLanguage.get());
   })();
 </script>
 </body>

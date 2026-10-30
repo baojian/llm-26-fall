@@ -37,3 +37,7 @@ multimodal = [
 dev = [
     "pytest>=9.1.1",
 ]
+
+[tool.pytest.ini_options]
+# Repository checks run here; assignment suites are invoked explicitly.
+testpaths = ["tests"]

@@ -1,0 +1,93 @@
+{
+  "source": "lecture-05-slides-transformers.pptx",
+  "source_slide": 29,
+  "effect": "Appear",
+  "adaptation": "Six token rows from the Noa prefix; explicit one-head matrix dimensions; causal mask in the score path.",
+  "tokens": [
+    "Noa",
+    "can",
+    "be",
+    "annoying",
+    "but",
+    "she"
+  ],
+  "dimensions": {
+    "X": [
+      6,
+      "d_model"
+    ],
+    "W_Q": [
+      "d_model",
+      "d_k"
+    ],
+    "W_K": [
+      "d_model",
+      "d_k"
+    ],
+    "W_V": [
+      "d_model",
+      "d_v"
+    ],
+    "Q": [
+      6,
+      "d_k"
+    ],
+    "K": [
+      6,
+      "d_k"
+    ],
+    "V": [
+      6,
+      "d_v"
+    ],
+    "S": [
+      6,
+      6
+    ],
+    "A": [
+      6,
+      6
+    ],
+    "Z": [
+      6,
+      "d_v"
+    ]
+  },
+  "steps": [
+    {
+      "click": 1,
+      "label": "Q uses a learned d_model by d_k projection and has six token rows.",
+      "object_ids": [
+        "query-projection"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "K uses a learned d_model by d_k projection and has six token rows.",
+      "object_ids": [
+        "key-projection"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "V uses a learned d_model by d_v projection and has six token rows.",
+      "object_ids": [
+        "value-projection"
+      ]
+    },
+    {
+      "click": 4,
+      "label": "Projection matrices are shared across all six token positions, while Q, K, and V have separate parameters.",
+      "object_ids": [
+        "trainable-projections"
+      ]
+    },
+    {
+      "click": 5,
+      "label": "Rows index the same six token positions; columns are learned features. Q and K share width d_k, while V can use width d_v.",
+      "object_ids": [
+        "matrix-form"
+      ]
+    }
+  ]
+}

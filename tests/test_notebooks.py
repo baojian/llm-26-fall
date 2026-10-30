@@ -40,18 +40,19 @@ def test_working_copy_preserves_answers_and_assets(course):
     assert json.loads((course / "slides/01-tokenization/practice.ipynb").read_text())["cells"] == []
 
 
-def test_named_lecture_notebook_preserves_student_work(course):
-    deck = course / "slides/lecture-01"
+@pytest.mark.parametrize("lecture", ["lecture-01", "lecture-05-test"])
+def test_named_lecture_notebook_preserves_student_work(course, lecture):
+    deck = course / "slides" / lecture
     deck.mkdir()
-    filename = "lecture-01-exercise.ipynb"
+    filename = f"{lecture}-exercise.ipynb"
     (deck / "lecture.json").write_text(json.dumps({"notebook": filename}))
     (deck / filename).write_text((course / "slides/01-tokenization/practice.ipynb").read_text())
     launcher = NotebookLauncher(course)
-    notebook = launcher.prepare_notebook("lecture-01")
-    assert notebook == course / "workspace/slides/lecture-01" / filename
+    notebook = launcher.prepare_notebook(lecture)
+    assert notebook == course / "workspace/slides" / lecture / filename
     assert json.loads(notebook.read_text())["metadata"]["kernelspec"]["name"] == "python3"
     notebook.write_text("Student's saved answers")
-    assert launcher.prepare_notebook("lecture-01").read_text() == "Student's saved answers"
+    assert launcher.prepare_notebook(lecture).read_text() == "Student's saved answers"
 
 
 def test_additional_notebook_gets_separate_copy_and_new_assets(course):
@@ -273,3 +274,77 @@ def test_launch_passes_requested_notebook(preview_server):
     with build_opener(ProxyHandler({})).open(request) as response:
         assert response.status == 200
     assert preview_server.notebooks.calls == [("lecture-01", "lecture-01-exercise-tokenization.ipynb")]
+
+
+class FakeAncestry:
+    def __init__(self, ancestry):
+        self._ancestry = ancestry
+
+    def parents(self):
+        class Parent:
+            def __init__(self, pid):
+                self.pid = pid
+
+        return [Parent(pid) for pid in self._ancestry]
+
+
+class FakeChildProcess:
+    def __init__(self, pid=100):
+        self.pid = pid
+        self.terminated = False
+
+    def poll(self):
+        return None
+
+    def terminate(self):
+        self.terminated = True
+
+    def wait(self, timeout):
+        return 0
+
+
+def test_runtime_file_is_matched_by_process_ancestry(course, monkeypatch):
+    """The launch must accept the runtime record when the spawned pid is an ancestor of the recorded pid."""
+    import scripts.notebooks as module
+
+    process = FakeChildProcess(pid=100)
+    monkeypatch.setattr(module.subprocess, "Popen", lambda *args, **kwargs: process)
+
+    launcher = NotebookLauncher(course)
+    notebook = launcher.prepare_notebook("01-tokenization")
+    runtime = launcher.state / "runtime"
+    runtime.mkdir(parents=True, exist_ok=True)
+    # Jupyter records the child interpreter's pid, not the trampoline's pid.
+    record = {"url": "http://127.0.0.1:8888/", "root_dir": str(course), "pid": 200, "token": "t"}
+    (runtime / "jpserver-200.json").write_text(json.dumps(record))
+
+    monkeypatch.setattr(module.psutil, "Process", lambda pid: FakeAncestry([100, 1]))
+    monkeypatch.setattr(launcher, "compatible", lambda server, notebook: True)
+
+    assert launcher.start_server(notebook)["pid"] == 200
+    assert not process.terminated
+
+
+def test_exact_pid_match_needs_no_ancestry_lookup(course, monkeypatch):
+    """macOS/Linux exec the interpreter directly, the exact-pid path must win."""
+    import scripts.notebooks as module
+
+    launcher = NotebookLauncher(course)
+    launcher.process = FakeChildProcess(pid=100)
+
+    def explode(pid):
+        raise AssertionError("ancestry lookup should not be needed for an exact match")
+
+    monkeypatch.setattr(module.psutil, "Process", explode)
+    assert launcher.spawned_by_us({"pid": 100}) is True
+
+
+def test_unrelated_runtime_record_is_not_adopted(course, monkeypatch):
+    """Ancestry matching must not adopt a server that someone else started."""
+    import scripts.notebooks as module
+
+    launcher = NotebookLauncher(course)
+    launcher.process = FakeChildProcess(pid=100)
+
+    monkeypatch.setattr(module.psutil, "Process", lambda pid: FakeAncestry([999, 1]))
+    assert launcher.spawned_by_us({"pid": 200}) is False

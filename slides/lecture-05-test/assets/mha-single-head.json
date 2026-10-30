@@ -1,0 +1,38 @@
+{
+  "title": "Scaled dot-product attention in one head",
+  "source_file": "lecture-05-slides-transformers.pptx",
+  "source_copy": "Desktop copy supplied by the instructor",
+  "source_pages": [
+    38
+  ],
+  "steps": [
+    {
+      "click": 1,
+      "label": "Compare queries and keys, then scale by the key dimension.",
+      "object_ids": [
+        "mha-single-head-0"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "For causal attention, set future-key logits to negative infinity.",
+      "object_ids": [
+        "mha-single-head-1"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "Softmax normalizes over the keys for each query.",
+      "object_ids": [
+        "mha-single-head-2"
+      ]
+    },
+    {
+      "click": 4,
+      "label": "Use the attention weights to combine the value vectors.",
+      "object_ids": [
+        "mha-single-head-3"
+      ]
+    }
+  ]
+}

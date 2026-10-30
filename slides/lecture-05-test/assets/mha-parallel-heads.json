@@ -1,0 +1,46 @@
+{
+  "title": "Parallel heads, then an output projection",
+  "source_file": "lecture-05-slides-transformers.pptx",
+  "source_copy": "Desktop copy supplied by the instructor",
+  "source_pages": [
+    38,
+    39
+  ],
+  "steps": [
+    {
+      "click": 1,
+      "label": "Each head learns separate Q, K, and V projections of all input features.",
+      "object_ids": [
+        "mha-parallel-heads-0"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "Compute scaled dot-product attention independently in every head.",
+      "object_ids": [
+        "mha-parallel-heads-1"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "Concatenate along the feature axis; keep the token rows aligned.",
+      "object_ids": [
+        "mha-parallel-heads-2"
+      ]
+    },
+    {
+      "click": 4,
+      "label": "The output projection mixes the concatenated head features.",
+      "object_ids": [
+        "mha-parallel-heads-3"
+      ]
+    },
+    {
+      "click": 5,
+      "label": "In the original base model, 512 dimensions divided among 8 heads gives 64 per head.",
+      "object_ids": [
+        "mha-parallel-heads-4"
+      ]
+    }
+  ]
+}

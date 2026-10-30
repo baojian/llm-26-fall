@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+\begin{axis}[width=.9\linewidth,height=51mm,ybar,bar width=9pt,
+  symbolic x coords={A,B,C},xtick=data,ymin=0,ymax=.8,ylabel={Probability},
+  legend style={at={(.5,1.03)},anchor=south,legend columns=3}]
+\addplot[fill=courseblue!65,draw=courseblue] coordinates {(A,.6666667)(B,.3333333)(C,0)};
+\addlegendentry{MLE}
+\addplot[fill=courseteal!55,draw=courseteal] coordinates {(A,.5)(B,.3333333)(C,.1666667)};
+\addlegendentry{Add one}
+\addplot[fill=courseorange!50,draw=courseorange] coordinates {(A,.5666667)(B,.3333333)(C,.1)};
+\addlegendentry{$0.7\,$MLE$+0.3\,$uniform}
+\end{axis}\end{tikzpicture}

@@ -1,0 +1,65 @@
+{
+  "data": [
+    {
+      "type": "scatter",
+      "mode": "lines+markers",
+      "x": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "y": [
+        1.299,
+        1.477,
+        1.593,
+        1.707,
+        1.823,
+        1.94
+      ],
+      "line": {
+        "color": "#c62828",
+        "width": 4
+      },
+      "marker": {
+        "size": 12
+      },
+      "customdata": [
+        6076505,
+        190756,
+        144010,
+        124412,
+        107524,
+        100681
+      ],
+      "hovertemplate": "Round %{x}<br>BPB: %{y:.3f}<br>Training tokens: %{customdata:,}<extra></extra>"
+    }
+  ],
+  "layout": {
+    "showlegend": false,
+    "margin": {
+      "l": 90,
+      "r": 25,
+      "t": 15,
+      "b": 70
+    },
+    "hoverlabel": {
+      "font": {
+        "size": 24
+      }
+    },
+    "xaxis": {
+      "title": {
+        "text": "Round (0 = original corpus)"
+      },
+      "dtick": 1
+    },
+    "yaxis": {
+      "title": {
+        "text": "Held-out bits per byte"
+      }
+    }
+  }
+}

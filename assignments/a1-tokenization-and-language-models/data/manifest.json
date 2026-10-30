@@ -1,0 +1,655 @@
+{
+  "name": "a1-tokenization-and-language-models",
+  "version": "v1",
+  "source": "course corpus mirrors",
+  "repo": "roneneldan/TinyStories; opencsg/Fineweb-Edu-Chinese-V2.1",
+  "downloaded_at": "2026-09-15T16:00:45.061248+00:00",
+  "seed": 20260915,
+  "mb_definition": "1 MB = 1,000,000 bytes of uncompressed UTF-8 text",
+  "bytes": 24003688,
+  "files": [
+    {
+      "path": "tinystories-train.txt",
+      "bytes": 10000399,
+      "target_bytes": 10000000,
+      "sha256": "1ac5c9ab31d3ca2e6b3ee22ce184d658d1481328be008063865e0180e546634e",
+      "documents": 12352,
+      "modeled_bytes": 9975695,
+      "min_document_bytes": 282,
+      "median_document_bytes": 721,
+      "max_document_bytes": 4332,
+      "source_files": {
+        "tinystories/TinyStoriesV2-GPT4-train.txt": 12352
+      }
+    },
+    {
+      "path": "tinystories-dev.txt",
+      "bytes": 1000253,
+      "target_bytes": 1000000,
+      "sha256": "ce52dcd79c48e9b160e3898977481639471e66d3191f7d13bc2b933bc72caa0e",
+      "documents": 1235,
+      "modeled_bytes": 997783,
+      "min_document_bytes": 342,
+      "median_document_bytes": 720,
+      "max_document_bytes": 3311,
+      "source_files": {
+        "tinystories/TinyStoriesV2-GPT4-valid.txt": 1235
+      }
+    },
+    {
+      "path": "tinystories-test.txt",
+      "bytes": 1000561,
+      "target_bytes": 1000000,
+      "sha256": "667acbf84462e976b3e520c43f0d78c9bfa00141aea7b601ceb7251c5d443b7b",
+      "documents": 1276,
+      "modeled_bytes": 998009,
+      "min_document_bytes": 322,
+      "median_document_bytes": 715,
+      "max_document_bytes": 3685,
+      "source_files": {
+        "tinystories/TinyStoriesV2-GPT4-valid.txt": 1276
+      }
+    },
+    {
+      "path": "chinese-web-train.txt",
+      "bytes": 10000520,
+      "target_bytes": 10000000,
+      "sha256": "cbd0f94dd8636cdacdf68e9f84793b18df14b4ce36154363bdb254e18a36cec2",
+      "documents": 2307,
+      "modeled_bytes": 9995906,
+      "min_document_bytes": 644,
+      "median_document_bytes": 4000,
+      "max_document_bytes": 8177,
+      "source_files": {
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000032.parquet": 23,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000037.parquet": 33,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000053.parquet": 31,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000065.parquet": 21,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000090.parquet": 30,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000116.parquet": 36,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000136.parquet": 37,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000153.parquet": 36,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000167.parquet": 27,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000202.parquet": 34,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000229.parquet": 38,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000244.parquet": 30,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000284.parquet": 34,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000287.parquet": 43,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000289.parquet": 34,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000303.parquet": 32,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000319.parquet": 24,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000330.parquet": 35,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000337.parquet": 47,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000358.parquet": 36,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000376.parquet": 33,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000387.parquet": 30,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000389.parquet": 38,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000399.parquet": 45,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000401.parquet": 38,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000406.parquet": 35,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000441.parquet": 27,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000446.parquet": 32,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000452.parquet": 43,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000483.parquet": 32,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000485.parquet": 33,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000499.parquet": 40,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000513.parquet": 40,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000532.parquet": 28,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000543.parquet": 47,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000554.parquet": 32,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000583.parquet": 28,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000590.parquet": 29,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000611.parquet": 37,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000663.parquet": 29,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000668.parquet": 45,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000676.parquet": 23,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000689.parquet": 29,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000695.parquet": 29,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000740.parquet": 35,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000752.parquet": 33,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000775.parquet": 35,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000778.parquet": 32,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000840.parquet": 27,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000850.parquet": 29,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000851.parquet": 38,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000861.parquet": 33,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000873.parquet": 35,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000887.parquet": 38,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000925.parquet": 31,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000951.parquet": 35,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000984.parquet": 34,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000995.parquet": 35,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001056.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001075.parquet": 6,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001086.parquet": 147,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001119.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001120.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001136.parquet": 190
+      }
+    },
+    {
+      "path": "chinese-web-dev.txt",
+      "bytes": 1001784,
+      "target_bytes": 1000000,
+      "sha256": "bd675a192bdc760133327f152dd0bf349244a4d4e7750e1b4adbe3cfc71f5161",
+      "documents": 229,
+      "modeled_bytes": 1001326,
+      "min_document_bytes": 1112,
+      "median_document_bytes": 4107,
+      "max_document_bytes": 8158,
+      "source_files": {
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000032.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000037.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000053.parquet": 6,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000065.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000090.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000116.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000136.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000153.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000167.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000229.parquet": 8,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000244.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000287.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000289.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000303.parquet": 7,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000319.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000330.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000337.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000358.parquet": 10,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000376.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000387.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000389.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000399.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000401.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000406.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000441.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000446.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000452.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000483.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000499.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000513.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000532.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000543.parquet": 6,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000554.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000583.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000590.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000611.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000663.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000668.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000676.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000689.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000695.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000740.parquet": 6,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000752.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000775.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000778.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000840.parquet": 7,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000851.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000861.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000873.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000887.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000951.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000984.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000995.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001056.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001075.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001086.parquet": 20,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001119.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001120.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001136.parquet": 31
+      }
+    },
+    {
+      "path": "chinese-web-test.txt",
+      "bytes": 1000171,
+      "target_bytes": 1000000,
+      "sha256": "66c2ff9d8348b27e3ec504b73b7b265e5b28b4629072b4cbb39af2ec66cadcca",
+      "documents": 232,
+      "modeled_bytes": 999707,
+      "min_document_bytes": 1152,
+      "median_document_bytes": 3947,
+      "max_document_bytes": 8185,
+      "source_files": {
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000032.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000037.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000053.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000065.parquet": 6,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000090.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000116.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000136.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000153.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000167.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000202.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000229.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000244.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000284.parquet": 7,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000287.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000289.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000303.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000319.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000330.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000337.parquet": 6,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000358.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000376.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000387.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000389.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000399.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000401.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000406.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000441.parquet": 6,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000446.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000452.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000483.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000485.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000499.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000513.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000532.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000543.parquet": 6,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000590.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000611.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000663.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000668.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000676.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000689.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000695.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000740.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000752.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000775.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000778.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000840.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000850.parquet": 2,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000851.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000861.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000873.parquet": 3,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000887.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000925.parquet": 4,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000951.parquet": 6,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000984.parquet": 7,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/000995.parquet": 5,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001075.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001086.parquet": 12,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001120.parquet": 1,
+        "fineweb-edu-chinese-v2.1-4_5/4_5/001136.parquet": 21
+      }
+    }
+  ],
+  "errors": [],
+  "sources": {
+    "tinystories": {
+      "folder": "tinystories",
+      "repo": "roneneldan/TinyStories",
+      "license": "CDLA-Sharing-1.0",
+      "variant": "V2 GPT-4"
+    },
+    "chinese-web": {
+      "folder": "fineweb-edu-chinese-v2.1-4_5",
+      "repo": "opencsg/Fineweb-Edu-Chinese-V2.1",
+      "variant": "4-5 score bucket",
+      "license": "Apache-2.0 declared in card; additional OpenCSG terms in preserved source card"
+    }
+  },
+  "source_files": [
+    {
+      "path": "tinystories/TinyStoriesV2-GPT4-train.txt",
+      "bytes": 2227753162,
+      "sha256": "6418d412de72888f52b5142c761ac21a582f7d1166f0bfbdb5f03ccfdec90443"
+    },
+    {
+      "path": "tinystories/TinyStoriesV2-GPT4-valid.txt",
+      "bytes": 22502601,
+      "sha256": "6874bae9a4c1a4e7edcf0e53b86c17817e9cf881fc75ff2368da457b80c0585d"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000387.parquet",
+      "bytes": 8566056,
+      "sha256": "2d794c0238149f36772581b1f61600b29a147553b5113cba7dbeb2a70016e3bf"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000485.parquet",
+      "bytes": 9095276,
+      "sha256": "2f6e278be54744dce806577618a521756a6e5ed2a2a2f0551d90a07b667c3ae3"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000116.parquet",
+      "bytes": 9130839,
+      "sha256": "b358604d14626c363f60b1db02b236e5e2ff15ac4fa3809a709e1d50a608e4be"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000441.parquet",
+      "bytes": 8781967,
+      "sha256": "2b181c79353cefe8cf53d49f14f671af914f7b4bf45a5fe128c9657e6ad024d0"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/001056.parquet",
+      "bytes": 202385,
+      "sha256": "c9486853bb8b1f497081f5e4eade7d0b8376127513ab96dd63b7dd393733c61c"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000850.parquet",
+      "bytes": 9348804,
+      "sha256": "cc0444715646e54540c6a32100db90856f0807bed548c7d0b8e4c8704ed25bae"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000229.parquet",
+      "bytes": 8855401,
+      "sha256": "4a0bcd43a4f6f97e10546b1089557ad8d3ec5692bcd3e823f40341fdb4b462a8"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000244.parquet",
+      "bytes": 8998278,
+      "sha256": "e2f62bfb947964b02b12c3ec52338289be67eb60fe525cfacb7060787e5893f0"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000303.parquet",
+      "bytes": 9216687,
+      "sha256": "cabc1258bb7db9690eb6483f8971cc21bfe4a64890a9d6cb0bf47e5a7b1fe07d"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000554.parquet",
+      "bytes": 9396335,
+      "sha256": "fa02e52312012320d6ce942563006bb5f81919351a3d831df34a9242210c3e43"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000090.parquet",
+      "bytes": 8867889,
+      "sha256": "9f3c7b58268e68ee7f5c03de060cde8a9d5d87e3a3658b50ed2f439e16b80c61"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000202.parquet",
+      "bytes": 9472750,
+      "sha256": "8bc8d06a360d2f0b62098f1e2f22b37b8140daf311381e99875afc05e0e8186f"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000289.parquet",
+      "bytes": 9028981,
+      "sha256": "f463c07be577f6ea6bf7ff832601f695dd8c14d03270ea8af1427bd320f525f2"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000053.parquet",
+      "bytes": 8813035,
+      "sha256": "b6459e893592da69eba62e5539539d764c99c6e9219ea9891a312e8609434ee6"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000663.parquet",
+      "bytes": 8628729,
+      "sha256": "ff2bee83f00e070898ea7881edc0c68793bc89b51507628368e69ac95208dd25"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000668.parquet",
+      "bytes": 9116930,
+      "sha256": "d6f7c07c8a500635ddfeb58fbef53eb7247805cdf43d446caf413ce0185d92b4"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000330.parquet",
+      "bytes": 9063442,
+      "sha256": "7db2abe43fe0bb15ff9085eddff8970a50805ae4508481569e5b0b0ded6db1aa"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000513.parquet",
+      "bytes": 9911781,
+      "sha256": "565061eebd01a0554cf9110f6515717501d2048239ae90bd1f5837c51dbb47d8"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000925.parquet",
+      "bytes": 8963514,
+      "sha256": "690e51a2934b480b5ce62de793099aff82052caba04632b1ac6fca579353e991"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000037.parquet",
+      "bytes": 8966081,
+      "sha256": "9bb67e1223820b40cee88a52fa676690057d290a0875850b35cd6d24b9bf5809"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000840.parquet",
+      "bytes": 9280421,
+      "sha256": "9b6d30ce8f49fa82f7867b622c27ab6b693e8200dc697a876ea24e8558c48d7f"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000287.parquet",
+      "bytes": 9020249,
+      "sha256": "1d5d702cd11964acf97ef3a5d15be099ebc9e67c23b71aa5db083b235691e4c4"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000851.parquet",
+      "bytes": 8910927,
+      "sha256": "d7cb8f2e0cb24b43a06172aaa316a3c2040c1c5b5ad80d9934a9a6fb8b36fb27"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000406.parquet",
+      "bytes": 9146259,
+      "sha256": "0c8209ac7d56f57b66a79dc331f7200326ee281b25eb83d698e503c27f3e1d98"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000401.parquet",
+      "bytes": 9476846,
+      "sha256": "8e9907eeba59b1fb0e7b4dd04a6cff2b1d9ac5d9ac2bb2c1c546b601a93675ae"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000676.parquet",
+      "bytes": 9409810,
+      "sha256": "e4a850acadded185b9eb508b8109f2cebe723aaea5984ee069a1df9d6524a5ad"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000995.parquet",
+      "bytes": 9269050,
+      "sha256": "0870f909a202c02f25b62f7bb6b45254826b6419738b85be23887972925f5934"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000499.parquet",
+      "bytes": 8985826,
+      "sha256": "af34c6401de57160fdccad0945565ade480a0f771c07e5ba459f86ca52eb9ce9"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000951.parquet",
+      "bytes": 9162963,
+      "sha256": "210b5e11ba7fbf8edadab5279ad3d1c5383ade3750fbe8eecc831efd3460425d"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000984.parquet",
+      "bytes": 9390510,
+      "sha256": "094ca341e16a55f034ca96c7dc0d04e6192deb8d3fed029d380c113502762a23"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000611.parquet",
+      "bytes": 8767679,
+      "sha256": "805c20fbc4a07680f9db8e3c7960f62ad51a98c6c99fb9cb9e1b6d74132dd34a"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000695.parquet",
+      "bytes": 8934113,
+      "sha256": "db73542281c2061d5617d21842cc79a6aea5f793258881b86be31ddf63cde058"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/001136.parquet",
+      "bytes": 39911042,
+      "sha256": "cdf7c9be462d93f1c3f1cb36beb1395d623cff1cbaaa735880742c840a8f3cf5"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000778.parquet",
+      "bytes": 9350446,
+      "sha256": "f92df6df58b723c4e9713c45f17262a8d02deb4ba8cf955406fe37c73165e884"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000337.parquet",
+      "bytes": 8906075,
+      "sha256": "87d2f097fba918e80d609bec447c8f18e730e581839e5420c65849064c4ce6a0"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/001075.parquet",
+      "bytes": 1652497,
+      "sha256": "c088a8907eb1115763b6bf3049a0c42114b8920d48b164db12450815c9bf5a45"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/001120.parquet",
+      "bytes": 683801,
+      "sha256": "7877e8f63aaddb0b700386e30c769f863a9f1f6bf0a2e151302244a91a617337"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000740.parquet",
+      "bytes": 8834832,
+      "sha256": "5188eb28dffe56f309af994b481bbdc1a23652ad8e1e1d9050eac0937f7e165a"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000167.parquet",
+      "bytes": 8895798,
+      "sha256": "a3945fc1ae2505bb499866fd139658c84ab87c52713f5191cdbf9489161d7640"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000532.parquet",
+      "bytes": 9376901,
+      "sha256": "deb1524c96a8b3e4602b39d2f0a15446f6561a698c083ddbc2a1e72c296779ed"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000136.parquet",
+      "bytes": 9330870,
+      "sha256": "ef1ba55d56138e3b2624736bf858077105dfe68feab11fdebfb32cd5ade1c1fd"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000389.parquet",
+      "bytes": 9243485,
+      "sha256": "9d99cddd8300d93578610fb4c82c582aa0346afbf6cad7c350085795fe1fb936"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000284.parquet",
+      "bytes": 9172087,
+      "sha256": "7d9d79fedf2ea124e8797ee1c25c462e9bddb219989a8f8df06593afd59feb35"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000399.parquet",
+      "bytes": 9187658,
+      "sha256": "7d943c27bdd2cbce6e083138bb2efff71b260ae40101f8c6e0c1de252ae8fc72"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000319.parquet",
+      "bytes": 8977766,
+      "sha256": "5db5e56f4418f4a6d10dd90f6412874cec0759de09b99c3da327e0cba5c6a8ff"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000689.parquet",
+      "bytes": 8912369,
+      "sha256": "5cb62474e943ec17602543acfdb31833e4a445e5e766adf7a329a454135f5177"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/001086.parquet",
+      "bytes": 35173353,
+      "sha256": "c461c75ad82c97571b2c27f6a97a6572f7c3463ad81ba2cecb127573a4fd381d"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000887.parquet",
+      "bytes": 8808542,
+      "sha256": "99541019cb0949a6124a4a42c3d97adf27c84bc030ff27a07aeea36642a1a9c3"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000752.parquet",
+      "bytes": 9458289,
+      "sha256": "f05a22a4964d8c6300fd41717ec81c43eb2a9ae7b1b1b66f6aa557f066c65436"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000452.parquet",
+      "bytes": 9164827,
+      "sha256": "7c0c9de2ed5a38044263204bd8ef5c176d4eb9cc549f025dd789a8a8d740ecde"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000583.parquet",
+      "bytes": 9612746,
+      "sha256": "11833cee70253d43f7acab42b2135772ef2914fa8fbff071a5bc92e6ad031e1f"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000590.parquet",
+      "bytes": 8665256,
+      "sha256": "007c03733df0f046b576828dc5229d384b0793c0bf610a3719f825e7a36f9b58"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/001119.parquet",
+      "bytes": 751381,
+      "sha256": "440fa3301d922a770230002aeedc0bd3c1f9cd294d39550b5eb370295967d117"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000446.parquet",
+      "bytes": 9035248,
+      "sha256": "2ad8905456509b7a252dd4e9ab9bce51f839aa0114b3355424e0d0018e77980b"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000861.parquet",
+      "bytes": 8844086,
+      "sha256": "7a237888e122bae035ebd38e0eafdc80d901cc8d2fd84a83e55d4c4a77c02223"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000065.parquet",
+      "bytes": 8643325,
+      "sha256": "5d168970420809440c32e70f462303bf86e52242c71fb2c721eea65003ec5706"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000775.parquet",
+      "bytes": 8667318,
+      "sha256": "8a2a4ab588d5bc8c655f282cb8fd8e40e09fff6d105f22507bed6e54c1e9232d"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000873.parquet",
+      "bytes": 9366249,
+      "sha256": "c1d5bc0b4c11bc38bbed5b1f04de2a2b1751e274214066be9d461d2765f4a25d"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000483.parquet",
+      "bytes": 8995118,
+      "sha256": "460eeb0e879d74a34c178cae5f99f2e794a541baeb5ac4512615444b282eb554"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000543.parquet",
+      "bytes": 8661435,
+      "sha256": "9a19121b607b0fd63824a45c98e6292616dea448afc558e42e27c21aa0342c0f"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000376.parquet",
+      "bytes": 8805754,
+      "sha256": "d18650de1817200e224538ad4f028d6b6fea4ce3c938bf660473adafb5d8b448"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000358.parquet",
+      "bytes": 9305139,
+      "sha256": "28329a22327d72976e402ba9cd7a2e277ea63233e857e8b03aaa50e29886ec31"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000032.parquet",
+      "bytes": 8901194,
+      "sha256": "6809d87da68b4a6fe3985323d30211ab3658335c4897588e020bc1504c5db74e"
+    },
+    {
+      "path": "fineweb-edu-chinese-v2.1-4_5/4_5/000153.parquet",
+      "bytes": 9016219,
+      "sha256": "229e78cdcef699e533ccc623eba5df9810e8f688863a8972fadfbaf98fe67bd8"
+    }
+  ],
+  "scanned": {
+    "tinystories": {
+      "validation_seen": 27631,
+      "validation_length_filtered": 1,
+      "training_seen": 2717700,
+      "training_length_filtered": 246
+    },
+    "chinese-web": {
+      "documents_seen": 123238,
+      "length_filtered": 38606
+    }
+  },
+  "sampling": {
+    "method": "smallest seeded SHA-256 ranks among eligible distinct complete documents",
+    "tinystories": "train from complete official V2 training file; dev/test from official V2 validation; all normalized official validation documents excluded from train",
+    "chinese": "64 shards selected by seeded hash from the local mirror, not the complete upstream corpus; normalized content hashes assign train/dev/test in a 10:1:1 ratio",
+    "length_filter_utf8_bytes": {
+      "tinystories": [
+        128,
+        8192
+      ],
+      "chinese-web": [
+        256,
+        8192
+      ]
+    },
+    "text_transform": "strip each line, remove empty lines, join remaining lines with one newline; separate source documents by a blank line",
+    "deduplication": "NFKC + casefold + collapsed whitespace SHA-256; zero matching hashes across splits; near-duplicate semantic variants are not guaranteed absent",
+    "byte_budget": "minimum target, exceeded by at most one complete document including its two-byte separator"
+  },
+  "note": "A1 laptop corpus: 10 MB train, 1 MB dev, 1 MB test per language; fixed split files for every student",
+  "sampling_script_sha256": "a00a07d1fe868c417d8387cef143b9d0285653e5041bd7def8489fd3c743d6d3"
+}

@@ -1,0 +1,32 @@
+{
+  "title": "Where multi-head attention is used",
+  "source_file": "lecture-05-slides-transformers.pptx",
+  "source_copy": "Desktop copy supplied by the instructor",
+  "source_pages": [
+    39,
+    40
+  ],
+  "steps": [
+    {
+      "click": 1,
+      "label": "The encoder attends over the source sequence.",
+      "object_ids": [
+        "mha-architecture-0"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "The decoder uses causal self-attention and cross-attention to the encoder.",
+      "object_ids": [
+        "mha-architecture-1"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "The GPT-style model keeps the causal self-attention path.",
+      "object_ids": [
+        "mha-architecture-2"
+      ]
+    }
+  ]
+}

@@ -1,66 +1,60 @@
 # NLP and LLMs — Fall 2026
 
-Course materials for **NLP and LLMs** at Fudan University.
-
-Course website: <https://baojian.github.io/llm-26-fall/>.
+Course materials for **NLP and LLMs** (CS40008.01) at Fudan University.
+Visit the [course website](https://baojian.github.io/llm-26-fall/) for lectures,
+readings, and assessment information.
 
 ## Getting started
 
-Install [Git](https://git-scm.com/downloads) and [uv](https://docs.astral.sh/uv/getting-started/installation/), then run `git clone https://github.com/baojian/llm-26-fall.git` and `cd llm-26-fall`. Start the course with `uv run python scripts/slides.py serve` and open <http://127.0.0.1:8000>. Python and Jupyter dependencies are prepared automatically; Reveal.js is included. Open slides or exercises from the course page; notebooks open in JupyterLab with personal copies under `workspace/`. Before class, stop the server with `Ctrl+C`, run `git pull`, and start it again.
+1. Install [Git](https://git-scm.com/downloads) and [uv](https://docs.astral.sh/uv/getting-started/installation/).
+2. Clone the course: `git clone https://github.com/baojian/llm-26-fall.git`.
+3. Run `cd llm-26-fall`, then start the local course server: `uv run python scripts/slides.py serve` and open <http://127.0.0.1:8000>.
+4. Run `git pull` before class and restart the server to get the latest materials.
 
-## Course Information
+Submit quizzes, assignments, and individual projects through
+[eLearning](https://elearning.fudan.edu.cn/). For optional participation
+activities, see the [participation workflow](docs/participation-workflow.md).
+
+Find assignment deadlines and updates in the
+[assignment announcement issues](https://github.com/baojian/llm-26-fall/issues?q=is%3Aissue%20label%3Aassignment).
+Subscribe to an assignment's issue to follow its announcements and clarifications.
+
+## Course information
 
 - **Course code:** CS40008.01
-- **Semester:** Fall 2026 (2026–2027 academic year, first semester)
+- **Semester:** Fall 2026 (2026–2027 academic year, fall semester)
 - **Schedule:** Wednesdays, periods 6–8 (13:30–16:10), weeks 1–16
-- **First class:** September 9, 2026
+- **First / last class:** September 9 / December 23, 2026
+- **Make-up class:** Saturday, October 10 (replaces October 7)
 - **Location:** Handan Campus, HGX103
-- **Teaching language:** Chinese / English
+- **Teaching language:** Chinese lectures, English materials
+- **Assessment:** Quizzes 10%, assignments 45%, individual project 45%
 
-## Schedule
+Dates, periods, and holidays: [docs/schedule.md](docs/schedule.md). Assessment details: [course website](https://baojian.github.io/llm-26-fall/).
 
-See [docs/schedule.md](docs/schedule.md) for Fudan's daily period timetable,
-what "periods 6–8" means in clock time (13:30–16:10), and the calendar weeks
-with holidays and exam weeks. First class: September 9, 2026 (week 1). Last class: December 23, 2026
-(week 16). Week 5, October 7, is **skip** for National Day. The revised lecture
-sequence fits into the other 15 Wednesday meetings.
+The [individual project catalog](docs/project-candidates.html) starts with a
+student-proposed project option and contains 48 suggested directions for
+Lecture 05. Each suggestion has annotated references, a baseline, an
+evaluation plan, and an explicit resource plan with a smaller fallback. The
+compute guide covers CPUs, one GPU, two GPUs, and larger requirements; cards
+distinguish minimum hardware from optional parallel runs.
+Prefer CPU studies and short inference runs in our shared compute pool.
+Use the left contents panel to jump to a topic, or search by approach and
+resource needs. Students may use resources they obtain outside the course pool.
+Every project requires practical or experimental work; survey-only projects
+are not allowed.
+The one-page proposal is due **October 21, 2026,
+23:59 (Asia/Shanghai)** through eLearning.
 
-## First-lecture survey
+## What is in this repository
 
-Select at most two LLM apps you use most in everyday life through the
-[Lecture 01 survey issue](https://github.com/baojian/llm-26-fall/issues/6).
-Each student submits one response file in a PR using the GitHub website.
-See the [survey guide](surveys/lecture-01/README.md) for instructions.
-
-## Lecture slides
-
-The [Reveal.js framework](slides/README.md) provides a shared theme, companion
-notebooks, references, and browser-based demonstrations. It supports Plotly
-charts, exported Excalidraw diagrams, and prepared Manim videos. The
-[tokenization sample](slides/example/index.html) demonstrates the format; it is
-not a complete first lecture. Published decks can be presented from a classroom
-browser without an instructor laptop.
-
-[Lecture 01](slides/lecture-01/index.html) has its own slides and
-[exercise notebook](slides/lecture-01/lecture-01-exercise.ipynb). The course
-page links to the local server for both. PDFs and citations for course readings
-are collected in [papers/](papers/README.md).
-
-## Your Workspace
-
-Put your own notes, experiments, and exercise solutions in
-[`workspace/`](workspace/README.md). Everything there except its README is
-ignored by git, so pulling new course material never conflicts with your files
-and your work stays out of any pull request you open. To modify a course file,
-copy it into `workspace/` and edit the copy.
-
-## Repository Status
-
-The revised course schedule and content plan are available as a review draft.
-Lecture materials will be prepared through pull requests so that changes remain
-easy to review and discuss.
-
-This repository will contain course-facing materials such as lecture notes,
-examples, exercises, and contribution guidance. Students will be welcome to
-suggest improvements and contribute suitable material through issues and pull
-requests after the participation guidelines are published.
+| Folder | Contents |
+| --- | --- |
+| [slides/](slides/README.md) | Lecture decks, companion notebooks, and teaching notes. |
+| [docs/](docs/README.md) | Course schedule, reading guides, and reference notes. |
+| [papers/](papers/README.md) | PDFs and citations for the course readings. |
+| [tasks/](tasks/README.md) | Optional participation activities, instructions, and the [progress board](tasks/PROGRESS.md). |
+| [assignments/](assignments/README.md) | Assignment handouts, starter code, supplied data, and public tests. |
+| [workspace/](workspace/README.md) | Personal notes, experiments, and exercise solutions; contents other than its README are ignored by git. |
+| [pipeline/](pipeline/) | Data preparation, language modeling, and evaluation utilities. |
+| [scripts/](scripts/) | Course server, notebook launcher, and maintenance tools. |

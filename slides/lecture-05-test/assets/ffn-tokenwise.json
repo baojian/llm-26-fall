@@ -1,0 +1,33 @@
+{
+  "title": "Feedforward network: transform each token",
+  "source_file": "lecture-05-slides-transformers.pptx",
+  "source_copy": "Desktop copy, 19-slide revision inspected on October 10, 2026 (Asia/Shanghai)",
+  "source_pages": [
+    6
+  ],
+  "source_title": "Transformer Feed forward",
+  "adaptation": "Native token columns, affine maps, and activation; distinguish the 2017 ReLU from the GPT-2 GELU. Dropout omitted.",
+  "steps": [
+    {
+      "click": 1,
+      "label": "Expand the feature width using the same first affine map at every token.",
+      "object_ids": [
+        "ffn-tokenwise-0"
+      ]
+    },
+    {
+      "click": 2,
+      "label": "Apply the activation to each hidden coordinate. The 2017 model uses ReLU; GPT-2 uses GELU.",
+      "object_ids": [
+        "ffn-tokenwise-1"
+      ]
+    },
+    {
+      "click": 3,
+      "label": "Project back to the model width. The FFN preserves batch and token axes.",
+      "object_ids": [
+        "ffn-tokenwise-2"
+      ]
+    }
+  ]
+}
