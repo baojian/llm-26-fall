@@ -7,9 +7,11 @@ model or tokenizer. Fine-tunes, quantized copies, GGUF conversions, adapters,
 and merges are included. Test fixtures and specialized scientific models
 returned by the task queries are retained too.
 
-The full JSON/CSV has 56 columns. Large generated files, cached API responses,
-tokenizer artifacts, and figures live in ignored `workspace/`; the collection,
-export, and plotting scripts are versioned. The separate [84-row curated
+The full JSON/CSV has 56 columns and is available as a versioned
+[4.55 MB compressed snapshot](snapshots/2026-10-31/) for analysis on another
+computer. Working data, cached API responses, tokenizer artifacts, and figures
+live in ignored `workspace/`; the collection, export, and plotting scripts are
+versioned. The separate [84-row curated
 collection](README.md) retains more detailed manually checked release and
 training-data provenance.
 
@@ -118,7 +120,37 @@ missing gated measurements, and heterogeneous model purposes affect a time
 trend. Dates and measurements remain traceable so a later analysis can define
 its population and filters explicitly.
 
-## Reproduce
+## Continue on another computer
+
+From a checkout containing this change, restore the committed data and redraw
+the figures. This uses the recorded 11,229-row snapshot without contacting
+Hugging Face or downloading tokenizer assets:
+
+```sh
+uv run --no-project --python 3.11 python -m zipfile -e \
+  docs/model-tokenizer-statistics/snapshots/2026-10-31/catalog.zip \
+  workspace/hf-tokenizer-catalog
+
+uv run --no-project --python 3.11 --with matplotlib==3.11.1 \
+  python scripts/plot_hf_tokenizer_catalog.py
+```
+
+The restored CSV and JSON are
+`workspace/hf-tokenizer-catalog/model-catalog.csv` and `model-catalog.json`.
+The four-panel figure is
+`workspace/model-tokenizer-statistics/figures/vocabulary-catalog.svg`.
+The archive also contains the catalog summary and shared-tokenizer/vocabulary
+group tables. [The snapshot manifest](snapshots/2026-10-31/manifest.json)
+records the archive hash and each extracted file's hash and size.
+
+Extraction replaces same-named working files; use a different destination if
+you have edited them, then pass its JSON path with the plot's `--catalog` option.
+`tokenizer_local_path` identifies an optional artifact cache. Those roughly
+10 GB of tokenizer files are separate from the metadata snapshot and are not
+needed for statistical analysis or plotting. Pinned artifact URLs and SHA-256
+hashes remain in the catalog for retrieval when needed.
+
+## Collect a new observation
 
 From the repository root, use a fresh `--cache-dir` for a new observation date.
 Without it the commands reuse cached responses and measurements. The discovery

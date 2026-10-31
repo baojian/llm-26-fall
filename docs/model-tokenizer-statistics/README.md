@@ -12,8 +12,10 @@ Collection date: **2026-10-31**.
 The [expanded Hub catalog](expanded-catalog.md) adds a reproducible discovery
 and measurement workflow for **11,210 Hugging Face repositories**, including
 fine-tunes, quantized copies, merges, and adapters. Its local CSV/JSON includes
-these 84 curated records and has **11,229 rows** in total. The large generated
-catalog and tokenizer cache remain in ignored `workspace/`.
+these 84 curated records and has **11,229 rows** in total. A compressed
+[data snapshot](snapshots/2026-10-31/) is committed for use on another computer.
+Working copies, tokenizer caches, and generated figures remain in ignored
+`workspace/`.
 
 Each row describes one named model variant or API snapshot. Parameter sizes,
 base models, instruction variants, and updated checkpoints are not assumed to
