@@ -41,10 +41,17 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Encoder-only historical tokenizer baseline. The 3.3B-word corpus is not a token count."
+    "notes": "Encoder-only historical tokenizer baseline. The 3.3B-word corpus is not a token count.",
+    "hf_repository_created_at": "2022-03-02T23:29:04.000Z",
+    "earliest_repository_record_at": "2018-11-14T23:35:08.000Z",
+    "earliest_repository_record_kind": "earliest_hf_commit",
+    "earliest_repository_record_source_url": "https://huggingface.co/google-bert/bert-base-uncased/commit/2f07d813ca87c8c709147704c87210359ccf2309",
+    "timeline_date": "2018-11-14",
+    "timeline_date_basis": "earliest_hf_commit",
+    "timeline_date_source_url": "https://huggingface.co/google-bert/bert-base-uncased/commit/2f07d813ca87c8c709147704c87210359ccf2309"
   },
   {
-    "release_date": "2018",
+    "release_date": "2018-06-11",
     "model_name": "GPT-1",
     "architecture": "OpenAIGPTLMHeadModel",
     "tokenizer_local_path": "workspace/llm-tokenizers/huggingface/openai-community/openai-gpt/1e0d4f3028acbffb47fe933cea64619c5ec1a002",
@@ -56,8 +63,8 @@
     "weights_access": "open_weights",
     "license": "mit",
     "parameters_billion": 0.117,
-    "release_date_precision": "year",
-    "release_date_source_url": "https://huggingface.co/openai-community/openai-gpt/blob/1e0d4f3028acbffb47fe933cea64619c5ec1a002/README.md",
+    "release_date_precision": "day",
+    "release_date_source_url": "https://openai.com/index/language-unsupervised/",
     "model_source_url": "https://huggingface.co/openai-community/openai-gpt/blob/1e0d4f3028acbffb47fe933cea64619c5ec1a002/README.md",
     "architecture_source_url": "https://huggingface.co/openai-community/openai-gpt/blob/1e0d4f3028acbffb47fe933cea64619c5ec1a002/config.json",
     "config_model_type": "openai-gpt",
@@ -85,7 +92,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Historical baseline. Exact original release day has not been verified here; source describes the 2018 model. Corpus size is reported in books/words, not converted to tokens."
+    "notes": "Historical baseline. Release day follows the dated OpenAI announcement. Corpus size is reported in books/words, not converted to tokens.",
+    "hf_repository_created_at": "2022-03-02T23:29:04.000Z",
+    "earliest_repository_record_at": "2019-01-08T15:40:22.000Z",
+    "earliest_repository_record_kind": "earliest_hf_commit",
+    "earliest_repository_record_source_url": "https://huggingface.co/openai-community/openai-gpt/commit/93e4e9b342c2dd0c9e0402812bd6eea4871e99c2",
+    "timeline_date": "2018-06-11",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://openai.com/index/language-unsupervised/"
   },
   {
     "release_date": "2019",
@@ -129,7 +143,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Encoder-decoder historical tokenizer baseline; no training-token count is inferred from corpus bytes or a different training schedule."
+    "notes": "Encoder-decoder historical tokenizer baseline; no training-token count is inferred from corpus bytes or a different training schedule.",
+    "hf_repository_created_at": "2022-03-02T23:29:04.000Z",
+    "earliest_repository_record_at": "2019-12-12T10:37:43.000Z",
+    "earliest_repository_record_kind": "earliest_hf_commit",
+    "earliest_repository_record_source_url": "https://huggingface.co/google-t5/t5-base/commit/666f4ee1ab305b1835b95ee83c183c4d0948bf2e",
+    "timeline_date": "2019-12-12",
+    "timeline_date_basis": "earliest_hf_commit",
+    "timeline_date_source_url": "https://huggingface.co/google-t5/t5-base/commit/666f4ee1ab305b1835b95ee83c183c4d0948bf2e"
   },
   {
     "release_date": "2019",
@@ -173,7 +194,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "The model card reports 40GB of training text; no byte-to-token conversion is made. GPT-2 sizes were released on different dates, so only the verified year is recorded."
+    "notes": "The model card reports 40GB of training text; no byte-to-token conversion is made. GPT-2 sizes were released on different dates, so only the verified year is recorded.",
+    "hf_repository_created_at": "2022-03-02T23:29:04.000Z",
+    "earliest_repository_record_at": "2019-11-05T17:51:20.000Z",
+    "earliest_repository_record_kind": "earliest_hf_commit",
+    "earliest_repository_record_source_url": "https://huggingface.co/openai-community/gpt2-xl/commit/f5f1719dba1bf0c7e434a195ab0deb077584048c",
+    "timeline_date": "2019-11-05",
+    "timeline_date_basis": "earliest_hf_commit",
+    "timeline_date_source_url": "https://huggingface.co/openai-community/gpt2-xl/commit/f5f1719dba1bf0c7e434a195ab0deb077584048c"
   },
   {
     "release_date": "2020",
@@ -217,10 +245,17 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Multilingual encoder-decoder baseline; exact original release day and training-token total are unverified in this collection."
+    "notes": "Multilingual encoder-decoder baseline; exact original release day and training-token total are unverified in this collection.",
+    "hf_repository_created_at": "2022-03-02T23:29:05.000Z",
+    "earliest_repository_record_at": "2020-11-17T13:59:37.000Z",
+    "earliest_repository_record_kind": "earliest_hf_commit",
+    "earliest_repository_record_source_url": "https://huggingface.co/google/mt5-base/commit/9b368d68699b7557a92d1729ab18fdfcab33d231",
+    "timeline_date": "2020-11-17",
+    "timeline_date_basis": "earliest_hf_commit",
+    "timeline_date_source_url": "https://huggingface.co/google/mt5-base/commit/9b368d68699b7557a92d1729ab18fdfcab33d231"
   },
   {
-    "release_date": "2020",
+    "release_date": "2020-06-11",
     "model_name": "GPT-3 davinci (175B)",
     "architecture": "Dense autoregressive Transformer",
     "tokenizer_local_path": "workspace/llm-tokenizers/tiktoken/0.14.0/r50k_base",
@@ -232,8 +267,8 @@
     "weights_access": "closed_weights",
     "license": null,
     "parameters_billion": 175,
-    "release_date_precision": "year",
-    "release_date_source_url": "https://arxiv.org/abs/2005.14165",
+    "release_date_precision": "day",
+    "release_date_source_url": "https://openai.com/index/openai-api/",
     "model_source_url": "https://arxiv.org/abs/2005.14165",
     "architecture_source_url": "https://arxiv.org/abs/2005.14165",
     "config_model_type": null,
@@ -261,7 +296,14 @@
     "pretraining_count_notes": "GPT-3 paper reports 300B tokens processed. This row is original davinci, not the later davinci-002 replacement.",
     "pretraining_source_url": "https://arxiv.org/abs/2005.14165",
     "collected_at": "2026-10-31",
-    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry."
+    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2020-06-11",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://openai.com/index/openai-api/"
   },
   {
     "release_date": "2021",
@@ -305,7 +347,14 @@
     "pretraining_count_notes": "Model card reports 402B tokens processed over 383,500 steps.",
     "pretraining_source_url": "https://huggingface.co/EleutherAI/gpt-j-6b/blob/47e169305d2e8376be1d31e765533382721b2cc1/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2022-03-02T23:29:04.000Z",
+    "earliest_repository_record_at": "2021-08-05T14:30:56.000Z",
+    "earliest_repository_record_kind": "earliest_hf_commit",
+    "earliest_repository_record_source_url": "https://huggingface.co/EleutherAI/gpt-j-6b/commit/f5ee4a94a0bba47a16e863891e27870d326fe400",
+    "timeline_date": "2021-08-05",
+    "timeline_date_basis": "earliest_hf_commit",
+    "timeline_date_source_url": "https://huggingface.co/EleutherAI/gpt-j-6b/commit/f5ee4a94a0bba47a16e863891e27870d326fe400"
   },
   {
     "release_date": "2021",
@@ -349,7 +398,14 @@
     "pretraining_count_notes": "Model card reports 420B tokens processed over 400,000 steps.",
     "pretraining_source_url": "https://huggingface.co/EleutherAI/gpt-neo-2.7B/blob/e24fa291132763e59f4a5422741b424fb5d59056/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2022-03-02T23:29:04.000Z",
+    "earliest_repository_record_at": "2021-03-30T14:31:55.000Z",
+    "earliest_repository_record_kind": "earliest_hf_commit",
+    "earliest_repository_record_source_url": "https://huggingface.co/EleutherAI/gpt-neo-2.7B/commit/d31f41580505f92f0f18c0c9287c884958d5382a",
+    "timeline_date": "2021-03-30",
+    "timeline_date_basis": "earliest_hf_commit",
+    "timeline_date_source_url": "https://huggingface.co/EleutherAI/gpt-neo-2.7B/commit/d31f41580505f92f0f18c0c9287c884958d5382a"
   },
   {
     "release_date": "2022",
@@ -393,7 +449,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "The model card architecture table says 50,257 vocabulary entries, but the pinned tokenizer artifact measures 50,277. The measured artifact is authoritative for the count column."
+    "notes": "The model card architecture table says 50,257 vocabulary entries, but the pinned tokenizer artifact measures 50,277. The measured artifact is authoritative for the count column.",
+    "hf_repository_created_at": "2022-04-07T20:28:29.000Z",
+    "earliest_repository_record_at": "2022-04-07T20:28:29.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/EleutherAI/gpt-neox-20b",
+    "timeline_date": "2022-04-07",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/EleutherAI/gpt-neox-20b"
   },
   {
     "release_date": "2022",
@@ -437,7 +500,14 @@
     "pretraining_count_notes": "The model card identifies 180B tokens as the final training dataset, not as a separately verified total of tokens processed.",
     "pretraining_source_url": "https://huggingface.co/facebook/opt-6.7b/blob/a45aa65bbeb77c1558bc99bedc6779195462dab0/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2022-05-11T08:26:52.000Z",
+    "earliest_repository_record_at": "2022-05-11T08:26:52.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/facebook/opt-6.7b",
+    "timeline_date": "2022-05-11",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/facebook/opt-6.7b"
   },
   {
     "release_date": "2022-07",
@@ -481,7 +551,14 @@
     "pretraining_count_notes": "Model card reports 350B unique corpus tokens and 366B total seen tokens. Both are rounded published figures.",
     "pretraining_source_url": "https://huggingface.co/bigscience/bloom/blob/7f10a99ce7c08f03c7719a586cb2cbda1433ac05/README.md",
     "collected_at": "2026-10-31",
-    "notes": "The card labels July 11 as a release-date estimate; the month is retained without asserting an exact day."
+    "notes": "The card labels July 11 as a release-date estimate; the month is retained without asserting an exact day.",
+    "hf_repository_created_at": "2022-05-19T11:53:33.000Z",
+    "earliest_repository_record_at": "2022-05-19T11:53:33.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/bigscience/bloom",
+    "timeline_date": "2022-05-19",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/bigscience/bloom"
   },
   {
     "release_date": "2023",
@@ -525,7 +602,14 @@
     "pretraining_count_notes": "143,000 steps times 2,097,152 tokens per step, as documented in the model card. This is the final step143000 checkpoint of the retrained suite.",
     "pretraining_source_url": "https://huggingface.co/EleutherAI/pythia-12b/blob/bb1e3e710cdf6b524461d543cfb5ba773f0a81b6/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2023-02-28T18:48:12.000Z",
+    "earliest_repository_record_at": "2023-02-28T18:48:12.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/EleutherAI/pythia-12b",
+    "timeline_date": "2023-02-28",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/EleutherAI/pythia-12b"
   },
   {
     "release_date": "2023",
@@ -569,7 +653,14 @@
     "pretraining_count_notes": "Model card identifies the final checkpoint as trained on 2.6T tokens and distinguishes earlier 0.2T-2.4T checkpoints.",
     "pretraining_source_url": "https://huggingface.co/baichuan-inc/Baichuan2-7B-Base/blob/f9d4d8dd2f7a3dbede3bda3b0cf0224e9272bbe5/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2023-08-30T10:11:04.000Z",
+    "earliest_repository_record_at": "2023-08-30T10:11:04.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/baichuan-inc/Baichuan2-7B-Base",
+    "timeline_date": "2023-08-30",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/baichuan-inc/Baichuan2-7B-Base"
   },
   {
     "release_date": "2023",
@@ -613,7 +704,14 @@
     "pretraining_count_notes": "Model card explicitly says the 7B base model was trained from scratch on 2T tokens.",
     "pretraining_source_url": "https://huggingface.co/deepseek-ai/deepseek-llm-7b-base/blob/7683fea62db869066ddaff6a41d032262c490d4f/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2023-11-29T03:08:22.000Z",
+    "earliest_repository_record_at": "2023-11-29T03:08:22.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/deepseek-ai/deepseek-llm-7b-base",
+    "timeline_date": "2023-11-29",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/deepseek-ai/deepseek-llm-7b-base"
   },
   {
     "release_date": "2023",
@@ -657,7 +755,14 @@
     "pretraining_count_notes": "Model card explicitly reports 1,000B training tokens for this size.",
     "pretraining_source_url": "https://huggingface.co/tiiuae/falcon-40b/blob/05ab2ee8d6b593bdbab17d728de5c028a7a94d83/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2023-05-24T12:08:30.000Z",
+    "earliest_repository_record_at": "2023-05-24T12:08:30.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/tiiuae/falcon-40b",
+    "timeline_date": "2023-05-24",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/tiiuae/falcon-40b"
   },
   {
     "release_date": "2023",
@@ -701,7 +806,14 @@
     "pretraining_count_notes": "Model card explicitly reports 1,500B training tokens for this size.",
     "pretraining_source_url": "https://huggingface.co/tiiuae/falcon-7b/blob/ec89142b67d748a1865ea4451372db8313ada0d8/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2023-04-24T16:36:24.000Z",
+    "earliest_repository_record_at": "2023-04-24T16:36:24.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/tiiuae/falcon-7b",
+    "timeline_date": "2023-04-24",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/tiiuae/falcon-7b"
   },
   {
     "release_date": "2023-03-01",
@@ -745,7 +857,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry."
+    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2023-03-01",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://developers.openai.com/api/docs/models/gpt-3.5-turbo"
   },
   {
     "release_date": "2023-03-14",
@@ -789,7 +908,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": "https://arxiv.org/abs/2303.08774",
     "collected_at": "2026-10-31",
-    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry."
+    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2023-03-14",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://developers.openai.com/api/docs/models/gpt-4"
   },
   {
     "release_date": "2023-05-05",
@@ -833,7 +959,14 @@
     "pretraining_count_notes": "Publisher launch post reports 1T tokens processed by the base model.",
     "pretraining_source_url": "https://www.databricks.com/blog/mpt-7b",
     "collected_at": "2026-10-31",
-    "notes": "The original repository returned HTTP 401 during collection. Release and training metadata come from the publisher launch post; exact tokenizer artifacts remain unverified."
+    "notes": "The original repository returned HTTP 401 during collection. Release and training metadata come from the publisher launch post; exact tokenizer artifacts remain unverified.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2023-05-05",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://www.databricks.com/blog/mpt-7b"
   },
   {
     "release_date": "2023-07-11",
@@ -877,7 +1010,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Exact public tokenizer artifacts and undisclosed pretraining totals are not verified for this snapshot; no community surrogate tokenizer is substituted."
+    "notes": "Exact public tokenizer artifacts and undisclosed pretraining totals are not verified for this snapshot; no community surrogate tokenizer is substituted.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2023-07-11",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://www.anthropic.com/news/claude-2"
   },
   {
     "release_date": "2023-07-18",
@@ -921,7 +1061,14 @@
     "pretraining_count_notes": "Model card reports pretraining on 2T tokens; the exact deduplicated corpus size is not separately disclosed.",
     "pretraining_source_url": "https://huggingface.co/meta-llama/Llama-2-70b-hf/blob/3aba440b59558f995867ba6e1f58f21d0336b5bb/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2023-07-11T08:56:34.000Z",
+    "earliest_repository_record_at": "2023-07-11T08:56:34.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/meta-llama/Llama-2-70b-hf",
+    "timeline_date": "2023-07-18",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://huggingface.co/meta-llama/Llama-2-70b-hf/blob/3aba440b59558f995867ba6e1f58f21d0336b5bb/README.md"
   },
   {
     "release_date": "2023-07-18",
@@ -965,7 +1112,14 @@
     "pretraining_count_notes": "Model card reports pretraining on 2T tokens; the exact deduplicated corpus size is not separately disclosed.",
     "pretraining_source_url": "https://huggingface.co/meta-llama/Llama-2-7b-hf/blob/01c7f73d771dfac7d292323805ebc428287df4f9/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2023-07-13T16:16:13.000Z",
+    "earliest_repository_record_at": "2023-07-13T16:16:13.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/meta-llama/Llama-2-7b-hf",
+    "timeline_date": "2023-07-18",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://huggingface.co/meta-llama/Llama-2-7b-hf/blob/01c7f73d771dfac7d292323805ebc428287df4f9/README.md"
   },
   {
     "release_date": "2023-09-25",
@@ -1009,7 +1163,14 @@
     "pretraining_count_notes": "The model card states over 3T tokens after deduplication and filtering; no independent processed-token total is asserted.",
     "pretraining_source_url": "https://huggingface.co/Qwen/Qwen-14B/blob/c4051215126d906ac22bb67fe5edb39a921cd831/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2023-09-24T03:28:41.000Z",
+    "earliest_repository_record_at": "2023-09-24T03:28:41.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/Qwen/Qwen-14B",
+    "timeline_date": "2023-09-25",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://github.com/QwenLM/Qwen/blob/main/README.md"
   },
   {
     "release_date": "2023-09-25",
@@ -1053,7 +1214,14 @@
     "pretraining_count_notes": "Release notes increase training tokens from 2.2T to 2.4T. The current model card separately describes over 2.4T corpus tokens. This row is the September update, not the August initial checkpoint.",
     "pretraining_source_url": "https://github.com/QwenLM/Qwen/blob/main/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2023-08-03T02:51:18.000Z",
+    "earliest_repository_record_at": "2023-08-03T02:51:18.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/Qwen/Qwen-7B",
+    "timeline_date": "2023-09-25",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://github.com/QwenLM/Qwen/blob/main/README.md"
   },
   {
     "release_date": "2023-09-27",
@@ -1097,7 +1265,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2023-09-20T13:03:50.000Z",
+    "earliest_repository_record_at": "2023-09-20T13:03:50.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/mistralai/Mistral-7B-v0.1",
+    "timeline_date": "2023-09-27",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://mistral.ai/news/announcing-mistral-7b/"
   },
   {
     "release_date": "2023-11-02",
@@ -1141,10 +1316,17 @@
     "pretraining_count_notes": "The release model card describes a 3T multilingual corpus; processed-token total is not independently separated.",
     "pretraining_source_url": "https://huggingface.co/01-ai/Yi-6B/blob/80080be87ec5a0103f643195f2d9003b8068941b/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2023-11-01T11:14:36.000Z",
+    "earliest_repository_record_at": "2023-11-01T11:14:36.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/01-ai/Yi-6B",
+    "timeline_date": "2023-11-02",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://huggingface.co/01-ai/Yi-6B/blob/80080be87ec5a0103f643195f2d9003b8068941b/README.md"
   },
   {
-    "release_date": "2023-12",
+    "release_date": "2023-12-06",
     "model_name": "Gemini 1.0 Pro",
     "architecture": null,
     "tokenizer_local_path": "workspace/llm-tokenizers/google-sdk/gemma1/33b652c465537c6158f9a472ea5700e5e770ad3f",
@@ -1156,7 +1338,7 @@
     "weights_access": "closed_weights",
     "license": null,
     "parameters_billion": null,
-    "release_date_precision": "month",
+    "release_date_precision": "day",
     "release_date_source_url": "https://blog.google/technology/ai/google-gemini-ai/",
     "model_source_url": "https://blog.google/technology/ai/google-gemini-ai/",
     "architecture_source_url": null,
@@ -1185,7 +1367,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Official Google SDK local text-tokenizer mapping inspected at the pinned SDK revision. This is not evidence of the full multimodal service vocabulary or a preserved launch-day tokenizer. The first release date and the current SDK mapping are separate observations."
+    "notes": "Official Google SDK local text-tokenizer mapping inspected at the pinned SDK revision. This is not evidence of the full multimodal service vocabulary or a preserved launch-day tokenizer. The first release date and the current SDK mapping are separate observations.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2023-12-06",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://blog.google/technology/ai/google-gemini-ai/"
   },
   {
     "release_date": "2023-12",
@@ -1229,7 +1418,14 @@
     "pretraining_count_notes": "The model card distinguishes a 250B-token dataset from 1.4T tokens processed.",
     "pretraining_source_url": "https://huggingface.co/microsoft/phi-2/blob/810d367871c1d460086d9f82db8696f2e0a0fcd0/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2023-12-13T21:19:59.000Z",
+    "earliest_repository_record_at": "2023-12-13T21:19:59.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/microsoft/phi-2",
+    "timeline_date": "2023-12-13",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/microsoft/phi-2"
   },
   {
     "release_date": "2023-12",
@@ -1273,7 +1469,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "First torrent release predates the December 11 blog. Month precision avoids treating the blog date as the first release day."
+    "notes": "First torrent release predates the December 11 blog. Month precision avoids treating the blog date as the first release day.",
+    "hf_repository_created_at": "2023-12-01T09:42:00.000Z",
+    "earliest_repository_record_at": "2023-12-01T09:42:00.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/mistralai/Mixtral-8x7B-v0.1",
+    "timeline_date": "2023-12-01",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/mistralai/Mixtral-8x7B-v0.1"
   },
   {
     "release_date": "2024",
@@ -1317,7 +1520,14 @@
     "pretraining_count_notes": "The model card table reports 2.5T training tokens for this exact 7B release; the separately named Twin-2T checkpoint is not used.",
     "pretraining_source_url": "https://huggingface.co/allenai/OLMo-7B-hf/blob/11fb3186a2e4f681edea621fa8b4345147a9db6a/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-04-12T22:33:46.000Z",
+    "earliest_repository_record_at": "2024-04-12T22:33:46.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/allenai/OLMo-7B-hf",
+    "timeline_date": "2024-04-12",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/allenai/OLMo-7B-hf"
   },
   {
     "release_date": "2024-02-15",
@@ -1361,7 +1571,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": "https://arxiv.org/abs/2403.05530",
     "collected_at": "2026-10-31",
-    "notes": "Official Google SDK local text-tokenizer mapping inspected at the pinned SDK revision. This is not evidence of the full multimodal service vocabulary or a preserved launch-day tokenizer. The first release date and the current SDK mapping are separate observations."
+    "notes": "Official Google SDK local text-tokenizer mapping inspected at the pinned SDK revision. This is not evidence of the full multimodal service vocabulary or a preserved launch-day tokenizer. The first release date and the current SDK mapping are separate observations.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2024-02-15",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://blog.google/technology/ai/google-gemini-next-generation-model-february-2024/"
   },
   {
     "release_date": "2024-02-21",
@@ -1405,7 +1622,14 @@
     "pretraining_count_notes": "Technical report distinguishes 2T for the 2B model and 6T for the 7B model. The shared model card text alone reports the family maximum.",
     "pretraining_source_url": "https://storage.googleapis.com/deepmind-media/gemma/gemma-report.pdf",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-02-08T08:11:26.000Z",
+    "earliest_repository_record_at": "2024-02-08T08:11:26.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/google/gemma-2b",
+    "timeline_date": "2024-02-21",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://ai.google.dev/gemma/docs/releases"
   },
   {
     "release_date": "2024-02-21",
@@ -1449,7 +1673,14 @@
     "pretraining_count_notes": "Technical report distinguishes 2T for the 2B model and 6T for the 7B model. The shared model card text alone reports the family maximum.",
     "pretraining_source_url": "https://storage.googleapis.com/deepmind-media/gemma/gemma-report.pdf",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-02-08T22:36:43.000Z",
+    "earliest_repository_record_at": "2024-02-08T22:36:43.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/google/gemma-7b",
+    "timeline_date": "2024-02-21",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://ai.google.dev/gemma/docs/releases"
   },
   {
     "release_date": "2024-03",
@@ -1493,7 +1724,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Original public release month; local artifact access requires the publisher approval flow."
+    "notes": "Original public release month; local artifact access requires the publisher approval flow.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": null,
+    "timeline_date_basis": null,
+    "timeline_date_source_url": null
   },
   {
     "release_date": "2024-03",
@@ -1537,7 +1775,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Hybrid Transformer/Mamba architecture with mixture-of-experts layers; config class is preserved rather than relabeling it a standard Transformer."
+    "notes": "Hybrid Transformer/Mamba architecture with mixture-of-experts layers; config class is preserved rather than relabeling it a standard Transformer.",
+    "hf_repository_created_at": "2024-03-28T12:32:22.000Z",
+    "earliest_repository_record_at": "2024-03-28T12:32:22.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/ai21labs/Jamba-v0.1",
+    "timeline_date": "2024-03-28",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/ai21labs/Jamba-v0.1"
   },
   {
     "release_date": "2024-03-04",
@@ -1581,7 +1826,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Exact public tokenizer artifacts and undisclosed pretraining totals are not verified for this snapshot; no community surrogate tokenizer is substituted."
+    "notes": "Exact public tokenizer artifacts and undisclosed pretraining totals are not verified for this snapshot; no community surrogate tokenizer is substituted.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2024-03-04",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://www.anthropic.com/news/claude-3-family"
   },
   {
     "release_date": "2024-03-27",
@@ -1625,7 +1877,14 @@
     "pretraining_count_notes": "Publisher launch post reports 12T pretraining tokens, 132B total and 36B active parameters.",
     "pretraining_source_url": "https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm",
     "collected_at": "2026-10-31",
-    "notes": "Original Hugging Face metadata returned HTTP 401. Publisher reports use of the GPT-4 tiktoken tokenizer; model-specific added tokens are not independently measured."
+    "notes": "Original Hugging Face metadata returned HTTP 401. Publisher reports use of the GPT-4 tiktoken tokenizer; model-specific added tokens are not independently measured.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2024-03-27",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm"
   },
   {
     "release_date": "2024-04-18",
@@ -1669,7 +1928,14 @@
     "pretraining_count_notes": "Model card states over 15T pretraining tokens.",
     "pretraining_source_url": "https://huggingface.co/meta-llama/Meta-Llama-3-8B/blob/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-04-17T09:35:16.000Z",
+    "earliest_repository_record_at": "2024-04-17T09:35:16.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/meta-llama/Meta-Llama-3-8B",
+    "timeline_date": "2024-04-18",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://huggingface.co/meta-llama/Meta-Llama-3-8B/blob/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/README.md"
   },
   {
     "release_date": "2024-04-24",
@@ -1713,7 +1979,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-04-23T20:35:09.000Z",
+    "earliest_repository_record_at": "2024-04-23T20:35:09.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/Snowflake/snowflake-arctic-base",
+    "timeline_date": "2024-04-24",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://huggingface.co/Snowflake/snowflake-arctic-base/blob/7f176173956a1738ca97f222daf15e389c02e005/README.md"
   },
   {
     "release_date": "2024-05-06",
@@ -1757,7 +2030,14 @@
     "pretraining_count_notes": "Model card describes an 8.1T-token pretraining corpus. Total versus active parameters are 236B versus 21B.",
     "pretraining_source_url": "https://huggingface.co/deepseek-ai/DeepSeek-V2/blob/4461458f186c35188585855f28f77af5661ad489/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-04-22T07:53:46.000Z",
+    "earliest_repository_record_at": "2024-04-22T07:53:46.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/deepseek-ai/DeepSeek-V2",
+    "timeline_date": "2024-05-06",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://github.com/deepseek-ai/DeepSeek-V2/blob/main/README.md"
   },
   {
     "release_date": "2024-05-13",
@@ -1801,7 +2081,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry."
+    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2024-05-13",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://developers.openai.com/api/docs/models/gpt-4o"
   },
   {
     "release_date": "2024-06",
@@ -1845,7 +2132,14 @@
     "pretraining_count_notes": "Pinned card identifies the June 2024 update and 4.9T training tokens. These are not the 3.3T tokens reported for the initial April model.",
     "pretraining_source_url": "https://huggingface.co/microsoft/Phi-3-mini-4k-instruct/blob/f39ac1d28e925b323eae81227eaba4464caced4e/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-04-22T16:18:17.000Z",
+    "earliest_repository_record_at": "2024-04-22T16:18:17.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/microsoft/Phi-3-mini-4k-instruct",
+    "timeline_date": "2024-04-22",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/microsoft/Phi-3-mini-4k-instruct"
   },
   {
     "release_date": "2024-06-07",
@@ -1889,7 +2183,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Release date follows the date printed on the official announcement. Corpus and processed-token counts are left unverified."
+    "notes": "Release date follows the date printed on the official announcement. Corpus and processed-token counts are left unverified.",
+    "hf_repository_created_at": "2024-06-04T13:35:27.000Z",
+    "earliest_repository_record_at": "2024-06-04T13:35:27.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/Qwen/Qwen2-7B",
+    "timeline_date": "2024-06-07",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://qwenlm.github.io/blog/qwen2/"
   },
   {
     "release_date": "2024-06-20",
@@ -1933,7 +2234,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Exact public tokenizer artifacts and undisclosed pretraining totals are not verified for this snapshot; no community surrogate tokenizer is substituted."
+    "notes": "Exact public tokenizer artifacts and undisclosed pretraining totals are not verified for this snapshot; no community surrogate tokenizer is substituted.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2024-06-20",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://www.anthropic.com/news/claude-3-5-sonnet"
   },
   {
     "release_date": "2024-06-27",
@@ -1977,7 +2285,14 @@
     "pretraining_count_notes": "Model card gives 13T tokens for the 27B model specifically.",
     "pretraining_source_url": "https://huggingface.co/google/gemma-2-27b/blob/938270f5272feb02779b55c2bb2fffdd0f53ff0c/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-06-24T08:05:17.000Z",
+    "earliest_repository_record_at": "2024-06-24T08:05:17.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/google/gemma-2-27b",
+    "timeline_date": "2024-06-27",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://ai.google.dev/gemma/docs/releases"
   },
   {
     "release_date": "2024-06-27",
@@ -2021,7 +2336,14 @@
     "pretraining_count_notes": "Model card gives 8T tokens for the 9B model specifically.",
     "pretraining_source_url": "https://huggingface.co/google/gemma-2-9b/blob/33c193028431c2fde6c6e51f29e6f17b60cbfac6/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-06-24T08:10:30.000Z",
+    "earliest_repository_record_at": "2024-06-24T08:10:30.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/google/gemma-2-9b",
+    "timeline_date": "2024-06-27",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://ai.google.dev/gemma/docs/releases"
   },
   {
     "release_date": "2024-07-18",
@@ -2065,7 +2387,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-07-18T10:26:55.000Z",
+    "earliest_repository_record_at": "2024-07-18T10:26:55.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/mistralai/Mistral-Nemo-Base-2407",
+    "timeline_date": "2024-07-18",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://mistral.ai/news/mistral-nemo/"
   },
   {
     "release_date": "2024-07-18",
@@ -2109,7 +2438,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry."
+    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2024-07-18",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://developers.openai.com/api/docs/models/gpt-4o-mini"
   },
   {
     "release_date": "2024-07-23",
@@ -2153,7 +2489,14 @@
     "pretraining_count_notes": "Model card reports approximately 15T pretraining tokens.",
     "pretraining_source_url": "https://huggingface.co/meta-llama/Meta-Llama-3.1-8B/blob/d04e592bb4f6aa9cfee91e2e20afa771667e1d4b/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2024-07-23",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://huggingface.co/meta-llama/Meta-Llama-3.1-8B/blob/d04e592bb4f6aa9cfee91e2e20afa771667e1d4b/README.md"
   },
   {
     "release_date": "2024-09-19",
@@ -2197,7 +2540,14 @@
     "pretraining_count_notes": "Release describes a family pretraining corpus scaling up to 18T tokens; this is not a verified per-checkpoint processed-token total.",
     "pretraining_source_url": "https://qwenlm.github.io/blog/qwen2.5-llm/",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-09-15T12:17:40.000Z",
+    "earliest_repository_record_at": "2024-09-15T12:17:40.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/Qwen/Qwen2.5-7B",
+    "timeline_date": "2024-09-19",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://qwenlm.github.io/blog/qwen2.5/"
   },
   {
     "release_date": "2024-10-21",
@@ -2241,7 +2591,14 @@
     "pretraining_count_notes": "Model card reports 10T tokens in stage 1 plus 2T tokens in stage 2.",
     "pretraining_source_url": "https://huggingface.co/ibm-granite/granite-3.0-8b-base/blob/4fad7f8ad56393dcef4e34e37a35962bd091f320/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-10-02T21:08:16.000Z",
+    "earliest_repository_record_at": "2024-10-02T21:08:16.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/ibm-granite/granite-3.0-8b-base",
+    "timeline_date": "2024-10-21",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://huggingface.co/ibm-granite/granite-3.0-8b-base/blob/4fad7f8ad56393dcef4e34e37a35962bd091f320/README.md"
   },
   {
     "release_date": "2024-11",
@@ -2285,7 +2642,14 @@
     "pretraining_count_notes": "4T tokens in stage 1. Stage 2 trains three 50B-token branches that are merged; no single additive final-checkpoint total is asserted.",
     "pretraining_source_url": "https://huggingface.co/allenai/OLMo-2-1124-7B/blob/7df9a82518afdecae4e8c026b27adccc8c1f0032/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-10-29T21:08:22.000Z",
+    "earliest_repository_record_at": "2024-10-29T21:08:22.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/allenai/OLMo-2-1124-7B",
+    "timeline_date": "2024-10-29",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/allenai/OLMo-2-1124-7B"
   },
   {
     "release_date": "2024-12",
@@ -2329,7 +2693,14 @@
     "pretraining_count_notes": "Model card reports the 14.8T-token base pretraining run, preceding SFT and RL.",
     "pretraining_source_url": "https://huggingface.co/deepseek-ai/DeepSeek-V3-Base/blob/afb92e1fa402c2be2a9eb085312bb02e0384d6c7/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2024-12-25T12:52:06.000Z",
+    "earliest_repository_record_at": "2024-12-25T12:52:06.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/deepseek-ai/DeepSeek-V3-Base",
+    "timeline_date": "2024-12-25",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/deepseek-ai/DeepSeek-V3-Base"
   },
   {
     "release_date": "2024-12-12",
@@ -2373,7 +2744,14 @@
     "pretraining_count_notes": "Model card reports 9.8T training tokens.",
     "pretraining_source_url": "https://huggingface.co/microsoft/phi-4/blob/2db69c1c3e91a05d2c64a3185acfbaf36f744e25/README.md",
     "collected_at": "2026-10-31",
-    "notes": "Date is the model release date stated in its card; public Hugging Face weights followed in January 2025. Do not interpret this as the weight-publication date."
+    "notes": "Date is the model release date stated in its card; public Hugging Face weights followed in January 2025. Do not interpret this as the weight-publication date.",
+    "hf_repository_created_at": "2024-12-11T11:47:29.000Z",
+    "earliest_repository_record_at": "2024-12-11T11:47:29.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/microsoft/phi-4",
+    "timeline_date": "2024-12-12",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://huggingface.co/microsoft/phi-4/blob/2db69c1c3e91a05d2c64a3185acfbaf36f744e25/README.md"
   },
   {
     "release_date": "2024-12-17",
@@ -2417,7 +2795,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry."
+    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2024-12-17",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://developers.openai.com/api/docs/models/o1"
   },
   {
     "release_date": "2025-01",
@@ -2461,7 +2846,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Hybrid attention/MoE model. Architecture class is copied from the published configuration."
+    "notes": "Hybrid attention/MoE model. Architecture class is copied from the published configuration.",
+    "hf_repository_created_at": "2025-01-12T13:48:31.000Z",
+    "earliest_repository_record_at": "2025-01-12T13:48:31.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/MiniMaxAI/MiniMax-Text-01",
+    "timeline_date": "2025-01-12",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/MiniMaxAI/MiniMax-Text-01"
   },
   {
     "release_date": "2025-01",
@@ -2505,7 +2897,14 @@
     "pretraining_count_notes": "Inherited pretraining of the DeepSeek-V3 base model. Excludes R1 post-training and does not describe R1-Distill models.",
     "pretraining_source_url": "https://huggingface.co/deepseek-ai/DeepSeek-V3-Base",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2025-01-20T03:46:07.000Z",
+    "earliest_repository_record_at": "2025-01-20T03:46:07.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/deepseek-ai/DeepSeek-R1",
+    "timeline_date": "2025-01-20",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/deepseek-ai/DeepSeek-R1"
   },
   {
     "release_date": "2025-03-10",
@@ -2549,7 +2948,14 @@
     "pretraining_count_notes": "Model card explicitly reports 14T training tokens for this size; multimodal token accounting is not normalized across providers.",
     "pretraining_source_url": "https://huggingface.co/google/gemma-3-27b-pt/blob/9fe3c4ebc93fbadb14913801536d022054ef11cc/README.md",
     "collected_at": "2026-10-31",
-    "notes": "Google release log dates the release March 10; the public launch blog is March 12. Both should be kept distinct."
+    "notes": "Google release log dates the release March 10; the public launch blog is March 12. Both should be kept distinct.",
+    "hf_repository_created_at": "2025-03-01T19:10:03.000Z",
+    "earliest_repository_record_at": "2025-03-01T19:10:03.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/google/gemma-3-27b-pt",
+    "timeline_date": "2025-03-10",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://ai.google.dev/gemma/docs/releases"
   },
   {
     "release_date": "2025-03-10",
@@ -2593,7 +2999,14 @@
     "pretraining_count_notes": "Model card explicitly reports 4T training tokens for this size; multimodal token accounting is not normalized across providers.",
     "pretraining_source_url": "https://huggingface.co/google/gemma-3-4b-pt/blob/cc012e0a6d0787b4adcc0fa2c4da74402494554d/README.md",
     "collected_at": "2026-10-31",
-    "notes": "Google release log dates the release March 10; the public launch blog is March 12. Both should be kept distinct."
+    "notes": "Google release log dates the release March 10; the public launch blog is March 12. Both should be kept distinct.",
+    "hf_repository_created_at": "2025-02-20T21:19:40.000Z",
+    "earliest_repository_record_at": "2025-02-20T21:19:40.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/google/gemma-3-4b-pt",
+    "timeline_date": "2025-03-10",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://ai.google.dev/gemma/docs/releases"
   },
   {
     "release_date": "2025-03-17",
@@ -2637,7 +3050,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2025-03-16T23:31:11.000Z",
+    "earliest_repository_record_at": "2025-03-16T23:31:11.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/mistralai/Mistral-Small-3.1-24B-Base-2503",
+    "timeline_date": "2025-03-17",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://mistral.ai/news/mistral-small-3-1"
   },
   {
     "release_date": "2025-04-05",
@@ -2681,7 +3101,14 @@
     "pretraining_count_notes": "Model card reports approximately 40T tokens for Scout, versus 22T for Maverick. 17B active parameters; 109B total.",
     "pretraining_source_url": "https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E/blob/14d516bdff6ac06cec40678529222f193386189c/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2025-04-02T17:03:27.000Z",
+    "earliest_repository_record_at": "2025-04-02T17:03:27.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/meta-llama/Llama-4-Scout-17B-16E",
+    "timeline_date": "2025-04-05",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E/blob/14d516bdff6ac06cec40678529222f193386189c/README.md"
   },
   {
     "release_date": "2025-04-14",
@@ -2725,7 +3152,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry."
+    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2025-04-14",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://developers.openai.com/api/docs/models/gpt-4.1"
   },
   {
     "release_date": "2025-04-29",
@@ -2769,7 +3203,14 @@
     "pretraining_count_notes": "Official release describes the approximately 36T-token Qwen3 pretraining dataset. This is a family corpus figure, not an independently verified processed-token total for this checkpoint.",
     "pretraining_source_url": "https://qwenlm.github.io/blog/qwen3/",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2025-04-27T03:53:46.000Z",
+    "earliest_repository_record_at": "2025-04-27T03:53:46.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/Qwen/Qwen3-235B-A22B",
+    "timeline_date": "2025-04-29",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://qwenlm.github.io/blog/qwen3/"
   },
   {
     "release_date": "2025-04-29",
@@ -2813,7 +3254,14 @@
     "pretraining_count_notes": "Official release describes the approximately 36T-token Qwen3 pretraining dataset. This is a family corpus figure, not an independently verified processed-token total for this checkpoint.",
     "pretraining_source_url": "https://qwenlm.github.io/blog/qwen3/",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2025-04-27T03:42:21.000Z",
+    "earliest_repository_record_at": "2025-04-27T03:42:21.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/Qwen/Qwen3-8B",
+    "timeline_date": "2025-04-29",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://qwenlm.github.io/blog/qwen3/"
   },
   {
     "release_date": "2025-05-22",
@@ -2857,7 +3305,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Exact public tokenizer artifacts and undisclosed pretraining totals are not verified for this snapshot; no community surrogate tokenizer is substituted."
+    "notes": "Exact public tokenizer artifacts and undisclosed pretraining totals are not verified for this snapshot; no community surrogate tokenizer is substituted.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2025-05-22",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://www.anthropic.com/news/claude-4"
   },
   {
     "release_date": "2025-06-17",
@@ -2901,7 +3356,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Official Google SDK local text-tokenizer mapping inspected at the pinned SDK revision. This is not evidence of the full multimodal service vocabulary or a preserved launch-day tokenizer. The first release date and the current SDK mapping are separate observations."
+    "notes": "Official Google SDK local text-tokenizer mapping inspected at the pinned SDK revision. This is not evidence of the full multimodal service vocabulary or a preserved launch-day tokenizer. The first release date and the current SDK mapping are separate observations.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2025-06-17",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://ai.google.dev/gemini-api/docs/changelog"
   },
   {
     "release_date": "2025-07",
@@ -2945,7 +3407,14 @@
     "pretraining_count_notes": "Model card reports 11.2T pretraining tokens; the additional 140B reasoning midtraining tokens described under post-training are excluded.",
     "pretraining_source_url": "https://huggingface.co/HuggingFaceTB/SmolLM3-3B/blob/a07cc9a04f16550a088caea529712d1d335b0ac1/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2025-07-08T10:11:45.000Z",
+    "earliest_repository_record_at": "2025-07-08T10:11:45.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/HuggingFaceTB/SmolLM3-3B",
+    "timeline_date": "2025-07-08",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/HuggingFaceTB/SmolLM3-3B"
   },
   {
     "release_date": "2025-07",
@@ -2989,7 +3458,14 @@
     "pretraining_count_notes": "Model card explicitly reports 15.5T pretraining tokens; 1T total parameters and 32B active parameters.",
     "pretraining_source_url": "https://huggingface.co/moonshotai/Kimi-K2-Base/blob/ce72df012259dcc55d945e890f815fe7ef69159c/README.md",
     "collected_at": "2026-10-31",
-    "notes": "Pinned tokenizer implementation allocates 258 special/reserved entries after 163,584 base ranks, giving 163,842 entries. The model configuration has 163,840 rows. This source discrepancy is preserved; Kimi K2.5 instead allocates 256 special/reserved entries."
+    "notes": "Pinned tokenizer implementation allocates 258 special/reserved entries after 163,584 base ranks, giving 163,842 entries. The model configuration has 163,840 rows. This source discrepancy is preserved; Kimi K2.5 instead allocates 256 special/reserved entries.",
+    "hf_repository_created_at": "2025-07-03T12:49:14.000Z",
+    "earliest_repository_record_at": "2025-07-03T12:49:14.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/moonshotai/Kimi-K2-Base",
+    "timeline_date": "2025-07-03",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/moonshotai/Kimi-K2-Base"
   },
   {
     "release_date": "2025-07",
@@ -3033,7 +3509,14 @@
     "pretraining_count_notes": "GLM-5 model card identifies its predecessor GLM-4.5 pretraining data as 23T tokens; this is recorded as a dataset figure, not a separately verified training-step total.",
     "pretraining_source_url": "https://huggingface.co/zai-org/GLM-5",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2025-07-20T03:25:36.000Z",
+    "earliest_repository_record_at": "2025-07-20T03:25:36.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/zai-org/GLM-4.5",
+    "timeline_date": "2025-07-20",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/zai-org/GLM-4.5"
   },
   {
     "release_date": "2025-08-05",
@@ -3077,7 +3560,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Count is the exact published Hugging Face tokenizer artifact plus added-token configuration, not the 201,088-row model configuration or all reserved entries of tiktoken o200k_harmony. These representations differ at the inspected revisions."
+    "notes": "Count is the exact published Hugging Face tokenizer artifact plus added-token configuration, not the 201,088-row model configuration or all reserved entries of tiktoken o200k_harmony. These representations differ at the inspected revisions.",
+    "hf_repository_created_at": "2025-08-04T22:33:06.000Z",
+    "earliest_repository_record_at": "2025-08-04T22:33:06.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/openai/gpt-oss-120b",
+    "timeline_date": "2025-08-05",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://openai.com/index/introducing-gpt-oss/"
   },
   {
     "release_date": "2025-08-05",
@@ -3121,7 +3611,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Count is the exact published Hugging Face tokenizer artifact plus added-token configuration, not the 201,088-row model configuration or all reserved entries of tiktoken o200k_harmony. These representations differ at the inspected revisions."
+    "notes": "Count is the exact published Hugging Face tokenizer artifact plus added-token configuration, not the 201,088-row model configuration or all reserved entries of tiktoken o200k_harmony. These representations differ at the inspected revisions.",
+    "hf_repository_created_at": "2025-08-04T22:33:29.000Z",
+    "earliest_repository_record_at": "2025-08-04T22:33:29.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/openai/gpt-oss-20b",
+    "timeline_date": "2025-08-05",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://openai.com/index/introducing-gpt-oss/"
   },
   {
     "release_date": "2025-08-07",
@@ -3165,7 +3662,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry."
+    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2025-08-07",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://developers.openai.com/api/docs/models/gpt-5"
   },
   {
     "release_date": "2025-09",
@@ -3209,7 +3713,14 @@
     "pretraining_count_notes": "Model card explicitly lists pretraining at 15T tokens, followed by post-training; 80B total and 3B active parameters.",
     "pretraining_source_url": "https://huggingface.co/Qwen/Qwen3-Next-80B-A3B-Instruct/blob/9c7f2fbe84465e40164a94cc16cd30b6999b0cc7/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2025-09-09T15:40:56.000Z",
+    "earliest_repository_record_at": "2025-09-09T15:40:56.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/Qwen/Qwen3-Next-80B-A3B-Instruct",
+    "timeline_date": "2025-09-09",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/Qwen/Qwen3-Next-80B-A3B-Instruct"
   },
   {
     "release_date": "2025-11",
@@ -3253,7 +3764,14 @@
     "pretraining_count_notes": "Exact checkpoint card table reports 5.93T training tokens. Other training-run documentation reports different stage/run budgets; those are not silently substituted.",
     "pretraining_source_url": "https://huggingface.co/allenai/Olmo-3-1025-7B/blob/a81bae42db3975be1671e27b9c9a56da1a9f980f/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2025-09-12T19:24:57.000Z",
+    "earliest_repository_record_at": "2025-09-12T19:24:57.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/allenai/Olmo-3-1025-7B",
+    "timeline_date": "2025-09-12",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/allenai/Olmo-3-1025-7B"
   },
   {
     "release_date": "2026-01",
@@ -3297,7 +3815,14 @@
     "pretraining_count_notes": "Approximately 15T tokens of continual pretraining on top of Kimi-K2-Base. This excludes the base model 15.5T-token training and is not a total from scratch.",
     "pretraining_source_url": "https://huggingface.co/moonshotai/Kimi-K2.5/blob/4d01dfe0332d63057c186e0b262165819efb6611/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2026-01-01T06:06:03.000Z",
+    "earliest_repository_record_at": "2026-01-01T06:06:03.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/moonshotai/Kimi-K2.5",
+    "timeline_date": "2026-01-01",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/moonshotai/Kimi-K2.5"
   },
   {
     "release_date": "2026-02",
@@ -3341,7 +3866,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2026-02-12T06:05:24.000Z",
+    "earliest_repository_record_at": "2026-02-12T06:05:24.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/MiniMaxAI/MiniMax-M2.5",
+    "timeline_date": "2026-02-12",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/MiniMaxAI/MiniMax-M2.5"
   },
   {
     "release_date": "2026-02",
@@ -3385,7 +3917,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Native multimodal hybrid attention/DeltaNet MoE release, 17B active parameters. February precision retains the release month without choosing between announcement time zones."
+    "notes": "Native multimodal hybrid attention/DeltaNet MoE release, 17B active parameters. February precision retains the release month without choosing between announcement time zones.",
+    "hf_repository_created_at": "2026-02-16T04:55:12.000Z",
+    "earliest_repository_record_at": "2026-02-16T04:55:12.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/Qwen/Qwen3.5-397B-A17B",
+    "timeline_date": "2026-02-16",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/Qwen/Qwen3.5-397B-A17B"
   },
   {
     "release_date": "2026-02",
@@ -3429,7 +3968,14 @@
     "pretraining_count_notes": "Model card reports pretraining data of 28.5T tokens, 744B total parameters and 40B active parameters.",
     "pretraining_source_url": "https://huggingface.co/zai-org/GLM-5/blob/c183ef8c61faee82855eca1ed9bb3a9a7ce3b0b2/README.md",
     "collected_at": "2026-10-31",
-    "notes": null
+    "notes": null,
+    "hf_repository_created_at": "2026-02-11T04:55:46.000Z",
+    "earliest_repository_record_at": "2026-02-11T04:55:46.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/zai-org/GLM-5",
+    "timeline_date": "2026-02-11",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/zai-org/GLM-5"
   },
   {
     "release_date": "2026-02-05",
@@ -3473,7 +4019,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Exact public tokenizer artifacts and undisclosed pretraining totals are not verified for this snapshot; no community surrogate tokenizer is substituted."
+    "notes": "Exact public tokenizer artifacts and undisclosed pretraining totals are not verified for this snapshot; no community surrogate tokenizer is substituted.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2026-02-05",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://www.anthropic.com/news/claude-opus-4-6"
   },
   {
     "release_date": "2026-02-19",
@@ -3517,7 +4070,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Official Google SDK local text-tokenizer mapping inspected at the pinned SDK revision. This is not evidence of the full multimodal service vocabulary or a preserved launch-day tokenizer. The first release date and the current SDK mapping are separate observations."
+    "notes": "Official Google SDK local text-tokenizer mapping inspected at the pinned SDK revision. This is not evidence of the full multimodal service vocabulary or a preserved launch-day tokenizer. The first release date and the current SDK mapping are separate observations.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2026-02-19",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/3-1-pro"
   },
   {
     "release_date": "2026-03-05",
@@ -3561,7 +4121,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Exact public tokenizer artifacts and undisclosed pretraining totals are not verified for this snapshot; no community surrogate tokenizer is substituted."
+    "notes": "Exact public tokenizer artifacts and undisclosed pretraining totals are not verified for this snapshot; no community surrogate tokenizer is substituted.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": "2026-03-05",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://developers.openai.com/api/docs/models/gpt-5.4"
   },
   {
     "release_date": "2026-03-31",
@@ -3605,7 +4172,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Google release log dates Gemma 4 March 31; launch blog is April 2. Pretraining token volume is not disclosed in the inspected model card."
+    "notes": "Google release log dates Gemma 4 March 31; launch blog is April 2. Pretraining token volume is not disclosed in the inspected model card.",
+    "hf_repository_created_at": "2026-03-11T18:22:36.000Z",
+    "earliest_repository_record_at": "2026-03-11T18:22:36.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/google/gemma-4-31B-it",
+    "timeline_date": "2026-03-31",
+    "timeline_date_basis": "documented_release",
+    "timeline_date_source_url": "https://ai.google.dev/gemma/docs/releases"
   },
   {
     "release_date": "2026-04",
@@ -3649,7 +4223,14 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "April 2026 initial public release month. Current tokenizer/configuration revision is pinned separately; later model updates must not be treated as measurements from the launch date."
+    "notes": "April 2026 initial public release month. Current tokenizer/configuration revision is pinned separately; later model updates must not be treated as measurements from the launch date.",
+    "hf_repository_created_at": "2026-04-22T06:04:20.000Z",
+    "earliest_repository_record_at": "2026-04-22T06:04:20.000Z",
+    "earliest_repository_record_kind": "hf_repository_creation",
+    "earliest_repository_record_source_url": "https://huggingface.co/api/models/deepseek-ai/DeepSeek-V4-Flash",
+    "timeline_date": "2026-04-22",
+    "timeline_date_basis": "hf_repository_creation",
+    "timeline_date_source_url": "https://huggingface.co/api/models/deepseek-ai/DeepSeek-V4-Flash"
   },
   {
     "release_date": null,
@@ -3693,6 +4274,13 @@
     "pretraining_count_notes": null,
     "pretraining_source_url": null,
     "collected_at": "2026-10-31",
-    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry."
+    "notes": "Measured public text encoding. This does not establish the closed model embedding-row count, hidden control tokens, multimodal vocabulary or complete service token accounting. Mapping is from the cited documentation or the pinned tiktoken model registry.",
+    "hf_repository_created_at": null,
+    "earliest_repository_record_at": null,
+    "earliest_repository_record_kind": null,
+    "earliest_repository_record_source_url": null,
+    "timeline_date": null,
+    "timeline_date_basis": null,
+    "timeline_date_source_url": null
   }
 ]

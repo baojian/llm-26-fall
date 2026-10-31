@@ -9,6 +9,12 @@ baselines, such as BERT and T5. It is a curated starting point, not an exhaustiv
 catalog or a ranking measured by downloads, users, or benchmark popularity.
 Collection date: **2026-10-31**.
 
+The [expanded Hub catalog](expanded-catalog.md) adds a reproducible discovery
+and measurement workflow for **11,210 Hugging Face repositories**, including
+fine-tunes, quantized copies, merges, and adapters. Its local CSV/JSON includes
+these 84 curated records and has **11,229 rows** in total. The large generated
+catalog and tokenizer cache remain in ignored `workspace/`.
+
 Each row describes one named model variant or API snapshot. Parameter sizes,
 base models, instruction variants, and updated checkpoints are not assumed to
 share identical training histories. The first seven columns contain the main
@@ -93,12 +99,26 @@ creation time as a model release date. A preview, a stable API snapshot, a
 model announcement, and the later publication of weights can have different
 dates; row names and notes identify the selected event.
 
+`timeline_date` supplies a separate day-level plotting coordinate: a documented
+release day takes priority; otherwise the earliest inspected repository record
+is used and explicitly labeled as a proxy. The original partial `release_date`
+is preserved. `timeline_date_basis` and its source URL distinguish the events.
+The fallback considers repository creation and, for the curated records and
+legacy repositories, paginated commit history. It does **not** establish the
+first public access to model weights. Hugging Face's synthetic March 2, 2022
+creation-date floor is excluded as a candidate. A commit can predate a public
+release, and a later Hub migration can postdate it.
+
+There are 82 dated curated rows, including 63 with measured vocabularies.
+GPT-1, GPT-3's API debut, and Gemini 1.0 have been assigned exact announcement
+days from first-party dated announcements. Unresolved dates stay blank.
+
 Tokenizer files are pinned to **revisions inspected at collection time**.
 These are not necessarily launch-day revisions. Preserve that distinction
 when plotting vocabulary size against model release year. Several modern
 families share tokenizers, so treating every checkpoint as an independent
-tokenizer design can also bias a trend. Fine-tuned community copies and every
-parameter-size variant are outside this initial scope.
+tokenizer design can also bias a trend. Community derivatives are included in
+the expanded catalog with declared ancestry and shared-vocabulary identifiers.
 
 ## Column dictionary
 
@@ -146,6 +166,13 @@ parameter-size variant are outside this initial scope.
 | `pretraining_source_url` | Source supporting training-token figures |
 | `collected_at` | Date this record was curated and its artifacts inspected |
 | `notes` | Remaining variant, provenance, and comparison limitations |
+| `hf_repository_created_at` | Original Hub timestamp, retained even when it is the legacy synthetic floor |
+| `earliest_repository_record_at` | Earliest usable timestamp among the inspected repository records; not proof of public weight availability |
+| `earliest_repository_record_kind` | `earliest_hf_commit` or `hf_repository_creation` |
+| `earliest_repository_record_source_url` | Commit page or repository API supporting that timestamp |
+| `timeline_date` | Day-level plotting coordinate, distinct from the original release date |
+| `timeline_date_basis` | `documented_release`, `earliest_hf_commit`, or `hf_repository_creation` |
+| `timeline_date_source_url` | Source supporting the selected plotting coordinate |
 
 ## Read, reproduce, and extend
 

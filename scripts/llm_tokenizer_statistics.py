@@ -77,6 +77,8 @@ def measure(folder: Path, profile: str | None = None) -> dict:
         base = ({int(index): token for token, index in serialized.items()}
                 if isinstance(serialized, dict)
                 else {index: item[0] for index, item in enumerate(serialized)})
+        if len(base) != len(serialized):
+            raise ValueError("Conflicting base-vocabulary token IDs")
         additions.extend(document.get("added_tokens", []))
         algorithm = model.get("type")
         if algorithm is None:
@@ -199,6 +201,18 @@ def validate(rows: list[dict]):
                 raise ValueError("Release date without a source")
         elif row["release_date_precision"] is not None:
             raise ValueError("Date precision without a date")
+        if row.get("timeline_date") is not None:
+            datetime.date.fromisoformat(row["timeline_date"])
+            if not row.get("timeline_date_source_url"):
+                raise ValueError("Timeline date without a source")
+            if row.get("timeline_date_basis") == "documented_release":
+                if row["release_date_precision"] != "day" or row["timeline_date"] != row["release_date"]:
+                    raise ValueError("Documented timeline date disagrees with release")
+            elif row.get("timeline_date_basis") in ("earliest_hf_commit", "hf_repository_creation"):
+                if row["timeline_date"] != row["earliest_repository_record_at"][:10]:
+                    raise ValueError("Timeline proxy disagrees with repository record")
+            else:
+                raise ValueError("Unknown timeline date basis")
         if row["weights_access"] not in ("open_weights", "closed_weights"):
             raise ValueError("Unknown weights access category")
         if row["tokenizer_status"] not in ("downloaded", "gated", "not_verified", "unavailable_at_collection"):

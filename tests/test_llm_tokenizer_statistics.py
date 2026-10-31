@@ -53,6 +53,14 @@ def test_configuration_additions_are_merged_with_serialized_vocabulary(tmp_path)
     assert measured["tokenizer_special_token_count"] == 2
 
 
+def test_serialized_base_rejects_multiple_tokens_at_one_id(tmp_path):
+    (tmp_path / "tokenizer.json").write_text(json.dumps({
+        "model": {"type": "BPE", "vocab": {"a": 0, "b": 0}}, "added_tokens": [],
+    }))
+    with pytest.raises(ValueError, match="Conflicting base"):
+        stats.measure(tmp_path)
+
+
 @pytest.mark.parametrize("profile,reserved", [("kimi_k2", 258), ("kimi_k25", 256)])
 def test_kimi_versions_have_different_reserved_token_counts(tmp_path, profile, reserved):
     (tmp_path / "tiktoken.model").write_text("YQ== 0\nYg== 1\n")
@@ -131,3 +139,11 @@ def test_curated_dataset_and_export_agree():
     stats.validate_manifest(rows, stats.read_json(stats.DATA / "tokenizer-files.json"))
     assert (stats.DATA / "models.csv").read_text() == stats.csv_text(rows)
     assert {row["weights_access"] for row in rows} == {"open_weights", "closed_weights"}
+
+
+def test_timeline_rejects_relabeling_a_repository_proxy_as_release():
+    row = copy.deepcopy(stats.read_json(stats.DATA / "models.json")[0])
+    row.update(release_date="2020", release_date_precision="year", timeline_date="2020-01-01",
+               timeline_date_basis="documented_release", timeline_date_source_url="https://example.org/repo")
+    with pytest.raises(ValueError, match="disagrees with release"):
+        stats.validate([row])
