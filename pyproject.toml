@@ -32,6 +32,9 @@ multimodal = [
     "accelerate>=1.14.0",
     "diffusers>=0.40.0",
 ]
+tokenizer-comparison = [
+    "tokenizers>=0.23.2",
+]
 
 [dependency-groups]
 dev = [

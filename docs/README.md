@@ -1,5 +1,10 @@
 # Course reading pages
 
+The [course explorations](../explorations/README.md) collect instructor-authored
+investigations, one topic per folder. Start with [the same text, six
+tokenizers](../explorations/tokenizer-comparison/index.html): inspect 32 examples,
+compare token boundaries and decoding, and read the measured analysis.
+
 The [Lecture 07 board notes](lecture-07-scaling-laws/README.md) provide a
 standalone 90-minute lesson on Kaplan, Chinchilla, and Porian. The LaTeX source
 includes a step-by-step allocation derivation, original vector figures,
