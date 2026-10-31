@@ -1,5 +1,10 @@
 # Course reading pages
 
+The [model and tokenizer statistics](model-tokenizer-statistics/README.md)
+provide a sourced CSV/JSON inventory of 84 open- and closed-weight model
+releases, with local tokenizer paths, measured vocabulary sizes, published
+pretraining token counts, and reproducible artifact checks.
+
 The [Lecture 07 board notes](lecture-07-scaling-laws/README.md) provide a
 standalone 90-minute lesson on Kaplan, Chinchilla, and Porian. The LaTeX source
 includes a step-by-step allocation derivation, original vector figures,
