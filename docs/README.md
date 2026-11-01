@@ -31,6 +31,11 @@ for classroom discussion.
 The [MiMo RL archive guide](mimo-rl-archive.md) documents the public training
 history preserved for the post-training lectures and how to retrieve it.
 
+The [RL reading guide for LLM post-training and agents](rl-posttraining-and-agents.md)
+collects Lambert's book, course, and source repository, the MARL textbook,
+and an agentic-RL survey. It includes a suggested reading path and discussion
+prompts for the post-training and agent lectures.
+
 The [Lecture 01 reader](lecture-01-pre-tokenization.html) explains text
 preprocessing before tokenization. Its English and Chinese versions share
 section links, code samples, citations, and three illustrated stages:
