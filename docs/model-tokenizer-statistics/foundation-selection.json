@@ -259,13 +259,15 @@
       "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation."
     },
     {
-      "model_id": "meta-llama/Meta-Llama-3.1-8B",
+      "model_id": "meta-llama/Llama-3.1-8B",
       "label": "Llama 3.1 8B",
       "stage": "base",
       "release_year": 2024,
       "release_year_source_url": "https://huggingface.co/meta-llama/Meta-Llama-3.1-8B/blob/d04e592bb4f6aa9cfee91e2e20afa771667e1d4b/README.md",
       "base_evidence_url": "https://huggingface.co/meta-llama/Meta-Llama-3.1-8B/blob/d04e592bb4f6aa9cfee91e2e20afa771667e1d4b/README.md",
-      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation."
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation. Hub API redirects the legacy ID to meta-llama/Llama-3.1-8B; the resolved revision d04e592bb4f6aa9cfee91e2e20afa771667e1d4b matches the October 31 snapshot (verified 2026-11-01).",
+      "curated_model_id": "meta-llama/Meta-Llama-3.1-8B",
+      "alias_evidence_url": "https://huggingface.co/api/models/meta-llama/Meta-Llama-3.1-8B"
     },
     {
       "model_id": "Qwen/Qwen2.5-7B",

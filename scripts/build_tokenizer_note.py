@@ -39,21 +39,26 @@ def select_models(selection, catalog, curated):
     selected, seen = [], set()
     for decision in selection["models"]:
         identifier = decision["model_id"]
+        curated_id = decision.get("curated_model_id", identifier)
+        if curated_id != identifier and not decision.get("alias_evidence_url"):
+            raise ValueError(f"Repository-rename evidence required: {identifier}")
         if identifier in seen:
             raise ValueError(f"Duplicate selection: {identifier}")
         seen.add(identifier)
         if decision["stage"] != "base" or not decision.get("base_evidence_url"):
             raise ValueError(f"Base-checkpoint evidence required: {identifier}")
-        if identifier not in by_id and identifier not in original:
+        if identifier not in by_id and curated_id not in original:
             raise ValueError(f"Selected model absent from source data: {identifier}")
         if decision.get("release_year") is not None and not decision.get("release_year_source_url"):
             raise ValueError(f"Release-year source required: {identifier}")
         snapshot = by_id.get(identifier, {})
-        source = original.get(identifier) or snapshot
+        source = original.get(curated_id) or snapshot
         # The curated measurements include inspected companion-file additions;
         # bulk-only rows retain their narrower serialized-JSON counting scope.
         selected.append({
             **decision,
+            "curated_model_id": curated_id,
+            "alias_evidence_url": decision.get("alias_evidence_url"),
             "tokenizer_vocab_size": source.get("tokenizer_vocab_size"),
             "tokenizer_count_scope": source.get("tokenizer_count_scope"),
             "tokenizer_status": source.get("tokenizer_status"),

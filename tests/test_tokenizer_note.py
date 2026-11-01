@@ -48,6 +48,21 @@ def test_curated_companion_aware_measurement_keeps_its_scope_and_source():
     assert result["tokenizer_source_url"] == "https://example.org/pinned-tokenizer"
 
 
+def test_documented_repository_rename_preserves_measurement_and_ranks_canonical_id():
+    config = selection()
+    config["models"][0].update(curated_model_id="publisher/old-name",
+                               alias_evidence_url="https://example.org/redirect")
+    snapshot = [{"model_id": "publisher/base", "downloads_30d": 100}]
+    curated = [{"model_id": "publisher/old-name", "tokenizer_vocab_size": None}]
+    result = select_models(config, snapshot, curated)[0]
+    assert result["downloads_30d"] == 100
+    assert result["popularity_rank"] == 1
+    assert result["tokenizer_vocab_size"] is None
+    config["models"][0].pop("alias_evidence_url")
+    with pytest.raises(ValueError, match="Repository-rename evidence"):
+        select_models(config, snapshot, curated)
+
+
 @pytest.mark.parametrize("change,match", [
     ({"stage": "instruct"}, "Base-checkpoint evidence"),
     ({"base_evidence_url": None}, "Base-checkpoint evidence"),
@@ -86,4 +101,5 @@ def test_committed_selection_uses_base_variants_and_retains_small_vocabularies()
     assert by_id["mistralai/Mistral-7B-v0.1"]["tokenizer_vocab_size"] == 32000
     assert by_id["ibm-granite/granite-3.0-8b-base"]["tokenizer_vocab_size"] == 49152
     assert by_id["HuggingFaceTB/SmolLM2-135M"]["tokenizer_vocab_size"] == 49152
+    assert by_id["meta-llama/Llama-3.1-8B"]["downloads_30d"] == 575876
     assert all(row["release_year"] is None or row["release_year_source_url"] for row in rows)
