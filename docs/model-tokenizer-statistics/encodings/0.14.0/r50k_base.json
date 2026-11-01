@@ -1,0 +1,9 @@
+{
+  "encoding": "r50k_base",
+  "tiktoken_version": "0.14.0",
+  "rank_file": "r50k_base.tiktoken",
+  "pattern": "'(?:[sdmt]|ll|ve|re)| ?\\p{L}++| ?\\p{N}++| ?[^\\s\\p{L}\\p{N}]++|\\s++$|\\s+(?!\\S)|\\s",
+  "special_tokens": {
+    "<|endoftext|>": 50256
+  }
+}

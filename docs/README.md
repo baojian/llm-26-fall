@@ -1,5 +1,16 @@
 # Course reading pages
 
+The [short note on LLM vocabularies](model-tokenizer-statistics/foundation-models.html)
+accounts for all 189 rows in the inspected Wikipedia model list, with measured
+counts for 87 representatives and snapshot download rankings for 84 repositories.
+Missing data remain visible, and the original 42-base-checkpoint study is a
+separate view. Its figures, searchable table, and JSON/CSV downloads work offline.
+
+The [model and tokenizer statistics](model-tokenizer-statistics/README.md)
+provide a sourced CSV/JSON inventory of 84 open- and closed-weight model
+releases, with local tokenizer paths, measured vocabulary sizes, published
+pretraining token counts, and reproducible artifact checks.
+
 The [Lecture 07 board notes](lecture-07-scaling-laws/README.md) provide a
 standalone 90-minute lesson on Kaplan, Chinchilla, and Porian. The LaTeX source
 includes a step-by-step allocation derivation, original vector figures,

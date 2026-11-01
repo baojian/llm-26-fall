@@ -1,0 +1,1518 @@
+{
+  "reviewed_on": "2026-11-01",
+  "mapping_unit": "One exact representative per source row; this does not enumerate every size or API snapshot.",
+  "mappings": [
+    {
+      "entry_id": "wiki-2018-01",
+      "listed_name": "GPT-1",
+      "representative_id": "openai-community/openai-gpt",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/openai-community/openai-gpt/blob/1e0d4f3028acbffb47fe933cea64619c5ec1a002/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2018-02",
+      "listed_name": "BERT",
+      "representative_id": "google-bert/bert-base-uncased",
+      "category": "historical_baseline",
+      "mapping_evidence_url": "https://huggingface.co/google-bert/bert-base-uncased/blob/86b5e0934494bd15c9632b12f734a8a67f723594/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2019-01",
+      "listed_name": "T5",
+      "representative_id": "google-t5/t5-base",
+      "category": "historical_baseline",
+      "mapping_evidence_url": "https://huggingface.co/google-t5/t5-base/blob/a9723ea7f1b39c1eae772870f3b547bf6ef7e6c1/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2019-02",
+      "listed_name": "XLNet",
+      "representative_id": "xlnet/xlnet-base-cased",
+      "category": "historical_baseline",
+      "mapping_evidence_url": "https://huggingface.co/xlnet/xlnet-base-cased/blob/ceaa69c7bc5e512b5007106a7ccbb7daf24b2c79/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2019-03",
+      "listed_name": "GPT-2",
+      "representative_id": "openai-community/gpt2-xl",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/openai-community/gpt2-xl/blob/15ea56dee5df4983c59b2538573817e1667135e2/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2020-01",
+      "listed_name": "GPT-3",
+      "representative_id": "openai/davinci",
+      "category": "closed_api",
+      "mapping_evidence_url": "https://arxiv.org/abs/2005.14165",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2021-01",
+      "listed_name": "GPT-Neo",
+      "representative_id": "EleutherAI/gpt-neo-2.7B",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/EleutherAI/gpt-neo-2.7B/blob/e24fa291132763e59f4a5422741b424fb5d59056/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2021-02",
+      "listed_name": "HyperCLOVA",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2021-03",
+      "listed_name": "GPT-J",
+      "representative_id": "EleutherAI/gpt-j-6b",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/EleutherAI/gpt-j-6b/blob/47e169305d2e8376be1d31e765533382721b2cc1/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2021-04",
+      "listed_name": "Megatron-Turing NLG",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2021-05",
+      "listed_name": "Ernie 3.0 Titan",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2021-06",
+      "listed_name": "Claude",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2021-07",
+      "listed_name": "GLaM (Generalist Language Model)",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2021-08",
+      "listed_name": "Gopher",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2022-01",
+      "listed_name": "LaMDA (Language Models for Dialog Applications)",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2022-02",
+      "listed_name": "GPT-NeoX",
+      "representative_id": "EleutherAI/gpt-neox-20b",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/EleutherAI/gpt-neox-20b/blob/c292233c833e336628618a88a648727eb3dff0a7/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2022-03",
+      "listed_name": "Chinchilla scaling",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2022-04",
+      "listed_name": "PaLM (Pathways Language Model)",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2022-05",
+      "listed_name": "OPT (Open Pretrained Transformer)",
+      "representative_id": "facebook/opt-6.7b",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/facebook/opt-6.7b/blob/a45aa65bbeb77c1558bc99bedc6779195462dab0/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2022-06",
+      "listed_name": "YaLM 100B",
+      "representative_id": "yandex/yalm-100b",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://github.com/yandex/YaLM-100B",
+      "mapping_note": "Official YaLM 100B release; Hub API returns the normalized identifier yandex/yalm-100b for yandex/YaLM-100B."
+    },
+    {
+      "entry_id": "wiki-2022-07",
+      "listed_name": "Minerva",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2022-08",
+      "listed_name": "BLOOM",
+      "representative_id": "bigscience/bloom",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/bigscience/bloom/blob/7f10a99ce7c08f03c7719a586cb2cbda1433ac05/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2022-09",
+      "listed_name": "Galactica",
+      "representative_id": "facebook/galactica-1.3b",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/facebook/galactica-1.3b/blob/f711c69357d598defb703ddce93c5d7f7bc6e6da/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2022-10",
+      "listed_name": "AlexaTM (Teacher Models)",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2023-01",
+      "listed_name": "Llama",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2023-02",
+      "listed_name": "Stanford Alpaca",
+      "representative_id": null,
+      "category": "derivative",
+      "mapping_evidence_url": null,
+      "mapping_note": "Derived/task-adapted model listed in the source; retained in the inventory, with no inherited parent-tokenizer measurement."
+    },
+    {
+      "entry_id": "wiki-2023-03",
+      "listed_name": "GPT-4",
+      "representative_id": "openai/gpt-4-0314",
+      "category": "closed_api",
+      "mapping_evidence_url": "https://developers.openai.com/api/docs/models/gpt-4",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2023-04",
+      "listed_name": "Cerebras-GPT",
+      "representative_id": "cerebras/Cerebras-GPT-13B",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/cerebras/Cerebras-GPT-13B",
+      "mapping_note": "Exact representative verified in the publisher model card; metadata API returned HTTP 401 during this collection. The reported vocabulary size is not substituted for a measured artifact."
+    },
+    {
+      "entry_id": "wiki-2023-05",
+      "listed_name": "Falcon",
+      "representative_id": "tiiuae/falcon-7b",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/tiiuae/falcon-7b/blob/ec89142b67d748a1865ea4451372db8313ada0d8/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2023-06",
+      "listed_name": "BloombergGPT",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2023-07",
+      "listed_name": "PanGu-Σ",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2023-08",
+      "listed_name": "OpenAssistant",
+      "representative_id": null,
+      "category": "derivative",
+      "mapping_evidence_url": null,
+      "mapping_note": "Derived/task-adapted model listed in the source; retained in the inventory, with no inherited parent-tokenizer measurement."
+    },
+    {
+      "entry_id": "wiki-2023-09",
+      "listed_name": "Vicuna",
+      "representative_id": null,
+      "category": "derivative",
+      "mapping_evidence_url": null,
+      "mapping_note": "Derived/task-adapted model listed in the source; retained in the inventory, with no inherited parent-tokenizer measurement."
+    },
+    {
+      "entry_id": "wiki-2023-10",
+      "listed_name": "Jurassic-2",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2023-11",
+      "listed_name": "PaLM 2 (Pathways Language Model 2)",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2023-12",
+      "listed_name": "YandexGPT",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2023-13",
+      "listed_name": "Phi-1",
+      "representative_id": "microsoft/phi-1",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/microsoft/phi-1/blob/d4c0adcb065e84e00ca814e35cba3012ea9841ab/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2023-14",
+      "listed_name": "Llama 2",
+      "representative_id": "meta-llama/Llama-2-7b-hf",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/meta-llama/Llama-2-7b-hf/blob/01c7f73d771dfac7d292323805ebc428287df4f9/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2023-15",
+      "listed_name": "Claude 2",
+      "representative_id": "anthropic/claude-2.0",
+      "category": "closed_api",
+      "mapping_evidence_url": "https://www.anthropic.com/news/claude-2",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2023-16",
+      "listed_name": "Granite 13b",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2023-17",
+      "listed_name": "Mistral 7B",
+      "representative_id": "mistralai/Mistral-7B-v0.1",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/mistralai/Mistral-7B-v0.1/blob/27d67f1b5f57dc0953326b2601d68371d40ea8da/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2023-18",
+      "listed_name": "YandexGPT 2",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2023-19",
+      "listed_name": "Claude 2.1",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2023-20",
+      "listed_name": "Grok-1",
+      "representative_id": "xai-org/grok-1",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/xai-org/grok-1/blob/5de83eb225f49624b424f1c8aa74f96983b5885c/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2023-21",
+      "listed_name": "Gemini 1.0",
+      "representative_id": "google/gemini-1.0-pro",
+      "category": "closed_api",
+      "mapping_evidence_url": "https://blog.google/technology/ai/google-gemini-ai/",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2023-22",
+      "listed_name": "Mixtral 8x7B",
+      "representative_id": "mistralai/Mixtral-8x7B-v0.1",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/mistralai/Mixtral-8x7B-v0.1/blob/fc7ac94680e38d7348cfa806e51218e6273104b0/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2023-23",
+      "listed_name": "DeepSeek-LLM",
+      "representative_id": "deepseek-ai/deepseek-llm-7b-base",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/deepseek-ai/deepseek-llm-7b-base/blob/7683fea62db869066ddaff6a41d032262c490d4f/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2023-24",
+      "listed_name": "Phi-2",
+      "representative_id": "microsoft/phi-2",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/microsoft/phi-2/blob/810d367871c1d460086d9f82db8696f2e0a0fcd0/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-01",
+      "listed_name": "Gemini 1.5",
+      "representative_id": "google/gemini-1.5-pro",
+      "category": "closed_api",
+      "mapping_evidence_url": "https://blog.google/technology/ai/google-gemini-next-generation-model-february-2024/",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-02",
+      "listed_name": "Gemini Ultra",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2024-03",
+      "listed_name": "Gemma",
+      "representative_id": "google/gemma-2b",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/google/gemma-2b/blob/9cf48e52b224239de00d483ec8eb84fb8d0f3a3a/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-04",
+      "listed_name": "OLMo",
+      "representative_id": "allenai/OLMo-7B-hf",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/allenai/OLMo-7B-hf/blob/11fb3186a2e4f681edea621fa8b4345147a9db6a/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-05",
+      "listed_name": "Claude 3",
+      "representative_id": "anthropic/claude-3-opus-20240229",
+      "category": "closed_api",
+      "mapping_evidence_url": "https://www.anthropic.com/news/claude-3-family",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-06",
+      "listed_name": "DBRX",
+      "representative_id": "databricks/dbrx-base",
+      "category": "base",
+      "mapping_evidence_url": "https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-07",
+      "listed_name": "YandexGPT 3 Pro",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2024-08",
+      "listed_name": "Fugaku-LLM",
+      "representative_id": "Fugaku-LLM/Fugaku-LLM-13B",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/Fugaku-LLM/Fugaku-LLM-13B",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-09",
+      "listed_name": "Chameleon",
+      "representative_id": "facebook/chameleon-7b",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/facebook/chameleon-7b",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-10",
+      "listed_name": "Mixtral 8x22B",
+      "representative_id": "mistralai/Mixtral-8x22B-v0.1",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/mistralai/Mixtral-8x22B-v0.1",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-11",
+      "listed_name": "Phi-3",
+      "representative_id": "microsoft/Phi-3-mini-4k-instruct",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/microsoft/Phi-3-mini-4k-instruct/blob/f39ac1d28e925b323eae81227eaba4464caced4e/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-12",
+      "listed_name": "Granite Code Models",
+      "representative_id": "ibm-granite/granite-3b-code-base-2k",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/ibm-granite/granite-3b-code-base-2k/blob/b67f3dabc0b6d00ae477bd76732c7f3458a2caf3/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-13",
+      "listed_name": "YandexGPT 3 Lite",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2024-14",
+      "listed_name": "Qwen2",
+      "representative_id": "Qwen/Qwen2-7B",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/Qwen/Qwen2-7B/blob/453ed1575b739b5b03ce3758b23befdb0967f40e/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-15",
+      "listed_name": "DeepSeek-V2",
+      "representative_id": "deepseek-ai/DeepSeek-V2",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/deepseek-ai/DeepSeek-V2/blob/4461458f186c35188585855f28f77af5661ad489/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-16",
+      "listed_name": "Nemotron-4",
+      "representative_id": "nvidia/Nemotron-4-340B-Base",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/nvidia/Nemotron-4-340B-Base",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-17",
+      "listed_name": "Claude 3.5",
+      "representative_id": "anthropic/claude-3-5-sonnet-20240620",
+      "category": "closed_api",
+      "mapping_evidence_url": "https://www.anthropic.com/news/claude-3-5-sonnet",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-18",
+      "listed_name": "Llama 3.1",
+      "representative_id": "meta-llama/Llama-3.1-8B",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/meta-llama/Meta-Llama-3.1-8B/blob/d04e592bb4f6aa9cfee91e2e20afa771667e1d4b/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-19",
+      "listed_name": "Grok-2",
+      "representative_id": "xai-org/grok-2",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/xai-org/grok-2",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-20",
+      "listed_name": "OpenAI o1",
+      "representative_id": "openai/o1-2024-12-17",
+      "category": "closed_api",
+      "mapping_evidence_url": "https://developers.openai.com/api/docs/models/o1",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-21",
+      "listed_name": "Sarvam-1",
+      "representative_id": "sarvamai/sarvam-1",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/sarvamai/sarvam-1/blob/e9607337286ddf496d4a2562b194e489dcf3feea/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-22",
+      "listed_name": "YandexGPT 4 Lite and Pro",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2024-23",
+      "listed_name": "Mistral Large",
+      "representative_id": "mistralai/Mistral-Large-Instruct-2411",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/mistralai/Mistral-Large-Instruct-2411",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-24",
+      "listed_name": "Pixtral",
+      "representative_id": "mistralai/Pixtral-Large-Instruct-2411",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/mistralai/Pixtral-Large-Instruct-2411",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-25",
+      "listed_name": "OLMo 2",
+      "representative_id": "allenai/OLMo-2-1124-7B",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/allenai/OLMo-2-1124-7B/blob/7df9a82518afdecae4e8c026b27adccc8c1f0032/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-26",
+      "listed_name": "Phi-4",
+      "representative_id": "microsoft/phi-4",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/microsoft/phi-4/blob/2db69c1c3e91a05d2c64a3185acfbaf36f744e25/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-27",
+      "listed_name": "DeepSeek-V3",
+      "representative_id": "deepseek-ai/DeepSeek-V3-Base",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/deepseek-ai/DeepSeek-V3-Base/blob/afb92e1fa402c2be2a9eb085312bb02e0384d6c7/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2024-28",
+      "listed_name": "Amazon Nova",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-01",
+      "listed_name": "DeepSeek-R1",
+      "representative_id": "deepseek-ai/DeepSeek-R1",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/deepseek-ai/DeepSeek-R1/blob/56d4cbbb4d29f4355bab4b9a39ccb717a14ad5ad/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-02",
+      "listed_name": "Qwen2.5",
+      "representative_id": "Qwen/Qwen2.5-7B",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/Qwen/Qwen2.5-7B/blob/d149729398750b98c0af14eb82c78cfe92750796/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-03",
+      "listed_name": "MiniMax-Text-01",
+      "representative_id": "MiniMaxAI/MiniMax-Text-01",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/MiniMaxAI/MiniMax-Text-01/blob/a7351bf2bee0e1253919d349f1ad304e6dac13e9/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-04",
+      "listed_name": "Gemini 2.0",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-05",
+      "listed_name": "Grok 3",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-06",
+      "listed_name": "Claude 3.7",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-07",
+      "listed_name": "YandexGPT 5 Lite Pretrain and Pro",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-08",
+      "listed_name": "GPT-4.5",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-09",
+      "listed_name": "Gemini 2.5",
+      "representative_id": "google/gemini-2.5-pro",
+      "category": "closed_api",
+      "mapping_evidence_url": "https://ai.google.dev/gemini-api/docs/changelog",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-10",
+      "listed_name": "YandexGPT 5 Lite Instruct",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-11",
+      "listed_name": "Llama 4",
+      "representative_id": "meta-llama/Llama-4-Scout-17B-16E",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E/blob/14d516bdff6ac06cec40678529222f193386189c/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-12",
+      "listed_name": "OpenAI o3 and o4-mini",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-13",
+      "listed_name": "Qwen3",
+      "representative_id": "Qwen/Qwen3-8B",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/Qwen/Qwen3-8B/blob/b968826d9c46dd6066d109eabc6255188de91218/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-14",
+      "listed_name": "Claude 4",
+      "representative_id": "anthropic/claude-sonnet-4-20250514",
+      "category": "closed_api",
+      "mapping_evidence_url": "https://www.anthropic.com/news/claude-4",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-15",
+      "listed_name": "Sarvam-M",
+      "representative_id": "sarvamai/sarvam-m",
+      "category": "derivative",
+      "mapping_evidence_url": "https://huggingface.co/sarvamai/sarvam-m/blob/01534a53c46f2788e392dbb3d994e0fa8f04d3fd/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-16",
+      "listed_name": "Grok 4",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-17",
+      "listed_name": "Param-1",
+      "representative_id": "bharatgenai/Param-1",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/bharatgenai/Param-1",
+      "mapping_note": "Exact repository named by the publisher model card and source reference; metadata API returned HTTP 401 during this collection, so no count is imputed."
+    },
+    {
+      "entry_id": "wiki-2025-18",
+      "listed_name": "GLM-4.5",
+      "representative_id": "zai-org/GLM-4.5",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/zai-org/GLM-4.5/blob/cbb2c7cfb52fa128a9660cb1a7a78e017899e115/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-19",
+      "listed_name": "GPT-OSS",
+      "representative_id": "openai/gpt-oss-20b",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/openai/gpt-oss-20b/blob/6cee5e81ee83917806bbde320786a8fb61efebee/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-20",
+      "listed_name": "Claude 4.1",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-21",
+      "listed_name": "GPT-5",
+      "representative_id": "openai/gpt-5-2025-08-07",
+      "category": "closed_api",
+      "mapping_evidence_url": "https://developers.openai.com/api/docs/models/gpt-5",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-22",
+      "listed_name": "DeepSeek-V3.1",
+      "representative_id": "deepseek-ai/DeepSeek-V3.1",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/deepseek-ai/DeepSeek-V3.1/blob/c0781d039fb7a1ba2abc4add0bdc293e92d2b8db/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-23",
+      "listed_name": "YandexGPT 5.1 Pro",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-24",
+      "listed_name": "Apertus",
+      "representative_id": "swiss-ai/Apertus-8B-2509",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/swiss-ai/Apertus-8B-2509/blob/3162c99675aa588097cecd4a24b9aa1f712af477/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-25",
+      "listed_name": "Claude Sonnet 4.5",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-26",
+      "listed_name": "GLM-4.6",
+      "representative_id": "zai-org/GLM-4.6",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/zai-org/GLM-4.6/blob/be72194883d968d7923a07e2f61681ea9a2826d1/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-27",
+      "listed_name": "Alice AI LLM 1.0",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-28",
+      "listed_name": "Gemini 3",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-29",
+      "listed_name": "Olmo 3",
+      "representative_id": "allenai/Olmo-3-1025-7B",
+      "category": "base",
+      "mapping_evidence_url": "https://huggingface.co/allenai/Olmo-3-1025-7B/blob/a81bae42db3975be1671e27b9c9a56da1a9f980f/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-30",
+      "listed_name": "Claude Opus 4.5",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-31",
+      "listed_name": "DeepSeek-V3.2",
+      "representative_id": "deepseek-ai/DeepSeek-V3.2",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/deepseek-ai/DeepSeek-V3.2/blob/a7e62ac04ecb2c0a54d736dc46601c5606cf10a6/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2025-32",
+      "listed_name": "GPT 5.2",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2025-33",
+      "listed_name": "GLM-4.7",
+      "representative_id": "zai-org/GLM-4.7",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/zai-org/GLM-4.7/blob/602d01efcdd332c5238ca4bcede555defbe83eb7/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-01",
+      "listed_name": "Qwen3-Max-Thinking",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-02",
+      "listed_name": "K2 Think V2",
+      "representative_id": "IFM/K2-Think-V2",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/IFM/K2-Think-V2/blob/f86e5d11c501ad19d3b26e66b0ac550fc134c628/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-03",
+      "listed_name": "Kimi K2.5",
+      "representative_id": "moonshotai/Kimi-K2.5",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/moonshotai/Kimi-K2.5/blob/4d01dfe0332d63057c186e0b262165819efb6611/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-04",
+      "listed_name": "Step 3.5 Flash",
+      "representative_id": "stepfun-ai/Step-3.5-Flash",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/stepfun-ai/Step-3.5-Flash/blob/ab446a3de5e171ea341227e24bb1f090e1b771f7/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-05",
+      "listed_name": "Claude Opus 4.6",
+      "representative_id": "anthropic/claude-opus-4-6",
+      "category": "closed_api",
+      "mapping_evidence_url": "https://www.anthropic.com/news/claude-opus-4-6",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-06",
+      "listed_name": "GPT-5.3-Codex",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-07",
+      "listed_name": "GLM-5",
+      "representative_id": "zai-org/GLM-5",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/zai-org/GLM-5/blob/c183ef8c61faee82855eca1ed9bb3a9a7ce3b0b2/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-08",
+      "listed_name": "Qwen3.5",
+      "representative_id": "Qwen/Qwen3.5-397B-A17B",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/Qwen/Qwen3.5-397B-A17B/blob/8472618112abcbd45acbcdc58436aff4233c23f7/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-09",
+      "listed_name": "Qwen3.5-Plus",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-10",
+      "listed_name": "Claude Sonnet 4.6",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-11",
+      "listed_name": "Param-2",
+      "representative_id": "bharatgenai/Param2-17B-A2.4B-Thinking",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/bharatgenai/Param2-17B-A2.4B-Thinking/blob/86fd8f7bb96a404aaab589cb56831f575bbb92b5/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-12",
+      "listed_name": "Sarvam-105B",
+      "representative_id": "sarvamai/sarvam-105b",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/sarvamai/sarvam-105b/blob/abe264bdb8fb2244daadaa59ebc2020b3c139e89/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-13",
+      "listed_name": "Sarvam-30B",
+      "representative_id": "sarvamai/sarvam-30b",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/sarvamai/sarvam-30b/blob/071ae95e933605ca1104a6b4524a36a98488efa4/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-14",
+      "listed_name": "GPT-5.4",
+      "representative_id": "openai/gpt-5.4-2026-03-05",
+      "category": "closed_api",
+      "mapping_evidence_url": "https://developers.openai.com/api/docs/models/gpt-5.4",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-15",
+      "listed_name": "Mistral Small 4",
+      "representative_id": "mistralai/Mistral-Small-4-119B-2603",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/mistralai/Mistral-Small-4-119B-2603",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-16",
+      "listed_name": "MiMo-V2-Pro",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-17",
+      "listed_name": "Qwen3.6-Plus",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-18",
+      "listed_name": "Gemma 4",
+      "representative_id": "google/gemma-4-31B-it",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/google/gemma-4-31B-it/blob/842da3794eaa0b77d5f08bae87a17459d91ff475/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-19",
+      "listed_name": "GLM-5.1",
+      "representative_id": "zai-org/GLM-5.1",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/zai-org/GLM-5.1/blob/26e1bd6e011feb778d25ae34b09b07074139d92d/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-20",
+      "listed_name": "Muse Spark",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-21",
+      "listed_name": "Qwen3.6",
+      "representative_id": "Qwen/Qwen3.6-35B-A3B",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/blob/995ad96eacd98c81ed38be0c5b274b04031597b0/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-22",
+      "listed_name": "Claude Opus 4.7",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-23",
+      "listed_name": "Kimi K2.6",
+      "representative_id": "moonshotai/Kimi-K2.6",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/moonshotai/Kimi-K2.6/blob/7eb5002f6aadc958aed6a9177b7ed26bb94011bb/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-24",
+      "listed_name": "GPT-5.5",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-25",
+      "listed_name": "Hy3 preview",
+      "representative_id": "tencent/Hy3-preview",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/tencent/Hy3-preview/blob/549c2b3a0fd5b9a6c6059a9935bf0d59ab69d75a/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-26",
+      "listed_name": "MiMo-V2.5-Pro",
+      "representative_id": "XiaomiMiMo/MiMo-V2.5-Pro",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.5-Pro/blob/98e90df48208087a2eb974866a736a20f8122d2a/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-27",
+      "listed_name": "MiMo-V2.5",
+      "representative_id": "XiaomiMiMo/MiMo-V2.5",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.5/blob/d6bf9db68673d1f903a53d8da417b293fdc97d1f/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-28",
+      "listed_name": "Mistral Medium 3.5",
+      "representative_id": "mistralai/Mistral-Medium-3.5-128B",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/mistralai/Mistral-Medium-3.5-128B",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-29",
+      "listed_name": "Composer 2.5",
+      "representative_id": null,
+      "category": "derivative",
+      "mapping_evidence_url": null,
+      "mapping_note": "Derived/task-adapted model listed in the source; retained in the inventory, with no inherited parent-tokenizer measurement."
+    },
+    {
+      "entry_id": "wiki-2026-30",
+      "listed_name": "Gemini 3.5 Flash",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-31",
+      "listed_name": "Qwen3.7-Max",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-32",
+      "listed_name": "Claude Opus 4.8",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-33",
+      "listed_name": "Step 3.7 Flash",
+      "representative_id": "stepfun-ai/Step-3.7-Flash",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/stepfun-ai/Step-3.7-Flash/blob/5f6244077ac62e04eec3f320501ff8c2b293373a/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-34",
+      "listed_name": "MiniMax-M3",
+      "representative_id": "MiniMaxAI/MiniMax-M3",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/MiniMaxAI/MiniMax-M3/blob/d95e30cb912fe3021bb9c2ba66a8ce60b6c937a9/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-35",
+      "listed_name": "Nemotron 3 Ultra",
+      "representative_id": "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16/blob/77df655d5e9f8362164ed14dd8b48f8bce657498/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-36",
+      "listed_name": "Claude Fable 5",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-37",
+      "listed_name": "Kimi K2.7 Code",
+      "representative_id": "moonshotai/Kimi-K2.7-Code",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/moonshotai/Kimi-K2.7-Code/blob/74797c9c62378b951a1f6fcf5c4631024e9b8bef/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-38",
+      "listed_name": "GLM-5.2",
+      "representative_id": "zai-org/GLM-5.2",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/zai-org/GLM-5.2/blob/cf457fa734ab149ffef225f80893eb38c6ff5cdc/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-39",
+      "listed_name": "LongCat-2.0",
+      "representative_id": "meituan-longcat/LongCat-2.0",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/meituan-longcat/LongCat-2.0/blob/834bf5ffe3047aa9f6cc7a64a9bc068b146b8274/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-40",
+      "listed_name": "Hy3",
+      "representative_id": "tencent/Hy3",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/tencent/Hy3/blob/a960ebc3da325ba167f069f76c41eb62c9280d22/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-41",
+      "listed_name": "Grok 4.5",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-42",
+      "listed_name": "SWE-1.7",
+      "representative_id": null,
+      "category": "derivative",
+      "mapping_evidence_url": null,
+      "mapping_note": "Derived/task-adapted model listed in the source; retained in the inventory, with no inherited parent-tokenizer measurement."
+    },
+    {
+      "entry_id": "wiki-2026-43",
+      "listed_name": "Muse Spark 1.1",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-44",
+      "listed_name": "GPT-5.6",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-45",
+      "listed_name": "Inkling",
+      "representative_id": "thinkingmachines/Inkling",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/thinkingmachines/Inkling/blob/828496eeae4c243ff1a22f7f28ff83694f2f7bc9/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-46",
+      "listed_name": "Kimi K3",
+      "representative_id": "moonshotai/Kimi-K3",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/moonshotai/Kimi-K3/blob/f831ab66814297da540d832a5235f8e904f29d06/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-47",
+      "listed_name": "Qwen3.8",
+      "representative_id": "Qwen/Qwen3.8-27B",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-48",
+      "listed_name": "Gemini 3.5 Flash Lite",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-49",
+      "listed_name": "Gemini 3.6 Flash",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-50",
+      "listed_name": "Laguna S 2.1",
+      "representative_id": "poolside/Laguna-S-2.1",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/poolside/Laguna-S-2.1/blob/0f573140834b11cfac0c2af97a101a7a69a13e22/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-51",
+      "listed_name": "Motif 3",
+      "representative_id": "Motif-Technologies/Motif-3",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/Motif-Technologies/Motif-3/blob/2ed2ed5cfabffa10fdabb2fc0d0288f8e6de893a/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-52",
+      "listed_name": "Solar Open 2",
+      "representative_id": "upstage/Solar-Open2-250B",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/upstage/Solar-Open2-250B/blob/9190fbe63a2ad8e17fc766ccceb36de7c66f004b/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-53",
+      "listed_name": "Fugu-Ultra v1.1",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-54",
+      "listed_name": "Claude Opus 5",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-55",
+      "listed_name": "A.X K2",
+      "representative_id": "skt/A.X-K2",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/skt/A.X-K2/blob/d0805cfd1fc647b4078c0d9f232c80d34ee0c893/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-56",
+      "listed_name": "Inkling Small",
+      "representative_id": "thinkingmachines/Inkling-Small",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/thinkingmachines/Inkling-Small/blob/8cc5877b44d343f88b92086aa1fb72897950f06a/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-57",
+      "listed_name": "K-Exaone 2.0",
+      "representative_id": "LGAI-EXAONE/K-EXAONE-2.0-750B-A37B",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B/blob/fec0c8dd25fdd20ffd09869d5af5277966d5523d/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-58",
+      "listed_name": "DeepSeek-V4-Flash",
+      "representative_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731/blob/7872f01b1d1fe23eabc4c98b48bffcef5a386062/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-59",
+      "listed_name": "Muse Glimmer",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-60",
+      "listed_name": "Gemini 3.7 Flash",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-61",
+      "listed_name": "DeepSeek-V4-Pro",
+      "representative_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813/blob/72e1d3230f6c080a530b0a1d46f8eb4602340597/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-62",
+      "listed_name": "GLM-5.3",
+      "representative_id": "zai-org/GLM-5.3",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/zai-org/GLM-5.3/blob/ba32f8c19c8738e2c57c71798c601d477a7bf844/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-63",
+      "listed_name": "GLM-5.3-flash",
+      "representative_id": "zai-org/GLM-5.3-Flash",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/zai-org/GLM-5.3-Flash/blob/46a050bec13002ad29ee795c16e61cf4fa3c4a9c/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-64",
+      "listed_name": "Hy4 preview",
+      "representative_id": "tencent/Hy4-preview",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/tencent/Hy4-preview/blob/705d81ee51566a186d645b74c974d642ef2828fe/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-65",
+      "listed_name": "Claude Mythos 5.1",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-66",
+      "listed_name": "Claude Fable 5.1",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-67",
+      "listed_name": "Gemini 3.8 Flash",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-68",
+      "listed_name": "GPT-6 Astra",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-69",
+      "listed_name": "K2 Horizon",
+      "representative_id": "IFM/K2-Horizon-7B",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/IFM/K2-Horizon-7B/blob/4622f94a6632384784471fd674d5b78f8d527798/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-70",
+      "listed_name": "DeepSeek-V4.1-Flash",
+      "representative_id": "deepseek-ai/DeepSeek-V4.1-Flash",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/314113f8a7dadb388215396ba5fbee2c610a04d6/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-71",
+      "listed_name": "Grok 4.7",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-72",
+      "listed_name": "GPT-6 Sol",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-73",
+      "listed_name": "MiMo-V2.6-Pro",
+      "representative_id": "XiaomiMiMo/MiMo-V2.6-Pro-RL",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL/blob/a066ba0057192126bd5d255f37138265fc1a435e/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-74",
+      "listed_name": "MiMo-V2.6-Flash",
+      "representative_id": "XiaomiMiMo/MiMo-V2.6-Flash-RL",
+      "category": "publisher_release",
+      "mapping_evidence_url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL/blob/f657ba2f7d24c9adc5730675baaa2d34de878a49/README.md",
+      "mapping_note": "One explicitly identified representative of the listed family/release; metrics describe this exact identifier only."
+    },
+    {
+      "entry_id": "wiki-2026-75",
+      "listed_name": "Claude Opus 5.5",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-76",
+      "listed_name": "Claude Sonnet 5.5",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-77",
+      "listed_name": "GPT 6.1",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-78",
+      "listed_name": "Gemini 4 Argon",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-79",
+      "listed_name": "Mistral Large 4 Preview",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    },
+    {
+      "entry_id": "wiki-2026-80",
+      "listed_name": "Gemini 4 Carbon",
+      "representative_id": null,
+      "category": "unmapped",
+      "mapping_evidence_url": null,
+      "mapping_note": "No exact representative or tokenizer mapping verified in this pass; retain the source entry and its references."
+    }
+  ]
+}

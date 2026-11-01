@@ -1,0 +1,36 @@
+{
+  "snapshot_date": "2026-10-31",
+  "catalog_rows": 11229,
+  "catalog_columns": 56,
+  "archive": "catalog.zip",
+  "archive_bytes": 4548684,
+  "archive_sha256": "5c742ac87c57afcf33ac357fb6b6cf541b33ac120d830ec645b65016b51d30ab",
+  "files": [
+    {
+      "path": "model-catalog.json",
+      "bytes": 31397644,
+      "sha256": "c236a2c0252de085fad94a823b6429402905e7c1899dabea0701c7fd89f6d684"
+    },
+    {
+      "path": "model-catalog.csv",
+      "bytes": 11737439,
+      "sha256": "29f9ef74f377a1f64413c64c134dafa99ada4aae7fcdd99c0839282dae99b90e"
+    },
+    {
+      "path": "catalog-summary.json",
+      "bytes": 937,
+      "sha256": "33468e3c8e76e38925051a4a267153f8cd72499ae1c1e042523a33ac823e03e0"
+    },
+    {
+      "path": "tokenizer-groups.json",
+      "bytes": 568450,
+      "sha256": "bd439e271319edbce3f6e04c05c15b11c6fca4f26508dce60de2f29386babc7d"
+    },
+    {
+      "path": "vocabulary-groups.json",
+      "bytes": 413636,
+      "sha256": "465b2b94a98cbfb0175fb966e1694b17d0c12e5ce4a35faf4ada0c0c7a8b0f7b"
+    }
+  ],
+  "scope": "Model metadata and tokenizer statistics. Raw tokenizer assets and model weights are not included."
+}
