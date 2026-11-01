@@ -2,6 +2,28 @@
 
 [Download CSV](models.csv) · [Canonical JSON](models.json)
 
+Start with the [short HTML note on foundation models](foundation-models.html)
+for a focused comparison: 42 reviewed base checkpoints, vocabulary figures,
+and exact-repository download rankings. The reader is self-contained and works
+offline. The [selection file](foundation-selection.json) records every inclusion
+and its evidence; this is an illustrative cohort, not a census.
+
+Rebuild or check the note and its embedded SVG figures:
+
+```sh
+uv run --no-project --python 3.11 --with matplotlib==3.11.1 python scripts/build_tokenizer_note.py
+uv run --no-project --python 3.11 --with matplotlib==3.11.1 python scripts/build_tokenizer_note.py --check
+uv run --group dev python -m pytest -q tests/test_llm_tokenizer_statistics.py tests/test_hf_tokenizer_catalog.py tests/test_tokenizer_catalog_analysis.py tests/test_tokenizer_note.py
+node scripts/check-tokenizer-note.mjs
+```
+
+The browser check uses the pinned Playwright dependency in `slides/`; run
+`npm ci --prefix slides` and `npm --prefix slides run browser:install` once.
+Edit `note-template.html` for prose/layout and `foundation-selection.json` for
+membership/date decisions. The builder reads the checked-in snapshot directly,
+verifies checksums, and writes `foundation-models.html`, matching JSON/CSV,
+and two figures. Missing measurements or download counts remain explicit.
+
 This initial collection contains **84 model releases from 2018–2026**:
 65 with open weights and 19 with closed weights. It includes historically
 significant model families and a few encoder/encoder-decoder tokenizer

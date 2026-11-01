@@ -49,8 +49,11 @@ selection task, rank, downloads, likes, and observation time.
 All 5,092 ungated repositories listing a root `tokenizer.json` were attempted.
 There are **5,105 measured rows**, of which **5,104 have a timeline date**.
 The JSON measurements cover **1,127 distinct files** and **637 distinct
-token-to-ID mappings**. The plot collapses those mappings plus other-format
-artifact groups into **649 dated groups**.
+token-to-ID mappings**. The corrected plot contains **657 dated groups or
+singletons**: 637 complete token-to-ID mapping groups plus 20 records without
+a complete mapping hash. Those 20 records remain separate. A shared primary
+artifact is insufficient: Kimi K2-Base and K2.5 share a rank file but add
+different special-token sets (163,842 versus 163,840 total entries).
 
 Many quantized repositories package tokenizers inside GGUF weights or refer
 to a parent repository. This pass does not download weight files, unpack GGUF,
@@ -109,7 +112,7 @@ uploads can also postdate the true model release.
 The original partial release date is retained alongside the selected plotting
 date. Filled markers indicate documented release days; hollow markers indicate
 proxies. The figure contains linear and logarithmic y-axes, both for all dated
-measurements and for grouped vocabularies/artifacts. Each group's x-coordinate
+measurements and for verified vocabulary groups plus ungrouped records. Each group's x-coordinate
 is the earliest model date observed in this sample, not the tokenizer's proven
 invention date. The plot contains no date-range bars, regression, or uncertainty
 intervals. Small-vocabulary scientific and test models remain visible.

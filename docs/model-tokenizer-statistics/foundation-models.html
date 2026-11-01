@@ -1,0 +1,2130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A short, reproducible note on foundation-model vocabulary sizes and Hugging Face download rankings.">
+<title>Vocabulary sizes in foundation models</title>
+<style>
+:root{--ink:#192e3b;--muted:#586975;--line:#dbe3e7;--teal:#126d78;--amber:#b45721;--paper:#fff;--ground:#f4f6f5}
+*{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font:17px/1.65 Georgia,serif}
+main{max-width:1080px;margin:0 auto;padding:48px 32px 64px}a{color:var(--teal);text-underline-offset:3px}
+header{border-top:5px solid var(--teal);padding-top:22px;margin-bottom:32px}h1,h2,h3,nav,.eyebrow,.stats,figcaption,table,label,summary,button,select,input,footer,.legend{font-family:system-ui,-apple-system,sans-serif}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}h1{font-size:clamp(32px,5vw,52px);line-height:1.12;letter-spacing:-.035em;margin:16px 0}h2{font-size:24px;line-height:1.3;letter-spacing:-.02em;margin:0 0 12px}h3{font-size:17px;margin:0 0 6px}p{max-width:80ch;margin:0 0 16px}.lede{font-size:21px;max-width:72ch;color:#3e5562}
+nav{display:flex;gap:20px;flex-wrap:wrap;font-size:13px;margin-top:22px}nav a{text-decoration:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:26px 0}.stats div{padding:14px 20px;background:white}.stats strong{font-size:26px;display:block;line-height:1.2}.stats span{font-size:12px;color:var(--muted)}section{margin:36px 0}figure{margin:20px 0;background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden}.figure-heading{padding:20px 24px 0;margin:0;font:600 17px/1.4 system-ui,sans-serif}.chart-scroll{overflow-x:auto}.chart-scroll svg{display:block;width:100%;height:auto;min-width:670px}.legend{font-size:12px;padding:0 24px 8px;color:var(--muted)}.dot{display:inline-block;border-radius:50%;width:9px;height:9px;margin:0 4px 0 10px;background:var(--teal)}.dot:first-child{margin-left:0}.small{background:var(--amber)}.unknown{background:#94a1ae}figcaption{padding:0 24px 20px;font-size:12px;line-height:1.6;color:var(--muted)}.callout{background:#e9f2f2;border-left:3px solid var(--teal);padding:18px 22px;margin:22px 0}.callout p:last-child{margin-bottom:0}.two-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px}.two-columns p{font-size:16px}.quiet{color:var(--muted);font-size:14px}
+details{border:1px solid var(--line);border-radius:8px;background:white;margin:20px 0;padding:16px 20px}summary{font-weight:600;font-size:15px;cursor:pointer}details[open]>summary{margin-bottom:18px}.controls{display:flex;flex-wrap:wrap;align-items:end;gap:12px;margin:16px 0}label{font-size:12px;color:var(--muted);display:grid;gap:4px}input,select,button{border:1px solid #bac9ce;border-radius:5px;background:white;padding:8px 10px;color:var(--ink);font-size:13px}input[type=search]{width:240px;max-width:100%}button{cursor:pointer}.check{display:flex;align-items:center;padding-bottom:9px}button:hover{background:#e9f2f2}a:focus-visible,summary:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #dbb346;outline-offset:3px}
+.table-scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.5}th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:11px;text-transform:uppercase;color:var(--muted);letter-spacing:.03em}.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}td small{display:block;font-size:10px;color:var(--muted);overflow-wrap:anywhere;max-width:30em}tr[hidden]{display:none}footer{border-top:1px solid var(--line);padding-top:20px;font-size:12px;color:var(--muted)}.downloads{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.methods li{font-size:14px;margin:10px 0}.methods ul{padding-left:20px}.methods code{font-size:12px;overflow-wrap:anywhere}.no-results{font-size:14px;color:var(--muted)}
+@media(max-width:700px){main{padding:24px 16px 40px}.lede{font-size:18px}.two-columns{grid-template-columns:1fr;gap:0}.stats div{padding:12px}.stats span{font-size:10px}details{padding:14px 12px}h2{font-size:21px}.figure-heading{padding:16px 16px 0}figcaption,.legend{padding-left:16px;padding-right:16px}}
+@media print{body{background:white;font-size:11pt}main{padding:0;max-width:none}nav,.controls,.downloads{display:none}.chart-scroll svg{min-width:0}figure{break-inside:avoid}details:not([open]){display:none}h2,h3{break-after:avoid}a{color:inherit}.stats{margin:16px 0}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div class="eyebrow">NLP and LLMs · Short research note · 1 November 2026</div>
+<h1>Vocabulary sizes in<br>foundation models</h1>
+<p class="lede">A modern language model can still use fewer than 50,000 tokens. To understand why, compare original pretraining checkpoints and make the selection rule explicit.</p>
+<nav aria-label="On this page"><a href="#scope">Model selection</a><a href="#timeline">Vocabulary timeline</a><a href="#popularity">Popularity</a><a href="#data">Explore the data</a></nav>
+<div class="stats"><div><strong>42</strong><span>reviewed base checkpoints</span></div><div><strong>33</strong><span>measured vocabularies</span></div><div><strong>39</strong><span>repositories with download counts</span></div></div>
+</header>
+<section id="scope">
+<h2>Compare original pretraining checkpoints</h2>
+<p>The <a href="https://en.wikipedia.org/wiki/List_of_large_language_models">Wikipedia model list</a> is our starting map of model families. The selection here is narrower: reviewed, general-purpose <strong>base checkpoints</strong> from the original developers or their maintained archives. Small models and text-capable multimodal bases qualify. The linked publisher cards establish each inclusion.</p>
+<p>We select one size for each included generation, preserving early GPT models and recent Qwen, Mistral, DeepSeek, Llama, Gemma, and OLMo releases. We exclude instruction/reasoning-tuned variants, specialist models, community fine-tunes, quantized copies, adapters, merges, and test fixtures. This is an illustrative cohort, not a complete census or a global popularity leaderboard.</p>
+</section>
+<section id="timeline">
+<h2>Vocabulary size does not grow uniformly</h2>
+<p>The selected measurements include large vocabularies, such as BLOOM and Qwen3.5, alongside compact choices such as Mistral 7B and Granite 3.0. A 50,000-token cutoff would remove real foundation models and bias the picture.</p>
+<figure>
+<p class="figure-heading">Selected base checkpoints, by documented release year</p>
+<div class="chart-scroll"><svg role="img" aria-label="Measured vocabulary size by documented release year for reviewed foundation checkpoints" xmlns:xlink="http://www.w3.org/1999/xlink" width="820.8pt" height="403.2pt" viewBox="0 0 820.8 403.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="timeline-figure_1">
+  <g id="timeline-patch_1">
+   <path d="M 0 403.2
+L 820.8 403.2
+L 820.8 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="timeline-axes_1">
+   <g id="timeline-patch_2">
+    <path d="M 73.872 338.688
+L 779.76 338.688
+L 779.76 36.288
+L 73.872 36.288
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="timeline-matplotlib.axis_1">
+    <g id="timeline-xtick_1">
+     <g id="timeline-line2d_1"/>
+     <g id="timeline-text_1">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="101.788475" y="356.045422" transform="rotate(-0 101.788475 356.045422)">2018</text>
+     </g>
+    </g>
+    <g id="timeline-xtick_2">
+     <g id="timeline-line2d_2"/>
+     <g id="timeline-text_2">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="181.549831" y="356.045422" transform="rotate(-0 181.549831 356.045422)">2019</text>
+     </g>
+    </g>
+    <g id="timeline-xtick_3">
+     <g id="timeline-line2d_3"/>
+     <g id="timeline-text_3">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="261.311186" y="356.045422" transform="rotate(-0 261.311186 356.045422)">2020</text>
+     </g>
+    </g>
+    <g id="timeline-xtick_4">
+     <g id="timeline-line2d_4"/>
+     <g id="timeline-text_4">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="341.072542" y="356.045422" transform="rotate(-0 341.072542 356.045422)">2021</text>
+     </g>
+    </g>
+    <g id="timeline-xtick_5">
+     <g id="timeline-line2d_5"/>
+     <g id="timeline-text_5">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="420.833898" y="356.045422" transform="rotate(-0 420.833898 356.045422)">2022</text>
+     </g>
+    </g>
+    <g id="timeline-xtick_6">
+     <g id="timeline-line2d_6"/>
+     <g id="timeline-text_6">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="500.595254" y="356.045422" transform="rotate(-0 500.595254 356.045422)">2023</text>
+     </g>
+    </g>
+    <g id="timeline-xtick_7">
+     <g id="timeline-line2d_7"/>
+     <g id="timeline-text_7">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="580.35661" y="356.045422" transform="rotate(-0 580.35661 356.045422)">2024</text>
+     </g>
+    </g>
+    <g id="timeline-xtick_8">
+     <g id="timeline-line2d_8"/>
+     <g id="timeline-text_8">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="660.117966" y="356.045422" transform="rotate(-0 660.117966 356.045422)">2025</text>
+     </g>
+    </g>
+    <g id="timeline-xtick_9">
+     <g id="timeline-line2d_9"/>
+     <g id="timeline-text_9">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="739.879322" y="356.045422" transform="rotate(-0 739.879322 356.045422)">2026</text>
+     </g>
+    </g>
+    <g id="timeline-text_10">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle" x="426.816" y="380.046281" transform="rotate(-0 426.816 380.046281)">Documented release year</text>
+    </g>
+   </g>
+   <g id="timeline-matplotlib.axis_2">
+    <g id="timeline-ytick_1">
+     <g id="timeline-line2d_10">
+      <path d="M 73.872 338.688
+L 779.76 338.688
+" clip-path="url(#timeline-p03144376e2)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="timeline-line2d_11"/>
+     <g id="timeline-text_11">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="64.872" y="342.867141" transform="rotate(-0 64.872 342.867141)">0k</text>
+     </g>
+    </g>
+    <g id="timeline-ytick_2">
+     <g id="timeline-line2d_12">
+      <path d="M 73.872 284.688
+L 779.76 284.688
+" clip-path="url(#timeline-p03144376e2)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="timeline-line2d_13"/>
+     <g id="timeline-text_12">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="64.872" y="288.867141" transform="rotate(-0 64.872 288.867141)">50k</text>
+     </g>
+    </g>
+    <g id="timeline-ytick_3">
+     <g id="timeline-line2d_14">
+      <path d="M 73.872 230.688
+L 779.76 230.688
+" clip-path="url(#timeline-p03144376e2)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="timeline-line2d_15"/>
+     <g id="timeline-text_13">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="64.872" y="234.867141" transform="rotate(-0 64.872 234.867141)">100k</text>
+     </g>
+    </g>
+    <g id="timeline-ytick_4">
+     <g id="timeline-line2d_16">
+      <path d="M 73.872 176.688
+L 779.76 176.688
+" clip-path="url(#timeline-p03144376e2)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="timeline-line2d_17"/>
+     <g id="timeline-text_14">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="64.872" y="180.867141" transform="rotate(-0 64.872 180.867141)">150k</text>
+     </g>
+    </g>
+    <g id="timeline-ytick_5">
+     <g id="timeline-line2d_18">
+      <path d="M 73.872 122.688
+L 779.76 122.688
+" clip-path="url(#timeline-p03144376e2)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="timeline-line2d_19"/>
+     <g id="timeline-text_15">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="64.872" y="126.867141" transform="rotate(-0 64.872 126.867141)">200k</text>
+     </g>
+    </g>
+    <g id="timeline-ytick_6">
+     <g id="timeline-line2d_20">
+      <path d="M 73.872 68.688
+L 779.76 68.688
+" clip-path="url(#timeline-p03144376e2)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="timeline-line2d_21"/>
+     <g id="timeline-text_16">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="64.872" y="72.867141" transform="rotate(-0 64.872 72.867141)">250k</text>
+     </g>
+    </g>
+    <g id="timeline-text_17">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle" x="22.863484" y="187.488" transform="rotate(-90 22.863484 187.488)">Measured tokenizer entries</text>
+    </g>
+   </g>
+   <g id="timeline-patch_3">
+    <path d="M 73.872 338.688
+L 779.76 338.688
+" style="fill: none; stroke: #cad3da; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="timeline-PathCollection_1">
+    <defs>
+     <path id="timeline-m4a9f76216b" d="M 0 3.708099
+C 0.983399 3.708099 1.926654 3.317391 2.622022 2.622022
+C 3.317391 1.926654 3.708099 0.983399 3.708099 0
+C 3.708099 -0.983399 3.317391 -1.926654 2.622022 -2.622022
+C 1.926654 -3.317391 0.983399 -3.708099 0 -3.708099
+C -0.983399 -3.708099 -1.926654 -3.317391 -2.622022 -2.622022
+C -3.317391 -1.926654 -3.708099 -0.983399 -3.708099 0
+C -3.708099 0.983399 -3.317391 1.926654 -2.622022 2.622022
+C -1.926654 3.317391 -0.983399 3.708099 0 3.708099
+z
+" style="stroke: #ffffff; stroke-width: 0.7"/>
+    </defs>
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="500.595254" y="269.57664" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_2">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="341.072542" y="284.256" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_3">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="341.072542" y="284.41044" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_4">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="420.833898" y="284.38884" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_5">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="500.595254" y="284.38884" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_6">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="660.117966" y="200.17152" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_7">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="500.595254" y="174.68892" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_8">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="580.35661" y="174.91032" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_9">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="580.35661" y="174.8898" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_10">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="660.117966" y="174.8898" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_11">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="739.879322" y="70.77672" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_12">
+    <defs>
+     <path id="timeline-m14fc7a4015" d="M 0 3.708099
+C 0.983399 3.708099 1.926654 3.317391 2.622022 2.622022
+C 3.317391 1.926654 3.708099 0.983399 3.708099 0
+C 3.708099 -0.983399 3.317391 -1.926654 2.622022 -2.622022
+C 1.926654 -3.317391 0.983399 -3.708099 0 -3.708099
+C -0.983399 -3.708099 -1.926654 -3.317391 -2.622022 -2.622022
+C -3.317391 -1.926654 -3.708099 -0.983399 -3.708099 0
+C -3.708099 0.983399 -3.317391 1.926654 -2.622022 2.622022
+C -1.926654 3.317391 -0.983399 3.708099 0 3.708099
+z
+" style="stroke: #ffffff; stroke-width: 0.7"/>
+    </defs>
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m14fc7a4015" x="580.35661" y="304.128" style="fill: #b45721; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_13">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="580.35661" y="267.90912" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_14">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="580.35661" y="230.38776" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_15">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="580.35661" y="284.3856" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_16">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="660.117966" y="230.38776" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_17">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="500.595254" y="202.93632" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_18">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="420.833898" y="67.9536" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_19">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="580.35661" y="230.68584" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_20">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="580.35661" y="199.5678" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_21">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="500.595254" y="230.6718" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_22">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="420.833898" y="284.4018" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_23">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m14fc7a4015" x="580.35661" y="285.60384" style="fill: #b45721; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_24">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="500.595254" y="284.3694" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_25">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m14fc7a4015" x="500.595254" y="304.128" style="fill: #b45721; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_26">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="580.35661" y="197.13024" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_27">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="660.117966" y="197.13024" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_28">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m14fc7a4015" x="500.595254" y="304.128" style="fill: #b45721; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_29">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="660.117966" y="161.73864" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_30">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="181.549831" y="284.41044" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_31">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m14fc7a4015" x="101.788475" y="294.97176" style="fill: #b45721; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-PathCollection_32">
+    <g clip-path="url(#timeline-p03144376e2)">
+     <use xlink:href="#timeline-m4a9f76216b" x="500.595254" y="268.46208" style="fill: #126d78; stroke: #ffffff; stroke-width: 0.7"/>
+    </g>
+   </g>
+   <g id="timeline-patch_4">
+    <path d="M 696.700943 58.486409
+Q 717.32953 64.358138 737.958116 70.229867
+" style="fill: none; stroke: #b4c2ca; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="timeline-text_18">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #263947" x="627.879322" y="53.77672" transform="rotate(-0 627.879322 53.77672)">Qwen3.5 0.8B Base</text>
+   </g>
+   <g id="timeline-patch_5">
+    <path d="M 575.729094 161.930941
+Q 577.706747 167.469145 579.6844 173.007349
+" style="fill: none; stroke: #b4c2ca; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="timeline-text_19">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #263947" x="545.35661" y="155.8898" transform="rotate(-0 545.35661 155.8898)">Qwen2.5 7B</text>
+   </g>
+   <g id="timeline-patch_6">
+    <path d="M 481.282612 320.97544
+Q 490.185712 313.208795 499.088812 305.44215
+" style="fill: none; stroke: #b4c2ca; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="timeline-text_20">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #263947" x="438.595254" y="331.128" transform="rotate(-0 438.595254 331.128)">Mistral 7B v0.1</text>
+   </g>
+   <g id="timeline-patch_7">
+    <path d="M 178.467901 270.52342
+Q 179.792544 276.492194 181.117187 282.460968
+" style="fill: none; stroke: #b4c2ca; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="timeline-text_21">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #263947" x="156.549831" y="264.41044" transform="rotate(-0 156.549831 264.41044)">GPT-2 XL</text>
+   </g>
+   <g id="timeline-patch_8">
+    <path d="M 117.788693 308.82319
+Q 110.54543 302.552679 103.302167 296.282167
+" style="fill: none; stroke: #b4c2ca; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="timeline-text_22">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #263947" x="113.788475" y="318.97176" transform="rotate(-0 113.788475 318.97176)">GPT-1</text>
+   </g>
+   <g id="timeline-patch_9">
+    <path d="M 472.609697 164.532976
+Q 485.661311 169.2694 498.712925 174.005824
+" style="fill: none; stroke: #b4c2ca; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="timeline-text_23">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #263947" x="432.595254" y="159.68892" transform="rotate(-0 432.595254 159.68892)">Qwen 7B</text>
+   </g>
+   <g id="timeline-patch_10">
+    <path d="M 646.354757 145.424577
+Q 652.592051 152.817883 658.829345 160.211188
+" style="fill: none; stroke: #b4c2ca; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="timeline-text_24">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #263947" x="610.117966" y="139.73864" transform="rotate(-0 610.117966 139.73864)">Kimi K2 Base</text>
+   </g>
+   <g id="timeline-patch_11">
+    <path d="M 411.154609 81.488584
+Q 415.411748 75.535636 419.668886 69.582689
+" style="fill: none; stroke: #b4c2ca; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="timeline-text_25">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #263947" x="375.833898" y="91.9536" transform="rotate(-0 375.833898 91.9536)">BLOOM 176B</text>
+   </g>
+   <g id="timeline-patch_12">
+    <path d="M 617.794311 301.005545
+Q 600.000892 293.685411 582.207473 286.365277
+" style="fill: none; stroke: #b4c2ca; stroke-width: 0.7; stroke-linecap: round"/>
+   </g>
+   <g id="timeline-text_26">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #263947" x="590.35661" y="310.60384" transform="rotate(-0 590.35661 310.60384)">Granite 3.0 8B Base</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="timeline-p03144376e2">
+   <rect x="73.872" y="36.288" width="705.888" height="302.4"/>
+  </clipPath>
+ </defs>
+</svg>
+</div>
+<div class="legend"><span class="dot"></span>50,000 entries or more <span class="dot small"></span>Below 50,000</div>
+<figcaption>32 measured checkpoints with a sourced release year. Years are discrete: overlapping points are left in place, with no date jitter or fitted trend. Current pinned tokenizer revisions are measured, not necessarily launch-day revisions. On a narrow screen, scroll the figure horizontally.</figcaption>
+</figure>
+<div class="callout"><h3>Why do smaller vocabularies persist?</h3><p>Mistral 7B has <strong>32,000</strong> measured entries; Granite 3.0 8B has <strong>49,152</strong>. Vocabulary size is a design choice: at hidden width <var>d</var>, one embedding table contains <var>V</var> × <var>d</var> parameters. Increasing <var>V</var> from 32k to 128k quadruples that table. Whether the extra entries improve compression or model quality must be tested on the target languages and tasks. The scatter alone cannot establish the best vocabulary size.</p></div>
+<p class="quiet">Coverage matters: 9 reviewed checkpoints lack a measured tokenizer in this snapshot, including Llama and Gemma entries; 1 measured checkpoint lacks a verified release year. They remain visible in the data table rather than being plotted at zero or assigned a repository date.</p>
+</section>
+<section id="popularity">
+<h2>Rank by an observable usage signal</h2>
+<p>We rank the exact selected repositories by <strong>30-day Hugging Face downloads observed on 31 October 2026</strong>. This is a reproducible way to prioritize case studies. It does not measure unique users, total family adoption, benchmark quality, or practical usefulness.</p>
+<figure>
+<p class="figure-heading">The 12 most downloaded checkpoints within this selection</p>
+<div class="chart-scroll"><svg role="img" aria-label="Twelve highest-download checkpoints within the reviewed selection, with measured vocabulary sizes" xmlns:xlink="http://www.w3.org/1999/xlink" width="820.8pt" height="475.2pt" viewBox="0 0 820.8 475.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="popularity-figure_1">
+  <g id="popularity-patch_1">
+   <path d="M 0 475.2
+L 820.8 475.2
+L 820.8 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="popularity-axes_1">
+   <g id="popularity-patch_2">
+    <path d="M 238.032 418.176
+L 648.432 418.176
+L 648.432 57.024
+L 238.032 57.024
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="popularity-matplotlib.axis_1">
+    <g id="popularity-xtick_1">
+     <g id="popularity-line2d_1">
+      <path d="M 238.032 418.176
+L 238.032 57.024
+" clip-path="url(#popularity-pff381bd47d)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="popularity-line2d_2"/>
+     <g id="popularity-text_1">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="238.032" y="435.533422" transform="rotate(-0 238.032 435.533422)">0.0</text>
+     </g>
+    </g>
+    <g id="popularity-xtick_2">
+     <g id="popularity-line2d_3">
+      <path d="M 288.472067 418.176
+L 288.472067 57.024
+" clip-path="url(#popularity-pff381bd47d)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="popularity-line2d_4"/>
+     <g id="popularity-text_2">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="288.472067" y="435.533422" transform="rotate(-0 288.472067 435.533422)">0.5</text>
+     </g>
+    </g>
+    <g id="popularity-xtick_3">
+     <g id="popularity-line2d_5">
+      <path d="M 338.912135 418.176
+L 338.912135 57.024
+" clip-path="url(#popularity-pff381bd47d)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="popularity-line2d_6"/>
+     <g id="popularity-text_3">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="338.912135" y="435.533422" transform="rotate(-0 338.912135 435.533422)">1.0</text>
+     </g>
+    </g>
+    <g id="popularity-xtick_4">
+     <g id="popularity-line2d_7">
+      <path d="M 389.352202 418.176
+L 389.352202 57.024
+" clip-path="url(#popularity-pff381bd47d)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="popularity-line2d_8"/>
+     <g id="popularity-text_4">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="389.352202" y="435.533422" transform="rotate(-0 389.352202 435.533422)">1.5</text>
+     </g>
+    </g>
+    <g id="popularity-xtick_5">
+     <g id="popularity-line2d_9">
+      <path d="M 439.79227 418.176
+L 439.79227 57.024
+" clip-path="url(#popularity-pff381bd47d)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="popularity-line2d_10"/>
+     <g id="popularity-text_5">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="439.79227" y="435.533422" transform="rotate(-0 439.79227 435.533422)">2.0</text>
+     </g>
+    </g>
+    <g id="popularity-xtick_6">
+     <g id="popularity-line2d_11">
+      <path d="M 490.232337 418.176
+L 490.232337 57.024
+" clip-path="url(#popularity-pff381bd47d)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="popularity-line2d_12"/>
+     <g id="popularity-text_6">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="490.232337" y="435.533422" transform="rotate(-0 490.232337 435.533422)">2.5</text>
+     </g>
+    </g>
+    <g id="popularity-xtick_7">
+     <g id="popularity-line2d_13">
+      <path d="M 540.672405 418.176
+L 540.672405 57.024
+" clip-path="url(#popularity-pff381bd47d)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="popularity-line2d_14"/>
+     <g id="popularity-text_7">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="540.672405" y="435.533422" transform="rotate(-0 540.672405 435.533422)">3.0</text>
+     </g>
+    </g>
+    <g id="popularity-xtick_8">
+     <g id="popularity-line2d_15">
+      <path d="M 591.112472 418.176
+L 591.112472 57.024
+" clip-path="url(#popularity-pff381bd47d)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="popularity-line2d_16"/>
+     <g id="popularity-text_8">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="591.112472" y="435.533422" transform="rotate(-0 591.112472 435.533422)">3.5</text>
+     </g>
+    </g>
+    <g id="popularity-xtick_9">
+     <g id="popularity-line2d_17">
+      <path d="M 641.55254 418.176
+L 641.55254 57.024
+" clip-path="url(#popularity-pff381bd47d)" style="fill: none; stroke: #e7ecef; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="popularity-line2d_18"/>
+     <g id="popularity-text_9">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle; fill: #445260" x="641.55254" y="435.533422" transform="rotate(-0 641.55254 435.533422)">4.0</text>
+     </g>
+    </g>
+    <g id="popularity-text_10">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: middle" x="443.232" y="458.534281" transform="rotate(-0 443.232 458.534281)">30-day repository downloads (millions)</text>
+    </g>
+   </g>
+   <g id="popularity-matplotlib.axis_2">
+    <g id="popularity-ytick_1">
+     <g id="popularity-line2d_19"/>
+     <g id="popularity-text_11">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="229.032" y="85.706539" transform="rotate(-0 229.032 85.706539)">1. Pythia 160M</text>
+     </g>
+    </g>
+    <g id="popularity-ytick_2">
+     <g id="popularity-line2d_20"/>
+     <g id="popularity-text_12">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="229.032" y="114.083376" transform="rotate(-0 229.032 114.083376)">2. SmolLM2 135M</text>
+     </g>
+    </g>
+    <g id="popularity-ytick_3">
+     <g id="popularity-line2d_21"/>
+     <g id="popularity-text_13">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="229.032" y="142.459783" transform="rotate(-0 229.032 142.459783)">3. Qwen3.5 0.8B Base</text>
+     </g>
+    </g>
+    <g id="popularity-ytick_4">
+     <g id="popularity-line2d_22"/>
+     <g id="popularity-text_14">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="229.032" y="170.836619" transform="rotate(-0 229.032 170.836619)">4. Qwen2.5 7B</text>
+     </g>
+    </g>
+    <g id="popularity-ytick_5">
+     <g id="popularity-line2d_23"/>
+     <g id="popularity-text_15">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="229.032" y="199.213456" transform="rotate(-0 229.032 199.213456)">5. Qwen3 8B Base</text>
+     </g>
+    </g>
+    <g id="popularity-ytick_6">
+     <g id="popularity-line2d_24"/>
+     <g id="popularity-text_16">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="229.032" y="227.590722" transform="rotate(-0 229.032 227.590722)">6. Mistral 7B v0.1</text>
+     </g>
+    </g>
+    <g id="popularity-ytick_7">
+     <g id="popularity-line2d_25"/>
+     <g id="popularity-text_17">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="229.032" y="255.967559" transform="rotate(-0 229.032 255.967559)">7. Llama 2 7B</text>
+     </g>
+    </g>
+    <g id="popularity-ytick_8">
+     <g id="popularity-line2d_26"/>
+     <g id="popularity-text_18">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="229.032" y="284.344396" transform="rotate(-0 229.032 284.344396)">8. Phi-2</text>
+     </g>
+    </g>
+    <g id="popularity-ytick_9">
+     <g id="popularity-line2d_27"/>
+     <g id="popularity-text_19">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="229.032" y="312.720803" transform="rotate(-0 229.032 312.720803)">9. Gemma 3 4B PT</text>
+     </g>
+    </g>
+    <g id="popularity-ytick_10">
+     <g id="popularity-line2d_28"/>
+     <g id="popularity-text_20">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="229.032" y="341.097639" transform="rotate(-0 229.032 341.097639)">10. GPT-NeoX 20B</text>
+     </g>
+    </g>
+    <g id="popularity-ytick_11">
+     <g id="popularity-line2d_29"/>
+     <g id="popularity-text_21">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="229.032" y="369.474476" transform="rotate(-0 229.032 369.474476)">11. Qwen2 7B</text>
+     </g>
+    </g>
+    <g id="popularity-ytick_12">
+     <g id="popularity-line2d_30"/>
+     <g id="popularity-text_22">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: end; fill: #445260" x="229.032" y="397.851742" transform="rotate(-0 229.032 397.851742)">12. Olmo 3 7B Base</text>
+     </g>
+    </g>
+   </g>
+   <g id="popularity-patch_3">
+    <path d="M 238.032 73.44
+L 580.032 73.44
+L 580.032 89.614797
+L 238.032 89.614797
+z
+" clip-path="url(#popularity-pff381bd47d)" style="fill: #126d78"/>
+   </g>
+   <g id="popularity-patch_4">
+    <path d="M 238.032 101.816837
+L 478.550821 101.816837
+L 478.550821 117.991634
+L 238.032 117.991634
+z
+" clip-path="url(#popularity-pff381bd47d)" style="fill: #b45721"/>
+   </g>
+   <g id="popularity-patch_5">
+    <path d="M 238.032 130.193673
+L 303.909351 130.193673
+L 303.909351 146.36847
+L 238.032 146.36847
+z
+" clip-path="url(#popularity-pff381bd47d)" style="fill: #126d78"/>
+   </g>
+   <g id="popularity-patch_6">
+    <path d="M 238.032 158.57051
+L 292.19061 158.57051
+L 292.19061 174.745307
+L 238.032 174.745307
+z
+" clip-path="url(#popularity-pff381bd47d)" style="fill: #126d78"/>
+   </g>
+   <g id="popularity-patch_7">
+    <path d="M 238.032 186.947347
+L 291.875259 186.947347
+L 291.875259 203.122143
+L 238.032 203.122143
+z
+" clip-path="url(#popularity-pff381bd47d)" style="fill: #126d78"/>
+   </g>
+   <g id="popularity-patch_8">
+    <path d="M 238.032 215.324183
+L 283.340699 215.324183
+L 283.340699 231.49898
+L 238.032 231.49898
+z
+" clip-path="url(#popularity-pff381bd47d)" style="fill: #b45721"/>
+   </g>
+   <g id="popularity-patch_9">
+    <path d="M 238.032 243.70102
+L 270.85658 243.70102
+L 270.85658 259.875817
+L 238.032 259.875817
+z
+" clip-path="url(#popularity-pff381bd47d)" style="fill: #94a1ae"/>
+   </g>
+   <g id="popularity-patch_10">
+    <path d="M 238.032 272.077857
+L 270.265322 272.077857
+L 270.265322 288.252653
+L 238.032 288.252653
+z
+" clip-path="url(#popularity-pff381bd47d)" style="fill: #126d78"/>
+   </g>
+   <g id="popularity-patch_11">
+    <path d="M 238.032 300.454693
+L 268.376442 300.454693
+L 268.376442 316.62949
+L 238.032 316.62949
+z
+" clip-path="url(#popularity-pff381bd47d)" style="fill: #94a1ae"/>
+   </g>
+   <g id="popularity-patch_12">
+    <path d="M 238.032 328.83153
+L 264.833027 328.83153
+L 264.833027 345.006327
+L 238.032 345.006327
+z
+" clip-path="url(#popularity-pff381bd47d)" style="fill: #126d78"/>
+   </g>
+   <g id="popularity-patch_13">
+    <path d="M 238.032 357.208366
+L 258.522874 357.208366
+L 258.522874 373.383163
+L 238.032 373.383163
+z
+" clip-path="url(#popularity-pff381bd47d)" style="fill: #126d78"/>
+   </g>
+   <g id="popularity-patch_14">
+    <path d="M 238.032 385.585203
+L 252.706226 385.585203
+L 252.706226 401.76
+L 238.032 401.76
+z
+" clip-path="url(#popularity-pff381bd47d)" style="fill: #126d78"/>
+   </g>
+   <g id="popularity-patch_15">
+    <path d="M 238.032 418.176
+L 648.432 418.176
+" style="fill: none; stroke: #cad3da; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="popularity-text_23">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #445260" x="583.562805" y="83.865289" transform="rotate(-0 583.562805 83.865289)">3.39M</text>
+   </g>
+   <g id="popularity-text_24">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #126d78" x="701.784" y="84.125055" transform="rotate(-0 701.784 84.125055)">50,277</text>
+   </g>
+   <g id="popularity-text_25">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #445260" x="482.081626" y="112.242126" transform="rotate(-0 482.081626 112.242126)">2.38M</text>
+   </g>
+   <g id="popularity-text_26">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #b45721" x="701.784" y="112.501891" transform="rotate(-0 701.784 112.501891)">49,152</text>
+   </g>
+   <g id="popularity-text_27">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #445260" x="307.440156" y="140.618962" transform="rotate(-0 307.440156 140.618962)">0.65M</text>
+   </g>
+   <g id="popularity-text_28">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #126d78" x="701.784" y="140.878728" transform="rotate(-0 701.784 140.878728)">248,066</text>
+   </g>
+   <g id="popularity-text_29">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #445260" x="295.721415" y="168.995799" transform="rotate(-0 295.721415 168.995799)">0.54M</text>
+   </g>
+   <g id="popularity-text_30">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #126d78" x="701.784" y="169.255565" transform="rotate(-0 701.784 169.255565)">151,665</text>
+   </g>
+   <g id="popularity-text_31">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #445260" x="295.406064" y="197.372636" transform="rotate(-0 295.406064 197.372636)">0.53M</text>
+   </g>
+   <g id="popularity-text_32">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #126d78" x="701.784" y="197.632401" transform="rotate(-0 701.784 197.632401)">151,665</text>
+   </g>
+   <g id="popularity-text_33">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #445260" x="286.871503" y="225.749472" transform="rotate(-0 286.871503 225.749472)">0.45M</text>
+   </g>
+   <g id="popularity-text_34">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #b45721" x="701.784" y="226.009238" transform="rotate(-0 701.784 226.009238)">32,000</text>
+   </g>
+   <g id="popularity-text_35">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #445260" x="274.387385" y="254.126309" transform="rotate(-0 274.387385 254.126309)">0.33M</text>
+   </g>
+   <g id="popularity-text_36">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #94a1ae" x="701.784" y="254.386465" transform="rotate(-0 701.784 254.386465)">Not measured</text>
+   </g>
+   <g id="popularity-text_37">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #445260" x="273.796126" y="282.503146" transform="rotate(-0 273.796126 282.503146)">0.32M</text>
+   </g>
+   <g id="popularity-text_38">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #126d78" x="701.784" y="282.762911" transform="rotate(-0 701.784 282.762911)">50,295</text>
+   </g>
+   <g id="popularity-text_39">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #445260" x="271.907247" y="310.879982" transform="rotate(-0 271.907247 310.879982)">0.30M</text>
+   </g>
+   <g id="popularity-text_40">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #94a1ae" x="701.784" y="311.140138" transform="rotate(-0 701.784 311.140138)">Not measured</text>
+   </g>
+   <g id="popularity-text_41">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #445260" x="268.363832" y="339.256819" transform="rotate(-0 268.363832 339.256819)">0.27M</text>
+   </g>
+   <g id="popularity-text_42">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #126d78" x="701.784" y="339.516585" transform="rotate(-0 701.784 339.516585)">50,277</text>
+   </g>
+   <g id="popularity-text_43">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #445260" x="262.053679" y="367.633656" transform="rotate(-0 262.053679 367.633656)">0.20M</text>
+   </g>
+   <g id="popularity-text_44">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #126d78" x="701.784" y="367.893421" transform="rotate(-0 701.784 367.893421)">151,646</text>
+   </g>
+   <g id="popularity-text_45">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #445260" x="256.237031" y="396.010492" transform="rotate(-0 256.237031 396.010492)">0.15M</text>
+   </g>
+   <g id="popularity-text_46">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #126d78" x="701.784" y="396.270258" transform="rotate(-0 701.784 396.270258)">100,278</text>
+   </g>
+   <g id="popularity-text_47">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans', Arial, sans-serif; text-anchor: start; fill: #445260" x="701.784" y="35.35488" transform="rotate(-0 701.784 35.35488)">Vocabulary</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="popularity-pff381bd47d">
+   <rect x="238.032" y="57.024" width="410.4" height="361.152"/>
+  </clipPath>
+ </defs>
+</svg>
+</div>
+<div class="legend"><span class="dot"></span>50,000 entries or more <span class="dot small"></span>Below 50,000 <span class="dot unknown"></span>Vocabulary not measured</div>
+<figcaption>Rank uses downloads even when vocabulary measurement is unavailable. Counts belong to these exact checkpoints; derivatives and other parameter sizes are not added together. The full ranking and all unknown values are available below.</figcaption>
+</figure>
+<div class="two-columns"><div><h3>Popularity is not a quality score</h3><p>Hub downloads count requests to selected files and can include automated activity. They are affected by caching, distribution channels, and library conventions. See the <a href="https://huggingface.co/docs/hub/models-download-stats">Hub’s counting rules</a>.</p></div><div><h3>Usability depends on the task</h3><p>A base model is useful for studying pretraining and further adaptation. Choosing a ready-to-use assistant also requires task evaluations, language coverage, a suitable license, and affordable inference. We do not turn vocabulary size or download counts into a synthetic “usability” score.</p></div></div>
+</section>
+<details id="data">
+<summary>Explore all 42 checkpoints, sources, and exact counts</summary>
+<p class="quiet">Rank is within this curated selection. Model links give classification evidence; year links give date evidence; vocabulary links identify tokenizer artifacts. “Not measured” and “Unranked” are missing values, not zeros. Some source pages require publisher access.</p>
+<div class="controls">
+<label>Find a model<input id="search" type="search" placeholder="Qwen, Mistral, Llama…"></label>
+<label>Order<select id="sort"><option value="rank">Downloads: highest first</option><option value="year">Release year: newest first</option><option value="vocab">Vocabulary: smallest first</option></select></label>
+<label>Rows<select id="limit"><option value="15">First 15</option><option value="1000">All selected models</option></select></label>
+<label class="check"><input id="compact" type="checkbox">Only measured vocabularies below 50k</label>
+</div>
+<p id="shown" class="quiet" aria-live="polite">42 selected checkpoints.</p>
+<div class="table-scroll"><table><thead><tr><th class="num">Rank</th><th>Base checkpoint</th><th>Release year</th><th class="num">Vocabulary</th><th class="num">30-day downloads</th></tr></thead><tbody id="models"><tr data-model="EleutherAI/pythia-160m"
+          data-rank="1" data-year="2023"
+          data-vocab="50277" data-downloads="3390162">
+          <td class="num">1</td>
+          <td><a href="https://huggingface.co/EleutherAI/pythia-160m/blob/50f5173d932e8e61f858120bcb800b97af589f46/README.md">Pythia 160M</a>
+          <small>EleutherAI/pythia-160m · 0.213B parameters</small></td>
+          <td><a href="https://github.com/EleutherAI/pythia">2023</a></td><td class="num"><a href="https://huggingface.co/EleutherAI/pythia-160m/resolve/50f5173d932e8e61f858120bcb800b97af589f46/tokenizer.json">50,277</a></td>
+          <td class="num">3,390,162</td></tr>
+<tr data-model="HuggingFaceTB/SmolLM2-135M"
+          data-rank="2" data-year="0"
+          data-vocab="49152" data-downloads="2384204">
+          <td class="num">2</td>
+          <td><a href="https://huggingface.co/HuggingFaceTB/SmolLM2-135M/blob/93efa2f097d58c2a74874c7e644dbc9b0cee75a2/README.md">SmolLM2 135M</a>
+          <small>HuggingFaceTB/SmolLM2-135M · 0.135B parameters</small></td>
+          <td>Unverified</td><td class="num"><a href="https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/93efa2f097d58c2a74874c7e644dbc9b0cee75a2/tokenizer.json">49,152</a></td>
+          <td class="num">2,384,204</td></tr>
+<tr data-model="Qwen/Qwen3.5-0.8B-Base"
+          data-rank="3" data-year="2026"
+          data-vocab="248066" data-downloads="653026">
+          <td class="num">3</td>
+          <td><a href="https://huggingface.co/Qwen/Qwen3.5-0.8B-Base/blob/dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68/README.md">Qwen3.5 0.8B Base</a>
+          <small>Qwen/Qwen3.5-0.8B-Base · 0.873B parameters</small></td>
+          <td><a href="https://github.com/QwenLM/Qwen3.8#news">2026</a></td><td class="num"><a href="https://huggingface.co/Qwen/Qwen3.5-0.8B-Base/resolve/dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68/tokenizer.json">248,066</a></td>
+          <td class="num">653,026</td></tr>
+<tr data-model="Qwen/Qwen2.5-7B"
+          data-rank="4" data-year="2024"
+          data-vocab="151665" data-downloads="536861">
+          <td class="num">4</td>
+          <td><a href="https://huggingface.co/Qwen/Qwen2.5-7B/blob/d149729398750b98c0af14eb82c78cfe92750796/README.md">Qwen2.5 7B</a>
+          <small>Qwen/Qwen2.5-7B · 7.61B parameters</small></td>
+          <td><a href="https://qwenlm.github.io/blog/qwen2.5/">2024</a></td><td class="num"><a href="https://huggingface.co/Qwen/Qwen2.5-7B/blob/d149729398750b98c0af14eb82c78cfe92750796/tokenizer.json">151,665</a></td>
+          <td class="num">536,861</td></tr>
+<tr data-model="Qwen/Qwen3-8B-Base"
+          data-rank="5" data-year="2025"
+          data-vocab="151665" data-downloads="533735">
+          <td class="num">5</td>
+          <td><a href="https://huggingface.co/Qwen/Qwen3-8B-Base/blob/49e3418fbbbca6ecbdf9608b4d22e5a407081db4/README.md">Qwen3 8B Base</a>
+          <small>Qwen/Qwen3-8B-Base · 8.19B parameters</small></td>
+          <td><a href="https://qwenlm.github.io/blog/qwen3/">2025</a></td><td class="num"><a href="https://huggingface.co/Qwen/Qwen3-8B-Base/resolve/49e3418fbbbca6ecbdf9608b4d22e5a407081db4/tokenizer.json">151,665</a></td>
+          <td class="num">533,735</td></tr>
+<tr data-model="mistralai/Mistral-7B-v0.1"
+          data-rank="6" data-year="2023"
+          data-vocab="32000" data-downloads="449134">
+          <td class="num">6</td>
+          <td><a href="https://huggingface.co/mistralai/Mistral-7B-v0.1/blob/27d67f1b5f57dc0953326b2601d68371d40ea8da/README.md">Mistral 7B v0.1</a>
+          <small>mistralai/Mistral-7B-v0.1 · 7B parameters</small></td>
+          <td><a href="https://mistral.ai/news/announcing-mistral-7b/">2023</a></td><td class="num"><a href="https://huggingface.co/mistralai/Mistral-7B-v0.1/blob/27d67f1b5f57dc0953326b2601d68371d40ea8da/tokenizer.json">32,000</a></td>
+          <td class="num">449,134</td></tr>
+<tr data-model="meta-llama/Llama-2-7b-hf"
+          data-rank="7" data-year="2023"
+          data-vocab="-1" data-downloads="325382">
+          <td class="num">7</td>
+          <td><a href="https://huggingface.co/meta-llama/Llama-2-7b-hf/blob/01c7f73d771dfac7d292323805ebc428287df4f9/README.md">Llama 2 7B</a>
+          <small>meta-llama/Llama-2-7b-hf · 7B parameters</small></td>
+          <td><a href="https://huggingface.co/meta-llama/Llama-2-7b-hf/blob/01c7f73d771dfac7d292323805ebc428287df4f9/README.md">2023</a></td><td class="num">Not measured</td>
+          <td class="num">325,382</td></tr>
+<tr data-model="microsoft/phi-2"
+          data-rank="8" data-year="2023"
+          data-vocab="50295" data-downloads="319521">
+          <td class="num">8</td>
+          <td><a href="https://huggingface.co/microsoft/phi-2/blob/810d367871c1d460086d9f82db8696f2e0a0fcd0/README.md">Phi-2</a>
+          <small>microsoft/phi-2 · 2.7B parameters</small></td>
+          <td><a href="https://huggingface.co/microsoft/phi-2/blob/810d367871c1d460086d9f82db8696f2e0a0fcd0/README.md">2023</a></td><td class="num"><a href="https://huggingface.co/microsoft/phi-2/blob/810d367871c1d460086d9f82db8696f2e0a0fcd0/tokenizer.json">50,295</a></td>
+          <td class="num">319,521</td></tr>
+<tr data-model="google/gemma-3-4b-pt"
+          data-rank="9" data-year="2025"
+          data-vocab="-1" data-downloads="300797">
+          <td class="num">9</td>
+          <td><a href="https://huggingface.co/google/gemma-3-4b-pt/blob/cc012e0a6d0787b4adcc0fa2c4da74402494554d/README.md">Gemma 3 4B PT</a>
+          <small>google/gemma-3-4b-pt · 4B parameters</small></td>
+          <td><a href="https://ai.google.dev/gemma/docs/releases">2025</a></td><td class="num">Not measured</td>
+          <td class="num">300,797</td></tr>
+<tr data-model="EleutherAI/gpt-neox-20b"
+          data-rank="10" data-year="2022"
+          data-vocab="50277" data-downloads="265672">
+          <td class="num">10</td>
+          <td><a href="https://huggingface.co/EleutherAI/gpt-neox-20b/blob/c292233c833e336628618a88a648727eb3dff0a7/README.md">GPT-NeoX 20B</a>
+          <small>EleutherAI/gpt-neox-20b · 20B parameters</small></td>
+          <td><a href="https://huggingface.co/EleutherAI/gpt-neox-20b/blob/c292233c833e336628618a88a648727eb3dff0a7/README.md">2022</a></td><td class="num"><a href="https://huggingface.co/EleutherAI/gpt-neox-20b/blob/c292233c833e336628618a88a648727eb3dff0a7/tokenizer.json">50,277</a></td>
+          <td class="num">265,672</td></tr>
+<tr data-model="Qwen/Qwen2-7B"
+          data-rank="11" data-year="2024"
+          data-vocab="151646" data-downloads="203121">
+          <td class="num">11</td>
+          <td><a href="https://huggingface.co/Qwen/Qwen2-7B/blob/453ed1575b739b5b03ce3758b23befdb0967f40e/README.md">Qwen2 7B</a>
+          <small>Qwen/Qwen2-7B · 7.07B parameters</small></td>
+          <td><a href="https://qwenlm.github.io/blog/qwen2/">2024</a></td><td class="num"><a href="https://huggingface.co/Qwen/Qwen2-7B/blob/453ed1575b739b5b03ce3758b23befdb0967f40e/tokenizer.json">151,646</a></td>
+          <td class="num">203,121</td></tr>
+<tr data-model="allenai/Olmo-3-1025-7B"
+          data-rank="12" data-year="2025"
+          data-vocab="100278" data-downloads="145462">
+          <td class="num">12</td>
+          <td><a href="https://huggingface.co/allenai/Olmo-3-1025-7B/blob/a81bae42db3975be1671e27b9c9a56da1a9f980f/README.md">Olmo 3 7B Base</a>
+          <small>allenai/Olmo-3-1025-7B · 7B parameters</small></td>
+          <td><a href="https://huggingface.co/allenai/Olmo-3-1025-7B/blob/a81bae42db3975be1671e27b9c9a56da1a9f980f/README.md">2025</a></td><td class="num"><a href="https://huggingface.co/allenai/Olmo-3-1025-7B/blob/a81bae42db3975be1671e27b9c9a56da1a9f980f/tokenizer.json">100,278</a></td>
+          <td class="num">145,462</td></tr>
+<tr data-model="meta-llama/Meta-Llama-3-8B"
+          data-rank="13" data-year="2024"
+          data-vocab="-1" data-downloads="135564">
+          <td class="num">13</td>
+          <td><a href="https://huggingface.co/meta-llama/Meta-Llama-3-8B/blob/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/README.md">Llama 3 8B</a>
+          <small>meta-llama/Meta-Llama-3-8B · 8B parameters</small></td>
+          <td><a href="https://huggingface.co/meta-llama/Meta-Llama-3-8B/blob/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/README.md">2024</a></td><td class="num">Not measured</td>
+          <td class="num">135,564</td></tr>
+<tr data-model="tiiuae/falcon-7b"
+          data-rank="14" data-year="2023"
+          data-vocab="65024" data-downloads="129342">
+          <td class="num">14</td>
+          <td><a href="https://huggingface.co/tiiuae/falcon-7b/blob/ec89142b67d748a1865ea4451372db8313ada0d8/README.md">Falcon 7B</a>
+          <small>tiiuae/falcon-7b · 7B parameters</small></td>
+          <td><a href="https://huggingface.co/tiiuae/falcon-7b/blob/ec89142b67d748a1865ea4451372db8313ada0d8/README.md">2023</a></td><td class="num"><a href="https://huggingface.co/tiiuae/falcon-7b/blob/ec89142b67d748a1865ea4451372db8313ada0d8/tokenizer.json">65,024</a></td>
+          <td class="num">129,342</td></tr>
+<tr data-model="google/gemma-2b"
+          data-rank="15" data-year="2024"
+          data-vocab="-1" data-downloads="90422">
+          <td class="num">15</td>
+          <td><a href="https://huggingface.co/google/gemma-2b/blob/9cf48e52b224239de00d483ec8eb84fb8d0f3a3a/README.md">Gemma 2B</a>
+          <small>google/gemma-2b · 2B parameters</small></td>
+          <td><a href="https://ai.google.dev/gemma/docs/releases">2024</a></td><td class="num">Not measured</td>
+          <td class="num">90,422</td></tr>
+<tr data-model="openai-community/gpt2-xl"
+          data-rank="16" data-year="2019"
+          data-vocab="50257" data-downloads="79477">
+          <td class="num">16</td>
+          <td><a href="https://huggingface.co/openai-community/gpt2-xl/blob/15ea56dee5df4983c59b2538573817e1667135e2/README.md">GPT-2 XL</a>
+          <small>openai-community/gpt2-xl · 1.5B parameters</small></td>
+          <td><a href="https://huggingface.co/openai-community/gpt2-xl/blob/15ea56dee5df4983c59b2538573817e1667135e2/README.md">2019</a></td><td class="num"><a href="https://huggingface.co/openai-community/gpt2-xl/blob/15ea56dee5df4983c59b2538573817e1667135e2/tokenizer.json">50,257</a></td>
+          <td class="num">79,477</td></tr>
+<tr data-model="mistralai/Mistral-Nemo-Base-2407"
+          data-rank="17" data-year="2024"
+          data-vocab="131072" data-downloads="78431">
+          <td class="num">17</td>
+          <td><a href="https://huggingface.co/mistralai/Mistral-Nemo-Base-2407/blob/a4477a2f977929a969745b69bbd62e03043551a5/README.md">Mistral NeMo 12B Base</a>
+          <small>mistralai/Mistral-Nemo-Base-2407 · 12B parameters</small></td>
+          <td><a href="https://mistral.ai/news/mistral-nemo/">2024</a></td><td class="num"><a href="https://huggingface.co/mistralai/Mistral-Nemo-Base-2407/blob/a4477a2f977929a969745b69bbd62e03043551a5/tokenizer.json">131,072</a></td>
+          <td class="num">78,431</td></tr>
+<tr data-model="HuggingFaceTB/SmolLM3-3B-Base"
+          data-rank="18" data-year="2025"
+          data-vocab="128256" data-downloads="73485">
+          <td class="num">18</td>
+          <td><a href="https://huggingface.co/HuggingFaceTB/SmolLM3-3B-Base/blob/d78a42f79198603e614095753484a04c10c2b940/README.md">SmolLM3 3B Base</a>
+          <small>HuggingFaceTB/SmolLM3-3B-Base · 3.08B parameters</small></td>
+          <td><a href="https://huggingface.co/blog/smollm3">2025</a></td><td class="num"><a href="https://huggingface.co/HuggingFaceTB/SmolLM3-3B-Base/resolve/d78a42f79198603e614095753484a04c10c2b940/tokenizer.json">128,256</a></td>
+          <td class="num">73,485</td></tr>
+<tr data-model="EleutherAI/gpt-j-6b"
+          data-rank="19" data-year="2021"
+          data-vocab="50400" data-downloads="70345">
+          <td class="num">19</td>
+          <td><a href="https://huggingface.co/EleutherAI/gpt-j-6b/blob/47e169305d2e8376be1d31e765533382721b2cc1/README.md">GPT-J 6B</a>
+          <small>EleutherAI/gpt-j-6b · 6B parameters</small></td>
+          <td><a href="https://huggingface.co/EleutherAI/gpt-j-6b/blob/47e169305d2e8376be1d31e765533382721b2cc1/README.md">2021</a></td><td class="num"><a href="https://huggingface.co/EleutherAI/gpt-j-6b/blob/47e169305d2e8376be1d31e765533382721b2cc1/tokenizer.json">50,400</a></td>
+          <td class="num">70,345</td></tr>
+<tr data-model="openai-community/openai-gpt"
+          data-rank="20" data-year="2018"
+          data-vocab="40478" data-downloads="67121">
+          <td class="num">20</td>
+          <td><a href="https://huggingface.co/openai-community/openai-gpt/blob/1e0d4f3028acbffb47fe933cea64619c5ec1a002/README.md">GPT-1</a>
+          <small>openai-community/openai-gpt · 0.117B parameters</small></td>
+          <td><a href="https://openai.com/index/language-unsupervised/">2018</a></td><td class="num"><a href="https://huggingface.co/openai-community/openai-gpt/blob/1e0d4f3028acbffb47fe933cea64619c5ec1a002/tokenizer.json">40,478</a></td>
+          <td class="num">67,121</td></tr>
+<tr data-model="Qwen/Qwen-7B"
+          data-rank="21" data-year="2023"
+          data-vocab="151851" data-downloads="62991">
+          <td class="num">21</td>
+          <td><a href="https://huggingface.co/Qwen/Qwen-7B/blob/ef3c5c9c57b252f3149c1408daf4d649ec8b6c85/README.md">Qwen 7B</a>
+          <small>Qwen/Qwen-7B · 7B parameters</small></td>
+          <td><a href="https://github.com/QwenLM/Qwen/blob/main/README.md">2023</a></td><td class="num"><a href="https://huggingface.co/Qwen/Qwen-7B/blob/ef3c5c9c57b252f3149c1408daf4d649ec8b6c85/qwen.tiktoken">151,851</a></td>
+          <td class="num">62,991</td></tr>
+<tr data-model="facebook/opt-6.7b"
+          data-rank="22" data-year="2022"
+          data-vocab="50265" data-downloads="62739">
+          <td class="num">22</td>
+          <td><a href="https://huggingface.co/facebook/opt-6.7b/blob/a45aa65bbeb77c1558bc99bedc6779195462dab0/README.md">OPT 6.7B</a>
+          <small>facebook/opt-6.7b · 6.7B parameters</small></td>
+          <td><a href="https://huggingface.co/facebook/opt-6.7b/blob/a45aa65bbeb77c1558bc99bedc6779195462dab0/README.md">2022</a></td><td class="num"><a href="https://huggingface.co/facebook/opt-6.7b/blob/a45aa65bbeb77c1558bc99bedc6779195462dab0/vocab.json">50,265</a></td>
+          <td class="num">62,739</td></tr>
+<tr data-model="allenai/OLMo-2-1124-7B"
+          data-rank="23" data-year="2024"
+          data-vocab="100278" data-downloads="53864">
+          <td class="num">23</td>
+          <td><a href="https://huggingface.co/allenai/OLMo-2-1124-7B/blob/7df9a82518afdecae4e8c026b27adccc8c1f0032/README.md">OLMo 2 7B</a>
+          <small>allenai/OLMo-2-1124-7B · 7B parameters</small></td>
+          <td><a href="https://huggingface.co/allenai/OLMo-2-1124-7B/blob/7df9a82518afdecae4e8c026b27adccc8c1f0032/README.md">2024</a></td><td class="num"><a href="https://huggingface.co/allenai/OLMo-2-1124-7B/blob/7df9a82518afdecae4e8c026b27adccc8c1f0032/tokenizer.json">100,278</a></td>
+          <td class="num">53,864</td></tr>
+<tr data-model="mistralai/Mixtral-8x7B-v0.1"
+          data-rank="24" data-year="2023"
+          data-vocab="32000" data-downloads="41964">
+          <td class="num">24</td>
+          <td><a href="https://huggingface.co/mistralai/Mixtral-8x7B-v0.1/blob/fc7ac94680e38d7348cfa806e51218e6273104b0/README.md">Mixtral 8×7B</a>
+          <small>mistralai/Mixtral-8x7B-v0.1 · 46.7B parameters</small></td>
+          <td><a href="https://mistral.ai/news/mixtral-of-experts/">2023</a></td><td class="num"><a href="https://huggingface.co/mistralai/Mixtral-8x7B-v0.1/blob/fc7ac94680e38d7348cfa806e51218e6273104b0/tokenizer.json">32,000</a></td>
+          <td class="num">41,964</td></tr>
+<tr data-model="google/gemma-2-9b"
+          data-rank="25" data-year="2024"
+          data-vocab="-1" data-downloads="34803">
+          <td class="num">25</td>
+          <td><a href="https://huggingface.co/google/gemma-2-9b/blob/33c193028431c2fde6c6e51f29e6f17b60cbfac6/README.md">Gemma 2 9B</a>
+          <small>google/gemma-2-9b · 9B parameters</small></td>
+          <td><a href="https://ai.google.dev/gemma/docs/releases">2024</a></td><td class="num">Not measured</td>
+          <td class="num">34,803</td></tr>
+<tr data-model="deepseek-ai/deepseek-llm-7b-base"
+          data-rank="26" data-year="2023"
+          data-vocab="100015" data-downloads="27747">
+          <td class="num">26</td>
+          <td><a href="https://huggingface.co/deepseek-ai/deepseek-llm-7b-base/blob/7683fea62db869066ddaff6a41d032262c490d4f/README.md">DeepSeek LLM 7B Base</a>
+          <small>deepseek-ai/deepseek-llm-7b-base · 7B parameters</small></td>
+          <td><a href="https://huggingface.co/deepseek-ai/deepseek-llm-7b-base/blob/7683fea62db869066ddaff6a41d032262c490d4f/README.md">2023</a></td><td class="num"><a href="https://huggingface.co/deepseek-ai/deepseek-llm-7b-base/blob/7683fea62db869066ddaff6a41d032262c490d4f/tokenizer.json">100,015</a></td>
+          <td class="num">27,747</td></tr>
+<tr data-model="moonshotai/Kimi-K2-Base"
+          data-rank="27" data-year="2025"
+          data-vocab="163842" data-downloads="22920">
+          <td class="num">27</td>
+          <td><a href="https://huggingface.co/moonshotai/Kimi-K2-Base/blob/ce72df012259dcc55d945e890f815fe7ef69159c/README.md">Kimi K2 Base</a>
+          <small>moonshotai/Kimi-K2-Base · 1e+03B parameters</small></td>
+          <td><a href="https://huggingface.co/moonshotai/Kimi-K2-Base/blob/ce72df012259dcc55d945e890f815fe7ef69159c/README.md">2025</a></td><td class="num"><a href="https://huggingface.co/moonshotai/Kimi-K2-Base/blob/ce72df012259dcc55d945e890f815fe7ef69159c/tiktoken.model">163,842</a></td>
+          <td class="num">22,920</td></tr>
+<tr data-model="deepseek-ai/DeepSeek-V3-Base"
+          data-rank="28" data-year="2024"
+          data-vocab="128815" data-downloads="19260">
+          <td class="num">28</td>
+          <td><a href="https://huggingface.co/deepseek-ai/DeepSeek-V3-Base/blob/afb92e1fa402c2be2a9eb085312bb02e0384d6c7/README.md">DeepSeek V3 Base</a>
+          <small>deepseek-ai/DeepSeek-V3-Base · 671B parameters</small></td>
+          <td><a href="https://huggingface.co/deepseek-ai/DeepSeek-V3-Base/blob/afb92e1fa402c2be2a9eb085312bb02e0384d6c7/README.md">2024</a></td><td class="num"><a href="https://huggingface.co/deepseek-ai/DeepSeek-V3-Base/blob/afb92e1fa402c2be2a9eb085312bb02e0384d6c7/tokenizer.json">128,815</a></td>
+          <td class="num">19,260</td></tr>
+<tr data-model="EleutherAI/gpt-neo-2.7B"
+          data-rank="29" data-year="2021"
+          data-vocab="50257" data-downloads="15913">
+          <td class="num">29</td>
+          <td><a href="https://huggingface.co/EleutherAI/gpt-neo-2.7B/blob/e24fa291132763e59f4a5422741b424fb5d59056/README.md">GPT-Neo 2.7B</a>
+          <small>EleutherAI/gpt-neo-2.7B · 2.7B parameters</small></td>
+          <td><a href="https://huggingface.co/EleutherAI/gpt-neo-2.7B/blob/e24fa291132763e59f4a5422741b424fb5d59056/README.md">2021</a></td><td class="num"><a href="https://huggingface.co/EleutherAI/gpt-neo-2.7B/blob/e24fa291132763e59f4a5422741b424fb5d59056/vocab.json">50,257</a></td>
+          <td class="num">15,913</td></tr>
+<tr data-model="01-ai/Yi-6B"
+          data-rank="30" data-year="2023"
+          data-vocab="63992" data-downloads="14303">
+          <td class="num">30</td>
+          <td><a href="https://huggingface.co/01-ai/Yi-6B/blob/80080be87ec5a0103f643195f2d9003b8068941b/README.md">Yi 6B</a>
+          <small>01-ai/Yi-6B · 6B parameters</small></td>
+          <td><a href="https://huggingface.co/01-ai/Yi-6B/blob/80080be87ec5a0103f643195f2d9003b8068941b/README.md">2023</a></td><td class="num"><a href="https://huggingface.co/01-ai/Yi-6B/blob/80080be87ec5a0103f643195f2d9003b8068941b/tokenizer.json">63,992</a></td>
+          <td class="num">14,303</td></tr>
+<tr data-model="bigscience/bloom"
+          data-rank="31" data-year="2022"
+          data-vocab="250680" data-downloads="10634">
+          <td class="num">31</td>
+          <td><a href="https://huggingface.co/bigscience/bloom/blob/7f10a99ce7c08f03c7719a586cb2cbda1433ac05/README.md">BLOOM 176B</a>
+          <small>bigscience/bloom · 176B parameters</small></td>
+          <td><a href="https://huggingface.co/bigscience/bloom/blob/7f10a99ce7c08f03c7719a586cb2cbda1433ac05/README.md">2022</a></td><td class="num"><a href="https://huggingface.co/bigscience/bloom/blob/7f10a99ce7c08f03c7719a586cb2cbda1433ac05/tokenizer.json">250,680</a></td>
+          <td class="num">10,634</td></tr>
+<tr data-model="deepseek-ai/DeepSeek-V2"
+          data-rank="32" data-year="2024"
+          data-vocab="100002" data-downloads="10558">
+          <td class="num">32</td>
+          <td><a href="https://huggingface.co/deepseek-ai/DeepSeek-V2/blob/4461458f186c35188585855f28f77af5661ad489/README.md">DeepSeek V2</a>
+          <small>deepseek-ai/DeepSeek-V2 · 236B parameters</small></td>
+          <td><a href="https://github.com/deepseek-ai/DeepSeek-V2/blob/main/README.md">2024</a></td><td class="num"><a href="https://huggingface.co/deepseek-ai/DeepSeek-V2/blob/4461458f186c35188585855f28f77af5661ad489/tokenizer.json">100,002</a></td>
+          <td class="num">10,558</td></tr>
+<tr data-model="allenai/OLMo-7B-hf"
+          data-rank="33" data-year="2024"
+          data-vocab="50280" data-downloads="6317">
+          <td class="num">33</td>
+          <td><a href="https://huggingface.co/allenai/OLMo-7B-hf/blob/11fb3186a2e4f681edea621fa8b4345147a9db6a/README.md">OLMo 7B</a>
+          <small>allenai/OLMo-7B-hf · 7B parameters</small></td>
+          <td><a href="https://huggingface.co/allenai/OLMo-7B-hf/blob/11fb3186a2e4f681edea621fa8b4345147a9db6a/README.md">2024</a></td><td class="num"><a href="https://huggingface.co/allenai/OLMo-7B-hf/blob/11fb3186a2e4f681edea621fa8b4345147a9db6a/tokenizer.json">50,280</a></td>
+          <td class="num">6,317</td></tr>
+<tr data-model="ai21labs/Jamba-v0.1"
+          data-rank="34" data-year="2024"
+          data-vocab="65536" data-downloads="5304">
+          <td class="num">34</td>
+          <td><a href="https://huggingface.co/ai21labs/Jamba-v0.1/blob/9efd11575ba791d9e3d25d4c8b670e78506b2df7/README.md">Jamba v0.1</a>
+          <small>ai21labs/Jamba-v0.1 · 52B parameters</small></td>
+          <td><a href="https://huggingface.co/ai21labs/Jamba-v0.1/blob/9efd11575ba791d9e3d25d4c8b670e78506b2df7/README.md">2024</a></td><td class="num"><a href="https://huggingface.co/ai21labs/Jamba-v0.1/blob/9efd11575ba791d9e3d25d4c8b670e78506b2df7/tokenizer.json">65,536</a></td>
+          <td class="num">5,304</td></tr>
+<tr data-model="ibm-granite/granite-3.0-8b-base"
+          data-rank="35" data-year="2024"
+          data-vocab="49152" data-downloads="3577">
+          <td class="num">35</td>
+          <td><a href="https://huggingface.co/ibm-granite/granite-3.0-8b-base/blob/4fad7f8ad56393dcef4e34e37a35962bd091f320/README.md">Granite 3.0 8B Base</a>
+          <small>ibm-granite/granite-3.0-8b-base · 8B parameters</small></td>
+          <td><a href="https://huggingface.co/ibm-granite/granite-3.0-8b-base/blob/4fad7f8ad56393dcef4e34e37a35962bd091f320/README.md">2024</a></td><td class="num"><a href="https://huggingface.co/ibm-granite/granite-3.0-8b-base/blob/4fad7f8ad56393dcef4e34e37a35962bd091f320/tokenizer.json">49,152</a></td>
+          <td class="num">3,577</td></tr>
+<tr data-model="meta-llama/Llama-4-Scout-17B-16E"
+          data-rank="36" data-year="2025"
+          data-vocab="-1" data-downloads="2370">
+          <td class="num">36</td>
+          <td><a href="https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E/blob/14d516bdff6ac06cec40678529222f193386189c/README.md">Llama 4 Scout Base</a>
+          <small>meta-llama/Llama-4-Scout-17B-16E · 109B parameters</small></td>
+          <td><a href="https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E/blob/14d516bdff6ac06cec40678529222f193386189c/README.md">2025</a></td><td class="num">Not measured</td>
+          <td class="num">2,370</td></tr>
+<tr data-model="baichuan-inc/Baichuan2-7B-Base"
+          data-rank="37" data-year="2023"
+          data-vocab="125696" data-downloads="2257">
+          <td class="num">37</td>
+          <td><a href="https://huggingface.co/baichuan-inc/Baichuan2-7B-Base/blob/f9d4d8dd2f7a3dbede3bda3b0cf0224e9272bbe5/README.md">Baichuan 2 7B Base</a>
+          <small>baichuan-inc/Baichuan2-7B-Base · 7B parameters</small></td>
+          <td><a href="https://huggingface.co/baichuan-inc/Baichuan2-7B-Base/blob/f9d4d8dd2f7a3dbede3bda3b0cf0224e9272bbe5/README.md">2023</a></td><td class="num"><a href="https://huggingface.co/baichuan-inc/Baichuan2-7B-Base/blob/f9d4d8dd2f7a3dbede3bda3b0cf0224e9272bbe5/tokenizer.model">125,696</a></td>
+          <td class="num">2,257</td></tr>
+<tr data-model="mistralai/Mistral-Small-3.1-24B-Base-2503"
+          data-rank="38" data-year="2025"
+          data-vocab="131072" data-downloads="2027">
+          <td class="num">38</td>
+          <td><a href="https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Base-2503/blob/ba6496e3dce1d0bdc93848804b1d4b9d5f3c57bc/README.md">Mistral Small 3.1 Base</a>
+          <small>mistralai/Mistral-Small-3.1-24B-Base-2503 · 24B parameters</small></td>
+          <td><a href="https://mistral.ai/news/mistral-small-3-1">2025</a></td><td class="num"><a href="https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Base-2503/blob/ba6496e3dce1d0bdc93848804b1d4b9d5f3c57bc/tokenizer.json">131,072</a></td>
+          <td class="num">2,027</td></tr>
+<tr data-model="Snowflake/snowflake-arctic-base"
+          data-rank="39" data-year="2024"
+          data-vocab="32000" data-downloads="724">
+          <td class="num">39</td>
+          <td><a href="https://huggingface.co/Snowflake/snowflake-arctic-base/blob/7f176173956a1738ca97f222daf15e389c02e005/README.md">Snowflake Arctic Base</a>
+          <small>Snowflake/snowflake-arctic-base · 480B parameters</small></td>
+          <td><a href="https://huggingface.co/Snowflake/snowflake-arctic-base/blob/7f176173956a1738ca97f222daf15e389c02e005/README.md">2024</a></td><td class="num"><a href="https://huggingface.co/Snowflake/snowflake-arctic-base/blob/7f176173956a1738ca97f222daf15e389c02e005/tokenizer.json">32,000</a></td>
+          <td class="num">724</td></tr>
+<tr data-model="databricks/dbrx-base"
+          data-rank="9999" data-year="2024"
+          data-vocab="-1" data-downloads="-1">
+          <td class="num">—</td>
+          <td><a href="https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm">DBRX Base</a>
+          <small>databricks/dbrx-base · 132B parameters</small></td>
+          <td><a href="https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm">2024</a></td><td class="num">Not measured</td>
+          <td class="num">Unranked</td></tr>
+<tr data-model="meta-llama/Meta-Llama-3.1-8B"
+          data-rank="9999" data-year="2024"
+          data-vocab="-1" data-downloads="-1">
+          <td class="num">—</td>
+          <td><a href="https://huggingface.co/meta-llama/Meta-Llama-3.1-8B/blob/d04e592bb4f6aa9cfee91e2e20afa771667e1d4b/README.md">Llama 3.1 8B</a>
+          <small>meta-llama/Meta-Llama-3.1-8B · 8B parameters</small></td>
+          <td><a href="https://huggingface.co/meta-llama/Meta-Llama-3.1-8B/blob/d04e592bb4f6aa9cfee91e2e20afa771667e1d4b/README.md">2024</a></td><td class="num">Not measured</td>
+          <td class="num">Unranked</td></tr>
+<tr data-model="mosaicml/mpt-7b"
+          data-rank="9999" data-year="2023"
+          data-vocab="-1" data-downloads="-1">
+          <td class="num">—</td>
+          <td><a href="https://www.databricks.com/blog/mpt-7b">MPT 7B</a>
+          <small>mosaicml/mpt-7b · 6.7B parameters</small></td>
+          <td><a href="https://www.databricks.com/blog/mpt-7b">2023</a></td><td class="num">Not measured</td>
+          <td class="num">Unranked</td></tr></tbody></table></div>
+<p id="empty" class="no-results" hidden>No models match these filters.</p>
+<div class="downloads"><button type="button" id="download-json">Download data (JSON)</button><button type="button" id="download-csv">Download data (CSV)</button></div>
+</details>
+<details class="methods" id="methods">
+<summary>Measurement, corrections, and remaining gaps</summary>
+<ul>
+<li><strong>Counting unit.</strong> Distinct assigned tokenizer IDs, including serialized added/reserved tokens. Curated rows include inspected companion-file additions; additional bulk rows count the serialized tokenizer JSON only. Each exported row retains its counting scope. These are not padded configuration vocabulary rows, embedding tensor dimensions, or complete multimodal symbol inventories.</li>
+<li><strong>Dates.</strong> The main figure uses sourced release years, never Hub creation dates. SmolLM2’s release year is unverified in this reviewed source set, so it appears in the ranking but not the timeline. The original 11,229-row catalog retains repository proxies for separate exploratory analyses.</li>
+<li><strong>Deduplication corrected.</strong> Kimi K2-Base and K2.5 share a primary rank file but have 163,842 and 163,840 entries after additions. The broad-catalog plots now collapse only verified complete token-to-ID hashes: 637 shared mapping groups plus 20 separate records, or 657 groups/singletons. Even identical primary hashes and counts cannot prove full vocabulary equality. The foundation plots show each selected model separately.</li>
+<li><strong>Missing measurements.</strong> Llama 2 7B, Gemma 3 4B PT, Llama 3 8B, Gemma 2B, Gemma 2 9B, Llama 4 Scout Base, DBRX Base, Llama 3.1 8B, MPT 7B. No community tokenizer or configuration row count is substituted for these missing measurements. Rank can still be assigned when a download count exists.</li>
+<li><strong>Boundary cases.</strong> Qwen3-8B-Base is selected instead of the post-trained Qwen3-8B. Qwen3.5’s repository-specific notice says pretraining only, despite a shared overview mentioning post-training. Closed APIs such as GPT, Claude, and Gemini lack comparable Hub download counts and are outside this ranking; their public encoding records remain in the full catalog.</li>
+<li><strong>Reproducibility.</strong> The reader is generated offline from the October 31 snapshot, the original curated measurements, and the explicit selection file. All plots are embedded vector graphics. Downloading this HTML preserves its figures, table, and filters without an internet connection. Release-year and classification sources were reviewed on November 1, 2026.</li>
+</ul>
+</details>
+<footer>Fudan University · NLP and LLMs, Fall 2026. Prepared from a fixed data snapshot; no model inference or quality benchmark was run for this note.</footer>
+</main>
+<script id="note-data" type="application/json">{
+  "snapshot_date": "2026-10-31",
+  "snapshot_sha256": "5c742ac87c57afcf33ac357fb6b6cf541b33ac120d830ec645b65016b51d30ab",
+  "scope": "A reviewed, illustrative selection of original general-purpose generative pretraining checkpoints; includes small models and text-capable multimodal bases. Excludes instruction/reasoning-tuned checkpoints, specialist code/science models, community fine-tunes, adapters, conversions, merges, random fixtures, encoder-only and encoder-decoder baselines, and closed APIs. This is not a census or the globally most popular set.",
+  "ranking": "Exact selected checkpoint repositories sorted by October 31, 2026 snapshot downloads_30d. No aggregation over descendants or model families; unknown stays unranked.",
+  "models": [
+    {
+      "model_id": "EleutherAI/pythia-160m",
+      "label": "Pythia 160M",
+      "stage": "base",
+      "release_year": 2023,
+      "release_year_source_url": "https://github.com/EleutherAI/pythia",
+      "base_evidence_url": "https://huggingface.co/EleutherAI/pythia-160m/blob/50f5173d932e8e61f858120bcb800b97af589f46/README.md",
+      "selection_note": "The original Pythia suite; use the 160M base checkpoint to retain a heavily downloaded small foundation model.",
+      "tokenizer_vocab_size": 50277,
+      "tokenizer_count_scope": "serialized_tokenizer_json_only",
+      "tokenizer_status": "measured_tokenizer_json",
+      "tokenizer_source_url": "https://huggingface.co/EleutherAI/pythia-160m/resolve/50f5173d932e8e61f858120bcb800b97af589f46/tokenizer.json",
+      "tokenizer_revision": "50f5173d932e8e61f858120bcb800b97af589f46",
+      "tokenizer_sha256": "c24618a1b3e6a38167beff1c72cffd126c3a66254347304b50547d12c5f25624",
+      "downloads_30d": 3390162,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/EleutherAI/pythia-160m",
+      "parameters_billion": 0.212654688,
+      "popularity_rank": 1
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-135M",
+      "label": "SmolLM2 135M",
+      "stage": "base",
+      "release_year": null,
+      "release_year_source_url": null,
+      "base_evidence_url": "https://huggingface.co/HuggingFaceTB/SmolLM2-135M/blob/93efa2f097d58c2a74874c7e644dbc9b0cee75a2/README.md",
+      "selection_note": "The original base checkpoint, not the Instruct variant. The snapshot supplies no verified release year; keep it ranked but omit it from the release timeline.",
+      "tokenizer_vocab_size": 49152,
+      "tokenizer_count_scope": "serialized_tokenizer_json_only",
+      "tokenizer_status": "measured_tokenizer_json",
+      "tokenizer_source_url": "https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/93efa2f097d58c2a74874c7e644dbc9b0cee75a2/tokenizer.json",
+      "tokenizer_revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+      "tokenizer_sha256": "9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c",
+      "downloads_30d": 2384204,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M",
+      "parameters_billion": 0.134515008,
+      "popularity_rank": 2
+    },
+    {
+      "model_id": "Qwen/Qwen3.5-0.8B-Base",
+      "label": "Qwen3.5 0.8B Base",
+      "stage": "base",
+      "release_year": 2026,
+      "release_year_source_url": "https://github.com/QwenLM/Qwen3.8#news",
+      "base_evidence_url": "https://huggingface.co/Qwen/Qwen3.5-0.8B-Base/blob/dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68/README.md",
+      "selection_note": "The repository-specific notice states pre-trained only. The shared family overview also mentions post-training; the explicit checkpoint notice governs this classification.",
+      "tokenizer_vocab_size": 248066,
+      "tokenizer_count_scope": "serialized_tokenizer_json_only",
+      "tokenizer_status": "measured_tokenizer_json",
+      "tokenizer_source_url": "https://huggingface.co/Qwen/Qwen3.5-0.8B-Base/resolve/dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68/tokenizer.json",
+      "tokenizer_revision": "dc7cdfe2ee4154fa7e30f5b51ca41bfa40174e68",
+      "tokenizer_sha256": "fe000e3ed39ed12b8d2481d527d44f93c65d37e87645d2dcc80d1bf9d50d2927",
+      "downloads_30d": 653026,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/Qwen/Qwen3.5-0.8B-Base",
+      "parameters_billion": 0.873438784,
+      "popularity_rank": 3
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-7B",
+      "label": "Qwen2.5 7B",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://qwenlm.github.io/blog/qwen2.5/",
+      "base_evidence_url": "https://huggingface.co/Qwen/Qwen2.5-7B/blob/d149729398750b98c0af14eb82c78cfe92750796/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 151665,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/Qwen/Qwen2.5-7B/blob/d149729398750b98c0af14eb82c78cfe92750796/tokenizer.json",
+      "tokenizer_revision": "d149729398750b98c0af14eb82c78cfe92750796",
+      "tokenizer_sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+      "downloads_30d": 536861,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/Qwen/Qwen2.5-7B",
+      "parameters_billion": 7.61,
+      "popularity_rank": 4
+    },
+    {
+      "model_id": "Qwen/Qwen3-8B-Base",
+      "label": "Qwen3 8B Base",
+      "stage": "base",
+      "release_year": 2025,
+      "release_year_source_url": "https://qwenlm.github.io/blog/qwen3/",
+      "base_evidence_url": "https://huggingface.co/Qwen/Qwen3-8B-Base/blob/49e3418fbbbca6ecbdf9608b4d22e5a407081db4/README.md",
+      "selection_note": "The card explicitly identifies the training stage as pretraining. Qwen3-8B without Base is a different, post-trained checkpoint.",
+      "tokenizer_vocab_size": 151665,
+      "tokenizer_count_scope": "serialized_tokenizer_json_only",
+      "tokenizer_status": "measured_tokenizer_json",
+      "tokenizer_source_url": "https://huggingface.co/Qwen/Qwen3-8B-Base/resolve/49e3418fbbbca6ecbdf9608b4d22e5a407081db4/tokenizer.json",
+      "tokenizer_revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+      "tokenizer_sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+      "downloads_30d": 533735,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/Qwen/Qwen3-8B-Base",
+      "parameters_billion": 8.19073536,
+      "popularity_rank": 5
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-v0.1",
+      "label": "Mistral 7B v0.1",
+      "stage": "base",
+      "release_year": 2023,
+      "release_year_source_url": "https://mistral.ai/news/announcing-mistral-7b/",
+      "base_evidence_url": "https://huggingface.co/mistralai/Mistral-7B-v0.1/blob/27d67f1b5f57dc0953326b2601d68371d40ea8da/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 32000,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/mistralai/Mistral-7B-v0.1/blob/27d67f1b5f57dc0953326b2601d68371d40ea8da/tokenizer.json",
+      "tokenizer_revision": "27d67f1b5f57dc0953326b2601d68371d40ea8da",
+      "tokenizer_sha256": "11c08db21487c885d8c792180f0be237f6a261b89a46f128a6a80a3aa4bd1720",
+      "downloads_30d": 449134,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/mistralai/Mistral-7B-v0.1",
+      "parameters_billion": 7,
+      "popularity_rank": 6
+    },
+    {
+      "model_id": "meta-llama/Llama-2-7b-hf",
+      "label": "Llama 2 7B",
+      "stage": "base",
+      "release_year": 2023,
+      "release_year_source_url": "https://huggingface.co/meta-llama/Llama-2-7b-hf/blob/01c7f73d771dfac7d292323805ebc428287df4f9/README.md",
+      "base_evidence_url": "https://huggingface.co/meta-llama/Llama-2-7b-hf/blob/01c7f73d771dfac7d292323805ebc428287df4f9/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": null,
+      "tokenizer_count_scope": null,
+      "tokenizer_status": "gated",
+      "tokenizer_source_url": null,
+      "tokenizer_revision": null,
+      "tokenizer_sha256": null,
+      "downloads_30d": 325382,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/meta-llama/Llama-2-7b-hf",
+      "parameters_billion": 7,
+      "popularity_rank": 7
+    },
+    {
+      "model_id": "microsoft/phi-2",
+      "label": "Phi-2",
+      "stage": "base",
+      "release_year": 2023,
+      "release_year_source_url": "https://huggingface.co/microsoft/phi-2/blob/810d367871c1d460086d9f82db8696f2e0a0fcd0/README.md",
+      "base_evidence_url": "https://huggingface.co/microsoft/phi-2/blob/810d367871c1d460086d9f82db8696f2e0a0fcd0/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 50295,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/microsoft/phi-2/blob/810d367871c1d460086d9f82db8696f2e0a0fcd0/tokenizer.json",
+      "tokenizer_revision": "810d367871c1d460086d9f82db8696f2e0a0fcd0",
+      "tokenizer_sha256": "337da36be7a71a6e88aa9148967a7bc8736f4b47c7de8e19ba92b89e80734cfc",
+      "downloads_30d": 319521,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/microsoft/phi-2",
+      "parameters_billion": 2.7,
+      "popularity_rank": 8
+    },
+    {
+      "model_id": "google/gemma-3-4b-pt",
+      "label": "Gemma 3 4B PT",
+      "stage": "base",
+      "release_year": 2025,
+      "release_year_source_url": "https://ai.google.dev/gemma/docs/releases",
+      "base_evidence_url": "https://huggingface.co/google/gemma-3-4b-pt/blob/cc012e0a6d0787b4adcc0fa2c4da74402494554d/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": null,
+      "tokenizer_count_scope": null,
+      "tokenizer_status": "gated",
+      "tokenizer_source_url": null,
+      "tokenizer_revision": null,
+      "tokenizer_sha256": null,
+      "downloads_30d": 300797,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/google/gemma-3-4b-pt",
+      "parameters_billion": 4,
+      "popularity_rank": 9
+    },
+    {
+      "model_id": "EleutherAI/gpt-neox-20b",
+      "label": "GPT-NeoX 20B",
+      "stage": "base",
+      "release_year": 2022,
+      "release_year_source_url": "https://huggingface.co/EleutherAI/gpt-neox-20b/blob/c292233c833e336628618a88a648727eb3dff0a7/README.md",
+      "base_evidence_url": "https://huggingface.co/EleutherAI/gpt-neox-20b/blob/c292233c833e336628618a88a648727eb3dff0a7/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 50277,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/EleutherAI/gpt-neox-20b/blob/c292233c833e336628618a88a648727eb3dff0a7/tokenizer.json",
+      "tokenizer_revision": "c292233c833e336628618a88a648727eb3dff0a7",
+      "tokenizer_sha256": "c24618a1b3e6a38167beff1c72cffd126c3a66254347304b50547d12c5f25624",
+      "downloads_30d": 265672,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/EleutherAI/gpt-neox-20b",
+      "parameters_billion": 20,
+      "popularity_rank": 10
+    },
+    {
+      "model_id": "Qwen/Qwen2-7B",
+      "label": "Qwen2 7B",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://qwenlm.github.io/blog/qwen2/",
+      "base_evidence_url": "https://huggingface.co/Qwen/Qwen2-7B/blob/453ed1575b739b5b03ce3758b23befdb0967f40e/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 151646,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/Qwen/Qwen2-7B/blob/453ed1575b739b5b03ce3758b23befdb0967f40e/tokenizer.json",
+      "tokenizer_revision": "453ed1575b739b5b03ce3758b23befdb0967f40e",
+      "tokenizer_sha256": "f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8",
+      "downloads_30d": 203121,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/Qwen/Qwen2-7B",
+      "parameters_billion": 7.07,
+      "popularity_rank": 11
+    },
+    {
+      "model_id": "allenai/Olmo-3-1025-7B",
+      "label": "Olmo 3 7B Base",
+      "stage": "base",
+      "release_year": 2025,
+      "release_year_source_url": "https://huggingface.co/allenai/Olmo-3-1025-7B/blob/a81bae42db3975be1671e27b9c9a56da1a9f980f/README.md",
+      "base_evidence_url": "https://huggingface.co/allenai/Olmo-3-1025-7B/blob/a81bae42db3975be1671e27b9c9a56da1a9f980f/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 100278,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/allenai/Olmo-3-1025-7B/blob/a81bae42db3975be1671e27b9c9a56da1a9f980f/tokenizer.json",
+      "tokenizer_revision": "a81bae42db3975be1671e27b9c9a56da1a9f980f",
+      "tokenizer_sha256": "73fd5254624f39a88e3faac6a8e11300fc3c735ed37880d4f4f08db898eaecca",
+      "downloads_30d": 145462,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/allenai/Olmo-3-1025-7B",
+      "parameters_billion": 7,
+      "popularity_rank": 12
+    },
+    {
+      "model_id": "meta-llama/Meta-Llama-3-8B",
+      "label": "Llama 3 8B",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://huggingface.co/meta-llama/Meta-Llama-3-8B/blob/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/README.md",
+      "base_evidence_url": "https://huggingface.co/meta-llama/Meta-Llama-3-8B/blob/8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": null,
+      "tokenizer_count_scope": null,
+      "tokenizer_status": "gated",
+      "tokenizer_source_url": null,
+      "tokenizer_revision": null,
+      "tokenizer_sha256": null,
+      "downloads_30d": 135564,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/meta-llama/Meta-Llama-3-8B",
+      "parameters_billion": 8,
+      "popularity_rank": 13
+    },
+    {
+      "model_id": "tiiuae/falcon-7b",
+      "label": "Falcon 7B",
+      "stage": "base",
+      "release_year": 2023,
+      "release_year_source_url": "https://huggingface.co/tiiuae/falcon-7b/blob/ec89142b67d748a1865ea4451372db8313ada0d8/README.md",
+      "base_evidence_url": "https://huggingface.co/tiiuae/falcon-7b/blob/ec89142b67d748a1865ea4451372db8313ada0d8/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 65024,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/tiiuae/falcon-7b/blob/ec89142b67d748a1865ea4451372db8313ada0d8/tokenizer.json",
+      "tokenizer_revision": "ec89142b67d748a1865ea4451372db8313ada0d8",
+      "tokenizer_sha256": "d6c5cdac1421ea998722aa88ea1cb630b2a9ec63bf8a85331bb3d9d321507186",
+      "downloads_30d": 129342,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/tiiuae/falcon-7b",
+      "parameters_billion": 7,
+      "popularity_rank": 14
+    },
+    {
+      "model_id": "google/gemma-2b",
+      "label": "Gemma 2B",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://ai.google.dev/gemma/docs/releases",
+      "base_evidence_url": "https://huggingface.co/google/gemma-2b/blob/9cf48e52b224239de00d483ec8eb84fb8d0f3a3a/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": null,
+      "tokenizer_count_scope": null,
+      "tokenizer_status": "gated",
+      "tokenizer_source_url": null,
+      "tokenizer_revision": null,
+      "tokenizer_sha256": null,
+      "downloads_30d": 90422,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/google/gemma-2b",
+      "parameters_billion": 2,
+      "popularity_rank": 15
+    },
+    {
+      "model_id": "openai-community/gpt2-xl",
+      "label": "GPT-2 XL",
+      "stage": "base",
+      "release_year": 2019,
+      "release_year_source_url": "https://huggingface.co/openai-community/gpt2-xl/blob/15ea56dee5df4983c59b2538573817e1667135e2/README.md",
+      "base_evidence_url": "https://huggingface.co/openai-community/gpt2-xl/blob/15ea56dee5df4983c59b2538573817e1667135e2/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 50257,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/openai-community/gpt2-xl/blob/15ea56dee5df4983c59b2538573817e1667135e2/tokenizer.json",
+      "tokenizer_revision": "15ea56dee5df4983c59b2538573817e1667135e2",
+      "tokenizer_sha256": "8414cab924d8b9b33013f0d221c5862f365ee9be39c5c2bfae8a5a9e970478a6",
+      "downloads_30d": 79477,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/openai-community/gpt2-xl",
+      "parameters_billion": 1.5,
+      "popularity_rank": 16
+    },
+    {
+      "model_id": "mistralai/Mistral-Nemo-Base-2407",
+      "label": "Mistral NeMo 12B Base",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://mistral.ai/news/mistral-nemo/",
+      "base_evidence_url": "https://huggingface.co/mistralai/Mistral-Nemo-Base-2407/blob/a4477a2f977929a969745b69bbd62e03043551a5/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 131072,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/mistralai/Mistral-Nemo-Base-2407/blob/a4477a2f977929a969745b69bbd62e03043551a5/tokenizer.json",
+      "tokenizer_revision": "a4477a2f977929a969745b69bbd62e03043551a5",
+      "tokenizer_sha256": "e11c71726323d33da7b8d6f6f269f1988931c0a52b7122bcdd8c05042974e0db",
+      "downloads_30d": 78431,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/mistralai/Mistral-Nemo-Base-2407",
+      "parameters_billion": 12,
+      "popularity_rank": 17
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM3-3B-Base",
+      "label": "SmolLM3 3B Base",
+      "stage": "base",
+      "release_year": 2025,
+      "release_year_source_url": "https://huggingface.co/blog/smollm3",
+      "base_evidence_url": "https://huggingface.co/HuggingFaceTB/SmolLM3-3B-Base/blob/d78a42f79198603e614095753484a04c10c2b940/README.md",
+      "selection_note": "The card identifies this as the checkpoint after pretraining and links a separate instruct model.",
+      "tokenizer_vocab_size": 128256,
+      "tokenizer_count_scope": "serialized_tokenizer_json_only",
+      "tokenizer_status": "measured_tokenizer_json",
+      "tokenizer_source_url": "https://huggingface.co/HuggingFaceTB/SmolLM3-3B-Base/resolve/d78a42f79198603e614095753484a04c10c2b940/tokenizer.json",
+      "tokenizer_revision": "d78a42f79198603e614095753484a04c10c2b940",
+      "tokenizer_sha256": "ab4da6b2aa68247e9c0fa9b97fc7fcc796505038d01f7e144522a65ce0dbd2e5",
+      "downloads_30d": 73485,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/HuggingFaceTB/SmolLM3-3B-Base",
+      "parameters_billion": 3.075098624,
+      "popularity_rank": 18
+    },
+    {
+      "model_id": "EleutherAI/gpt-j-6b",
+      "label": "GPT-J 6B",
+      "stage": "base",
+      "release_year": 2021,
+      "release_year_source_url": "https://huggingface.co/EleutherAI/gpt-j-6b/blob/47e169305d2e8376be1d31e765533382721b2cc1/README.md",
+      "base_evidence_url": "https://huggingface.co/EleutherAI/gpt-j-6b/blob/47e169305d2e8376be1d31e765533382721b2cc1/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 50400,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/EleutherAI/gpt-j-6b/blob/47e169305d2e8376be1d31e765533382721b2cc1/tokenizer.json",
+      "tokenizer_revision": "47e169305d2e8376be1d31e765533382721b2cc1",
+      "tokenizer_sha256": "f758fc1ee05a0775387ad8fa3983fab0c40e4a05cf6b7aea00a29e696cd6205c",
+      "downloads_30d": 70345,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/EleutherAI/gpt-j-6b",
+      "parameters_billion": 6,
+      "popularity_rank": 19
+    },
+    {
+      "model_id": "openai-community/openai-gpt",
+      "label": "GPT-1",
+      "stage": "base",
+      "release_year": 2018,
+      "release_year_source_url": "https://openai.com/index/language-unsupervised/",
+      "base_evidence_url": "https://huggingface.co/openai-community/openai-gpt/blob/1e0d4f3028acbffb47fe933cea64619c5ec1a002/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 40478,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/openai-community/openai-gpt/blob/1e0d4f3028acbffb47fe933cea64619c5ec1a002/tokenizer.json",
+      "tokenizer_revision": "1e0d4f3028acbffb47fe933cea64619c5ec1a002",
+      "tokenizer_sha256": "ad8b2a00566d1cce8f64b3bb73243c716ddb130ef09ae073cecf217c84cc42d3",
+      "downloads_30d": 67121,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/openai-community/openai-gpt",
+      "parameters_billion": 0.117,
+      "popularity_rank": 20
+    },
+    {
+      "model_id": "Qwen/Qwen-7B",
+      "label": "Qwen 7B",
+      "stage": "base",
+      "release_year": 2023,
+      "release_year_source_url": "https://github.com/QwenLM/Qwen/blob/main/README.md",
+      "base_evidence_url": "https://huggingface.co/Qwen/Qwen-7B/blob/ef3c5c9c57b252f3149c1408daf4d649ec8b6c85/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 151851,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/Qwen/Qwen-7B/blob/ef3c5c9c57b252f3149c1408daf4d649ec8b6c85/qwen.tiktoken",
+      "tokenizer_revision": "ef3c5c9c57b252f3149c1408daf4d649ec8b6c85",
+      "tokenizer_sha256": "b2b1b8dfb5cc5f024bafc373121c6aba3f66f9a5a0269e243470a1de16a33186",
+      "downloads_30d": 62991,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/Qwen/Qwen-7B",
+      "parameters_billion": 7,
+      "popularity_rank": 21
+    },
+    {
+      "model_id": "facebook/opt-6.7b",
+      "label": "OPT 6.7B",
+      "stage": "base",
+      "release_year": 2022,
+      "release_year_source_url": "https://huggingface.co/facebook/opt-6.7b/blob/a45aa65bbeb77c1558bc99bedc6779195462dab0/README.md",
+      "base_evidence_url": "https://huggingface.co/facebook/opt-6.7b/blob/a45aa65bbeb77c1558bc99bedc6779195462dab0/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 50265,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/facebook/opt-6.7b/blob/a45aa65bbeb77c1558bc99bedc6779195462dab0/vocab.json",
+      "tokenizer_revision": "a45aa65bbeb77c1558bc99bedc6779195462dab0",
+      "tokenizer_sha256": "06b4d46c8e752d410213d9548eb27a54db70fda0319b6271fb8d59dead5e1cab",
+      "downloads_30d": 62739,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/facebook/opt-6.7b",
+      "parameters_billion": 6.7,
+      "popularity_rank": 22
+    },
+    {
+      "model_id": "allenai/OLMo-2-1124-7B",
+      "label": "OLMo 2 7B",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://huggingface.co/allenai/OLMo-2-1124-7B/blob/7df9a82518afdecae4e8c026b27adccc8c1f0032/README.md",
+      "base_evidence_url": "https://huggingface.co/allenai/OLMo-2-1124-7B/blob/7df9a82518afdecae4e8c026b27adccc8c1f0032/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 100278,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/allenai/OLMo-2-1124-7B/blob/7df9a82518afdecae4e8c026b27adccc8c1f0032/tokenizer.json",
+      "tokenizer_revision": "7df9a82518afdecae4e8c026b27adccc8c1f0032",
+      "tokenizer_sha256": "73fd5254624f39a88e3faac6a8e11300fc3c735ed37880d4f4f08db898eaecca",
+      "downloads_30d": 53864,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/allenai/OLMo-2-1124-7B",
+      "parameters_billion": 7,
+      "popularity_rank": 23
+    },
+    {
+      "model_id": "mistralai/Mixtral-8x7B-v0.1",
+      "label": "Mixtral 8×7B",
+      "stage": "base",
+      "release_year": 2023,
+      "release_year_source_url": "https://mistral.ai/news/mixtral-of-experts/",
+      "base_evidence_url": "https://huggingface.co/mistralai/Mixtral-8x7B-v0.1/blob/fc7ac94680e38d7348cfa806e51218e6273104b0/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 32000,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/mistralai/Mixtral-8x7B-v0.1/blob/fc7ac94680e38d7348cfa806e51218e6273104b0/tokenizer.json",
+      "tokenizer_revision": "fc7ac94680e38d7348cfa806e51218e6273104b0",
+      "tokenizer_sha256": "fc4f0bd70b3709312d9d1d9e5ba674794b6bc5abc17429897a540f93882f25fc",
+      "downloads_30d": 41964,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/mistralai/Mixtral-8x7B-v0.1",
+      "parameters_billion": 46.7,
+      "popularity_rank": 24
+    },
+    {
+      "model_id": "google/gemma-2-9b",
+      "label": "Gemma 2 9B",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://ai.google.dev/gemma/docs/releases",
+      "base_evidence_url": "https://huggingface.co/google/gemma-2-9b/blob/33c193028431c2fde6c6e51f29e6f17b60cbfac6/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": null,
+      "tokenizer_count_scope": null,
+      "tokenizer_status": "gated",
+      "tokenizer_source_url": null,
+      "tokenizer_revision": null,
+      "tokenizer_sha256": null,
+      "downloads_30d": 34803,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/google/gemma-2-9b",
+      "parameters_billion": 9,
+      "popularity_rank": 25
+    },
+    {
+      "model_id": "deepseek-ai/deepseek-llm-7b-base",
+      "label": "DeepSeek LLM 7B Base",
+      "stage": "base",
+      "release_year": 2023,
+      "release_year_source_url": "https://huggingface.co/deepseek-ai/deepseek-llm-7b-base/blob/7683fea62db869066ddaff6a41d032262c490d4f/README.md",
+      "base_evidence_url": "https://huggingface.co/deepseek-ai/deepseek-llm-7b-base/blob/7683fea62db869066ddaff6a41d032262c490d4f/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 100015,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/deepseek-ai/deepseek-llm-7b-base/blob/7683fea62db869066ddaff6a41d032262c490d4f/tokenizer.json",
+      "tokenizer_revision": "7683fea62db869066ddaff6a41d032262c490d4f",
+      "tokenizer_sha256": "a08b02921f08548065a7b2ec13b2ffeed873231add60f9c3c7b08b04f2cc212a",
+      "downloads_30d": 27747,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/deepseek-ai/deepseek-llm-7b-base",
+      "parameters_billion": 7,
+      "popularity_rank": 26
+    },
+    {
+      "model_id": "moonshotai/Kimi-K2-Base",
+      "label": "Kimi K2 Base",
+      "stage": "base",
+      "release_year": 2025,
+      "release_year_source_url": "https://huggingface.co/moonshotai/Kimi-K2-Base/blob/ce72df012259dcc55d945e890f815fe7ef69159c/README.md",
+      "base_evidence_url": "https://huggingface.co/moonshotai/Kimi-K2-Base/blob/ce72df012259dcc55d945e890f815fe7ef69159c/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 163842,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/moonshotai/Kimi-K2-Base/blob/ce72df012259dcc55d945e890f815fe7ef69159c/tiktoken.model",
+      "tokenizer_revision": "ce72df012259dcc55d945e890f815fe7ef69159c",
+      "tokenizer_sha256": "b6c497a7469b33ced9c38afb1ad6e47f03f5e5dc05f15930799210ec050c5103",
+      "downloads_30d": 22920,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/moonshotai/Kimi-K2-Base",
+      "parameters_billion": 1000,
+      "popularity_rank": 27
+    },
+    {
+      "model_id": "deepseek-ai/DeepSeek-V3-Base",
+      "label": "DeepSeek V3 Base",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://huggingface.co/deepseek-ai/DeepSeek-V3-Base/blob/afb92e1fa402c2be2a9eb085312bb02e0384d6c7/README.md",
+      "base_evidence_url": "https://huggingface.co/deepseek-ai/DeepSeek-V3-Base/blob/afb92e1fa402c2be2a9eb085312bb02e0384d6c7/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 128815,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/deepseek-ai/DeepSeek-V3-Base/blob/afb92e1fa402c2be2a9eb085312bb02e0384d6c7/tokenizer.json",
+      "tokenizer_revision": "afb92e1fa402c2be2a9eb085312bb02e0384d6c7",
+      "tokenizer_sha256": "621ac2e32d0dba658404412318818aaa8ce8cda492e59830109d8da6b517fb41",
+      "downloads_30d": 19260,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/deepseek-ai/DeepSeek-V3-Base",
+      "parameters_billion": 671,
+      "popularity_rank": 28
+    },
+    {
+      "model_id": "EleutherAI/gpt-neo-2.7B",
+      "label": "GPT-Neo 2.7B",
+      "stage": "base",
+      "release_year": 2021,
+      "release_year_source_url": "https://huggingface.co/EleutherAI/gpt-neo-2.7B/blob/e24fa291132763e59f4a5422741b424fb5d59056/README.md",
+      "base_evidence_url": "https://huggingface.co/EleutherAI/gpt-neo-2.7B/blob/e24fa291132763e59f4a5422741b424fb5d59056/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 50257,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/EleutherAI/gpt-neo-2.7B/blob/e24fa291132763e59f4a5422741b424fb5d59056/vocab.json",
+      "tokenizer_revision": "e24fa291132763e59f4a5422741b424fb5d59056",
+      "tokenizer_sha256": "3ba3c3109ff33976c4bd966589c11ee14fcaa1f4c9e5e154c2ed7f99d80709e7",
+      "downloads_30d": 15913,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/EleutherAI/gpt-neo-2.7B",
+      "parameters_billion": 2.7,
+      "popularity_rank": 29
+    },
+    {
+      "model_id": "01-ai/Yi-6B",
+      "label": "Yi 6B",
+      "stage": "base",
+      "release_year": 2023,
+      "release_year_source_url": "https://huggingface.co/01-ai/Yi-6B/blob/80080be87ec5a0103f643195f2d9003b8068941b/README.md",
+      "base_evidence_url": "https://huggingface.co/01-ai/Yi-6B/blob/80080be87ec5a0103f643195f2d9003b8068941b/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 63992,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/01-ai/Yi-6B/blob/80080be87ec5a0103f643195f2d9003b8068941b/tokenizer.json",
+      "tokenizer_revision": "80080be87ec5a0103f643195f2d9003b8068941b",
+      "tokenizer_sha256": "a13ccc285aea27f5e9a98d40e04e330b01d89db6de7af10b013f56eec8eae8a2",
+      "downloads_30d": 14303,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/01-ai/Yi-6B",
+      "parameters_billion": 6,
+      "popularity_rank": 30
+    },
+    {
+      "model_id": "bigscience/bloom",
+      "label": "BLOOM 176B",
+      "stage": "base",
+      "release_year": 2022,
+      "release_year_source_url": "https://huggingface.co/bigscience/bloom/blob/7f10a99ce7c08f03c7719a586cb2cbda1433ac05/README.md",
+      "base_evidence_url": "https://huggingface.co/bigscience/bloom/blob/7f10a99ce7c08f03c7719a586cb2cbda1433ac05/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 250680,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/bigscience/bloom/blob/7f10a99ce7c08f03c7719a586cb2cbda1433ac05/tokenizer.json",
+      "tokenizer_revision": "7f10a99ce7c08f03c7719a586cb2cbda1433ac05",
+      "tokenizer_sha256": "3fa39cd4b1500feb205bcce3b9703a4373414cafe4970e0657b413f7ddd2a9d3",
+      "downloads_30d": 10634,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/bigscience/bloom",
+      "parameters_billion": 176,
+      "popularity_rank": 31
+    },
+    {
+      "model_id": "deepseek-ai/DeepSeek-V2",
+      "label": "DeepSeek V2",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://github.com/deepseek-ai/DeepSeek-V2/blob/main/README.md",
+      "base_evidence_url": "https://huggingface.co/deepseek-ai/DeepSeek-V2/blob/4461458f186c35188585855f28f77af5661ad489/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 100002,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/deepseek-ai/DeepSeek-V2/blob/4461458f186c35188585855f28f77af5661ad489/tokenizer.json",
+      "tokenizer_revision": "4461458f186c35188585855f28f77af5661ad489",
+      "tokenizer_sha256": "41f3bf64213da8c012d8bd0871a58a1fdf70463e8f08f110ddbb1082f529f669",
+      "downloads_30d": 10558,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/deepseek-ai/DeepSeek-V2",
+      "parameters_billion": 236,
+      "popularity_rank": 32
+    },
+    {
+      "model_id": "allenai/OLMo-7B-hf",
+      "label": "OLMo 7B",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://huggingface.co/allenai/OLMo-7B-hf/blob/11fb3186a2e4f681edea621fa8b4345147a9db6a/README.md",
+      "base_evidence_url": "https://huggingface.co/allenai/OLMo-7B-hf/blob/11fb3186a2e4f681edea621fa8b4345147a9db6a/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 50280,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/allenai/OLMo-7B-hf/blob/11fb3186a2e4f681edea621fa8b4345147a9db6a/tokenizer.json",
+      "tokenizer_revision": "11fb3186a2e4f681edea621fa8b4345147a9db6a",
+      "tokenizer_sha256": "f6be7e4f0ee192755599bb2756cc57a44bd0456fe8c2aac7caab42628ca786d5",
+      "downloads_30d": 6317,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/allenai/OLMo-7B-hf",
+      "parameters_billion": 7,
+      "popularity_rank": 33
+    },
+    {
+      "model_id": "ai21labs/Jamba-v0.1",
+      "label": "Jamba v0.1",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://huggingface.co/ai21labs/Jamba-v0.1/blob/9efd11575ba791d9e3d25d4c8b670e78506b2df7/README.md",
+      "base_evidence_url": "https://huggingface.co/ai21labs/Jamba-v0.1/blob/9efd11575ba791d9e3d25d4c8b670e78506b2df7/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 65536,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/ai21labs/Jamba-v0.1/blob/9efd11575ba791d9e3d25d4c8b670e78506b2df7/tokenizer.json",
+      "tokenizer_revision": "9efd11575ba791d9e3d25d4c8b670e78506b2df7",
+      "tokenizer_sha256": "168522c4bc2db021984eb9ec0534b2421adee443b7fc038ed2ff8c36e934096a",
+      "downloads_30d": 5304,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/ai21labs/Jamba-v0.1",
+      "parameters_billion": 52,
+      "popularity_rank": 34
+    },
+    {
+      "model_id": "ibm-granite/granite-3.0-8b-base",
+      "label": "Granite 3.0 8B Base",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://huggingface.co/ibm-granite/granite-3.0-8b-base/blob/4fad7f8ad56393dcef4e34e37a35962bd091f320/README.md",
+      "base_evidence_url": "https://huggingface.co/ibm-granite/granite-3.0-8b-base/blob/4fad7f8ad56393dcef4e34e37a35962bd091f320/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 49152,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/ibm-granite/granite-3.0-8b-base/blob/4fad7f8ad56393dcef4e34e37a35962bd091f320/tokenizer.json",
+      "tokenizer_revision": "4fad7f8ad56393dcef4e34e37a35962bd091f320",
+      "tokenizer_sha256": "d3b4df07a0ce3940b15c77e2ea17ab5627ca0c4bf982d2eb37966aea0a81c918",
+      "downloads_30d": 3577,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/ibm-granite/granite-3.0-8b-base",
+      "parameters_billion": 8,
+      "popularity_rank": 35
+    },
+    {
+      "model_id": "meta-llama/Llama-4-Scout-17B-16E",
+      "label": "Llama 4 Scout Base",
+      "stage": "base",
+      "release_year": 2025,
+      "release_year_source_url": "https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E/blob/14d516bdff6ac06cec40678529222f193386189c/README.md",
+      "base_evidence_url": "https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E/blob/14d516bdff6ac06cec40678529222f193386189c/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": null,
+      "tokenizer_count_scope": null,
+      "tokenizer_status": "gated",
+      "tokenizer_source_url": null,
+      "tokenizer_revision": null,
+      "tokenizer_sha256": null,
+      "downloads_30d": 2370,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/meta-llama/Llama-4-Scout-17B-16E",
+      "parameters_billion": 109,
+      "popularity_rank": 36
+    },
+    {
+      "model_id": "baichuan-inc/Baichuan2-7B-Base",
+      "label": "Baichuan 2 7B Base",
+      "stage": "base",
+      "release_year": 2023,
+      "release_year_source_url": "https://huggingface.co/baichuan-inc/Baichuan2-7B-Base/blob/f9d4d8dd2f7a3dbede3bda3b0cf0224e9272bbe5/README.md",
+      "base_evidence_url": "https://huggingface.co/baichuan-inc/Baichuan2-7B-Base/blob/f9d4d8dd2f7a3dbede3bda3b0cf0224e9272bbe5/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 125696,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/baichuan-inc/Baichuan2-7B-Base/blob/f9d4d8dd2f7a3dbede3bda3b0cf0224e9272bbe5/tokenizer.model",
+      "tokenizer_revision": "f9d4d8dd2f7a3dbede3bda3b0cf0224e9272bbe5",
+      "tokenizer_sha256": "79452955be6b419a65984273a9f08af86042e1c2a75ee3ba989cbf620a133cc2",
+      "downloads_30d": 2257,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/baichuan-inc/Baichuan2-7B-Base",
+      "parameters_billion": 7,
+      "popularity_rank": 37
+    },
+    {
+      "model_id": "mistralai/Mistral-Small-3.1-24B-Base-2503",
+      "label": "Mistral Small 3.1 Base",
+      "stage": "base",
+      "release_year": 2025,
+      "release_year_source_url": "https://mistral.ai/news/mistral-small-3-1",
+      "base_evidence_url": "https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Base-2503/blob/ba6496e3dce1d0bdc93848804b1d4b9d5f3c57bc/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 131072,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Base-2503/blob/ba6496e3dce1d0bdc93848804b1d4b9d5f3c57bc/tokenizer.json",
+      "tokenizer_revision": "ba6496e3dce1d0bdc93848804b1d4b9d5f3c57bc",
+      "tokenizer_sha256": "b76085f9923309d873994d444989f7eb6ec074b06f25b58f1e8d7b7741070949",
+      "downloads_30d": 2027,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/mistralai/Mistral-Small-3.1-24B-Base-2503",
+      "parameters_billion": 24,
+      "popularity_rank": 38
+    },
+    {
+      "model_id": "Snowflake/snowflake-arctic-base",
+      "label": "Snowflake Arctic Base",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://huggingface.co/Snowflake/snowflake-arctic-base/blob/7f176173956a1738ca97f222daf15e389c02e005/README.md",
+      "base_evidence_url": "https://huggingface.co/Snowflake/snowflake-arctic-base/blob/7f176173956a1738ca97f222daf15e389c02e005/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": 32000,
+      "tokenizer_count_scope": "serialized_artifact_and_added_tokens",
+      "tokenizer_status": "downloaded",
+      "tokenizer_source_url": "https://huggingface.co/Snowflake/snowflake-arctic-base/blob/7f176173956a1738ca97f222daf15e389c02e005/tokenizer.json",
+      "tokenizer_revision": "7f176173956a1738ca97f222daf15e389c02e005",
+      "tokenizer_sha256": "8eea70c4866c4f1320ba096fc986ac82038a8374dbe135212ba7628835b4a6f1",
+      "downloads_30d": 724,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/Snowflake/snowflake-arctic-base",
+      "parameters_billion": 480,
+      "popularity_rank": 39
+    },
+    {
+      "model_id": "databricks/dbrx-base",
+      "label": "DBRX Base",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm",
+      "base_evidence_url": "https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm",
+      "selection_note": "Publisher base model. The archived tokenizer collection returned an access failure; retain the coverage gap, with no substituted vocabulary.",
+      "tokenizer_vocab_size": null,
+      "tokenizer_count_scope": null,
+      "tokenizer_status": "unavailable_at_collection",
+      "tokenizer_source_url": null,
+      "tokenizer_revision": null,
+      "tokenizer_sha256": null,
+      "downloads_30d": null,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/databricks/dbrx-base",
+      "parameters_billion": 132,
+      "popularity_rank": null
+    },
+    {
+      "model_id": "meta-llama/Meta-Llama-3.1-8B",
+      "label": "Llama 3.1 8B",
+      "stage": "base",
+      "release_year": 2024,
+      "release_year_source_url": "https://huggingface.co/meta-llama/Meta-Llama-3.1-8B/blob/d04e592bb4f6aa9cfee91e2e20afa771667e1d4b/README.md",
+      "base_evidence_url": "https://huggingface.co/meta-llama/Meta-Llama-3.1-8B/blob/d04e592bb4f6aa9cfee91e2e20afa771667e1d4b/README.md",
+      "selection_note": "Publisher base/pretraining checkpoint, reviewed against the linked model card; one selected size per generation.",
+      "tokenizer_vocab_size": null,
+      "tokenizer_count_scope": null,
+      "tokenizer_status": "gated",
+      "tokenizer_source_url": null,
+      "tokenizer_revision": null,
+      "tokenizer_sha256": null,
+      "downloads_30d": null,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/meta-llama/Meta-Llama-3.1-8B",
+      "parameters_billion": 8,
+      "popularity_rank": null
+    },
+    {
+      "model_id": "mosaicml/mpt-7b",
+      "label": "MPT 7B",
+      "stage": "base",
+      "release_year": 2023,
+      "release_year_source_url": "https://www.databricks.com/blog/mpt-7b",
+      "base_evidence_url": "https://www.databricks.com/blog/mpt-7b",
+      "selection_note": "Publisher base model. The archived tokenizer collection returned an access failure; retain the coverage gap, with no substituted vocabulary.",
+      "tokenizer_vocab_size": null,
+      "tokenizer_count_scope": null,
+      "tokenizer_status": "unavailable_at_collection",
+      "tokenizer_source_url": null,
+      "tokenizer_revision": null,
+      "tokenizer_sha256": null,
+      "downloads_30d": null,
+      "downloads_observed_on": "2026-10-31",
+      "downloads_source_url": "https://huggingface.co/api/models/mosaicml/mpt-7b",
+      "parameters_billion": 6.7,
+      "popularity_rank": null
+    }
+  ]
+}
+</script>
+<script>
+const data=JSON.parse(document.querySelector('#note-data').textContent);
+const tbody=document.querySelector('#models');
+const rows=[...tbody.querySelectorAll('tr')];
+function update(){
+ const query=document.querySelector('#search').value.toLowerCase();
+ const compact=document.querySelector('#compact').checked;
+ const order=document.querySelector('#sort').value;
+ const limit=Number(document.querySelector('#limit').value);
+ const visible=rows.filter(row=>row.textContent.toLowerCase().includes(query)&&(!compact||(Number(row.dataset.vocab)>=0&&Number(row.dataset.vocab)<50000)));
+ visible.sort((a,b)=>{
+  if(order==='year')return Number(b.dataset.year)-Number(a.dataset.year)||Number(a.dataset.rank)-Number(b.dataset.rank);
+  if(order==='vocab')return (Number(a.dataset.vocab)<0?Infinity:Number(a.dataset.vocab))-(Number(b.dataset.vocab)<0?Infinity:Number(b.dataset.vocab))||Number(a.dataset.rank)-Number(b.dataset.rank);
+  return Number(a.dataset.rank)-Number(b.dataset.rank);
+ });
+ rows.forEach(row=>row.hidden=true);
+ visible.forEach((row,index)=>{tbody.append(row);row.hidden=index>=limit;});
+ document.querySelector('#shown').textContent=`Showing ${Math.min(visible.length,limit)} of ${visible.length} matching checkpoints (${rows.length} reviewed).`;
+ document.querySelector('#empty').hidden=visible.length>0;
+}
+['search','sort','limit','compact'].forEach(id=>document.getElementById(id).addEventListener('input',update));
+function download(content,type,name){const url=URL.createObjectURL(new Blob([content],{type}));const link=document.createElement('a');link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+document.querySelector('#download-json').addEventListener('click',()=>download(JSON.stringify(data,null,2)+'\n','application/json','foundation-models.json'));
+document.querySelector('#download-csv').addEventListener('click',()=>{const keys=Object.keys(data.models[0]);const cell=value=>'"'+String(value??'').replaceAll('"','""')+'"';download([keys,...data.models.map(row=>keys.map(key=>row[key]))].map(row=>row.map(cell).join(',')).join('\n')+'\n','text/csv','foundation-models.csv');});
+update();
+</script>
+</body>
+</html>

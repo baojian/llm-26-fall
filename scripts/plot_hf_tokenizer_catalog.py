@@ -1,5 +1,5 @@
 """Plot the expanded catalog, both with and without repeated vocabularies."""
-from collections import defaultdict
+from collections import Counter
 import argparse
 from datetime import datetime
 import hashlib
@@ -12,17 +12,10 @@ import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib.ticker import FuncFormatter, LogLocator, NullFormatter
+from tokenizer_catalog_analysis import grouped_representatives, vocabulary_group_key as group_key
 
 
 ROOT = Path(__file__).resolve().parents[1]
-
-
-def group_key(row):
-    if row.get('shared_vocabulary_sha256'):
-        return 'vocab:' + row['shared_vocabulary_sha256']
-    if row.get('tokenizer_artifact_sha256'):
-        return 'artifact:' + row['tokenizer_artifact_sha256']
-    return 'model:' + row['model_id']
 
 
 def draw(ax, rows, log_scale, title, minimum, maximum):
@@ -79,17 +72,17 @@ def main():
     catalog = json.loads(raw)
     collection_date = max(r['collected_at'][:10] for r in catalog if r.get('collected_at'))
     points = [r for r in catalog if r['timeline_date'] and r['tokenizer_vocab_size'] is not None and r['tokenizer_vocab_size'] > 0]
-    groups = defaultdict(list)
-    for row in points:
-        groups[group_key(row)].append(row)
-    representatives = [min(group, key=lambda r: (r['timeline_date'], r['model_id'])) for group in groups.values()]
+    if not points:
+        parser.error('The catalog has no dated positive vocabulary measurements.')
+    representatives = grouped_representatives(points)
+    date_bases = Counter(row['timeline_date_basis'] for row in points)
     minimum = min(r['tokenizer_vocab_size'] for r in points)
     maximum = max(r['tokenizer_vocab_size'] for r in points)
     plt.rcParams.update({'font.family': 'DejaVu Sans', 'svg.fonttype': 'none', 'font.size': 10})
     figure, axes = plt.subplots(2, 2, figsize=(15.0, 10.8))
     figure.subplots_adjust(left=0.067, right=0.977, top=0.80, bottom=0.16, wspace=0.20, hspace=0.39)
     for index, data in enumerate((points, representatives)):
-        count_label = f'{len(data):,} model rows' if index == 0 else f'{len(data):,} vocabulary/artifact groups'
+        count_label = f'{len(data):,} model rows' if index == 0 else f'{len(data):,} vocabulary groups / singletons'
         draw(axes[index, 0], data, False, f'{chr(97 + 2*index)}) {count_label} · linear y', minimum, maximum)
         draw(axes[index, 1], data, True, f'{chr(98 + 2*index)}) {count_label} · logarithmic y', minimum, maximum)
     figure.suptitle('Vocabulary size across the expanded model catalog', x=0.067, y=0.975,
@@ -103,7 +96,7 @@ def main():
                   frameon=False, fontsize=10, columnspacing=2, labelspacing=0.9)
     figure.text(0.067, 0.031,
                 'No date-range bars and no fitted trend. Repository timestamps do not establish the first public availability of model weights.\n'
-                'Bottom row groups identical token-to-ID mappings; formats without that mapping use the primary artifact hash. Dates are earliest observed in this sample.\n'
+                'Bottom row collapses complete token-to-ID hashes only; unverified mappings stay separate. Dates are earliest observed in this sample.\n'
                 'Fine-tunes, merges, conversions, adapters, specialized models, and test fixtures remain in the catalog. Unknown/unavailable vocabularies are omitted.\n'
                 'Selection uses current 30-day download rankings, supplemented by curated releases; it is not a historical popularity census.',
                 fontsize=8.3, color='#647383', linespacing=1.6)
@@ -115,7 +108,7 @@ def main():
         for logarithmic, scale in ((False, 'linear'), (True, 'log')):
             figure, ax = plt.subplots(figsize=(12.0, 7.0))
             figure.subplots_adjust(left=0.08, right=0.97, top=0.82, bottom=0.18)
-            draw(ax, data, logarithmic, f'{len(data):,} ' + ('model rows' if name == 'all-models' else 'vocabulary/artifact groups'), minimum, maximum)
+            draw(ax, data, logarithmic, f'{len(data):,} ' + ('model rows' if name == 'all-models' else 'vocabulary groups / singletons'), minimum, maximum)
             figure.suptitle('Tokenizer vocabulary size over time', x=0.08, ha='left', fontsize=19, fontweight='bold')
             figure.text(0.08, 0.91, 'Hollow markers: repository-date proxy. Filled markers: documented release day. No date-range bars.', fontsize=9.5, color='#596979')
             figure.text(0.08, 0.035, 'Blue: Hugging Face repositories. Orange: closed-model public text encodings.\n'
@@ -125,7 +118,9 @@ def main():
                 figure.savefig(output / f'vocabulary-{name}-{scale}.{extension}', dpi=180, facecolor='white')
             plt.close(figure)
     (output / 'expanded-plot-metadata.json').write_text(json.dumps({
-        'catalog_rows': len(catalog), 'plotted_model_rows': len(points), 'deduplicated_groups': len(groups),
+        'catalog_rows': len(catalog), 'plotted_model_rows': len(points), 'deduplicated_groups': len(representatives),
+        'deduplication_policy': 'complete_token_to_id_hash_else_model_id',
+        'date_basis_counts': dict(date_bases),
         'source_sha256': hashlib.sha256(raw).hexdigest(),
         'min_vocabulary': minimum, 'max_vocabulary': maximum,
         'date_range_bars': False, 'fitted_trend': None,
@@ -133,7 +128,7 @@ def main():
         'group_representatives': [{'group': group_key(r), 'model_id': r['model_id'], 'date': r['timeline_date'],
                                    'vocabulary_size': r['tokenizer_vocab_size']} for r in representatives]
     }, indent=2) + '\n')
-    print(json.dumps({'catalog_rows': len(catalog), 'plotted_models': len(points), 'groups': len(groups),
+    print(json.dumps({'catalog_rows': len(catalog), 'plotted_models': len(points), 'groups': len(representatives),
                       'vocabulary_range': [minimum, maximum]}))
 
 

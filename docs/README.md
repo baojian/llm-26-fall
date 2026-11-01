@@ -1,5 +1,10 @@
 # Course reading pages
 
+The [short note on foundation-model vocabularies](model-tokenizer-statistics/foundation-models.html)
+compares a reviewed selection of original base checkpoints using measured
+vocabulary sizes, documented release years, and snapshot download rankings.
+Its figures, searchable table, and JSON/CSV downloads work offline in one HTML file.
+
 The [model and tokenizer statistics](model-tokenizer-statistics/README.md)
 provide a sourced CSV/JSON inventory of 84 open- and closed-weight model
 releases, with local tokenizer paths, measured vocabulary sizes, published
