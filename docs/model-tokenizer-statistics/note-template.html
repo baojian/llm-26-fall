@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="A short, reproducible note on foundation-model vocabulary sizes and Hugging Face download rankings.">
-<title>Vocabulary sizes in foundation models</title>
+<meta name="description" content="A complete inventory of Wikipedia's listed LLMs, with measured tokenizers, explicit gaps, and repository download rankings.">
+<title>LLM vocabularies: a broader inventory</title>
 <style>
 :root{--ink:#192e3b;--muted:#586975;--line:#dbe3e7;--teal:#126d78;--amber:#b45721;--paper:#fff;--ground:#f4f6f5}
 *{box-sizing:border-box}body{margin:0;background:var(--ground);color:var(--ink);font:17px/1.65 Georgia,serif}
@@ -17,68 +17,81 @@ details{border:1px solid var(--line);border-radius:8px;background:white;margin:2
 .table-scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.5}th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:11px;text-transform:uppercase;color:var(--muted);letter-spacing:.03em}.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}td small{display:block;font-size:10px;color:var(--muted);overflow-wrap:anywhere;max-width:30em}tr[hidden]{display:none}footer{border-top:1px solid var(--line);padding-top:20px;font-size:12px;color:var(--muted)}.downloads{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.methods li{font-size:14px;margin:10px 0}.methods ul{padding-left:20px}.methods code{font-size:12px;overflow-wrap:anywhere}.no-results{font-size:14px;color:var(--muted)}
 @media(max-width:700px){main{padding:24px 16px 40px}.lede{font-size:18px}.two-columns{grid-template-columns:1fr;gap:0}.stats div{padding:12px}.stats span{font-size:10px}details{padding:14px 12px}h2{font-size:21px}.figure-heading{padding:16px 16px 0}figcaption,.legend{padding-left:16px;padding-right:16px}}
 @media print{body{background:white;font-size:11pt}main{padding:0;max-width:none}nav,.controls,.downloads{display:none}.chart-scroll svg{min-width:0}figure{break-inside:avoid}details:not([open]){display:none}h2,h3{break-after:avoid}a{color:inherit}.stats{margin:16px 0}}
+.coverage{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;margin:20px 0;font:12px/1.6 system-ui,sans-serif}.coverage div{padding:10px;border:1px solid var(--line);border-radius:6px;background:white}.coverage strong,.coverage span,.coverage small{display:block}.coverage strong{font-size:15px}.coverage small{color:var(--muted)}.hollow{background:transparent;border:1.5px solid var(--teal)}#models td:nth-child(2){min-width:210px}#models td:nth-child(5){min-width:135px}.table-scroll{max-height:680px}.table-scroll th{position:sticky;top:0;background:white;z-index:1}#search{width:210px}
 </style>
 </head>
 <body>
 <main>
 <header>
 <div class="eyebrow">NLP and LLMs · Short research note · 1 November 2026</div>
-<h1>Vocabulary sizes in<br>foundation models</h1>
-<p class="lede">A modern language model can still use fewer than 50,000 tokens. To understand why, compare original pretraining checkpoints and make the selection rule explicit.</p>
-<nav aria-label="On this page"><a href="#scope">Model selection</a><a href="#timeline">Vocabulary timeline</a><a href="#popularity">Popularity</a><a href="#data">Explore the data</a></nav>
-<div class="stats"><div><strong>@@TOTAL@@</strong><span>reviewed base checkpoints</span></div><div><strong>@@MEASURED@@</strong><span>measured vocabularies</span></div><div><strong>@@RANKED@@</strong><span>repositories with download counts</span></div></div>
+<h1>LLM vocabularies:<br>a broader inventory</h1>
+<p class="lede">Start with every model entry in the source list. Then separate what we can measure, what we can rank, and what remains unknown.</p>
+<nav aria-label="On this page"><a href="#scope">Coverage</a><a href="#timeline">Vocabulary timeline</a><a href="#popularity">Popularity</a><a href="#data">All entries</a><a href="#bases">Base checkpoints</a></nav>
+<div class="stats"><div><strong>@@TOTAL@@</strong><span>of @@TOTAL@@ Wikipedia rows accounted for</span></div><div><strong>@@MEASURED@@</strong><span>representatives with measured counts</span></div><div><strong>@@RANKED@@</strong><span>repositories with snapshot downloads</span></div></div>
 </header>
 <section id="scope">
-<h2>Compare original pretraining checkpoints</h2>
-<p>The <a href="https://en.wikipedia.org/wiki/List_of_large_language_models">Wikipedia model list</a> is our starting map of model families. The selection here is narrower: reviewed, general-purpose <strong>base checkpoints</strong> from the original developers or their maintained archives. Small models and text-capable multimodal bases qualify. The linked publisher cards establish each inclusion.</p>
-<p>We select one size for each included generation, preserving early GPT models and recent Qwen, Mistral, DeepSeek, Llama, Gemma, and OLMo releases. We exclude instruction/reasoning-tuned variants, specialist models, community fine-tunes, quantized copies, adapters, merges, and test fixtures. This is an illustrative cohort, not a complete census or a global popularity leaderboard.</p>
+<h2>A complete inventory of the source list</h2>
+<p>The <a href="@@WIKI_SOURCE@@">Wikipedia list, frozen at the inspected revision</a>, contains <strong>@@TOTAL@@ table rows</strong> from 2018–2026. Every row appears here: open checkpoints, closed APIs, research models, and post-trained releases. A source row may group several sizes or models, so @@TOTAL@@ rows is not a count of distinct checkpoints, nor a census of all LLMs.</p>
+<p>We map <strong>@@MAPPED@@ rows</strong> to an exact representative and retain <strong>@@UNMAPPED@@ without a verified mapping</strong>. Of the mapped rows, @@TOKENIZERS@@ have measured public tokenizers, @@ENCODINGS@@ have measured public API text encodings, and @@MAPPED_MISSING@@ remain unmeasured. No entry is excluded because its vocabulary is small or its data are missing.</p>
+<div class="coverage" aria-label="Source rows and measured representatives by listed year">@@YEAR_COUNTS@@</div>
+<p class="quiet">The earlier @@BASE_COUNT@@-checkpoint pretraining study is preserved <a href="#bases">as a separate subset</a>, including base models absent from Wikipedia. It no longer defines the coverage of this inventory. “Publisher release” does not by itself establish that a checkpoint is a pretrained base.</p>
 </section>
 <section id="timeline">
 <h2>Vocabulary size does not grow uniformly</h2>
-<p>The selected measurements include large vocabularies, such as BLOOM and Qwen3.5, alongside compact choices such as Mistral 7B and Granite 3.0. A 50,000-token cutoff would remove real foundation models and bias the picture.</p>
+<p>The larger inventory contains both large and compact vocabularies. The figure uses an exact representative for each measured entry; different releases can share a tokenizer. API text encodings have their own panel because they do not reveal a closed model’s complete vocabulary.</p>
 <figure>
-<p class="figure-heading">Selected base checkpoints, by documented release year</p>
+<p class="figure-heading">Measured representatives across the full inventory</p>
 <div class="chart-scroll">@@TIMELINE@@</div>
-<div class="legend"><span class="dot"></span>50,000 entries or more <span class="dot small"></span>Below 50,000</div>
-<figcaption>@@PLOTTED@@ measured checkpoints with a sourced release year. Years are discrete: overlapping points are left in place, with no date jitter or fitted trend. Current pinned tokenizer revisions are measured, not necessarily launch-day revisions. On a narrow screen, scroll the figure horizontally.</figcaption>
+<div class="legend"><span class="dot"></span>50,000 entries or more <span class="dot small"></span>Below 50,000 · Filled: primary-sourced year <span class="dot hollow"></span>Hollow: Wikipedia year only</div>
+<figcaption>@@MEASURED@@ measured representatives: @@PRIMARY_DATES@@ with primary-sourced release years and @@WIKI_DATES@@ with source-listed years still unverified. Current pinned tokenizer revisions are measured, not necessarily launch-day revisions. Points can overlap; there is no date jitter or fitted trend. Unmeasured rows are omitted from the chart but retained in the table. Scroll horizontally on narrow screens.</figcaption>
 </figure>
-<div class="callout"><h3>Why do smaller vocabularies persist?</h3><p>Mistral 7B has <strong>32,000</strong> measured entries; Granite 3.0 8B has <strong>49,152</strong>. Vocabulary size is a design choice: at hidden width <var>d</var>, one embedding table contains <var>V</var> × <var>d</var> parameters. Increasing <var>V</var> from 32k to 128k quadruples that table. Whether the extra entries improve compression or model quality must be tested on the target languages and tasks. The scatter alone cannot establish the best vocabulary size.</p></div>
-<p class="quiet">Coverage matters: @@MISSING_COUNT@@ reviewed checkpoints lack a measured tokenizer in this snapshot, including Llama and Gemma entries; @@MISSING_DATES@@ measured checkpoint lacks a verified release year. They remain visible in the data table rather than being plotted at zero or assigned a repository date.</p>
+<div class="callout"><h3>A small vocabulary is a valid design choice</h3><p>Mistral 7B has <strong>32,000</strong> measured entries; the selected Granite Code 3B checkpoint has <strong>49,152</strong>. At hidden width <var>d</var>, one embedding table contains <var>V</var> × <var>d</var> parameters. Increasing <var>V</var> from 32k to 128k quadruples that table. Compression and model quality still need evaluation on the target languages and tasks. A 50k cutoff would discard relevant models and bias the comparison.</p></div>
+<p class="quiet">Dates need checking too. Wikipedia lists Qwen2.5 under 2025; the <a href="https://qwenlm.github.io/blog/qwen2.5/">official release announcement</a> places it in 2024. We preserve both fields and plot the verified year where available. Repository creation dates are never used in this figure.</p>
 </section>
 <section id="popularity">
 <h2>Rank by an observable usage signal</h2>
-<p>We rank the exact selected repositories by <strong>30-day Hugging Face downloads observed on 31 October 2026</strong>. This is a reproducible way to prioritize case studies. It does not measure unique users, total family adoption, benchmark quality, or practical usefulness.</p>
+<p>Among mapped representatives, @@RANKED@@ have <strong>30-day Hugging Face download counts observed on 31 October 2026</strong>. This gives a reproducible ordering for exploring the inventory. Closed APIs and repositories absent from that snapshot remain unranked.</p>
 <figure>
-<p class="figure-heading">The 12 most downloaded checkpoints within this selection</p>
+<p class="figure-heading">The 12 most downloaded mapped representatives</p>
 <div class="chart-scroll">@@POPULARITY@@</div>
 <div class="legend"><span class="dot"></span>50,000 entries or more <span class="dot small"></span>Below 50,000 <span class="dot unknown"></span>Vocabulary not measured</div>
-<figcaption>Rank uses downloads even when vocabulary measurement is unavailable. Counts belong to these exact checkpoints; derivatives and other parameter sizes are not added together. The full ranking and all unknown values are available below.</figcaption>
+<figcaption>Labels identify source-list entries; the table gives the exact checkpoint behind each bar. This ranking includes base, post-trained, and historical baseline representatives. It is not a global leaderboard or a sum over each family’s sizes and derivatives. Newly fetched tokenizer metadata does not change the fixed download snapshot.</figcaption>
 </figure>
 <div class="two-columns"><div><h3>Popularity is not a quality score</h3><p>Hub downloads count requests to selected files and can include automated activity. They are affected by caching, distribution channels, and library conventions. See the <a href="https://huggingface.co/docs/hub/models-download-stats">Hub’s counting rules</a>.</p></div><div><h3>Usability depends on the task</h3><p>A base model is useful for studying pretraining and further adaptation. Choosing a ready-to-use assistant also requires task evaluations, language coverage, a suitable license, and affordable inference. We do not turn vocabulary size or download counts into a synthetic “usability” score.</p></div></div>
 </section>
 <details id="data">
-<summary>Explore all @@TOTAL@@ checkpoints, sources, and exact counts</summary>
-<p class="quiet">Rank is within this curated selection. Model links give classification evidence; year links give date evidence; vocabulary links identify tokenizer artifacts. “Not measured” and “Unranked” are missing values, not zeros. Some source pages require publisher access.</p>
+<summary>Explore all @@TOTAL@@ source entries, exact representatives, and gaps</summary>
+<p class="quiet">Model links identify the representative or the unmapped source row. Each year cell links the listing and, where available, primary evidence. Count links identify tokenizer artifacts. “Not measured” and “Unranked” are missing values, not zeros. Filters change the view; downloads retain all @@TOTAL@@ rows.</p>
 <div class="controls">
 <label>Find a model<input id="search" type="search" placeholder="Qwen, Mistral, Llama…"></label>
-<label>Order<select id="sort"><option value="rank">Downloads: highest first</option><option value="year">Release year: newest first</option><option value="vocab">Vocabulary: smallest first</option></select></label>
-<label>Rows<select id="limit"><option value="15">First 15</option><option value="1000">All selected models</option></select></label>
+<label>Coverage<select id="status"><option value="all">All source entries</option><option value="measured_tokenizer">Measured public tokenizers</option><option value="public_text_encoding">Public API text encodings</option><option value="mapped_not_measured">Mapped, not measured</option><option value="not_mapped">Not mapped yet</option></select></label>
+<label>Type<select id="category"><option value="all">All types</option><option value="base">Reviewed base checkpoints</option><option value="publisher_release">Other publisher releases</option><option value="closed_api">Mapped closed APIs</option><option value="historical_baseline">Historical baselines</option><option value="derivative">Derived models</option><option value="unmapped">Not classified</option></select></label>
+<label>Order<select id="sort"><option value="rank">Downloads: highest first</option><option value="year">Plotted year: newest first</option><option value="vocab">Vocabulary: smallest first</option></select></label>
+<label>Rows<select id="limit"><option value="15">First 15</option><option value="1000">All @@TOTAL@@ source entries</option></select></label>
 <label class="check"><input id="compact" type="checkbox">Only measured vocabularies below 50k</label>
 </div>
-<p id="shown" class="quiet" aria-live="polite">@@TOTAL@@ selected checkpoints.</p>
-<div class="table-scroll"><table><thead><tr><th class="num">Rank</th><th>Base checkpoint</th><th>Release year</th><th class="num">Vocabulary</th><th class="num">30-day downloads</th></tr></thead><tbody id="models">@@ROWS@@</tbody></table></div>
+<p id="shown" class="quiet" aria-live="polite">@@TOTAL@@ source entries.</p>
+<div class="table-scroll"><table><thead><tr><th class="num">Rank</th><th>Source entry / representative</th><th>Listed / verified year</th><th class="num">Count</th><th>Measurement status</th><th class="num">30-day downloads</th></tr></thead><tbody id="models">@@ROWS@@</tbody></table></div>
 <p id="empty" class="no-results" hidden>No models match these filters.</p>
 <div class="downloads"><button type="button" id="download-json">Download data (JSON)</button><button type="button" id="download-csv">Download data (CSV)</button></div>
+</details>
+<details id="bases">
+<summary>The original @@BASE_COUNT@@ base-checkpoint study</summary>
+<p class="quiet">This separate pretraining cohort includes @@BASE_SUPPLEMENTAL@@ representatives absent from the Wikipedia mapping, such as Pythia, MPT, Yi, and SmolLM. One size per included generation was reviewed using publisher evidence. Ranks below are within these @@BASE_COUNT@@ checkpoints, not the broader inventory. Small and unmeasured models remain included.</p>
+<div class="table-scroll"><table><thead><tr><th class="num">Rank</th><th>Base checkpoint</th><th>Verified year</th><th class="num">Vocabulary</th><th class="num">30-day downloads</th></tr></thead><tbody>@@BASE_ROWS@@</tbody></table></div>
+<div class="downloads"><button type="button" id="download-bases">Download base cohort (JSON)</button></div>
 </details>
 <details class="methods" id="methods">
 <summary>Measurement, corrections, and remaining gaps</summary>
 <ul>
 <li><strong>Counting unit.</strong> Distinct assigned tokenizer IDs, including serialized added/reserved tokens. Curated rows include inspected companion-file additions; additional bulk rows count the serialized tokenizer JSON only. Each exported row retains its counting scope. These are not padded configuration vocabulary rows, embedding tensor dimensions, or complete multimodal symbol inventories.</li>
-<li><strong>Dates.</strong> The main figure uses sourced release years, never Hub creation dates. SmolLM2’s release year is unverified in this reviewed source set, so it appears in the ranking but not the timeline. The original 11,229-row catalog retains repository proxies for separate exploratory analyses.</li>
-<li><strong>Deduplication corrected.</strong> Kimi K2-Base and K2.5 share a primary rank file but have 163,842 and 163,840 entries after additions. The broad-catalog plots now collapse only verified complete token-to-ID hashes: 637 shared mapping groups plus 20 separate records, or 657 groups/singletons. Even identical primary hashes and counts cannot prove full vocabulary equality. The foundation plots show each selected model separately.</li>
-<li><strong>Missing measurements.</strong> @@MISSING@@. No community tokenizer or configuration row count is substituted for these missing measurements. Rank can still be assigned when a download count exists.</li>
-<li><strong>Boundary cases.</strong> Qwen3-8B-Base is selected instead of the post-trained Qwen3-8B. Qwen3.5’s repository-specific notice says pretraining only, despite a shared overview mentioning post-training. Closed APIs such as GPT, Claude, and Gemini lack comparable Hub download counts and are outside this ranking; their public encoding records remain in the full catalog.</li>
-<li><strong>Reproducibility.</strong> The reader is generated offline from the October 31 snapshot, the original curated measurements, and the explicit selection file. The renamed Llama 3.1 repository is matched through a verified Hub redirect, recorded in the exported data. All plots are embedded vector graphics. Downloading this HTML preserves its figures, table, and filters without an internet connection. Release-year and classification sources were reviewed on November 1, 2026.</li>
+<li><strong>Dates.</strong> Listed dates and developers are transcribed source fields, not independently verified facts. The timeline uses the selected representative’s primary-sourced release year when recorded; hollow points use only the Wikipedia year. Neither repository timestamps nor a sibling model’s date fill a gap. Exact release and API snapshot dates can differ within a listed family.</li>
+<li><strong>Deduplication corrected.</strong> Kimi K2-Base and K2.5 share a primary rank file but have 163,842 and 163,840 entries after additions. The separate broad-catalog analysis now collapses only verified complete token-to-ID hashes: 637 shared mapping groups plus 20 separate records, or 657 groups/singletons. Even identical primary hashes and counts cannot prove full vocabulary equality. The figures in this note show each representative separately.</li>
+<li><strong>Missing measurements.</strong> @@MAPPED_MISSING@@ mapped entries remain unmeasured; @@UNMAPPED@@ source entries have no exact representative mapped in this pass. Access restrictions, collection failures, and unsupported artifact formats are recorded separately. This does not establish that a tokenizer is unavailable everywhere. No community tokenizer or configuration count substitutes for a missing measurement.</li>
+<li><strong>Closed models.</strong> Tiktoken and official SDK mappings describe public text encodings, not private control tokens, embedding dimensions, or complete multimodal vocabularies. These appear in their own panel. Claude and other unmapped API vocabularies remain unknown.</li>
+<li><strong>Representatives.</strong> Family-level entries receive at most one exact checkpoint or API snapshot. A grouped row such as “OpenAI o3 and o4-mini” is retained as written, not silently expanded or assigned one sibling’s metrics. The broader inventory uses Qwen3-8B; the pretraining subset separately uses Qwen3-8B-Base. DeepSeek-V4-Flash and Pro use the explicitly listed July/August updates. Exported mapping notes preserve this distinction.</li>
+<li><strong>Reproducibility.</strong> Offline generation joins the attributed Wikipedia inventory, explicit representative mappings, the October 31 catalog, original curated measurements, and additional pinned tokenizer inspections from November 1. Hashes, revisions, counting scopes, dates, and source URLs are exported. The original 11,229-row catalog remains a separate exploratory dataset. This HTML contains its figures, data, filters, and downloads without external runtime dependencies.</li>
+<li><strong>Attribution.</strong> Source names, dates, developers, and references are extracted from <a href="@@WIKI_SOURCE@@">Wikipedia contributors, “List of large language models”</a>, under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. The source revision and raw-page hash are recorded. Descriptive article prose is not reproduced. Coverage is complete for that revision’s table rows, not for future edits or every LLM release.</li>
 </ul>
 </details>
 <footer>Fudan University · NLP and LLMs, Fall 2026. Prepared from a fixed data snapshot; no model inference or quality benchmark was run for this note.</footer>
@@ -93,7 +106,11 @@ function update(){
  const compact=document.querySelector('#compact').checked;
  const order=document.querySelector('#sort').value;
  const limit=Number(document.querySelector('#limit').value);
- const visible=rows.filter(row=>row.textContent.toLowerCase().includes(query)&&(!compact||(Number(row.dataset.vocab)>=0&&Number(row.dataset.vocab)<50000)));
+ const status=document.querySelector('#status').value;
+ const category=document.querySelector('#category').value;
+ const visible=rows.filter(row=>row.textContent.toLowerCase().includes(query)
+  &&(status==='all'||row.dataset.status===status)&&(category==='all'||row.dataset.category===category)
+  &&(!compact||(Number(row.dataset.vocab)>=0&&Number(row.dataset.vocab)<50000)));
  visible.sort((a,b)=>{
   if(order==='year')return Number(b.dataset.year)-Number(a.dataset.year)||Number(a.dataset.rank)-Number(b.dataset.rank);
   if(order==='vocab')return (Number(a.dataset.vocab)<0?Infinity:Number(a.dataset.vocab))-(Number(b.dataset.vocab)<0?Infinity:Number(b.dataset.vocab))||Number(a.dataset.rank)-Number(b.dataset.rank);
@@ -101,13 +118,14 @@ function update(){
  });
  rows.forEach(row=>row.hidden=true);
  visible.forEach((row,index)=>{tbody.append(row);row.hidden=index>=limit;});
- document.querySelector('#shown').textContent=`Showing ${Math.min(visible.length,limit)} of ${visible.length} matching checkpoints (${rows.length} reviewed).`;
+ document.querySelector('#shown').textContent=`Showing ${Math.min(visible.length,limit)} of ${visible.length} matching entries (${rows.length} source rows in total).`;
  document.querySelector('#empty').hidden=visible.length>0;
 }
-['search','sort','limit','compact'].forEach(id=>document.getElementById(id).addEventListener('input',update));
+['search','sort','limit','compact','status','category'].forEach(id=>document.getElementById(id).addEventListener('input',update));
 function download(content,type,name){const url=URL.createObjectURL(new Blob([content],{type}));const link=document.createElement('a');link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 document.querySelector('#download-json').addEventListener('click',()=>download(JSON.stringify(data,null,2)+'\n','application/json','foundation-models.json'));
-document.querySelector('#download-csv').addEventListener('click',()=>{const keys=Object.keys(data.models[0]);const cell=value=>'"'+String(value??'').replaceAll('"','""')+'"';download([keys,...data.models.map(row=>keys.map(key=>row[key]))].map(row=>row.map(cell).join(',')).join('\n')+'\n','text/csv','foundation-models.csv');});
+document.querySelector('#download-csv').addEventListener('click',()=>{const keys=Object.keys(data.models[0]);const cell=value=>'"'+String(value!=null&&typeof value==='object'?JSON.stringify(value):value??'').replaceAll('"','""')+'"';download([keys,...data.models.map(row=>keys.map(key=>row[key]))].map(row=>row.map(cell).join(',')).join('\n')+'\n','text/csv','foundation-models.csv');});
+document.querySelector('#download-bases').addEventListener('click',()=>download(JSON.stringify({models:data.base_models},null,2)+'\n','application/json','base-checkpoints.json'));
 update();
 </script>
 </body>

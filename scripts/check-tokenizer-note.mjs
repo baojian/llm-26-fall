@@ -21,7 +21,10 @@ try {
   await page.goto(pathToFileURL(source).href, { waitUntil: 'load' });
   assert.equal(await page.locator('figure svg').count(), 2);
   const modelCount = await page.locator('#models tr').count();
-  assert.ok(modelCount > 20);
+  const inventory = JSON.parse(await readFile(path.join(root, 'docs/model-tokenizer-statistics/wikipedia-inventory.json'), 'utf8'));
+  assert.equal(modelCount, inventory.entries.length);
+  const entryIds = await page.locator('#models tr').evaluateAll(nodes => nodes.map(n => n.dataset.entry));
+  assert.deepEqual([...entryIds].sort(), inventory.entries.map(row => row.entry_id).sort());
   const ids = await page.locator('[id]').evaluateAll(nodes => nodes.map(n => n.id));
   assert.equal(new Set(ids).size, ids.length, 'Inline SVG identifiers must not collide.');
   await page.screenshot({ path: path.join(output, 'reader-desktop.png'), fullPage: true });
@@ -34,9 +37,20 @@ try {
   await page.locator('#limit').selectOption('1000');
   assert.equal(await page.locator('#models tr:visible').count(), modelCount);
   await page.locator('#search').fill('Qwen');
-  const searchModels = await page.locator('#models tr:visible').evaluateAll(nodes => nodes.map(n => n.dataset.model));
-  assert.ok(searchModels.length >= 3 && searchModels.every(id => id.startsWith('Qwen/')));
+  const searchModels = await page.locator('#models tr:visible').allTextContents();
+  assert.ok(searchModels.length >= 3 && searchModels.every(text => text.includes('Qwen')));
   await page.locator('#search').fill('');
+  await page.locator('#status').selectOption('not_mapped');
+  const unmapped = await page.locator('#models tr:visible').evaluateAll(nodes => nodes.map(n => n.dataset));
+  assert.ok(unmapped.length > 0 && unmapped.every(row => row.model === '' && row.vocab === '-1'));
+  await page.locator('#status').selectOption('public_text_encoding');
+  const encodings = await page.locator('#models tr:visible').evaluateAll(nodes => nodes.map(n => n.dataset.status));
+  assert.ok(encodings.length > 0 && encodings.every(status => status === 'public_text_encoding'));
+  await page.locator('#status').selectOption('all');
+  await page.locator('#category').selectOption('base');
+  const bases = await page.locator('#models tr:visible').evaluateAll(nodes => nodes.map(n => n.dataset.category));
+  assert.ok(bases.length > 0 && bases.every(category => category === 'base'));
+  await page.locator('#category').selectOption('all');
   await page.locator('#compact').check();
   const compact = await page.locator('#models tr:visible').evaluateAll(nodes => nodes.map(n => Number(n.dataset.vocab)));
   assert.ok(compact.length >= 3 && compact.every(value => value >= 0 && value < 50000));
@@ -54,11 +68,22 @@ try {
   const exportPath = path.join(output, download.suggestedFilename());
   await download.saveAs(exportPath);
   const exported = JSON.parse(await readFile(exportPath, 'utf8'));
-  assert.equal(exported.models.length, modelCount, 'Export the full cohort, not just filtered rows.');
+  assert.equal(exported.models.length, modelCount, 'Export every source entry, not just filtered rows.');
+  assert.equal(exported.base_models.length, 42, 'Keep the original base-checkpoint study.');
   const csvEvent = page.waitForEvent('download');
   await page.locator('#download-csv').click();
   const csv = await csvEvent;
   await csv.saveAs(path.join(output, csv.suggestedFilename()));
+  await page.locator('#data').screenshot({ path: path.join(output, 'inventory-table.png') });
+  await page.locator('#bases summary').click();
+  assert.equal(await page.locator('#bases tbody tr').count(), 42);
+  const baseEvent = page.waitForEvent('download');
+  await page.locator('#download-bases').click();
+  const baseDownload = await baseEvent;
+  const basePath = path.join(output, baseDownload.suggestedFilename());
+  await baseDownload.saveAs(basePath);
+  assert.equal(JSON.parse(await readFile(basePath, 'utf8')).models.length, 42);
+  await page.locator('#bases summary').click();
   for (const width of [390, 320]) {
     await page.setViewportSize({ width, height: 844 });
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1);
@@ -70,7 +95,7 @@ try {
   assert.deepEqual(requests, [], 'The standalone reader must not need external requests.');
   assert.deepEqual(errors, []);
   console.log(JSON.stringify({ status: 'passed', modelCount, figures: 2, externalRequests: requests.length,
-    checks: ['direct-file/offline', 'keyboard', 'search', 'vocabulary filter', 'sort', 'empty state', 'JSON/CSV download', '390px', '320px'] }));
+    checks: ['complete source coverage', 'direct-file/offline', 'keyboard', 'search', 'coverage/type filters', 'vocabulary filter', 'sort', 'empty state', 'JSON/CSV download', 'original base cohort', '390px', '320px'] }));
 } finally {
   await browser.close();
 }

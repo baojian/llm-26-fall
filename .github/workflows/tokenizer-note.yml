@@ -8,7 +8,9 @@ on:
       - 'scripts/*tokenizer*.py'
       - 'scripts/*hf_tokenizer*.py'
       - 'scripts/check-tokenizer-note.mjs'
+      - 'scripts/import_wikipedia_llms.py'
       - 'tests/test*tokenizer*.py'
+      - 'tests/test_wikipedia_llm_inventory.py'
       - 'slides/package.json'
       - 'slides/package-lock.json'
   workflow_dispatch:
@@ -30,7 +32,7 @@ jobs:
           enable-cache: false
       - name: Check measurements, selection, grouping, and snapshot integrity
         run: |
-          uv run --no-project --python 3.11 --with pytest==9.1.1 python -m pytest -q tests/test_llm_tokenizer_statistics.py tests/test_hf_tokenizer_catalog.py tests/test_tokenizer_catalog_analysis.py tests/test_tokenizer_note.py
+          uv run --no-project --python 3.11 --with pytest==9.1.1 --with beautifulsoup4==4.13.4 python -m pytest -q tests/test_llm_tokenizer_statistics.py tests/test_hf_tokenizer_catalog.py tests/test_tokenizer_catalog_analysis.py tests/test_tokenizer_note.py tests/test_wikipedia_llm_inventory.py
           uv run --no-project --python 3.11 python scripts/llm_tokenizer_statistics.py check
       - name: Verify reproducible figures and standalone reader
         run: uv run --no-project --python 3.11 --with matplotlib==3.11.1 python scripts/build_tokenizer_note.py --check

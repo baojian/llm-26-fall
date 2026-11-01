@@ -1,4 +1,4 @@
-"""Build the standalone foundation-model note from the pinned catalog snapshot.
+"""Build the complete Wikipedia inventory and standalone tokenizer note.
 
 Run with Python 3.11 and matplotlib==3.11.1. No network or tokenizer cache is
 needed. --check verifies that all committed reader/data/figure files are current.
@@ -77,6 +77,93 @@ def select_models(selection, catalog, curated):
     return sorted(selected, key=lambda r: (r["popularity_rank"] or float("inf"), r["model_id"]))
 
 
+def assemble_inventory(inventory, decisions, bases, catalog, curated, additional):
+    """Retain every source row, with independent mapping and measurement status.
+
+    No fuzzy family matching, inherited tokenizer, repository-date fallback, or
+    newly observed popularity count is allowed in this join.
+    """
+    entries = inventory["entries"]
+    mappings = decisions["mappings"]
+    ids = [row["entry_id"] for row in entries]
+    mapping_ids = [row["entry_id"] for row in mappings]
+    if len(set(ids)) != len(ids) or len(set(mapping_ids)) != len(mapping_ids):
+        raise ValueError("Duplicate inventory or mapping entry")
+    if set(ids) != set(mapping_ids):
+        raise ValueError("Mappings must account for every inventory row exactly once")
+    by_entry = {row["entry_id"]: row for row in mappings}
+    by_id = {row["model_id"]: row for row in catalog}
+    originals = {row["model_id"]: row for row in curated}
+    extra = {row["model_id"]: row for row in additional}
+    base_rows = {row["model_id"]: row for row in bases}
+    representatives, rows = set(), []
+    for entry in entries:
+        mapping = by_entry[entry["entry_id"]]
+        if entry["listed_name"] != mapping["listed_name"]:
+            raise ValueError("Source row changed; review its mapping")
+        identifier = mapping["representative_id"]
+        if identifier and (identifier in representatives or not mapping.get("mapping_evidence_url")):
+            raise ValueError("Duplicate representative or missing mapping evidence")
+        if identifier:
+            representatives.add(identifier)
+        base = base_rows.get(identifier, {})
+        curated_id = base.get("curated_model_id", identifier)
+        curated_row = originals.get(curated_id, {})
+        snapshot = by_id.get(identifier, {})
+        candidates = [curated_row, extra.get(identifier, {}), snapshot]
+        source = next((r for r in candidates if r.get("tokenizer_vocab_size") is not None),
+                      next((r for r in candidates if r), {}))
+        count = source.get("tokenizer_vocab_size")
+        scope = source.get("tokenizer_count_scope")
+        if count is not None and not all((scope, source.get("tokenizer_source_url"),
+                                         source.get("tokenizer_revision") or source.get("revision"),
+                                         source.get("tokenizer_sha256") or source.get("tokenizer_artifact_sha256"))):
+            raise ValueError(f"Incomplete measurement provenance: {identifier}")
+        api_encoding = scope in {"public_text_encoding_only", "official_sdk_text_tokenizer"}
+        status = ("public_text_encoding" if api_encoding else "measured_tokenizer") if count is not None else (
+            "mapped_not_measured" if identifier else "not_mapped")
+        date_source = next((r for r in [curated_row, snapshot]
+                            if r.get("release_date") and r.get("release_date_source_url")), {})
+        year = base.get("release_year") or (int(date_source["release_date"][:4]) if date_source else None)
+        year_source = base.get("release_year_source_url") if base.get("release_year") else date_source.get("release_date_source_url")
+        downloads = snapshot.get("downloads_30d")
+        rows.append({
+            **entry, "model_id": identifier, "label": entry["listed_name"],
+            "category": mapping["category"], "mapping_evidence_url": mapping["mapping_evidence_url"],
+            "mapping_note": mapping["mapping_note"],
+            "curated_model_id": curated_id, "alias_evidence_url": base.get("alias_evidence_url"),
+            "in_original_base_cohort": identifier in base_rows,
+            "release_year": year, "release_year_source_url": year_source,
+            "year_differs_from_listing": year is not None and year != entry["listed_year"],
+            "timeline_year": year if year is not None else entry["listed_year"],
+            "timeline_year_basis": "primary_source" if year is not None else "wikipedia_only",
+            "measurement_status": status, "tokenizer_vocab_size": count,
+            "tokenizer_count_scope": scope, "tokenizer_status": source.get("tokenizer_status"),
+            "tokenizer_source_url": source.get("tokenizer_source_url"),
+            "tokenizer_mapping_source_url": source.get("tokenizer_mapping_source_url"),
+            "tokenizer_revision": source.get("tokenizer_revision") or source.get("revision"),
+            "tokenizer_sha256": source.get("tokenizer_sha256") or source.get("tokenizer_artifact_sha256"),
+            "measurement_observed_at": source.get("observed_at") or source.get("collected_at"),
+            "downloads_30d": downloads,
+            "downloads_observed_on": "2026-10-31" if downloads is not None else None,
+            "downloads_source_url": f"https://huggingface.co/api/models/{identifier}" if downloads is not None else None,
+        })
+    ranks = {r["model_id"]: rank for rank, r in enumerate(popularity_ranking(rows), 1)}
+    for row in rows:
+        row["popularity_rank"] = ranks.get(row["model_id"])
+    return rows
+
+
+def csv_text(rows):
+    buffer = io.StringIO(newline="")
+    writer = csv.DictWriter(buffer, fieldnames=list(rows[0]), lineterminator="\n")
+    writer.writeheader()
+    for row in rows:
+        writer.writerow({key: json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+                         if isinstance(value, (list, dict, bool)) else value for key, value in row.items()})
+    return buffer.getvalue()
+
+
 def inline_svg(raw, prefix, description):
     """Keep inline Matplotlib clip-path identifiers unique across the two figures."""
     text = raw[raw.index("<svg"):]
@@ -113,38 +200,45 @@ def make_figures(rows):
         svg = buffer.getvalue().replace("font-family: 'DejaVu Sans'", "font-family: 'DejaVu Sans', Arial, sans-serif")
         return "\n".join(line.rstrip() for line in svg.splitlines()) + "\n"
 
-    measured = [r for r in rows if r["tokenizer_vocab_size"] is not None and r["release_year"] is not None]
-    fig, ax = plt.subplots(figsize=(11.4, 5.6))
-    fig.subplots_adjust(left=0.09, right=0.95, bottom=0.16, top=0.91)
-    clean(ax)
-    # Year is the actual plotted variable. No January-1 imputation or date jitter.
-    for row in sorted(measured, key=lambda r: r["model_id"]):
-        x, y = row["release_year"], row["tokenizer_vocab_size"]
-        point = ax.scatter(x, y, s=55, color=amber if y < 50000 else blue,
-                           edgecolors="white", linewidths=0.7, zorder=3)
-        point.set_url(row["base_evidence_url"])
+    measured = [r for r in rows if r["tokenizer_vocab_size"] is not None]
+    fig, axes = plt.subplots(2, 1, figsize=(11.4, 8.1), sharex=True,
+                             gridspec_kw={"height_ratios": [2.25, 1]})
+    fig.subplots_adjust(left=0.09, right=0.95, bottom=0.12, top=0.94, hspace=0.30)
     annotations = {
-        "openai-community/openai-gpt": (12, -24),
-        "openai-community/gpt2-xl": (-25, 20),
+        "openai-community/openai-gpt": (12, -22),
+        "openai-community/gpt2-xl": (-25, 18),
         "bigscience/bloom": (-45, -24),
-        "mistralai/Mistral-7B-v0.1": (-62, -27),
-        "Qwen/Qwen-7B": (-68, 15),
-        "Qwen/Qwen2.5-7B": (-35, 19),
-        "ibm-granite/granite-3.0-8b-base": (10, -25),
-        "moonshotai/Kimi-K2-Base": (-50, 22),
-        "Qwen/Qwen3.5-0.8B-Base": (-112, 17),
+        "mistralai/Mistral-7B-v0.1": (-75, -24),
+        "ibm-granite/granite-3b-code-base-2k": (-105, 19),
+        "mistralai/Mistral-Large-Instruct-2411": (15, -24),
+        "Qwen/Qwen2.5-7B": (-60, 18),
+        "Qwen/Qwen3.5-397B-A17B": (-90, 14),
+        "openai/gpt-4-0314": (-47, 15),
+        "google/gemini-2.5-pro": (-90, -22),
     }
-    for row in measured:
-        if row["model_id"] in annotations:
-            ax.annotate(row["label"], (row["release_year"], row["tokenizer_vocab_size"]),
-                        xytext=annotations[row["model_id"]], textcoords="offset points",
-                        fontsize=9, color="#263947", arrowprops={"arrowstyle": "-", "color": "#b4c2ca", "lw": 0.7})
-    ax.set_xticks(range(2018, 2027))
-    ax.set_xlim(2017.65, 2026.5)
-    ax.set_ylim(0, 280000)
-    ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value / 1000:g}k"))
-    ax.set_ylabel("Measured tokenizer entries", labelpad=12)
-    ax.set_xlabel("Documented release year", labelpad=13)
+    for ax, api, title in zip(axes, [False, True],
+                              ["Public checkpoint tokenizers", "Closed APIs: mapped public text encodings only"]):
+        clean(ax)
+        ax.set_title(title, loc="left", fontsize=12, pad=12, color="#263947")
+        for row in sorted(measured, key=lambda r: r["model_id"]):
+            if (row["measurement_status"] == "public_text_encoding") != api:
+                continue
+            x, y = row["timeline_year"], row["tokenizer_vocab_size"]
+            color = amber if y < 50000 else blue
+            primary = row["timeline_year_basis"] == "primary_source"
+            point = ax.scatter(x, y, s=58, facecolors=color if primary else "none",
+                               edgecolors=color, linewidths=1.2, zorder=3)
+            point.set_url(row["tokenizer_source_url"])
+            if row["model_id"] in annotations:
+                ax.annotate(row["label"], (x, y), xytext=annotations[row["model_id"]],
+                            textcoords="offset points", fontsize=9, color="#263947",
+                            arrowprops={"arrowstyle": "-", "color": "#b4c2ca", "lw": 0.7})
+        ax.set_xticks(range(2018, 2027))
+        ax.set_xlim(2017.65, 2026.5)
+        ax.set_ylim(0, 285000)
+        ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value / 1000:g}k"))
+        ax.set_ylabel("Assigned token IDs", labelpad=12)
+    axes[-1].set_xlabel("Release year — primary source when verified; Wikipedia listing otherwise", labelpad=13)
     timeline = save(fig)
 
     ranked = popularity_ranking(rows)[:12]
@@ -170,7 +264,7 @@ def make_figures(rows):
     return {"foundation-timeline.svg": timeline, "foundation-popularity.svg": popularity}
 
 
-def table_rows(rows):
+def base_table_rows(rows):
     output = []
     for row in rows:
         count = row["tokenizer_vocab_size"]
@@ -193,30 +287,73 @@ def table_rows(rows):
     return "\n".join(output)
 
 
+def table_rows(rows):
+    categories = {"base": "Reviewed base checkpoint", "publisher_release": "Publisher release",
+                  "historical_baseline": "Encoder / encoder–decoder baseline",
+                  "closed_api": "Closed API", "derivative": "Derived model", "unmapped": "Not classified"}
+    statuses = {"measured_tokenizer": "Tokenizer measured", "public_text_encoding": "Public text encoding only",
+                "mapped_not_measured": "Mapped; not measured", "not_mapped": "Exact representative not mapped"}
+    output = []
+    escape = lambda value: html.escape(str(value), quote=True)
+    for row in rows:
+        count, year = row["tokenizer_vocab_size"], row["release_year"]
+        value = f'{count:,}' if count is not None else "Not measured"
+        count_html = f'<a href="{escape(row["tokenizer_source_url"])}">{value}</a>' if count is not None else value
+        year_html = (f'<a href="{escape(row["release_year_source_url"])}">{year} verified</a>'
+                     if year is not None else "Primary year unverified")
+        evidence = row["mapping_evidence_url"] or row["source_url"]
+        source_detail = row["tokenizer_count_scope"] if count is not None else row["tokenizer_status"]
+        output.append(f'''<tr data-entry="{escape(row['entry_id'])}" data-model="{escape(row['model_id'] or '')}"
+          data-rank="{row['popularity_rank'] or 9999}" data-year="{row['timeline_year']}"
+          data-status="{escape(row['measurement_status'])}" data-category="{escape(row['category'])}"
+          data-vocab="{count if count is not None else -1}">
+          <td class="num">{row['popularity_rank'] or '—'}</td>
+          <td><a href="{escape(evidence)}">{escape(row['listed_name'])}</a>
+          <small>{escape(row['model_id'] or row['listed_developer'] or '')}</small>
+          <small>{categories[row['category']]}</small></td>
+          <td><a href="{escape(row['source_url'])}">{row['listed_year']} listed</a><small>{year_html}</small></td>
+          <td class="num">{count_html}</td>
+          <td>{statuses[row['measurement_status']]}<small>{escape((source_detail or '').replace('_', ' '))}</small></td>
+          <td class="num">{format(row['downloads_30d'], ',') if row['downloads_30d'] is not None else 'Unranked'}</td></tr>''')
+    return "\n".join(output)
+
+
 def build_outputs():
     selection = json.loads((DATA / "foundation-selection.json").read_text())
     catalog, manifest = read_snapshot(DATA / "snapshots" / selection["snapshot_date"])
     curated = json.loads((DATA / "models.json").read_text())
-    rows = select_models(selection, catalog, curated)
+    bases = select_models(selection, catalog, curated)
+    inventory = json.loads((DATA / "wikipedia-inventory.json").read_text())
+    decisions = json.loads((DATA / "inventory-mappings.json").read_text())
+    additional = json.loads((DATA / "inventory-additional-measurements.json").read_text())["models"]
+    rows = assemble_inventory(inventory, decisions, bases, catalog, curated, additional)
     figures = make_figures(rows)
     measured = [r for r in rows if r["tokenizer_vocab_size"] is not None]
-    plotted = [r for r in measured if r["release_year"] is not None]
-    unavailable = [r["label"] for r in rows if r["tokenizer_vocab_size"] is None]
+    primary = [r for r in measured if r["release_year"] is not None]
+    mapped = [r for r in rows if r["model_id"]]
     payload = {"snapshot_date": selection["snapshot_date"], "snapshot_sha256": manifest["archive_sha256"],
-               "scope": selection["scope"], "ranking": selection["ranking"], "models": rows}
+               "scope": "Every source-table row in the pinned Wikipedia revision, including unknown measurements; at most one reviewed representative per row.",
+               "wikipedia_source": inventory["source"],
+               "ranking": "Exact representative repositories ranked by known 30-day downloads in the October 31 snapshot; not a global or family-level ranking.",
+               "models": rows, "base_models": bases}
     raw = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
-    buffer = io.StringIO(newline="")
-    writer = csv.DictWriter(buffer, fieldnames=list(rows[0]), lineterminator="\n")
-    writer.writeheader()
-    writer.writerows(rows)
+    coverage = []
+    for year, total in inventory["source"]["rows_by_year"].items():
+        count = sum(r["listed_year"] == int(year) for r in measured)
+        coverage.append(f'<div><strong>{year}</strong><span>{total} listed</span><small>{count} measured</small></div>')
     replacements = {
-        "TOTAL": str(len(rows)), "MEASURED": str(len(measured)), "PLOTTED": str(len(plotted)),
+        "TOTAL": str(len(rows)), "MEASURED": str(len(measured)), "MAPPED": str(len(mapped)),
+        "UNMAPPED": str(len(rows) - len(mapped)), "MAPPED_MISSING": str(len(mapped) - len(measured)),
+        "TOKENIZERS": str(sum(r["measurement_status"] == "measured_tokenizer" for r in rows)),
+        "ENCODINGS": str(sum(r["measurement_status"] == "public_text_encoding" for r in rows)),
+        "PRIMARY_DATES": str(len(primary)), "WIKI_DATES": str(len(measured) - len(primary)),
         "RANKED": str(len(popularity_ranking(rows))), "ROWS": table_rows(rows),
-        "MISSING": html.escape(", ".join(unavailable)), "MISSING_COUNT": str(len(unavailable)),
-        "MISSING_DATES": str(len(measured) - len(plotted)),
+        "BASE_ROWS": base_table_rows(bases), "BASE_COUNT": str(len(bases)),
+        "BASE_SUPPLEMENTAL": str(sum(r["model_id"] not in {m["model_id"] for m in rows} for r in bases)),
+        "YEAR_COUNTS": "".join(coverage), "WIKI_SOURCE": html.escape(inventory["source"]["revision_url"], quote=True),
         "JSON": raw.replace("<", "\\u003c"),
-        "TIMELINE": inline_svg(figures["foundation-timeline.svg"], "timeline", "Measured vocabulary size by documented release year for reviewed foundation checkpoints"),
-        "POPULARITY": inline_svg(figures["foundation-popularity.svg"], "popularity", "Twelve highest-download checkpoints within the reviewed selection, with measured vocabulary sizes"),
+        "TIMELINE": inline_svg(figures["foundation-timeline.svg"], "timeline", "Vocabulary measurements across the Wikipedia inventory; primary-sourced and Wikipedia-only years distinguished; API text encodings in a separate panel"),
+        "POPULARITY": inline_svg(figures["foundation-popularity.svg"], "popularity", "Twelve highest-download mapped representatives in the Wikipedia inventory"),
     }
     page = (DATA / "note-template.html").read_text()
     for key, value in replacements.items():
@@ -224,7 +361,10 @@ def build_outputs():
     if re.search(r"@@[A-Z_]+@@", page):
         raise ValueError("Unfilled reader placeholder")
     return {"foundation-models.html": page, "foundation-models.json": raw,
-            "foundation-models.csv": buffer.getvalue(), **{f"figures/{k}": v for k, v in figures.items()}}
+            "foundation-models.csv": csv_text(rows),
+            "base-checkpoints.json": json.dumps({"scope": selection["scope"], "models": bases}, indent=2, ensure_ascii=False) + "\n",
+            "base-checkpoints.csv": csv_text(bases),
+            **{f"figures/{k}": v for k, v in figures.items()}}
 
 
 def main():

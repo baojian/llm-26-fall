@@ -1,9 +1,10 @@
 # Course reading pages
 
-The [short note on foundation-model vocabularies](model-tokenizer-statistics/foundation-models.html)
-compares a reviewed selection of original base checkpoints using measured
-vocabulary sizes, documented release years, and snapshot download rankings.
-Its figures, searchable table, and JSON/CSV downloads work offline in one HTML file.
+The [short note on LLM vocabularies](model-tokenizer-statistics/foundation-models.html)
+accounts for all 189 rows in the inspected Wikipedia model list, with measured
+counts for 87 representatives and snapshot download rankings for 84 repositories.
+Missing data remain visible, and the original 42-base-checkpoint study is a
+separate view. Its figures, searchable table, and JSON/CSV downloads work offline.
 
 The [model and tokenizer statistics](model-tokenizer-statistics/README.md)
 provide a sourced CSV/JSON inventory of 84 open- and closed-weight model

@@ -2,27 +2,73 @@
 
 [Download CSV](models.csv) · [Canonical JSON](models.json)
 
-Start with the [short HTML note on foundation models](foundation-models.html)
-for a focused comparison: 42 reviewed base checkpoints, vocabulary figures,
-and exact-repository download rankings. The reader is self-contained and works
-offline. The [selection file](foundation-selection.json) records every inclusion
-and its evidence; this is an illustrative cohort, not a census.
+Start with the [short HTML note on LLM vocabularies](foundation-models.html).
+It accounts for **all 189 table rows** in the inspected Wikipedia revision:
+110 have an exact representative mapped, comprising 80 measured public
+tokenizers, 7 public API text encodings, and 23 unmeasured representatives.
+The other 79 source rows remain visible without a verified mapping. Download
+rankings cover 84 exact repositories in the fixed October 31 snapshot.
+One source row can contain several models/sizes; these are not 189 distinct
+checkpoints or a census of all LLMs.
+
+The self-contained reader includes vector figures, search, type/status filters,
+and full [inventory JSON](foundation-models.json) / [CSV](foundation-models.csv)
+exports. The earlier 42-checkpoint pretraining cohort is preserved separately
+in the reader and as [base JSON](base-checkpoints.json) / [CSV](base-checkpoints.csv).
+Its [selection file](foundation-selection.json) records membership and evidence;
+18 of its representatives are absent from the Wikipedia mapping.
+
+The timeline distinguishes primary-sourced years from unverified Wikipedia
+years and plots API text encodings separately. Qwen2.5, for example, is listed
+under 2025 but has a verified 2024 release year. Neither repository timestamps,
+parent tokenizers, configuration counts, nor newer download observations fill
+missing values.
 
 Rebuild or check the note and its embedded SVG figures:
 
 ```sh
 uv run --no-project --python 3.11 --with matplotlib==3.11.1 python scripts/build_tokenizer_note.py
 uv run --no-project --python 3.11 --with matplotlib==3.11.1 python scripts/build_tokenizer_note.py --check
-uv run --group dev python -m pytest -q tests/test_llm_tokenizer_statistics.py tests/test_hf_tokenizer_catalog.py tests/test_tokenizer_catalog_analysis.py tests/test_tokenizer_note.py
+uv run --no-project --python 3.11 --with pytest==9.1.1 --with beautifulsoup4==4.13.4 python -m pytest -q tests/test_llm_tokenizer_statistics.py tests/test_hf_tokenizer_catalog.py tests/test_tokenizer_catalog_analysis.py tests/test_tokenizer_note.py tests/test_wikipedia_llm_inventory.py
 node scripts/check-tokenizer-note.mjs
 ```
 
 The browser check uses the pinned Playwright dependency in `slides/`; run
 `npm ci --prefix slides` and `npm --prefix slides run browser:install` once.
-Edit `note-template.html` for prose/layout and `foundation-selection.json` for
-membership/date decisions. The builder reads the checked-in snapshot directly,
-verifies checksums, and writes `foundation-models.html`, matching JSON/CSV,
-and two figures. Missing measurements or download counts remain explicit.
+Edit `note-template.html` for prose/layout. The builder checks snapshot hashes
+and joins these inputs without a network connection:
+
+- [Wikipedia inventory](wikipedia-inventory.json): all names, listed dates,
+  developers, and references; revision ID, raw-page hash, and CC BY-SA attribution.
+- [Representative mappings](inventory-mappings.json): one decision per source
+  row, with exact identifiers and evidence; unmapped rows are explicit.
+- [Additional inspections](inventory-additional-measurements.json): 12 official
+  repositories absent from the October 31 snapshot. Four root tokenizer JSONs
+  were measured, with pinned revisions, SHA-256, byte counts, and scope. Gating,
+  HTTP failures, and missing root JSONs remain separate recorded outcomes.
+- Original curated measurements, the checked-in Hub snapshot, and the earlier
+  base-checkpoint selection. Curated companion-aware counts take priority;
+  supplementary root-JSON measurements retain their narrower scope.
+
+To deliberately refresh the inventory, save the Wikipedia HTML under ignored
+`workspace/`, then run the importer below. Review every changed row and mapping;
+the builder rejects incomplete mappings, changed source names, duplicate
+representatives, and measurements lacking provenance. The importer expands
+rowspans before reading dates/developers and does not copy article prose.
+
+```sh
+uv run --no-project --python 3.11 --with beautifulsoup4==4.13.4 python scripts/import_wikipedia_llms.py --html workspace/tokenizer-inventory-review-2026-11-01/wikipedia.html
+uv run --no-project --python 3.11 --with requests==2.34.2 python scripts/collect_inventory_tokenizers.py
+```
+
+The second command inspects only additional exact identifiers absent from the
+fixed catalog. It collects no weights, runs no publisher code, does not
+authenticate to gated files, and does not add new download counts to the old
+ranking. Its tokenizer cache stays under ignored `workspace/`. This is a
+collection refresh, not required for ordinary offline builds. The builder
+writes the HTML, inventory JSON/CSV, base-cohort JSON/CSV, and two SVG figures.
+
+## Original 84-record collection
 
 This initial collection contains **84 model releases from 2018–2026**:
 65 with open weights and 19 with closed weights. It includes historically
