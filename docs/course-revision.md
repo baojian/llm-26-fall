@@ -1,5 +1,15 @@
 # Fall 2026 course revision: review draft
 
+## Accepted update: November 10, 2026
+
+Weeks 8 and 9 reflect the actual teaching: InstructGPT/SFT/reward models,
+then REINFORCE/PPO. GRPO and DPO remain prepared supplementary material,
+not topics already taught. Week 10 combines data preparation and quality with
+evaluation and experimental design. The [current schedule](schedule.md) and
+[notes index](README.md) are the active references. Existing assessment dates
+and weights remain unchanged. Earlier planning discussions below are historical.
+
+
 Review draft updated October 9, 2026. The lecture sequence uses the October 10
 make-up meeting for Transformers and ends with research synthesis on December 23.
 The [schedule adjustment proposal](schedule-adjustment-proposal.md) records the

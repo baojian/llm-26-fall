@@ -1,8 +1,7 @@
 {
   "number": "08",
-  "title": "Data preparation and quality",
+  "title": "InstructGPT, SFT and reward models",
   "subtitle": "Lecture 08 \u2013 NLP and LLMs",
   "language": "en",
-  "notebook": "practice.ipynb",
-  "demo": "demo.js"
+  "notebook": "practice.ipynb"
 }

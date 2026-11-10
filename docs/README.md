@@ -1,5 +1,17 @@
 # Course reading pages
 
+## Weeks 8–10
+
+- [Lecture 08: InstructGPT, SFT and reward models](lecture-08-instructgpt.html).
+- [Lecture 09: REINFORCE, PPO, and the GRPO/DPO supplement](lecture-09-policy-optimization.html).
+- [Lecture 10: Data preparation, evaluation and experimental design](lecture-10-data-evaluation.html).
+
+These English notes match the revised November 10 teaching sequence. Rebuild
+their HTML after editing the matching Markdown with
+`node scripts/build-lecture-notes.mjs`. Equations and styles are hosted locally.
+
+## Other course readings
+
 The [Lecture 07 board notes](lecture-07-scaling-laws/README.md) provide a
 standalone 90-minute lesson on Kaplan, Chinchilla, and Porian. The LaTeX source
 includes a step-by-step allocation derivation, original vector figures,

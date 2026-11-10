@@ -1,4 +1,4 @@
-"""Independent checks of the small Lecture 08 curation examples."""
+"""Independent checks of the small Lecture 10 curation examples."""
 
 import importlib.util
 from itertools import permutations, product
@@ -8,7 +8,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location(
-    "lecture08_data_quality", ROOT / "slides/lecture-08/assets/data_quality.py")
+    "lecture10_data_quality", ROOT / "slides/lecture-10/assets/data_quality.py")
 quality = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(quality)
 

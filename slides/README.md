@@ -98,17 +98,26 @@ use explicitly synthetic data. Three editable diagrams explain compute and
 validation; see the [reading guide](lecture-07/optional-reading.md) and
 [provenance](lecture-07/assets/README.md).
 
-[Lecture 08](lecture-08/index.html) follows data from extraction and filtering
-through duplicate matching, split construction, and training mixtures. Its
-40-slide classroom route has five editable diagrams and five ungraded offline
-CPU exercises: exact matches, MinHash, split groups, sampling exposure, and an
-evaluation audit. A 20-slide optional extension retains the Spring benchmark
-adaptation and three further exercises in the
-[notebook](lecture-08/practice.ipynb). See the
-[teaching plan](lecture-08/teaching-plan.md),
-[reading guide](lecture-08/optional-reading.md), and
-[asset provenance](lecture-08/assets/README.md). The core fits three 45-minute
-periods; evaluation remains the published Lecture 09 topic.
+[Lecture 08](lecture-08/index.html) consolidates InstructGPT, response-masked SFT,
+preferences and reward models. Its 31 slides and four offline exercises match
+[the notes](../docs/lecture-08-instructgpt.html) and
+[teaching plan](lecture-08/teaching-plan.md).
+
+[Lecture 09](lecture-09/index.html) develops REINFORCE, baselines, PPO and GAE.
+Its 41-slide material bank includes four core exercises and a clearly marked
+GRPO/DPO supplement with two optional practices. The supplement was not taught
+in Week 9. See [the notes](../docs/lecture-09-policy-optimization.html) and
+[teaching plan](lecture-09/teaching-plan.md).
+
+[Lecture 10](lecture-10/index.html) connects data preparation and quality to
+evaluation and experimental design. The former data deck is retained here with
+a 45-slide core, 15-slide optional extension, five core exercises and three
+optional practices. Paired comparisons and uncertainty are now core.
+See [the notes](../docs/lecture-10-data-evaluation.html),
+[teaching plan](lecture-10/teaching-plan.md),
+[reading guide](lecture-10/optional-reading.md), and
+[asset provenance](lecture-10/assets/README.md).
+All three notebooks run offline on CPU with the standard library (0 GPU-hours).
 
 ## Teaching from a classroom browser
 

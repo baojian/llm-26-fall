@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lecture 10: Data preparation, evaluation, and experimental design · Fudan LLMs</title>
+<link rel="stylesheet" href="../slides/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/course-language.css">
+<link rel="stylesheet" href="../assets/lecture-notes.css"></head>
+<body><header><a href="../index.html" data-en="Course" data-zh="课程主页">Course</a><a href="../slides/lecture-10/" data-en="Slides" data-zh="课件">Slides</a><a href="lecture-10-data-evaluation.md" data-en="Markdown source" data-zh="Markdown 源文件">Markdown source</a><button onclick="window.print()" data-en="Print" data-zh="打印">Print</button><div class="lang-toggle" role="group" aria-label="Language / 语言"><button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button><button type="button" data-lang="zh" lang="zh-CN" aria-pressed="false">中文</button></div></header>
+<main><p class="language-availability" data-en="These lecture notes are in English. Navigation is available in English and Chinese." data-zh="讲义正文目前为英文；导航支持中英文切换。">These lecture notes are in English. Navigation is available in English and Chinese.</p><details class="contents"><summary data-en="Contents" data-zh="目录">Contents</summary><ol><li><a href="#1-define-the-claim-before-building-the-pipeline">1. Define the claim before building the pipeline</a></li><li><a href="#2-a-traceable-data-pipeline">2. A traceable data pipeline</a></li><li><a href="#3-extraction-and-filtering">3. Extraction and filtering</a></li><li><a href="#4-exact-and-approximate-duplicates">4. Exact and approximate duplicates</a></li><li><a href="#5-split-by-the-unit-that-can-leak">5. Split by the unit that can leak</a></li><li><a href="#6-match-exposure-and-compute">6. Match exposure and compute</a></li><li><a href="#7-a-benchmark-is-a-complete-protocol">7. A benchmark is a complete protocol</a></li><li><a href="#8-likelihood-and-generation-answer-different-questions">8. Likelihood and generation answer different questions</a></li><li><a href="#9-paired-comparisons-and-uncertainty">9. Paired comparisons and uncertainty</a></li><li><a href="#10-validate-the-evaluator">10. Validate the evaluator</a></li><li><a href="#11-a-minimum-useful-experiment-report">11. A minimum useful experiment report</a></li><li><a href="#practice-and-reading">Practice and reading</a></li></ol></details><article lang="en"><h1>Lecture 10: Data preparation, evaluation, and experimental design</h1>
+<p>Week 10, November 11, 2026. This lecture connects the post-training workflow
+to the evidence needed to trust an improvement. The central question is:
+<strong>does the measured gain survive a controlled comparison on relevant held-out data?</strong></p>
+<h2 id="1-define-the-claim-before-building-the-pipeline">1. Define the claim before building the pipeline</h2>
+<p>“Better data” needs a task, population, budget, and measurement. A useful
+question is whether removing exact duplicates improves held-out instruction
+following at a fixed training-token budget, while preserving performance on
+short factual answers. A change in aggregate score alone does not explain
+which population improved or which variable caused it.</p>
+<p>Write an experiment record before running the final comparison: treatment,
+baseline, frozen model/tokenizer revision, data version, split unit, training
+budget, development-selection rule, evaluation protocol, and the smallest
+effect that would matter. Keep evaluation data out of every earlier fitting
+or selection stage.</p>
+<h2 id="2-a-traceable-data-pipeline">2. A traceable data pipeline</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Output to preserve</th>
+<th>Example failure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Acquisition</td>
+<td>Source, version, access conditions, source ID</td>
+<td>Unknown provenance</td>
+</tr>
+<tr>
+<td>Extraction</td>
+<td>Text plus parent-document ID</td>
+<td>Menus replace article content</td>
+</tr>
+<tr>
+<td>Filtering</td>
+<td>Decision and reason</td>
+<td>Useful short answers rejected</td>
+</tr>
+<tr>
+<td>Matching</td>
+<td>Exact keys or approximate match evidence</td>
+<td>False duplicate merges</td>
+</tr>
+<tr>
+<td>Splitting</td>
+<td>Family/group assignment</td>
+<td>Related examples cross the split</td>
+</tr>
+<tr>
+<td>Tokenization and packing</td>
+<td>Frozen tokenizer, boundaries, masks</td>
+<td>Prompt tokens scored as response targets</td>
+</tr>
+<tr>
+<td>Sampling</td>
+<td>Source weights and exposure counts</td>
+<td>A small source repeated excessively</td>
+</tr>
+</tbody>
+</table>
+<p>Preserve source identifiers through chunking and augmentation. Several chunks
+from the same document are not independent examples. A license or access record
+is separate from an estimate of content quality. A filter score also does not
+prove that text is factually correct.</p>
+<p>For SFT, inspect instruction/response alignment and the response-token mask.
+For preferences, retain pair provenance, the rubric, and correlated candidate
+groups. For reward optimization, separate policy-training prompts, reward-model
+training pairs, and evaluation prompts. All three can become leakage routes.</p>
+<h2 id="3-extraction-and-filtering">3. Extraction and filtering</h2>
+<p>Extraction choices decide what becomes training text. Compare raw source,
+extracted text, and the downstream example on a small audited sample. Look
+for navigation, repeated footers, missing equations, broken lists, and lost
+speaker roles. Preserve enough information to reproduce a decision.</p>
+<p>Quality is conditional on use. A rule rejecting all short documents could
+remove exact answers and concise code snippets. A language classifier can make
+errors on mixed-language text. Inspect both retained and rejected examples,
+including examples near the threshold. Report rejection rates by source or
+slice, rather than only a global retained-token count.</p>
+<p>Primary examples: <a href="https://arxiv.org/abs/2406.17557">FineWeb</a>,
+<a href="https://arxiv.org/abs/2402.00159">Dolma</a>, and
+<a href="https://arxiv.org/abs/2406.11794">DataComp-LM</a>. Their large published experiments
+are methodological references, not the required course compute budget.</p>
+<h2 id="4-exact-and-approximate-duplicates">4. Exact and approximate duplicates</h2>
+<p>An exact key is only as meaningful as its normalization rule. Unicode NFC,
+line-ending normalization, and trimming outer whitespace can remove superficial
+differences. Lowercasing, punctuation removal, or aggressive whitespace changes
+can collapse examples whose distinctions matter. State the rule explicitly.</p>
+<p>For sets of word shingles <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span></span></span></span>, Jaccard similarity is</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>J</mi><mo stretchy="false">(</mo><mi>A</mi><mo separator="true">,</mo><mi>B</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mi mathvariant="normal">∣</mi><mi>A</mi><mo>∩</mo><mi>B</mi><mi mathvariant="normal">∣</mi></mrow><mrow><mi mathvariant="normal">∣</mi><mi>A</mi><mo>∪</mo><mi>B</mi><mi mathvariant="normal">∣</mi></mrow></mfrac><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">J(A,B)=\frac{|A\cap B|}{|A\cup B|}.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0962em;">J</span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:2.363em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">∣</span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="mord">∣</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">∣</span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∩</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="mord">∣</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord">.</span></span></span></span></span></p>
+<p>With a uniformly random ordering of the universe, the minimum element of
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>∪</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">A\cup B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span></span></span></span> belongs to the intersection with probability <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mo stretchy="false">(</mo><mi>A</mi><mo separator="true">,</mo><mi>B</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">J(A,B)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0962em;">J</span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="mclose">)</span></span></span></span>. Thus
+MinHash collisions estimate that similarity. A finite signature is an estimate,
+and a match proposed by locality-sensitive hashing still needs the declared
+verification rule.</p>
+<p>Under ideal independent MinHash rows, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span> bands of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span></span></span></span> rows give candidate
+probability <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msup><mi>s</mi><mi>r</mi></msup><msup><mo stretchy="false">)</mo><mi>b</mi></msup></mrow><annotation encoding="application/x-tex">1-(1-s^r)^b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1.0991em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0278em;">r</span></span></span></span></span></span></span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">b</span></span></span></span></span></span></span></span></span></span></span> at similarity <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">s</span></span></span></span>. This is not the actual similarity
+of a particular document pair. Connected components of a match graph can also
+contain endpoints below the pairwise threshold.</p>
+<h2 id="5-split-by-the-unit-that-can-leak">5. Split by the unit that can leak</h2>
+<p>Choose a grouping unit appropriate to the claim: source document, prompt
+family, author, repository, patient, time period, or interaction environment.
+For preference data, all pairs derived from one prompt should remain together.
+For chunked documents, keep parent and related-family IDs available.</p>
+<p>Establish split membership before generating dependent pairs, chunks, or
+augmentations. Audit exact and approximate overlaps across splits. When
+grouping must change, preserve the mapping and reasons. A random row split
+does not make rows independent, and exact deduplication does not rule out
+semantic overlap or prior pretraining exposure.</p>
+<p>Development data selects thresholds, prompts, hyperparameters, and stopping
+points. A final test is used after these choices are fixed. Repeatedly trying
+options on the final test turns it into development data, even if no gradients
+were computed on its text.</p>
+<h2 id="6-match-exposure-and-compute">6. Match exposure and compute</h2>
+<p>Removing records changes corpus size. Equal epochs then give different
+training-token counts. A data-policy study should freeze the model, tokenizer,
+optimizer, and processed-token budget, while reporting both retained tokens
+and actual processed tokens.</p>
+<p>For source <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6595em;"></span><span class="mord mathnormal">i</span></span></span></span> with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>N</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">N_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.109em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.109em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> retained tokens and sampling probability <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">p_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>,
+an expected exposure under budget <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span></span></span></span> is</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>B</mi><mi>i</mi></msub><mo>=</mo><mi>B</mi><msub><mi>p</mi><mi>i</mi></msub><mo separator="true">,</mo><mspace width="2em"/><msub><mi>E</mi><mi>i</mi></msub><mo>=</mo><mfrac><mrow><mi>B</mi><msub><mi>p</mi><mi>i</mi></msub></mrow><msub><mi>N</mi><mi>i</mi></msub></mfrac><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">B_i=Bp_i,\qquad E_i=\frac{Bp_i}{N_i}.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0502em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:2em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0576em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:2.1963em;vertical-align:-0.836em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal" style="margin-right:0.109em;">N</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.109em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="mord"><span class="mord mathnormal">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.836em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord">.</span></span></span></span></span></p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>E</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">E_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0576em;">E</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is an expected pass count under the stated token-sampling convention,
+not a guarantee that every token is seen that many times. Sampling documents
+uniformly creates different token weights when their lengths differ.</p>
+<p>Keep total GPU-hours across all devices and runs, or CPU time for CPU studies.
+Record model and dataset sizes separately from runtime. An external resource
+has a source and cost; it is not an allocation from the course pool.</p>
+<h2 id="7-a-benchmark-is-a-complete-protocol">7. A benchmark is a complete protocol</h2>
+<p>The measurement includes dataset revision, task interface, prompt/template,
+decoding budget, answer extraction, grader, aggregation, and uncertainty.
+A familiar benchmark name does not pin all of these. Changing the number of
+attempts or giving tools changes the evaluated system.</p>
+<table>
+<thead>
+<tr>
+<th>Evaluation family</th>
+<th>Example measurement</th>
+<th>Limitation to inspect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Language modeling</td>
+<td>Token loss, PPL, BPB</td>
+<td>Tokenizer and context conventions</td>
+</tr>
+<tr>
+<td>Classification or candidate scoring</td>
+<td>Accuracy, macro-F1</td>
+<td>Label mapping, imbalance, candidate normalization</td>
+</tr>
+<tr>
+<td>Generated answers</td>
+<td>Exact match, rubric, checked tests</td>
+<td>Equivalent answers, weak graders</td>
+</tr>
+<tr>
+<td>Preferences</td>
+<td>Paired win rate</td>
+<td>Ties, length/style bias, judge identity</td>
+</tr>
+<tr>
+<td>Code or interaction</td>
+<td>Tests passed, tasks completed, budget</td>
+<td>Environment, retries, hidden feedback</td>
+</tr>
+</tbody>
+</table>
+<p>GLUE, SuperGLUE, and HANS remain useful teaching cases for task construction
+and shortcut analysis. Modern benchmark examples are useful for studying
+versioning, graded reasoning, tools, and interaction. They are not a substitute
+for evaluation matched to a project's question.</p>
+<h2 id="8-likelihood-and-generation-answer-different-questions">8. Likelihood and generation answer different questions</h2>
+<p>Token perplexity is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>exp</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>H</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\exp(H)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">exp</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0813em;">H</span><span class="mclose">)</span></span></span></span> for mean negative log likelihood <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi></mrow><annotation encoding="application/x-tex">H</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0813em;">H</span></span></span></span> in nats per
+scored token. It is not directly comparable across tokenizers without controlling
+the scoring unit and conventions. Bits per byte uses total negative log
+likelihood divided by <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>log</mi><mo>⁡</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\log 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mop">lo<span style="margin-right:0.0139em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span></span></span></span> and the original UTF-8 byte count.</p>
+<p>For multiple-choice evaluation, sum response-token log probabilities under
+each candidate, with the same context and boundary convention. Length-normalized
+scores can rank candidates differently. State the choice rather than treating
+normalization as an innocuous implementation detail.</p>
+<p>For code, the HumanEval estimator for <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span> sampled completions, <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span> successes,
+and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>≥</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">n\ge k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.7719em;vertical-align:-0.136em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.0315em;">k</span></span></span></span> is</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mover accent="true"><mrow><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">@</mi></mrow><mi>k</mi></mrow><mo stretchy="true">^</mo></mover><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mo fence="true">(</mo><mfrac linethickness="0px"><mrow><mi>n</mi><mo>−</mo><mi>c</mi></mrow><mi>k</mi></mfrac><mo fence="true">)</mo></mrow><mrow><mo fence="true">(</mo><mfrac linethickness="0px"><mi>n</mi><mi>k</mi></mfrac><mo fence="true">)</mo></mrow></mfrac><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">\widehat{\mathrm{pass@}k}=1-\frac{\binom{n-c}{k}}{\binom{n}{k}}.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1.1889em;vertical-align:-0.1944em;"></span><span class="mord katex-accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9944em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathrm">pass@</span></span><span class="mord mathnormal" style="margin-right:0.0315em;">k</span></span></span><span class="svg-align" style="top:-3.6944em;"><span class="pstrut" style="height:3em;"></span><span style="height:0.3em;"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="0.3em" viewBox="0 0 2364 300" preserveAspectRatio="none"><path d="M1181 0h2l1171 176c6 0 10 5 10 11l-2 23c-1 6-5 10
+-11 10h-1L1182 67 15 220h-1c-6 0-10-4-11-10l-2-23c-1-6 4-11 10-11z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:2.6824em;vertical-align:-1.09em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5923em;"><span style="top:-2.26em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7454em;"><span style="top:-2.355em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0315em;">k</span></span></span></span><span style="top:-3.144em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.74em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size1">(</span></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8523em;"><span style="top:-2.355em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.0315em;">k</span></span></span></span><span style="top:-3.144em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mathnormal mtight">c</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size1">)</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.09em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord">.</span></span></span></span></span></p>
+<p>With <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>10</mn><mo separator="true">,</mo><mi>c</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n=10,c=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">10</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">c</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span>, pass@1 is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>20</mn><mi mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">20\%</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8056em;vertical-align:-0.0556em;"></span><span class="mord">20%</span></span></span></span> and pass@5 is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>7</mn><mi mathvariant="normal">/</mi><mn>9</mn><mo>≈</mo><mn>77.8</mn><mi mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">7/9\approx77.8\%</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">7/9</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.8056em;vertical-align:-0.0556em;"></span><span class="mord">77.8%</span></span></span></span>.
+The weights did not improve; the attempt budget changed. The measure also
+does not supply a deployment method for choosing the successful answer without
+a checker. Adaptive repair after test feedback is a different protocol.</p>
+<p>Reading: <a href="https://arxiv.org/abs/2107.03374">Chen et al., Section 3 and Appendix A</a>.</p>
+<h2 id="9-paired-comparisons-and-uncertainty">9. Paired comparisons and uncertainty</h2>
+<p>Evaluate A and B on the same items and retain their paired outcomes. In a
+synthetic set of 100 independent items, suppose 50 are correct for both,
+10 only for A, 14 only for B, and 26 for neither. The accuracy difference is
+<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mn>14</mn><mo>−</mo><mn>10</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>100</mn><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">(14-10)/100=4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">14</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">10</span><span class="mclose">)</span><span class="mord">/100</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span> percentage points.</p>
+<p>A paired bootstrap resamples item indices and carries both systems' outcomes
+together. Compute the difference for each resample, then a declared interval.
+For the supplied fixture and seed, the central 95% percentile interval is
+approximately -5 to +13 percentage points. It crosses zero: the observed
+sample does not establish a reliable positive gain. This does not prove the
+systems are equivalent.</p>
+<p>The interval conditions on the fitted systems, prompts, and grader. It omits
+training-seed variation, prompt selection, label error, and domain shift.
+Related observations need resampling at the relevant group level. More rows
+from the same family may add less independent evidence than new families.</p>
+<p>Reading: <a href="https://aclanthology.org/P18-1128/">Dror et al. (2018), assumptions and test selection</a>.</p>
+<h2 id="10-validate-the-evaluator">10. Validate the evaluator</h2>
+<p>An exact matcher can reject an equivalent answer. A unit-test suite can miss
+incorrect behavior. An LLM judge can change its decision when answer order or
+presentation changes. Human assessors can disagree about an ambiguous rubric.
+These are failure modes to investigate, not universal error rates.</p>
+<p>Build a small checked set containing clear successes, clear failures, and
+borderline cases. Test order swaps for pairwise judgments and state how ties
+are counted. Record the judge model revision, prompt, rubric, and access to
+reference answers. Keep its training and selection history separate from the
+system being evaluated when possible.</p>
+<p>Error analysis should produce a testable next question. “Long responses fail
+more often” could reflect task difficulty, truncation, or a scoring artifact.
+Inspect examples before changing the model. Choose the next experiment on
+development data, then use a fresh or preserved final evaluation for the claim.</p>
+<h2 id="11-a-minimum-useful-experiment-report">11. A minimum useful experiment report</h2>
+<p>State the question, treatment, and baseline. Document data provenance and
+splits, actual training exposure, model/template revisions, and evaluator.
+Report per-item or per-group outcomes, relevant slices, uncertainty, and a few
+checked failures. Identify which choices were made before final evaluation.</p>
+<p>A negative result can be informative when the implementation and comparison
+are sound. A large score increase with leakage or a changed attempt budget
+does not answer the intended question. Tie the conclusion to the tested
+population and budget instead of claiming general model superiority.</p>
+<h2 id="practice-and-reading">Practice and reading</h2>
+<p>The notebook provides five core offline exercises on duplicate/split audits,
+source exposure, evaluation composition, and paired uncertainty. Additional
+practice covers candidate scoring, pass@k, and MinHash. Every dataset is a
+labeled teaching fixture; the core practice uses no model download or GPU.</p>
+<ul>
+<li><a href="../slides/lecture-10/optional-reading.md">Lecture 10 reading guide and versioned benchmark examples</a>.</li>
+<li><a href="lecture-08-instructgpt.html">Lecture 08: SFT and reward-model data</a>.</li>
+<li><a href="lecture-09-policy-optimization.html">Lecture 09: policy-training and evaluation distributions</a>.</li>
+<li><a href="https://arxiv.org/abs/2406.17557">FineWeb methods and controlled data comparisons</a>.</li>
+<li><a href="https://arxiv.org/abs/2406.11794">DataComp-LM benchmark design</a>.</li>
+</ul>
+</article></main>
+<footer>CS40008.01 · Fudan University · Fall 2026</footer><script src="../assets/course-language.js"></script></body></html>

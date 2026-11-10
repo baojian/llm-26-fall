@@ -1,7 +1,7 @@
-"""Build original, editable Lecture 08 diagrams using the course SVG convention.
+"""Build original, editable Lecture 10 diagrams using the course SVG convention.
 
 Each SVG and its Excalidraw source share positions and text. All examples are
-course-authored. Run with uv run python slides/lecture-08/assets/build_diagrams.py.
+course-authored. Run with uv run python slides/lecture-10/assets/build_diagrams.py.
 """
 
 from html import escape

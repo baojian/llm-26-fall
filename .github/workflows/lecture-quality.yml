@@ -173,6 +173,10 @@ jobs:
       - run: slides/node_modules/.bin/playwright install --with-deps chromium
       - name: Check the bilingual reader, mobile layouts, and shared navigation
         run: npm --prefix slides run check:notes
+      - name: Verify the Week 8–10 notes match their Markdown sources
+        run: |
+          npm --prefix slides run build:lecture-notes
+          git diff --exit-code -- docs/lecture-08-instructgpt.html docs/lecture-09-policy-optimization.html docs/lecture-10-data-evaluation.html
       - name: Save reading-page screenshots
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

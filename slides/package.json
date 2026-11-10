@@ -11,6 +11,7 @@
     "pdf": "node tools/check.mjs --pdf",
     "browser:install": "playwright install chromium",
     "build:notes": "node ../scripts/build-notes.mjs",
+    "build:lecture-notes": "node ../scripts/build-lecture-notes.mjs",
     "check:notes": "node ../scripts/check-notes.mjs"
   },
   "dependencies": {
