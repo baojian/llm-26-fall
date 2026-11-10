@@ -1,8 +1,8 @@
 # RL reading guide for LLM post-training and agents
 
-These optional resources support Lecture 10 (supervised fine-tuning),
-Lecture 11 (preferences, rewards, and alignment), and Lecture 15 (agents and
-tool use). See the [course schedule](schedule.md). They introduce no new
+These optional resources support Lecture 08 (SFT and reward models),
+Lecture 09 (REINFORCE and PPO), Lecture 11 (DPO, GRPO and verifiable rewards),
+and Lecture 15 (agents and tool use). See the [course schedule](schedule.md). They introduce no new
 graded deliverable or deadline.
 
 We organize the material around two training settings: **alignment and

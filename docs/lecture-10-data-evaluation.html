@@ -75,6 +75,37 @@ prove that text is factually correct.</p>
 For preferences, retain pair provenance, the rubric, and correlated candidate
 groups. For reward optimization, separate policy-training prompts, reward-model
 training pairs, and evaluation prompts. All three can become leakage routes.</p>
+<table>
+<thead>
+<tr>
+<th>Taught stage</th>
+<th>Fitting data</th>
+<th>Boundary to audit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SFT, Lecture 08</td>
+<td>Demonstrations and response masks</td>
+<td>Evaluation answers or related source documents in demonstrations</td>
+</tr>
+<tr>
+<td>Reward model, Lecture 08</td>
+<td>Preference pairs and rubric</td>
+<td>Evaluation prompt families in reward-model fitting or selection</td>
+</tr>
+<tr>
+<td>PPO, Lecture 09</td>
+<td>Prompts, sampled responses and rewards</td>
+<td>Evaluation tasks exposed during policy optimization</td>
+</tr>
+</tbody>
+</table>
+<p>A prompt held out from PPO is not necessarily held out from SFT or reward-model
+training. Carry source-family IDs across stages and reserve final evaluation
+before model or prompt selection. The three training pools need not be mutually
+disjoint; the claim concerns their relationship to the evaluation population.
+When pretraining exposure cannot be audited, record that uncertainty.</p>
 <h3>Task definitions become data schemas</h3>
 <p>The instructor's 2025 benchmark lecture provides concrete preparation cases.
 Start by specifying what one example contains, what the target means, and
@@ -386,6 +417,40 @@ Related observations need resampling at the relevant group level. More rows
 from the same family may add less independent evidence than new families.</p>
 <p>Reading: <a href="https://aclanthology.org/P18-1128/">Dror et al. (2018), assumptions and test selection</a>.</p>
 <h2 id="10-validate-the-evaluator">10. Validate the evaluator</h2>
+<h3>Worked example: reward coverage</h3>
+<p>Suppose the task is to return the square of an input. The training reward only
+checks input 2. Both <code>return 4</code> and <code>return x * x</code> receive full reward. An
+independent check at input 3 expects 9 and rejects the hard-coded candidate.</p>
+<table>
+<thead>
+<tr>
+<th>Candidate</th>
+<th>Reward case: input 2</th>
+<th>Independent case: input 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hard-coded answer</td>
+<td>4: pass</td>
+<td>4: fail</td>
+</tr>
+<tr>
+<td>Square function</td>
+<td>4: pass</td>
+<td>9: pass</td>
+</tr>
+</tbody>
+</table>
+<p>The notebook executes this authored fixture. It demonstrates an incomplete
+verifier, not a trained-policy result. Even passing both tests does not prove
+general correctness. Once a check guides a repair or candidate selection,
+it is development evidence; retain a separate final evaluation for the claim.
+This connects Lecture 09's optimization signal to Lecture 11's verifiable rewards.
+For an empirical study of optimizing a proxy, read
+<a href="https://arxiv.org/abs/2210.10760">Gao et al., Scaling Laws for Reward Model Overoptimization</a>.
+Their reward-model experiments are distinct from this two-function illustration.</p>
+<h3>Audit disagreements and failure slices</h3>
 <p>An exact matcher can reject an equivalent answer. A unit-test suite can miss
 incorrect behavior. An LLM judge can change its decision when answer order or
 presentation changes. Human assessors can disagree about an ambiguous rubric.
@@ -418,6 +483,7 @@ E02 also checks why disjoint question IDs do not establish an unseen-article spl
 <li><a href="../slides/lecture-10/optional-reading.md">Lecture 10 reading guide and versioned benchmark examples</a>.</li>
 <li><a href="lecture-08-instructgpt.html">Lecture 08: SFT and reward-model data</a>.</li>
 <li><a href="lecture-09-policy-optimization.html">Lecture 09: policy-training and evaluation distributions</a>.</li>
+<li><a href="course-revision.html#lecture-11-dpo-grpo-and-verifiable-rewards">Lecture 11 plan: DPO, GRPO and independent reward evaluation</a>.</li>
 <li><a href="https://arxiv.org/abs/2406.17557">FineWeb methods and controlled data comparisons</a>.</li>
 <li><a href="https://arxiv.org/abs/2406.11794">DataComp-LM benchmark design</a>.</li>
 </ul>

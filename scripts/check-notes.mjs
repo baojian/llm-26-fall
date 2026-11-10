@@ -203,12 +203,12 @@ try {
   assert.equal(await projectCards.count(), 48);
   await page.evaluate(() => scrollTo(0, 0));
   await page.screenshot({ path: path.join(output, 'project-catalog-desktop.png') });
-  // Weeks 8–10 retain English lesson text with bilingual navigation.
-  for (const slug of ['lecture-08-instructgpt', 'lecture-09-policy-optimization', 'lecture-10-data-evaluation']) {
+  // Lecture notes and the remaining course plan keep English text with bilingual navigation.
+  for (const slug of ['lecture-08-instructgpt', 'lecture-09-policy-optimization', 'lecture-10-data-evaluation', 'course-revision']) {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(`${origin}/docs/${slug}.html?lang=en`, { waitUntil: 'networkidle' });
     assert.equal(await page.locator('article').getAttribute('lang'), 'en');
-    assert.ok(await page.locator('article .katex').count() > 0);
+    if (slug !== 'course-revision') assert.ok(await page.locator('article .katex').count() > 0);
     assert.equal(await page.locator('.katex-error').count(), 0);
     const links = await page.locator('a[href]').evaluateAll(items => items.map(item => item.href));
     for (const href of new Set(links)) {
@@ -220,8 +220,13 @@ try {
       }
     }
     await page.screenshot({ path: path.join(output, `${slug}-desktop.png`) });
-    await page.locator('.katex-display').nth(1).scrollIntoViewIfNeeded();
-    await page.screenshot({ path: path.join(output, `${slug}-equations.png`) });
+    if (slug === 'course-revision') {
+      await page.locator('#lecture-13-inference-and-computation-at-test-time').scrollIntoViewIfNeeded();
+      await page.screenshot({ path: path.join(output, `${slug}-lecture-13.png`) });
+    } else {
+      await page.locator('.katex-display').nth(1).scrollIntoViewIfNeeded();
+      await page.screenshot({ path: path.join(output, `${slug}-equations.png`) });
+    }
     await page.locator('.lang-toggle [data-lang="zh"]').click();
     assert.equal(await page.locator('header a').first().textContent(), '课程主页');
     assert.match(await page.locator('.language-availability').textContent(), /正文目前为英文/);
@@ -242,10 +247,24 @@ try {
   for (const number of ['08', '09', '10']) {
     await page.locator(`#lecture-${number}`).screenshot({ path: path.join(output, `course-week-${number}-zh.png`) });
   }
+  for (const language of ['en', 'zh']) {
+    for (const number of ['11', '12', '13', '14', '15', '16']) {
+      await page.goto(`${origin}/index.html?lang=${language}`, { waitUntil: 'networkidle' });
+      const row = page.locator(`#lecture-${number}`);
+      const plan = row.locator('a[href^="docs/course-revision.html#"]');
+      assert.equal(await plan.count(), 1);
+      assert.match(await plan.textContent(), language === 'en' ? /preparation plan/ : /备课计划/);
+      assert.doesNotMatch(await row.textContent(), /To be updated|待更新/);
+      await row.screenshot({ path: path.join(output, `course-week-${number}-${language}.png`) });
+      await plan.click();
+      await page.waitForURL('**/docs/course-revision.html*');
+      assert.equal(await page.evaluate(() => Boolean(document.getElementById(decodeURIComponent(location.hash.slice(1))))), true, `Missing plan section for Lecture ${number}`);
+    }
+  }
   assert.deepEqual(errors, [], 'Browser errors or external runtime dependencies.');
   console.log('Passed bilingual articles, six accessible diagrams, tabs, copying, anchors, mobile layout, print, offline viewing, shared language controls, and project catalog filter/reset/topic navigation.');
   console.log('Review images: slides/.checks/notes/');
-  console.log('Passed Week 8–10 notes, equation rendering, local links, mobile layouts, print and bilingual course rows.');
+  console.log('Passed Week 8–10 notes, the remaining-six plan, equations, local links, mobile layouts, print and bilingual course rows.');
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));

@@ -7,6 +7,31 @@ Pin the actual dataset,
 model, task configuration, and scorer revisions when running an experiment.
 A release date or a benchmark name alone does not fully specify a result.
 
+## CS336 data and evaluation materials
+
+Checked **November 10, 2026**, against the [Spring 2026 syllabus](https://cs336.stanford.edu/).
+Lecture links below pin revision `de53a9f979a6ee35f7d13a5e1aadee5ea1afc58e`.
+They are teaching references, not copies of Stanford's full workload.
+
+| CS336 source | Useful material | Where it fits in our course |
+| --- | --- | --- |
+| [Lecture 12: Evaluation](https://github.com/stanford-cs336/lectures/blob/de53a9f979a6ee35f7d13a5e1aadee5ea1afc58e/lecture_12.py) | Perplexity; exam, chat and agent benchmarks; realism and validity | Lecture 10's frozen protocol, task/metric choice, grader audit and interpretation; agent evaluation returns in Lecture 15. |
+| [Lecture 13: Data](https://github.com/stanford-cs336/lectures/blob/de53a9f979a6ee35f7d13a5e1aadee5ea1afc58e/lecture_13.py) | Pretraining sources, datasets and composition | Lecture 10's provenance and counts; the optional corpus catalog. |
+| [Lecture 14: Data processing](https://github.com/stanford-cs336/lectures/blob/de53a9f979a6ee35f7d13a5e1aadee5ea1afc58e/lecture_14.py) | Quality filtering; exact and approximate deduplication; mixtures, repetition and synthetic data | Lecture 10's filtering, duplicate families and token exposure; MinHash/LSH in optional P03. Broad synthetic-data generation remains further reading. |
+| [Assignment 4: Data](https://github.com/stanford-cs336/assignment4-data) | Web-text extraction, filtering and deduplication before model training | The Lecture 02 MinHash/LSH task adapts its deduplication exercise; A2 Part 4 credits the data assignment for its fixed-budget comparison. Full Common Crawl processing is not required. |
+
+The Lecture 02 deduplication adaptation used [A4 revision `0555bea`, Section 3.2](https://github.com/stanford-cs336/assignment4-data/blob/0555bea66369872d912652debf10b115ca0688c8/cs336_assignment4_data.pdf).
+The separate Lecture 02 DSIR task draws on the DSIR paper and earlier
+[CS336 data-selection examples from 2025](https://github.com/stanford-cs336/spring2025-lectures/blob/b98b08a98d9d47a69bbdcb4e96a58aa48ee4d13b/lecture_14.py#L143).
+Do not describe DSIR as a required exercise in the current A4.
+
+Our GLUE/QNLI and SWAG/HellaSwag construction cases come from the instructor's
+2025/2026 decks and the primary papers below. The small corpora, source-family
+audits, reward-test counterexample, plots and notebook fixtures are course-authored.
+Paired uncertainty draws on statistical evaluation guidance, including Dror et al.;
+it is not attributed wholesale to CS336. All five core exercises run on CPU
+without downloading a Stanford corpus or training a large model.
+
 ## Core: data preparation and quality
 
 | Reading | Focus |
@@ -54,6 +79,7 @@ protocol. Do not silently re-split a benchmark while claiming its official score
 | --- | --- |
 | [Dror et al., The Hitchhiker's Guide to Testing Statistical Significance in NLP (2018)](https://aclanthology.org/P18-1128/) | Test selection and assumptions, especially dependence between predictions and the evaluation unit. |
 | [EleutherAI language-model evaluation harness](https://github.com/EleutherAI/lm-evaluation-harness) | Read the model interface and the exact task configuration: likelihood requests, generation, normalization, and aggregation. |
+| [Gao et al., Scaling Laws for Reward Model Overoptimization (2023)](https://arxiv.org/abs/2210.10760) | Optional bridge to Lecture 11: distinguish optimizing a proxy reward from independent evidence of improvement. Our square-function counterexample is an authored illustration, not a reproduction of these experiments. |
 
 The core E05 seeded paired percentile bootstrap is a small teaching example.
 It does not account for training-run variation. For related examples, decide

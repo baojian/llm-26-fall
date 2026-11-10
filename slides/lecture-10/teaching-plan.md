@@ -9,24 +9,26 @@ Central question: **Which data decision changed the behavior, under which contro
 
 ## Classroom route
 
-There are 45 core slides through `methods-reading`, then 22 optional extension
+There are 45 core slides through `methods-reading`, then 24 optional extension
 slides beginning at `outline-benchmarks`. The final `references` slide serves both.
 The deck is a material bank. GLUE/QNLI construction and SWAG/HellaSwag shortcut
 audits are core; the open-data catalog, FineWeb case, model-interface comparison
-and detailed candidate scoring are now optional. Preserve exercise assumptions.
+and detailed candidate scoring are now optional. `source-card` and `data-evidence`
+also remain in the appendix. Two core bridges connect the taught SFT/RM/PPO
+workflow to evaluation boundaries and an incomplete reward test. Preserve exercise assumptions.
 Timing is a planning estimate, not a classroom rehearsal.
 
 | Time (Asia/Shanghai) | Route | Purpose |
 | --- | --- | --- |
-| 13:30–13:37 | `title`–`running-comparison` | Retrieve SFT/RM/PPO; declare a claim and controlled comparison. |
+| 13:30–13:37 | `title`–`posttraining-data-boundaries` | Retrieve SFT/RM/PPO; declare a claim and audit evaluation exposure across stages. |
 | 13:37–13:53 | `data-lineage`–`historical-shortcuts` | Schemas, extraction, distractors and shortcut checks. |
 | 13:53–14:03 | `exact-duplicates`–`exercise-01` | Normalization, similarities; E01 (6 min). |
 | 14:03–14:15 | `outline-curation`–`data-exercise-03` | Match families and QNLI-style article lineage; E02 (8 min). |
 | 14:15–14:25 | Break | |
 | 14:25–14:35 | `contamination-paths`–`fixed-budget` | Group before splitting; retain IDs; match processed tokens. |
-| 14:35–14:48 | `training-mixture`–`data-exercise-04` | Sampling exposure; E03 (7 min). |
-| 14:48–15:00 | `outline-evidence`–`mixtures` | Freeze protocols; distinguish loss, task metrics and aggregation. |
-| 15:00–15:10 | `graders`–`evaluation-demo` | Audit grader/prompt choices; E04 (6 min). |
+| 14:35–14:47 | `training-mixture`–`data-exercise-04` | Sampling exposure; E03 (7 min). |
+| 14:47–14:58 | `outline-evidence`–`mixtures` | Freeze protocols; distinguish loss, task metrics and aggregation. |
+| 14:58–15:10 | `graders`–`evaluation-demo` | Incomplete reward-test walkthrough; audit prompts; E04 (6 min). |
 | 15:10–15:25 | Break | |
 | 15:25–15:39 | `uncertainty-sources`–`bootstrap-result` | Paired resampling; E05 (8 min). |
 | 15:39–15:50 | `error-analysis`–`project-evaluation` | Failure slices and a feasible experiment record. |
@@ -57,7 +59,22 @@ with Python 3.11+ standard library on CPU; GPU memory and total GPU-hours are 0.
 No model or benchmark download is required. These are ungraded practices for
 all students, not new assignment requirements.
 
+The additional notebook walkthrough compares `return 4` with `return x * x`.
+Both pass the training reward case (input 2); only the latter passes the
+independent case (input 3). This is an executed counterexample to an inference
+from reward to general correctness, not a trained-policy result. Keep it to
+two minutes; E01–E05 and P01–P03 retain their IDs and order.
+
+Lecture 11 builds on this audit to introduce DPO and GRPO. Those algorithms
+were prepared as Lecture 09 supplements but were not yet taught. See the
+[remaining lecture plan](../../docs/course-revision.html#lecture-11-dpo-grpo-and-verifiable-rewards).
+
 ## Source adaptation
+
+The [reading guide's CS336 map](optional-reading.md#cs336-data-and-evaluation-materials)
+distinguishes the data/evaluation methods from the instructor's historical
+benchmark material and our authored fixtures. It pins the Spring 2026 lecture
+sources; full Stanford data-processing infrastructure is outside this lesson.
 
 The earlier data-quality deck was prepared from the instructor's Spring
 `lecture-07-slides-bert-benchmarks.pptx` (35 slides), with the five editable
@@ -94,9 +111,22 @@ npm --prefix slides run check -- lecture-10
 npm --prefix slides run pdf -- lecture-10
 uv run python scripts/slides.py serve --port 8010
 node slides/lecture-10/check-demo.mjs http://127.0.0.1:8010
+npm --prefix slides run check:notebook -- http://127.0.0.1:8010 lecture-10
+npm --prefix slides run build:lecture-notes
+npm --prefix slides run check:notes
 ```
 
 The demo switches between mixed and clean evaluation and resets to the mixed
 state. PDF output uses that initial state; E04 prints both results. Review
 artifacts belong in ignored `slides/.checks/lecture-10/`. See the notes for a
 full experimental-record template and the reading guide for source versions.
+
+Local verification on November 10, 2026 (Asia/Shanghai), against base
+`d930c2ca2b973973816770892ac3308c7156301a` plus the lecture/plan edits:
+10 Python checks passed, including execution in a fresh notebook working copy;
+all 69 slides passed three viewport checks and were visually inspected;
+the PDF has 69 pages. The mixed/clean demo and notebook launcher passed on
+the existing local server at port 8005. Reading-page checks passed for notes,
+equations, mobile/print layouts and all six future lecture links in English
+and Chinese. No GPU run or live-model comparison was performed. Timing and
+future live-demo budgets remain planning estimates.

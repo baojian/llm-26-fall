@@ -70,6 +70,14 @@ not present-day model rankings. No source screenshot is embedded in the deck.
 
 ## Synthetic teaching fixtures
 
+The `posttraining-data-boundaries` table and `reward-is-not-evaluation` slide
+are original November 10 course examples. The notebook executes two square
+functions: both pass input 2, but only `x * x` passes input 3. This fixture uses
+no model, dataset download or random seed and costs 0 GPU-hours. It illustrates
+incomplete reward coverage; it is not an experiment from the reward-overoptimization
+paper. The [CS336 source map](../optional-reading.md#cs336-data-and-evaluation-materials)
+separately credits the data/evaluation teaching references.
+
 The pipeline, extraction, MinHash, duplicate-family, and mixture diagrams are
 course-authored, not traced paper figures. Their editable sources are adjacent
 `.excalidraw` files. `data_quality.py` supplies the corresponding calculations:

@@ -68,13 +68,13 @@ gantt
     L04 Neural LMs and attention  :milestone, l04, 2026-09-30, 0d
     L05 Transformer (Sat)         :milestone, l05, 2026-10-10, 0d
     L06 Pretraining and decoding  :milestone, l06, 2026-10-14, 0d
-    L07 Data preparation          :milestone, l07, 2026-10-21, 0d
-    L08 Compute and scaling       :milestone, l08, 2026-10-28, 0d
-    L09 Evaluation                :milestone, l09, 2026-11-04, 0d
-    L10 Supervised fine-tuning    :milestone, l10, 2026-11-11, 0d
-    L11 Preferences and alignment :milestone, l11, 2026-11-18, 0d
+    L07 Compute and scaling       :milestone, l07, 2026-10-21, 0d
+    L08 SFT and reward models     :milestone, l08, 2026-10-28, 0d
+    L09 REINFORCE and PPO         :milestone, l09, 2026-11-04, 0d
+    L10 Data and evaluation       :milestone, l10, 2026-11-11, 0d
+    L11 DPO and GRPO              :milestone, l11, 2026-11-18, 0d
     L12 Retrieval and RAG         :milestone, l12, 2026-11-25, 0d
-    L13 Efficient inference       :milestone, l13, 2026-12-02, 0d
+    L13 Inference and test compute :milestone, l13, 2026-12-02, 0d
     L14 Diffusion LMs             :milestone, l14, 2026-12-09, 0d
     L15 Agents and tool use       :milestone, l15, 2026-12-16, 0d
     L16 Synthesis and revision    :milestone, l16, 2026-12-23, 0d
