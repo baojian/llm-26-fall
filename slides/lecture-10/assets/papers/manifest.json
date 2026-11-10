@@ -1,0 +1,158 @@
+[
+  {
+    "file": "gpt3-in-context.png",
+    "asset_url": "https://arxiv.org/html/2005.14165v4/graphs/img/in_context_learning.png",
+    "source_url": "https://arxiv.org/html/2005.14165v4",
+    "title": "Brown et al. (2020), Language Models are Few-Shot Learners",
+    "figure": "Figure 1.2",
+    "adaptation": "Unmodified figure asset; displayed at preserved aspect ratio.",
+    "sha256": "67e5480ae2511e745d4bff21b17391b4e734b683a138bd2bd97e5afc43fdf0c6",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  },
+  {
+    "file": "instructgpt-preferences.svg",
+    "asset_url": "https://arxiv.org/html/2203.02155v1/main-graph-no-facets.svg",
+    "source_url": "https://arxiv.org/html/2203.02155v1",
+    "title": "Ouyang et al. (2022), Training language models to follow instructions with human feedback",
+    "figure": "Figure 1",
+    "adaptation": "Unmodified figure asset; displayed at preserved aspect ratio.",
+    "sha256": "d7e544eda1549eca08bf235fe7e93cac2588fe69095e3458ce772b1dd658eab1",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  },
+  {
+    "file": "gpt4-predictable-evaluation.svg",
+    "asset_url": "https://arxiv.org/html/2303.08774v6/capability_pred.svg",
+    "source_url": "https://arxiv.org/html/2303.08774v6",
+    "title": "OpenAI (2023), GPT-4 Technical Report",
+    "figure": "Figure 2",
+    "adaptation": "Unmodified figure asset; displayed at preserved aspect ratio.",
+    "sha256": "5d09cbd97625a81e93d352b92d14bf2ed06cd88de4093f95d2f8129a325537bf",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  },
+  {
+    "file": "codex-sampling.png",
+    "asset_url": "https://arxiv.org/html/2107.03374v2/figs/ft-pass-vs-temp.png",
+    "source_url": "https://arxiv.org/html/2107.03374v2",
+    "title": "Chen et al. (2021), Evaluating Large Language Models Trained on Code",
+    "figure": "Figure 5",
+    "adaptation": "Unmodified figure asset; displayed at preserved aspect ratio.",
+    "sha256": "0b8d28a98681bcfe445db1a88f49510e21a2ed0224e9df9b14b65895052d8420",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  },
+  {
+    "file": "fineweb-dedup.svg",
+    "asset_url": "https://arxiv.org/html/2406.17557v2/dedup_ind_dedup_better.svg",
+    "source_url": "https://arxiv.org/html/2406.17557v2",
+    "title": "Penedo et al. (2024), The FineWeb Datasets",
+    "figure": "Figure 5",
+    "adaptation": "Unmodified figure asset; displayed at preserved aspect ratio.",
+    "sha256": "04917415942b3720bed94b3c8e7498999afd7d5c9eb29a11435d40adf4e8c56b",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  },
+  {
+    "file": "fineweb-extraction.svg",
+    "asset_url": "https://arxiv.org/html/2406.17557v2/wet_comparison.svg",
+    "source_url": "https://arxiv.org/html/2406.17557v2",
+    "title": "Penedo et al. (2024), The FineWeb Datasets",
+    "figure": "Figure 1",
+    "adaptation": "Unmodified figure asset; displayed at preserved aspect ratio.",
+    "sha256": "6d3fc2bc239d1473b62dd6f06be555e4607434478f076e3b65f47f30c4788825",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  },
+  {
+    "file": "swebench-task.svg",
+    "asset_url": "https://arxiv.org/html/2310.06770v3/teaser.svg",
+    "source_url": "https://arxiv.org/html/2310.06770v3",
+    "title": "Jimenez et al. (2024), SWE-bench",
+    "figure": "Figure 1",
+    "adaptation": "Unmodified figure asset; displayed at preserved aspect ratio.",
+    "sha256": "c6a82178494df972ceba886cd68976f6a09d776da762a674bf27bb43e7d51a60",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  },
+  {
+    "file": "hle-construction.svg",
+    "asset_url": "https://arxiv.org/html/2501.14249v10/pipeline.svg",
+    "source_url": "https://arxiv.org/html/2501.14249v10",
+    "title": "Phan et al., Humanity's Last Exam (2025; v10 2026)",
+    "figure": "Figure 4",
+    "adaptation": "Unmodified figure asset; displayed at preserved aspect ratio.",
+    "sha256": "659055ca0bd31e114b67324c9a023ef7972338069257151596e11132427da4a2",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  },
+  {
+    "file": "terminal-task.svg",
+    "asset_url": "https://arxiv.org/html/2601.11868v1/hero_figure_revised.svg",
+    "source_url": "https://arxiv.org/html/2601.11868v1",
+    "title": "Terminal-Bench authors (2026), Terminal-Bench",
+    "figure": "Figure 2",
+    "adaptation": "Unmodified figure asset; displayed at preserved aspect ratio.",
+    "sha256": "ab6c3f164266adab558fee697400450b1640988b4f95376a5e5a6659665153d2",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  },
+  {
+    "file": "terminal-versioning.svg",
+    "asset_url": "https://www.tbench.ai/blog/terminal-bench-4-0/versioning-light.svg",
+    "source_url": "https://www.tbench.ai/news/terminal-bench-4-0",
+    "title": "Terminal-Bench authors (2026), Terminal-Bench 4.0",
+    "figure": "Versioning diagram",
+    "adaptation": "Unmodified figure asset; displayed at preserved aspect ratio.",
+    "sha256": "63e2d7228d4af699b0fbaa28b01a7f2d0cebd3f9492c7f47a93ac9c6fca0e635",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  },
+  {
+    "file": "ale-task.svg",
+    "asset_url": "https://arxiv.org/html/2606.05405v4/task-spec.svg",
+    "source_url": "https://arxiv.org/html/2606.05405v4",
+    "title": "Agents’ Last Exam authors (2026)",
+    "figure": "Figure 6",
+    "adaptation": "Unmodified figure asset; displayed at preserved aspect ratio.",
+    "sha256": "1780a6e9a36ad3265936f171387386280033d27885a2564408bbde6d751ed30b",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  },
+  {
+    "file": "ale-harness-model.png",
+    "asset_url": "https://arxiv.org/html/2606.05405v4/harness_vs_model.png",
+    "source_url": "https://arxiv.org/html/2606.05405v4",
+    "title": "Agents’ Last Exam authors (2026)",
+    "figure": "Figure 12",
+    "adaptation": "Unmodified figure asset; displayed at preserved aspect ratio.",
+    "sha256": "0d8bed21620c8628b78bf4c32bb1c0d1fc683e15c2f503bd109180929eb9fbc4",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  },
+  {
+    "file": "gpt1-task-inputs.png",
+    "source_url": "https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf",
+    "title": "Radford et al. (2018), Improving Language Understanding by Generative Pre-Training",
+    "figure": "Figure 1, right panel, classification and entailment rows",
+    "adaptation": "PDF crop only; preserved axes and labels.",
+    "pdf_page": 4,
+    "crop_points": [
+      200,
+      67,
+      502,
+      118
+    ],
+    "dpi": 288,
+    "source_sha256": "eb81a65e0856bd38e855e1f1de6ee12e7c3eb92ae05c8270d345a475beb631d0",
+    "sha256": "65fe9e9c9981f0ec7f7ae27cf8b488484bc7a82d1bf2504941945909fa27b9a0",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  },
+  {
+    "file": "gpt2-zero-shot.png",
+    "source_url": "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf",
+    "title": "Radford et al. (2019), Language Models are Unsupervised Multitask Learners",
+    "figure": "Figure 1, CoQA reading-comprehension panel",
+    "adaptation": "PDF crop only; preserved axes and labels.",
+    "pdf_page": 2,
+    "crop_points": [
+      55,
+      65,
+      185,
+      207
+    ],
+    "dpi": 288,
+    "source_sha256": "d9d852e2894556e73f53cb22b7c605a9643d6f0b19bf604b429ed6192fa24f4e",
+    "sha256": "4b53ea3ceaf820cede6276ecd3243eb544b5c96203b3839962060a340a1f168a",
+    "retrieved": "2026-11-11 Asia/Shanghai"
+  }
+]

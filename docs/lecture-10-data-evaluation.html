@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="../assets/course-language.css">
 <link rel="stylesheet" href="../assets/lecture-notes.css"></head>
 <body><header><a href="../index.html" data-en="Course" data-zh="课程主页">Course</a><a href="../slides/lecture-10/" data-en="Slides" data-zh="课件">Slides</a><a href="lecture-10-data-evaluation.md" data-en="Markdown source" data-zh="Markdown 源文件">Markdown source</a><button onclick="window.print()" data-en="Print" data-zh="打印">Print</button><div class="lang-toggle" role="group" aria-label="Language / 语言"><button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button><button type="button" data-lang="zh" lang="zh-CN" aria-pressed="false">中文</button></div></header>
-<main><p class="language-availability" data-en="These lecture notes are in English. Navigation is available in English and Chinese." data-zh="讲义正文目前为英文；导航支持中英文切换。">These lecture notes are in English. Navigation is available in English and Chinese.</p><details class="contents"><summary data-en="Contents" data-zh="目录">Contents</summary><ol><li><a href="#1-define-the-claim-before-building-the-pipeline">1. Define the claim before building the pipeline</a></li><li><a href="#2-a-traceable-data-pipeline">2. A traceable data pipeline</a></li><li><a href="#3-extraction-and-filtering">3. Extraction and filtering</a></li><li><a href="#4-exact-and-approximate-duplicates">4. Exact and approximate duplicates</a></li><li><a href="#5-split-by-the-unit-that-can-leak">5. Split by the unit that can leak</a></li><li><a href="#6-match-exposure-and-compute">6. Match exposure and compute</a></li><li><a href="#7-a-benchmark-is-a-complete-protocol">7. A benchmark is a complete protocol</a></li><li><a href="#8-likelihood-and-generation-answer-different-questions">8. Likelihood and generation answer different questions</a></li><li><a href="#9-paired-comparisons-and-uncertainty">9. Paired comparisons and uncertainty</a></li><li><a href="#10-validate-the-evaluator">10. Validate the evaluator</a></li><li><a href="#11-a-minimum-useful-experiment-report">11. A minimum useful experiment report</a></li><li><a href="#practice-and-reading">Practice and reading</a></li></ol></details><article lang="en"><h1>Lecture 10: Data preparation, evaluation, and experimental design</h1>
+<main><p class="language-availability" data-en="These lecture notes are in English. Navigation is available in English and Chinese." data-zh="讲义正文目前为英文；导航支持中英文切换。">These lecture notes are in English. Navigation is available in English and Chinese.</p><details class="contents"><summary data-en="Contents" data-zh="目录">Contents</summary><ol><li><a href="#1-define-the-claim-before-building-the-pipeline">1. Define the claim before building the pipeline</a></li><li><a href="#2-a-traceable-data-pipeline">2. A traceable data pipeline</a></li><li><a href="#3-extraction-and-filtering">3. Extraction and filtering</a></li><li><a href="#4-exact-and-approximate-duplicates">4. Exact and approximate duplicates</a></li><li><a href="#5-split-by-the-unit-that-can-leak">5. Split by the unit that can leak</a></li><li><a href="#6-match-exposure-and-compute">6. Match exposure and compute</a></li><li><a href="#7-a-benchmark-is-a-complete-protocol">7. A benchmark is a complete protocol</a></li><li><a href="#8-likelihood-and-generation-answer-different-questions">8. Likelihood and generation answer different questions</a></li><li><a href="#9-paired-comparisons-and-uncertainty">9. Paired comparisons and uncertainty</a></li><li><a href="#10-validate-the-evaluator">10. Validate the evaluator</a></li><li><a href="#11-a-minimum-useful-experiment-report">11. A minimum useful experiment report</a></li><li><a href="#12-from-task-adaptation-to-agent-evaluation">12. From task adaptation to agent evaluation</a></li><li><a href="#practice-and-reading">Practice and reading</a></li></ol></details><article lang="en"><h1>Lecture 10: Data preparation, evaluation, and experimental design</h1>
 <p>Week 10, November 11, 2026. This lecture connects the post-training workflow
 to the evidence needed to trust an improvement. The central question is:
 <strong>does the measured gain survive a controlled comparison on relevant held-out data?</strong></p>
@@ -473,6 +473,63 @@ checked failures. Identify which choices were made before final evaluation.</p>
 are sound. A large score increase with leakage or a changed attempt budget
 does not answer the intended question. Tie the conclusion to the tested
 population and budget instead of claiming general model superiority.</p>
+<h2 id="12-from-task-adaptation-to-agent-evaluation">12. From task adaptation to agent evaluation</h2>
+<p>The slide timeline traces changes in the evaluated object: GPT-1's supervised
+task adaptation, GPT-2's zero-shot transfer, GPT-3's in-context demonstrations,
+Codex's executable tests, InstructGPT's human preference comparisons, GPT-4's
+capability/exam evaluation, and budgeted reasoning and tool-using systems.
+These are different protocols, not a single cross-generation score curve.
+Actual figures and source sections are in the
+<a href="../slides/lecture-10/optional-reading.md#evaluation-history">historical reading map</a>.
+Official documentation verified GPT-6/6.1 interfaces on November 11, 2026;
+the requested GPT-6.2 endpoint was not verified, so no result is invented.</p>
+<p>The four core modern cases ask different questions:</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Evaluated output</th>
+<th>Essential boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HLE / HLE-Diamond</td>
+<td>Closed-ended expert answer</td>
+<td>Question-set identity, answer extraction, calibration and tools</td>
+</tr>
+<tr>
+<td>SWE-bench family</td>
+<td>Repository patch</td>
+<td>Exact task set, snapshot, issue/regression tests and harness</td>
+</tr>
+<tr>
+<td>Terminal-Bench series</td>
+<td>Environment outcome or artifact</td>
+<td>Agent/verifier separation, hardware, timeout and release compatibility</td>
+</tr>
+<tr>
+<td>Agents’ Last Exam</td>
+<td>Professional deliverable</td>
+<td>Task subset, full-pass versus partial-credit scoring, model and harness</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="../slides/lecture-10/optional-reading.md#four-benchmark-case-studies">versioned benchmark guide</a>
+distinguishes first releases, papers and later revisions. Terminal-Bench 4.0
+illustrates why rerunning an agent, regrading stored artifacts and reusing a
+compatible result are different operations. Original HLE and HLE-Diamond use
+different question populations. A changed score can reflect a changed task or
+verifier even when the agent outputs are unchanged.</p>
+<p>For agent comparisons, record model snapshot, harness commit, task IDs, VM or
+container image, tools and network policy, reasoning/output budget, attempts,
+timeouts, failure/retry policy, grader revision, per-task artifacts and total
+cost. Pair systems on the same task IDs and initial states. A report that
+changes both model and harness measures a system improvement unless additional
+controls separate their contributions.</p>
+<p>The optional atlas adds 2026 ProgramBench, SWE Atlas, OSWorld 2.0/2.1,
+ARC-AGI-3, LiveBench 2.0 and AgentTime examples. New benchmarks are design
+references; their full compute scale is not a course requirement or allocation.</p>
 <h2 id="practice-and-reading">Practice and reading</h2>
 <p>The notebook provides five core offline exercises on duplicate/split audits,
 source exposure, evaluation composition, and paired uncertainty. Additional

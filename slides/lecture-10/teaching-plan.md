@@ -5,40 +5,44 @@ Data preparation, evaluation and experimental design · November 11, 2026.
 The revised material combines data quality with evaluation after the taught
 InstructGPT/reward-model and REINFORCE/PPO lectures.
 
-Central question: **Which data decision changed the behavior, under which controls?**
+Central question: **What changed in the data, model or evaluated system, and what evidence supports the improvement?**
 
 ## Classroom route
 
-There are 45 core slides through `methods-reading`, then 24 optional extension
-slides beginning at `outline-benchmarks`. The final `references` slide serves both.
-The deck is a material bank. GLUE/QNLI construction and SWAG/HellaSwag shortcut
-audits are core; the open-data catalog, FineWeb case, model-interface comparison
-and detailed candidate scoring are now optional. `source-card` and `data-evidence`
-also remain in the appendix. Two core bridges connect the taught SFT/RM/PPO
-workflow to evaluation boundaries and an incomplete reward test. Preserve exercise assumptions.
-Timing is a planning estimate, not a classroom rehearsal.
+The revised material bank has **95 slides: 57 core slides through
+`methods-reading`, then 38 optional slides starting at `outline-benchmarks`**.
+The five exercises retain their IDs, order and checked assumptions. The new
+history and HLE/SWE-bench/Terminal-Bench/ALE cases are in the core. Broader 2026
+benchmark comparisons and detailed likelihood/pass@k/MinHash methods remain
+optional. This timing is a planning estimate, not a rehearsal measurement.
 
-| Time (Asia/Shanghai) | Route | Purpose |
+| Time (Asia/Shanghai) | Route | Minutes and purpose |
 | --- | --- | --- |
-| 13:30–13:37 | `title`–`posttraining-data-boundaries` | Retrieve SFT/RM/PPO; declare a claim and audit evaluation exposure across stages. |
-| 13:37–13:53 | `data-lineage`–`historical-shortcuts` | Schemas, extraction, distractors and shortcut checks. |
-| 13:53–14:03 | `exact-duplicates`–`exercise-01` | Normalization, similarities; E01 (6 min). |
-| 14:03–14:15 | `outline-curation`–`data-exercise-03` | Match families and QNLI-style article lineage; E02 (8 min). |
-| 14:15–14:25 | Break | |
-| 14:25–14:35 | `contamination-paths`–`fixed-budget` | Group before splitting; retain IDs; match processed tokens. |
-| 14:35–14:47 | `training-mixture`–`data-exercise-04` | Sampling exposure; E03 (7 min). |
-| 14:47–14:58 | `outline-evidence`–`mixtures` | Freeze protocols; distinguish loss, task metrics and aggregation. |
-| 14:58–15:10 | `graders`–`evaluation-demo` | Incomplete reward-test walkthrough; audit prompts; E04 (6 min). |
-| 15:10–15:25 | Break | |
-| 15:25–15:39 | `uncertainty-sources`–`bootstrap-result` | Paired resampling; E05 (8 min). |
-| 15:39–15:50 | `error-analysis`–`project-evaluation` | Failure slices and a feasible experiment record. |
-| 15:50–15:55 | `summary`–`methods-reading` | Retrieve the evidence needed for a claim. |
-| 15:55–16:10 | Quiz 4 | Previously taught material; questions remain instructor-only until the quiz. |
+| 13:30–13:45 | `title`–`current-model-boundary` | 15: evaluation history, four paper excerpts, inference-budget and source boundaries. |
+| 13:45–14:05 | `outline-data`–`exercise-01` | 20: provenance, extraction evidence, shortcuts, exact/near duplicates; E01 (6). |
+| 14:05–14:15 | `outline-curation`–`data-exercise-03` | 10: connected families/article lineage; E02 (8, including debrief). |
+| 14:15–14:25 | Break | 10, outside teaching budget. |
+| 14:25–14:38 | `fixed-budget`–`data-exercise-04` | 13: actual FineWeb ablation, matched tokens, sampling exposure; E03 (7). |
+| 14:38–15:00 | `outline-evidence`–`agent-comparison-check` | 22: four benchmark cases and complete agent protocol; 90-second oral check. |
+| 15:00–15:10 | `graders`–`prompt-sensitivity` | 10: order-swap probe, independent verifier and prompt selection. |
+| 15:10–15:25 | Break | 15, outside teaching budget. |
+| 15:25–15:35 | `exercise-04`–`evaluation-demo` | 10: contamination reversal; E04 (6) plus demo/debrief. |
+| 15:35–15:49 | `uncertainty-sources`–`bootstrap-result` | 14: paired uncertainty; E05 (8) and interpretation. |
+| 15:49–15:55 | `error-analysis`–`methods-reading` | 6: failure slices, feasible experiment and retrieval summary. |
+| 15:55–16:10 | Quiz 4 | 15, previously taught material; questions stay private. |
 
-If discussion runs long, summarize the extraction illustration and schema table,
-and leave the corpus/method catalogs in the appendix. Use notes for candidate
-scoring. Do not compress the paired-comparison exercise into
-a claim that overlapping uncertainty intervals prove equivalence.
+Teaching minutes total **120**. The route is deliberately concise; rehearse
+before delivery. If time runs short, skip `gpt1-task-adaptation` (summarized by
+the timeline), `swebench-family`, `terminal-versioning`, and
+`ale-harness-evidence`; retain the four task objects and all five exercises.
+Do not make up time by dropping paired uncertainty or implying that an interval
+crossing zero proves equivalence. Use the full atlas for independent reading.
+
+Each source figure has a question in its notes: identify the metric, changed
+factor, controls and claim boundary. Historical scores are never plotted on a
+single cross-generation axis. The requested GPT-6.2 endpoint is explicitly
+unverified; official sources establish the separately named GPT-6/6.1 examples.
+All embedded figure assets load locally. No live benchmark/API run is required.
 
 ## Exercises and checked outcomes
 
@@ -103,6 +107,14 @@ STS-B lower bound, CoLA label/metric distinction and LAMBADA training-set
 description are corrected against primary sources. The original file remains
 unchanged; credits and exact corrections are in the asset provenance file.
 
+## November 11 revision
+
+The instructor requested three iterations, each informed by three independent
+reviewers. The [revision record](revision-review.md) records decisions and
+validation. The expanded history, 14 locally bundled source figures/illustrations,
+four benchmark families, 2026 atlas and judge/agent probes build on the existing
+data-quality and uncertainty exercises. Original exercise values remain unchanged.
+
 ## Verification
 
 ```sh
@@ -121,7 +133,7 @@ state. PDF output uses that initial state; E04 prints both results. Review
 artifacts belong in ignored `slides/.checks/lecture-10/`. See the notes for a
 full experimental-record template and the reading guide for source versions.
 
-Local verification on November 10, 2026 (Asia/Shanghai), against base
+Prior baseline verification on November 10, 2026 (Asia/Shanghai), against base
 `d930c2ca2b973973816770892ac3308c7156301a` plus the lecture/plan edits:
 10 Python checks passed, including execution in a fresh notebook working copy;
 all 69 slides passed three viewport checks and were visually inspected;

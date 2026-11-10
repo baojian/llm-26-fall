@@ -13,7 +13,7 @@ Existing assessment dates and weights remain unchanged.
 
 Lectures 01–10 have slide and notebook packages. The sections below are
 **preparation plans for Lectures 11–16**, not a claim that six new decks or demos
-are ready. Lecture 10 has 45 core slides, five offline exercises and an optional
+are ready. Lecture 10 has 57 core slides, five offline exercises and an optional
 appendix; its [teaching plan](../slides/lecture-10/teaching-plan.md) reserves
 15 minutes for Quiz 4 after 120 minutes of instruction.
 
