@@ -11,21 +11,19 @@
 Note:
 November 11, 2026. Data preparation, quality, evaluation and experimental design follow the taught InstructGPT and PPO lectures. Plan 120 teaching minutes and reserve the final 15 minutes for Quiz 4. Five ungraded offline exercises connect provenance and split construction to controlled comparisons and paired uncertainty. The optional extension has its own practice. Quiz questions are held privately.
 
-
 ---
 
 <!-- .slide: id="objectives" -->
 
 ## What makes an improvement believable?
 
-- Trace source data through filtering, grouping and sampling.
-- Keep related prompts out of evaluation splits.
+- Define targets and trace data through filtering and sampling.
+- Audit shortcuts and keep related sources within splits.
 - Freeze a benchmark protocol before comparing models.
 - Report paired evidence, uncertainty and failure slices.
 
 Note:
 Central question: which data decision changed the measured behavior, under which controlled conditions? The examples connect pretraining corpora to SFT demonstrations, preference pairs and policy rollout prompts. A reward increase is not independent evidence of task improvement.
-
 
 ---
 
@@ -37,7 +35,6 @@ Central question: which data decision changed the measured behavior, under which
 
 Note:
 Data and evaluation are one experimental design. Keep the inference population and the training budget explicit.
-
 
 ---
 
@@ -91,20 +88,21 @@ Use an authored record so no rights or provenance claim is inferred from a real 
 
 ---
 
-<!-- .slide: id="open-data-cases" -->
+<!-- .slide: id="data-schema" -->
 
-## Open data projects to inspect
+## A target needs a definition and a schema
 
-| Project | Useful evidence to read |
-| --- | --- |
-| FineWeb / FineWeb-Edu | Extraction, filtering, and deduplication ablations |
-| Dolma | Source composition and an inspectable curation toolkit |
-| DataComp-LM | Data-policy comparisons with a shared training setup |
+| Case | Target | Preparation check |
+| --- | --- | --- |
+| CoLA | Binary acceptability | Label ≠ Matthews correlation |
+| STS-B | Similarity, 0–5 | Scale and annotation anchors |
+| MNLI / RTE | Relation label | Input order and label mapping |
+| MultiRC | Answer-option label | Passage, question and option IDs |
 
-Read a named release and its recipe before choosing data.
+Save the rubric and inspect annotation disagreements.
 
 Note:
-These are examples for studying methods, not a ranking of the best or latest corpora. FineWeb: https://arxiv.org/abs/2406.17557. Dolma: https://arxiv.org/abs/2402.00159 and https://github.com/allenai/dolma. DataComp-LM: https://arxiv.org/abs/2406.11794. Match language, domain, access, and available tokens to the project. The classroom uses small authored data and downloads none of these corpora.
+Adapted from the instructor's October 29, 2025 PPTX, slides 5–13 and 15–23. GLUE Section 3: https://arxiv.org/html/1804.07461v3. CoLA labels are binary; −1 to 1 describes its Matthews correlation metric. STS-B is a real-valued similarity task on a 0–5 scale: see Cer et al., Section 2, Table 1 and Section 8, https://aclanthology.org/S17-2001/. The source deck and GLUE paper say 1–5, but the original STS rubric includes zero. Store named labels and the pinned release's integer mapping; do not copy a numeric convention from a different NLI dataset. MultiRC uses answer-option F1 and question-level exact match: SuperGLUE Sections 3.2–3.3, https://arxiv.org/html/1905.00537v3. The rubric/annotation audit is our course recommendation: pilot independent judgments, retain disagreements and adjudication. Connect to Week 8: grammaticality and human preference answer different questions.
 
 ---
 
@@ -169,6 +167,38 @@ Measure retained tokens and inspect errors by source and language.
 
 Note:
 Use development evidence to choose a policy, then preserve a final evaluation. A heuristic score is not a gold quality label. English whitespace word counts do not transfer unchanged to Chinese. This table contains authored failure possibilities, not measured rates. FineWeb Sections 3.5–3.6 documents controlled filter ablations; generalize the method rather than copying every threshold.
+
+---
+
+<!-- .slide: id="negative-construction" -->
+
+## Distractors can reveal the answer
+
+SWAG / HellaSwag: generated alternatives and adversarial filtering.
+
+1. Retain the source context and candidate provenance.
+2. Audit easy cues: length, style and answer position.
+3. Check that people can resolve the intended contrast.
+
+A difficult alternative may also be a valid answer.
+
+<p class="caption">Construction choices need development evidence and a separate final evaluation.</p>
+
+Note:
+The historical motivation is SWAG Section 2 and Figure 1, https://aclanthology.org/D18-1009/, and HellaSwag Sections 3–4, https://aclanthology.org/P19-1472/. Supplied 2025 slides 25–31. SWAG iteratively trains classifiers on construction folds and replaces easy generated negatives; human validation is a distinct step. These three classroom audit steps summarize design questions, not a faithful implementation of either full algorithm. A low adversary score does not establish semantic validity or eliminate every shortcut. For a new course dataset, record the candidate generator, filtering model, selection history and human decisions. Freeze a final evaluation after development. The next chart shows why an answer-only check is useful.
+
+---
+
+<!-- .slide: id="historical-shortcuts" -->
+
+## Shortcut checks can expose dataset artifacts
+
+<div class="plot" data-plotly="assets/historical-shortcuts.json" role="img" aria-label="Historical 2019 BERT-Large accuracy on SWAG and HellaSwag under default, ending-only, shuffled, and shuffled-ending-only conditions."></div>
+
+<p class="caption">Historical BERT-Large results, 2019. Ending-only removes the context.</p>
+
+Note:
+The original Spring slide 17 and 2025 slide 29 include Figure 4 of Zellers et al., HellaSwag. This editable replot preserves all eight values and uses a zero baseline. Models were trained and evaluated under the stated conditions. High ending-only performance suggests exploitable information in the candidate endings; it does not measure understanding of the missing context. Shuffled means token order within endings is shuffled. These are historical experimental results, not current model rankings. Source: https://arxiv.org/abs/1905.07830, Figure 4; Spring media image16.png; 2025 media image27.png. The chart is now in the core data-quality route: inspect a construction shortcut before interpreting the dataset as a capability test. A low ending-only score would not certify an artifact-free dataset.
 
 ---
 
@@ -239,7 +269,6 @@ Expected response: Unicode normalization equates the decomposed accent in train-
 Note:
 Data and evaluation are one experimental design. Keep the inference population and the training budget explicit.
 
-
 ---
 
 <!-- .slide: id="duplicate-families" -->
@@ -273,9 +302,29 @@ Rows are not always independent examples. A chunk split asks a different questio
 
 ---
 
+<!-- .slide: id="task-construction" -->
+
+## One article becomes several question–sentence rows
+
+| Article | Question | Sentence | Contains answer? |
+| --- | --- | --- | --- |
+| 17 | Q1 | S1 | Yes |
+| 17 | Q1 | S2 | No |
+| 17 | Q2 | S1 | No |
+| 17 | Q2 | S2 | Yes |
+
+Q1 in training and Q2 in development still share article 17.
+
+<p class="caption">QNLI-inspired toy conversion. An unseen-article claim needs article-family splits.</p>
+
+Note:
+Adapted concept: 2025 PPTX slide 11; GLUE Section 3.3 and Appendix A, https://arxiv.org/html/1804.07461v3. The toy article contains S1: Noa stores the model on the shared drive. S2: Mina writes the report. Q1 asks where Noa stores the model; Q2 asks who writes the report. The table is authored, not released QNLI data or its full selection recipe. Group related articles, assign splits, then materialize question–sentence rows with inherited source IDs. New questions about familiar articles are a different generalization target. Preserve published benchmark splits when reproducing official results. MultiRC supplies a separate aggregation lesson: option labels need question IDs for whole-answer-set exact match, and related questions may need passage-level resampling. E02 checks the article boundary as well as duplicate families.
+
+---
+
 <!-- .slide: class="exercise" id="data-exercise-03" -->
 
-<p class="exercise-meta">Exercise E02 · 6 minutes · Notebook E02</p>
+<p class="exercise-meta">Exercise E02 · 8 minutes · Notebook E02</p>
 
 ## Which proposed split leaks a match family?
 
@@ -285,12 +334,14 @@ Declared matches: A–B and B–C. Record D is unrelated.
 | --- | --- |
 | A, C | B, D |
 
-Find the components and suggest a split with no match edge crossing.
+Find the components and repair the split.
 
-<div class="answer fragment"><p>Components: {A, B, C}, {D}. One feasible split: train A/B/C; development D.</p></div>
+For unseen articles, is grouping only by question ID enough?
+
+<div class="answer fragment"><p>Components: {A, B, C}, {D}. One feasible split: train A/B/C; development D.<br>Question IDs alone do not separate articles.</p></div>
 
 Note:
-This four-record split is only an illustration of the invariant; one development record cannot support a useful real estimate. Discuss group imbalance and the deployment question before using a real partition. Keep chunks and revisions under their parent grouping. The notebook detects the original violation and verifies the corrected assignment without deleting records.
+This four-record split is only an illustration of the invariant; one development record cannot support a useful real estimate. Discuss group imbalance and the deployment question before using a real partition. Keep chunks and revisions under their parent grouping. The notebook detects both a duplicate-family crossing and an article shared across distinct question groups. It verifies repaired assignments without deleting records. Allow six minutes for the graph and two for the question/article contrast.
 
 ---
 
@@ -340,22 +391,6 @@ For our course: change one data policy and keep a comparable training budget.
 
 Note:
 These papers provide methods and empirical case studies. Their findings do not guarantee that every deduplication or quality threshold improves every model. Students can get a sound negative result. Read Lee et al., methods and experimental sections, https://aclanthology.org/2022.acl-long.577/; FineWeb, dataset-construction ablations, https://arxiv.org/abs/2406.17557. Full paper training budgets are outside the classroom scope. Allow a short transition before the break.
-
----
-
-<!-- .slide: id="fineweb-case" -->
-
-## FineWeb: stronger deduplication changed the data mixture
-
-| Reported 2024 comparison | Observation |
-| --- | --- |
-| Global deduplication across crawls | Removed more data, but did not give the best aggregate result |
-| Deduplication within each crawl | Performed better in the reported comparison |
-
-A data policy changes which documents remain and how often they appear.
-
-Note:
-Source: FineWeb Section 3.4 and Appendix E, https://arxiv.org/html/2406.17557v2; official blog, More deduplication is always better, right? and individual dump dedup. This is a reported empirical case under the authors' model, budget, and evaluation mixture. Their explanation about low-frequency residual data quality is a hypothesis supported by their inspection and ablations, not a general theorem. We do not fabricate a numerical reproduction or claim global deduplication is always worse.
 
 ---
 
@@ -438,7 +473,6 @@ Seven minutes includes arithmetic and debrief. State the within-source sampling 
 Note:
 Data and evaluation are one experimental design. Keep the inference population and the training budget explicit.
 
-
 ---
 
 <!-- .slide: id="comparison-record" -->
@@ -474,40 +508,6 @@ A model name and one number leave much of the experiment unspecified.
 
 Note:
 An evaluation harness implements this contract. Record the dataset revision, task configuration, model revision, tokenizer, prompt, generation settings, and scoring code. The EleutherAI harness distinguishes likelihood-based requests from generated responses; a backend's capabilities constrain which task interface can run. Source: https://github.com/EleutherAI/lm-evaluation-harness, model request types and reproducibility guidance. We inspect the concepts without requiring a new harness installation today.
-
----
-
-<!-- .slide: id="model-interfaces" -->
-
-## The same task can use different model interfaces
-
-| Interface | Sentiment example |
-| --- | --- |
-| BERT masked token | “It was [MASK].” Compare label words. |
-| Causal LM likelihood | Score each candidate answer. |
-| Chat generation | Generate a label, then parse it. |
-
-Prompts, label words, and parsing rules are experimental choices.
-
-Note:
-Retain the useful comparison in the Spring companion notebook. BERT predicts a masked token using both sides of its input. A causal LM scores an answer token sequence conditioned on a prefix. A chat model generates a response that needs a declared extraction rule. A plain masked-token score is not an autoregressive sequence probability. Check label-token boundaries and label mappings. Do not copy the old notebook's automatic model downloads into the classroom core. Source: BERT, https://aclanthology.org/N19-1423/, Section 3; supplied Spring notebook, zero-shot evaluation section.
-
----
-
-<!-- .slide: id="completion-scoring" -->
-
-## Candidate likelihood and length normalization
-
-$$s(y\mid x)=\sum_{t=1}^{|y|}\log p(y_t\mid x,y_{<t})$$
-
-An alternative rule uses $s(y\mid x)/|y|$.
-
-- Score the answer tokens under a fixed prompt.
-- State how the denominator counts length.
-- Choose the rule before inspecting test results.
-
-Note:
-The sum is the candidate's conditional log probability under the token sequence model. Dividing by answer length creates a different decision rule, and neither rule is universally appropriate for every benchmark. Our exercise uses token counts. Real harness tasks may normalize by characters, bytes, or another convention, so inspect the pinned task definition. Leading spaces and prompt/completion tokenization boundaries can also matter. Source: EleutherAI harness task configuration documentation, linked from https://github.com/EleutherAI/lm-evaluation-harness.
 
 ---
 
@@ -732,7 +732,6 @@ Students can adapt the notebook's final short template to the existing project p
 Note:
 The same structure applies to a data-filter comparison, SFT adaptation, reward-model evaluation or policy optimization. A negative result with sound controls is useful. Choose one meaningful comparison within a small budget; do not promise improvement from a preferred method.
 
-
 ---
 
 <!-- .slide: class="references" id="methods-reading" -->
@@ -744,10 +743,10 @@ The same structure applies to a data-filter comparison, SFT adaptation, reward-m
 - [Dolma, 2024](https://arxiv.org/abs/2402.00159): source composition and curation tools.
 - [DataComp-LM, 2024](https://arxiv.org/abs/2406.11794): comparisons under shared training conditions.
 
-[Full reading guide](optional-reading.md)
+[Benchmark construction cases and full reading guide](optional-reading.md)
 
 Note:
-End the 135-minute classroom route here. The following benchmark and statistical material remains available as an optional extension and for the evaluation section planning. Reading choices follow the project question; there is no reference-count requirement and no new graded work.
+End the 120 teaching minutes here, then allow 15 minutes for Quiz 4. The following construction cases, scoring details and matching methods are optional. GLUE/STS schemas, QNLI-style lineage, SWAG/HellaSwag shortcuts and paired uncertainty are in the core. Reading choices follow the project question; there is no reference-count requirement and no new graded work.
 
 ---
 
@@ -755,13 +754,13 @@ End the 135-minute classroom route here. The following benchmark and statistical
 
 ## Optional extension: protocols and matching
 
+- Context, minimal pairs and task-specific schemas.
 - Candidate scoring: P01.
 - Attempt budgets and pass@k: P02.
-- MinHash and candidate probability: P03.
+- Collection rounds, curation cases and MinHash: P03.
 
 Note:
 This extension is outside the 120-minute Lecture 10 core. Paired evaluation and uncertainty are now core E05. Keep the catalog as reading rather than racing through benchmark names. Current examples are protocol case studies, not a model ranking.
-
 
 ---
 
@@ -769,7 +768,7 @@ This extension is outside the 120-minute Lecture 10 core. Paired evaluation and 
 
 ## Established tasks still teach useful distinctions
 
-| Spring example | What the model returns |
+| Historical example | What the model returns |
 | --- | --- |
 | SuperGLUE: BoolQ, RTE | A label about a passage or sentence pair |
 | HellaSwag | A continuation choice |
@@ -777,23 +776,99 @@ This extension is outside the 120-minute Lecture 10 core. Paired evaluation and 
 | GSM8K | A final numerical answer |
 | HumanEval | Executable code |
 
-<p class="caption">Retained from the Spring material. Each requires its own scoring rule.</p>
+<p class="caption">From the 2025 and Spring benchmark materials. Each requires its own scoring rule.</p>
 
 Note:
-This compresses the Spring deck's dataset catalog. Different SuperGLUE tasks also use different metrics, so do not call every suite score plain accuracy. Older public tasks remain useful for small models, debugging, and studying specific failure modes. Strong scores alone do not establish broad capability. Source: supplied Spring PPTX slides 3–29, which credits Anoop Sarkar; SuperGLUE paper https://arxiv.org/abs/1905.00537; HellaSwag project https://rowanzellers.com/hellaswag/.
+This compresses the Spring and 2025 decks' dataset catalogs. Different SuperGLUE tasks also use different metrics, so do not call every suite score plain accuracy. Older public tasks remain useful for small models, debugging, and studying specific failure modes. Strong scores alone do not establish broad capability. Source: supplied Spring PPTX slides 3–29 and 2025 PPTX slides 3–42, which credits Anoop Sarkar; SuperGLUE paper https://arxiv.org/abs/1905.00537; HellaSwag project https://rowanzellers.com/hellaswag/.
 
 ---
 
-<!-- .slide: id="historical-shortcuts" -->
+<!-- .slide: id="lambada-construction" -->
 
-## Shortcut checks can expose dataset artifacts
+## LAMBADA: select examples that need context
 
-<div class="plot" data-plotly="assets/historical-shortcuts.json" role="img" aria-label="Historical 2019 BERT-Large accuracy on SWAG and HellaSwag under default, ending-only, shuffled, and shuffled-ending-only conditions."></div>
+**Earlier context:** Noa handed Mina a notebook. Its cover was green.
 
-<p class="caption">Historical BERT-Large results, 2019. Ending-only removes the context.</p>
+**Target sentence:** Later Mina described the cover as ____.
+
+**Target word:** green.
+
+Compare prediction with the full passage and the target sentence alone.
+
+<p class="caption">Authored illustration. Human filtering must establish the context contrast.</p>
 
 Note:
-The original Spring slide 17 includes Figure 4 of Zellers et al., HellaSwag. This editable replot preserves all eight values and uses a zero baseline. Models were trained and evaluated under the stated conditions. High ending-only performance suggests exploitable information in the candidate endings; it does not measure understanding of the missing context. Shuffled means token order within endings is shuffled. These are historical experimental results, not current model rankings. Source: https://arxiv.org/abs/1905.07830, Figure 4; supplied PPTX image16.png.
+Source: supplied 2025 slide 34 and Paperno et al., Sections 3.1–3.2, https://aclanthology.org/P16-1144/. LAMBADA selects passages using automated and human checks, including full versus limited context. This invented example illustrates the design and has not passed that collection protocol. Retain book IDs and context-window rules in a course adaptation; compare the same target under both conditions. The original 10,022 filtered passages are development/test data, not a training set. Raw training novels are disjoint and not filtered the same way. A target word may occupy multiple BPE tokens: do not silently score only its first token. A context ablation measures dependence on the provided context; it alone does not prove broad comprehension.
+
+---
+
+<!-- .slide: id="minimal-pair-construction" -->
+
+## BLiMP: preserve the intended contrast
+
+| Authored agreement pair | Sentence |
+| --- | --- |
+| Acceptable | The keys beside the folder **are** missing. |
+| Unacceptable | The keys beside the folder **is** missing. |
+
+Retain pair and template IDs; check grammar and lexical cues.
+
+<p class="caption">A grammaticality contrast is different from a human-preference pair.</p>
+
+Note:
+Source: supplied 2025 slide 41 and Warstadt et al., Sections 2–3, https://aclanthology.org/2020.tacl-1.25/. BLiMP uses linguist-designed generation templates and evaluates sentence probability preferences. These sentences are authored course examples, not copied benchmark rows. Keep the contrast, vocabulary choices and template provenance. A course experiment claiming transfer to new templates must split by template families before generating variants. For an autoregressive model, specify complete sentence scoring, token boundaries and tie handling. The target is a specified English agreement judgment, not overall response helpfulness; do not automatically reuse these labels as reward-model preferences.
+
+---
+
+<!-- .slide: id="benchmark-task-fields" -->
+
+## Task families require different preparation checks
+
+| Task family | What must survive preprocessing? |
+| --- | --- |
+| Question answering | Source evidence, answer spans or aliases |
+| Summarization | Document–reference alignment and provenance |
+| Translation | Aligned source/target text and language IDs |
+| Structured prediction | Text revision, token/span offsets and labels |
+
+Normalization or truncation can invalidate an annotation.
+
+Note:
+Adapted from the 2025 deck's task catalog, slides 44–47: Natural Questions and other QA examples, summarization, FLORES and other translation resources, and CoNLL/structured prediction. This table is an original checklist, not a claim about every dataset's official format. Preserve source-family IDs in every family, inspect transformations with examples, and use the pinned task's scorer. In structured prediction, changing Unicode normalization may shift character offsets; in summarization, truncating a document may remove support for the reference. Select a task because it matches the claim, then inspect its data contract. The catalog creates no requirement to run all these tasks.
+
+---
+
+<!-- .slide: id="model-interfaces" -->
+
+## The same task can use different model interfaces
+
+| Interface | Sentiment example |
+| --- | --- |
+| BERT masked token | “It was [MASK].” Compare label words. |
+| Causal LM likelihood | Score each candidate answer. |
+| Chat generation | Generate a label, then parse it. |
+
+Prompts, label words, and parsing rules are experimental choices.
+
+Note:
+Retain the useful comparison in the Spring companion notebook. BERT predicts a masked token using both sides of its input. A causal LM scores an answer token sequence conditioned on a prefix. A chat model generates a response that needs a declared extraction rule. A plain masked-token score is not an autoregressive sequence probability. Check label-token boundaries and label mappings. Do not copy the old notebook's automatic model downloads into the classroom core. Source: BERT, https://aclanthology.org/N19-1423/, Section 3; supplied Spring notebook, zero-shot evaluation section.
+
+---
+
+<!-- .slide: id="completion-scoring" -->
+
+## Candidate likelihood and length normalization
+
+$$s(y\mid x)=\sum_{t=1}^{|y|}\log p(y_t\mid x,y_{<t})$$
+
+An alternative rule uses $s(y\mid x)/|y|$.
+
+- Score the answer tokens under a fixed prompt.
+- State how the denominator counts length.
+- Choose the rule before inspecting test results.
+
+Note:
+The sum is the candidate's conditional log probability under the token sequence model. Dividing by answer length creates a different decision rule, and neither rule is universally appropriate for every benchmark. Our exercise uses token counts. Real harness tasks may normalize by characters, bytes, or another convention, so inspect the pinned task definition. Leading spaces and prompt/completion tokenization boundaries can also matter. Source: EleutherAI harness task configuration documentation, linked from https://github.com/EleutherAI/lm-evaluation-harness.
 
 ---
 
@@ -902,6 +977,24 @@ ARC-AGI-3 launched in March 2026. This is an introduction to evaluating an inter
 
 ---
 
+<!-- .slide: id="collection-rounds" -->
+
+## Dynabench: model failures guide data collection
+
+1. People propose examples that challenge a model.
+2. Independent checks validate the intended labels.
+3. Record the model, rubric and collection round.
+4. Evaluate improvements on a separate, fixed set.
+
+Report results by evaluation round: later rounds can change difficulty.
+
+<p class="caption">Historical design, 2021; the final-check recommendation is our course adaptation.</p>
+
+Note:
+Source: supplied 2025 slide 48; Kiela et al., Sections 2–3, https://aclanthology.org/2021.naacl-main.324/. Dynabench studies dynamic human-and-model data collection. The last two steps emphasize our experimental-design recommendations, not a verbatim description of every task's workflow. Model failures are useful development evidence; a collected example needs validation before it becomes a target. Preserve model and round identity, and distinguish validated failures from annotation errors. New rounds may select another population, so a score on round 2 is not directly comparable with a score on round 1 for attributing improvement. The lecture does not require the historical web service or claim it remains operational.
+
+---
+
 <!-- .slide: id="pass-at-k" -->
 
 ## More attempts change the success measure
@@ -934,6 +1027,39 @@ Ten sampled programs contain two that pass all tests.
 
 Note:
 Expected arithmetic: 1 minus choose(8,5) divided by choose(10,5) equals 1 minus 56/252. The same ten outcomes support both estimates. This example contains no generated executable code. Students should distinguish a task-level pass fraction from repeated attempts on a task, and should not compare pass@1 to pass@5 as if the compute were equal.
+
+---
+
+<!-- .slide: id="open-data-cases" -->
+
+## Open data projects to inspect
+
+| Project | Useful evidence to read |
+| --- | --- |
+| FineWeb / FineWeb-Edu | Extraction, filtering, and deduplication ablations |
+| Dolma | Source composition and an inspectable curation toolkit |
+| DataComp-LM | Data-policy comparisons with a shared training setup |
+
+Read a named release and its recipe before choosing data.
+
+Note:
+These are examples for studying methods, not a ranking of the best or latest corpora. FineWeb: https://arxiv.org/abs/2406.17557. Dolma: https://arxiv.org/abs/2402.00159 and https://github.com/allenai/dolma. DataComp-LM: https://arxiv.org/abs/2406.11794. Match language, domain, access, and available tokens to the project. The classroom uses small authored data and downloads none of these corpora.
+
+---
+
+<!-- .slide: id="fineweb-case" -->
+
+## FineWeb: stronger deduplication changed the data mixture
+
+| Reported 2024 comparison | Observation |
+| --- | --- |
+| Global deduplication across crawls | Removed more data, but did not give the best aggregate result |
+| Deduplication within each crawl | Performed better in the reported comparison |
+
+A data policy changes which documents remain and how often they appear.
+
+Note:
+Source: FineWeb Section 3.4 and Appendix E, https://arxiv.org/html/2406.17557v2; official blog, More deduplication is always better, right? and individual dump dedup. This is a reported empirical case under the authors' model, budget, and evaluation mixture. Their explanation about low-frequency residual data quality is a hypothesis supported by their inspection and ablations, not a general theorem. We do not fabricate a numerical reproduction or claim global deduplication is always worse.
 
 ---
 

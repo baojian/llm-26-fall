@@ -75,6 +75,53 @@ prove that text is factually correct.</p>
 For preferences, retain pair provenance, the rubric, and correlated candidate
 groups. For reward optimization, separate policy-training prompts, reward-model
 training pairs, and evaluation prompts. All three can become leakage routes.</p>
+<h3>Task definitions become data schemas</h3>
+<p>The instructor's 2025 benchmark lecture provides concrete preparation cases.
+Start by specifying what one example contains, what the target means, and
+which source identifiers must survive transformation.</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Input and target</th>
+<th>Preparation check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CoLA</td>
+<td>Sentence → binary acceptability label</td>
+<td>Separate the label from the Matthews correlation metric, whose range is −1 to 1.</td>
+</tr>
+<tr>
+<td>STS-B</td>
+<td>Sentence pair → similarity score on a 0–5 scale</td>
+<td>Preserve a real-valued target; define annotation anchors.</td>
+</tr>
+<tr>
+<td>MNLI / RTE</td>
+<td>Ordered premise and hypothesis → relation label</td>
+<td>Store label names and the release-specific integer mapping.</td>
+</tr>
+<tr>
+<td>MultiRC</td>
+<td>Passage, question and answer option → binary decision</td>
+<td>Keep passage/question IDs and the complete option set.</td>
+</tr>
+</tbody>
+</table>
+<p>These task distinctions come from <a href="https://arxiv.org/html/1804.07461v3#S3">GLUE, Section 3</a>,
+<a href="https://aclanthology.org/S17-2001/">STS, Section 2 and Table 1</a>, and
+<a href="https://arxiv.org/html/1905.00537v3#S3">SuperGLUE, Sections 3.2–3.3</a>.
+The STS source establishes the lower endpoint as <strong>0</strong>; the earlier lecture
+and GLUE paper's 1–5 wording should not be used to reject valid zero scores.</p>
+<p>Write a short annotation rubric with positive, negative and borderline examples.
+Pilot it with independent judgments, retain disagreements, and record how they
+were resolved. Store the rubric revision alongside labels. For Week 8 preference
+pairs, also preserve candidate order, ties and annotator agreement: a grammatical
+sentence is not automatically the preferred response under a helpfulness rubric.
+These are recommended course data practices, not a claim that each historical
+dataset used the same annotation procedure.</p>
 <h2 id="3-extraction-and-filtering">3. Extraction and filtering</h2>
 <p>Extraction choices decide what becomes training text. Compare raw source,
 extracted text, and the downstream example on a small audited sample. Look
@@ -89,6 +136,18 @@ slice, rather than only a global retained-token count.</p>
 <a href="https://arxiv.org/abs/2402.00159">Dolma</a>, and
 <a href="https://arxiv.org/abs/2406.11794">DataComp-LM</a>. Their large published experiments
 are methodological references, not the required course compute budget.</p>
+<h3>Distractor construction is a quality decision</h3>
+<p>SWAG builds continuation choices using generated negatives and adversarial
+filtering; HellaSwag revisits the remaining shortcuts. Read the construction
+method in <a href="https://aclanthology.org/D18-1009/">SWAG, Section 2</a> and the
+ablation in <a href="https://aclanthology.org/P19-1472/">HellaSwag, Section 3.2 and Figure 4</a>.</p>
+<p>For a course dataset, retain candidate provenance, use a development audit to
+identify easy stylistic cues, then have people check that the intended answer is
+supported and alternatives are unsuitable. A difficult distractor can instead
+be another valid answer. Inspect length, formatting and answer-position cues;
+try an answer-only baseline. Strong performance without the required context
+is evidence to investigate a shortcut. Low performance does not certify that
+all shortcuts are absent. Freeze the final evaluation after construction choices.</p>
 <h2 id="4-exact-and-approximate-duplicates">4. Exact and approximate duplicates</h2>
 <p>An exact key is only as meaningful as its normalization rule. Unicode NFC,
 line-ending normalization, and trimming outer whitespace can remove superficial
@@ -119,6 +178,60 @@ semantic overlap or prior pretraining exposure.</p>
 points. A final test is used after these choices are fixed. Repeatedly trying
 options on the final test turns it into development data, even if no gradients
 were computed on its text.</p>
+<h3>QNLI-style conversion: one source produces many rows</h3>
+<p>QNLI converts question answering into question–sentence classification.
+The historical conversion motivates this <strong>authored illustration</strong>, not a
+reproduction or proposed re-split of released QNLI.</p>
+<p>Article 17 contains: S1, “Noa stores the model on the shared drive.” S2,
+“Mina writes the report.” Q1 asks where Noa stores the model; Q2 asks who
+writes the report. Pairing questions with sentences produces:</p>
+<table>
+<thead>
+<tr>
+<th>Article</th>
+<th>Question</th>
+<th>Sentence</th>
+<th>Contains its answer?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>17</td>
+<td>Q1</td>
+<td>S1</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Q1</td>
+<td>S2</td>
+<td>No</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Q2</td>
+<td>S1</td>
+<td>No</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Q2</td>
+<td>S2</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>Q1 in training and Q2 in development have disjoint question IDs but share the
+article. For a claim about unseen articles, assign article families to splits
+before materializing these rows; inherit that assignment in every row. If
+the claim concerns new questions about familiar articles, describe that different
+setting explicitly. Preserve published benchmark splits when reproducing scores.
+Source: <a href="https://arxiv.org/html/1804.07461v3#A1">GLUE, Section 3.3 and Appendix A</a>.</p>
+<p>The scoring unit can also differ from the row unit. MultiRC reports answer-option
+F1 and exact match of each question's entire answer set. Four correct options
+out of five do not imply a correctly answered question. Keep the identifiers
+needed for both aggregation and group-aware uncertainty.
+<a href="https://arxiv.org/html/1905.00537v3#S5.T3">SuperGLUE, Table 3</a>.</p>
 <h2 id="6-match-exposure-and-compute">6. Match exposure and compute</h2>
 <p>Removing records changes corpus size. Equal epochs then give different
 training-token counts. A data-policy study should freeze the model, tokenizer,
@@ -178,6 +291,66 @@ attempts or giving tools changes the evaluated system.</p>
 and shortcut analysis. Modern benchmark examples are useful for studying
 versioning, graded reasoning, tools, and interaction. They are not a substitute
 for evaluation matched to a project's question.</p>
+<h3>Controlled examples reveal what a dataset measures</h3>
+<p><strong>LAMBADA</strong> selected passages through full-context and limited-context prediction
+checks. Its 10,022 filtered passages form development and test sets; its separate
+training text comes from different novels and is not filtered in the same way.
+<a href="https://aclanthology.org/P16-1144/">Paperno et al., Sections 3.1–3.2</a>.
+For a new context-use study, retain book/document IDs, document the context
+window, and compare both conditions on the same items. Correct prediction of a
+target word spanning several BPE tokens requires scoring the complete word.</p>
+<p><strong>BLiMP</strong> uses grammar-generated minimal pairs and checks which sentence receives
+higher probability. <a href="https://aclanthology.org/2020.tacl-1.25/">Warstadt et al., Sections 2–3</a>.
+An authored example is “The keys beside the folder are missing” versus “The keys
+beside the folder is missing.” Preserve pair and template IDs, verify the intended
+contrast, and check for lexical cues. Template-based generation can create many
+related rows; a new-template generalization claim needs a corresponding split.
+Do not equate grammatical acceptability with a Week 8 human-preference label.</p>
+<p><strong>Dynabench</strong> studies data collection with people challenging a model and
+validating examples across rounds. <a href="https://aclanthology.org/2021.naacl-main.324/">Kiela et al., Sections 2–3</a>.
+For a course adaptation, record the model, collection round, rubric and validation
+status. Use discovered failures for development, preserve a separate final check,
+and report performance by fixed evaluation round. Changing the test distribution
+while changing the model prevents attributing the score difference to the model
+alone. These design recommendations do not assume the historical web service
+is currently available.</p>
+<h3>Metadata depends on the task</h3>
+<p>The 2025 lecture's task catalog becomes a preparation checklist:</p>
+<table>
+<thead>
+<tr>
+<th>Task family</th>
+<th>Preserve before tokenization</th>
+<th>Example audit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Question answering</td>
+<td>Source, question ID, answer spans or aliases</td>
+<td>Answers remain supported after extraction.</td>
+</tr>
+<tr>
+<td>Summarization</td>
+<td>Document, reference and source-family IDs</td>
+<td>Truncation has not removed reference evidence.</td>
+</tr>
+<tr>
+<td>Translation</td>
+<td>Aligned pair, languages and document IDs</td>
+<td>Source/target alignment survives filtering.</td>
+</tr>
+<tr>
+<td>Structured prediction</td>
+<td>Text revision, token/span offsets, labels</td>
+<td>Normalization has not shifted annotation offsets.</td>
+</tr>
+</tbody>
+</table>
+<p>This is a course-authored checklist, not an official scorer specification for
+every dataset. Choose one family that matches the project claim. The optional
+slides connect these older examples to the versioned modern protocols in the
+reading guide, without treating historical leaderboards as current rankings.</p>
 <h2 id="8-likelihood-and-generation-answer-different-questions">8. Likelihood and generation answer different questions</h2>
 <p>Token perplexity is <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>exp</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>H</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\exp(H)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">exp</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0813em;">H</span><span class="mclose">)</span></span></span></span> for mean negative log likelihood <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi></mrow><annotation encoding="application/x-tex">H</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0813em;">H</span></span></span></span> in nats per
 scored token. It is not directly comparable across tokenizers without controlling
@@ -239,7 +412,8 @@ population and budget instead of claiming general model superiority.</p>
 <p>The notebook provides five core offline exercises on duplicate/split audits,
 source exposure, evaluation composition, and paired uncertainty. Additional
 practice covers candidate scoring, pass@k, and MinHash. Every dataset is a
-labeled teaching fixture; the core practice uses no model download or GPU.</p>
+labeled teaching fixture; the core practice uses no model download or GPU.
+E02 also checks why disjoint question IDs do not establish an unseen-article split.</p>
 <ul>
 <li><a href="../slides/lecture-10/optional-reading.md">Lecture 10 reading guide and versioned benchmark examples</a>.</li>
 <li><a href="lecture-08-instructgpt.html">Lecture 08: SFT and reward-model data</a>.</li>

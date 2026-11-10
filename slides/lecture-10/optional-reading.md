@@ -2,6 +2,7 @@
 
 Read for a question you want to investigate; there is no fixed reference count.
 Data sources and dated benchmark releases were checked on **October 26, 2026**.
+The 2025 deck's benchmark-construction sources were checked on **November 10, 2026**.
 Pin the actual dataset,
 model, task configuration, and scorer revisions when running an experiment.
 A release date or a benchmark name alone does not fully specify a result.
@@ -26,6 +27,27 @@ token exposure, an evaluation audit, and paired uncertainty. The sampling
 numbers and outcomes are authored examples. More exposure to a source is not
 evidence that it improves a model; a controlled run must test that hypothesis.
 
+## Benchmark construction as data preparation
+
+The instructor's October 29, 2025 benchmark deck provides the following cases.
+The first four readings support the classroom route; the remaining cases are
+optional. Read how the data were made before interpreting the model scores.
+
+| Reading | Section and preparation question |
+| --- | --- |
+| [GLUE (Wang et al., 2019)](https://arxiv.org/html/1804.07461v3) | Section 3 and Appendix A: what do labels mean, and how does converting QA into question–sentence rows change the unit? |
+| [STS (Cer et al., 2017)](https://aclanthology.org/S17-2001/) | Section 2, Table 1 and Section 8: the annotation rubric uses 0–5, including zero; preserve real-valued targets. |
+| [SuperGLUE (Wang et al., 2019)](https://arxiv.org/html/1905.00537v3) | Sections 3.2–3.3 and Table 3: MultiRC needs option decisions and question-level answer-set scoring. |
+| [SWAG (Zellers et al., 2018)](https://aclanthology.org/D18-1009/) and [HellaSwag (2019)](https://aclanthology.org/P19-1472/) | SWAG Section 2; HellaSwag Section 3.2 and Figure 4: generation, adversarial filtering, human checks, and shortcut ablations. |
+| [LAMBADA (Paperno et al., 2016)](https://aclanthology.org/P16-1144/) | Sections 3.1–3.2: select a context-dependent prediction task, and distinguish filtered evaluation passages from raw training novels. |
+| [BLiMP (Warstadt et al., 2020)](https://aclanthology.org/2020.tacl-1.25/) | Sections 2–3: template generation, minimal contrasts and validation. A grammaticality pair is not automatically a response-preference pair. |
+| [Dynabench (Kiela et al., 2021)](https://aclanthology.org/2021.naacl-main.324/) | Sections 2–3: model-guided collection and validation; record rounds because their populations can differ. |
+
+E02's additional source-ID check uses six authored rows, with no benchmark
+download. A question split can still share an article. The notes and slides
+distinguish these course design recommendations from each benchmark's released
+protocol. Do not silently re-split a benchmark while claiming its official score.
+
 ## Core: evaluation methods
 
 | Reading | Focus |
@@ -37,7 +59,7 @@ The core E05 seeded paired percentile bootstrap is a small teaching example.
 It does not account for training-run variation. For related examples, decide
 whether documents, repositories, or another grouping should be the sampling unit.
 
-## Appendix: from the Spring examples to current protocols
+## Appendix: from historical examples to current protocols
 
 These readings support the protocol case studies in the optional extension.
 The main Lecture 10 route combines data quality and evaluation in 120 teaching
@@ -74,8 +96,8 @@ environment setup, and total evaluation cost need a separate check before a run.
   the judge-bias and human-agreement experiments. Agreement in one study does
   not validate every future judge, rubric, and application.
 
-The Spring PPTX credits Anoop Sarkar. The [teaching plan](teaching-plan.md)
-records which topics were retained or compressed. No Spring leaderboard is
+Both supplied PPTX decks credit Anoop Sarkar. The [teaching plan](teaching-plan.md)
+maps the source pages to the updated lecture. No historical leaderboard is
 presented as a current result.
 
 ## A feasible follow-up

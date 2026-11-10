@@ -111,8 +111,10 @@ in Week 9. See [the notes](../docs/lecture-09-policy-optimization.html) and
 
 [Lecture 10](lecture-10/index.html) connects data preparation and quality to
 evaluation and experimental design. The former data deck is retained here with
-a 45-slide core, 15-slide optional extension, five core exercises and three
-optional practices. Paired comparisons and uncertainty are now core.
+a 45-slide core, 22-slide optional extension, five core exercises and three
+optional practices. The 2025 benchmark material supplies data-schema,
+question–article lineage and distractor-audit cases. Paired comparisons and
+uncertainty are core; E02 also checks source IDs after QA conversion.
 See [the notes](../docs/lecture-10-data-evaluation.html),
 [teaching plan](lecture-10/teaching-plan.md),
 [reading guide](lecture-10/optional-reading.md), and

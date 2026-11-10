@@ -15,7 +15,7 @@ window.courseTranslations = {
   "Check a score-function gradient, calculate PPO clipping for both advantage signs, and trace a short GAE recursion.": "检验得分函数梯度，计算正负优势下的 PPO 裁剪，并手算一段 GAE 递推。",
   "Data preparation, evaluation and experimental design": "数据准备、评测与实验设计",
   "What data and evaluation choices make an improvement believable?": "哪些数据与评测设计能让提升结论可信？",
-  "Data provenance, extraction and filtering; duplicate families and leakage; sampling exposure; benchmark protocols, graders, paired comparisons, uncertainty and error analysis.": "数据溯源、提取与过滤；重复样本族与泄漏；采样曝光量；基准协议、评分器、配对比较、不确定性与错误分析。",
+  "Data schemas, provenance, extraction and filtering; benchmark construction and shortcut audits; source families, leakage and sampling exposure; evaluation protocols, graders, paired comparisons, uncertainty and error analysis.": "数据格式、溯源、提取与过滤；基准数据构建与捷径检查；同源样本、泄漏与采样曝光量；评测协议、评分器、配对比较、不确定性与错误分析。",
   "Audit duplicate families and split leakage; compare a fixed-budget data policy and report a paired evaluation with uncertainty.": "检查重复样本族与划分泄漏；在固定预算下比较数据策略，并报告配对评测及不确定性。",
   "Ouyang et al., InstructGPT": "Ouyang 等，InstructGPT",
   "Schulman et al., PPO": "Schulman 等，PPO",
