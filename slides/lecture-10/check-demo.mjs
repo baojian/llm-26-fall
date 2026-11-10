@@ -13,7 +13,7 @@ try {
       external.push(request.url());
     }
   });
-  await page.goto(`${origin}/slides/lecture-08/#/evaluation-demo`);
+  await page.goto(`${origin}/slides/lecture-10/#/evaluation-demo`);
   await page.evaluate(() => window.courseReady);
   assert.equal(await page.locator('#historical-shortcuts .ytitle').textContent(), 'Accuracy (%)');
   assert.equal(await page.locator('#evaluation-demo .ytitle').textContent(), 'Accuracy (%)');

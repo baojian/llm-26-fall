@@ -52,9 +52,9 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
 | 5 | **Sat, Oct 10, 2026** | **Attention and the Transformer** | **Make-up class**; Quiz 2; [A2 released](../assignments/a2-build-a-small-lm/README.md); [candidate projects](project-candidates.html) |
 | 6 | Wed, Oct 14, 2026 | Pretraining and decoding in practice | — |
 | 7 | Wed, Oct 21, 2026 | Compute budgets and scaling; guest talk by Jiaxuan Zou | Quiz 3; Project proposal due |
-| 8 | Wed, Oct 28, 2026 | Data preparation and quality | A2 due **Sat, Oct 31** |
-| 9 | Wed, Nov 4, 2026 | Evaluation and experimental design | — |
-| 10 | Wed, Nov 11, 2026 | Supervised fine-tuning | Quiz 4; A3 released |
+| 8 | Wed, Oct 28, 2026 | [InstructGPT, SFT and reward models](lecture-08-instructgpt.html) | A2 due **Sat, Oct 31** |
+| 9 | Wed, Nov 4, 2026 | [Reinforcement learning, REINFORCE and PPO](lecture-09-policy-optimization.html) | — |
+| 10 | Wed, Nov 11, 2026 | [Data preparation, evaluation and experimental design](lecture-10-data-evaluation.html) | Quiz 4; A3 released |
 | 11 | Wed, Nov 18, 2026 | Preferences, rewards, and alignment | — |
 | 12 | Wed, Nov 25, 2026 | Retrieval and retrieval-augmented generation | Project progress update due |
 | 13 | Wed, Dec 2, 2026 | Efficient inference | A3 due |
@@ -66,13 +66,18 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
   October 10; time and room follow the university make-up-day notice.
 - There are 16 meetings of three 45-minute periods: 48 academic periods,
   matching the registered allocation. Lecture numbers follow these meetings.
-- Lecture 07 and Lecture 08 exchange topics to align with
+- Lecture 07 covered compute budgets and scaling to align with
   [Jiaxuan Zou's](https://jiaxuanzou0714.github.io/) guest session on
   **October 21, 15:25–16:10 (Asia/Shanghai), period 8**, in HGX103.
   The topic is [How to Build a Scientific Scaling Ladder](https://jiaxuanzou0714.github.io/blog/2026/how-to-build-scientific-scaling-ladder/).
   The first two periods introduce compute budgets and scaling laws, with
   the existing 15-minute Quiz 3 slot in the first period. Quiz 3, the project
   proposal deadline, and the A2 deadline retain their published dates.
+- **November 10 update:** Weeks 8–9 now reflect the taught InstructGPT/SFT/reward-model
+  and REINFORCE/PPO material. GRPO and DPO are prepared as supplementary slides
+  and were not taught in Week 9. Data preparation, quality, evaluation and
+  experimental design move together to Week 10. Quiz 4 assesses previously
+  taught material; assignment dates and assessment weights are unchanged.
 - December 23 includes guided revision of project claims and evidence.
   Project checkpoints remain individual written submissions through eLearning.
 - Weeks 17–18 (Dec 27, 2026 – Jan 9, 2027) are exam weeks with no classes.

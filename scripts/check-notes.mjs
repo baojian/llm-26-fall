@@ -203,9 +203,49 @@ try {
   assert.equal(await projectCards.count(), 48);
   await page.evaluate(() => scrollTo(0, 0));
   await page.screenshot({ path: path.join(output, 'project-catalog-desktop.png') });
+  // Weeks 8–10 retain English lesson text with bilingual navigation.
+  for (const slug of ['lecture-08-instructgpt', 'lecture-09-policy-optimization', 'lecture-10-data-evaluation']) {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(`${origin}/docs/${slug}.html?lang=en`, { waitUntil: 'networkidle' });
+    assert.equal(await page.locator('article').getAttribute('lang'), 'en');
+    assert.ok(await page.locator('article .katex').count() > 0);
+    assert.equal(await page.locator('.katex-error').count(), 0);
+    const links = await page.locator('a[href]').evaluateAll(items => items.map(item => item.href));
+    for (const href of new Set(links)) {
+      const url = new URL(href);
+      if (url.origin !== origin) continue;
+      assert.ok((await context.request.get(href)).ok(), `Missing note link: ${href}`);
+      if (url.hash && url.pathname === new URL(page.url()).pathname) {
+        assert.equal(await page.evaluate(id => Boolean(document.getElementById(id)), decodeURIComponent(url.hash.slice(1))), true, `Missing section: ${href}`);
+      }
+    }
+    await page.screenshot({ path: path.join(output, `${slug}-desktop.png`) });
+    await page.locator('.katex-display').nth(1).scrollIntoViewIfNeeded();
+    await page.screenshot({ path: path.join(output, `${slug}-equations.png`) });
+    await page.locator('.lang-toggle [data-lang="zh"]').click();
+    assert.equal(await page.locator('header a').first().textContent(), '课程主页');
+    assert.match(await page.locator('.language-availability').textContent(), /正文目前为英文/);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.evaluate(() => scrollTo(0, 0));
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${slug}: mobile page overflow`);
+    await page.screenshot({ path: path.join(output, `${slug}-mobile.png`) });
+    await page.emulateMedia({ media: 'print' });
+    assert.equal(await page.locator('header').isVisible(), false);
+    assert.equal(await page.locator('article').isVisible(), true);
+    await page.emulateMedia({ media: 'screen' });
+  }
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(`${origin}/index.html?lang=zh`, { waitUntil: 'networkidle' });
+  assert.match(await page.locator('#lecture-08').textContent(), /奖励模型/);
+  assert.match(await page.locator('#lecture-09').textContent(), /尚未讲授/);
+  assert.match(await page.locator('#lecture-10').textContent(), /实验设计/);
+  for (const number of ['08', '09', '10']) {
+    await page.locator(`#lecture-${number}`).screenshot({ path: path.join(output, `course-week-${number}-zh.png`) });
+  }
   assert.deepEqual(errors, [], 'Browser errors or external runtime dependencies.');
   console.log('Passed bilingual articles, six accessible diagrams, tabs, copying, anchors, mobile layout, print, offline viewing, shared language controls, and project catalog filter/reset/topic navigation.');
   console.log('Review images: slides/.checks/notes/');
+  console.log('Passed Week 8–10 notes, equation rendering, local links, mobile layouts, print and bilingual course rows.');
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));

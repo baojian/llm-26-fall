@@ -1,218 +1,139 @@
 <!-- .slide: class="title-slide" id="title" -->
 
-<p class="eyebrow">CS40008.01</p>
+<p class="eyebrow">CS40008.01 · Week 8 · October 28, 2026</p>
 
-# Data preparation and quality
+# InstructGPT and reward models
 
-<p class="subtitle">Lecture 08 · NLP and LLMs</p>
+<p class="subtitle">Supervised fine-tuning, preferences, and learned feedback</p>
 
-<p class="byline">Baojian Zhou<br>School of Data Science<br>Fudan University<br>October 28, 2026</p>
+<p class="byline">Baojian Zhou<br>Fudan University · Fall 2026</p>
 
 Note:
-Three 45-minute periods on October 28, with the usual breaks. Follow the published Lecture 08 topic: can better data improve a fixed model at a fixed training budget? Five ungraded exercises run offline on CPU. The final evaluation audit bridges to Lecture 09. Benchmark catalogs, scoring interfaces, and paired bootstrap remain in an optional extension after the main summary, with P01–P03 practice. Source dates and the Spring adaptation are documented in the teaching plan and reading guide.
+This deck consolidates the Week 8 topics the instructor reported teaching. Use the notes for longer explanations; the material is organized for three 45-minute periods, not a claim about the exact historical minute-by-minute sequence. The PPO derivation belongs to Lecture 09. All unlabelled numerical examples are synthetic. Primary case study: Ouyang et al., https://arxiv.org/html/2203.02155v1, Sections 2–3.
 
 ---
 
-<!-- .slide: id="objectives" -->
+<!-- .slide: id="outcomes" -->
 
-## What you will be able to do
+## What you will be able to explain
 
-**Can better data improve a fixed model under a fixed training budget?**
+- Separate demonstrations, preferences, and rewards.
+- Write the response-only SFT loss and check its mask.
+- Derive the pairwise reward-model loss.
+- Distinguish policy improvement from reward-score improvement.
 
-- Inspect extraction and filtering decisions.
-- Explain exact matching, MinHash, and duplicate families.
-- Build splits and sampling weights with explicit assumptions.
-- Design a controlled data-policy comparison.
+<p class="caption">Four ungraded exercises; offline CPU notebook.</p>
 
 Note:
-Retrieve Lecture 07: N and D do not fully describe the data distribution. Today the model, tokenizer, and processed-token budget stay fixed. A2 already contains a data-policy comparison; the exercises develop its concepts without changing the assignment. The short evaluation audit prepares the next lecture.
+Ask students what changes after pretraining: the model family can stay the same while the data, objective, and evaluation change. Prerequisites are the causal next-token loss and the held-out evaluation conventions from Lectures 02 and 06. No new graded work is introduced by these exercises.
 
 ---
 
-<!-- .slide: class="outline-slide" id="outline-data" -->
+<!-- .slide: class="outline-slide" id="outline-sft" -->
 
 ## Lecture outline
 
-<ol class="outline-topics">
-  <li aria-current="step">Sources, extraction, and exact matches</li>
-  <li>Near duplicates and split construction</li>
-  <li>Sampling budgets and a controlled comparison</li>
-</ol>
-
-<p class="caption">First period · 13:30–14:15</p>
+<ol class="outline-topics"><li aria-current="step">Demonstrations and supervised fine-tuning</li><li>Preferences and reward models</li><li>Policy optimization and evaluation</li></ol>
 
 Note:
-The core route follows the course schedule. All benchmark catalogs and optional statistical calculations are after the main summary.
+Period 1. Begin with an actual instruction rather than starting with three unexplained acronyms. The first exercise checks shifted target positions before discussing reward modeling.
 
 ---
 
-<!-- .slide: id="running-comparison" -->
+<!-- .slide: id="prediction-task" -->
 
-## One comparison throughout the lecture
+## A likely continuation may ignore the instruction
 
-| Condition | Training data | Everything else |
+**Prompt:** “Summarize this paragraph in one sentence.”
+
+Possible continuations include an answer, another instruction, or a transcript.
+
+Pretraining estimates text continuation probabilities. Instruction following
+adds evidence about the behavior we want.
+
+Note:
+These are constructed possible continuations, not generated outputs or findings about a named model. Explain that an instruction-following model still predicts tokens; post-training changes which continuations receive probability. Do not imply that pretraining never produces instruction following.
+
+---
+
+<!-- .slide: id="instructgpt-stages" -->
+
+## The InstructGPT workflow
+
+| Stage | Data | Object learned |
 | --- | --- | --- |
-| A | Original corpus | Fixed model and tokenizer |
-| B | Deduplicated corpus | Same training-token budget |
+| SFT | Demonstrated responses | Response policy |
+| Reward modeling | Ranked candidate responses | Scalar scorer |
+| Policy optimization | Sampled responses and scores | Updated policy |
 
-We need a common evaluation set and a declared scoring rule.
-
-<p class="caption">Classroom outcomes are synthetic. They illustrate an audit, not a measured training result.</p>
+<p class="source">Ouyang et al. (2022), Figure 2 and Section 3</p>
 
 Note:
-Use the same initial weights, optimizer settings, and training schedule for a single paired run. Multiple training seeds are a separate source of uncertainty. A2 already supplies an exact-document deduplication comparison under matched processed-token budgets. This lesson uses small authored fixtures so students can inspect every assumption. Source: ../../assignments/a2-build-a-small-lm/README.md, Part 4.
+Source: https://arxiv.org/html/2203.02155v1. These are different learning problems. The original study reports preference results under its prompt distribution and annotation procedure; those results should not be generalized into a universal model ranking. PPO is an algorithm within the third stage, not another name for the whole workflow.
 
 ---
 
-<!-- .slide: id="data-lineage" -->
+<!-- .slide: id="response-probability" -->
 
-## A traceable data pipeline
+## The policy still predicts the next token
 
-<img class="diagram" src="assets/data-lineage.svg" data-excalidraw-source="assets/data-lineage.excalidraw" alt="Extract and retain source IDs; normalize, filter, and match using versioned rules; group related records and assign splits; sample a declared training-token mixture.">
+$$\pi_\theta(y\mid x)=\prod_{t=1}^{T}\pi_\theta(y_t\mid x,y_{<t})$$
 
-<p class="caption">Keep source IDs, policy versions, and retained counts. Freeze final evaluation examples.</p>
+The prompt $x$ supplies context.
+
+The response $y$ includes its termination decision under the chosen convention.
 
 Note:
-This is an original course workflow. Extraction, normalization, language/quality selection, and matching make distinct decisions. Keep the mapping from raw records to retained records. A newly constructed dataset groups related records before splitting. An existing benchmark keeps its published split; audit training overlap against it using a declared policy. Source: FineWeb, https://arxiv.org/abs/2406.17557, Section 3. Exact ordering is a policy to evaluate rather than a universal recipe.
+This factorization is unchanged by switching from pretraining to SFT or policy optimization. Name which positions belong to the response. Prompt tokens can affect hidden states without contributing direct response target loss. Padding is not a response action.
 
 ---
 
-<!-- .slide: id="source-card" -->
+<!-- .slide: id="sft-data" -->
 
-## A source record students can audit
+## A demonstration specifies desired behavior
 
-| Field | Example value |
+| Field | Example content |
 | --- | --- |
-| Source and revision | Course fixture, revision 1 |
-| Document and parent IDs | `article-17`, `site-a` |
-| Extraction and filter rules | `extract-v1`, `policy-b` |
-| Rights and access metadata | Course-authored text |
-| Counts | Raw bytes, retained documents, tokenizer tokens |
+| Instruction | Summarize the supplied paragraph |
+| Context | The paragraph and any allowed evidence |
+| Response | A checked one-sentence summary |
+| Provenance | Source, version, authoring procedure |
 
-<p class="caption">A dataset name alone does not identify the training mixture.</p>
+Check correctness and instruction following separately.
 
 Note:
-Use an authored record so no rights or provenance claim is inferred from a real URL. Preserve dates, source licenses or terms, language metadata, and removal decisions when constructing a real dataset. A permissive toolkit license does not automatically describe every source document. Byte, document, and token counts answer different questions; token counts depend on the tokenizer. This is a metadata design exercise, not legal advice.
+This schema is a teaching example, not the original InstructGPT collection format. A grammatically good answer can still violate the request or invent facts. Preserve source and prompt-family identifiers so later splitting does not leak paraphrases or examples derived from the same source.
 
 ---
 
-<!-- .slide: id="open-data-cases" -->
+<!-- .slide: id="sft-loss" -->
 
-## Open data projects to inspect
+## Response-only supervised loss
 
-| Project | Useful evidence to read |
-| --- | --- |
-| FineWeb / FineWeb-Edu | Extraction, filtering, and deduplication ablations |
-| Dolma | Source composition and an inspectable curation toolkit |
-| DataComp-LM | Data-policy comparisons with a shared training setup |
+$$L=-\frac{\sum_{i,t}m_{i,t}\log\pi_\theta(y_{i,t}\mid x_i,y_{i,<t})}{\sum_{i,t}m_{i,t}}$$
 
-Read a named release and its recipe before choosing data.
+$m_{i,t}=1$ for a scored response target; otherwise zero.
+
+Use the mask on **shifted targets**. Prompt and padding targets are excluded.
 
 Note:
-These are examples for studying methods, not a ranking of the best or latest corpora. FineWeb: https://arxiv.org/abs/2406.17557. Dolma: https://arxiv.org/abs/2402.00159 and https://github.com/allenai/dolma. DataComp-LM: https://arxiv.org/abs/2406.11794. Match language, domain, access, and available tokens to the project. The classroom uses small authored data and downloads none of these corpora.
+This slide declares a token-mean reduction, not a claim that every SFT implementation uses this exact reduction. Teacher forcing uses the demonstrated prefix. Explain that taking a mean over sequence means instead changes the relative contribution of different response lengths.
 
 ---
 
-<!-- .slide: id="text-extraction" -->
+<!-- .slide: id="shifted-mask" -->
 
-## Text extraction changes the learning problem
+## Align inputs, targets, and masks
 
-| Input | Possible extraction error |
-| --- | --- |
-| Web article | Navigation repeated on every page |
-| Code tutorial | Indentation or symbols lost |
-| Table | Values detached from their headers |
-| Multilingual text | Useful passages rejected by an English rule |
+| Input | Prompt-end | Answer A | Answer B | EOS |
+| --- | --- | --- | --- | --- |
+| Target | Answer A | Answer B | EOS | PAD |
+| Score target? | Yes | Yes | Yes | No |
 
-Inspect retained examples and rejected examples.
+The first response token is predicted from the prompt.
 
 Note:
-These are authored failure examples. Parsing HTML is only one step: preserving the meaningful sequence matters for a language model. Do not show an HTML-tag regex as a general web extractor. Normalization, content extraction, and quality selection make different changes. Keep original source identifiers so a suspicious example can be traced back. FineWeb provides a concrete large-scale case study, not a recipe students must reproduce at its full scale.
-
----
-
-<!-- .slide: id="extraction-example" -->
-
-## Content extraction on one page
-
-<img class="diagram" src="assets/text-extraction.svg" data-excalidraw-source="assets/text-extraction.excalidraw" alt="An authored page contains navigation, two sentences about Noa, and cookie text; the intended extraction keeps the two sentences in order.">
-
-<p class="caption">Toy page. Code indentation and table relationships need their own checks.</p>
-
-Note:
-Ask students which parts they would keep and which extraction errors would change meaning. Navigation may recur on thousands of pages. Removing every short line would also remove useful headings or code. This illustration is the desired result for one authored page, not a general extraction algorithm. Do not present stripping tags with a regex as a reliable HTML extractor.
-
----
-
-<!-- .slide: id="quality-filters" -->
-
-## Quality depends on the intended use
-
-- Repetition filters can catch boilerplate.
-- Language filters change which communities remain represented.
-- Model-based scores inherit the reference model's preferences.
-- Aggressive thresholds can remove difficult but useful examples.
-
-Compare the resulting models on relevant held-out tasks.
-
-Note:
-Ask students for an example of useful repetition, such as definitions in textbooks or common code syntax. A filtering score is a selection rule, and its effectiveness is an empirical question for a target task and budget. A held-out development set can guide threshold selection. Preserve a final set for the selected policy. Relevant ablations: FineWeb, https://arxiv.org/abs/2406.17557. The language-coverage cautions here are experimental design considerations rather than universal measured effects of every filter.
-
----
-
-<!-- .slide: id="filter-audit" -->
-
-## A filter needs retained and rejected examples
-
-| Toy rule | Useful rejection | Possible false rejection |
-| --- | --- | --- |
-| Many repeated lines | Repeated navigation | A poem or code pattern |
-| Few words | An empty page | A short definition |
-| Low reference-model likelihood | Broken text | A different domain or language |
-
-Measure retained tokens and inspect errors by source and language.
-
-Note:
-Use development evidence to choose a policy, then preserve a final evaluation. A heuristic score is not a gold quality label. English whitespace word counts do not transfer unchanged to Chinese. This table contains authored failure possibilities, not measured rates. FineWeb Sections 3.5–3.6 documents controlled filter ablations; generalize the method rather than copying every threshold.
-
----
-
-<!-- .slide: id="exact-duplicates" -->
-
-## Exact duplicates depend on normalization
-
-```python
-text = unicodedata.normalize("NFC", text)
-text = text.replace("\r\n", "\n").replace("\r", "\n")
-key = text.strip()
-```
-
-Preserve case and internal whitespace in this exercise.
-
-`"Noa reads the red book."` and its padded copy share a key.
-
-Note:
-This is the A2 normalization convention. A stable hash can index keys in a larger system, with collision handling appropriate to the application. The classroom audit groups text values directly. It records IDs without deleting any files. Explain that changing normalization can merge genuinely distinct code, quotations, or formatting-sensitive documents. Source: ../../assignments/a2-build-a-small-lm/README.md, Part 4.
-
----
-
-<!-- .slide: id="near-duplicates" -->
-
-## Near duplicates need an explicit similarity rule
-
-$$J(A,B)=\frac{|A\cap B|}{|A\cup B|}$$
-
-Compare word-bigram sets:
-
-- Noa reads the **red** book.
-- Noa reads the **blue** book.
-
-Two shared bigrams, six in the union: **$J=1/3$**.
-
-<p class="caption">A similarity threshold flags candidates for review.</p>
-
-Note:
-The two shared bigrams are “Noa reads” and “reads the.” These are whitespace word shingles for this English toy example, not model BPE tokens. Shingle size and normalization affect the score. A color substitution may change the answer to a question, so similarity alone does not establish semantic equivalence. The next period introduces MinHash for finding candidates efficiently. Source: Lee et al., https://aclanthology.org/2022.acl-long.577/, deduplication methods.
+The names denote token roles, not a particular tokenizer vocabulary. Earlier prompt positions have masked prompt targets. Do not mask the first response target just because its input position is the final prompt token. Include EOS only under the declared training convention and distinguish it from a length-cap truncation.
 
 ---
 
@@ -220,804 +141,337 @@ The two shared bigrams are “Noa reads” and “reads the.” These are whites
 
 <p class="exercise-meta">Exercise E01 · 6 minutes · Notebook E01</p>
 
-## Which records belong together?
+## Which loss is being averaged?
 
-Inspect the six supplied documents.
+Response A has scored probabilities $(1/2,1/4)$.
+Response B has one scored probability $1/4$.
 
-1. Find exact duplicate groups after normalization.
-2. Identify the group that crosses train and development splits.
-3. Explain why the red/blue pair needs separate consideration.
+Compute the token mean and the mean of response means.
 
-<div class="answer fragment"><p>Duplicates: train-1/train-2 and train-4/dev-1. The café pair crosses splits.</p></div>
+<div class="answer fragment"><p>Token mean: $\frac53\log2$. Response mean: $\frac74\log2$.</p></div>
 
 Note:
-Expected response: Unicode normalization equates the decomposed accent in train-4 with dev-1's composed accent. The padded Noa copy is a training duplicate. Red and blue produce distinct normalized texts, although they have shared word bigrams. For a new dataset, keep duplicate families within one split. For fixed external held-out data, exclude overlapping training records under the declared policy and audit remaining overlap. Preserve the source files. Fixtures: assets/toy-documents.json.
+Expected reasoning: the total NLL is 5 log 2 across three scored tokens; the sequence losses are 1.5 log 2 and 2 log 2. All prompt and padding targets are excluded. The two answers differ because the reductions assign different weights. Checked in the notebook; give students two minutes of discussion after the calculation.
 
 ---
 
-<!-- .slide: class="outline-slide" id="outline-curation" -->
+<!-- .slide: id="chat-template" -->
+
+## Chat formatting changes the token sequence
+
+- Inspect role separators and special tokens.
+- Check the assistant-response boundary after tokenization.
+- Record truncation and termination rules.
+- Reuse the model's tokenizer and declared template.
+
+<p class="caption">A printed conversation is not the encoded training example.</p>
+
+Note:
+This is an implementation principle, not advice to choose a new template for every evaluation. Pin the tokenizer and template revision. Show an encoded example in a practical project before training, particularly when a template adds assistant headers or end-of-turn tokens.
+
+---
+
+<!-- .slide: id="sft-limit" -->
+
+## Lower demonstration loss is one piece of evidence
+
+Teacher forcing uses demonstrated prefixes.
+
+Generation uses the model's own prefixes.
+
+Compare held-out generated behavior, including regressions and failures.
+
+Note:
+A good training fit does not establish robustness to generated prefixes or unseen instruction types. Keep decoding settings and the evaluated prompt population fixed in the comparison. This provides the conceptual bridge to Lecture 10 rather than adding another required training run.
+
+---
+
+<!-- .slide: class="outline-slide" id="outline-reward" -->
 
 ## Lecture outline
 
-<ol class="outline-topics">
-  <li>Sources, extraction, and exact matches</li>
-  <li aria-current="step">Near duplicates and split construction</li>
-  <li>Sampling budgets and a controlled comparison</li>
-</ol>
-
-<p class="caption">Second period · 14:25–15:10</p>
+<ol class="outline-topics"><li>Demonstrations and supervised fine-tuning</li><li aria-current="step">Preferences and reward models</li><li>Policy optimization and evaluation</li></ol>
 
 Note:
-The core route follows the course schedule. All benchmark catalogs and optional statistical calculations are after the main summary.
+Period 2. Ask why people might find comparing two answers easier than writing an ideal answer from scratch. Comparison labels still depend on the rubric and the population providing them.
 
 ---
 
-<!-- .slide: id="minhash-mechanism" -->
+<!-- .slide: id="preference-data" -->
 
-## MinHash turns overlap into matching signatures
+## A preference is a comparison
 
-<img class="diagram" src="assets/minhash-orders.svg" data-excalidraw-source="assets/minhash-orders.excalidraw" alt="Sets A equals a,b,c and B equals b,c,d. Four shared shingle orders give two equal minimum elements and two unequal ones.">
+$(x,y_w,y_l)$ means response $y_w$ was preferred to $y_l$ for prompt $x$.
 
-<p class="caption">Under a uniform random order, $P[\min(A)=\min(B)]=J(A,B)$.</p>
+Record the rubric, candidate source, and disagreement.
+
+A winner label does not supply an absolute numerical reward.
 
 Note:
-The first element of A union B in a uniform random permutation is equally likely to be any union element. The minima agree exactly when it lies in the intersection. This proves the ideal collision probability. The four displayed orders are hand-chosen, so their average need not equal Jaccard for arbitrary inputs. The notebook can enumerate all 24 orders to check this example. Real systems approximate permutations with hash functions. FineWeb documents its MinHash implementation and choices; https://huggingfacefw-blogpost-fineweb-v1.static.hf.space/index.html, Deduplicating the data.
+InstructGPT Section 3.2 and Appendix B describe human feedback and annotation procedures: https://arxiv.org/html/2203.02155v1. Do not erase ties by inventing a winner. Several pairs obtained from one ranking are correlated and should not be treated as independent prompts.
 
 ---
 
-<!-- .slide: id="lsh-candidates" -->
+<!-- .slide: id="reward-scorer" -->
 
-## Banding selects candidate pairs
+## A reward model produces one score per response
 
-With $b$ bands of $r$ independent MinHash rows:
+$$r_\phi(x,y)\in\mathbb R$$
 
-$$P(\text{candidate}\mid J=s)=1-(1-s^r)^b.$$
+The same scorer processes both candidates.
 
-- All $r$ rows must match within a band.
-- A match in any of $b$ bands generates a candidate.
-- The probability changes smoothly with similarity.
-
-<p class="caption">A candidate is an algorithmic match, not a proof of semantic equivalence.</p>
+Training uses their score difference to predict the observed comparison.
 
 Note:
-Derive one band probability s^r, then probability all bands miss. The independence and ideal MinHash assumptions matter. Show b=2, r=2 as a tiny example. FineWeb uses 14 bands of 8 rows in the cited 2024 recipe, but this is not a universal best setting. Some pipelines directly merge candidates; others verify exact shingle overlap. Measure missed matches and false matches on a sample. The formula does not imply a hard 75 percent cutoff. Source: official FineWeb blog, Deduplicating the data.
+An implementation can use a scalar head on a language-model representation, with an explicit choice of which response position is pooled. The score is not a token probability. Its numerical origin is not identified by same-prompt pair comparisons.
 
 ---
 
-<!-- .slide: class="exercise" id="data-exercise-02" -->
+<!-- .slide: id="bradley-terry" -->
 
-<p class="exercise-meta">Exercise E02 · 5 minutes · Notebook E02</p>
+## Convert a score difference to a probability
 
-## How does matching probability differ from similarity?
+$$P(y_w\succ y_l\mid x)=\sigma(r_w-r_l)$$
 
-$A=\lbrace a,b,c\rbrace$ and $B=\lbrace b,c,d\rbrace$.
+$$\sigma(d)=\frac{1}{1+e^{-d}}$$
 
-1. Calculate their Jaccard similarity.
-2. Count matching signature positions in the four orders.
-3. With two bands of two rows, compute the ideal candidate probability.
+A zero margin gives probability $1/2$.
 
-<div class="answer fragment"><p>$J=1/2$; 2/4 positions match; $1-(1-1/4)^2=7/16$.</p></div>
+<p class="source">Pairwise Bradley–Terry model; InstructGPT Section 3.2</p>
 
 Note:
-The last answer is a probability under independent random rows, not a count from these particular four hand-chosen rows. Students should distinguish document overlap, a finite signature estimate, and the chance of a band match. The optional exhaustive check averages all 24 uniform orders. No external corpus or model is required.
+Source: https://arxiv.org/html/2203.02155v1. This is a modeling assumption for comparison labels. It does not assert that all annotators share one transitive utility or that the inferred probability is calibrated on another prompt population.
 
 ---
 
-<!-- .slide: id="duplicate-families" -->
+<!-- .slide: id="preference-curve" -->
 
-## A match family can contain nonmatching endpoints
+## The margin controls preference probability
 
-<img class="diagram" src="assets/duplicate-families.svg" data-excalidraw-source="assets/duplicate-families.excalidraw" alt="A and B have Jaccard 0.8, B and C have 0.8, but A and C have 0.6. At threshold 0.75 all three are in one connected component.">
+<div class="plot" data-plotly="assets/preference-probability.json" role="img" aria-label="Sigmoid preference probability versus reward margin, with a zero margin giving one half and log three giving three quarters."></div>
 
-<p class="caption">Connected components define split groups. Choosing which records to retain is a separate policy.</p>
+<p class="caption">Analytical curve, not a fitted reward model.</p>
 
 Note:
-These are shingle sets, not literal document IDs. Draw edges for pairwise Jaccard at least 0.75. Connectivity is transitive but pairwise similarity at this threshold is not. Keeping this component within one split blocks these declared match edges from crossing splits. It does not prove every member is redundant, and it does not detect every semantic paraphrase. A connected component is not automatically a justification to delete all but one record.
+Hover to inspect the values. The plotted function is exactly sigmoid(d), generated from the standard library. Use the horizontal symmetry to explain swapping winner and loser. The curve's shape is a consequence of the model, not evidence that preferences in a particular dataset follow it.
 
 ---
 
-<!-- .slide: id="split-construction" -->
+<!-- .slide: id="reward-loss" -->
 
-## A random row split can leak source content
+## Fit the observed winner
 
-| Related records | Useful grouping boundary |
-| --- | --- |
-| Copies of one article | Duplicate family |
-| Chunks of one document | Original document |
-| Revisions of one repository task | Task or repository lineage |
-| Repeated records from one person | Person, when appropriate |
+$$L_{\mathrm{RM}}=-\mathbb E\log\sigma(r_w-r_l)$$
 
-Choose the boundary that matches the generalization question.
+For margin $d$, $\frac{dL}{dd}=\sigma(d)-1$.
+
+Use a stable log-sigmoid or softplus implementation.
 
 Note:
-Rows are not always independent examples. A chunk split asks a different question from a document split. A repository split can test transfer to new projects, while an issue split within a repository tests another setting. Grouping choices can also make evaluation harder or change its target population. Explain the intended deployment before choosing the boundary. These are course-authored design examples, not a claim that one grouping rule suits every dataset.
-
----
-
-<!-- .slide: class="exercise" id="data-exercise-03" -->
-
-<p class="exercise-meta">Exercise E03 · 6 minutes · Notebook E03</p>
-
-## Which proposed split leaks a match family?
-
-Declared matches: A–B and B–C. Record D is unrelated.
-
-| Proposed training | Proposed development |
-| --- | --- |
-| A, C | B, D |
-
-Find the components and suggest a split with no match edge crossing.
-
-<div class="answer fragment"><p>Components: {A, B, C}, {D}. One feasible split: train A/B/C; development D.</p></div>
-
-Note:
-This four-record split is only an illustration of the invariant; one development record cannot support a useful real estimate. Discuss group imbalance and the deployment question before using a real partition. Keep chunks and revisions under their parent grouping. The notebook detects the original violation and verifies the corrected assignment without deleting records.
-
----
-
-<!-- .slide: id="contamination-paths" -->
-
-## Evaluation information can enter several stages
-
-- Pretraining includes benchmark questions or solutions.
-- Fine-tuning examples contain evaluation answers.
-- Demonstrations reproduce a held-out item.
-- Repeated test-set feedback guides model or prompt selection.
-- A tool retrieves the solution during evaluation.
-
-The audit must cover the full evaluated system.
-
-Note:
-Direct text overlap is only one route. Paraphrases and derived examples may escape exact matching. Repeated use of a public test set can also bias model selection without literal memorization. A permitted web search is part of a tool-enabled protocol, but looking up a benchmark solution may violate the intended task. State the tool policy before running. Lee et al. supports train/evaluation overlap analysis; the tool and grading case returns in the SWE-Bench Pro V2 slide.
-
----
-
-<!-- .slide: id="pipeline-order" -->
-
-## Chunking preserves parent and family IDs
-
-| Record | Parent document | Duplicate family | Split |
-| --- | --- | --- | --- |
-| `A-1`, `A-2` | A | family-1 | train |
-| `B-1`, `B-2` | B | family-1 | train |
-| `D-1` | D | family-2 | development |
-
-Tokenize and pack within the assigned split.
-
-Note:
-A random chunk split can move near-identical context across partitions even after document matching was done correctly. Carry parent and family IDs to chunks and packed sequences. Record tokenizer revision, document boundaries, scored token positions, and packing rules. Training shuffle and evaluation grouping serve different purposes. This is an authored example, not a prescribed ratio for real dataset sizes.
-
----
-
-<!-- .slide: id="data-evidence" -->
-
-## Data policies need controlled evidence
-
-**Lee et al., 2022:** investigate deduplication, memorization, and evaluation overlap.
-
-**FineWeb, 2024:** document extraction, filtering, and deduplication ablations.
-
-For our course: change one data policy and keep a comparable training budget.
-
-Note:
-These papers provide methods and empirical case studies. Their findings do not guarantee that every deduplication or quality threshold improves every model. Students can get a sound negative result. Read Lee et al., methods and experimental sections, https://aclanthology.org/2022.acl-long.577/; FineWeb, dataset-construction ablations, https://arxiv.org/abs/2406.17557. Full paper training budgets are outside the classroom scope. Allow a short transition before the break.
-
----
-
-<!-- .slide: id="fineweb-case" -->
-
-## FineWeb: stronger deduplication changed the data mixture
-
-| Reported 2024 comparison | Observation |
-| --- | --- |
-| Global deduplication across crawls | Removed more data, but did not give the best aggregate result |
-| Deduplication within each crawl | Performed better in the reported comparison |
-
-A data policy changes which documents remain and how often they appear.
-
-Note:
-Source: FineWeb Section 3.4 and Appendix E, https://arxiv.org/html/2406.17557v2; official blog, More deduplication is always better, right? and individual dump dedup. This is a reported empirical case under the authors' model, budget, and evaluation mixture. Their explanation about low-frequency residual data quality is a hypothesis supported by their inspection and ablations, not a general theorem. We do not fabricate a numerical reproduction or claim global deduplication is always worse.
-
----
-
-<!-- .slide: id="fixed-budget" -->
-
-## Match processed tokens when data size changes
-
-| Condition | Corpus tokens | Processed tokens | Approximate passes |
-| --- | ---: | ---: | ---: |
-| A | 4 million | 12 million | 3 |
-| B | 3 million | 12 million | 4 |
-
-Keep the architecture, tokenizer, context length, and training recipe fixed.
-
-<p class="caption">Illustrative counts. Equal epochs would change the training budget.</p>
-
-Note:
-Processed tokens count repeated exposures. The retained corpus size measures a different quantity. With fixed architecture, sequence shape, and implementation, matching processed tokens is a useful approximation to matching training FLOPs. Report measured runtime separately because throughput and data handling can differ. The pass count is approximate when packing or incomplete windows affect consumption. This is the same budget convention required by A2.
-
----
-
-<!-- .slide: class="outline-slide" id="outline-evidence" -->
-
-## Lecture outline
-
-<ol class="outline-topics">
-  <li>Sources, extraction, and exact matches</li>
-  <li>Near duplicates and split construction</li>
-  <li aria-current="step">Sampling budgets and a controlled comparison</li>
-</ol>
-
-<p class="caption">Third period · 15:25–16:10</p>
-
-Note:
-The core route follows the course schedule. All benchmark catalogs and optional statistical calculations are after the main summary.
-
----
-
-<!-- .slide: id="training-mixture" -->
-
-## Sampling weights determine the training distribution
-
-Available source shares: $q_i=n_i/\sum_j n_j$.
-
-$$p_i=\frac{q_i^\tau}{\sum_j q_j^\tau},\qquad
- D_i=D\,p_i,\qquad e_i=\frac{D_i}{n_i}.$$
-
-- $p_i$: share of processed training tokens.
-- $e_i$: expected passes over source $i$.
-- $\tau=1$: natural shares; $\tau=0$: equal source weights.
-
-<p class="caption">Illustrative sampling family. Source weights refer to tokens, not documents.</p>
-
-Note:
-This is an explicitly chosen classroom policy. It is not a claim that every named corpus uses this formula or that one exponent is optimal. Exposures assume uniform sampling within each source with replacement, ignoring packing overhead. Long documents make document-weighted sampling different from token-weighted sampling. For 0<tau<1, source probabilities become more balanced, which may repeatedly expose a small pool. Evaluate the policy rather than treating balance as automatically better.
-
----
-
-<!-- .slide: id="mixture-exposure" -->
-
-## More weight can mean more repetition
-
-<img class="diagram" src="assets/mixture-exposure.svg" data-excalidraw-source="assets/mixture-exposure.excalidraw" alt="With 9 million English and 1 million Chinese tokens and a 60-million-token training budget, natural weights give six expected passes each. Square-root weights give five English and fifteen Chinese passes.">
-
-<p class="caption">Synthetic counts. Blue: English. Orange: Chinese. Both runs process 60M tokens.</p>
-
-Note:
-Work through sqrt(0.9)/(sqrt(0.9)+sqrt(0.1))=0.75. The smaller source receives one quarter of the processed tokens despite providing one tenth of the unique pool. More repeated exposure is not the same as more unique data. No measured loss or accuracy is implied by this arithmetic. A cap, more source data, or a different mixture is a policy to study under a declared budget.
-
----
-
-<!-- .slide: class="exercise" id="data-exercise-04" -->
-
-<p class="exercise-meta">Exercise E04 · 7 minutes · Notebook E04</p>
-
-## How often does each source repeat?
-
-English: 9M tokens. Chinese: 1M tokens. Total processed budget: 60M.
-
-1. Calculate $p_i$ for $\tau=1/2$.
-2. Calculate the processed tokens and expected passes per source.
-3. Compare with natural sampling, $\tau=1$.
-
-<div class="answer fragment"><p>Weights 75%/25%; processed tokens 45M/15M; expected passes 5/15. Natural sampling gives 6/6.</p></div>
-
-Note:
-Seven minutes includes arithmetic and debrief. State the within-source sampling assumption. The two language names label a toy mixture and do not recommend a language ratio for this course. Ask which experimental evidence would justify paying for the extra repetition. If changing the total token budget, it is a different comparison.
-
----
-
-<!-- .slide: id="mixtures" -->
-
-## An aggregate score reflects the language mixture
-
-| Synthetic accuracy | English | Chinese | 80/20 mixture | Equal language weight |
-| --- | ---: | ---: | ---: | ---: |
-| A | 90% | 40% | 80% | 65% |
-| B | 85% | 60% | 80% | 72.5% |
-
-Report relevant slices and state their weights.
-
-Note:
-Compute A's 80/20 score as 0.8 times 90 plus 0.2 times 40. These are constructed values, not measurements of a real model or language. Equal language weighting is a macro average over these two language accuracies; an item-weighted average depends on the item counts. Neither weighting is universally right. Choose weights that answer the application question before comparing systems. Training mixtures and evaluation mixtures are separate choices.
-
----
-
-<!-- .slide: id="comparison-record" -->
-
-## A comparison needs a frozen record
-
-| Training record | Evaluation record |
-| --- | --- |
-| Data policy and source revision | Dataset revision and item IDs |
-| Model, tokenizer, initialization | Prompt and answer parser |
-| Processed tokens and schedule | Sampling and tool budget |
-| Training seeds | Metric, slices, and aggregation |
-
-Use development evidence for choices, then run the declared final evaluation.
-
-Note:
-Fixing a record is a procedural decision, not a claim that files cannot change. Record hashes where useful and retain predictions by item ID. If a bug invalidates the final evaluation, document it and design a fresh valid comparison rather than silently treating a repeatedly optimized score as untouched evidence. This extends Lecture 07's separation of fitting and validation to data policies and task evaluation.
-
----
-
-<!-- .slide: class="exercise" id="exercise-04" -->
-
-<p class="exercise-meta">Exercise E05 · 6 minutes · Notebook E05</p>
-
-## Does the evaluation set change the conclusion?
-
-| Synthetic outcomes | Raw data A | Deduplicated data B |
-| --- | ---: | ---: |
-| 100 clean items | 60 correct | 64 correct |
-| 20 exposed items | 19 correct | 11 correct |
-
-Compute accuracy on all 120 items and on the clean 100.
-
-<div class="answer fragment"><p>All: A 65.8%, B 62.5%. Clean: A 60%, B 64%.</p></div>
-
-Note:
-An independent audit has already marked the exposed items in this constructed example. The numbers show how sample composition can reverse the ranking. They do not establish how much of a real score is caused by memorization. Students must not exclude examples because a preferred model gets them wrong. Exclusion needs an independently justified rule, and changing the evaluated population must be reported. Full item-level correctness vectors are constructed in assets/evaluation.py.
-
----
-
-<!-- .slide: id="evaluation-demo" -->
-
-## The ranking changes with the evaluated items
-
-<div class="demo-form">
-  <button id="evaluation-toggle" type="button" aria-pressed="false">Mixed evaluation</button>
-  <button id="reset-button" type="button">Reset</button>
-</div>
-
-<div id="evaluation-plot" class="plot" data-plotly="assets/contamination.json" role="img" aria-label="Synthetic accuracies for raw and deduplicated training data. Toggle between a mixed evaluation with 120 items and a clean evaluation with 100 items."></div>
-
-<p class="caption" id="evaluation-status" aria-live="polite">Synthetic: 100 clean items plus 20 exposed items. Raw 65.8%, deduplicated 62.5%.</p>
-
-Note:
-Toggle once after students calculate both results, then reset. The chart uses a zero baseline and a fixed 0–100 percent scale. The evaluation size changes, while the predictions on the clean items stay fixed. This demonstration does not run inference or remove any files. In the PDF, the initial mixed set appears; the preceding exercise gives both outcomes.
-
----
-
-<!-- .slide: id="loss-and-task" -->
-
-## Language-model loss and task accuracy answer different questions
-
-| Measure | What contributes |
-| --- | --- |
-| Held-out NLL or PPL | Probabilities of observed text tokens |
-| Task accuracy | Whether the selected answer is correct |
-| Per-language score | Behavior on a specified language slice |
-| Cost per task | Resources consumed under the protocol |
-
-A lower average loss does not guarantee every task improves.
-
-Note:
-Retrieve Lecture 02's units: PPL is exp(mean NLL in nats per scored token). Its direct comparison requires compatible tokenization and evaluation conventions. BPB changes the normalization unit but still requires the same text and scoring scope. Task metrics may use a subset of outputs and a discontinuous decision rule. A model can change answer probabilities without changing its selected answer, or improve one domain while losing another. Source: ../../docs/lecture-02-lm-metrics.md. No loss values are invented for the synthetic accuracy fixtures.
-
----
-
-<!-- .slide: id="uncertainty-sources" -->
-
-## What uncertainty does a result include?
-
-| Source | Useful evidence |
-| --- | --- |
-| Which evaluation items appear | Item or cluster resampling |
-| Training randomness | Independent training seeds |
-| Generation randomness | Repeated samples with fixed settings |
-| Prompt or grader choices | Prespecified robustness checks |
-
-One interval cannot automatically cover all four.
-
-Note:
-The optional appendix bootstrap conditions on two fixed fitted systems and their fixed prompts. It estimates sampling uncertainty across independent items drawn from the same population. It does not include training-run variation. Related examples may require resampling document or task groups rather than individual rows. Source: Dror et al., https://aclanthology.org/P18-1128/, statistical testing assumptions and test selection. The resampling implementation and limitations are documented in assets/evaluation.py.
-
----
-
-<!-- .slide: id="error-analysis" -->
-
-## Error analysis turns a score into a hypothesis
-
-| Inspect | Possible next comparison |
-| --- | --- |
-| Both systems fail the same items | Review labels and missing skills |
-| One language loses after filtering | Audit retained language coverage |
-| Answer text is right but parsing fails | Test a corrected parser on development data |
-| Only long inputs fail | Check truncation and context limits |
-
-Note:
-These are hypotheses to investigate, not diagnoses guaranteed by the observed pattern. Inspect raw predictions alongside labels and item metadata. Avoid changing many parts of the pipeline at once. If label errors are discovered, keep an audit trail and report the revised dataset version. The purpose is to decide which evidence would discriminate among explanations, building on the course's individual-project requirements.
-
----
-
-<!-- .slide: id="project-evaluation" -->
-
-## A data-policy comparison for your project
-
-Write down:
-
-- The claim and a relevant baseline.
-- Evaluation examples, provenance, and split boundaries.
-- The fixed model, tokenizer, processed tokens, and training recipe.
-- One controlled comparison and its resource cost.
-- An uncertainty estimate and examples of failures.
-
-Note:
-Students can adapt the notebook's final short template to the existing project plan. This creates no new graded submission or reference-count requirement. A CPU study or a small supplied-result analysis can be useful if it tests a meaningful claim. A frontier benchmark may be too expensive or poorly matched to the project; use a smaller relevant comparison and state the scope. Keep the same learning goals and expectations for all students.
-
----
-
-<!-- .slide: id="summary" -->
-
-## Data quality is an experimental question
-
-- A data policy with inspectable examples and provenance.
-- A comparable training and evaluation budget.
-- A split audit and a declared evaluation protocol.
-- Retained examples, source coverage, and a qualified conclusion.
-
-**The result should answer the question the experiment was designed to test.**
-
-[Optional benchmark extension](#/outline-benchmarks) · [References](#/references)
-
-Note:
-Return to the original question. Deduplication can change exposure frequency and content coverage. Evaluation quality determines whether the comparison supports a claim. The synthetic audit demonstrates why evaluation composition matters. Lecture 09 expands evaluation protocols and experimental design. Leave time for students to name one change they will make to their own comparison record.
-
----
-
-<!-- .slide: class="references" id="methods-reading" -->
-
-## Reading: data preparation methods
-
-- [Lee et al., 2022](https://aclanthology.org/2022.acl-long.577/): deduplication and overlap.
-- [FineWeb, 2024](https://arxiv.org/abs/2406.17557): controlled extraction and filtering ablations.
-- [Dolma, 2024](https://arxiv.org/abs/2402.00159): source composition and curation tools.
-- [DataComp-LM, 2024](https://arxiv.org/abs/2406.11794): comparisons under shared training conditions.
-
-[Full reading guide](optional-reading.md)
-
-Note:
-End the 135-minute classroom route here. The following benchmark and statistical material remains available as an optional extension and for Lecture 09 planning. Reading choices follow the project question; there is no reference-count requirement and no new graded work.
-
----
-
-<!-- .slide: class="outline-slide" id="outline-benchmarks" -->
-
-## Optional extension: evaluation protocols
-
-- Task interfaces and candidate scoring: P01.
-- Benchmark versions and the attempt budget: P02.
-- Paired comparisons and uncertainty: P03.
-
-<p class="caption">Outside the Lecture 08 classroom route. Supports preparation for Lecture 09.</p>
-
-Note:
-This retains the original draft's evaluation material and its Spring adaptation. It is not a reassignment of the published Lecture 09 schedule. Students can revisit these slides independently; the optional notebook sections have P identifiers.
-
----
-
-<!-- .slide: id="benchmark-definition" -->
-
-## A benchmark includes a protocol
-
-| Component | Example |
-| --- | --- |
-| Task | Select a plausible continuation |
-| Dataset | A versioned set of contexts and choices |
-| Protocol | Prompt, demonstrations, tools, budget |
-| Scoring | Answer extraction and aggregation |
-
-A model name and one number leave much of the experiment unspecified.
-
-Note:
-An evaluation harness implements this contract. Record the dataset revision, task configuration, model revision, tokenizer, prompt, generation settings, and scoring code. The EleutherAI harness distinguishes likelihood-based requests from generated responses; a backend's capabilities constrain which task interface can run. Source: https://github.com/EleutherAI/lm-evaluation-harness, model request types and reproducibility guidance. We inspect the concepts without requiring a new harness installation today.
-
----
-
-<!-- .slide: id="historical-tasks" -->
-
-## Established tasks still teach useful distinctions
-
-| Spring example | What the model returns |
-| --- | --- |
-| SuperGLUE: BoolQ, RTE | A label about a passage or sentence pair |
-| HellaSwag | A continuation choice |
-| MMLU | A subject-question answer |
-| GSM8K | A final numerical answer |
-| HumanEval | Executable code |
-
-<p class="caption">Retained from the Spring material. Each requires its own scoring rule.</p>
-
-Note:
-This compresses the Spring deck's dataset catalog. Different SuperGLUE tasks also use different metrics, so do not call every suite score plain accuracy. Older public tasks remain useful for small models, debugging, and studying specific failure modes. Strong scores alone do not establish broad capability. Source: supplied Spring PPTX slides 3–29, which credits Anoop Sarkar; SuperGLUE paper https://arxiv.org/abs/1905.00537; HellaSwag project https://rowanzellers.com/hellaswag/.
-
----
-
-<!-- .slide: id="historical-shortcuts" -->
-
-## Shortcut checks can expose dataset artifacts
-
-<div class="plot" data-plotly="assets/historical-shortcuts.json" role="img" aria-label="Historical 2019 BERT-Large accuracy on SWAG and HellaSwag under default, ending-only, shuffled, and shuffled-ending-only conditions."></div>
-
-<p class="caption">Historical BERT-Large results, 2019. Ending-only removes the context.</p>
-
-Note:
-The original Spring slide 17 includes Figure 4 of Zellers et al., HellaSwag. This editable replot preserves all eight values and uses a zero baseline. Models were trained and evaluated under the stated conditions. High ending-only performance suggests exploitable information in the candidate endings; it does not measure understanding of the missing context. Shuffled means token order within endings is shuffled. These are historical experimental results, not current model rankings. Source: https://arxiv.org/abs/1905.07830, Figure 4; supplied PPTX image16.png.
-
----
-
-<!-- .slide: id="model-interfaces" -->
-
-## The same task can use different model interfaces
-
-| Interface | Sentiment example |
-| --- | --- |
-| BERT masked token | “It was [MASK].” Compare label words. |
-| Causal LM likelihood | Score each candidate answer. |
-| Chat generation | Generate a label, then parse it. |
-
-Prompts, label words, and parsing rules are experimental choices.
-
-Note:
-Retain the useful comparison in the Spring companion notebook. BERT predicts a masked token using both sides of its input. A causal LM scores an answer token sequence conditioned on a prefix. A chat model generates a response that needs a declared extraction rule. A plain masked-token score is not an autoregressive sequence probability. Check label-token boundaries and label mappings. Do not copy the old notebook's automatic model downloads into the classroom core. Source: BERT, https://aclanthology.org/N19-1423/, Section 3; supplied Spring notebook, zero-shot evaluation section.
-
----
-
-<!-- .slide: id="completion-scoring" -->
-
-## Candidate likelihood and length normalization
-
-$$s(y\mid x)=\sum_{t=1}^{|y|}\log p(y_t\mid x,y_{<t})$$
-
-An alternative rule uses $s(y\mid x)/|y|$.
-
-- Score the answer tokens under a fixed prompt.
-- State how the denominator counts length.
-- Choose the rule before inspecting test results.
-
-Note:
-The sum is the candidate's conditional log probability under the token sequence model. Dividing by answer length creates a different decision rule, and neither rule is universally appropriate for every benchmark. Our exercise uses token counts. Real harness tasks may normalize by characters, bytes, or another convention, so inspect the pinned task definition. Leading spaces and prompt/completion tokenization boundaries can also matter. Source: EleutherAI harness task configuration documentation, linked from https://github.com/EleutherAI/lm-evaluation-harness.
+At zero margin the derivative is minus one half. Gradient descent increases the margin contributed by this pair. Do not independently regress the winner score to 1 and the loser score to 0 and call that the same objective. Both candidate scores need gradients. Large negative margins require stable arithmetic.
 
 ---
 
 <!-- .slide: class="exercise" id="exercise-02" -->
 
-<p class="exercise-meta">Optional practice P01 · 6 minutes · Notebook P01</p>
+<p class="exercise-meta">Exercise E02 · 5 minutes · Notebook E02</p>
 
-## Which candidate wins under each rule?
+## What does a reward score identify?
 
-| Candidate | Token log probabilities | Sum | Per token |
-| --- | --- | ---: | ---: |
-| A | −1.1, −1.3 | ? | ? |
-| B | −0.7, −0.8, −0.8, −0.9 | ? | ? |
+Let $r_w=\log3$ and $r_l=0$.
 
-<div class="answer fragment"><p>Sum: A wins, −2.4 versus −3.2.<br>Per token: B wins, −0.8 versus −1.2.</p></div>
+Compute the preference probability and pair loss.
+Then add 10 to both scores.
+
+<div class="answer fragment"><p>Probability $3/4$; loss $\log(4/3)$. The common shift changes neither.</p></div>
 
 Note:
-These are invented valid log probabilities. Larger, less negative scores win. Expected response: the choice flips because the protocol changed. No task label has been supplied, so students cannot infer which rule is more accurate from this calculation. The result does not imply that a normalized score is a joint probability. Compare only runs with the same declared scoring convention.
+The score difference is the identified quantity in this example. More generally, a prompt-dependent common shift cancels. This does not mean multiplying all scores by a constant leaves probabilities unchanged. Ask students to distinguish a shift from a scale change.
 
 ---
 
-<!-- .slide: id="knowledge-benchmarks" -->
+<!-- .slide: id="reward-shortcut" -->
 
-## Knowledge and reasoning benchmarks
+## A shortcut can predict the training labels
 
-| Benchmark | Useful distinction |
-| --- | --- |
-| MMLU-Pro | More reasoning-focused questions, up to ten choices |
-| GPQA | Expert-written science questions |
-| HLE-Diamond | A revised, frozen expert-question collection |
+Suppose preferred training responses are usually longer.
 
-Inspect the subject coverage, answer format, and selected subset.
+A scorer can reward length without detecting correct answers.
 
-<p class="caption">Benchmark sources checked October 23, 2026.</p>
+Test comparisons where answer quality and length disagree.
 
 Note:
-MMLU-Pro covers 14 subject domains and was introduced in 2024. GPQA's original main set contains 448 questions in biology, physics, and chemistry; reports using the Diamond subset must name that subset. Avoid treating either as a complete measure of reasoning in every domain. Sources: https://arxiv.org/abs/2406.01574 and https://github.com/TIGER-AI-Lab/MMLU-Pro; https://arxiv.org/abs/2311.12022. HLE-Diamond is the recent revision discussed next. Do not reuse the Spring MMLU leaderboard as a current ranking.
-
----
-
-<!-- .slide: id="hle-diamond" -->
-
-## HLE-Diamond: versioning the evaluation set
-
-**Announced September 22, 2026.**
-
-- 1,000 questions with stable identifiers.
-- 500 reasoning questions and 500 knowledge questions.
-- Revised from the original HLE pool and its reserve.
-- Report the partition scores and the tool setting.
-
-<p class="caption">HLE, HLE-Rolling, and HLE-Diamond are different evaluation versions.</p>
-
-Note:
-The publisher describes Diamond as a frozen, refined collection. Its protocol uses automatic answer extraction/judging and also reports calibration. A new question set changes the comparison population: do not place an original-HLE score beside a Diamond score as if they were the same experiment. Strong results support claims about these expert questions, not a general claim about autonomous research. Sources: https://www.lastexam.ai/, latest-news entry; https://labs.scale.com/leaderboard/hle-diamond, design and methodology. Counts and announcement date checked October 23, 2026.
-
----
-
-<!-- .slide: id="code-and-interaction" -->
-
-## Code and interaction need richer protocols
-
-| Benchmark | Evaluated behavior |
-| --- | --- |
-| LiveCodeBench | Code tasks with dated problem windows |
-| SWE-Bench Pro V2 | Repository changes checked by tests |
-| ARC-AGI-3 | Learning through actions in unfamiliar environments |
-| LiveBench 2.0 | Longer tasks with graded deliverables |
-
-Record the available tools, time limits, and grading environment.
-
-Note:
-LiveCodeBench's official repository explains release versions and date-window selection. SWE-Bench Pro V2 and ARC-AGI-3 are developed on the next slides. LiveBench's publisher lists version 2.0 dated October 14, 2026 and tasks involving artifacts such as reports, software, and decks. Comparing its aggregate with version 1 requires checking the changed suite and grader. Sources: https://github.com/LiveCodeBench/LiveCodeBench; https://labs.scale.com/blog/swe-bench-pro-v2; https://arcprize.org/arc-agi/3; https://livebench.ai/. These are protocol examples, not required full-suite student runs.
-
----
-
-<!-- .slide: id="swe-benchmark-repair" -->
-
-## SWE-Bench Pro V2: task quality and grading
-
-| Publisher's September 2026 revision | Evaluation issue |
-| --- | --- |
-| 731 public tasks reduced to 642 | Invalid task instances |
-| Instructions checked by independent engineers | Ambiguous task specifications |
-| Restricted network during agent work | Access to solution information |
-| Re-grading on a pristine image | Changes to the grading environment |
-
-Note:
-This is a concrete current case where data curation and evaluation belong in one lesson. Scale's release describes checking reference-patch success and empty-patch failure, alongside manual task review. A second engineer solves a corrected specification without seeing the reference solution. Network restrictions cannot undo prior training exposure. Distinguish this named Pro V2 release from SWE-bench Verified and from other independently revised Pro datasets. Sources: https://labs.scale.com/blog/swe-bench-pro-v2, Sections 1, 3, and 5; https://labs.scale.com/leaderboard/swe_bench_pro_public_v2. Counts describe the publisher's release, not an independent audit by this course.
-
----
-
-<!-- .slide: id="interactive-evaluation" -->
-
-## ARC-AGI-3: actions become part of evaluation
-
-- The agent explores an unfamiliar interactive environment.
-- It infers goals and tests actions using feedback.
-- Scoring considers efficiency relative to human action baselines.
-- Replays help explain failures behind the final score.
-
-Memory, tools, and the agent's control loop affect the measured system.
-
-Note:
-ARC-AGI-3 launched in March 2026. This is an introduction to evaluating an interactive system; agent implementation comes later in the course. Completion and action efficiency are different quantities, so a score is not simply the percentage of games solved. Public demo and semi-private results also represent different evaluation sets. Sources: https://arcprize.org/arc-agi/3; https://arcprize.org/media/ARC_AGI_3_Technical_Report.pdf, benchmark and scoring sections. Avoid carrying the launch-time model scores into a current leaderboard claim.
-
----
-
-<!-- .slide: id="pass-at-k" -->
-
-## More attempts change the success measure
-
-With $c$ correct completions among $n$ samples:
-
-$$\widehat{\mathrm{pass@}k}=1-\frac{\binom{n-c}{k}}{\binom{n}{k}}$$
-
-This estimates success among $k$ attempts under the sampling protocol.
-
-Report the sampling settings and total attempt budget.
-
-Note:
-This is the HumanEval estimator, with n at least k. The probability of selecting no successful completion from n fixed samples is the ratio of combinations. Under independent samples from a fixed generator, it estimates the probability that at least one of k attempts passes the tests. It does not give a deployment method for choosing the successful answer without a checker. Adaptive repair with feedback is a different protocol. Source: Chen et al., https://arxiv.org/abs/2107.03374, Section 3 and Appendix A.
+This is a hypothetical failure mode rather than a measured property of InstructGPT. Suggest a held-out slice with a concise correct answer against a long incorrect answer. Keep the rubric fixed and inspect annotator disagreement rather than assuming every length effect is necessarily a bug.
 
 ---
 
 <!-- .slide: class="exercise" id="exercise-03" -->
 
-<p class="exercise-meta">Optional practice P02 · 5 minutes · Notebook P02</p>
+<p class="exercise-meta">Exercise E03 · 6 minutes · Notebook E03</p>
 
-## How much does the attempt budget matter?
+## Did the reward-model split leak?
 
-Ten sampled programs contain two that pass all tests.
+| Pair | Prompt family | Proposed split |
+| --- | --- | --- |
+| p1 | summary-17 | Train |
+| p2 | summary-17 | Test |
+| p3 | summary-29 | Test |
 
-1. Calculate estimated pass@1 and pass@5.
-2. Does the difference show that the model weights improved?
-
-<div class="answer fragment"><p>pass@1 = 20%. pass@5 = $7/9\approx77.8\%$. The sampling budget changed.</p></div>
+<div class="answer fragment"><p>p1 and p2 share a family. Assign complete families before deriving pairs.</p></div>
 
 Note:
-Expected arithmetic: 1 minus choose(8,5) divided by choose(10,5) equals 1 minus 56/252. The same ten outcomes support both estimates. This example contains no generated executable code. Students should distinguish a task-level pass fraction from repeated attempts on a task, and should not compare pass@1 to pass@5 as if the compute were equal.
+Expected response identifies the grouping boundary and explains why different pair IDs do not make independent examples. The notebook implements an overlap audit without deleting data. A separate held-out source or time period may be needed for a broader generalization claim.
 
 ---
 
-<!-- .slide: id="graders" -->
+<!-- .slide: id="reward-evaluation" -->
 
-## A grader needs its own validation
+## Reward-model evaluation has several questions
 
-| Grader | Example failure |
+| Measurement | Question |
 | --- | --- |
-| Exact string match | Equivalent answer rejected |
-| Unit tests | Untested behavior accepted |
-| LLM judge | Rubric or presentation changes the judgment |
-| Human rubric | Reviewers disagree on an ambiguous criterion |
-
-Inspect disagreements and retain examples behind the score.
+| Pair accuracy | Is the winner ranked higher? |
+| Pair log loss | How much probability is assigned to labels? |
+| Slice audit | Does a shortcut explain the decisions? |
+| Optimized outputs | Does maximizing the score remain useful? |
 
 Note:
-These are possibilities to audit, not measured error rates for a named grader. Use known correct and incorrect examples, check label mappings, and manually inspect a small sample. For an LLM judge, record its model revision, prompt, rubric, and reference-answer access. A grader's agreement with humans on a particular sample does not establish universal validity. HLE-Diamond's answer-extraction protocol and the SWE-Bench Pro V2 clean re-grading example provide concrete contexts. Detailed judge studies are linked in optional-reading.md.
+These questions require different data. Pair accuracy does not measure absolute calibration or robustness to optimization-induced distribution shift. Keep a checked collection of disagreement examples. Lecture 10 will connect this to paired evaluation and uncertainty.
 
 ---
 
-<!-- .slide: id="prompt-sensitivity" -->
+<!-- .slide: class="outline-slide" id="outline-policy" -->
 
-## Prompt selection is part of model selection
+## Lecture outline
 
-| Synthetic accuracy on 100 items | Model A | Model B |
+<ol class="outline-topics"><li>Demonstrations and supervised fine-tuning</li><li>Preferences and reward models</li><li aria-current="step">Policy optimization and evaluation</li></ol>
+
+Note:
+Period 3. Introduce the regularized objective and the different model roles, leaving the policy-gradient derivation to Lecture 09. Ask why optimizing a proxy might create examples unlike the reward model's original comparison data.
+
+---
+
+<!-- .slide: id="regularized-objective" -->
+
+## Reward with a reference anchor
+
+$$J=\mathbb E_{y\sim\pi_\theta}[r_\phi(x,y)]-\beta D_{\mathrm{KL}}(\pi_\theta\Vert\pi_{\mathrm{ref}})$$
+
+Here the prompt is fixed; training also averages over prompts.
+
+The reference is often the SFT policy.
+
+Note:
+Source: InstructGPT Section 3.2, https://arxiv.org/html/2203.02155v1. Both distributions are complete-response distributions conditioned on the same prompt. The KL penalty discourages movement from the anchor, but does not prove the reward model is correct or eliminate reward hacking.
+
+---
+
+<!-- .slide: id="sampled-kl" -->
+
+## A sampled log ratio is not the full KL
+
+$$\log\frac{\pi_\theta(y\mid x)}{\pi_{\mathrm{ref}}(y\mid x)}=\sum_t\log\frac{\pi_\theta(y_t\mid s_t)}{\pi_{\mathrm{ref}}(y_t\mid s_t)}$$
+
+A single sampled value may be negative.
+
+Its expectation under the current policy is nonnegative.
+
+Note:
+Assume reference support on the policy's allowed responses. The expectation of the sequence log ratio is the sequence KL. A token average changes the length-weighting convention and should be stated separately. Lecture 09 discusses what changes when differentiating a penalty on a fixed rollout batch.
+
+---
+
+<!-- .slide: id="model-roles" -->
+
+## Keep the computational roles distinct
+
+| Object | Role |
+| --- | --- |
+| Current policy | Receives the actor update |
+| Old policy | Generated the rollout batch |
+| Reference policy | Persistent regularization anchor |
+| Reward model | Scores a completed response |
+| Critic | Estimates remaining return from a prefix |
+
+Note:
+Some implementations share parameters or memory between roles; that does not merge their mathematical responsibilities. The reward model is fixed during an ordinary actor update. The critic is trained to a return target tied to the policy and reward convention. PPO details are in the next lecture.
+
+---
+
+<!-- .slide: class="exercise" id="exercise-04" -->
+
+<p class="exercise-meta">Exercise E04 · 5 minutes · Notebook E04</p>
+
+## Which denominator belongs in the update ratio?
+
+For one sampled token:
+$\pi_{\mathrm{old}}=0.20$, $\pi_{\mathrm{ref}}=0.10$, $\pi_\theta=0.24$.
+
+Find the rollout ratio and the reference log ratio.
+
+<div class="answer fragment"><p>Rollout ratio: $1.2$. Reference log ratio: $\log2.4$.</p></div>
+
+Note:
+The probabilities refer to the same token at the same prefix. The current-to-old ratio is 0.24/0.20; using the reference instead would produce 2.4 and change the update. The reference log ratio is the value for the current policy here; a rollout-time shaped reward would use cached old versus reference probabilities instead.
+
+---
+
+<!-- .slide: id="ptx" -->
+
+## The training recipe includes auxiliary objectives
+
+InstructGPT's PPO-ptx variant also includes a pretraining-likelihood term.
+
+Record the objective mixture and evaluation regressions.
+
+The name “PPO” does not fully specify a post-training experiment.
+
+Note:
+Source: https://arxiv.org/html/2203.02155v1, Section 3.2 and alignment-tax discussion. Do not add a pretraining mixture as an unannounced course requirement. This slide explains why two systems both called PPO can differ in their actual optimization objectives.
+
+---
+
+<!-- .slide: id="proxy-failure" -->
+
+## More reward can accompany worse task performance
+
+| Synthetic checkpoint | Reward score | Checked task accuracy |
 | --- | ---: | ---: |
-| Template 1 | 60% | 64% |
-| Template 2 | 62% | 58% |
+| Before update | 0.4 | 70% |
+| After update | 1.2 | 62% |
 
-Choose a prompt on development data, or report a prespecified set of prompts.
-
-<p class="caption">Changing the prompt can change the model ranking.</p>
+Inspect outputs, the reward model, and the evaluator before claiming improvement.
 
 Note:
-The table is a constructed counterexample, not empirical evidence about a model family. Both prompts use the same item population. Reporting only each model's best test prompt introduces selection bias. Shared prompts and model-specific prompts answer different questions; either needs a declared protocol. Choice ordering, chat templates, truncation, and answer extraction can also change results. MMLU-Pro's prompt sensitivity study is a concrete reading: https://arxiv.org/abs/2406.01574, experiments on prompt variations.
+These invented values illustrate a logically possible proxy failure, not measured InstructGPT results. An alternative explanation could be an evaluation bug. The appropriate next step is to inspect examples and compare under a frozen protocol, not conclude that all policy optimization is harmful.
 
 ---
 
-<!-- .slide: id="paired-items" -->
+<!-- .slide: id="three-claims" -->
 
-## Compare the same items together
+## Match each claim to its evidence
 
-| Clean synthetic items | Count |
-| --- | ---: |
-| Both A and B correct | 50 |
-| Only A correct | 10 |
-| Only B correct | 14 |
-| Both wrong | 26 |
+| Claim | Needed comparison |
+| --- | --- |
+| Fits demonstrations | Held-out response likelihood |
+| Predicts preferences | Held-out comparisons and slices |
+| Improves the assistant | Controlled generated-output evaluation |
 
-$$\Delta=\mathrm{accuracy}(B)-\mathrm{accuracy}(A)=\frac{14-10}{100}=4\text{ percentage points}$$
-
-Note:
-Students often compare two independent error bars even though both models answer the same questions. The paired difference uses the joint outcomes. Here 24 items disagree. Pair each item's two predictions before resampling; independent resampling of A and B loses that dependence. All counts derive from the explicit synthetic vectors used by E05.
-
----
-
-<!-- .slide: class="exercise" id="exercise-05" -->
-
-<p class="exercise-meta">Optional practice P03 · 8 minutes · Notebook P03</p>
-
-## How strong is the four-point improvement?
-
-Resample the 100 paired items with replacement 5,000 times.
-
-1. Compute the accuracy difference in each resample.
-2. Read the central 95% percentile interval.
-3. State which uncertainty this interval leaves out.
-
-<div class="answer fragment"><p>The interval crosses zero. These items do not establish a reliable positive gain.</p></div>
+One optimization trace cannot establish all three claims.
 
 Note:
-The notebook fixes the seed at 20261028 and uses a transparent percentile implementation. It reports the exact computed endpoints and the point estimate. An interval crossing zero does not prove the models are identical. The small fixture is for understanding the procedure, not deciding a research result from one run. Expected limitations include training seeds, prompt choice, grader errors, and violations of item independence. Use this exercise to practice a qualified conclusion.
-
----
-
-<!-- .slide: id="bootstrap-result" -->
-
-## The paired differences include both signs
-
-<div class="plot" data-plotly="assets/bootstrap.json" role="img" aria-label="Histogram of 5000 paired bootstrap accuracy differences from synthetic predictions. The distribution includes negative and positive differences around a four-percentage-point estimate."></div>
-
-<p class="caption">95% interval: −5 to +13 points. Dashed line: zero. Synthetic items; fixed systems.</p>
-
-Note:
-Read the units as percentage points, not relative percent improvement. The plot is generated directly from the same seeded samples as Notebook P03. The histogram counts resampled differences; it is not a Bayesian posterior probability that B is better. More representative independent evaluation items or repeated training runs answer different uncertainty questions; choose the next experiment based on the dominant uncertainty and compute budget.
+Conclude by asking students where each evaluation split must be protected in the pipeline. The same held-out prompt family must not re-enter through SFT, reward-model pairs, or policy-training prompts. This is the bridge to Lecture 10.
 
 ---
 
 <!-- .slide: class="references" id="references" -->
 
-## Reading: current benchmark protocols
+## Reading and next lecture
 
-- [HLE-Diamond](https://labs.scale.com/leaderboard/hle-diamond): revised expert questions.
-- [SWE-Bench Pro V2](https://labs.scale.com/blog/swe-bench-pro-v2): task repair and grading controls.
-- [ARC-AGI-3](https://arcprize.org/arc-agi/3): interactive evaluation.
-- [LiveBench](https://livebench.ai/): dated benchmark releases.
-- [Full reading guide](optional-reading.md): historical tasks, model interfaces, and code evaluation.
-
-<p class="caption">Sources checked October 26, 2026. Preserve the exact benchmark version in any reported result.</p>
+- [InstructGPT](https://arxiv.org/html/2203.02155v1): Sections 2–4; annotation appendix.
+- [PPO](https://arxiv.org/abs/1707.06347): Sections 2–3; Algorithm 1.
+- [Lecture 08 notes](../../docs/lecture-08-instructgpt.html): losses and worked examples.
+- [Post-training reading guide](../../docs/rl-posttraining-and-agents.md).
 
 Note:
-All named current releases have primary publisher references. Read protocols and dataset versions before consulting rankings. The course does not promise that a current leaderboard remains unchanged, or that benchmark access and full-suite runs fit the course pool. The reproducible classroom examples require no network, model download, or external API.
+Lecture 09 develops REINFORCE and PPO, then provides clearly labelled GRPO/DPO supplementary material. All practice here is optional and ungraded. Primary source URLs were checked November 10, 2026.

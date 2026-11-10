@@ -1,4 +1,4 @@
-"""Small, offline calculations for the ungraded Lecture 08 exercises.
+"""Small, offline calculations for the ungraded Lecture 10 exercises.
 
 All examples are authored teaching fixtures, not predictions from a model.
 The functions operate on values in memory and never remove files.

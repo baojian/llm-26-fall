@@ -288,28 +288,37 @@
       <tr id="lecture-08" data-start="2026-10-25">
         <td class="num">8</td>
         <td class="date">Oct 28</td>
-        <td><strong>Data preparation and quality</strong><span class="lens">Can better data improve a fixed model under a fixed training budget?</span></td>
-        <td>Text extraction; source documentation; quality filtering; exact and near duplicates; language mixtures; contamination and split construction.
-          <div class="practice"><strong>Practice:</strong> Compare filtering, deduplication, or language mixtures under a fixed model, tokenizer, and training-token budget.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+        <td><strong>InstructGPT, SFT and reward models</strong><span class="lens">How do demonstrations and preferences become learning signals?</span></td>
+        <td>The InstructGPT workflow; response-token loss masking; preference pairs; Bradley–Terry reward modeling; reward-model evaluation and KL anchoring.
+          <div class="practice"><strong>Practice:</strong> Calculate a masked SFT loss and a pairwise reward loss; audit a preference split and distinguish old and reference policies.</div>
+          <div class="materials"><strong>Notes:</strong> <a href="docs/lecture-08-instructgpt.html">Lecture 8 notes</a></div>
+          <div class="materials"><strong>Slides:</strong> <a href="slides/lecture-08/" data-local-path="/slides/lecture-08/" target="_blank" rel="noopener noreferrer">lecture-08-slides</a></div>
+          <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-08" data-local-path="/slides/shared/notebook.html?lecture=lecture-08" target="_blank" rel="noopener noreferrer">practice.ipynb</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2203.02155" target="_blank" rel="noopener noreferrer">Ouyang et al., InstructGPT</a> · <a href="slides/lecture-08/optional-reading.md">Reading guide</a></div></td>
         <td>A2 due Oct 31</td>
       </tr>
-      <tr data-start="2026-11-01">
+      <tr id="lecture-09" data-start="2026-11-01">
         <td class="num">9</td>
         <td class="date">Nov 4</td>
-        <td><strong>Evaluation and experimental design</strong><span class="lens">Does a measured improvement answer the question we care about?</span></td>
-        <td>Task and metric selection; loss versus downstream performance; prompt sensitivity; uncertainty; leakage; error analysis. Use a BERT classification example and one decoder evaluation.
-          <div class="practice"><strong>Practice:</strong> Audit an evaluation set, test a claim, and examine uncertainty or evaluator disagreement.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+        <td><strong>Reinforcement learning and PPO</strong><span class="lens">How can sampled rewards improve a language-model policy?</span></td>
+        <td>Policy gradients; REINFORCE and baselines; value estimates and GAE; PPO clipping and rollout bookkeeping. GRPO and DPO slides are supplementary and were not taught in Week 9.
+          <div class="practice"><strong>Practice:</strong> Check a score-function gradient, calculate PPO clipping for both advantage signs, and trace a short GAE recursion.</div>
+          <div class="materials"><strong>Notes:</strong> <a href="docs/lecture-09-policy-optimization.html">Lecture 9 notes</a></div>
+          <div class="materials"><strong>Slides:</strong> <a href="slides/lecture-09/" data-local-path="/slides/lecture-09/" target="_blank" rel="noopener noreferrer">lecture-09-slides</a></div>
+          <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-09" data-local-path="/slides/shared/notebook.html?lecture=lecture-09" target="_blank" rel="noopener noreferrer">practice.ipynb</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/1707.06347" target="_blank" rel="noopener noreferrer">Schulman et al., PPO</a> · <a href="slides/lecture-09/optional-reading.md">Reading guide</a></div></td>
         <td>—</td>
       </tr>
-      <tr data-start="2026-11-08">
+      <tr id="lecture-10" data-start="2026-11-08">
         <td class="num">10</td>
         <td class="date">Nov 11</td>
-        <td><strong>Supervised fine-tuning</strong><span class="lens">When does task-specific training improve a pretrained model?</span></td>
-        <td>Instruction data; chat templates; response-token loss masking; optimization and forgetting; evaluate before and after adaptation.
-          <div class="practice"><strong>Practice:</strong> Adapt a supplied pretrained model using parameter-efficient tuning or a data-quality comparison; inspect improvements and regressions.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+        <td><strong>Data preparation, evaluation and experimental design</strong><span class="lens">What data and evaluation choices make an improvement believable?</span></td>
+        <td>Data provenance, extraction and filtering; duplicate families and leakage; sampling exposure; benchmark protocols, graders, paired comparisons, uncertainty and error analysis.
+          <div class="practice"><strong>Practice:</strong> Audit duplicate families and split leakage; compare a fixed-budget data policy and report a paired evaluation with uncertainty.</div>
+          <div class="materials"><strong>Notes:</strong> <a href="docs/lecture-10-data-evaluation.html">Lecture 10 notes</a></div>
+          <div class="materials"><strong>Slides:</strong> <a href="slides/lecture-10/" data-local-path="/slides/lecture-10/" target="_blank" rel="noopener noreferrer">lecture-10-slides</a></div>
+          <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-10" data-local-path="/slides/shared/notebook.html?lecture=lecture-10" target="_blank" rel="noopener noreferrer">practice.ipynb</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2406.17557" target="_blank" rel="noopener noreferrer">Penedo et al., FineWeb</a> · <a href="slides/lecture-10/optional-reading.md">Reading guide</a></div></td>
         <td>Quiz 4; A3 released</td>
       </tr>
       <tr data-start="2026-11-15">

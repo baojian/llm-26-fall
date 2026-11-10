@@ -1,4 +1,4 @@
-"""Check the scoring and uncertainty examples used by Lecture 08."""
+"""Check the scoring and uncertainty examples used by Lecture 10."""
 
 import importlib.util
 import json
@@ -7,8 +7,8 @@ from pathlib import Path
 
 import pytest
 
-DECK = Path(__file__).resolve().parents[1] / "slides/lecture-08"
-spec = importlib.util.spec_from_file_location("lecture08_evaluation", DECK / "assets/evaluation.py")
+DECK = Path(__file__).resolve().parents[1] / "slides/lecture-10"
+spec = importlib.util.spec_from_file_location("lecture10_evaluation", DECK / "assets/evaluation.py")
 evaluation = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(evaluation)
 
@@ -90,6 +90,6 @@ def test_notebook_runs_offline_from_a_fresh_working_copy(tmp_path, monkeypatch):
     namespace = {"__name__": "__main__"}
     for index, cell in enumerate(notebook["cells"]):
         if cell["cell_type"] == "code":
-            exec(compile("".join(cell["source"]), f"lecture08-cell-{index}", "exec"), namespace)
+            exec(compile("".join(cell["source"]), f"lecture10-cell-{index}", "exec"), namespace)
     assert namespace["bootstrap_result"]["difference"] == pytest.approx(0.04)
     assert math.isclose(namespace["pass5"], 7 / 9)
