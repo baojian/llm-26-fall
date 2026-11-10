@@ -55,12 +55,12 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
 | 8 | Wed, Oct 28, 2026 | [InstructGPT, SFT and reward models](lecture-08-instructgpt.html) | A2 due **Sat, Oct 31** |
 | 9 | Wed, Nov 4, 2026 | [Reinforcement learning, REINFORCE and PPO](lecture-09-policy-optimization.html) | — |
 | 10 | Wed, Nov 11, 2026 | [Data preparation, evaluation and experimental design](lecture-10-data-evaluation.html) | Quiz 4; A3 released |
-| 11 | Wed, Nov 18, 2026 | Preferences, rewards, and alignment | — |
-| 12 | Wed, Nov 25, 2026 | Retrieval and retrieval-augmented generation | Project progress update due |
-| 13 | Wed, Dec 2, 2026 | Efficient inference | A3 due |
-| 14 | Wed, Dec 9, 2026 | Diffusion language models | Quiz 5 |
-| 15 | Wed, Dec 16, 2026 | Agents and tool use | — |
-| 16 | Wed, Dec 23, 2026 | Research synthesis and project revision | Last class |
+| 11 | Wed, Nov 18, 2026 | [DPO, GRPO and verifiable rewards](course-revision.html#lecture-11-dpo-grpo-and-verifiable-rewards) | — |
+| 12 | Wed, Nov 25, 2026 | [Retrieval and retrieval-augmented generation](course-revision.html#lecture-12-retrieval-and-rag) | Project progress update due |
+| 13 | Wed, Dec 2, 2026 | [Efficient inference and computation at test time](course-revision.html#lecture-13-inference-and-computation-at-test-time) | A3 due |
+| 14 | Wed, Dec 9, 2026 | [Masked diffusion language models](course-revision.html#lecture-14-masked-diffusion-language-models) | Quiz 5 |
+| 15 | Wed, Dec 16, 2026 | [Agents and tool use](course-revision.html#lecture-15-agents-and-tool-use) | — |
+| 16 | Wed, Dec 23, 2026 | [Research synthesis and project revision](course-revision.html#lecture-16-research-synthesis-and-project-revision) | Last class |
 
 - October 7 falls on the National Day holiday. Its meeting moves to Saturday,
   October 10; time and room follow the university make-up-day notice.
@@ -78,6 +78,9 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
   and were not taught in Week 9. Data preparation, quality, evaluation and
   experimental design move together to Week 10. Quiz 4 assesses previously
   taught material; assignment dates and assessment weights are unchanged.
+- Lectures 11–16 link to preparation plans, not completed slide packages.
+  Lecture 11 introduces DPO and GRPO after the taught PPO foundations;
+  Lecture 13 connects inference efficiency to computation at test time.
 - December 23 includes guided revision of project claims and evidence.
   Project checkpoints remain individual written submissions through eLearning.
 - Weeks 17–18 (Dec 27, 2026 – Jan 9, 2027) are exam weeks with no classes.

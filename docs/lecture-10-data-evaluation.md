@@ -40,6 +40,18 @@ For preferences, retain pair provenance, the rubric, and correlated candidate
 groups. For reward optimization, separate policy-training prompts, reward-model
 training pairs, and evaluation prompts. All three can become leakage routes.
 
+| Taught stage | Fitting data | Boundary to audit |
+| --- | --- | --- |
+| SFT, Lecture 08 | Demonstrations and response masks | Evaluation answers or related source documents in demonstrations |
+| Reward model, Lecture 08 | Preference pairs and rubric | Evaluation prompt families in reward-model fitting or selection |
+| PPO, Lecture 09 | Prompts, sampled responses and rewards | Evaluation tasks exposed during policy optimization |
+
+A prompt held out from PPO is not necessarily held out from SFT or reward-model
+training. Carry source-family IDs across stages and reserve final evaluation
+before model or prompt selection. The three training pools need not be mutually
+disjoint; the claim concerns their relationship to the evaluation population.
+When pretraining exposure cannot be audited, record that uncertainty.
+
 ### Task definitions become data schemas
 
 The instructor's 2025 benchmark lecture provides concrete preparation cases.
@@ -300,6 +312,28 @@ Reading: [Dror et al. (2018), assumptions and test selection](https://aclantholo
 
 ## 10. Validate the evaluator
 
+### Worked example: reward coverage
+
+Suppose the task is to return the square of an input. The training reward only
+checks input 2. Both `return 4` and `return x * x` receive full reward. An
+independent check at input 3 expects 9 and rejects the hard-coded candidate.
+
+| Candidate | Reward case: input 2 | Independent case: input 3 |
+| --- | --- | --- |
+| Hard-coded answer | 4: pass | 4: fail |
+| Square function | 4: pass | 9: pass |
+
+The notebook executes this authored fixture. It demonstrates an incomplete
+verifier, not a trained-policy result. Even passing both tests does not prove
+general correctness. Once a check guides a repair or candidate selection,
+it is development evidence; retain a separate final evaluation for the claim.
+This connects Lecture 09's optimization signal to Lecture 11's verifiable rewards.
+For an empirical study of optimizing a proxy, read
+[Gao et al., Scaling Laws for Reward Model Overoptimization](https://arxiv.org/abs/2210.10760).
+Their reward-model experiments are distinct from this two-function illustration.
+
+### Audit disagreements and failure slices
+
 An exact matcher can reject an equivalent answer. A unit-test suite can miss
 incorrect behavior. An LLM judge can change its decision when answer order or
 presentation changes. Human assessors can disagree about an ambiguous rubric.
@@ -339,5 +373,6 @@ E02 also checks why disjoint question IDs do not establish an unseen-article spl
 - [Lecture 10 reading guide and versioned benchmark examples](../slides/lecture-10/optional-reading.md).
 - [Lecture 08: SFT and reward-model data](lecture-08-instructgpt.html).
 - [Lecture 09: policy-training and evaluation distributions](lecture-09-policy-optimization.html).
+- [Lecture 11 plan: DPO, GRPO and independent reward evaluation](course-revision.html#lecture-11-dpo-grpo-and-verifiable-rewards).
 - [FineWeb methods and controlled data comparisons](https://arxiv.org/abs/2406.17557).
 - [DataComp-LM benchmark design](https://arxiv.org/abs/2406.11794).

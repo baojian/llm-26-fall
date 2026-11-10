@@ -321,58 +321,64 @@
           <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2406.17557" target="_blank" rel="noopener noreferrer">Penedo et al., FineWeb</a> · <a href="slides/lecture-10/optional-reading.md">Reading guide</a></div></td>
         <td>Quiz 4; A3 released</td>
       </tr>
-      <tr data-start="2026-11-15">
+      <tr id="lecture-11" data-start="2026-11-15">
         <td class="num">11</td>
         <td class="date">Nov 18</td>
-        <td><strong>Preferences, rewards, and alignment</strong><span class="lens">What happens when the optimization target differs from what we actually want?</span></td>
-        <td>Preference pairs and reward models; DPO intuition and loss; RLHF/RLVR overview; verifiable rewards; reward hacking and safety evaluation.
-          <div class="practice"><strong>Practice:</strong> Compute a DPO loss and inspect a preference-learning or verifiable-reward example for reward hacking.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+        <td><strong>DPO, GRPO and verifiable rewards</strong><span class="lens">How do preferences and rewards change a policy, and how do we check the result?</span></td>
+        <td>Build on SFT, reward models and PPO: reference-relative DPO loss; group-relative advantages and clipping in GRPO; verifier coverage, reward exploitation and independent evaluation.
+          <div class="practice"><strong>Practice:</strong> Compute a preference loss and group advantages; audit an incomplete verifier and design a held-out comparison.</div>
+          <div class="materials"><strong>Plan:</strong> <a href="docs/course-revision.html#lecture-11-dpo-grpo-and-verifiable-rewards">Lecture 11 preparation plan</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2305.18290" target="_blank" rel="noopener noreferrer">DPO</a> · <a href="https://arxiv.org/abs/2402.03300" target="_blank" rel="noopener noreferrer">DeepSeekMath / GRPO</a></div></td>
         <td>—</td>
       </tr>
-      <tr data-start="2026-11-22">
+      <tr id="lecture-12" data-start="2026-11-22">
         <td class="num">12</td>
         <td class="date">Nov 25</td>
         <td><strong>Retrieval and retrieval-augmented generation</strong><span class="lens">When should a system retrieve evidence, and when should it abstain?</span></td>
         <td>TF-IDF/BM25; dense retrieval; reranking; chunking; context construction; retrieval recall, answer support, and unanswerable questions.
-          <div class="practice"><strong>Practice:</strong> Compare retrieval or chunking choices in a course-notes RAG system; distinguish retrieval failures from generation failures.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+          <div class="practice"><strong>Practice:</strong> Compare retrieval or chunking choices on the same questions; distinguish retrieval failures, unsupported generation and appropriate abstention.</div>
+          <div class="materials"><strong>Plan:</strong> <a href="docs/course-revision.html#lecture-12-retrieval-and-rag">Lecture 12 preparation plan</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2004.04906" target="_blank" rel="noopener noreferrer">DPR</a> · <a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener noreferrer">RAG</a></div></td>
         <td>Project progress update due</td>
       </tr>
-      <tr data-start="2026-11-29">
+      <tr id="lecture-13" data-start="2026-11-29">
         <td class="num">13</td>
         <td class="date">Dec 2</td>
-        <td><strong>Efficient inference</strong><span class="lens">Which speed improvement matters for a particular workload?</span></td>
-        <td>Prefill and decoding; KV caching; batching; latency versus throughput; quantization tradeoffs; FlashAttention intuition.
-          <div class="practice"><strong>Practice:</strong> Profile a cache or batching change; compare speed and memory while checking output correctness.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+        <td><strong>Efficient inference and computation at test time</strong><span class="lens">How should we spend a fixed inference budget?</span></td>
+        <td>Prefill and decoding; KV caching; batching; latency, throughput and memory; quantization and FlashAttention; best-of-N, verification and quality versus inference budget.
+          <div class="practice"><strong>Practice:</strong> Check a cache or batching change, then compare candidate-selection strategies at declared attempt, token and time budgets.</div>
+          <div class="materials"><strong>Plan:</strong> <a href="docs/course-revision.html#lecture-13-inference-and-computation-at-test-time">Lecture 13 preparation plan</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2205.14135" target="_blank" rel="noopener noreferrer">FlashAttention</a> · <a href="https://arxiv.org/abs/2309.06180" target="_blank" rel="noopener noreferrer">vLLM</a> · <a href="https://arxiv.org/abs/2408.03314" target="_blank" rel="noopener noreferrer">Test-time compute</a></div></td>
         <td>A3 due</td>
       </tr>
-      <tr data-start="2026-12-06">
+      <tr id="lecture-14" data-start="2026-12-06">
         <td class="num">14</td>
         <td class="date">Dec 9</td>
-        <td><strong>Diffusion language models</strong><span class="lens">What changes when generation can update multiple token positions?</span></td>
-        <td>Review BERT masked prediction; corruption and iterative unmasking; compare sampling order, conditioning, and compute with autoregression. State assumptions behind the connections.
-          <div class="practice"><strong>Practice:</strong> Compare masked-generation samplers in a supplied demo, measuring quality and latency.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+        <td><strong>Masked diffusion language models</strong><span class="lens">What changes when generation can update multiple token positions?</span></td>
+        <td>BERT as a masked-prediction contrast; a discrete masking process and denoising objective; iterative unmasking, conditioning and sampling schedules; quality and compute comparisons with autoregression.
+          <div class="practice"><strong>Practice:</strong> Trace a small masked sampler and compare assumptions, step counts and costs; parallel token updates alone do not establish a speedup.</div>
+          <div class="materials"><strong>Plan:</strong> <a href="docs/course-revision.html#lecture-14-masked-diffusion-language-models">Lecture 14 preparation plan</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2406.07524" target="_blank" rel="noopener noreferrer">MDLM</a> · <a href="https://arxiv.org/abs/2502.09992" target="_blank" rel="noopener noreferrer">LLaDA</a></div></td>
         <td>Quiz 5</td>
       </tr>
-      <tr data-start="2026-12-13">
+      <tr id="lecture-15" data-start="2026-12-13">
         <td class="num">15</td>
         <td class="date">Dec 16</td>
         <td><strong>Agents and tool use</strong><span class="lens">When does a tool-use loop improve an outcome enough to justify its cost?</span></td>
         <td>Bounded tool use; stopping conditions; trace inspection; prompt injection and tool permissions; compare with direct generation.
-          <div class="practice"><strong>Practice:</strong> Compare an agent with direct generation and inspect its tool-use trace, stopping behavior, and cost.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+          <div class="practice"><strong>Practice:</strong> Compare direct generation with a bounded agent on the same tasks; inspect success, failures, tool calls, tokens, latency and stopping behavior.</div>
+          <div class="materials"><strong>Plan:</strong> <a href="docs/course-revision.html#lecture-15-agents-and-tool-use">Lecture 15 preparation plan</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener noreferrer">ReAct</a> · <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener noreferrer">SWE-bench</a></div></td>
         <td>—</td>
       </tr>
-      <tr data-start="2026-12-20">
+      <tr id="lecture-16" data-start="2026-12-20">
         <td class="num">16</td>
         <td class="date">Dec 23</td>
         <td><strong>Research synthesis and project revision</strong><span class="lens">Which claims are supported by our experiments, and what still needs to be checked?</span></td>
-        <td>Connect course methods to project findings; inspect baselines, controlled comparisons, uncertainty, and failure cases. Use written feedback to revise the final report and experiment record.
-          <div class="practice"><strong>Practice:</strong> Trace one project claim to its evidence, identify a limitation, and plan the final revision.</div>
-          <div class="materials"><strong>References:</strong> To be updated.</div></td>
+        <td>Connect course methods to project findings; inspect baselines, controlled comparisons, uncertainty and failure cases. Revise the six-page main report, code and experiment record using written feedback.
+          <div class="practice"><strong>Practice:</strong> Trace one project claim to its evidence, narrow an unsupported conclusion and prepare the final revision checklist.</div>
+          <div class="materials"><strong>Plan:</strong> <a href="docs/course-revision.html#lecture-16-research-synthesis-and-project-revision">Lecture 16 preparation plan</a></div>
+          <div class="materials"><strong>References:</strong> <a href="docs/project-candidates.html">Project guidance</a> · <a href="docs/lecture-10-data-evaluation.html#11-a-minimum-useful-experiment-report">Experiment-report template</a></div></td>
         <td>—</td>
       </tr>
       <tr data-start="2026-12-27">
@@ -383,6 +389,7 @@
         <td>Final report, code, and experiment record due</td>
       </tr>
     </tbody></table></div>
+    <p>Lectures 11–16 link to preparation plans with readings, classroom activities and estimated compute budgets. Their slide and notebook packages will be added after verification.</p>
     <p>There are 16 teaching sessions, including the Saturday make-up class on October 10. References will remain available on this course page. December 23 is reserved for research synthesis and project revision. Individual project feedback is provided through written comments and office hours.</p>
 </section>
 <section id="assessment">

@@ -10,6 +10,15 @@ These English notes match the revised November 10 teaching sequence. Rebuild
 their HTML after editing the matching Markdown with
 `node scripts/build-lecture-notes.mjs`. Equations and styles are hosted locally.
 
+## Remaining six lectures
+
+The [current course plan](course-revision.html) connects the taught SFT/RM/PPO
+sequence to Lecture 10 and provides timed preparation routes for Lectures 11–16:
+DPO/GRPO, retrieval, inference and test-time compute, masked diffusion, agents,
+and project synthesis. Each route includes readings and a CPU fallback.
+Future decks and notebooks still need preparation and verification. Edit
+[the Markdown source](course-revision.md); the same builder generates its HTML.
+
 ## Other course readings
 
 The [Lecture 07 board notes](lecture-07-scaling-laws/README.md) provide a

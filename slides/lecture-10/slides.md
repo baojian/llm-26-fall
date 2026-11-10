@@ -56,6 +56,23 @@ Use the same initial weights, optimizer settings, and training schedule for a si
 
 ---
 
+<!-- .slide: id="posttraining-data-boundaries" -->
+
+## Evaluation must stay outside every fitting stage
+
+| Taught stage | Data used to fit | Audit before training |
+| --- | --- | --- |
+| SFT | Demonstrations | Source IDs; response masks |
+| Reward model | Preference pairs | Prompt families; rubric |
+| PPO | Prompts and rollouts | Exposure to evaluation tasks |
+
+Carry source-family IDs across stages. Reserve final evaluation before selection.
+
+Note:
+Bridge from Lectures 08–09. A prompt excluded from PPO may still have appeared in SFT demonstrations or reward-model pairs. Different splits for the three stages do not establish independence from the final evaluation. Audit related prompts, source documents and generated variants, not just exact strings. Use development data to select prompts and policies. This is an original course audit table, not a requirement that SFT, RM and PPO training pools must be mutually disjoint. In a retrospective audit of opaque pretraining data, report unknown exposure rather than claiming it was ruled out. Keep the original-corpus versus deduplicated-corpus comparison as today's numerical running example.
+
+---
+
 <!-- .slide: id="data-lineage" -->
 
 ## A traceable data pipeline
@@ -66,25 +83,6 @@ Use the same initial weights, optimizer settings, and training schedule for a si
 
 Note:
 This is an original course workflow. Extraction, normalization, language/quality selection, and matching make distinct decisions. Keep the mapping from raw records to retained records. A newly constructed dataset groups related records before splitting. An existing benchmark keeps its published split; audit training overlap against it using a declared policy. Source: FineWeb, https://arxiv.org/abs/2406.17557, Section 3. Exact ordering is a policy to evaluate rather than a universal recipe.
-
----
-
-<!-- .slide: id="source-card" -->
-
-## A source record students can audit
-
-| Field | Example value |
-| --- | --- |
-| Source and revision | Course fixture, revision 1 |
-| Document and parent IDs | `article-17`, `site-a` |
-| Extraction and filter rules | `extract-v1`, `policy-b` |
-| Rights and access metadata | Course-authored text |
-| Counts | Raw bytes, retained documents, tokenizer tokens |
-
-<p class="caption">A dataset name alone does not identify the training mixture.</p>
-
-Note:
-Use an authored record so no rights or provenance claim is inferred from a real URL. Preserve dates, source licenses or terms, language metadata, and removal decisions when constructing a real dataset. A permissive toolkit license does not automatically describe every source document. Byte, document, and token counts answer different questions; token counts depend on the tokenizer. This is a metadata design exercise, not legal advice.
 
 ---
 
@@ -379,21 +377,6 @@ A random chunk split can move near-identical context across partitions even afte
 
 ---
 
-<!-- .slide: id="data-evidence" -->
-
-## Data policies need controlled evidence
-
-**Lee et al., 2022:** investigate deduplication, memorization, and evaluation overlap.
-
-**FineWeb, 2024:** document extraction, filtering, and deduplication ablations.
-
-For our course: change one data policy and keep a comparable training budget.
-
-Note:
-These papers provide methods and empirical case studies. Their findings do not guarantee that every deduplication or quality threshold improves every model. Students can get a sound negative result. Read Lee et al., methods and experimental sections, https://aclanthology.org/2022.acl-long.577/; FineWeb, dataset-construction ablations, https://arxiv.org/abs/2406.17557. Full paper training budgets are outside the classroom scope. Allow a short transition before the break.
-
----
-
 <!-- .slide: id="fixed-budget" -->
 
 ## Match processed tokens when data size changes
@@ -560,6 +543,26 @@ Inspect disagreements and retain examples behind the score.
 
 Note:
 These are possibilities to audit, not measured error rates for a named grader. Use known correct and incorrect examples, check label mappings, and manually inspect a small sample. For an LLM judge, record its model revision, prompt, rubric, and reference-answer access. A grader's agreement with humans on a particular sample does not establish universal validity. HLE-Diamond's answer-extraction protocol and the SWE-Bench Pro V2 clean re-grading example provide concrete contexts. Detailed judge studies are linked in optional-reading.md.
+
+---
+
+<!-- .slide: id="reward-is-not-evaluation" -->
+
+## Passing the reward test can miss the task
+
+Task: return the square of the input.
+
+| Candidate | Training reward: input 2 | Independent check: input 3 |
+| --- | --- | --- |
+| `return 4` | Pass: 4 | Fail: expected 9 |
+| `return x * x` | Pass: 4 | Pass: 9 |
+
+A reward is an optimization signal. Validate the intended behavior separately.
+
+<p class="caption">Authored toy example; no policy was trained. Two tests do not prove general correctness.</p>
+
+Note:
+Retrieve the reward in Lecture 09's policy objective. A perfect training-reward score is compatible with failure outside the checked case. The example demonstrates an incomplete verifier, not a measured outcome of PPO or a learned reward model. The notebook executes both candidates. Hold out independent task instances and inspect verifier blind spots; choosing this check after noticing the bug is development work, so freeze another evaluation for a final claim. Connect to Lecture 11: a verifiable reward is only as informative as its specification and coverage. Contextual reading: Gao, Schulman and Hilton, Scaling Laws for Reward Model Overoptimization, https://arxiv.org/abs/2210.10760. Their experiments concern proxy reward optimization; this two-function fixture is our illustration, not a reproduction of their experiment.
 
 ---
 
@@ -730,7 +733,7 @@ Students can adapt the notebook's final short template to the existing project p
 4. Paired difference, uncertainty and error slices.
 
 Note:
-The same structure applies to a data-filter comparison, SFT adaptation, reward-model evaluation or policy optimization. A negative result with sound controls is useful. Choose one meaningful comparison within a small budget; do not promise improvement from a preferred method.
+The same structure applies to a data-filter comparison, SFT adaptation, reward-model evaluation or policy optimization. A negative result with sound controls is useful. Choose one meaningful comparison within a small budget; do not promise improvement from a preferred method. Next, Lecture 11 introduces DPO and GRPO using the same independent-evaluation boundary: ../../docs/course-revision.html#lecture-11-dpo-grpo-and-verifiable-rewards.
 
 ---
 
@@ -761,6 +764,40 @@ End the 120 teaching minutes here, then allow 15 minutes for Quiz 4. The followi
 
 Note:
 This extension is outside the 120-minute Lecture 10 core. Paired evaluation and uncertainty are now core E05. Keep the catalog as reading rather than racing through benchmark names. Current examples are protocol case studies, not a model ranking.
+
+---
+
+<!-- .slide: id="source-card" -->
+
+## A source record students can audit
+
+| Field | Example value |
+| --- | --- |
+| Source and revision | Course fixture, revision 1 |
+| Document and parent IDs | `article-17`, `site-a` |
+| Extraction and filter rules | `extract-v1`, `policy-b` |
+| Rights and access metadata | Course-authored text |
+| Counts | Raw bytes, retained documents, tokenizer tokens |
+
+<p class="caption">A dataset name alone does not identify the training mixture.</p>
+
+Note:
+Use an authored record so no rights or provenance claim is inferred from a real URL. Preserve dates, source licenses or terms, language metadata, and removal decisions when constructing a real dataset. A permissive toolkit license does not automatically describe every source document. Byte, document, and token counts answer different questions; token counts depend on the tokenizer. This is a metadata design exercise, not legal advice.
+
+---
+
+<!-- .slide: id="data-evidence" -->
+
+## Data policies need controlled evidence
+
+**Lee et al., 2022:** investigate deduplication, memorization, and evaluation overlap.
+
+**FineWeb, 2024:** document extraction, filtering, and deduplication ablations.
+
+For our course: change one data policy and keep a comparable training budget.
+
+Note:
+These papers provide methods and empirical case studies. Their findings do not guarantee that every deduplication or quality threshold improves every model. Students can get a sound negative result. Read Lee et al., methods and experimental sections, https://aclanthology.org/2022.acl-long.577/; FineWeb, dataset-construction ablations, https://arxiv.org/abs/2406.17557. Full paper training budgets are outside the classroom scope. Allow a short transition before the break.
 
 ---
 
