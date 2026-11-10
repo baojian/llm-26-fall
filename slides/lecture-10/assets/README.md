@@ -7,7 +7,7 @@ The shared slide framework supplies fonts, colors, and rendering libraries.
 The Python helpers use only the standard library. They group and score values
 in memory; they do not delete files or call external services.
 
-## Instructor-supplied source
+## Instructor-supplied sources
 
 `lecture-07-slides-bert-benchmarks.pptx`, 35 slides, cover dated April 23, 2026.
 Instructor: Baojian Zhou; original credit: Anoop Sarkar.
@@ -18,11 +18,45 @@ The original file and its companion notebook remain unchanged. They are content
 sources, while the Fall repository's shared theme defines the presentation.
 The [teaching plan](../teaching-plan.md) maps source topics to this lecture.
 
+`lecture-07-slides.pptx`, **52 slides**, cover dated October 29, 2025,
+from the instructor's `2025/nlp-25-fall/lecture-07-Benchmarks` folder.
+Instructor: Baojian Zhou; the cover and references credit Anoop Sarkar.
+
+SHA-256: `f0ab949c25e936a0cc9491e9afd7c3d9bbaa7622f2167518db3c9191a75dff6c`.
+
+On November 10, 2026, its task examples were adapted into schemas, annotation
+checks, source-preserving transformations, distractor audits and controlled
+evaluation cases. The original 2025 PPTX is unchanged and is not bundled in the
+public repository. The [source-to-slide map](../teaching-plan.md#source-adaptation)
+records the selected pages. Tables and toy examples are editable course content;
+source screenshots and model rankings were not copied into the lecture.
+
+Primary-source corrections applied during adaptation:
+
+- **2025 slide 5:** CoLA targets are binary acceptability labels; −1 to 1 is
+  the range of the Matthews correlation metric. See
+  [GLUE, Section 3.1 and Table 1](https://arxiv.org/html/1804.07461v3).
+- **2025 slide 8:** STS-B uses a **0–5** target scale. The 1–5 wording also
+  appears in GLUE's description, but the original
+  [STS annotation rubric, Section 2 and Table 1](https://aclanthology.org/S17-2001/)
+  explicitly includes zero. This is a useful schema-validation example.
+- **2025 slide 34 notes:** LAMBADA's 10,022 filtered passages are development
+  and test data. Its separate training novels are disjoint and are not filtered
+  in the same way. See [Sections 3.1–3.2](https://aclanthology.org/P16-1144/).
+- **2025 slide 33:** BLiMP is a minimal-pair diagnostic built with grammar
+  templates, not a new release of CoLA. See
+  [BLiMP, Sections 2–3](https://aclanthology.org/2020.tacl-1.25/).
+
+The AI2 Reasoning Challenge in 2025 slide 37 is also distinct from the
+ARC-AGI series in the modern protocol appendix. Neither acronym identifies a
+shared dataset. Dated leaderboards do not establish current model performance.
+
 ## Historical measurements
 
 `historical-shortcuts.json` redraws **Figure 4** of
 [HellaSwag, Zellers et al., 2019](https://arxiv.org/abs/1905.07830), also present
-in Spring PPTX slide 17 (`image16.png` in its embedded media).
+in Spring PPTX slide 17 (`image16.png` in its embedded media) and 2025 PPTX
+slide 29 (`image27.png`). It now appears in the core data-quality route.
 
 | BERT-Large accuracy (%) | Default | Ending only | Shuffled | Shuffled + ending only |
 | --- | ---: | ---: | ---: | ---: |
@@ -52,6 +86,15 @@ course-authored, not traced paper figures. Their editable sources are adjacent
   `6/6` expected passes with natural weights and `5/15` with square-root weights.
   These are token weights, with uniform within-source sampling with replacement
   and packing overhead ignored. They are not training measurements.
+
+The QNLI-inspired table and E02 notebook extension are authored examples:
+article 17 supplies Q1/Q2, each with two question–sentence rows; article 42
+supplies Q3 with two rows. Splitting Q1 into training and Q2/Q3 into development
+passes a question-ID check but fails an article-ID check. Inheriting a split
+from each article avoids that crossing. This does not reproduce QNLI selection,
+alter a published benchmark split, or establish independence of related articles.
+The LAMBADA-style notebook-cover passage and BLiMP-style agreement pair are
+also authored illustrations, without claimed human validation or model scores.
 
 `toy-documents.json` contains six authored English records, with an accent and
 line-ending example. The exact comparison uses NFC, LF line endings, and stripped
@@ -108,5 +151,6 @@ uv run python -m pytest -q tests/test_lecture_10.py tests/test_lecture_10_data.p
 
 Current benchmark descriptions are sourced separately in
 [the reading guide](../optional-reading.md), checked October 26, 2026.
+Primary sources for the 2025 construction cases were checked November 10, 2026.
 No benchmark data, model weights, student submissions, or API credentials are
 included in these assets.

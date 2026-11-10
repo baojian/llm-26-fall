@@ -9,22 +9,23 @@ Central question: **Which data decision changed the behavior, under which contro
 
 ## Classroom route
 
-There are 45 core slides through `methods-reading`, then 15 optional extension
+There are 45 core slides through `methods-reading`, then 22 optional extension
 slides beginning at `outline-benchmarks`. The final `references` slide serves both.
-The deck is a material bank: summarize the open-data examples and FineWeb case
-briefly rather than reading every row. Preserve the exercises and assumptions.
+The deck is a material bank. GLUE/QNLI construction and SWAG/HellaSwag shortcut
+audits are core; the open-data catalog, FineWeb case, model-interface comparison
+and detailed candidate scoring are now optional. Preserve exercise assumptions.
 Timing is a planning estimate, not a classroom rehearsal.
 
 | Time (Asia/Shanghai) | Route | Purpose |
 | --- | --- | --- |
 | 13:30–13:37 | `title`–`running-comparison` | Retrieve SFT/RM/PPO; declare a claim and controlled comparison. |
-| 13:37–13:50 | `data-lineage`–`filter-audit` | Trace provenance, extraction and selection errors. |
-| 13:50–14:03 | `exact-duplicates`–`exercise-01` | Normalization, similarities; E01 (6 min). |
-| 14:03–14:15 | `outline-curation`–`data-exercise-03` | Family grouping and leakage; E02 (6 min). |
+| 13:37–13:53 | `data-lineage`–`historical-shortcuts` | Schemas, extraction, distractors and shortcut checks. |
+| 13:53–14:03 | `exact-duplicates`–`exercise-01` | Normalization, similarities; E01 (6 min). |
+| 14:03–14:15 | `outline-curation`–`data-exercise-03` | Match families and QNLI-style article lineage; E02 (8 min). |
 | 14:15–14:25 | Break | |
 | 14:25–14:35 | `contamination-paths`–`fixed-budget` | Group before splitting; retain IDs; match processed tokens. |
 | 14:35–14:48 | `training-mixture`–`data-exercise-04` | Sampling exposure; E03 (7 min). |
-| 14:48–15:00 | `outline-evidence`–`mixtures` | Freeze protocols; distinguish likelihood, task metrics and aggregation. |
+| 14:48–15:00 | `outline-evidence`–`mixtures` | Freeze protocols; distinguish loss, task metrics and aggregation. |
 | 15:00–15:10 | `graders`–`evaluation-demo` | Audit grader/prompt choices; E04 (6 min). |
 | 15:10–15:25 | Break | |
 | 15:25–15:39 | `uncertainty-sources`–`bootstrap-result` | Paired resampling; E05 (8 min). |
@@ -32,8 +33,9 @@ Timing is a planning estimate, not a classroom rehearsal.
 | 15:50–15:55 | `summary`–`methods-reading` | Retrieve the evidence needed for a claim. |
 | 15:55–16:10 | Quiz 4 | Previously taught material; questions remain instructor-only until the quiz. |
 
-If discussion runs long, skip the FineWeb case and open-data catalog, and use the
-notes for candidate scoring. Do not compress the paired-comparison exercise into
+If discussion runs long, summarize the extraction illustration and schema table,
+and leave the corpus/method catalogs in the appendix. Use notes for candidate
+scoring. Do not compress the paired-comparison exercise into
 a claim that overlapping uncertainty intervals prove equivalence.
 
 ## Exercises and checked outcomes
@@ -41,7 +43,7 @@ a claim that overlapping uncertainty intervals prove equivalence.
 | Exercise | Expected response |
 | --- | --- |
 | E01, 6 min | Exact groups `train-1/train-2` and `train-4/dev-1`; NFC exposes the cross-split match. Red/blue word-bigram Jaccard is 1/3. |
-| E02, 6 min | Components {A,B,C} and {D}; A/B/C must stay together under the declared grouping rule. One held-out group is insufficient for a broad real evaluation. |
+| E02, 8 min | Components {A,B,C} and {D}; A/B/C must stay together. The separate QA fixture passes a question-ID audit but fails an article-ID audit; inherit article splits. One held-out group is insufficient for a broad evaluation. |
 | E03, 7 min | With 9M/1M source tokens and 60M processed tokens: natural weights .9/.1 imply 6/6 passes; square-root weights .75/.25 imply 5/15 passes. |
 | E04, 6 min | Mixed 120 items: A 79/120, B 75/120. Independently audited clean 100: A 60%, B 64%. Exclusion changes the evaluated population. |
 | E05, 8 min | B−A is +4 percentage points; paired bootstrap interval approximately [−5,+13] pp. This does not establish a positive population difference at the stated level. |
@@ -64,6 +66,25 @@ it moved from Lecture 08 to Lecture 10. Stable slide IDs and the analytical
 fixtures were preserved. MinHash is now optional; paired uncertainty is core.
 The source hash and historical chart values remain in [asset provenance](assets/README.md).
 The benchmark catalog illustrates protocol design rather than a live ranking.
+
+The instructor also supplied the **52-slide October 29, 2025**
+`lecture-07-slides.pptx`. The November 10 integration uses it as follows:
+
+| 2025 source slides | Lecture 10 destination | Preparation lesson |
+| --- | --- | --- |
+| 3–13, 15–23 | Core `data-schema`; notes Sections 2 and 5 | Define labels, preserve IDs and choose the scoring unit. |
+| 11 | Core `task-construction`; notebook E02 | Materializing question–sentence rows must preserve article lineage. |
+| 25–31 | Core `negative-construction`, `historical-shortcuts` | Construct negatives, validate ambiguity and audit context-free shortcuts. |
+| 34 | Optional `lambada-construction`; notes Section 7 | Contrast full and limited context; keep source-book splits. |
+| 41 | Optional `minimal-pair-construction`; notes Section 7 | Keep grammatical contrasts, pair IDs and generation templates. |
+| 44–47 | Optional `benchmark-task-fields` | Make preprocessing checks match the task's annotations. |
+| 48 | Optional `collection-rounds` | Record collection rounds and preserve independent evaluation. |
+| 33, 35–42, 49–51 | Existing task/protocol appendix | Retain task distinctions; use versioned modern readings for protocol changes. |
+
+Historical model rankings are not imported as current results. The source's
+STS-B lower bound, CoLA label/metric distinction and LAMBADA training-set
+description are corrected against primary sources. The original file remains
+unchanged; credits and exact corrections are in the asset provenance file.
 
 ## Verification
 
