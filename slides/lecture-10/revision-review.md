@@ -34,7 +34,37 @@ browser checks, including local assets, math, links and interactions. Independen
 baseline notebook/numerical review passed 10 Python checks. Source figures are
 not new course experiments. Review images are retained under ignored `.checks`.
 
-## Iteration 2: pending independent review
+## Iteration 2: precision and projection
+
+Three fresh independent reviewers inspected frozen commit `3c726cc` without
+reading prior reviews. History/source and benchmark reviews found no core
+factual blocker. The visual reviewer inspected all 95 screenshots and all 14
+source figures at full size, finding a plotted-metric sign error that a
+text-only reading of the paper caption missed.
+
+Accepted changes:
+
+- Correct GPT-4's plotted **negative** mean log pass rate and explain its
+  direction in large native text, alt text, notes and provenance.
+- Remove neighboring BLEU-axis fragments from GPT-2 without clipping the final
+  CoQA parameter tick; record the outside-panel mask and new hash.
+- Enlarge Codex's upper sampling panel and give ALE readable native labels
+  for fixed factors and evaluator-only references; shorten figure headings.
+- State that ALE's 12/5/3-configuration ranges are descriptive, with no
+  balanced variance decomposition or significance claim. Record the source's
+  public-set count discrepancy rather than choosing an unsupported denominator.
+- Pin LiveBench's November 6 snapshot and October 25 weight change. Clarify
+  AgentTime's November 2 additions and v1.1's 200-task population.
+- Add cost per solved task to the existing authored checkpoint, including
+  failed-attempt cost and the zero-success boundary.
+- Move E03's solved diagram after the question in both slides and notebook;
+  preserve every code cell, fixture and exercise ID. Reallocate three minutes
+  from history to family/article splitting and add concrete figure questions.
+- Correct stale statements describing the optional schema table as core.
+
+Validation: 95 slides again passed three viewports; 10 numerical/notebook tests
+passed. Demo, notebook launcher and reading-page checks passed in this round.
+No inference/training experiment or measured teaching-time claim was added.
 
 ## Iteration 3: pending independent review
 

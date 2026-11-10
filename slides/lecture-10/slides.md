@@ -78,7 +78,7 @@ The curve is zero-shot task transfer from WebText language models. Its y-axis is
 
 <!-- .slide: id="gpt3-in-context" -->
 
-## GPT-3: examples become an evaluation variable
+## GPT-3: demonstrations change evaluation
 
 <img class="diagram" src="assets/papers/gpt3-in-context.png" alt="GPT-3 Figure 1.2: in-context word-manipulation accuracy versus demonstrations, with different model sizes and with or without a task description.">
 
@@ -98,7 +98,7 @@ Expected reading: number of demonstrations, model size and presence of a task de
 <p class="caption"><a href="https://arxiv.org/html/2203.02155v1">Ouyang et al., 2022, Fig. 1</a>. Win rate against 175B SFT; API prompts; 95% intervals.</p>
 
 Note:
-Read the baseline before interpreting 50 percent. Every curve is compared with the same 175B SFT reference under the paper's human-evaluation protocol. A smaller instruction-tuned model can be preferred to a larger base model on this prompt population. This does not show higher accuracy on every objective task. Distinguish the reward model used for PPO from the human evaluation that checks the result. Ask students whose preferences and which prompt distribution define the target. The next data section carries this boundary through SFT, reward models and policy training. Source Section 3.6 and Figure 1; chart values are historical, not current rankings.
+Figure question (20 seconds): what does a 50% point mean? Expected: equal preference frequency against the named 175B SFT reference under these prompts and raters, not 50% task accuracy. Read the baseline before interpreting 50 percent. Every curve is compared with the same 175B SFT reference under the paper's human-evaluation protocol. A smaller instruction-tuned model can be preferred to a larger base model on this prompt population. This does not show higher accuracy on every objective task. Distinguish the reward model used for PPO from the human evaluation that checks the result. Ask students whose preferences and which prompt distribution define the target. The next data section carries this boundary through SFT, reward models and policy training. Source Section 3.6 and Figure 1; chart values are historical, not current rankings.
 
 ---
 
@@ -124,7 +124,7 @@ These procedures estimate different quantities. The o1 report explicitly studies
 
 <!-- .slide: id="current-model-boundary" -->
 
-## GPT-5 to GPT-6/6.1: evaluate a configured system
+## Current models: evaluate the configured system
 
 | Record | Why it changes the result |
 | --- | --- |
@@ -208,7 +208,7 @@ This is an original course workflow. Extraction, normalization, language/quality
 <p class="caption"><a href="https://arxiv.org/html/2406.17557v2">Penedo et al., 2024, Fig. 1</a>. Same 28B-token budget; compare extraction before adding filters.</p>
 
 Note:
-This is actual paper evidence rather than the course's synthetic page illustration. WARC holds raw web captures; WET contains extracted text. The paper compares its custom Trafilatura extraction to default WET extraction, with English language filtering but without later quality filtering or deduplication. Its ablation setup uses a fixed 1.71B architecture. Read the paper's aggregate as an average over selected tasks, not universal corpus quality. The classroom does not reproduce this training scale. A small project can audit extraction on hand-inspected pages or run a smaller matched-budget study; mark such budgets as planning estimates.
+Figure question (20 seconds): which data decision changes while the token budget is held fixed? Expected: WARC custom extraction versus default WET extraction, before later quality filters/deduplication. This is actual paper evidence rather than the course's synthetic page illustration. WARC holds raw web captures; WET contains extracted text. The paper compares its custom Trafilatura extraction to default WET extraction, with English language filtering but without later quality filtering or deduplication. Its ablation setup uses a fixed 1.71B architecture. Read the paper's aggregate as an average over selected tasks, not universal corpus quality. The classroom does not reproduce this training scale. A small project can audit extraction on hand-inspected pages or run a smaller matched-budget study; mark such budgets as planning estimates.
 
 ---
 
@@ -413,7 +413,7 @@ Processed tokens count repeated exposures. The retained corpus size measures a d
 <p class="caption"><a href="https://arxiv.org/html/2406.17557v2">Penedo et al., 2024, Fig. 5</a>. Per-crawl deduplication outperforms global deduplication in this study.</p>
 
 Note:
-Read Section 3.4 and Figures 3–5 together. Global deduplication across 96 snapshots removed a large share from older crawls; inspecting retained versus removed material motivated individual-crawl deduplication. The cited comparison uses 350B training tokens and a fixed 1.71B architecture. More removal changes the retained mixture and repeated exposure, so it is not automatically better. The authors' explanation about the remaining data is an empirical interpretation under their recipe, not a theorem about all corpora. Our A/B exercise remains synthetic and does not reproduce FineWeb. Its scale is not a student compute allocation.
+Figure question (20 seconds): does removing duplicates across more crawls guarantee higher accuracy? Expected: no; the individual-crawl curve outperforms global deduplication in this matched setup. Read Section 3.4 and Figures 3–5 together. Global deduplication across 96 snapshots removed a large share from older crawls; inspecting retained versus removed material motivated individual-crawl deduplication. The cited comparison uses 350B training tokens and a fixed 1.71B architecture. More removal changes the retained mixture and repeated exposure, so it is not automatically better. The authors' explanation about the remaining data is an empirical interpretation under their recipe, not a theorem about all corpora. Our A/B exercise remains synthetic and does not reproduce FineWeb. Its scale is not a student compute allocation.
 
 ---
 
@@ -437,19 +437,6 @@ This is an explicitly chosen classroom policy. It is not a claim that every name
 
 ---
 
-<!-- .slide: id="mixture-exposure" -->
-
-## More weight can mean more repetition
-
-<img class="diagram" src="assets/mixture-exposure.svg" data-excalidraw-source="assets/mixture-exposure.excalidraw" alt="With 9 million English and 1 million Chinese tokens and a 60-million-token training budget, natural weights give six expected passes each. Square-root weights give five English and fifteen Chinese passes.">
-
-<p class="caption">Synthetic counts. Blue: English. Orange: Chinese. Both runs process 60M tokens.</p>
-
-Note:
-Work through sqrt(0.9)/(sqrt(0.9)+sqrt(0.1))=0.75. The smaller source receives one quarter of the processed tokens despite providing one tenth of the unique pool. More repeated exposure is not the same as more unique data. No measured loss or accuracy is implied by this arithmetic. A cap, more source data, or a different mixture is a policy to study under a declared budget.
-
----
-
 <!-- .slide: class="exercise" id="data-exercise-04" -->
 
 <p class="exercise-meta">Exercise E03 · 7 minutes · Notebook E03</p>
@@ -466,6 +453,19 @@ English: 9M tokens. Chinese: 1M tokens. Total processed budget: 60M.
 
 Note:
 Seven minutes includes arithmetic and debrief. State the within-source sampling assumption. The two language names label a toy mixture and do not recommend a language ratio for this course. Ask which experimental evidence would justify paying for the extra repetition. If changing the total token budget, it is a different comparison.
+
+---
+
+<!-- .slide: id="mixture-exposure" -->
+
+## More weight can mean more repetition
+
+<img class="diagram" src="assets/mixture-exposure.svg" data-excalidraw-source="assets/mixture-exposure.excalidraw" alt="With 9 million English and 1 million Chinese tokens and a 60-million-token training budget, natural weights give six expected passes each. Square-root weights give five English and fifteen Chinese passes.">
+
+<p class="caption">Synthetic counts. Blue: English. Orange: Chinese. Both runs process 60M tokens.</p>
+
+Note:
+After students predict in E03, work through sqrt(0.9)/(sqrt(0.9)+sqrt(0.1))=0.75. The smaller source receives one quarter of the processed tokens despite providing one tenth of the unique pool. More repeated exposure is not the same as more unique data. No measured loss or accuracy is implied by this arithmetic. A cap, more source data, or a different mixture is a policy to study under a declared budget.
 
 ---
 
@@ -518,14 +518,14 @@ The names alone are insufficient protocols. This table previews the four anchor 
 
 <!-- .slide: id="hle-construction" -->
 
-## HLE: hard questions still need a data pipeline
+## Humanity’s Last Exam: building hard questions
 
 <img class="diagram" src="assets/papers/hle-construction.svg" alt="Humanity's Last Exam Figure 4: contributor questions pass model filtering, expert peer review, and organizer review; public and private questions are separated.">
 
 <p class="caption"><a href="https://arxiv.org/html/2501.14249v10">Phan et al., HLE, Fig. 4</a>. Model failure selects difficulty; expert review checks validity.</p>
 
 Note:
-HLE was first released in January 2025; its finalized 2,500-question release is dated April 3, 2025; Nature publication was January 28, 2026. Do not label the original collection as first introduced in 2026. It contains closed-ended questions across academic subjects, including image-dependent items. Accuracy and calibration are distinct measurements. Model filtering can select weaknesses specific to the filtering models, so it does not alone validate the intended expertise. Expert review can still leave errors; revisions must identify which questions changed. Original HLE, Rolling and Diamond are different populations. The next slide describes the verified September 2026 Diamond release, not this figure's original 2,500-item dataset.
+Figure question (20 seconds): does rejecting questions answered by a frontier model validate the remaining labels? Expected: no; difficulty filtering and expert correctness review are distinct stages. HLE was first released in January 2025; its finalized 2,500-question release is dated April 3, 2025; Nature publication was January 28, 2026. Do not label the original collection as first introduced in 2026. It contains closed-ended questions across academic subjects, including image-dependent items. Accuracy and calibration are distinct measurements. Model filtering can select weaknesses specific to the filtering models, so it does not alone validate the intended expertise. Expert review can still leave errors; revisions must identify which questions changed. Original HLE, Rolling and Diamond are different populations. The next slide describes the verified September 2026 Diamond release, not this figure's original 2,500-item dataset.
 
 ---
 
@@ -556,7 +556,7 @@ The publisher describes Diamond as a frozen, refined collection. Its protocol us
 <p class="caption"><a href="https://arxiv.org/html/2310.06770v3">Jimenez et al., SWE-bench, Fig. 1</a>. Issue + snapshot → patch → execution.</p>
 
 Note:
-Original paper released in 2023 and published at ICLR 2024. Explain FAIL_TO_PASS tests for the reported issue and PASS_TO_PASS tests for regression behavior. A resolved task must satisfy the release's test contract; it does not establish all untested behavior. Repository snapshot, dependencies and harness are part of the evaluation. Source issue and patch lineage also connect back to our split-family exercise. The model can be surrounded by retrieval and editing tools, so compare the complete evaluated system. The original figure shows a specific task, not a requirement for a student's project to run the entire benchmark.
+Figure question (20 seconds): what evidence distinguishes a plausible patch from a resolved task? Expected: execute the issue tests and regression tests in the pinned repository environment. Original paper released in 2023 and published at ICLR 2024. Explain FAIL_TO_PASS tests for the reported issue and PASS_TO_PASS tests for regression behavior. A resolved task must satisfy the release's test contract; it does not establish all untested behavior. Repository snapshot, dependencies and harness are part of the evaluation. Source issue and patch lineage also connect back to our split-family exercise. The model can be surrounded by retrieval and editing tools, so compare the complete evaluated system. The original figure shows a specific task, not a requirement for a student's project to run the entire benchmark.
 
 ---
 
@@ -580,14 +580,14 @@ Counts were verified on 2026-11-11 Asia/Shanghai. Verified is not Pro V2. The Mu
 
 <!-- .slide: id="terminal-task" -->
 
-## Terminal-Bench: the environment is part of the task
+## Terminal-Bench: tasks include environments
 
 <img class="diagram" src="assets/papers/terminal-task.svg" alt="Terminal-Bench Figure 2 shows task instructions, Docker environment, verifier tests and oracle solution, with an agent interacting inside a container.">
 
 <p class="caption"><a href="https://arxiv.org/html/2601.11868v1">Terminal-Bench paper, 2026, Fig. 2</a>. TB2-era design; TB3/4 separates agent and verifier containers.</p>
 
 Note:
-The paper describes the Terminal-Bench 2.0-era system, released in November 2025; paper publication in January 2026 is not the benchmark's first release. A task defines initial state, permitted actions, an outcome verifier and a time budget. An oracle solution checks feasibility; it is not supplied to the evaluated agent. In the pictured older design the tests are copied into the agent container after its run. TB3/4 separates verifier and agent containers, so do not describe this image as current TB4 architecture. Artifacts and execution traces help diagnose failures; test success depends on specification and coverage.
+Figure question (20 seconds): which hidden artifact checks that a task is solvable? Expected: the oracle solution; the agent receives the instruction/environment, not that solution. The paper describes the Terminal-Bench 2.0-era system, released in November 2025; paper publication in January 2026 is not the benchmark's first release. A task defines initial state, permitted actions, an outcome verifier and a time budget. An oracle solution checks feasibility; it is not supplied to the evaluated agent. In the pictured older design the tests are copied into the agent container after its run. TB3/4 separates verifier and agent containers, so do not describe this image as current TB4 architecture. Artifacts and execution traces help diagnose failures; test success depends on specification and coverage.
 
 ---
 
@@ -625,14 +625,16 @@ This is a publisher's web illustration, not a numbered paper figure. Major chang
 
 <!-- .slide: id="ale-task" -->
 
-## Agents’ Last Exam: grade a professional deliverable
+## Agents’ Last Exam: task → deliverable
 
 <img class="diagram" src="assets/papers/ale-task.svg" alt="Agents' Last Exam Figure 6: a task specification loads an environment, starts an agent harness and model, then evaluates output artifacts against task references or rubrics.">
+
+Agent: task + tools. Evaluator: isolated references + rubric.
 
 <p class="caption"><a href="https://arxiv.org/html/2606.05405v4">ALE v4, 2026, Fig. 6</a>. GUI/CLI workflow; full-pass rate and partial-credit score differ.</p>
 
 Note:
-The canonical name is Agents' Last Exam, plural possessive; it is distinct from Humanity's Last Exam. First paper June 3, 2026; this figure comes from October 25 v4. The task specification controls load/start/evaluate over a VM. The agent is harness plus model and only receives task description and metadata, while references and rubrics belong to evaluation. Report public/CLI/full subset and QC-approved task IDs; dynamic collected-task counts can include unverified tasks and are not the evaluation denominator. End-state checks, milestone checks and human-authored rubrics have different failure modes. A mean normalized score can reward progress even when few tasks fully pass.
+Figure question (20 seconds): which component receives reference answers and evaluates the output? Expected: the task specification/evaluator, isolated from the agent’s task description and working assets. The canonical name is Agents' Last Exam, plural possessive; it is distinct from Humanity's Last Exam. First paper June 3, 2026; this figure comes from October 25 v4. The task specification controls load/start/evaluate over a VM. The agent is harness plus model and only receives task description and metadata, while references and rubrics belong to evaluation. Report public/CLI/full subset and QC-approved task IDs; dynamic collected-task counts can include unverified tasks and are not the evaluation denominator. End-state checks, milestone checks and human-authored rubrics have different failure modes. A mean normalized score can reward progress even when few tasks fully pass.
 
 ---
 
@@ -642,10 +644,12 @@ The canonical name is Agents' Last Exam, plural possessive; it is distinct from 
 
 <img class="diagram" src="assets/papers/ale-harness-model.png" alt="ALE Figure 12 compares full-pass-rate variation from changing backbone model under a fixed harness and changing harness under fixed backbones.">
 
-<p class="caption"><a href="https://arxiv.org/html/2606.05405v4">ALE v4, Fig. 12</a>. Each dot is one configuration. Which factor is held fixed?</p>
+Model sweep: OpenClaw fixed. Harness sweeps: backbone fixed.
+
+<p class="caption"><a href="https://arxiv.org/html/2606.05405v4">ALE v4, Fig. 12</a>. Unequal sets: 12 models versus 5 / 3 harnesses; descriptive ranges.</p>
 
 Note:
-The reported comparison fixes OpenClaw while varying 12 models, then fixes backbones while varying harnesses. The figure reports a 16.8 percentage-point model spread versus 4.9–7.2 point harness spreads in these configurations. Do not turn the observed roughly threefold ratio into a universal law: the chosen models, harnesses, tasks and budgets determine the contrast. It supports the need for controlled comparisons, not a claim that harness design is always less important. If both model and harness change, attribute improvement to the system unless a factorial experiment separates them. Historical v4 measurements; no course reproduction.
+Figure question (20 seconds): can the three spreads establish a universal model-versus-harness effect ratio? Expected: no; the configuration sets are unequal and selected, and the ranges have no uncertainty. The reported comparison fixes OpenClaw while varying 12 models, then fixes backbones while varying harnesses. The figure reports a 16.8 percentage-point model spread versus 4.9–7.2 point harness spreads in these configurations. The paper uses a five-hour cap. The model sweep has 12 configurations, while the GPT-5.5 and Opus-4.7 harness sweeps have five and three. Max-minus-min ranges depend on both configuration count and selection. This is not a balanced variance decomposition, causal effect-size estimate or significance test; no uncertainty is provided for the ranges. v4 mentions 150 public tasks in construction and 152 in experiments, so treat this as the authors’ reported public-set comparison and pin actual run task IDs before reproducing it. Do not turn the observed roughly threefold ratio into a universal law: the chosen models, harnesses, tasks and budgets determine the contrast. It supports the need for controlled comparisons, not a claim that harness design is always less important. If both model and harness change, attribute improvement to the system unless a factorial experiment separates them. Historical v4 measurements; no course reproduction.
 
 ---
 
@@ -663,7 +667,7 @@ The reported comparison fixes OpenClaw while varying 12 models, then fixes backb
 Save per-task outcomes and trajectories before aggregating.
 
 Note:
-A model API name alone cannot reproduce a system score. Report timeout and infrastructure-error policy before observing results; do not silently discard failures. Deterministic infrastructure failures may warrant a documented rerun under a fixed policy, not selective extra attempts for one system. Cache and network state can change available evidence. For repeated tasks, pair systems by task ID and initial state; report stochastic reruns separately. Sources: Terminal-Bench paper/release protocol; ALE v4 evaluation lifecycle; SWE-bench harness. This is our general experiment-record synthesis.
+Cost per fully solved task is total cost including failed attempts divided by fully solved tasks; with zero successes it is undefined. Track API spend, environment resources and elapsed latency separately. A model API name alone cannot reproduce a system score. Report timeout and infrastructure-error policy before observing results; do not silently discard failures. Deterministic infrastructure failures may warrant a documented rerun under a fixed policy, not selective extra attempts for one system. Cache and network state can change available evidence. For repeated tasks, pair systems by task ID and initial state; report stochastic reruns separately. Sources: Terminal-Bench paper/release protocol; ALE v4 evaluation lifecycle; SWE-bench harness. This is our general experiment-record synthesis.
 
 ---
 
@@ -677,13 +681,13 @@ A model API name alone cannot reproduce a system score. Report timeout and infra
 | --- | --- | --- |
 | Attempts per task | 1 | 5 |
 | Network | Disabled | Enabled |
-| Wall-time cap | 10 min | 60 min |
+| Total cost, including failures | $12 | $60 |
 | Tasks fully passed | 6/10 | 6/10 |
 
-<div class="answer fragment"><p>Equal observed scores; different systems and budgets. Match the protocol or report the tradeoff.</p></div>
+<div class="answer fragment"><p>60% each; $2 versus $10 per solved task. Different tools and budgets.</p></div>
 
 Note:
-Expected response: neither equal model ability nor statistical equivalence follows. The ten tasks must also be identical and paired before a useful comparison. Keep this as a short oral check after the agent protocol; no new graded work or notebook ID. Ask students to name a next comparison: same model/harness/environment, vary only attempt count; or compare complete systems at a common cost ceiling. With only ten tasks, uncertainty can remain large. The values are authored; no agent runs were performed.
+Compute cost per fully solved task as total cost of all evaluated attempts (including failures) divided by fully solved tasks: 12/6 = 2 and 60/6 = 10 dollars. It is undefined if no tasks succeed. These are authored totals, not live API prices. Report API spend and environment compute separately; latency is elapsed time, not the sum of parallel trial durations. Expected response: neither equal model ability nor statistical equivalence follows. The ten tasks must also be identical and paired before a useful comparison. Keep this as a short oral check after the agent protocol; no new graded work or notebook ID. Ask students to name a next comparison: same model/harness/environment, vary only attempt count; or compare complete systems at a common cost ceiling. With only ten tasks, uncertainty can remain large. The values are authored; no agent runs were performed.
 
 ---
 
@@ -930,7 +934,7 @@ The same structure applies to a data-filter comparison, SFT adaptation, reward-m
 [Benchmark construction cases and full reading guide](optional-reading.md)
 
 Note:
-End the 120 teaching minutes here, then allow 15 minutes for Quiz 4. The following broader benchmark catalog, construction cases, scoring details and matching methods are optional. GLUE/STS schemas, QNLI-style lineage, SWAG/HellaSwag shortcuts and paired uncertainty are in the core. Reading choices follow the project question; there is no reference-count requirement and no new graded work.
+End the 120 teaching minutes here, then allow 15 minutes for Quiz 4. The following broader benchmark catalog, construction cases, scoring details and matching methods are optional. QNLI-style lineage, SWAG/HellaSwag shortcuts and paired uncertainty are core; the detailed GLUE/STS schema table is optional. Reading choices follow the project question; there is no reference-count requirement and no new graded work.
 
 ---
 
@@ -951,14 +955,16 @@ This extension is outside the 120-minute Lecture 10 core. Paired evaluation and 
 
 <!-- .slide: id="gpt4-evaluation" -->
 
-## GPT-4: a capability metric can be predicted
+## GPT-4: predict a held-out capability metric
 
-<img class="diagram" src="assets/papers/gpt4-predictable-evaluation.svg" alt="GPT-4 report Figure 2: mean log pass rate on a HumanEval subset versus normalized training compute, with a fit to smaller models and the held-out GPT-4 result.">
+<img class="diagram" src="assets/papers/gpt4-predictable-evaluation.svg" alt="GPT-4 report Figure 2: negative mean log pass rate on a HumanEval subset versus normalized training compute, with a fit to smaller models and the held-out GPT-4 result.">
 
-<p class="caption"><a href="https://arxiv.org/html/2303.08774v6">OpenAI, 2023, Fig. 2</a>. HumanEval subset; mean log pass rate, not overall exam accuracy.</p>
+**Negative mean log pass rate:** lower means higher pass probabilities.
+
+<p class="caption"><a href="https://arxiv.org/html/2303.08774v6">OpenAI, 2023, Fig. 2</a>. HumanEval subset; normalized training compute.</p>
 
 Note:
-This connects Lecture 07's held-out scaling prediction to evaluation. The fit excludes GPT-4, and the x-axis is normalized training compute. Both axes and the selected HumanEval subset matter. This figure does not measure test-time scaling. The report separately evaluates academic/professional exams, multilingual MMLU and visual inputs (Section 4 and Figure 4). Those simulated exam percentiles depend on their reference population and sometimes wide percentile bins; they do not establish occupational competence. Main route uses the brief timeline; this detailed result is a reference stop if time permits.
+This connects Lecture 07's held-out scaling prediction to evaluation. The fit excludes GPT-4, and the x-axis is normalized training compute. Both axes and the selected HumanEval subset matter. The source graphic labels the plotted quantity with a leading minus sign (negative mean log pass rate), even though its paper caption abbreviates it as mean log pass rate. Lower plotted values mean higher geometric-mean pass probability. This figure does not measure test-time scaling. The report separately evaluates academic/professional exams, multilingual MMLU and visual inputs (Section 4 and Figure 4). Those simulated exam percentiles depend on their reference population and sometimes wide percentile bins; they do not establish occupational competence. Main route uses the brief timeline; this detailed result is a reference stop if time permits.
 
 ---
 
@@ -986,13 +992,13 @@ ProgramBench v1 has 200 tasks; % Resolved requires all tests, while % Almost use
 | Benchmark | Evaluated object | What must be reported? |
 | --- | --- | --- |
 | ARC-AGI-3, March 25 | Unfamiliar interactive games | Actions; human-relative efficiency |
-| LiveBench 2.0, October 14 | Reports, software, decks | Task version; artifact grader |
+| LiveBench 2.0, Oct 14 → Nov 6 | Reports, software, decks | Release; suite weights; grader |
 | AgentTime, September 26 | Following duration requests | Time asked; time worked; quality |
 
 <p class="caption"><a href="https://arcprize.org/arc-agi/3">ARC-AGI-3</a> · <a href="https://livebench.ai/">LiveBench</a> · <a href="https://agenttimebench.com/data/">AgentTime</a></p>
 
 Note:
-These release dates were checked November 11, 2026. AgentTime expanded its data on November 2; it evaluates duration instruction-following on tasks drawn from other benchmarks, so elapsed time and task correctness must remain separate metrics. For reproducibility pin a data release; this new benchmark is optional reading, not an established universal measure. LiveBench v2 changes the suite and artifact grading, so the aggregate cannot be directly compared with v1. ARC-AGI-3 is interactive and distinct from AI2's ARC science questions and the static ARC-AGI predecessors. See the separate ARC slide for action-efficiency interpretation. Benchmark author claims of low contamination are not a guarantee of zero exposure.
+These release dates were checked November 11, 2026. AgentTime added agent results on November 2; its current v1.1 reduces the original 222 tasks to 200. Duration instruction-following is the selected example here; the current index also covers forecasting and retrospection. See https://agenttimebench.com/method/. It uses tasks drawn from other benchmarks, so elapsed time and task correctness must remain separate metrics. For reproducibility pin a data release; this new benchmark is optional reading, not an established universal measure. LiveBench first released v2 on October 14; the current checked release is November 6. October 25 changed suite weights (Long Agentic 2, Coding 1.5, Design 1.5, others 1) from October 14’s equal weights. Match release, coverage, weights and grader even within v2. Source: https://livebench.ai/data/20261106/categories.json and the October 14/25 category metadata. ARC-AGI-3 is interactive and distinct from AI2's ARC science questions and the static ARC-AGI predecessors. See the separate ARC slide for action-efficiency interpretation. Benchmark author claims of low contamination are not a guarantee of zero exposure.
 
 ---
 
@@ -1358,7 +1364,7 @@ Inspect the subject coverage, answer format, and selected subset.
 <p class="caption">Benchmark sources checked November 11, 2026.</p>
 
 Note:
-MMLU-Pro covers 14 subject domains and was introduced in 2024. GPQA's original main set contains 448 questions in biology, physics, and chemistry; reports using the Diamond subset must name that subset. Avoid treating either as a complete measure of reasoning in every domain. Sources: https://arxiv.org/abs/2406.01574 and https://github.com/TIGER-AI-Lab/MMLU-Pro; https://arxiv.org/abs/2311.12022. HLE-Diamond is the recent revision discussed next. Do not reuse the Spring MMLU leaderboard as a current ranking.
+MMLU-Pro covers 14 subject domains and was introduced in 2024. GPQA's original main set contains 448 questions in biology, physics, and chemistry; reports using the Diamond subset must name that subset. Avoid treating either as a complete measure of reasoning in every domain. Sources: https://arxiv.org/abs/2406.01574 and https://github.com/TIGER-AI-Lab/MMLU-Pro; https://arxiv.org/abs/2311.12022. HLE-Diamond is the recent revision discussed in the core sequence. Do not reuse the Spring MMLU leaderboard as a current ranking.
 
 ---
 
@@ -1376,7 +1382,7 @@ MMLU-Pro covers 14 subject domains and was introduced in 2024. GPQA's original m
 Record the available tools, time limits, and grading environment.
 
 Note:
-LiveCodeBench's official repository explains release versions and date-window selection. SWE-Bench Pro V2 and ARC-AGI-3 are developed on the next slides. LiveBench's publisher lists version 2.0 dated October 14, 2026 and tasks involving artifacts such as reports, software, and decks. Comparing its aggregate with version 1 requires checking the changed suite and grader. Sources: https://github.com/LiveCodeBench/LiveCodeBench; https://labs.scale.com/blog/swe-bench-pro-v2; https://arcprize.org/arc-agi/3; https://livebench.ai/. These are protocol examples, not required full-suite student runs.
+LiveCodeBench's official repository explains release versions and date-window selection. SWE-Bench Pro V2 and ARC-AGI-3 are developed on the next slides. LiveBench's publisher lists version 2.0 dated October 14, 2026 and tasks involving artifacts such as reports, software, and decks. The first v2 release is October 14; later releases are October 25 and November 6. October 25 changed category weights: Long Agentic 2, Coding 1.5, Design 1.5, others 1; October 14 used equal suite weights. Match the exact release, suite coverage, weights and grader even within v2. Primary metadata: https://livebench.ai/data/20261014/categories.json; https://livebench.ai/data/20261025/categories.json; https://livebench.ai/data/20261106/categories.json. Sources: https://github.com/LiveCodeBench/LiveCodeBench; https://labs.scale.com/blog/swe-bench-pro-v2; https://arcprize.org/arc-agi/3; https://livebench.ai/. These are protocol examples, not required full-suite student runs.
 
 ---
 
@@ -1434,12 +1440,14 @@ Source: supplied 2025 slide 48; Kiela et al., Sections 2–3, https://aclantholo
 
 ## HumanEval: temperature and attempts interact
 
-<img class="diagram" src="assets/papers/codex-sampling.png" alt="Codex Figure 5: pass at k curves for different sampling temperatures and the temperature maximizing pass at each sample budget.">
+<img class="diagram" src="assets/papers/codex-sampling.png" alt="Codex Figure 5 upper panel: pass at k curves for all displayed sampling temperatures, with sample count on a logarithmic axis.">
 
-<p class="caption"><a href="https://arxiv.org/html/2107.03374v2">Chen et al., 2021, Fig. 5</a>. A larger search budget can favor more diverse samples.</p>
+Compare $k=1$ and $k=100$: same weights, different search.
+
+<p class="caption"><a href="https://arxiv.org/html/2107.03374v2">Chen et al., 2021, Fig. 5, upper panel</a>. A larger search budget can favor more diverse samples.</p>
 
 Note:
-Read k on the horizontal axis and success of at least one sample on the vertical axis. The best temperature changes with k under the paper's fixed Codex generator. This does not show that the model weights improved or that an unassisted selector can identify the passing sample. The next formula estimates pass@k from n samples. P02 calculates it exactly for n=10 and c=2. Adaptive repair with feedback requires another protocol. Historical measurements; the classroom uses supplied synthetic counts only.
+The lower optimal-temperature panel is omitted to enlarge the upper panel; all upper-panel curves and axes are preserved. Read k on the horizontal axis and success of at least one sample on the vertical axis. The best temperature changes with k under the paper's fixed Codex generator. This does not show that the model weights improved or that an unassisted selector can identify the passing sample. The next formula estimates pass@k from n samples. P02 calculates it exactly for n=10 and c=2. Adaptive repair with feedback requires another protocol. Historical measurements; the classroom uses supplied synthetic counts only.
 
 ---
 

@@ -34,10 +34,18 @@
     "asset_url": "https://arxiv.org/html/2107.03374v2/figs/ft-pass-vs-temp.png",
     "source_url": "https://arxiv.org/html/2107.03374v2",
     "title": "Chen et al. (2021), Evaluating Large Language Models Trained on Code",
-    "figure": "Figure 5",
-    "adaptation": "Unmodified figure asset; displayed at preserved aspect ratio.",
-    "sha256": "0b8d28a98681bcfe445db1a88f49510e21a2ed0224e9df9b14b65895052d8420",
-    "retrieved": "2026-11-11 Asia/Shanghai"
+    "figure": "Figure 5, upper panel",
+    "adaptation": "Upper-panel crop only. All temperatures, curves, axes and tick labels retained; lower optimal-temperature panel omitted for projection readability.",
+    "sha256": "3ccd21d14839ab9b47dc4ef452e7e6b2634b76b682c2b041bf308779424a83ef",
+    "retrieved": "2026-11-11 Asia/Shanghai",
+    "prior_asset_sha256": "0b8d28a98681bcfe445db1a88f49510e21a2ed0224e9df9b14b65895052d8420",
+    "source_asset_sha256": "0b8d28a98681bcfe445db1a88f49510e21a2ed0224e9df9b14b65895052d8420",
+    "crop_pixels": [
+      0,
+      0,
+      899,
+      577
+    ]
   },
   {
     "file": "fineweb-dedup.svg",
@@ -142,7 +150,7 @@
     "source_url": "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf",
     "title": "Radford et al. (2019), Language Models are Unsupervised Multitask Learners",
     "figure": "Figure 1, CoQA reading-comprehension panel",
-    "adaptation": "PDF crop only; preserved axes and labels.",
+    "adaptation": "PDF crop; adjacent translation-panel axis fragments blanked outside CoQA plot while preserving full final parameter tick. No CoQA data, axes or baselines changed.",
     "pdf_page": 2,
     "crop_points": [
       55,
@@ -152,7 +160,14 @@
     ],
     "dpi": 288,
     "source_sha256": "d9d852e2894556e73f53cb22b7c605a9643d6f0b19bf604b429ed6192fa24f4e",
-    "sha256": "4b53ea3ceaf820cede6276ecd3243eb544b5c96203b3839962060a340a1f168a",
-    "retrieved": "2026-11-11 Asia/Shanghai"
+    "sha256": "173a119b2eed3e2048fe6ac23878f558193d49e0fcdc976e88b5d09389664205",
+    "retrieved": "2026-11-11 Asia/Shanghai",
+    "prior_asset_sha256": "4b53ea3ceaf820cede6276ecd3243eb544b5c96203b3839962060a340a1f168a",
+    "blanked_pdf_region_points": [
+      176,
+      65,
+      185,
+      185
+    ]
   }
 ]

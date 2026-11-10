@@ -18,11 +18,11 @@ optional. This timing is a planning estimate, not a rehearsal measurement.
 
 | Time (Asia/Shanghai) | Route | Minutes and purpose |
 | --- | --- | --- |
-| 13:30–13:45 | `title`–`current-model-boundary` | 15: evaluation history, four paper excerpts, inference-budget and source boundaries. |
-| 13:45–14:05 | `outline-data`–`exercise-01` | 20: provenance, extraction evidence, shortcuts, exact/near duplicates; E01 (6). |
-| 14:05–14:15 | `outline-curation`–`data-exercise-03` | 10: connected families/article lineage; E02 (8, including debrief). |
+| 13:30–13:42 | `title`–`current-model-boundary` | 12: evaluation history, four paper excerpts, inference-budget and source boundaries. |
+| 13:42–14:02 | `outline-data`–`exercise-01` | 20: provenance, extraction evidence, shortcuts, exact/near duplicates; E01 (6). |
+| 14:02–14:15 | `outline-curation`–`data-exercise-03` | 13: connected families/article lineage; E02 (8, including debrief). |
 | 14:15–14:25 | Break | 10, outside teaching budget. |
-| 14:25–14:38 | `fixed-budget`–`data-exercise-04` | 13: actual FineWeb ablation, matched tokens, sampling exposure; E03 (7). |
+| 14:25–14:38 | `fixed-budget`–`mixture-exposure` | 13: actual FineWeb ablation, matched tokens, sampling exposure; E03 (7). |
 | 14:38–15:00 | `outline-evidence`–`agent-comparison-check` | 22: four benchmark cases and complete agent protocol; 90-second oral check. |
 | 15:00–15:10 | `graders`–`prompt-sensitivity` | 10: order-swap probe, independent verifier and prompt selection. |
 | 15:10–15:25 | Break | 15, outside teaching budget. |
@@ -56,6 +56,9 @@ All embedded figure assets load locally. No live benchmark/API run is required.
 | Optional P01 | Sum log likelihood selects the short candidate; token mean selects the long one. Neither convention is interchangeable. |
 | Optional P02 | For n=10, c=2: pass@1=.2, pass@5=7/9. State the sampling assumptions. |
 | Optional P03 | Jaccard 1/2, two of four signatures match, two bands of two rows give candidate probability 7/16. |
+
+E03 now places its solved exposure diagram after prediction, both in slides and
+the notebook Check cell. The calculations and seven-minute exercise are unchanged.
 
 All data are authored synthetic fixtures unless a chart explicitly cites a
 historical study. The notebook follows this exercise order and runs offline
@@ -93,7 +96,7 @@ The instructor also supplied the **52-slide October 29, 2025**
 
 | 2025 source slides | Lecture 10 destination | Preparation lesson |
 | --- | --- | --- |
-| 3–13, 15–23 | Core `data-schema`; notes Sections 2 and 5 | Define labels, preserve IDs and choose the scoring unit. |
+| 3–13, 15–23 | Optional `data-schema`; notes Sections 2 and 5 | Define labels, preserve IDs and choose the scoring unit. |
 | 11 | Core `task-construction`; notebook E02 | Materializing question–sentence rows must preserve article lineage. |
 | 25–31 | Core `negative-construction`, `historical-shortcuts` | Construct negatives, validate ambiguity and audit context-free shortcuts. |
 | 34 | Optional `lambada-construction`; notes Section 7 | Contrast full and limited context; keep source-book splits. |
