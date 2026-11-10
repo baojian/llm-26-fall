@@ -66,9 +66,77 @@ Validation: 95 slides again passed three viewports; 10 numerical/notebook tests
 passed. Demo, notebook launcher and reading-page checks passed in this round.
 No inference/training experiment or measured teaching-time claim was added.
 
-## Iteration 3: pending independent review
+## Iteration 3: final content and rendered-output audit
+
+Three fresh independent reviewers assessed frozen commit `bec21f4` without
+reading one another's reports. The content/teaching and benchmark/protocol
+reviewers passed the material without required factual or numerical changes.
+Both independently checked primary sources, all 14 asset hashes and the 10
+focused Python tests. The visual reviewer inspected all 95 browser slides,
+all 14 source-figure slides at full size, and all 95 exported PDF pages.
+
+Accepted correction: the answer on `agent-comparison-check` used paired dollar
+signs that KaTeX interpreted as a math span. Replace table and answer amounts
+with explicit USD labels. The final export passes the browser checks; visual
+inspection and PDF text extraction confirm **USD 2 versus USD 10** on page 43.
+The arithmetic and experimental interpretation are unchanged.
+
+The apparent edge loss on a FineWeb review thumbnail was checked against the
+full PDF page and was only a contact-sheet artifact. No source figure was
+recropped to compensate. Fine ALE/GPT-4 source labels remain close-reading
+detail; large native slide text carries the classroom interpretation.
+
+### Independent review register
+
+Each row is a separate reviewer session. Raw reports are retained locally in
+ignored `workspace/lecture10-review/`; this tracked record preserves findings,
+decisions and verification without treating reviewer suggestions as facts.
+
+| Iteration | Frozen version | Reviewer session | Assessment and resulting action |
+| --- | --- | --- | --- |
+| 1 | `eb5b754` | `review_history_r1` | Add evaluation history and authentic figures; keep GPT-6.2 unverified. |
+| 1 | `eb5b754` | `review_benchmarks_r1` | Teach four benchmark cases in the core and add a dated 2026 atlas. |
+| 1 | `eb5b754` | `review_teaching_r1` | Increase evidence density; preserve exercises and rebudget teaching time. |
+| 2 | `3c726cc` | `review_history_r2` | Content passes; remove unrelated neighboring GPT-2 axis fragments. |
+| 2 | `3c726cc` | `review_benchmarks_r2` | Qualify ALE ranges; pin LiveBench/AgentTime versions; define cost. |
+| 2 | `3c726cc` | `review_visuals_r2` | Correct GPT-4 metric sign, enlarge source detail, move E03's answer. |
+| 3 | `bec21f4` | `review_content_r3` | Pass; calculations, teaching sequence and source boundaries verified. |
+| 3 | `bec21f4` | `review_protocols_r3` | Pass; primary-source protocols and numerical assumptions verified. |
+| 3 | `bec21f4` | `review_visuals_r3` | Approve after currency rendering fix; author verified the regenerated page. |
 
 ## Release validation
 
-Final commands, artifacts and limitations will be recorded after the third
-iteration. This document does not authorize publication or a merge.
+Completed November 11, 2026 (Asia/Shanghai). The final rendered content is
+`bec21f48e987a8526d3522b76d279a6256114c1d` plus the iteration-3 currency fix;
+the working tree was dirty with that authorized correction during export.
+The review register and teaching-plan verification were finalized afterward.
+The third revision commit records these changes together.
+
+| Command or check | Result |
+| --- | --- |
+| `uv run python -m pytest -q tests/test_lecture_10.py tests/test_lecture_10_data.py` | 10 passed, including execution of every notebook code cell in a fresh working copy. |
+| `npm --prefix slides run check -- lecture-10` | All 95 slides passed at three viewport sizes after iteration 2. |
+| `npm --prefix slides run pdf -- lecture-10` | All 95 slides passed the same checks after the final fix; 95-page PDF exported. |
+| `node slides/lecture-10/check-demo.mjs http://127.0.0.1:8005` | Mixed/clean results, reset and offline interactions passed. |
+| `npm --prefix slides run check:notebook -- http://127.0.0.1:8005 lecture-10` | Notebook launcher, tab reuse, kernel and static fallback passed. |
+| `npm --prefix slides run build:lecture-notes` | Generated HTML synchronized with the edited notes and course plan. |
+| `npm --prefix slides run check:notes` | Notes, equations, diagrams, navigation, mobile, print and offline checks passed. |
+| Figure provenance | All 14 local SHA-256 values match the manifest; source versions and crops recorded. |
+| Visual audit | All 95 slides/pages inspected; final changed PDF page 43 reinspected. |
+| `git diff --check` | Passed. |
+
+The PDF, screenshots and machine-readable browser report are in ignored
+`slides/.checks/lecture-10/`. The source is `slides.md`; the exercise notebook
+is `practice.ipynb`. No code cell, data fixture, package manifest, lockfile,
+shared theme or grading requirement changed. The numerical examples use the
+existing authored data and seed `20261028` (5,000 paired bootstrap draws).
+Validation is local CPU/browser work; model training, live inference and GPU
+usage are zero. Publisher measurements are cited evidence, not reproduced
+course experiments.
+
+Remaining limits: 120 teaching minutes is an unmeasured plan; a classroom
+rehearsal and projector check remain useful. Model/benchmark facts are a dated
+November 11 snapshot. GPT-6.2 was not verified in official documentation; the
+separately named GPT-6/6.1 interface examples are sourced. No common score
+curve across model generations is asserted. The work is prepared for review
+through a pull request; this record does not authorize merging it.

@@ -681,10 +681,10 @@ Cost per fully solved task is total cost including failed attempts divided by fu
 | --- | --- | --- |
 | Attempts per task | 1 | 5 |
 | Network | Disabled | Enabled |
-| Total cost, including failures | $12 | $60 |
+| Total cost, including failures | USD 12 | USD 60 |
 | Tasks fully passed | 6/10 | 6/10 |
 
-<div class="answer fragment"><p>60% each; $2 versus $10 per solved task. Different tools and budgets.</p></div>
+<div class="answer fragment"><p>60% each; USD 2 versus USD 10 per solved task. Different tools and budgets.</p></div>
 
 Note:
 Compute cost per fully solved task as total cost of all evaluated attempts (including failures) divided by fully solved tasks: 12/6 = 2 and 60/6 = 10 dollars. It is undefined if no tasks succeed. These are authored totals, not live API prices. Report API spend and environment compute separately; latency is elapsed time, not the sum of parallel trial durations. Expected response: neither equal model ability nor statistical equivalence follows. The ten tasks must also be identical and paired before a useful comparison. Keep this as a short oral check after the agent protocol; no new graded work or notebook ID. Ask students to name a next comparison: same model/harness/environment, vary only attempt count; or compare complete systems at a common cost ceiling. With only ten tasks, uncertainty can remain large. The values are authored; no agent runs were performed.

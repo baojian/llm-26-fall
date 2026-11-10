@@ -43,6 +43,9 @@ factor, controls and claim boundary. Historical scores are never plotted on a
 single cross-generation axis. The requested GPT-6.2 endpoint is explicitly
 unverified; official sources establish the separately named GPT-6/6.1 examples.
 All embedded figure assets load locally. No live benchmark/API run is required.
+Use the native takeaway text to teach the ALE and GPT-4 plots; their fine
+internal labels are source detail for close reading, not text students must
+read from the back of the classroom.
 
 ## Exercises and checked outcomes
 
@@ -145,3 +148,13 @@ the existing local server at port 8005. Reading-page checks passed for notes,
 equations, mobile/print layouts and all six future lecture links in English
 and Chinese. No GPU run or live-model comparison was performed. Timing and
 future live-demo budgets remain planning estimates.
+
+November 11 final revision verification: all three iterations and nine
+independent reviews are complete. Ten Python checks pass, and all 95 slides
+pass three viewport checks. The exported PDF has 95 pages; every page was
+visually inspected, with the corrected currency answer reinspected after the
+final export. All 14 source-asset hashes match their provenance manifest.
+Demo, notebook-launcher and notes checks pass. See the
+[revision record](revision-review.md#release-validation) for commands, version
+and working-tree state, artifacts and remaining limits. No GPU or live-model
+run was performed; the 120-minute classroom route still needs rehearsal.
