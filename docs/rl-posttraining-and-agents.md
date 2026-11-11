@@ -1,9 +1,10 @@
 # RL reading guide for LLM post-training and agents
 
-These optional resources support Lecture 08 (SFT and reward models),
-Lecture 09 (REINFORCE and PPO), Lecture 11 (DPO, GRPO and verifiable rewards),
-and Lecture 15 (agents and tool use). See the [course schedule](schedule.md). They introduce no new
-graded deliverable or deadline.
+These optional resources support the post-training foundations covered across
+Lectures 8–10 (SFT, reward models, REINFORCE/PPO, GRPO and DPO), Lecture 11
+(efficient adaptation and distillation), and Lecture 14 (agents and tool use).
+See the [course schedule](schedule.md). They introduce no new graded deliverable
+or deadline.
 
 We organize the material around two training settings: **alignment and
 reasoning through response generation**, and **interactive decision-making

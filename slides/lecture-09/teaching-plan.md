@@ -3,9 +3,11 @@
 Reinforcement learning and policy optimization · November 4, 2026.
 Reconstructed November 10 to match the instructor's account; not a transcript.
 
-The core ends at `core-summary`. GRPO and DPO were **not taught in Week 9**.
-The material after `outline-supplement` prepares a later 35–45 minute session;
-it is not a prerequisite for Quiz 4. Timing estimates have not been rehearsed.
+The original REINFORCE/PPO route ends at `core-summary`. **Instructor update,
+November 11:** GRPO and DPO have now been covered across Lectures 8–10. The
+material after `outline-supplement` remains a separate 35–45 minute review
+route; Lecture 11 will build on this foundation instead of repeating it.
+The published Quiz 4 scope is unchanged. Timing estimates have not been rehearsed.
 
 | Teaching minutes | Route | Student check |
 | --- | --- | --- |

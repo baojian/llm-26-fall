@@ -55,11 +55,11 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
 | 8 | Wed, Oct 28, 2026 | [InstructGPT, SFT and reward models](lecture-08-instructgpt.html) | A2 due **Sat, Oct 31** |
 | 9 | Wed, Nov 4, 2026 | [Reinforcement learning, REINFORCE and PPO](lecture-09-policy-optimization.html) | — |
 | 10 | Wed, Nov 11, 2026 | [Data preparation, evaluation and experimental design](lecture-10-data-evaluation.html) | Quiz 4; A3 released |
-| 11 | Wed, Nov 18, 2026 | [DPO, GRPO and verifiable rewards](course-revision.html#lecture-11-dpo-grpo-and-verifiable-rewards) | — |
+| 11 | Wed, Nov 18, 2026 | [Efficient adaptation and distillation](course-revision.html#lecture-11-efficient-adaptation-and-distillation) | — |
 | 12 | Wed, Nov 25, 2026 | [Retrieval and retrieval-augmented generation](course-revision.html#lecture-12-retrieval-and-rag) | Project progress update due |
 | 13 | Wed, Dec 2, 2026 | [Efficient inference and computation at test time](course-revision.html#lecture-13-inference-and-computation-at-test-time) | A3 due |
-| 14 | Wed, Dec 9, 2026 | [Masked diffusion language models](course-revision.html#lecture-14-masked-diffusion-language-models) | Quiz 5 |
-| 15 | Wed, Dec 16, 2026 | [Agents and tool use](course-revision.html#lecture-15-agents-and-tool-use) | — |
+| 14 | Wed, Dec 9, 2026 | [Agents and tool use](course-revision.html#lecture-14-agents-and-tool-use) | Quiz 5 |
+| 15 | Wed, Dec 16, 2026 | [Masked diffusion language models](course-revision.html#lecture-15-masked-diffusion-language-models) | — |
 | 16 | Wed, Dec 23, 2026 | [Research synthesis and project revision](course-revision.html#lecture-16-research-synthesis-and-project-revision) | Last class |
 
 - October 7 falls on the National Day holiday. Its meeting moves to Saturday,
@@ -73,14 +73,16 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
   The first two periods introduce compute budgets and scaling laws, with
   the existing 15-minute Quiz 3 slot in the first period. Quiz 3, the project
   proposal deadline, and the A2 deadline retain their published dates.
-- **November 10 update:** Weeks 8–9 now reflect the taught InstructGPT/SFT/reward-model
-  and REINFORCE/PPO material. GRPO and DPO are prepared as supplementary slides
-  and were not taught in Week 9. Data preparation, quality, evaluation and
-  experimental design move together to Week 10. Quiz 4 assesses previously
-  taught material; assignment dates and assessment weights are unchanged.
+- **November 11 update:** The instructor confirms that the post-training
+  sequence across Lectures 8–10 includes InstructGPT, SFT, reward models,
+  REINFORCE/PPO, GRPO and DPO. The Lecture 09 supplement now serves as review;
+  Lecture 10's data/evaluation materials remain the experiment-protocol
+  reference. Assignment dates, published quiz scope and weights are unchanged.
 - Lectures 11–16 link to preparation plans, not completed slide packages.
-  Lecture 11 introduces DPO and GRPO after the taught PPO foundations;
-  Lecture 13 connects inference efficiency to computation at test time.
+  Lecture 11 adds LoRA/QLoRA and distillation; Lectures 12–13 develop retrieval
+  and inference/test-time compute. Agents move to Lecture 14, followed by
+  masked diffusion in Lecture 15. Quiz 5 stays on December 9 and covers
+  previously taught core material, not the new agent lesson.
 - December 23 includes guided revision of project claims and evidence.
   Project checkpoints remain individual written submissions through eLearning.
 - Weeks 17–18 (Dec 27, 2026 – Jan 9, 2027) are exam weeks with no classes.

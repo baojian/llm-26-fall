@@ -6,5 +6,7 @@
 4. Supplement: [DeepSeekMath (2024), Section 4](https://arxiv.org/abs/2402.03300): distinguish the outcome-supervised group estimate from process supervision and identify the loss reduction.
 5. Supplement: [DPO (2023), Sections 3–4](https://arxiv.org/abs/2305.18290): derive the reward/log-policy relationship and cancel the prompt partition function in a preference pair.
 
-The supplement does not expand Quiz 4 coverage. Use the same common core for all
-students. These readings imply no model-training or compute requirement.
+As confirmed on November 11, GRPO and DPO have been covered across Lectures
+8–10; the supplement is now a review resource. It does not expand the published
+Quiz 4 coverage. Use the same common core for all students. These readings imply
+no model-training or compute requirement.

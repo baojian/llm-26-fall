@@ -15,7 +15,7 @@ They are teaching references, not copies of Stanford's full workload.
 
 | CS336 source | Useful material | Where it fits in our course |
 | --- | --- | --- |
-| [Lecture 12: Evaluation](https://github.com/stanford-cs336/lectures/blob/de53a9f979a6ee35f7d13a5e1aadee5ea1afc58e/lecture_12.py) | Perplexity; exam, chat and agent benchmarks; realism and validity | Lecture 10's frozen protocol, task/metric choice, grader audit and interpretation; agent evaluation returns in Lecture 15. |
+| [Lecture 12: Evaluation](https://github.com/stanford-cs336/lectures/blob/de53a9f979a6ee35f7d13a5e1aadee5ea1afc58e/lecture_12.py) | Perplexity; exam, chat and agent benchmarks; realism and validity | Lecture 10's frozen protocol, task/metric choice, grader audit and interpretation; agent evaluation returns in Lecture 14. |
 | [Lecture 13: Data](https://github.com/stanford-cs336/lectures/blob/de53a9f979a6ee35f7d13a5e1aadee5ea1afc58e/lecture_13.py) | Pretraining sources, datasets and composition | Lecture 10's provenance and counts; the optional corpus catalog. |
 | [Lecture 14: Data processing](https://github.com/stanford-cs336/lectures/blob/de53a9f979a6ee35f7d13a5e1aadee5ea1afc58e/lecture_14.py) | Quality filtering; exact and approximate deduplication; mixtures, repetition and synthetic data | Lecture 10's filtering, duplicate families and token exposure; MinHash/LSH in optional P03. Broad synthetic-data generation remains further reading. |
 | [Assignment 4: Data](https://github.com/stanford-cs336/assignment4-data) | Web-text extraction, filtering and deduplication before model training | The Lecture 02 MinHash/LSH task adapts its deduplication exercise; A2 Part 4 credits the data assignment for its fixed-budget comparison. Full Common Crawl processing is not required. |
@@ -79,7 +79,7 @@ protocol. Do not silently re-split a benchmark while claiming its official score
 | --- | --- |
 | [Dror et al., The Hitchhiker's Guide to Testing Statistical Significance in NLP (2018)](https://aclanthology.org/P18-1128/) | Test selection and assumptions, especially dependence between predictions and the evaluation unit. |
 | [EleutherAI language-model evaluation harness](https://github.com/EleutherAI/lm-evaluation-harness) | Read the model interface and the exact task configuration: likelihood requests, generation, normalization, and aggregation. |
-| [Gao et al., Scaling Laws for Reward Model Overoptimization (2023)](https://arxiv.org/abs/2210.10760) | Optional bridge to Lecture 11: distinguish optimizing a proxy reward from independent evidence of improvement. Our square-function counterexample is an authored illustration, not a reproduction of these experiments. |
+| [Gao et al., Scaling Laws for Reward Model Overoptimization (2023)](https://arxiv.org/abs/2210.10760) | Review of the post-training sequence: distinguish optimizing a proxy reward from independent evidence of improvement. Our square-function counterexample is an authored illustration, not a reproduction of these experiments. |
 
 The core E05 seeded paired percentile bootstrap is a small teaching example.
 It does not account for training-run variation. For related examples, decide

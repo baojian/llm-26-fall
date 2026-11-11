@@ -6,10 +6,10 @@
 
 <p class="subtitle">REINFORCE, advantages and PPO</p>
 
-<p class="caption">GRPO and DPO follow as supplementary material.</p>
+<p class="caption">GRPO and DPO: review of the Lectures 8–10 sequence.</p>
 
 Note:
-Reconstructed November 10 from the instructor's taught scope and the November 4 policy-optimization reference PDF. REINFORCE and PPO are the core. GRPO and DPO were not taught in Week 9; the supplement is prepared for later teaching and is not a Quiz 4 prerequisite. Use the companion notes for longer derivations.
+Reconstructed November 10 from the instructor's taught scope and the November 4 policy-optimization reference PDF. REINFORCE and PPO are the core. Instructor update, November 11: GRPO and DPO have now been covered across Lectures 8–10. The supplement serves as review, without changing the published Quiz 4 scope. Use the companion notes for longer derivations.
 
 ---
 
@@ -447,7 +447,7 @@ Reward-model exploitation can increase the optimized proxy without improving the
 4. Clipping and reduction match the written objective.
 
 Note:
-This ends the Week 9 taught core. Direct students to the lecture notes and E01–E04. The next slides prepare material not yet taught; omit them from a 135-minute reconstruction of the original class. No assessment coverage expands merely because these slides exist.
+This ends the Week 9 core route. Direct students to the lecture notes and E01–E04. The next slides collect GRPO/DPO examples covered across Lectures 8–10, per the November 11 update. Keep them outside the original 135-minute REINFORCE/PPO route; use them for review as needed. No assessment coverage expands merely because these slides exist.
 
 ---
 
@@ -459,7 +459,7 @@ This ends the Week 9 taught core. Direct students to the lecture notes and E01�
 - DPO learns directly from offline preference pairs.
 - Both require explicit data and evaluation assumptions.
 
-<p class="caption">Prepared for later teaching; not taught in Week 9.</p>
+<p class="caption">Covered across Lectures 8–10; retained here for review.</p>
 
 Note:
 Allow a separate 35–45 minute session for this supplement, including P01/P02. It is not an extension required for master's students and carries no bonus grading track. Sources: DeepSeekMath Section 4 and DPO Sections 3–4.

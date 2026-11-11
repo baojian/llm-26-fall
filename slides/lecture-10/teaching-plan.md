@@ -65,9 +65,10 @@ independent case (input 3). This is an executed counterexample to an inference
 from reward to general correctness, not a trained-policy result. Keep it to
 two minutes; E01–E05 and P01–P03 retain their IDs and order.
 
-Lecture 11 builds on this audit to introduce DPO and GRPO. Those algorithms
-were prepared as Lecture 09 supplements but were not yet taught. See the
-[remaining lecture plan](../../docs/course-revision.html#lecture-11-dpo-grpo-and-verifiable-rewards).
+The November 11 instructor update confirms that DPO and GRPO were covered
+across Lectures 8–10. Lecture 11 now builds on this evaluation audit through
+efficient adaptation and distillation. See the
+[remaining lecture plan](../../docs/course-revision.html#lecture-11-efficient-adaptation-and-distillation).
 
 ## Source adaptation
 
