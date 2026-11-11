@@ -242,7 +242,7 @@ try {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`${origin}/index.html?lang=zh`, { waitUntil: 'networkidle' });
   assert.match(await page.locator('#lecture-08').textContent(), /奖励模型/);
-  assert.match(await page.locator('#lecture-09').textContent(), /尚未讲授/);
+  assert.match(await page.locator('#lecture-09').textContent(), /复习第 8–10 讲已涵盖的内容/);
   assert.match(await page.locator('#lecture-10').textContent(), /实验设计/);
   for (const number of ['08', '09', '10']) {
     await page.locator(`#lecture-${number}`).screenshot({ path: path.join(output, `course-week-${number}-zh.png`) });

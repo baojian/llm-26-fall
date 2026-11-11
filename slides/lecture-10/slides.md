@@ -562,7 +562,7 @@ A reward is an optimization signal. Validate the intended behavior separately.
 <p class="caption">Authored toy example; no policy was trained. Two tests do not prove general correctness.</p>
 
 Note:
-Retrieve the reward in Lecture 09's policy objective. A perfect training-reward score is compatible with failure outside the checked case. The example demonstrates an incomplete verifier, not a measured outcome of PPO or a learned reward model. The notebook executes both candidates. Hold out independent task instances and inspect verifier blind spots; choosing this check after noticing the bug is development work, so freeze another evaluation for a final claim. Connect to Lecture 11: a verifiable reward is only as informative as its specification and coverage. Contextual reading: Gao, Schulman and Hilton, Scaling Laws for Reward Model Overoptimization, https://arxiv.org/abs/2210.10760. Their experiments concern proxy reward optimization; this two-function fixture is our illustration, not a reproduction of their experiment.
+Retrieve the reward in Lecture 09's policy objective. A perfect training-reward score is compatible with failure outside the checked case. The example demonstrates an incomplete verifier, not a measured outcome of PPO or a learned reward model. The notebook executes both candidates. Hold out independent task instances and inspect verifier blind spots; choosing this check after noticing the bug is development work, so freeze another evaluation for a final claim. Connect to the completed post-training sequence: a verifiable reward is only as informative as its specification and coverage. Contextual reading: Gao, Schulman and Hilton, Scaling Laws for Reward Model Overoptimization, https://arxiv.org/abs/2210.10760. Their experiments concern proxy reward optimization; this two-function fixture is our illustration, not a reproduction of their experiment.
 
 ---
 
@@ -733,7 +733,7 @@ Students can adapt the notebook's final short template to the existing project p
 4. Paired difference, uncertainty and error slices.
 
 Note:
-The same structure applies to a data-filter comparison, SFT adaptation, reward-model evaluation or policy optimization. A negative result with sound controls is useful. Choose one meaningful comparison within a small budget; do not promise improvement from a preferred method. Next, Lecture 11 introduces DPO and GRPO using the same independent-evaluation boundary: ../../docs/course-revision.html#lecture-11-dpo-grpo-and-verifiable-rewards.
+The same structure applies to a data-filter comparison, SFT adaptation, reward-model evaluation or policy optimization. A negative result with sound controls is useful. Choose one meaningful comparison within a small budget; do not promise improvement from a preferred method. Next, Lecture 11 introduces efficient adaptation and distillation using the same independent-evaluation boundary: ../../docs/course-revision.html#lecture-11-efficient-adaptation-and-distillation. DPO and GRPO have already been covered across Lectures 8–10.
 
 ---
 

@@ -1,9 +1,9 @@
 # MiMo RL public training archive
 
 The [MiMo training dashboard](https://mimo.xiaomi.com/rl/#overview) exposes a
-production post-training case study to revisit Lectures 08–09 (SFT, reward
-models and PPO) and support Lecture 11 (DPO, GRPO and verifiable rewards,
-November 18). Lecture 10 supplies the independent-evaluation audit. The instructor's
+production post-training case study to revisit the SFT, reward-model and
+policy-optimization foundations covered across Lectures 8–10. Lecture 10's
+materials supply the independent-evaluation audit. The instructor's
 [case-study issue #177](https://github.com/baojian/llm-26-fall/issues/177) records
 the initial state, six operator notices, and questions for lecture preparation.
 
