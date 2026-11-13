@@ -4,11 +4,13 @@ import argparse
 import gc
 import hashlib
 import json
+import math
 import platform
 import random
 import subprocess
 import sys
 import time
+import uuid
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -34,10 +36,61 @@ CONFIG_KEYS = {
 }
 
 
+def json_scalar(value):
+    """Accept scalar tensor diagnostics without publishing tensor representations."""
+    if isinstance(value, torch.Tensor) and value.numel() == 1:
+        return value.detach().item()
+    raise TypeError(f'{type(value).__name__} is not a JSON scalar')
+
+
 def write_json(path, data):
     temporary = path.with_suffix(path.suffix + '.tmp')
-    temporary.write_text(json.dumps(data, indent=2, allow_nan=False) + '\n')
+    temporary.write_text(json.dumps(data, indent=2, allow_nan=False, default=json_scalar) + '\n')
     temporary.replace(path)
+
+
+def diagnostic_scalars(info):
+    """Validate the public PPO contract at the first update, before saving work."""
+    keys = {'policy_loss', 'value_loss', 'clip_fraction'}
+    if not isinstance(info, dict) or set(info) != keys:
+        raise ValueError(f'ppo_loss diagnostics must contain exactly {sorted(keys)}')
+    converted = {}
+    for key, value in info.items():
+        if isinstance(value, torch.Tensor):
+            value = json_scalar(value)
+        if isinstance(value, bool) or not isinstance(value, (float, int)) or not math.isfinite(value):
+            raise ValueError(f'ppo_loss diagnostic {key} must be a finite scalar')
+        converted[key] = float(value)
+    return converted
+
+
+def begin_attempt(metadata, resume=False):
+    return {'attempt_id': metadata.get('attempt_id', uuid.uuid4().hex),
+            'started_at': metadata['timestamp'], 'resume': resume, 'status': 'running',
+            'command': metadata.get('command'), 'git_revision': metadata.get('git_revision'),
+            'git_dirty': metadata.get('git_dirty'),
+            'budget_wall_minutes': metadata.get('budget_wall_minutes')}
+
+
+def finish_attempt(record, timer, error=None):
+    # A failed CUDA context may no longer synchronize; preserve its elapsed cost.
+    elapsed = time.perf_counter() - timer.start if error is not None else timer.now() - timer.start
+    attempt = record['attempts'][-1]
+    attempt.update(completed_at=datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(),
+                   wall_seconds=elapsed, status='failed' if error is not None else 'completed')
+    if error is not None:
+        attempt['error'] = f'{type(error).__name__}: {error}'
+    record.update(status='partial' if error is not None else 'completed', wall_seconds=elapsed,
+                  completed_at=attempt['completed_at'])
+    record['total_attempt_wall_seconds'] = sum(a.get('wall_seconds', 0.) for a in record['attempts'])
+
+
+def save_failed_attempt(args, metadata, timer, error):
+    stamp = datetime.now(ZoneInfo('Asia/Shanghai')).strftime('%Y%m%dT%H%M%S%f%z')
+    write_json(args.out / f'failed-attempt-{stamp}.json', {
+        'status': 'failed', 'attempt_id': metadata['attempt_id'], 'provenance': metadata,
+        'error': f'{type(error).__name__}: {error}', 'elapsed_seconds': time.perf_counter() - timer.start,
+        'completed_at': datetime.now(ZoneInfo('Asia/Shanghai')).isoformat()})
 
 
 def read_config(path):
@@ -278,10 +331,23 @@ def train(args, cfg, tokenizer, rows, device, metadata, timer):
         raise ValueError('resume requires identical config, data, model, source code, and device/precision')
     for stage in logs['completed_stages']:
         verify_checkpoint(args.out / f'{stage}.pt', fingerprint)
-    logs['attempts'].append({'started_at': metadata['timestamp'], 'resume': args.resume,
-                            'command': metadata.get('command'), 'git_revision': metadata.get('git_revision'),
-                            'git_dirty': metadata.get('git_dirty'), 'budget_wall_minutes': metadata.get('budget_wall_minutes')})
+    logs['attempts'].append(begin_attempt(metadata, args.resume))
+    logs['status'] = 'partial'
     write_json(partial, logs)
+    try:
+        _train_stages(args, cfg, tokenizer, rows, device, metadata, timer, logs)
+    except (Exception, KeyboardInterrupt) as exc:
+        finish_attempt(logs, timer, exc)
+        write_json(partial, logs)
+        raise
+    finish_attempt(logs, timer)
+    write_json(partial, logs)
+    return logs
+
+
+def _train_stages(args, cfg, tokenizer, rows, device, metadata, timer, logs):
+    fingerprint = metadata['fingerprint']
+    partial = args.out / 'training-partial.json'
     eos = tokenizer.eos_token_id
 
     for stage, steps, seed_offset, rate, checkpoint in [
@@ -330,7 +396,7 @@ def train(args, cfg, tokenizer, rows, device, metadata, timer):
                                 'examples': len(batch), 'scored_tokens': target_tokens if stage == 'sft' else None})
             if (step + 1) % 32 == 0 or step + 1 == steps:
                 print(f'{stage} {step + 1}/{steps}: loss={loss_total:.4f}', flush=True)
-                write_json(partial, logs)
+            write_json(partial, logs)
         logs['stage_seconds'][stage] = timer.now() - started
         save_checkpoint(args.out / checkpoint, model, fingerprint, head)
         logs['completed_stages'].append(stage)
@@ -384,7 +450,7 @@ def train(args, cfg, tokenizer, rows, device, metadata, timer):
                         advantages[start:end, :width], new_values, returns[start:end, :width], micro_mask,
                         clip=cfg['clip'], value_coef=cfg['value_coef'])
                     (loss * micro_mask.sum() / total_actions).backward()
-                    diagnostics.append(info)
+                    diagnostics.append(diagnostic_scalars(info))
                 step_optimizer(actor, value, optimizer, cfg)
                 assert torch.equal(original_old, old_logp)
                 epochs.append({'epoch': epoch + 1, 'minibatches': diagnostics})
@@ -403,7 +469,7 @@ def train(args, cfg, tokenizer, rows, device, metadata, timer):
                 'old_probabilities_unchanged': True})
             if (step + 1) % 8 == 0 or step + 1 == cfg['ppo_batches']:
                 print(f'ppo {step + 1}/{cfg["ppo_batches"]}: reward={float(scores.mean()):.4f}', flush=True)
-                write_json(partial, logs)
+            write_json(partial, logs)
         logs['stage_seconds']['ppo'] = timer.now() - started
         after = {'reference': parameter_digest(reference), 'reward': parameter_digest(rm),
                  'reward_head': parameter_digest(reward_head)}
@@ -433,11 +499,48 @@ def evaluate(args, cfg, tokenizer, rows, device, metadata, timer):
         raise ValueError('final test requires the full frozen main configuration')
     for stage in ('sft', 'reward', 'ppo'):
         verify_checkpoint(args.out / f'{stage}.pt', metadata['fingerprint'])
+    partial = args.out / (f'evaluation-{args.split}' + ('-quick' if args.quick else '') + '-partial.json')
+    previous = json.loads(partial.read_text()) if partial.exists() else {}
+    if previous and previous.get('provenance', {}).get('fingerprint') != metadata['fingerprint']:
+        raise ValueError('existing evaluation records have different provenance; preserve them and use a matching run')
+    output = {'split': args.split, 'quick': args.quick, 'status': 'partial',
+              'provenance': metadata, 'attempts': list(previous.get('attempts', [])),
+              'reward_model': {'pairs': [], 'pair_ids': []}, 'metrics': {},
+              'completed_stages': [],
+              'interrupted_evaluations': list(previous.get('interrupted_evaluations', []))}
+    if previous and previous.get('status') != 'completed':
+        output['interrupted_evaluations'].append({key: previous[key] for key in
+            ('completed_at', 'reward_model', 'baseline', 'sft', 'ppo', 'metrics', 'completed_stages') if key in previous})
+    output['attempts'].append(begin_attempt(metadata))
+    write_json(partial, output)
+    try:
+        _evaluate_stages(args, cfg, tokenizer, rows, device, metadata, timer, output, partial)
+    except (Exception, KeyboardInterrupt) as exc:
+        finish_attempt(output, timer, exc)
+        write_json(partial, output)
+        raise
+    finish_attempt(output, timer)
+    write_json(partial, output)
+    return output
+
+
+def prediction_metrics(predictions):
+    """Report aggregation supplied to students; no learned reward is used as truth."""
+    if not predictions:
+        raise ValueError('cannot summarize an empty prediction set')
+    return {
+        'accuracy': sum(r['prediction'].strip().lower() == r['target'].strip().lower() for r in predictions) / len(predictions),
+        'valid_label_rate': sum(r['format_ok'] for r in predictions) / len(predictions),
+        'mean_reward': sum(r['reward_score'] for r in predictions) / len(predictions),
+        'mean_response_tokens': sum(r['response_tokens'] for r in predictions) / len(predictions)}
+
+
+def _evaluate_stages(args, cfg, tokenizer, rows, device, metadata, timer, output, partial):
     count = 64 if args.quick else cfg['eval_examples']
     rows = rows if count is None else rows[:count]
     rm = freeze(load_model(args.cache, cfg, device, args.out / 'reward.pt'))
     head = freeze(scalar_head(rm, device, args.out / 'reward.pt'))
-    pairs = []
+    pairs = output['reward_model']['pairs']
     for batch in chunks(rows, cfg['eval_batch_size']):
         timer.check()
         with torch.no_grad():
@@ -445,14 +548,16 @@ def evaluate(args, cfg, tokenizer, rows, device, metadata, timer):
             rejected, mask_r, _ = batch_tokens(batch, 'rejected', tokenizer.eos_token_id, device)
             pairs.extend(zip(model_scores(rm, head, chosen, mask_c).tolist(),
                              model_scores(rm, head, rejected, mask_r).tolist()))
-    output = {'split': args.split, 'quick': args.quick,
-              'reward_model': {'accuracy': sum(a > b for a, b in pairs) / len(pairs),
-                               'ties': sum(a == b for a, b in pairs), 'pairs': pairs}}
+        output['reward_model']['pair_ids'].extend(row['id'] for row in batch)
+        write_json(partial, output)
+    output['reward_model'].update(accuracy=sum(a > b for a, b in pairs) / len(pairs),
+                                  ties=sum(a == b for a, b in pairs))
+    output['completed_stages'].append('reward')
+    write_json(partial, output)
     valid = set(json.loads((ROOT / 'data/manifest.json').read_text())['valid_answers'])
-    output['metrics'] = {}
     for stage in ('baseline', 'sft', 'ppo'):
         model = freeze(load_model(args.cache, cfg, device, args.out / f'{stage}.pt' if stage != 'baseline' else None))
-        predictions = []
+        predictions = output[stage] = []
         for batch in chunks(rows, cfg['eval_batch_size']):
             timer.check()
             responses, _ = generate_responses(model, tokenizer, batch, cfg['max_new_tokens'], False)
@@ -463,22 +568,23 @@ def evaluate(args, cfg, tokenizer, rows, device, metadata, timer):
                 record.update(prediction=prediction, response_tokens=len(response),
                               format_ok=prediction.strip().lower() in valid, reward_score=reward)
                 predictions.append(record)
-        output[stage] = predictions
-        output['metrics'][stage] = {
-            'accuracy': sum(r['prediction'].strip().lower() == r['target'] for r in predictions) / len(predictions),
-            'valid_label_rate': sum(r['format_ok'] for r in predictions) / len(predictions),
-            'mean_reward': sum(r['reward_score'] for r in predictions) / len(predictions),
-            'mean_response_tokens': sum(r['response_tokens'] for r in predictions) / len(predictions)}
+            write_json(partial, output)
+        output['metrics'][stage] = prediction_metrics(predictions)
+        output['completed_stages'].append(stage)
+        write_json(partial, output)
         del model
         gc.collect()
     output['baseline_to_sft'] = a3.paired_summary(output['baseline'], output['sft'])
     output['sft_to_ppo'] = a3.paired_summary(output['sft'], output['ppo'])
-    output['slices'] = {}
+    output['slices'], output['slice_metrics'] = {}, {}
     for field in ('slice', 'condition', 'attribute'):
         for name in sorted({r[field] for r in rows}):
-            output['slices'][field + ':' + name] = a3.paired_summary(
-                [r for r in output['sft'] if r[field] == name], [r for r in output['ppo'] if r[field] == name])
-    return output
+            key = field + ':' + name
+            grouped = {stage: [r for r in output[stage] if r[field] == name]
+                       for stage in ('baseline', 'sft', 'ppo')}
+            output['slices'][key] = a3.paired_summary(grouped['sft'], grouped['ppo'])
+            output['slice_metrics'][key] = {stage: prediction_metrics(predictions)
+                                             for stage, predictions in grouped.items()}
 
 
 def provenance(args, cfg, device):
@@ -504,6 +610,7 @@ def provenance(args, cfg, device):
                 'gpu': torch.cuda.get_device_name(device) if device.type == 'cuda' else None,
                 'gpu_memory_bytes': torch.cuda.get_device_properties(device).total_memory if device.type == 'cuda' else None}
     return {'timestamp': datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(), 'timezone': 'Asia/Shanghai',
+            'attempt_id': uuid.uuid4().hex,
             'command': __import__('shlex').join(sys.argv), 'git_revision': git('rev-parse', 'HEAD'),
             'git_dirty': None if dirty is None else bool(dirty), 'source_hashes': sources,
             'model': MODEL, 'model_revision': REVISION, 'data': manifest, 'config': cfg,
@@ -541,8 +648,8 @@ def main():
         parser.error('CUDA is unavailable. CPU debugging: --smoke --device cpu')
     if args.command != 'validate-data' and device.type != 'cuda' and not cfg['smoke']:
         parser.error('The main/calibration recipe requires CUDA. Use --smoke --device cpu for wiring checks.')
-    if args.max_wall_minutes <= 0:
-        parser.error('--max-wall-minutes must be positive')
+    if not math.isfinite(args.max_wall_minutes) or args.max_wall_minutes <= 0:
+        parser.error('--max-wall-minutes must be finite and positive')
     if args.quick and (args.command != 'evaluate' or args.split != 'dev'):
         parser.error('--quick is only for development evaluation')
     if args.command == 'evaluate' and args.split == 'test' and (cfg['smoke'] or args.calibrate):
@@ -562,45 +669,46 @@ def main():
             parser.error('--resume requires the original training-partial.json')
     metadata = provenance(args, cfg, device)
     timer = Timer(device, args.max_wall_minutes)
-    tokenizer = AutoTokenizer.from_pretrained(MODEL, revision=REVISION, cache_dir=args.cache, trust_remote_code=False)
-    tokenizer.pad_token = tokenizer.eos_token
-    if args.command == 'validate-data':
-        result = {}
-        for split in ('train', 'dev', 'test'):
-            rows = encode_rows(tokenizer, read_data(split, cfg), cfg)
-            result[split] = {'examples': len(rows), 'families': len({r['family'] for r in rows}),
-                'max_prompt_tokens': max(len(r['prompt_ids']) for r in rows),
-                'max_response_tokens_with_eos': max(len(r[key]) for r in rows for key in ('chosen_ids', 'rejected_ids'))}
-        filename = 'data-validation.json'
-    elif args.command == 'train':
-        rows = encode_rows(tokenizer, read_data('train', cfg), cfg)
-        try:
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(MODEL, revision=REVISION, cache_dir=args.cache, trust_remote_code=False)
+        tokenizer.pad_token = tokenizer.eos_token
+        if args.command == 'validate-data':
+            result = {}
+            for split in ('train', 'dev', 'test'):
+                rows = encode_rows(tokenizer, read_data(split, cfg), cfg)
+                result[split] = {'examples': len(rows), 'families': len({r['family'] for r in rows}),
+                    'max_prompt_tokens': max(len(r['prompt_ids']) for r in rows),
+                    'max_response_tokens_with_eos': max(len(r[key]) for r in rows for key in ('chosen_ids', 'rejected_ids'))}
+            filename = 'data-validation.json'
+        elif args.command == 'train':
+            rows = encode_rows(tokenizer, read_data('train', cfg), cfg)
             result = train(args, cfg, tokenizer, rows, device, metadata, timer)
-        except Exception as exc:
-            stamp = datetime.now(ZoneInfo('Asia/Shanghai')).strftime('%Y%m%dT%H%M%S%f%z')
-            write_json(args.out / f'failed-attempt-{stamp}.json', {'provenance': metadata,
-                'error': str(exc), 'elapsed_seconds': timer.now() - timer.start,
-                'completed_at': datetime.now(ZoneInfo('Asia/Shanghai')).isoformat()})
-            raise
-        if args.calibrate:
-            result['projected_main_loop_seconds'] = {
-                stage: result['stage_seconds'][stage] * full_cfg[key] / cfg[key]
-                for stage, key in [('sft', 'sft_steps'), ('reward', 'rm_steps'), ('ppo', 'ppo_batches')]}
-            result['projection_warning'] = 'Short-run extrapolation excludes loading/checkpoint/evaluation overhead; confirm with one full GPU pilot.'
-        filename = 'training.json'
-    else:
-        rows = encode_rows(tokenizer, read_data(args.split, cfg), cfg)
-        result = evaluate(args, cfg, tokenizer, rows, device, metadata, timer)
-        filename = f'evaluation-{args.split}' + ('-quick' if args.quick else '') + '.json'
+            if args.calibrate:
+                result['projected_main_loop_seconds'] = {
+                    stage: result['stage_seconds'][stage] * full_cfg[key] / cfg[key]
+                    for stage, key in [('sft', 'sft_steps'), ('reward', 'rm_steps'), ('ppo', 'ppo_batches')]}
+                result['projection_warning'] = 'Short-run extrapolation excludes loading/checkpoint/evaluation overhead; confirm with one full GPU pilot.'
+            filename = 'training.json'
+        else:
+            rows = encode_rows(tokenizer, read_data(args.split, cfg), cfg)
+            result = evaluate(args, cfg, tokenizer, rows, device, metadata, timer)
+            filename = f'evaluation-{args.split}' + ('-quick' if args.quick else '') + '.json'
+    except (Exception, KeyboardInterrupt) as exc:
+        save_failed_attempt(args, metadata, timer, exc)
+        raise
     result['wall_seconds'] = timer.now() - timer.start
     rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss if resource is not None else None
     result['peak_process_rss_bytes'] = None if rss is None else rss if platform.system() == 'Darwin' else rss * 1024
     result['peak_gpu_allocated_bytes'] = torch.cuda.max_memory_allocated(device) if device.type == 'cuda' else None
     result['peak_gpu_reserved_bytes'] = torch.cuda.max_memory_reserved(device) if device.type == 'cuda' else None
     result['completed_at'] = datetime.now(ZoneInfo('Asia/Shanghai')).isoformat()
-    if args.command == 'train':
+    if 'attempts' in result:
         result['attempts'][-1].update(completed_at=result['completed_at'], wall_seconds=result['wall_seconds'])
+        result['total_attempt_wall_seconds'] = sum(a.get('wall_seconds', 0.) for a in result['attempts'])
+    if args.command == 'train':
         write_json(args.out / 'training-partial.json', result)
+    elif args.command == 'evaluate':
+        write_json(args.out / (filename[:-5] + '-partial.json'), result)
     result.setdefault('provenance', metadata)
     write_json(args.out / filename, result)
     print(f'{filename}: {result["wall_seconds"]:.1f} seconds', flush=True)

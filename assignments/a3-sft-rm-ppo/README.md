@@ -1,6 +1,6 @@
 # Assignment 03: SFT, Reward Modeling, and PPO
 
-**Release version: November 13, 2026.** Due:
+**Release version: 2026-11-13-r2 (November 13, 2026).** Due:
 **Friday, December 4, 2026, 23:59 Asia/Shanghai (UTC+08:00)**, privately through
 eLearning. Weight: **15% of the course**. Total: **100 points**, with identical
 work and scoring for all students.
@@ -16,13 +16,23 @@ or improvement threshold is required.
 
 ## 1. Setup and supplied materials
 
-Use Python 3.11 and the included lockfile:
+Make a private working copy of the **entire released assignment directory**,
+including its data, configs, tests, and lockfile. Do not implement your solution
+in a public fork or publish it in a pull request. For a downloaded ZIP, extract
+it into a private directory; for the course repository, copy the assignment
+directory there. In the example below, replace the source path with the actual
+released directory:
 
 ```sh
+mkdir -p "$HOME/coursework"
+cp -R /path/to/released/a3-sft-rm-ppo "$HOME/coursework/a3-sft-rm-ppo"
+cd "$HOME/coursework/a3-sft-rm-ppo"
 uv sync --locked
 uv run python -m pytest -q
 ```
 
+Use Python 3.11 and the included lockfile. Run every command in this handout
+from that private assignment directory.
 The initial public tests fail until you implement the functions in `a3.py`.
 Do not replace the objectives with a library Trainer or PPO implementation.
 The supplied `run.py` handles loading, batches, sampling, scalar heads,
@@ -48,6 +58,11 @@ The separate CPU smoke configuration trains only the last Transformer block
 and final normalization for quick wiring checks. It is not an alternative
 required experiment or a separate grading track. Everyone uses the same main
 recipe and rubric.
+
+Plan for **15–20 active hours** if you are prepared by A2 and the PPO lectures,
+or **20–30+ hours** if setup or RL bookkeeping is unfamiliar. These are
+unmeasured planning estimates, not observed completion times; GPU waiting and
+execution time are separate. Start implementation and GPU-access checks early.
 
 ## 2. Data and evaluation boundary
 
@@ -103,6 +118,14 @@ value is still incorrect. Response-token counts include a generated EOS.
 | 4 | Controlled experiment and interpretation | 0 | 20 | 20 |
 | **Total** | | **60** | **40** | **100** |
 
+The 60 automatic points assess the eight functions on small CPU fixtures,
+independently of experiment completion or model performance. The 40 TA points
+assess SFT explanation/run comparison (5), reward evidence/limitations (5),
+PPO roles and a rollout trace (10), and experiment tables/slices (6), paired
+intervals (4), examples/claims (4), provenance/budget (4), and follow-up (2).
+Missing experiment evidence affects the relevant TA criteria, without removing
+correct implementation points or adding an unannounced packaging penalty.
+
 ### Part 1: SFT (25)
 
 Implement `response_labels` and `sft_loss`. Labels align with the unshifted
@@ -137,6 +160,8 @@ Do not count a correct word embedded in a wrong sentence as exact match.
 Bootstrap source-family mean accuracy differences with the supplied seed and
 1,000 resamples. Follow the function's percentile convention. These intervals
 reflect the small sampled test-family set, not training-seed uncertainty.
+The `paired_summary` docstring specifies its exact dictionary keys, types,
+family ordering, and illustrative output; use that public contract.
 
 Explain one way reward scores could improve while exact correctness does not.
 Inspect at least one reward-model error, or state explicitly if the evaluated
@@ -145,6 +170,9 @@ set contains none and discuss a remaining limitation.
 ### Part 3: PPO (30)
 
 Implement `shaped_rewards`, `gae`, and `ppo_loss` using their docstrings.
+Return the exact `ppo_loss` diagnostics specified there as finite Python
+numbers, so the runner can write them to JSON; detached tensors are not JSON
+numbers. Keep the total loss differentiable.
 
 Keep these four roles distinct:
 
@@ -186,11 +214,21 @@ SFT, and PPO on the same dev/test prompts. Do not search for the best seed.
 Include these results in a concise report (at most 1,500 words, excluding
 references and tables):
 
-1. One table with baseline/SFT/PPO exact accuracy, valid-label rate, mean reward
-   score, and mean generated length. Include the present/absent slices.
-2. Reward-model pair accuracy and at least one inspected failure or limitation.
-3. Baseline→SFT and SFT→PPO paired differences and family bootstrap intervals.
-   Acknowledge the small sample and single training seed.
+1. For **each full split (dev and test)**, report baseline/SFT/PPO exact accuracy,
+   valid-label rate, mean reward score, and mean response tokens. Report the
+   same four metrics for all three stages on both **present and absent**
+   slices. Use `metrics[stage]` for overall values and
+   `slice_metrics["slice:present"][stage]` / `slice_metrics["slice:absent"][stage]`
+   for the slices in each evaluation JSON. Missing-object/missing-attribute
+   and query-attribute breakdowns are optional and carry no extra points.
+2. Reward-model pair accuracy and tie count on each split, plus at least one
+   inspected failure or limitation. `reward_model.pairs` contains chosen/rejected
+   scores, aligned with `reward_model.pair_ids`; join an ID to the split's JSONL
+   row to inspect its prompt and responses.
+3. Baseline→SFT and SFT→PPO paired accuracy differences and 95% family-bootstrap
+   intervals for each full split (`baseline_to_sft` and `sft_to_ppo`). Report
+   differences as percentage points or clearly label fractions. Acknowledge
+   the small sample and single training seed. Slice intervals are optional.
 4. Inspect two example IDs: an improvement and a regression when present;
    otherwise show two informative unchanged/failing cases without inventing
    a success or failure. Quote their prompt, target, and stage outputs.
@@ -201,18 +239,27 @@ references and tables):
 
 ## 4. Run order and resource budget
 
-Install the pinned environment, then validate the complete dataset. The first
-command downloads only the tokenizer; model weights are downloaded on first
-training use. Installation and downloads are outside the training-time target.
+Implement all eight functions and pass the **complete public test suite before
+smoke training or any GPU training**, including the paired-evaluator and JSON
+diagnostics checks. The runner fingerprints the whole `a3.py`, even evaluation
+code. Changing `paired_summary`, another function, or other contents of this
+file after training invalidates checkpoint reuse under that fingerprint.
+Settle and test the evaluator first. If code must change later, keep the old
+code and records together; do not relabel old checkpoints as new-code runs.
+You may submit honest partial evidence if a new compatible run is unavailable.
+
+Then validate the complete dataset and run the smoke checks. Data validation
+downloads the tokenizer; model weights are downloaded on first training use.
 
 ```sh
+uv run python -m pytest -q
 uv run python run.py validate-data --out outputs/data-check
 uv run python run.py train --smoke --device cpu --out outputs/smoke
 uv run python run.py evaluate --smoke --device cpu --out outputs/smoke --split dev
 ```
 
-The smoke run tests wiring only. After implementing and checking all eight
-functions, run the fixed main recipe on one CUDA GPU:
+The smoke run tests wiring only. After those checks pass and the GPU preflight
+in `runtime.md` succeeds, run the fixed main recipe on one CUDA GPU:
 
 ```sh
 uv run python run.py train --device cuda --out outputs/main
@@ -240,7 +287,12 @@ No targets or prompts are silently truncated.
 Complete the fixed workload and both full evaluation splits. Record actual
 time and resource use; elapsed time and GPU model do not affect grading.
 The runner's configurable per-command timeout stops at a batch boundary and
-retains partial records. Read `runtime.md` for environment checks and recovery.
+retains partial records. Its default **45 minutes per command is a recovery
+setting, not a runtime estimate or speed requirement**. Command `wall_seconds`
+includes tokenizer/model loading and cold-cache downloads; `stage_seconds`
+measures training loops and excludes that loading. No measured full-pipeline
+GPU runtime is available for this release. Read `runtime.md` for timing and
+recovery details.
 
 For a quick development check, add `--quick` to development evaluation: it uses
 64 prompts and writes a separate `evaluation-dev-quick.json`. The required
@@ -250,11 +302,16 @@ The runner saves a checkpoint after each stage. If interrupted, repeat the
 same training command with `--resume`: completed stages are reused, while an
 unfinished stage restarts from its beginning with its recorded seed. This is
 stage-boundary recovery, not resumption from an arbitrary optimizer step.
-Keep failed-attempt logs and include their cost in your report.
+Keep failed-attempt logs and include their cost in your report. If a stage
+cannot finish within the timeout, repeating the same limit cannot complete
+it: use a larger `--max-wall-minutes` value within your available allocation.
+Evaluation restarts its command rather than resuming a partially evaluated split.
 
 Allow 16 GB system RAM and at least 10 GB free disk for the environment, cache,
 and one set of full-model checkpoints; reserve more disk for repeated runs.
-Arrange access to a compatible GPU before the main run. CPU smoke and unit
+As a tentative GPU planning target, arrange **16 GB VRAM** on one compatible
+CUDA GPU; this is unmeasured and is **not a proven minimum or guarantee**.
+Actual peak allocation/reservation must be recorded. CPU smoke and unit
 tests remain useful during implementation. Contact the teaching team if GPU
 access, drivers, memory, or downloads block the main run. Retain errors and
 report missing evidence honestly. This package does not allocate cluster time.
@@ -268,7 +325,15 @@ Copy `report-template.md` to `report.md` and complete it. Create the submission:
 uv run python make_submission.py YOUR_STUDENT_ID --run outputs/main
 ```
 
-This writes `results.json` and `a3-YOUR_STUDENT_ID.zip`. Its root contains
+This writes `results.json` and `a3-YOUR_STUDENT_ID.zip` in the working directory.
+Inspect the packaged filenames and results before uploading:
+
+```sh
+uv run python -m zipfile -l a3-YOUR_STUDENT_ID.zip
+uv run python -m json.tool results.json
+```
+
+The ZIP root contains
 `a3.py`, `report.md`, and `results.json`; no enclosing folder. It includes the
 training records and both evaluation files in `results.json`, not model weights.
 Keep a private copy of checkpoints and raw logs. Upload the ZIP to eLearning;
@@ -282,9 +347,23 @@ rejects symlinks and unsupported files instead of silently omitting them.
 Evidence adds no required work or bonus points; the original three-file ZIP
 remains valid. Do not put weights, caches, or unrelated personal files there.
 
-If some evidence is unavailable, use `--partial-reason "specific reason"`.
-This records missing files honestly and does not claim their results. Available
-implementation and evidence receive credit under the same rubric.
+The packager checks that complete records use the fixed main recipe and both
+full splits, agree on provenance, and match the submitted `a3.py`. It rejects
+malformed or mismatched complete records rather than presenting them as a
+completed experiment.
+
+If evidence is missing or incomplete, use an explicit reason:
+
+```sh
+uv run python make_submission.py YOUR_STUDENT_ID --run outputs/main --partial-reason "Describe the blocked stage and retained evidence"
+```
+
+Available valid final records remain in `records`; unfinished records and
+failure summaries are retained in `partial_records` and `failed_attempts`,
+with missing evidence and warnings labeled separately. Read those labels and
+describe unavailable results in the report. Do not invent table entries or
+copy smoke results into main-result fields. Available implementation and
+evidence receive credit under the same rubric.
 
 The runner records command, code revision/dirty state, source/data hashes,
 configuration, model/tokenizer revision, stage seeds, versions, token counts,
@@ -292,7 +371,21 @@ stage timing, peak GPU memory, and fixed-reference/reward checks.
 Add hardware, any failed attempts, and artifact locations to your report.
 AI assistance for concepts, debugging, and coding is permitted; verify its
 outputs and disclose material use. Write `AI-use disclosure: None` if unused.
-A missing disclosure costs 5 points. Attribute reused code and sources.
+A missing disclosure costs 5 points. Add automatic and TA points, subtract
+that deduction when applicable, clamp the result to 0–100, then apply the late
+multiplier below. Attribute reused code and sources.
+
+### Final checklist
+
+- All eight functions pass the complete CPU public suite, including paired
+  evaluation and JSON diagnostics, before training.
+- Main records use one frozen configuration/source identity; report full
+  dev/test tables, required present/absent slices, paired intervals, and examples,
+  or clearly identify unavailable evidence.
+- Record hardware, provenance, actual command/stage times and memory, and the
+  total cost of successful and failed attempts; include AI disclosure.
+- Check the ZIP root and `results.json`, then upload the single ZIP privately
+  through eLearning by the stated deadline. Keep checkpoints and raw logs private.
 
 ### Late submissions
 
