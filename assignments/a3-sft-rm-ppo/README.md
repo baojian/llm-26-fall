@@ -161,7 +161,7 @@ Bootstrap source-family mean accuracy differences with the supplied seed and
 1,000 resamples. Follow the function's percentile convention. These intervals
 reflect the small sampled test-family set, not training-seed uncertainty.
 The `paired_summary` docstring specifies its exact dictionary keys, types,
-family ordering, and illustrative output; use that public contract.
+and family ordering. See `tests/test_public.py` for a small worked fixture.
 
 Explain one way reward scores could improve while exact correctness does not.
 Inspect at least one reward-model error, or state explicitly if the evaluated
