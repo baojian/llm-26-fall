@@ -1,11 +1,71 @@
 # Lecture 10 reading guide
 
 Read for a question you want to investigate; there is no fixed reference count.
-Data sources and dated benchmark releases were checked on **October 26, 2026**.
-The 2025 deck's benchmark-construction sources were checked on **November 10, 2026**.
-Pin the actual dataset,
-model, task configuration, and scorer revisions when running an experiment.
-A release date or a benchmark name alone does not fully specify a result.
+The evaluation-history and benchmark sources below were checked on
+**November 11, 2026 (Asia/Shanghai)**. First releases, later paper publications,
+and dataset revisions are distinguished. Pin actual task IDs, data/model/harness
+revisions, prompts, tools, budgets and scoring code before running a comparison.
+The deck is a 95-slide material bank with a 57-slide classroom route; the
+[teaching plan](teaching-plan.md) reserves 120 teaching minutes and Quiz 4.
+
+## Evaluation history
+
+The timeline is a teaching synthesis of changing evaluation protocols, not a
+common leaderboard across generations. The deck embeds the actual source figures
+listed below; crops, hashes and attribution are in
+[asset provenance](assets/README.md#paper-figures-added-in-november-2026) and the
+[figure manifest](assets/papers/manifest.json).
+
+| Stage and primary source | Read | Evaluation lesson |
+| --- | --- | --- |
+| [GPT-1, Radford et al. (2018)](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf) | §3.2–3.3; Fig. 1, page 4 | Evaluate after task-specific supervised adaptation; input transformations and label maps matter. |
+| [GPT-2, Radford et al. (2019)](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) | Fig. 1 CoQA panel; §3.3 and §4 | Zero-shot transfer is distinct from zero pretraining exposure. Different tasks use different metrics. |
+| [GPT-3, Brown et al. (2020), v4](https://arxiv.org/html/2005.14165v4) | Fig. 1.2 and 2.1; §2.4; §4 | Demonstrations and task descriptions change evaluation with fixed weights. The displayed curve is word manipulation. |
+| [Codex/HumanEval, Chen et al. (2021), v2](https://arxiv.org/html/2107.03374v2) | §2; Fig. 5 (upper panel in slides); Appendix A | Executable tests, sampling temperature, attempt budget and the pass@k estimator. |
+| [InstructGPT, Ouyang et al. (2022), v1](https://arxiv.org/html/2203.02155v1) | Fig. 1; §3.6 | Preference against a named reference on a defined prompt and rater population. Human evaluation differs from the reward used to train. |
+| [GPT-4 Technical Report (2023), v6](https://arxiv.org/html/2303.08774v6) | Fig. 2 and 4; §4; Appendices A, C–D | Held-out capability prediction, simulated exams, modality, scoring and contamination. Exam percentiles are not occupational competence. |
+| [o1 research report (September 12, 2024)](https://openai.com/index/learning-to-reason-with-llms/) | Train/test compute plots and sampling protocols | Distinguish longer reasoning, consensus and oracle candidate selection. |
+| [Official OpenAI model catalog](https://developers.openai.com/api/docs/models) and [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol) | Snapshot/interface, reasoning effort, tools | GPT-5 through verified GPT-6/6.1 interfaces illustrate why the full configured system must be recorded. Documentation is not independent performance evidence. |
+
+The requested **GPT-6.2 endpoint could not be verified** in exact official-document
+searches and the fetched catalog on November 11, 2026. The material states this
+boundary explicitly and does not invent a release, technical report or score.
+It uses GPT-6/6.1 only as a separately named verified endpoint.
+
+## Four benchmark case studies
+
+| Family | Version and source | Read for |
+| --- | --- | --- |
+| Humanity's Last Exam | [Original paper v10](https://arxiv.org/html/2501.14249v10), Fig. 4; [release history](https://www.lastexam.ai/) | Initial release January 2025; finalized 2,500 questions April 3, 2025; Nature publication January 28, 2026. Model filtering, expert review and separate private questions. |
+| HLE-Diamond | [September 22, 2026 methodology](https://labs.scale.com/leaderboard/hle-diamond) | 1,000 questions; 500 knowledge and 500 reasoning. Accuracy, calibration and tools. Different population from original HLE and HLE-Rolling; unrelated to GPQA Diamond. |
+| SWE-bench | [Paper v3](https://arxiv.org/html/2310.06770v3), Fig. 1; [official sets](https://www.swebench.com/) | Issue + repository → patch → tests. Original 2,294; Lite 300; Verified 500; Multilingual 300 across nine programming languages. These are different denominators. |
+| SWE-Bench Pro V2 | [September 22, 2026 release](https://labs.scale.com/blog/swe-bench-pro-v2), [paper](https://arxiv.org/abs/2610.24206) | 642 public tasks and 51-task Hard subset; repair, network policy and pristine re-grading. Separate from Verified; paper first posted October 16. |
+| Terminal-Bench | [Paper v1](https://arxiv.org/html/2601.11868v1), Fig. 2; [release index](https://www.tbench.ai/benchmarks) | Figure describes TB2-era container architecture, not TB4. Instruction, environment, tests and oracle solution. |
+| Terminal-Bench 3/4 | [TB3](https://www.tbench.ai/news/terminal-bench-3-0), [TB4](https://www.tbench.ai/news/terminal-bench-4-0) | Separate agent/verifier containers; resource calibration; rerun/regrade/reuse semantics. TB4's eight-hour timeout is not a course allocation. |
+| Terminal-Bench Science 0.1 | [August 27, 2026 release](https://www.tbench.ai/news/terminal-bench-science-0-1) | 70 scientific workflows, with task-specific artifacts and verification. Discuss evaluation structure; no scientific wet-lab procedure is part of this lecture. |
+| Agents’ Last Exam | [Paper v4](https://arxiv.org/html/2606.05405v4), Figs. 6 and 12; [project](https://agents-last-exam.org/) | First paper June 3, 2026; v4 October 25. GUI/CLI workflows, full-pass versus partial-credit scores, model/harness controls. Fig. 12 compares unequal 12/5/3 configuration sets: descriptive ranges, not a variance decomposition. Use QC-approved task IDs, not changing collected-task counts. |
+
+Terminal-Bench first releases: 1.0 May 19, 2025; 2.0 November 7, 2025.
+The paper is dated January 17, 2026. The 2026 releases are 2.1 (May 6),
+Challenges (June 18), 3.0 (July 30), Science 0.1 (August 27), and 4.0 (August 28).
+These are not repeated measurements of the same population under the same budget.
+LiveBench’s within-v2 weight change is documented by its official [October 14](https://livebench.ai/data/20261014/categories.json), [October 25](https://livebench.ai/data/20261025/categories.json), and [November 6](https://livebench.ai/data/20261106/categories.json) category metadata.
+
+## More 2026 benchmarks
+
+| Source and date | Distinct question | Reproducibility requirement |
+| --- | --- | --- |
+| [ProgramBench](https://programbench.com/), [paper v1 May 5](https://arxiv.org/html/2605.03546v1) | Reconstruct 200 programs from executable behavior and documentation. Full resolution differs from ≥95% tests passed. | Task/test revision; query and execution budget. |
+| [SWE Atlas](https://scale.com/blog/swe-atlas), [full suite May 7](https://scale.com/blog/swe-atlas-complete) | Beyond issue repair: codebase QA, test writing and refactoring; initial release March 4, 284 tasks in complete suite. | [Current methodology](https://labs.scale.com/leaderboard/swe-atlas); November v1.1 changes judge/network protocol, so name the version. Exact November day not established. |
+| [OSWorld-V2](https://github.com/xlang-ai/OSWorld-V2), [paper](https://arxiv.org/abs/2606.29537) | Long desktop workflows and end states; 2.0 released June 26, paper June 28, 2.1 bug-fix release September 16. | Code, task files, assets, mocked websites and VM image together. |
+| [ARC-AGI-3](https://arcprize.org/arc-agi/3), [launch March 25](https://arcprize.org/blog/arc-agi-3-launch) | Interactive exploration and human-relative action efficiency. | Task partition, action policy, feedback and score definition. Distinct from AI2 ARC. |
+| [LiveBench 2.0](https://livebench.ai/), first release October 14; current checked release November 6 | Longer tasks producing reports, software and decks. | October 25 changed suite weights: Long Agentic 2, Coding/Design 1.5, others 1. Match release, coverage, weights and grader even within v2. |
+| [AgentTime data](https://agenttimebench.com/data/), [benchmark map](https://agenttimebench.com/benchmarks/) | Duration instruction-following on tasks drawn from other benchmarks; initial data September 26; added agent results November 2; current v1.1 uses 200 tasks. | Pin data release; distinguish requested duration, actual duration and upstream task quality. The [method](https://agenttimebench.com/method/) also covers forecasting/retrospection; duration following is our selected example. |
+
+Historical MMLU/GPQA/HumanEval/LiveCodeBench/MT-Bench/Arena still provide useful
+diagnostics. They are not all new in 2026. A benchmark portfolio should address
+specific claims and failure modes, rather than maximizing the number of names.
+None of these full suites is required for the course projects.
 
 ## CS336 data and evaluation materials
 
@@ -87,7 +147,7 @@ whether documents, repositories, or another grouping should be the sampling unit
 
 ## Appendix: from historical examples to current protocols
 
-These readings support the protocol case studies in the optional extension.
+These readings supplement the four core protocol cases and the optional atlas.
 The main Lecture 10 route combines data quality and evaluation in 120 teaching
 minutes, reserving 15 minutes for Quiz 4. MinHash is optional P03.
 
@@ -99,7 +159,7 @@ minutes, reserving 15 minutes for Quiz 4. MinHash is optional P03.
 | [LiveCodeBench paper](https://arxiv.org/abs/2403.07974) and [official repository](https://github.com/LiveCodeBench/LiveCodeBench) | Release and date window must be selected explicitly | Problem dates, model exposure, test configuration, and sample budget. A new date window is not proof of zero contamination. |
 | [SWE-Bench Pro V2 release](https://labs.scale.com/blog/swe-bench-pro-v2) and [public methodology](https://labs.scale.com/leaderboard/swe_bench_pro_public_v2) | September 22, 2026 | Task corrections, network policy, and independent re-grading. Distinguish this release from SWE-bench Verified. |
 | [ARC-AGI-3](https://arcprize.org/arc-agi/3), [launch](https://arcprize.org/blog/arc-agi-3-launch), and [technical report](https://arcprize.org/media/ARC_AGI_3_Technical_Report.pdf) | Launched March 25, 2026 | Interaction, action efficiency, and the evaluation environment. |
-| [LiveBench](https://livebench.ai/) and [archived version 1](https://livebench.ai/v1/) | Version 2.0 dated October 14, 2026 | Changed task suites and artifact grading. Do not equate a v1 aggregate with a v2 aggregate. |
+| [LiveBench](https://livebench.ai/) and [archived version 1](https://livebench.ai/v1/) | First v2 October 14; checked release November 6, 2026 | Changed suites, artifact grading and October 25 suite weights. Match exact release and aggregation within v2. |
 
 These sources supply examples of contemporary evaluation design, not a claim
 that every benchmark is unsaturated or suitable for every small model. We do

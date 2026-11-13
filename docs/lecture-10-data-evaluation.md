@@ -363,6 +363,45 @@ are sound. A large score increase with leakage or a changed attempt budget
 does not answer the intended question. Tie the conclusion to the tested
 population and budget instead of claiming general model superiority.
 
+## 12. From task adaptation to agent evaluation
+
+The slide timeline traces changes in the evaluated object: GPT-1's supervised
+task adaptation, GPT-2's zero-shot transfer, GPT-3's in-context demonstrations,
+Codex's executable tests, InstructGPT's human preference comparisons, GPT-4's
+capability/exam evaluation, and budgeted reasoning and tool-using systems.
+These are different protocols, not a single cross-generation score curve.
+Actual figures and source sections are in the
+[historical reading map](../slides/lecture-10/optional-reading.md#evaluation-history).
+Official documentation verified GPT-6/6.1 interfaces on November 11, 2026;
+the requested GPT-6.2 endpoint was not verified, so no result is invented.
+
+The four core modern cases ask different questions:
+
+| Case | Evaluated output | Essential boundary |
+| --- | --- | --- |
+| HLE / HLE-Diamond | Closed-ended expert answer | Question-set identity, answer extraction, calibration and tools |
+| SWE-bench family | Repository patch | Exact task set, snapshot, issue/regression tests and harness |
+| Terminal-Bench series | Environment outcome or artifact | Agent/verifier separation, hardware, timeout and release compatibility |
+| Agents’ Last Exam | Professional deliverable | Task subset, full-pass versus partial-credit scoring, model and harness |
+
+The [versioned benchmark guide](../slides/lecture-10/optional-reading.md#four-benchmark-case-studies)
+distinguishes first releases, papers and later revisions. Terminal-Bench 4.0
+illustrates why rerunning an agent, regrading stored artifacts and reusing a
+compatible result are different operations. Original HLE and HLE-Diamond use
+different question populations. A changed score can reflect a changed task or
+verifier even when the agent outputs are unchanged.
+
+For agent comparisons, record model snapshot, harness commit, task IDs, VM or
+container image, tools and network policy, reasoning/output budget, attempts,
+timeouts, failure/retry policy, grader revision, per-task artifacts and total
+cost. Pair systems on the same task IDs and initial states. A report that
+changes both model and harness measures a system improvement unless additional
+controls separate their contributions.
+
+The optional atlas adds 2026 ProgramBench, SWE Atlas, OSWorld 2.0/2.1,
+ARC-AGI-3, LiveBench 2.0 and AgentTime examples. New benchmarks are design
+references; their full compute scale is not a course requirement or allocation.
+
 ## Practice and reading
 
 The notebook provides five core offline exercises on duplicate/split audits,

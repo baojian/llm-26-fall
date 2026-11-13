@@ -158,7 +158,46 @@ uv run python -m pytest -q tests/test_lecture_10.py tests/test_lecture_10_data.p
 ```
 
 Current benchmark descriptions are sourced separately in
-[the reading guide](../optional-reading.md), checked October 26, 2026.
+[the reading guide](../optional-reading.md), checked November 11, 2026.
 Primary sources for the 2025 construction cases were checked November 10, 2026.
 No benchmark data, model weights, student submissions, or API credentials are
 included in these assets.
+
+## Paper figures added in November 2026
+
+The November 11 revision adds **14 locally bundled source figures or excerpts**
+under `papers/`: 13 paper figures and one Terminal-Bench release illustration.
+They are actual author figures, not generated illustrations or course-measured
+results. Exact source URLs, paper versions, figure numbers, retrieval date,
+SHA-256 hashes, and crop coordinates are in [manifest.json](papers/manifest.json).
+Every displayed figure has attribution and a source link on its slide, plus
+interpretation and limitations in speaker notes. The source papers retain their
+copyright/licensing terms; the course's authored fixtures are separate.
+
+| Asset | Source and interpretation |
+| --- | --- |
+| `gpt1-task-inputs.png` | Radford et al. 2018, Fig. 1, page 4; right-panel classification/entailment rows only. PDF crop at 288 dpi; no labels or data altered. |
+| `gpt2-zero-shot.png` | Radford et al. 2019, Fig. 1, page 2; CoQA panel only, preserving axes and every reference baseline. PDF crop at 288 dpi; neighboring translation-axis fragments blanked outside the CoQA panel. |
+| `gpt3-in-context.png` | Brown et al. 2020 v4, Fig. 1.2; word-manipulation in-context performance, not the all-task aggregate. |
+| `instructgpt-preferences.svg` | Ouyang et al. 2022 v1, Fig. 1; human preference against 175B SFT with 95% intervals. |
+| `gpt4-predictable-evaluation.svg` | GPT-4 report v6, Fig. 2; negative mean log pass rate on a selected HumanEval subset versus normalized training compute. |
+| `codex-sampling.png` | Chen et al. 2021 v2, Fig. 5 upper-panel crop; all temperatures and curves retained at a larger projection size. Oracle pass@k does not supply a deployed selector. |
+| `fineweb-extraction.svg`, `fineweb-dedup.svg` | Penedo et al. 2024 v2, Figs. 1 and 5. Extraction uses 28B-token ablations; the deduplication comparison uses 350B tokens. Fixed 1.71B architecture; not course experiments. |
+| `swebench-task.svg` | SWE-bench v3, Fig. 1; issue/repository → patch → tests. Original paper 2023, ICLR publication 2024. |
+| `hle-construction.svg` | HLE v10, Fig. 4; collection/model filtering/expert review. Original HLE population, not the later 1,000-question Diamond set. |
+| `terminal-task.svg` | Terminal-Bench v1 paper, Fig. 2; TB2-era shared-container design. TB3/4 separates agent and verifier containers. |
+| `terminal-versioning.svg` | Official TB4 release illustration, unnumbered; rerun, regrade and reuse are distinct operations. |
+| `ale-task.svg`, `ale-harness-model.png` | ALE v4, Figs. 6 and 12; task lifecycle and controlled model/harness comparisons. October 25, 2026 paper version. |
+
+SVG and PNG source assets were downloaded directly from the linked primary sources.
+The two PDF excerpts were rendered with PyMuPDF into PNGs; source PDF hashes,
+1-based page numbers, crop rectangles in PDF points and resolution are recorded
+in the manifest. Aspect ratios are preserved. The GPT-2 outside-panel mask and Codex upper-panel crop are recorded in the manifest with prior/source hashes. Source PDFs and review screenshots
+remain in ignored workspace/check locations; the public repository contains only
+the teaching excerpts. No source leaderboard screenshot is treated as a current
+ranking. Sources and figure captions checked **2026-11-11 (Asia/Shanghai)**.
+
+The new agent comparison (6/10 under different budgets), judge-order probe,
+0.6-success reliability calculation, and example CPU project protocol are
+course-authored illustrations, not reported benchmark experiments. GPU-hours: 0.
+The project runtime is an unmeasured planning estimate with a smaller fallback.
