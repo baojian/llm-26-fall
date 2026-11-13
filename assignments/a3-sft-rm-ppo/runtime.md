@@ -1,24 +1,23 @@
-# RTX 3090 runtime and budget
+# GPU setup and run records
 
-## Target and current evidence
+## Fixed configuration
 
-Reference hardware: **one NVIDIA RTX 3090, 24 GB VRAM**. The target is about
-30 minutes for SFT + reward fitting + PPO, and 1–3 minutes per full evaluation
-split (baseline/SFT/PPO plus preference evaluation). These are **unmeasured
-planning estimates**. Actual runtime and peak VRAM depend on the machine and
-system load. Complete the fixed configuration and report measured resource use.
+Use a GPU compatible with the
+supplied PyTorch/CUDA environment and with sufficient memory for the recipe.
+Complete the fixed configuration and report actual time and peak memory;
+GPU model and elapsed time are not graded.
 
-The required configuration is `configs/rtx3090.json`: full GPT-2 tuning,
-1,024 SFT updates, 1,024 preference updates (effective batch 16), and 256 PPO
+The required configuration is `configs/main.json`: full GPT-2 tuning,
+256 SFT updates, 256 preference updates (effective batch 16), and 64 PPO
 batches of 32 sampled responses with two update epochs. Microbatch size is 8;
 generation/evaluation are batched with a KV cache. Context reserve is 256 and
 response cap is 8. All model/objective tensors are float32; CUDA matmuls allow
 TF32. The value head shares the current policy backbone. The fixed SFT reference
 and learned reward backbone remain frozen during PPO.
 
-A main run presents each of 8,192 training rows twice to SFT and twice to the
+A main run presents each of 2,048 training rows twice to SFT and twice to the
 reward model. PPO samples one response per row in a separate shuffled pass:
-8,192 newly sampled sequences, not multiplied by PPO optimization epochs.
+2,048 newly sampled sequences, not multiplied by PPO optimization epochs.
 The same counts apply to every student.
 
 ## Environment preflight
@@ -57,8 +56,9 @@ results must never be described as the fixed main experiment.
 
 The runner records synchronized CUDA wall times, stage-loop times, input and
 sampled-response counts, peak allocated/reserved VRAM, hardware, source/data
-hashes, config, model revision, and failed attempts. The main default 45-minute
-ceiling stops at the next batch boundary, retaining partial records. `--resume`
+hashes, config, model revision, and failed attempts. The default 45-minute
+per-command recovery timeout is configurable with `--max-wall-minutes`.
+It stops at the next batch boundary, retaining partial records. `--resume`
 skips completed stages and restarts an interrupted stage with its recorded seed.
 It does not restore an interrupted stage's optimizer step. Count repeated work.
 
@@ -66,10 +66,3 @@ The course assumes access to at least one compatible GPU. Required work is
 defined by the fixed update counts and evaluations above. Record actual
 GPU-hours across all attempts, including interrupted work. Additional GPU
 availability does not add required runs or improve the grading criteria.
-
-## Historical timing is not a forecast
-
-The November 10 lookup-v1 pilot trained only 7.09M parameters on 96 examples,
-with eight PPO responses. Its 9.1-second CPU training measurement belongs to
-that old dataset/recipe. It is preserved by the instructor and must not be used
-as a measurement of this full-model, 8,192-example assignment.

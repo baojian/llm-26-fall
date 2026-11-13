@@ -1,19 +1,18 @@
 [assignment]
-id = "a3-adapt-and-evaluate"
+id = "a3-sft-rm-ppo"
 version = "2026-11-13"
 status = "student release"
 course_weight_percent = 15
 release_date = "2026-11-13"
 originally_scheduled_release_date = "2026-11-11"
-due_at = "2026-12-02T23:59:00+08:00"
+due_at = "2026-12-04T23:59:00+08:00"
 timezone = "Asia/Shanghai"
 entry_point = "uv run python run.py train --device cuda --out outputs/main"
 
 [experiment]
-data_version = "grounded-lookup-v2"
-configuration = "configs/rtx3090.json"
-reference_gpu = "NVIDIA RTX 3090 24 GB"
-runtime_status = "planning estimates only; unmeasured on reference GPU"
+data_version = "grounded-lookup-v3"
+configuration = "configs/main.json"
+device_backend = "cuda"
 
 [submission]
 zip_name = "a3-<student-id>.zip"
@@ -29,7 +28,7 @@ ta = [5, 5, 10, 20]
 missing_disclosure_deduction = 5
 
 [late_policy]
-due_at = "2026-12-02T23:59:00+08:00"
+due_at = "2026-12-04T23:59:00+08:00"
 period_hours = 24
 round_partial_period_up = true
 score_multipliers_days_0_to_5 = [1.0, 0.9, 0.8, 0.7, 0.6, 0.5]

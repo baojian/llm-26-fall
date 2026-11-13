@@ -1,4 +1,4 @@
-# grounded-lookup-v2
+# grounded-lookup-v3
 
 Course-authored synthetic records, questions, demonstrations, and preference
 pairs. License: **CC0-1.0**. Generation seed: **20261111**, with separate seeded
@@ -21,7 +21,7 @@ is checked separately and never silently truncated.
 
 | File | Independent families | Rows |
 | --- | ---: | ---: |
-| train.jsonl | 4,096 | 8,192 |
+| train.jsonl | 1,024 | 2,048 |
 | dev.jsonl | 128 | 256 |
 | test.jsonl | 128 | 256 |
 

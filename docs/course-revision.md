@@ -181,8 +181,8 @@ GPU profile must report its own hardware; it cannot turn a CPU trace into a
 measured GPU speedup. Report time to first token, inter-token latency and
 throughput separately. An answer selected with access to the correct answer
 is an oracle diagnostic, not the measured performance of a deployed verifier.
-A3 keeps its published deadline that evening; this class adds no requirement
-to rerun or extend the assignment.
+A3 is due Friday, December 4, at 23:59 Asia/Shanghai; this class adds no
+requirement to rerun or extend the assignment.
 
 ## Lecture 14: Agents and tool use
 
@@ -384,15 +384,16 @@ than receiving duplicate credit for the same submission.
 | --- | --- | --- |
 | A1: Tokenization and language models | Week 2, Sep 16 | Week 4, Sep 30 |
 | A2: Build and investigate a small LM | Week 5, Oct 10 | Week 8, Sat, Oct 31 |
-| [A3: GPT-2 post-training — SFT, reward modeling, and PPO](../assignments/a3-adapt-and-evaluate/README.md) | Week 10, Nov 13 | Week 13, Dec 2 |
+| [A3: SFT, Reward Modeling, and PPO](../assignments/a3-sft-rm-ppo/README.md) | Week 10, Nov 13 | Week 13, Fri, Dec 4 |
 | Project proposal | Project introduced Week 1 | Week 7, Oct 21 |
 | Project progress update, including baseline and initial results | Follows proposal feedback | Week 12, Nov 25 |
 | Final report, code, experiment record | Reuses the written checkpoints | Week 17, Dec 30 |
 
 Quiz weeks are 3, 5, 7, 10, and 14. All five quizzes count, each contributing
 2% of the course grade. A3's November 13 release package follows its original
-November 11 schedule; its December 2 deadline and 15% weight are unchanged.
-It uses A2's late-submission policy. All
+November 11 schedule. The instructor moved its deadline two days to Friday,
+December 4, preserving the 21-day window and 15% weight. It uses A2's
+late-submission policy, measured from the new deadline. All
 submission deadlines are at 23:59 (Asia/Shanghai); A2 is due on Saturday,
 October 31. No practical deadline coincides with a project deadline or the
 holiday. Core data-quality and scaling exercises can use supplied results

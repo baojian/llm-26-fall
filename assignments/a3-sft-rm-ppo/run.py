@@ -531,7 +531,7 @@ def main():
     args = parser.parse_args()
     if args.smoke and (args.config or args.calibrate):
         parser.error('--smoke selects its own configuration')
-    cfg_path = args.config or ROOT / 'configs' / ('smoke.json' if args.smoke else 'rtx3090.json')
+    cfg_path = args.config or ROOT / 'configs' / ('smoke.json' if args.smoke else 'main.json')
     cfg = read_config(cfg_path)
     full_cfg = dict(cfg)
     if args.calibrate:

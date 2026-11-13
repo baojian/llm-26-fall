@@ -1,7 +1,7 @@
-# Assignment 03: A small GPT-2 post-training pipeline
+# Assignment 03: SFT, Reward Modeling, and PPO
 
 **Release version: November 13, 2026.** Due:
-**December 2, 2026, 23:59 Asia/Shanghai (UTC+08:00)**, privately through
+**Friday, December 4, 2026, 23:59 Asia/Shanghai (UTC+08:00)**, privately through
 eLearning. Weight: **15% of the course**. Total: **100 points**, with identical
 work and scoring for all students.
 
@@ -35,7 +35,8 @@ initialize every stage. Remote model code is disabled. The first run downloads
 model files; later runs reuse the local cache. Keep weights and outputs out of
 Git. The model card supplies its MIT license and intended-use limitations.
 
-The main recipe targets **one NVIDIA RTX 3090 with 24 GB VRAM**. It fine-tunes
+Run the main recipe on a GPU compatible with the supplied PyTorch/CUDA
+environment. The main recipe fine-tunes
 all 124,439,808 GPT-2 backbone parameters, including the tied embedding/output
 matrix. Reward and value models add scalar heads; the value head shares the
 policy backbone. Parameters and objectives use float32, with TF32 matrix
@@ -50,7 +51,7 @@ recipe and rubric.
 
 ## 2. Data and evaluation boundary
 
-The supplied **grounded-lookup-v2** dataset asks questions about fictional
+The supplied **grounded-lookup-v3** dataset asks questions about fictional
 records of four to six items. Each item lists a subset of its color, shape,
 material, and size. Return exactly one attribute value, or `unknown` when the
 item or requested attribute is absent. For example, a record stating
@@ -59,7 +60,7 @@ item or requested attribute is absent. For example, a record stating
 
 | Split | Independent source families | Prompt/preference examples |
 | --- | ---: | ---: |
-| Train | 4,096 | 8,192 |
+| Train | 1,024 | 2,048 |
 | Development | 128 | 256 |
 | Test | 128 | 256 |
 
@@ -220,14 +221,14 @@ uv run python run.py evaluate --device cuda --out outputs/main --split dev
 uv run python run.py evaluate --device cuda --out outputs/main --split test
 ```
 
-The default `configs/rtx3090.json` fixes the workload:
+The default `configs/main.json` fixes the workload:
 
 | Stage | Updates/batches | Effective batch | Example presentations |
 | --- | ---: | ---: | ---: |
-| SFT | 1,024 updates | 16 demonstrations | 16,384 (two shuffled passes) |
-| Reward model | 1,024 updates | 16 preference pairs | 16,384 pairs (two passes) |
-| PPO collection | 256 rollout batches | 32 responses | 8,192 newly sampled responses |
-| PPO optimization | Two epochs per rollout batch | 32 responses | 512 optimizer updates |
+| SFT | 256 updates | 16 demonstrations | 4,096 (two shuffled passes) |
+| Reward model | 256 updates | 16 preference pairs | 4,096 pairs (two passes) |
+| PPO collection | 64 rollout batches | 32 responses | 2,048 newly sampled responses |
+| PPO optimization | Two epochs per rollout batch | 32 responses | 128 optimizer updates |
 
 Optimization uses microbatches of 8, with token-weighted gradient accumulation
 for SFT/PPO and pair-weighted accumulation for reward fitting. SFT/RM/PPO
@@ -236,13 +237,10 @@ gradient norm cap is 1, and beta is 0.05. Inputs reserve at most 256 tokens,
 including generation/scoring space; responses are capped at 8 generated tokens.
 No targets or prompts are silently truncated.
 
-The planning estimate is **about 30 minutes of training and 1–3 minutes per
-complete evaluation split** on one RTX 3090 24 GB. These estimates are
-unmeasured; actual time depends on hardware and system load. Follow the fixed
-counts, not a wall-clock stopping rule. The 45-minute default ceiling is a
-protective stop checked at batch
-boundaries, not an instruction to keep training for 45 minutes. Read
-`runtime.md` for the current verification and hardware requirements.
+Complete the fixed workload and both full evaluation splits. Record actual
+time and resource use; elapsed time and GPU model do not affect grading.
+The runner's configurable per-command timeout stops at a batch boundary and
+retains partial records. Read `runtime.md` for environment checks and recovery.
 
 For a quick development check, add `--quick` to development evaluation: it uses
 64 prompts and writes a separate `evaluation-dev-quick.json`. The required
@@ -256,7 +254,7 @@ Keep failed-attempt logs and include their cost in your report.
 
 Allow 16 GB system RAM and at least 10 GB free disk for the environment, cache,
 and one set of full-model checkpoints; reserve more disk for repeated runs.
-Arrange access to the reference GPU before the main run. CPU smoke and unit
+Arrange access to a compatible GPU before the main run. CPU smoke and unit
 tests remain useful during implementation. Contact the teaching team if GPU
 access, drivers, memory, or downloads block the main run. Retain errors and
 report missing evidence honestly. This package does not allocate cluster time.
@@ -300,7 +298,7 @@ A missing disclosure costs 5 points. Attribute reused code and sources.
 
 The policy is the same as Assignment 02. The penalty multiplies your earned
 assignment score after ordinary grading, including any disclosure deduction.
-Count each started 24-hour period after December 2, 2026, 23:59
+Count each started 24-hour period after December 4, 2026, 23:59
 (Asia/Shanghai) as one late day, using the eLearning submission timestamp.
 
 | Late days | Final score |

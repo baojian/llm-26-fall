@@ -89,7 +89,7 @@ gantt
     section Assignments (submitted on eLearning)
     A1 Tokenization and language models :a1, 2026-09-16, 2026-09-30
     A2                      :a2, 2026-10-10, 2026-10-31
-    A3                      :a3, 2026-11-11, 2026-12-02
+    A3                      :a3, 2026-11-13, 2026-12-04
 
     section Individual project (submitted on eLearning)
     Proposal due        :milestone, 2026-10-21, 0d

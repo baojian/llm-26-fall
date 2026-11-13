@@ -1,4 +1,4 @@
-# A3 report
+# Assignment 03: SFT, Reward Modeling, and PPO — report
 
 Student ID:
 

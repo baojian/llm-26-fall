@@ -54,10 +54,10 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
 | 7 | Wed, Oct 21, 2026 | Compute budgets and scaling; guest talk by Jiaxuan Zou | Quiz 3; Project proposal due |
 | 8 | Wed, Oct 28, 2026 | [InstructGPT, SFT and reward models](lecture-08-instructgpt.html) | A2 due **Sat, Oct 31** |
 | 9 | Wed, Nov 4, 2026 | [Reinforcement learning, REINFORCE and PPO](lecture-09-policy-optimization.html) | — |
-| 10 | Wed, Nov 11, 2026 | [Data preparation, evaluation and experimental design](lecture-10-data-evaluation.html) | Quiz 4; [A3 release Friday, Nov 13](../assignments/a3-adapt-and-evaluate/README.md) |
+| 10 | Wed, Nov 11, 2026 | [Data preparation, evaluation and experimental design](lecture-10-data-evaluation.html) | Quiz 4; [A3 release Friday, Nov 13](../assignments/a3-sft-rm-ppo/README.md) |
 | 11 | Wed, Nov 18, 2026 | [Efficient adaptation and distillation](course-revision.html#lecture-11-efficient-adaptation-and-distillation) | — |
 | 12 | Wed, Nov 25, 2026 | [Retrieval and retrieval-augmented generation](course-revision.html#lecture-12-retrieval-and-rag) | Project progress update due |
-| 13 | Wed, Dec 2, 2026 | [Efficient inference and computation at test time](course-revision.html#lecture-13-inference-and-computation-at-test-time) | A3 due |
+| 13 | Wed, Dec 2, 2026 | [Efficient inference and computation at test time](course-revision.html#lecture-13-inference-and-computation-at-test-time) | A3 due Friday, Dec 4 |
 | 14 | Wed, Dec 9, 2026 | [Agents and tool use](course-revision.html#lecture-14-agents-and-tool-use) | Quiz 5 |
 | 15 | Wed, Dec 16, 2026 | [Masked diffusion language models](course-revision.html#lecture-15-masked-diffusion-language-models) | — |
 | 16 | Wed, Dec 23, 2026 | [Research synthesis and project revision](course-revision.html#lecture-16-research-synthesis-and-project-revision) | Last class |
@@ -106,15 +106,17 @@ have the same requirements, points, and deadlines.
 | Quiz 5 | December 9 | In class |
 | A1: Tokenization and language models | September 16 | September 30 |
 | [A2: Build and investigate a small language model](../assignments/a2-build-a-small-lm/README.md) | October 10 | October 31, 23:59 (Asia/Shanghai) |
-| [A3: GPT-2 post-training — SFT, reward modeling, and PPO](../assignments/a3-adapt-and-evaluate/README.md) | November 13 | December 2 |
+| [A3: SFT, Reward Modeling, and PPO](../assignments/a3-sft-rm-ppo/README.md) | November 13 | Friday, December 4 |
 | Project proposal | Project introduced September 9 | October 21 |
 | Project progress update | Follows proposal feedback | November 25 |
 | Final report, code, and experiment record | Builds on project checkpoints | December 30 |
 
 The A3 release package is dated November 13, following the instructor's
 November 13 confirmation; its original scheduled release was November 11.
-The December 2 deadline and 15% course weight are unchanged. A3 uses the same
-late-submission policy as A2; see the handout for the exact rule.
+The instructor extended the deadline from December 2 to **Friday, December 4,
+2026, 23:59 Asia/Shanghai**, preserving the 21-day work window. The 15% course
+weight is unchanged. A3 uses the same late-submission policy as A2, measured
+from the new deadline; see the handout for the exact rule.
 
 The [September 29 review proposal](schedule-adjustment-proposal.md) records
 the schedule adjustment and explains the three-week assignment windows.
