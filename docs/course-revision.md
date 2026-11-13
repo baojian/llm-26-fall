@@ -304,7 +304,7 @@ available as references; do not delete their source files.
 | L06 GPT/pretraining | Existing GPT training notebook, AdamW, scheduling, checkpoint use, HellaSwag example | ELMo history and repeated beam-search variants shortened; model-generation catalog optional | Make training configuration and failure diagnosis explicit outcomes |
 | L07 benchmarks | Representative task examples and distinctions between loss and downstream scores | Dataset-by-dataset GLUE/SuperGLUE catalog and many leaderboard slides become reference tables | Contamination, prompt sensitivity, uncertainty, metrics, and error analysis |
 | BERT notebook | Masked prediction, contextual embeddings, classification example | Standalone BERT/SpanBERT family survey | Integrate architecture comparison with evaluation and retrieval |
-| SFT/RM/PPO notebook | SFT, response-token masking, preference data, reward diagnostics; PPO/GAE as taught | Full PPO training implementation optional; no required dual-family RL experiment | Post-training foundations completed across Weeks 8–10; efficient adaptation/distillation in Week 11 and agent evaluation in Week 14 |
+| SFT/RM/PPO notebook | SFT, response-token masking, preference data, reward diagnostics; PPO/GAE as taught | Full classroom notebook implementation optional; A3 separately requires its fixed GPT-2 SFT/RM/PPO recipe | Post-training foundations completed across Weeks 8–10; efficient adaptation/distillation in Week 11 and agent evaluation in Week 14 |
 | L10 retrieval/RAG | TF-IDF/BM25, dense retrieval, reranking, pipeline and evaluation | Detailed ColBERT internals optional | Evidence support, abstention, and retrieval-versus-generation failure analysis |
 | Frontier sessions | Practical inference, one diffusion session, one agent task | Repeated RLHF content folded into alignment; broad frontier survey optional | Workload-specific measurement and focused project investigation |
 
@@ -330,7 +330,7 @@ requirements for this course.
 | L13–14 data; A4 | Week 10; Lecture 02 tasks, A2 or project | Small supplied corpus, filtering/deduplication, and controlled comparison |
 | L09/L11 scaling; A3 | Week 7 | Fit supplied run results and optionally add small local runs; no Stanford API dependency |
 | L12 evaluation | Week 10 and project | Choose appropriate tasks, audit validity, and qualify conclusions |
-| L15–16 post-training; A5 | Weeks 8–10; A3 context | SFT/RM/PPO, DPO and GRPO already covered; Week 11 builds on them with adaptation efficiency and distillation; full RL training optional |
+| L15–16 post-training; A5 | Weeks 8–10; A3 context | SFT/RM/PPO, DPO and GRPO already covered; Week 11 builds on them with adaptation efficiency and distillation; A3 requires its supplied GPT-2 SFT/RM/PPO recipe |
 | L10 inference; A2 systems selections | Week 13 | Measure caching/batching/quantization; custom kernels and distributed training optional |
 
 Source repositories:
@@ -384,13 +384,15 @@ than receiving duplicate credit for the same submission.
 | --- | --- | --- |
 | A1: Tokenization and language models | Week 2, Sep 16 | Week 4, Sep 30 |
 | A2: Build and investigate a small LM | Week 5, Oct 10 | Week 8, Sat, Oct 31 |
-| A3: Adapt and evaluate | Week 10, Nov 11 | Week 13, Dec 2 |
+| [A3: GPT-2 post-training — SFT, reward modeling, and PPO](../assignments/a3-adapt-and-evaluate/README.md) | Week 10, Nov 13 | Week 13, Dec 2 |
 | Project proposal | Project introduced Week 1 | Week 7, Oct 21 |
 | Project progress update, including baseline and initial results | Follows proposal feedback | Week 12, Nov 25 |
 | Final report, code, experiment record | Reuses the written checkpoints | Week 17, Dec 30 |
 
 Quiz weeks are 3, 5, 7, 10, and 14. All five quizzes count, each contributing
-2% of the course grade. A2 and A3 each have a three-week work window. All
+2% of the course grade. A3's November 13 release package follows its original
+November 11 schedule; its December 2 deadline and 15% weight are unchanged.
+It uses A2's late-submission policy. All
 submission deadlines are at 23:59 (Asia/Shanghai); A2 is due on Saturday,
 October 31. No practical deadline coincides with a project deadline or the
 holiday. Core data-quality and scaling exercises can use supplied results

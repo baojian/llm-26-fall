@@ -1,0 +1,13 @@
+[project]
+name = "llm-course-a3"
+version = "0.1.0"
+description = "GPT-2 SFT, reward modeling and PPO teaching pipeline"
+requires-python = ">=3.11"
+dependencies = ["torch==2.14.0", "transformers==5.9.0"]
+
+[dependency-groups]
+dev = ["pytest>=9.1.1"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
