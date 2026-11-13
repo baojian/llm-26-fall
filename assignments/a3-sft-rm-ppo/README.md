@@ -298,10 +298,13 @@ For a quick development check, add `--quick` to development evaluation: it uses
 64 prompts and writes a separate `evaluation-dev-quick.json`. The required
 report still uses all 256 dev and all 256 test prompts.
 
-The runner saves a checkpoint after each stage. If interrupted, repeat the
-same training command with `--resume`: completed stages are reused, while an
-unfinished stage restarts from its beginning with its recorded seed. This is
-stage-boundary recovery, not resumption from an arbitrary optimizer step.
+The runner saves a checkpoint after each stage. If `training-partial.json`
+exists in the run directory, retry the same training command with `--resume`:
+completed stages are reused, while an unfinished stage restarts from its
+beginning with its recorded seed. If an early tokenizer/download failure
+occurred before that file was created, retry the same command **without
+`--resume`**. Retain its failed-attempt logs. This is stage-boundary recovery,
+not resumption from an arbitrary optimizer step.
 Keep failed-attempt logs and include their cost in your report. If a stage
 cannot finish within the timeout, repeating the same limit cannot complete
 it: use a larger `--max-wall-minutes` value within your available allocation.
@@ -348,9 +351,11 @@ Evidence adds no required work or bonus points; the original three-file ZIP
 remains valid. Do not put weights, caches, or unrelated personal files there.
 
 The packager checks that complete records use the fixed main recipe and both
-full splits, agree on provenance, and match the submitted `a3.py`. It rejects
-malformed or mismatched complete records rather than presenting them as a
-completed experiment.
+full splits, agree on provenance and the training `run_id`, and match the
+submitted `a3.py`. A stable `run_id` binds training, its checkpoints, and its
+evaluations; identical recipes from different runs cannot be mixed. The
+packager rejects malformed or mismatched complete records, even with
+`--partial-reason`.
 
 If evidence is missing or incomplete, use an explicit reason:
 
@@ -365,10 +370,22 @@ describe unavailable results in the report. Do not invent table entries or
 copy smoke results into main-result fields. Available implementation and
 evidence receive credit under the same rubric.
 
+If completed records come from an older source version, preserve them as
+explicitly archived partial evidence using the [runtime instructions](runtime.md#archiving-incompatible-completed-records).
+Copy them into a fresh partial-submission directory under the documented
+partial filenames; keep their bytes, provenance, and status unchanged. Merely
+adding `--partial-reason` to the original directory does not permit stale
+completed records.
+
 The runner records command, code revision/dirty state, source/data hashes,
 configuration, model/tokenizer revision, stage seeds, versions, token counts,
-stage timing, peak GPU memory, and fixed-reference/reward checks.
-Add hardware, any failed attempts, and artifact locations to your report.
+stage timing, memory, and fixed-reference/reward checks. Report each attempt's
+own provenance and resource measurements, deduplicating repeated `attempt_id`
+values across files. Training's top-level provenance describes its initial
+attempt; the `attempts` entries describe resumed environments. Process RSS is
+a process-lifetime high-water mark, while GPU peaks are measured per command.
+Add hardware, failed attempts, and artifact locations to your report; see
+`runtime.md` for the accounting details.
 AI assistance for concepts, debugging, and coding is permitted; verify its
 outputs and disclose material use. Write `AI-use disclosure: None` if unused.
 A missing disclosure costs 5 points. Add automatic and TA points, subtract

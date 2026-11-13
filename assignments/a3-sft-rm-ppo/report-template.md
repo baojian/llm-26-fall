@@ -12,9 +12,16 @@ Command(s), revision/dirty state, source/data hashes, GPT-2 revision, software,
 hardware/driver, base and stage seeds, token budget, peak allocated/reserved VRAM,
 and local artifact locations. Report command `wall_seconds` (including loading
 and cold-cache downloads), completed-stage `stage_seconds`, cache state, and
-total GPU-hours across all commands and attempts, including failures. Avoid
-double-counting an attempt recorded in more than one file. Identify deviations
-from the fixed configuration and any missing or incompatible evidence.
+total GPU-hours across all commands and attempts, including failures. Deduplicate
+by `attempt_id`; do not add an aggregate time to the attempts it already covers.
+Report the stable training `run_id` and use each attempt's full `provenance`
+for its environment: training's top-level provenance describes only the initial
+attempt. Process RSS is a process-lifetime high-water mark; GPU allocation and
+reservation peaks are per command. Do not sum memory peaks. Identify deviations
+from the fixed configuration and any missing or incompatible evidence. If older
+completed records were archived under partial filenames, identify their original
+source/run and preserve their original bytes, provenance, and status; describe
+them as historical evidence, not a completed run of the submitted code.
 
 ## Pipeline checks
 

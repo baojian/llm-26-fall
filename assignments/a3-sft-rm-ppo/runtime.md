@@ -68,13 +68,17 @@ GPU compatibility, or full-run time.
 requires the complete development/test evaluations. Smoke, quick, and calibration
 results must never be described as the fixed main experiment.
 
-The runner records synchronized CUDA command wall times, stage-loop times, input and
-sampled-response counts, peak allocated/reserved VRAM, hardware, source/data
-hashes, config, model revision, and failed attempts. Interpret the clocks as follows:
+The runner records synchronized CUDA command wall times, stage-loop times, input
+and sampled-response counts, memory, hardware, source/data hashes, config,
+model revision, and failed attempts. Interpret these records as follows:
 
 - `wall_seconds`: elapsed time for that command, including tokenizer/model
   loading and any cold-cache downloads. Sum completed command and failed-attempt
-  times for the total execution cost; do not count the same attempt twice.
+  times for the total execution cost. Deduplicate by `attempt_id` across
+  `attempts`, partial/final records, and `failed-attempt-*.json`: several files
+  can describe the same attempt. Do not add an aggregate such as
+  `total_attempt_wall_seconds` again to its constituent attempts. For legacy
+  records without attempt IDs, compare command/timestamp and explain uncertainty.
 - `stage_seconds`: training-loop time for each completed stage, excluding
   tokenizer/model loading. It is not the end-to-end pipeline time and omits
   interrupted work not represented by a completed stage.
@@ -82,14 +86,36 @@ hashes, config, model revision, and failed attempts. Interpret the clocks as fol
   checks at batch boundaries. It is a configurable recovery safeguard, not a
   benchmark, promised completion time, or grading requirement. A download or
   operation in progress may finish before the next check observes the timeout.
+- Each `attempts` entry carries its own full `provenance`, including software,
+  hardware, command, and source/configuration identity. Training's top-level
+  provenance remains the initial attempt's snapshot; use the individual entries
+  as the authoritative environment record for resumed commands. Do not attribute
+  later hardware or package versions to the first attempt.
+- `peak_process_rss_bytes` is the process-lifetime resident-memory high-water
+  mark, including setup/loading; it is not a stage-only incremental measurement.
+  `peak_gpu_allocated_bytes` and `peak_gpu_reserved_bytes` are peaks for each
+  command, not sums across attempts. Report per-attempt values or the maximum
+  with its attempt ID. Preserve missing measurements and errors as unavailable.
+- The stable training `run_id` identifies one training history and binds its
+  checkpoints and evaluations. Matching configuration/source fingerprints alone
+  do not make records from separate training runs interchangeable. The packager
+  rejects completed records with different run IDs.
 
 For an interrupted training command, retain its partial and failed-attempt
-records. Repeat the original command with `--resume`: completed stages are
-reused and the unfinished stage restarts from its beginning with the recorded
-seed. No intermediate optimizer step is restored. If an individual stage
+records. Choose the retry command from the files that actually exist:
+
+| Run-directory state | Retry |
+| --- | --- |
+| `training-partial.json` exists | Repeat the original training command with `--resume`. |
+| Early tokenizer/download failure before `training-partial.json` exists | Repeat the original command **without `--resume`**; retain `failed-attempt-*.json`. |
+
+With `--resume`, completed stages are reused and the unfinished stage restarts
+from its beginning with the recorded seed. No intermediate optimizer step is
+restored. If an individual stage
 cannot finish under the same timeout, choose a larger `--max-wall-minutes`
 within your available allocation; repeated restarts with the same inadequate
-limit cannot make progress through that stage. For example:
+limit cannot make progress through that stage. For example, **when
+`outputs/main/training-partial.json` exists**:
 
 ```sh
 uv run python run.py train --device cuda --out outputs/main --resume --max-wall-minutes 90
@@ -115,3 +141,56 @@ completion time is claimed.
 evidence is unavailable and explain it in the report. Preserve error messages
 and actual costs; neither a missing result nor a negative result justifies
 inventing an outcome.
+
+## Archiving incompatible completed records
+
+`--partial-reason` does not override checks on completed records. If you changed
+`a3.py` and cannot supply a compatible new run, archive earlier completed
+records explicitly as partial submission evidence. Leave the original run
+directory untouched; do not edit JSON status, hashes, provenance, or results.
+
+1. Create a **new, empty** directory. This command deliberately fails if it
+   already exists; choose a new directory name instead of overwriting it:
+
+   ```sh
+   mkdir outputs/partial-submission
+   ```
+
+2. Copy each available completed record from the original run using the
+   destination name below. Copy only files that exist. These are byte-for-byte
+   copies, including an original `status: "completed"`; the partial filename
+   tells the packager to retain them as historical evidence rather than current
+   completed results.
+
+   | Original under `outputs/main/` | Copy under `outputs/partial-submission/` |
+   | --- | --- |
+   | `training.json` | `training-partial.json` |
+   | `evaluation-dev.json` | `evaluation-dev-partial.json` |
+   | `evaluation-test.json` | `evaluation-test-partial.json` |
+
+   For example, if the training record exists:
+
+   ```sh
+   cp outputs/main/training.json outputs/partial-submission/training-partial.json
+   ```
+
+3. Retain existing interrupted and failure evidence. Copy an existing
+   `*-partial.json` to the same basename in the new directory **only when that
+   destination is absent**. If both an interrupted and completed version exist,
+   preserve the interrupted version separately under a fresh
+   `evidence/partial-submission-originals/` directory and link it from the
+   report; never overwrite either version. Optional evidence retains its
+   20 MiB limit. Copy all `failed-attempt-*.json` files unchanged into the new
+   run directory so the packager includes them automatically.
+4. Package the fresh directory and describe why current compatible evidence is
+   unavailable, which original run the archive came from, and any separately
+   retained interrupted files:
+
+   ```sh
+   uv run python make_submission.py YOUR_STUDENT_ID --run outputs/partial-submission --partial-reason "Source changed after the recorded run; earlier records are retained unchanged as historical evidence"
+   ```
+
+Inspect `results.json`: archived records belong under `partial_records`, and
+missing current results and provenance differences must remain visible. This
+route preserves available evidence; it does not certify an old run against
+new code or create missing experiment results.

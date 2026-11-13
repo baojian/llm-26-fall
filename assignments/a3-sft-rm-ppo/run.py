@@ -1,6 +1,7 @@
 """Supplied GPT-2 SFT -> reward model -> PPO runner; objectives live in a3.py."""
 from __future__ import annotations
 import argparse
+import copy
 import gc
 import hashlib
 import json
@@ -68,8 +69,21 @@ def begin_attempt(metadata, resume=False):
     return {'attempt_id': metadata.get('attempt_id', uuid.uuid4().hex),
             'started_at': metadata['timestamp'], 'resume': resume, 'status': 'running',
             'command': metadata.get('command'), 'git_revision': metadata.get('git_revision'),
-            'git_dirty': metadata.get('git_dirty'),
+            'git_dirty': metadata.get('git_dirty'), 'provenance': copy.deepcopy(metadata),
             'budget_wall_minutes': metadata.get('budget_wall_minutes')}
+
+
+def resource_snapshot(device):
+    rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss if resource is not None else None
+    snapshot = {'peak_process_rss_bytes': None if rss is None else rss if platform.system() == 'Darwin' else rss * 1024,
+                'peak_gpu_allocated_bytes': None, 'peak_gpu_reserved_bytes': None}
+    if device.type == 'cuda':
+        try:
+            snapshot.update(peak_gpu_allocated_bytes=torch.cuda.max_memory_allocated(device),
+                            peak_gpu_reserved_bytes=torch.cuda.max_memory_reserved(device))
+        except RuntimeError as exc:
+            snapshot['memory_measurement_error'] = str(exc)
+    return snapshot
 
 
 def finish_attempt(record, timer, error=None):
@@ -78,6 +92,7 @@ def finish_attempt(record, timer, error=None):
     attempt = record['attempts'][-1]
     attempt.update(completed_at=datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(),
                    wall_seconds=elapsed, status='failed' if error is not None else 'completed')
+    attempt.update(resource_snapshot(timer.device))
     if error is not None:
         attempt['error'] = f'{type(error).__name__}: {error}'
     record.update(status='partial' if error is not None else 'completed', wall_seconds=elapsed,
@@ -90,6 +105,7 @@ def save_failed_attempt(args, metadata, timer, error):
     write_json(args.out / f'failed-attempt-{stamp}.json', {
         'status': 'failed', 'attempt_id': metadata['attempt_id'], 'provenance': metadata,
         'error': f'{type(error).__name__}: {error}', 'elapsed_seconds': time.perf_counter() - timer.start,
+        **resource_snapshot(timer.device),
         'completed_at': datetime.now(ZoneInfo('Asia/Shanghai')).isoformat()})
 
 
@@ -199,8 +215,8 @@ def trainable_state(model):
     return {name: p.detach().cpu() for name, p in model.named_parameters() if p.requires_grad}
 
 
-def save_checkpoint(path, model, fingerprint, head=None):
-    state = {'weights': trainable_state(model), 'fingerprint': fingerprint}
+def save_checkpoint(path, model, fingerprint, head=None, run_id=None):
+    state = {'weights': trainable_state(model), 'fingerprint': fingerprint, 'run_id': run_id}
     if head is not None:
         state['head'] = {name: p.detach().cpu() for name, p in head.state_dict().items()}
     temporary = path.with_suffix('.tmp')
@@ -208,12 +224,14 @@ def save_checkpoint(path, model, fingerprint, head=None):
     temporary.replace(path)
 
 
-def verify_checkpoint(path, fingerprint):
+def verify_checkpoint(path, fingerprint, run_id=None):
     if not path.is_file():
         raise ValueError(f'missing completed checkpoint: {path.name}')
     state = torch.load(path, weights_only=True, map_location='cpu', mmap=True)
     if state.get('fingerprint') != fingerprint:
         raise ValueError(f'checkpoint provenance mismatch: {path.name}')
+    if run_id is not None and state.get('run_id') != run_id:
+        raise ValueError(f'checkpoint belongs to a different training run: {path.name}')
 
 
 def scalar_head(model, device, checkpoint=None):
@@ -329,8 +347,9 @@ def train(args, cfg, tokenizer, rows, device, metadata, timer):
         'provenance': metadata, 'attempts': [], 'parameter_counts': {}}
     if logs['provenance']['fingerprint'] != fingerprint:
         raise ValueError('resume requires identical config, data, model, source code, and device/precision')
+    logs.setdefault('run_id', uuid.uuid4().hex)
     for stage in logs['completed_stages']:
-        verify_checkpoint(args.out / f'{stage}.pt', fingerprint)
+        verify_checkpoint(args.out / f'{stage}.pt', fingerprint, logs['run_id'])
     logs['attempts'].append(begin_attempt(metadata, args.resume))
     logs['status'] = 'partial'
     write_json(partial, logs)
@@ -398,7 +417,7 @@ def _train_stages(args, cfg, tokenizer, rows, device, metadata, timer, logs):
                 print(f'{stage} {step + 1}/{steps}: loss={loss_total:.4f}', flush=True)
             write_json(partial, logs)
         logs['stage_seconds'][stage] = timer.now() - started
-        save_checkpoint(args.out / checkpoint, model, fingerprint, head)
+        save_checkpoint(args.out / checkpoint, model, fingerprint, head, run_id=logs['run_id'])
         logs['completed_stages'].append(stage)
         write_json(partial, logs)
         del model, head, optimizer
@@ -476,7 +495,7 @@ def _train_stages(args, cfg, tokenizer, rows, device, metadata, timer, logs):
         if before != after:
             raise AssertionError('frozen reference/reward parameters changed')
         logs['frozen_role_checks'] = {'before': before, 'after': after, 'unchanged': True}
-        save_checkpoint(args.out / 'ppo.pt', actor, fingerprint, value)
+        save_checkpoint(args.out / 'ppo.pt', actor, fingerprint, value, run_id=logs['run_id'])
         logs['completed_stages'].append('ppo')
         write_json(partial, logs)
         del reference, rm, reward_head, actor, value, optimizer
@@ -497,13 +516,18 @@ def evaluate(args, cfg, tokenizer, rows, device, metadata, timer):
     if args.split == 'test' and (cfg['smoke'] or args.calibrate or args.quick
                                  or training['provenance'].get('calibration_only', False)):
         raise ValueError('final test requires the full frozen main configuration')
+    if not isinstance(training.get('run_id'), str) or not training['run_id']:
+        raise ValueError('training record lacks its run identity; retain it as partial evidence')
     for stage in ('sft', 'reward', 'ppo'):
-        verify_checkpoint(args.out / f'{stage}.pt', metadata['fingerprint'])
+        verify_checkpoint(args.out / f'{stage}.pt', metadata['fingerprint'], training['run_id'])
     partial = args.out / (f'evaluation-{args.split}' + ('-quick' if args.quick else '') + '-partial.json')
     previous = json.loads(partial.read_text()) if partial.exists() else {}
     if previous and previous.get('provenance', {}).get('fingerprint') != metadata['fingerprint']:
         raise ValueError('existing evaluation records have different provenance; preserve them and use a matching run')
+    if previous and previous.get('run_id') != training['run_id']:
+        raise ValueError('existing evaluation belongs to a different training run; keep run directories separate')
     output = {'split': args.split, 'quick': args.quick, 'status': 'partial',
+              'run_id': training['run_id'],
               'provenance': metadata, 'attempts': list(previous.get('attempts', [])),
               'reward_model': {'pairs': [], 'pair_ids': []}, 'metrics': {},
               'completed_stages': [],
@@ -589,7 +613,10 @@ def _evaluate_stages(args, cfg, tokenizer, rows, device, metadata, timer, output
 
 def provenance(args, cfg, device):
     def git(*parts):
-        result = subprocess.run(['git', *parts], cwd=ROOT, capture_output=True, text=True)
+        try:
+            result = subprocess.run(['git', *parts], cwd=ROOT, capture_output=True, text=True)
+        except OSError:
+            return None
         return result.stdout.strip() if result.returncode == 0 else None
     dirty = git('status', '--porcelain')
     sources = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in ('a3.py', 'run.py')}
@@ -697,13 +724,12 @@ def main():
         save_failed_attempt(args, metadata, timer, exc)
         raise
     result['wall_seconds'] = timer.now() - timer.start
-    rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss if resource is not None else None
-    result['peak_process_rss_bytes'] = None if rss is None else rss if platform.system() == 'Darwin' else rss * 1024
-    result['peak_gpu_allocated_bytes'] = torch.cuda.max_memory_allocated(device) if device.type == 'cuda' else None
-    result['peak_gpu_reserved_bytes'] = torch.cuda.max_memory_reserved(device) if device.type == 'cuda' else None
+    result.update(resource_snapshot(device))
     result['completed_at'] = datetime.now(ZoneInfo('Asia/Shanghai')).isoformat()
     if 'attempts' in result:
         result['attempts'][-1].update(completed_at=result['completed_at'], wall_seconds=result['wall_seconds'])
+        result['attempts'][-1].update({key: result[key] for key in (
+            'peak_process_rss_bytes', 'peak_gpu_allocated_bytes', 'peak_gpu_reserved_bytes')})
         result['total_attempt_wall_seconds'] = sum(a.get('wall_seconds', 0.) for a in result['attempts'])
     if args.command == 'train':
         write_json(args.out / 'training-partial.json', result)

@@ -357,6 +357,7 @@ def _validate(record, kind, context, complete, warnings):
     status = record.get('status')
     if complete:
         _require(status == 'completed', f'{kind}: completed evidence needs status="completed"')
+        _require(isinstance(record.get('run_id'), str) and bool(record['run_id']), f'{kind}: completed evidence needs its training run_id')
         _keys(record, ('wall_seconds', 'completed_at', 'peak_process_rss_bytes',
                        'peak_gpu_allocated_bytes', 'peak_gpu_reserved_bytes'), kind)
         _number(record['wall_seconds'], f'{kind}.wall_seconds', 0)
@@ -413,14 +414,14 @@ def collect_results(run, root, partial_reason=None):
             incomplete = record.get('status') in ('partial', 'failed')
             fingerprint = validate(record, name, not incomplete)
             if not incomplete:
-                fingerprints.add(fingerprint)
+                fingerprints.add((fingerprint, record['run_id']))
                 results['records'][name] = record
                 continue
             results['partial_records'][name] = record
         if not reason:
             raise ValueError(f'{name} is missing or explicitly incomplete; use --partial-reason "specific explanation" and retain any partial/failed records')
         results['unavailable_evidence'][name] = reason
-    _require(len(fingerprints) <= 1, 'completed records have different fingerprints; do not combine different runs/configurations/sources')
+    _require(len(fingerprints) <= 1, 'completed records have different fingerprints or training run IDs; do not combine different runs/configurations/sources')
     partial_names = ['training-partial.json'] + [f'evaluation-{split}{quick}-partial.json'
                      for split in ('dev', 'test') for quick in ('', '-quick')]
     for name in partial_names:
