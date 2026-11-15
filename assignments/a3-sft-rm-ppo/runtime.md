@@ -49,6 +49,18 @@ cold-cache tokenizer/model downloads and model loading occur inside the
 training/evaluation command timer. Record the cache state instead of assuming
 that command time equals compute time.
 
+### Vendor GPU images
+
+A3 uses Python 3.11, Torch 2.14.0, and Transformers 5.9.0 from the supplied
+lockfile. Check these before choosing an image. The runner loads GPT-2 with
+SDPA, so a working `torch.cuda` check alone is not enough.
+
+On platforms such as MetaX/MACA, GPU support also depends on the vendor's
+Torch build. If the available image does not match the assignment environment,
+contact the teaching team before the main run. Include the image tag,
+Python/Torch/Transformers versions, driver/SDK versions, and the error message,
+and ask which environment to use.
+
 ## Debugging and recovery
 
 Implement all eight functions and pass `uv run python -m pytest -q` before
