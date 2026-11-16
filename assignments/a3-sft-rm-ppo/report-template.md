@@ -9,7 +9,8 @@ evidence. Do not invent results or substitute smoke/quick/calibration outputs.
 ## Configuration and provenance
 
 Command(s), revision/dirty state, source/data hashes, GPT-2 revision, software,
-hardware/driver, base and stage seeds, token budget, peak allocated/reserved VRAM,
+hardware/driver, attention backend, TF32 policy and effective setting (including
+any `--disable-tf32` compatibility adjustment), base and stage seeds, token budget, peak allocated/reserved VRAM,
 and local artifact locations. Report command `wall_seconds` (including loading
 and cold-cache downloads), completed-stage `stage_seconds`, cache state, and
 total GPU-hours across all commands and attempts, including failures. Deduplicate
