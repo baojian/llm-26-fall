@@ -1,6 +1,6 @@
 [assignment]
 id = "a3-sft-rm-ppo"
-version = "2026-11-13-r2"
+version = "2026-11-16-r3"
 status = "student release"
 course_weight_percent = 15
 release_date = "2026-11-13"

@@ -10,6 +10,7 @@ import platform
 import random
 import subprocess
 import sys
+import tempfile
 import time
 import uuid
 from datetime import datetime
@@ -21,6 +22,7 @@ except ImportError:
     resource = None
 
 import torch
+import numpy as np
 from torch import nn
 from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig, __version__ as transformers_version
 import a3
@@ -182,10 +184,10 @@ def epoch_batches(rows, size, seed):
         yield from chunks(order, size)
 
 
-def load_model(cache, cfg, device, checkpoint=None):
+def load_model(cache, cfg, device, checkpoint=None, *, attn_implementation='sdpa'):
     model = AutoModelForCausalLM.from_pretrained(
         MODEL, revision=REVISION, cache_dir=cache, trust_remote_code=False,
-        use_safetensors=True, dtype=torch.float32, attn_implementation='sdpa')
+        use_safetensors=True, torch_dtype=torch.float32, attn_implementation=attn_implementation)
     model.config.use_cache = False
     if cfg['trainable_scope'] == 'last_block':
         for p in model.parameters():
@@ -211,6 +213,53 @@ def freeze(module):
     return module
 
 
+def preflight(args, cfg, tokenizer, device, metadata, timer):
+    """Check the runtime with the pinned model, independently of student objectives."""
+    timer.check()
+    model = load_model(args.cache, cfg, device, attn_implementation=args.attn_implementation)
+    prompts = tokenizer(['The course', 'A short hardware check'], add_special_tokens=False)['input_ids']
+    rows = [{'prompt_ids': ids} for ids in prompts]
+    ids, attention = pack_sequences(prompts, tokenizer.eos_token_id, device)
+    parameters = [p for p in model.parameters() if p.requires_grad]
+    optimizer = torch.optim.AdamW(parameters, lr=1e-6)
+    # A generic finite-value probe, not an implementation of an assessed loss.
+    loss = model(input_ids=ids, attention_mask=attention).logits.float().square().mean()
+    if not torch.isfinite(loss):
+        raise ValueError('preflight: non-finite forward output')
+    loss.backward()
+    if any(p.grad is None for p in parameters):
+        raise ValueError('preflight: missing parameter gradients')
+    norm = torch.nn.utils.clip_grad_norm_(parameters, 1.)
+    if not torch.isfinite(norm):
+        raise ValueError('preflight: non-finite gradients')
+    optimizer.step()
+    optimizer.zero_grad(set_to_none=True)
+    del optimizer
+    timer.check()
+    responses, logp = generate_responses(model, tokenizer, rows, 2, True)
+    if not all(responses) or not torch.isfinite(logp).all():
+        raise ValueError('preflight: invalid cached generation')
+    # Exercise the actual checkpoint writer, mmap/weights_only reader and reload.
+    with tempfile.TemporaryDirectory(prefix='preflight-', dir=args.out) as temporary:
+        path = Path(temporary) / 'probe.pt'
+        expected = parameter_digest(model)
+        save_checkpoint(path, model, metadata['fingerprint'], run_id='preflight')
+        verify_checkpoint(path, metadata['fingerprint'], run_id='preflight')
+        del model
+        gc.collect()
+        if device.type == 'cuda':
+            torch.cuda.empty_cache()
+        model = load_model(args.cache, cfg, device, path, attn_implementation=args.attn_implementation)
+        if parameter_digest(model) != expected:
+            raise ValueError('preflight: checkpoint round trip changed parameters')
+    timer.check()
+    return {'status': 'completed', 'purpose': 'runtime preflight; not assignment experiment evidence',
+            'checks': ['float32_loading', 'forward', 'backward', 'adamw_step',
+                       'cached_sampling', 'checkpoint_round_trip'],
+            'probe_loss': float(loss.detach()), 'gradient_norm': float(norm),
+            'provenance': metadata}
+
+
 def trainable_state(model):
     return {name: p.detach().cpu() for name, p in model.named_parameters() if p.requires_grad}
 
@@ -227,7 +276,7 @@ def save_checkpoint(path, model, fingerprint, head=None, run_id=None):
 def verify_checkpoint(path, fingerprint, run_id=None):
     if not path.is_file():
         raise ValueError(f'missing completed checkpoint: {path.name}')
-    state = torch.load(path, weights_only=True, map_location='cpu', mmap=True)
+    state = torch.load(str(path), weights_only=True, map_location='cpu', mmap=True)
     if state.get('fingerprint') != fingerprint:
         raise ValueError(f'checkpoint provenance mismatch: {path.name}')
     if run_id is not None and state.get('run_id') != run_id:
@@ -346,7 +395,7 @@ def train(args, cfg, tokenizer, rows, device, metadata, timer):
         'sft': [], 'reward': [], 'ppo': [], 'stage_seconds': {}, 'completed_stages': [],
         'provenance': metadata, 'attempts': [], 'parameter_counts': {}}
     if logs['provenance']['fingerprint'] != fingerprint:
-        raise ValueError('resume requires identical config, data, model, source code, and device/precision')
+        raise ValueError('resume requires identical config, data, model, source code, device/precision, and attention backend')
     logs.setdefault('run_id', uuid.uuid4().hex)
     for stage in logs['completed_stages']:
         verify_checkpoint(args.out / f'{stage}.pt', fingerprint, logs['run_id'])
@@ -381,7 +430,8 @@ def _train_stages(args, cfg, tokenizer, rows, device, metadata, timer, logs):
             logs.setdefault('interrupted_stages', []).append({'stage': stage, 'records': logs[stage]})
         logs[stage] = []
         torch.manual_seed(cfg['seed'] + seed_offset)
-        model = load_model(args.cache, cfg, device, args.out / 'sft.pt' if stage == 'reward' else None)
+        model = load_model(args.cache, cfg, device, args.out / 'sft.pt' if stage == 'reward' else None,
+                           attn_implementation=getattr(args, 'attn_implementation', 'sdpa'))
         head = scalar_head(model, device) if stage == 'reward' else None
         optimizer = make_optimizer(model, cfg, rate, head)
         logs['parameter_counts'][stage] = {
@@ -430,10 +480,13 @@ def _train_stages(args, cfg, tokenizer, rows, device, metadata, timer, logs):
             logs.setdefault('interrupted_stages', []).append({'stage': 'ppo', 'records': logs['ppo']})
         logs['ppo'] = []
         torch.manual_seed(cfg['seed'] + 2)
-        reference = freeze(load_model(args.cache, cfg, device, args.out / 'sft.pt'))
-        rm = freeze(load_model(args.cache, cfg, device, args.out / 'reward.pt'))
+        reference = freeze(load_model(args.cache, cfg, device, args.out / 'sft.pt',
+                                      attn_implementation=getattr(args, 'attn_implementation', 'sdpa')))
+        rm = freeze(load_model(args.cache, cfg, device, args.out / 'reward.pt',
+                               attn_implementation=getattr(args, 'attn_implementation', 'sdpa')))
         reward_head = freeze(scalar_head(rm, device, args.out / 'reward.pt'))
-        actor = load_model(args.cache, cfg, device, args.out / 'sft.pt')
+        actor = load_model(args.cache, cfg, device, args.out / 'sft.pt',
+                           attn_implementation=getattr(args, 'attn_implementation', 'sdpa'))
         value = scalar_head(actor, device)
         optimizer = make_optimizer(actor, cfg, cfg['ppo_lr'], value)
         before = {'reference': parameter_digest(reference), 'reward': parameter_digest(rm),
@@ -512,7 +565,7 @@ def _train_stages(args, cfg, tokenizer, rows, device, metadata, timer, logs):
 def evaluate(args, cfg, tokenizer, rows, device, metadata, timer):
     training = json.loads((args.out / 'training.json').read_text())
     if training['provenance']['fingerprint'] != metadata['fingerprint']:
-        raise ValueError('evaluation must use the frozen training config, sources, dataset, model and device/precision')
+        raise ValueError('evaluation must use the frozen training config, sources, dataset, model, device/precision, and attention backend')
     if args.split == 'test' and (cfg['smoke'] or args.calibrate or args.quick
                                  or training['provenance'].get('calibration_only', False)):
         raise ValueError('final test requires the full frozen main configuration')
@@ -562,7 +615,8 @@ def prediction_metrics(predictions):
 def _evaluate_stages(args, cfg, tokenizer, rows, device, metadata, timer, output, partial):
     count = 64 if args.quick else cfg['eval_examples']
     rows = rows if count is None else rows[:count]
-    rm = freeze(load_model(args.cache, cfg, device, args.out / 'reward.pt'))
+    rm = freeze(load_model(args.cache, cfg, device, args.out / 'reward.pt',
+                           attn_implementation=getattr(args, 'attn_implementation', 'sdpa')))
     head = freeze(scalar_head(rm, device, args.out / 'reward.pt'))
     pairs = output['reward_model']['pairs']
     for batch in chunks(rows, cfg['eval_batch_size']):
@@ -580,7 +634,8 @@ def _evaluate_stages(args, cfg, tokenizer, rows, device, metadata, timer, output
     write_json(partial, output)
     valid = set(json.loads((ROOT / 'data/manifest.json').read_text())['valid_answers'])
     for stage in ('baseline', 'sft', 'ppo'):
-        model = freeze(load_model(args.cache, cfg, device, args.out / f'{stage}.pt' if stage != 'baseline' else None))
+        model = freeze(load_model(args.cache, cfg, device, args.out / f'{stage}.pt' if stage != 'baseline' else None,
+                                  attn_implementation=getattr(args, 'attn_implementation', 'sdpa')))
         predictions = output[stage] = []
         for batch in chunks(rows, cfg['eval_batch_size']):
             timer.check()
@@ -621,8 +676,10 @@ def provenance(args, cfg, device):
     dirty = git('status', '--porcelain')
     sources = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in ('a3.py', 'run.py')}
     manifest = json.loads((ROOT / 'data/manifest.json').read_text())
+    attention = getattr(args, 'attn_implementation', 'sdpa')
     identity = {'config': cfg, 'model': MODEL, 'model_revision': REVISION,
-                'sources': sources, 'data': manifest, 'device_type': device.type, 'dtype': 'float32'}
+                'sources': sources, 'data': manifest, 'device_type': device.type, 'dtype': 'float32',
+                'attn_implementation': attention}
     fingerprint = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
     driver = None
     if device.type == 'cuda':
@@ -636,12 +693,20 @@ def provenance(args, cfg, device):
                 'cuda_runtime': torch.version.cuda, 'nvidia_driver_versions': driver,
                 'gpu': torch.cuda.get_device_name(device) if device.type == 'cuda' else None,
                 'gpu_memory_bytes': torch.cuda.get_device_properties(device).total_memory if device.type == 'cuda' else None}
+    if device.type == 'cuda':
+        try:
+            query = subprocess.run(['mx-smi'], capture_output=True, text=True, timeout=10)
+            if query.returncode == 0:
+                hardware['mx_smi'] = query.stdout.strip()
+        except (OSError, subprocess.TimeoutExpired):
+            pass
     return {'timestamp': datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(), 'timezone': 'Asia/Shanghai',
             'attempt_id': uuid.uuid4().hex,
             'command': __import__('shlex').join(sys.argv), 'git_revision': git('rev-parse', 'HEAD'),
             'git_dirty': None if dirty is None else bool(dirty), 'source_hashes': sources,
             'model': MODEL, 'model_revision': REVISION, 'data': manifest, 'config': cfg,
             'python': platform.python_version(), 'torch': torch.__version__, 'transformers': transformers_version,
+            'numpy': np.__version__, 'attn_implementation': attention,
             'device': str(device), 'hardware': hardware, 'dtype': 'float32', 'tf32': cfg['tf32'] and device.type == 'cuda',
             'stage_seeds': {'sft': cfg['seed'], 'reward': cfg['seed'] + 1, 'ppo': cfg['seed'] + 2},
             'budget_wall_minutes': args.max_wall_minutes, 'calibration_only': args.calibrate,
@@ -651,11 +716,13 @@ def provenance(args, cfg, device):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=['validate-data', 'train', 'evaluate'])
+    parser.add_argument('command', choices=['preflight', 'validate-data', 'train', 'evaluate'])
     parser.add_argument('--config', type=Path)
     parser.add_argument('--smoke', action='store_true')
     parser.add_argument('--calibrate', action='store_true', help='Short GPU timing probe; not the main assignment')
     parser.add_argument('--device', choices=['auto', 'cpu', 'cuda'], default='auto')
+    parser.add_argument('--attn-implementation', choices=['sdpa', 'eager'], default='sdpa',
+                        help='Use eager for vendor images without GPT-2 SDPA support; keep fixed across a run')
     parser.add_argument('--out', type=Path, default=ROOT / 'outputs/main')
     parser.add_argument('--cache', type=Path, default=ROOT / 'outputs/model-cache')
     parser.add_argument('--split', choices=['dev', 'test'], default='dev')
@@ -673,7 +740,7 @@ def main():
     device = torch.device(('cuda' if torch.cuda.is_available() else 'cpu') if args.device == 'auto' else args.device)
     if device.type == 'cuda' and not torch.cuda.is_available():
         parser.error('CUDA is unavailable. CPU debugging: --smoke --device cpu')
-    if args.command != 'validate-data' and device.type != 'cuda' and not cfg['smoke']:
+    if args.command not in ('preflight', 'validate-data') and device.type != 'cuda' and not cfg['smoke']:
         parser.error('The main/calibration recipe requires CUDA. Use --smoke --device cpu for wiring checks.')
     if not math.isfinite(args.max_wall_minutes) or args.max_wall_minutes <= 0:
         parser.error('--max-wall-minutes must be finite and positive')
@@ -699,7 +766,10 @@ def main():
     try:
         tokenizer = AutoTokenizer.from_pretrained(MODEL, revision=REVISION, cache_dir=args.cache, trust_remote_code=False)
         tokenizer.pad_token = tokenizer.eos_token
-        if args.command == 'validate-data':
+        if args.command == 'preflight':
+            result = preflight(args, cfg, tokenizer, device, metadata, timer)
+            filename = f'preflight-{metadata["attempt_id"]}.json'
+        elif args.command == 'validate-data':
             result = {}
             for split in ('train', 'dev', 'test'):
                 rows = encode_rows(tokenizer, read_data(split, cfg), cfg)

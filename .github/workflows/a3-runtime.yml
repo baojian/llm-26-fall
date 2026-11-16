@@ -1,0 +1,53 @@
+name: A3 runtime compatibility
+
+on:
+  pull_request:
+    paths:
+      - 'assignments/a3-sft-rm-ppo/**'
+      - '.github/workflows/a3-runtime.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: a3-runtime-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  runtime:
+    name: Runner (${{ matrix.environment }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - environment: locked
+            python: '3.11'
+          - environment: legacy-api
+            python: '3.10'
+    defaults:
+      run:
+        working-directory: assignments/a3-sft-rm-ppo
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install the published lockfile
+        if: matrix.environment == 'locked'
+        run: uv sync --locked
+      - name: Install an isolated legacy CPU API fixture
+        if: matrix.environment == 'legacy-api'
+        run: |
+          uv venv --python 3.10 .venv
+          uv pip install --python .venv/bin/python torch==2.1.2 --index-url https://download.pytorch.org/whl/cpu
+          uv pip install --python .venv/bin/python transformers==4.40.2 numpy==1.26.4 pytest==8.3.5
+      - name: Check runner behavior without weights or student solutions
+        env:
+          HF_HUB_OFFLINE: '1'
+          TRANSFORMERS_OFFLINE: '1'
+        run: .venv/bin/python -m pytest -q tests/test_runtime.py
