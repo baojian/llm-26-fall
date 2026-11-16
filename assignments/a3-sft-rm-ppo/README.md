@@ -311,9 +311,9 @@ The runner's configurable per-command timeout stops at a batch boundary and
 retains partial records. Its default **45 minutes per command is a recovery
 setting, not a runtime estimate or speed requirement**. Command `wall_seconds`
 includes tokenizer/model loading and cold-cache downloads; `stage_seconds`
-measures training loops and excludes that loading. No measured full-pipeline
-GPU runtime is available for this release. Read `runtime.md` for timing and
-recovery details.
+measures training loops and excludes that loading. See the
+[measured MetaX checks](runtime.md#measured-metax-checks) for hardware/software
+observations and their limits, and `runtime.md` for timing and recovery details.
 
 For a quick development check, add `--quick` to development evaluation: it uses
 64 prompts and writes a separate `evaluation-dev-quick.json`. The required
