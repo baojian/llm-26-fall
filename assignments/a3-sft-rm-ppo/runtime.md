@@ -36,6 +36,7 @@ machine before allocating a main run:
 ```sh
 nvidia-smi
 uv run python -c "import torch; print(torch.__version__, torch.version.cuda); assert torch.cuda.is_available(); print(torch.cuda.get_device_name(0), torch.cuda.get_device_properties(0).total_memory)"
+uv run python run.py preflight --device cuda --out outputs/preflight
 ```
 
 [Driver compatibility reference](https://docs.nvidia.com/deploy/cuda-compatibility/minor-version-compatibility.html).
@@ -49,23 +50,71 @@ cold-cache tokenizer/model downloads and model loading occur inside the
 training/evaluation command timer. Record the cache state instead of assuming
 that command time equals compute time.
 
+`preflight` loads the pinned GPT-2 in float32, checks forward/backward and an
+AdamW step, samples with a KV cache, and round-trips a checkpoint through the
+runner's writer and loader. It does not call the eight student functions.
+It writes a separate `preflight-<attempt-id>.json` for each success and preserves
+failures as `failed-attempt-*.json`. A pass establishes these runtime operations;
+it does not establish learning, main-run memory requirements, or completion time.
+Keep preflight output separate from your main run. CPU preflight is also allowed.
+
 ### Vendor GPU images
 
-A3 uses Python 3.11, Torch 2.14.0, and Transformers 5.9.0 from the supplied
-lockfile. Check these before choosing an image. The runner loads GPT-2 with
-SDPA, so a working `torch.cuda` check alone is not enough.
+MetaX/MACA requires its **vendor Torch build**. Do not run `uv sync`, `uv run`,
+or replace Torch with a PyPI wheel in that environment. Use the image's Python
+directly for **every** command, including tests and packaging. `torch.cuda`
+is also the interface exposed by the MetaX build; use `--device cuda`.
 
-On platforms such as MetaX/MACA, GPU support also depends on the vendor's
-Torch build. If the available image does not match the assignment environment,
-contact the teaching team before the main run. Include the image tag,
-Python/Torch/Transformers versions, driver/SDK versions, and the error message,
-and ask which environment to use.
+Use `--attn-implementation eager` when GPT-2 SDPA is unavailable in the image's
+Transformers or accelerator backend. SDPA remains the default for the locked
+environment. Float32 loading uses the `torch_dtype` argument supported by older
+Transformers. This changes the runtime implementation, not the model, objective,
+data, precision, or update counts. Floating-point results and speed can differ.
+Keep the backend fixed for training, retries, and both evaluations; the
+fingerprint binds it to the checkpoints and records.
+
+From your private assignment copy (replace the Python path if needed):
+
+```sh
+A3_PYTHON=/opt/conda/bin/python
+mx-smi
+"$A3_PYTHON" -c "import sys, torch, transformers, numpy; print(sys.version); print(torch.__version__, transformers.__version__, numpy.__version__); assert torch.cuda.is_available(); print(torch.cuda.get_device_name(0))"
+"$A3_PYTHON" -m pytest -q tests/test_runtime.py
+"$A3_PYTHON" run.py preflight --device cuda --attn-implementation eager --out outputs/preflight
+# Complete the eight functions before these tests and smoke commands.
+"$A3_PYTHON" -m pytest -q
+"$A3_PYTHON" run.py train --smoke --device cuda --attn-implementation eager --out outputs/smoke
+"$A3_PYTHON" run.py evaluate --smoke --device cuda --attn-implementation eager --out outputs/smoke
+```
+
+After both checks pass, the main commands are:
+
+```sh
+"$A3_PYTHON" run.py train --device cuda --attn-implementation eager --out outputs/main
+"$A3_PYTHON" run.py evaluate --device cuda --attn-implementation eager --out outputs/main --split dev
+"$A3_PYTHON" run.py evaluate --device cuda --attn-implementation eager --out outputs/main --split test
+"$A3_PYTHON" make_submission.py YOUR_STUDENT_ID --run outputs/main
+```
+
+For old Torch 2.1 builds, retain NumPy 1.x (tested version: 1.26.4); NumPy 2 can
+break Torch's NumPy bridge used in checkpoint integrity checks. Do not downgrade
+an otherwise working image merely to match another student's versions. Record
+the image tag, Python/Torch/Transformers/NumPy versions, driver/SDK versions,
+and any errors. The runner records the selected backend and software versions,
+and captures `mx-smi` when available. Contact the teaching team if preflight or
+smoke fails; a successful GPU-availability check alone is insufficient.
+
+If the instance cannot reach Hugging Face, ask for a cache containing the exact
+pinned revision, copy it to private storage, and pass `--cache /path/to/cache`
+to each command. With that complete cache, `HF_HUB_OFFLINE=1` avoids network
+requests. Do not substitute another checkpoint to work around a download error.
 
 ## Debugging and recovery
 
-Implement all eight functions and pass `uv run python -m pytest -q` before
-smoke training or GPU work. This includes `paired_summary` and JSON diagnostic
-contracts. Unit tests require no downloaded weights. The source fingerprint
+Implement all eight functions and pass `uv run python -m pytest -q` (or your
+vendor Python equivalent) before smoke training or the main experiment.
+Preflight can run before implementation. The tests include `paired_summary`
+and JSON diagnostic contracts. Unit tests require no downloaded weights. The source fingerprint
 covers the whole `a3.py`; changing even the evaluator after training makes
 existing checkpoints incompatible with that code. Keep source versions and
 their records together. Do not edit provenance to bypass this check; if a new
@@ -73,8 +122,9 @@ run is unavailable, use the honest partial-submission route.
 
 The separate smoke recipe runs on CPU and tests all stages with two SFT
 updates, two preference updates, and two sampled PPO responses. It trains only
-the last block and final normalization. It establishes wiring, not learning,
-GPU compatibility, or full-run time.
+the last block and final normalization. It establishes wiring, not learning or
+full-run time. A CPU smoke run does not establish GPU compatibility; vendor
+images should also run smoke on their GPU.
 
 `--quick` evaluates 64 development prompts into a separate file. The submission
 requires the complete development/test evaluations. Smoke, quick, and calibration

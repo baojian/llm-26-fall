@@ -1,9 +1,17 @@
 # Assignment 03: SFT, Reward Modeling, and PPO
 
-**Release version: 2026-11-13-r2 (November 13, 2026).** Due:
+**Release version: 2026-11-16-r3 (runtime compatibility update).** Due:
 **Friday, December 4, 2026, 23:59 Asia/Shanghai (UTC+08:00)**, privately through
 eLearning. Weight: **15% of the course**. Total: **100 points**, with identical
 work and scoring for all students.
+
+This optional update adds vendor-GPU compatibility and a runtime preflight.
+The eight functions, data, main recipe, deadline, and grading are unchanged.
+If r2 already works or you have recorded a run, keep that complete private copy
+and its outputs together; no migration or rerun is required. The fingerprint
+includes `run.py`, so replacing it invalidates existing checkpoints. If setup
+is blocked, start from a new r3 copy, copy your own `a3.py` into it, and use fresh
+output directories. See [vendor GPU setup](runtime.md#vendor-gpu-images).
 
 Build and investigate this pipeline:
 
@@ -27,13 +35,20 @@ released directory:
 mkdir -p "$HOME/coursework"
 cp -R /path/to/released/a3-sft-rm-ppo "$HOME/coursework/a3-sft-rm-ppo"
 cd "$HOME/coursework/a3-sft-rm-ppo"
+# Default environment; vendor GPU images use the separate runtime.md route.
 uv sync --locked
 uv run python -m pytest -q
 ```
 
-Use Python 3.11 and the included lockfile. Run every command in this handout
+The default route uses Python 3.11 and the included lockfile. On MetaX/MACA,
+read [vendor GPU setup](runtime.md#vendor-gpu-images) **before installing**:
+retain its vendor Torch and use that environment's Python directly.
+Run every command in this handout
 from that private assignment directory.
 The initial public tests fail until you implement the functions in `a3.py`.
+The separate `tests/test_runtime.py` checks the runner with tiny offline models
+and can pass before you implement those functions. `run.py preflight` checks
+the pinned GPT-2 checkpoint on your actual device, also without your solutions.
 Do not replace the objectives with a library Trainer or PPO implementation.
 The supplied `run.py` handles loading, batches, sampling, scalar heads,
 optimization, saving, and evaluation. Your work is the eight functions in

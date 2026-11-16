@@ -99,6 +99,11 @@ def _provenance(record, context, complete, warnings, label):
     identity = {'config': p['config'], 'model': p['model'], 'model_revision': p['model_revision'],
                 'sources': p['source_hashes'], 'data': p['data'],
                 'device_type': p['device'].split(':')[0], 'dtype': p['dtype']}
+    # Original r2 records predate the explicit backend field. Keep their identity
+    # valid while binding new records to the backend selected for training.
+    if 'attn_implementation' in p:
+        _require(p['attn_implementation'] in ('sdpa', 'eager'), f'{label}: unsupported attention backend')
+        identity['attn_implementation'] = p['attn_implementation']
     fingerprint = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
     _require(p['fingerprint'] == fingerprint, f'{label}: fingerprint does not match its config/model/source/data/device identity')
     cfg, manifest, _, sources = context
