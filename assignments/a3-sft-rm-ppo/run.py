@@ -128,6 +128,20 @@ def read_config(path):
     return cfg
 
 
+def tf32_enabled(args, cfg, device):
+    return bool(cfg['tf32'] and device.type == 'cuda' and not getattr(args, 'disable_tf32', False))
+
+
+def configure_precision(args, cfg, device):
+    if device.type == 'cuda':
+        enabled = tf32_enabled(args, cfg, device)
+        torch.backends.cuda.matmul.allow_tf32 = enabled
+        torch.backends.cudnn.allow_tf32 = enabled
+        if (torch.backends.cuda.matmul.allow_tf32 != enabled
+                or torch.backends.cudnn.allow_tf32 != enabled):
+            raise RuntimeError('Torch did not apply the requested TF32 policy')
+
+
 def read_data(split, cfg):
     manifest = json.loads((ROOT / 'data/manifest.json').read_text())
     if manifest['version'] != cfg['data_version']:
@@ -239,6 +253,9 @@ def preflight(args, cfg, tokenizer, device, metadata, timer):
     responses, logp = generate_responses(model, tokenizer, rows, 2, True)
     if not all(responses) or not torch.isfinite(logp).all():
         raise ValueError('preflight: invalid cached generation')
+    with torch.no_grad():
+        recomputed, _, mask = response_statistics(model, None, rows, responses, tokenizer.eos_token_id)
+    mismatch = check_behavior_logp(logp, recomputed, mask)
     # Exercise the actual checkpoint writer, mmap/weights_only reader and reload.
     with tempfile.TemporaryDirectory(prefix='preflight-', dir=args.out) as temporary:
         path = Path(temporary) / 'probe.pt'
@@ -255,8 +272,9 @@ def preflight(args, cfg, tokenizer, device, metadata, timer):
     timer.check()
     return {'status': 'completed', 'purpose': 'runtime preflight; not assignment experiment evidence',
             'checks': ['float32_loading', 'forward', 'backward', 'adamw_step',
-                       'cached_sampling', 'checkpoint_round_trip'],
+                       'cached_sampling', 'behavior_recompute', 'checkpoint_round_trip'],
             'probe_loss': float(loss.detach()), 'gradient_norm': float(norm),
+            'behavior_recompute_max_error': mismatch,
             'provenance': metadata}
 
 
@@ -337,6 +355,17 @@ def response_statistics(model, head, rows, responses, eos):
     logp = logits.log_softmax(-1).gather(-1, actions[..., None]).squeeze(-1)
     values = head(states).squeeze(-1).float() if head is not None else torch.zeros_like(logp)
     return logp, values, mask.float()
+
+
+def check_behavior_logp(behavior_logp, recomputed, mask):
+    errors = (behavior_logp[:, :mask.shape[1]] - recomputed).abs()[mask.bool()]
+    mismatch = float(errors.max())
+    if not math.isfinite(mismatch) or mismatch > .02:
+        raise ValueError(
+            f'behavior/recomputed log probabilities disagree ({mismatch}); inspect padding/cache/precision. '
+            'For TF32 precision errors, use --disable-tf32 in a fresh run; do not relax this check '
+            'or reuse checkpoints under a changed precision policy.')
+    return mismatch
 
 
 def reward_scores(model, head, rows, responses, eos):
@@ -502,9 +531,7 @@ def _train_stages(args, cfg, tokenizer, rows, device, metadata, timer, logs):
                 ref_logp, _, _ = response_statistics(reference, None, batch, responses, eos)
                 scores = reward_scores(rm, reward_head, batch, responses, eos)
                 old_logp = behavior_logp[:, :mask.shape[1]].clone()
-                mismatch = float(((old_logp - recomputed).abs() * mask).max())
-                if mismatch > .02:
-                    raise ValueError(f'behavior/recomputed log probabilities disagree ({mismatch}); inspect padding/cache/precision')
+                mismatch = check_behavior_logp(old_logp, recomputed, mask)
                 rewards = a3.shaped_rewards(old_logp, ref_logp, scores, mask, cfg['beta'])
                 advantages, returns = a3.gae(rewards, old_values, mask, cfg['gamma'], cfg['lambda'])
             original_old = old_logp.clone()
@@ -677,9 +704,11 @@ def provenance(args, cfg, device):
     sources = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in ('a3.py', 'run.py')}
     manifest = json.loads((ROOT / 'data/manifest.json').read_text())
     attention = getattr(args, 'attn_implementation', 'sdpa')
+    tf32_policy = 'disabled' if getattr(args, 'disable_tf32', False) else 'config'
+    tf32 = tf32_enabled(args, cfg, device)
     identity = {'config': cfg, 'model': MODEL, 'model_revision': REVISION,
                 'sources': sources, 'data': manifest, 'device_type': device.type, 'dtype': 'float32',
-                'attn_implementation': attention}
+                'attn_implementation': attention, 'tf32_policy': tf32_policy, 'tf32': tf32}
     fingerprint = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
     driver = None
     if device.type == 'cuda':
@@ -707,7 +736,8 @@ def provenance(args, cfg, device):
             'model': MODEL, 'model_revision': REVISION, 'data': manifest, 'config': cfg,
             'python': platform.python_version(), 'torch': torch.__version__, 'transformers': transformers_version,
             'numpy': np.__version__, 'attn_implementation': attention,
-            'device': str(device), 'hardware': hardware, 'dtype': 'float32', 'tf32': cfg['tf32'] and device.type == 'cuda',
+            'device': str(device), 'hardware': hardware, 'dtype': 'float32',
+            'tf32_policy': tf32_policy, 'tf32': tf32,
             'stage_seeds': {'sft': cfg['seed'], 'reward': cfg['seed'] + 1, 'ppo': cfg['seed'] + 2},
             'budget_wall_minutes': args.max_wall_minutes, 'calibration_only': args.calibrate,
             'artifact_directory': str(args.out.resolve()), 'model_cache': str(args.cache.resolve()),
@@ -723,6 +753,8 @@ def main():
     parser.add_argument('--device', choices=['auto', 'cpu', 'cuda'], default='auto')
     parser.add_argument('--attn-implementation', choices=['sdpa', 'eager'], default='sdpa',
                         help='Use eager for vendor images without GPT-2 SDPA support; keep fixed across a run')
+    parser.add_argument('--disable-tf32', action='store_true',
+                        help='Disable TF32 matmul/cuDNN for numerical compatibility; keep fixed across a run')
     parser.add_argument('--out', type=Path, default=ROOT / 'outputs/main')
     parser.add_argument('--cache', type=Path, default=ROOT / 'outputs/model-cache')
     parser.add_argument('--split', choices=['dev', 'test'], default='dev')
@@ -750,9 +782,8 @@ def main():
         parser.error('smoke/calibration runs cannot produce final test evidence')
     torch.set_num_threads(2)
     torch.manual_seed(cfg['seed'])
+    configure_precision(args, cfg, device)
     if device.type == 'cuda':
-        torch.backends.cuda.matmul.allow_tf32 = cfg['tf32']
-        torch.backends.cudnn.allow_tf32 = cfg['tf32']
         torch.cuda.reset_peak_memory_stats(device)
     args.out.mkdir(parents=True, exist_ok=True)
     if args.command == 'train':

@@ -3,9 +3,10 @@
 ## Fixed configuration
 
 Use one GPU compatible with the supplied PyTorch/CUDA environment. A tentative
-planning target is **16 GB VRAM**, not a measured minimum or guarantee: no
-full-pipeline GPU timing or peak-memory measurement is available for this
-release. Check access and memory early, and contact the teaching team if the
+planning target is **16 GB VRAM**, not a measured minimum or guarantee. The
+[MetaX checks below](#measured-metax-checks) record two tested environments;
+they do not establish requirements for other GPUs or software. Check access
+and memory early, and contact the teaching team if the
 fixed recipe is blocked. This package does not allocate cluster resources.
 Complete the fixed configuration and report actual time and peak memory;
 GPU model and elapsed time are not graded.
@@ -15,7 +16,9 @@ The required configuration is `configs/main.json`: full GPT-2 tuning,
 batches of 32 sampled responses with two update epochs. Microbatch size is 8;
 generation/evaluation are batched with a KV cache. Context reserve is 256 and
 response cap is 8. All model/objective tensors are float32; CUDA matmuls allow
-TF32. The value head shares the current policy backbone. The fixed SFT reference
+TF32 by default; the documented `--disable-tf32` compatibility option keeps
+both matmul and cuDNN TF32 disabled without editing the fixed configuration.
+The value head shares the current policy backbone. The fixed SFT reference
 and learned reward backbone remain frozen during PPO.
 
 A main run presents each of 2,048 training rows twice to SFT and twice to the
@@ -51,8 +54,9 @@ training/evaluation command timer. Record the cache state instead of assuming
 that command time equals compute time.
 
 `preflight` loads the pinned GPT-2 in float32, checks forward/backward and an
-AdamW step, samples with a KV cache, and round-trips a checkpoint through the
-runner's writer and loader. It does not call the eight student functions.
+AdamW step, samples with a KV cache, compares sampled and recomputed log
+probabilities, and round-trips a checkpoint through the runner's writer and
+loader. It does not call the eight student functions.
 It writes a separate `preflight-<attempt-id>.json` for each success and preserves
 failures as `failed-attempt-*.json`. A pass establishes these runtime operations;
 it does not establish learning, main-run memory requirements, or completion time.
@@ -108,6 +112,89 @@ If the instance cannot reach Hugging Face, ask for a cache containing the exact
 pinned revision, copy it to private storage, and pass `--cache /path/to/cache`
 to each command. With that complete cache, `HF_HUB_OFFLINE=1` avoids network
 requests. Do not substitute another checkpoint to work around a download error.
+
+### TF32 precision and PPO consistency
+
+If MetaX PPO fails with `behavior/recomputed log probabilities disagree`,
+`--disable-tf32` is an allowed compatibility setting. It disables both
+`torch.backends.cuda.matmul.allow_tf32` and `torch.backends.cudnn.allow_tf32`.
+Keep float32 parameters/objectives, the pinned model, all data, seeds, batch
+sizes, update counts, and the `0.02` consistency threshold unchanged. Do not
+replace sampled behavior probabilities with recomputed values or skip the
+check. Disabling TF32 can change results and speed; report the setting and
+actual cost. See [PyTorch's TF32 notes](https://pytorch.org/docs/2.4/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices).
+
+The [MetaX report on PR #329](https://github.com/baojian/llm-26-fall/pull/329#issuecomment-6920792585)
+describes a no-update comparison with identical weights and 32 responses:
+maximum log-probability discrepancy `0.03650093` with TF32, about `6.71e-7`
+without TF32, and about `1.14e-5` on CPU (Torch `2.4.0+metax2.29.2.5`,
+Transformers `4.49.0.dev0`). This supports a precision diagnosis; it is not
+evidence that a complete training run succeeds. The smoke configuration
+already disables TF32, so passing smoke alone did not test the main default.
+The small preflight probability check also cannot guarantee all later batches.
+
+For a new run on the affected image, retain its vendor Python and use the
+same options for preflight, smoke, main training, retries, and evaluation:
+
+```sh
+A3_PYTHON=/opt/conda/bin/python
+"$A3_PYTHON" run.py preflight --device cuda --attn-implementation eager --disable-tf32 --out outputs/preflight-fp32
+# Pass all public tests before smoke or main training.
+"$A3_PYTHON" -m pytest -q
+"$A3_PYTHON" run.py train --smoke --device cuda --attn-implementation eager --disable-tf32 --out outputs/smoke-fp32
+"$A3_PYTHON" run.py evaluate --smoke --device cuda --attn-implementation eager --disable-tf32 --out outputs/smoke-fp32
+"$A3_PYTHON" run.py train --device cuda --attn-implementation eager --disable-tf32 --out outputs/main-fp32
+"$A3_PYTHON" run.py evaluate --device cuda --attn-implementation eager --disable-tf32 --out outputs/main-fp32 --split dev
+# Freeze the recipe before the final test evaluation.
+"$A3_PYTHON" run.py evaluate --device cuda --attn-implementation eager --disable-tf32 --out outputs/main-fp32 --split test
+"$A3_PYTHON" make_submission.py YOUR_STUDENT_ID --run outputs/main-fp32
+```
+
+The records contain `tf32_policy: "disabled"` and `tf32: false`; the fingerprint
+binds the policy to checkpoints and all evaluations. The supplied main JSON
+stays unchanged, and the packager accepts this runtime option. Do not edit
+that JSON or provenance to work around validation.
+
+Keep an existing r2/r3 copy with its original checkpoints and error records.
+Updating the runner or changing the precision policy invalidates checkpoint
+reuse, including completed SFT/RM weights: `--resume` only accepts the same
+source and policy. For a compatible r4 run, copy your own `a3.py` into a fresh
+assignment copy and start all stages in a new output directory. This is not
+a mandatory rerun for working earlier releases. If a new run is unavailable,
+retain honest partial evidence using the recovery/archiving guidance below;
+do not relabel old weights as trained with TF32 disabled. Report old attempts
+and costs separately. A later failure should retain its original error and
+records rather than trigger a tolerance increase.
+
+### Measured MetaX checks
+
+On November 17, 2026 (Asia/Shanghai), the teaching team completed the unchanged
+main recipe on two instructor-provided instances, each with one MetaX C550
+64 GB, Python 3.10.10, NumPy 1.26.4, and driver 3.8.30. Eager attention and
+`--disable-tf32` were used throughout, with the reference implementation and
+fixed seed 17. No packages were replaced. On each instance,
+all 256 SFT updates, 256 reward updates, 64 PPO batches, and both 256-prompt
+evaluation splits completed; submission validation also passed.
+
+| Torch | Transformers | MACA | Main process seconds, total | Maximum PPO log-probability error | Peak allocated GiB |
+| --- | --- | --- | ---: | ---: | ---: |
+| 2.1.2+metax2.29.2.6 | 4.40.2 | 2.29.2.7 | 184.4 | 4.57e-5 | 4.68 |
+| 2.4.0+metax2.29.2.5 | 4.49.0.dev0 | 2.29.2.6 | 191.8 | 4.70e-5 | 4.63 |
+
+Both errors are below the unchanged `0.02` limit. The second stack matches
+the Torch/Transformers versions in the student report; that student's own
+implementation and saved weights were not supplied for this check.
+
+Process times include Python startup for training and both evaluations, with
+a warm local model cache after preflight, smoke and calibration. Their runner
+`wall_seconds` fields sum to 159.8/162.1 seconds respectively; those timers
+start after Python imports and initial setup. Peak Torch reserved memory was
+**7.52 GiB per GPU** in both cases. Allocator measurements are not total device
+usage or a proven minimum. All GPU checks occupied 344.2/374.2 seconds on the
+respective single GPUs: **0.200 total allocated GPU-hours**, excluding transfer
+and separate CPU tests. These are one implementation/seed's measurements in
+two environments, not a completion-time requirement or evidence of general
+learning quality.
 
 ## Debugging and recovery
 
@@ -195,8 +282,8 @@ GPU-hours across all attempts, including interrupted work. Additional GPU
 availability does not add required runs or improve the grading criteria.
 For active student work, allow an unmeasured 15–20 hours with A2/PPO preparation,
 or 20–30+ hours with substantial setup or RL debugging. This is separate from
-GPU execution, downloads, installation, and queue waits; no measured GPU
-completion time is claimed.
+GPU execution, downloads, installation, and queue waits. The measured checks
+above are specific to their stated hardware, software and cache state.
 
 `make_submission.py` includes available valid final records, explicitly labeled
 `partial_records`, and `failed_attempts`. Use `--partial-reason` when required

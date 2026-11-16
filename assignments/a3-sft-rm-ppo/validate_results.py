@@ -104,6 +104,15 @@ def _provenance(record, context, complete, warnings, label):
     if 'attn_implementation' in p:
         _require(p['attn_implementation'] in ('sdpa', 'eager'), f'{label}: unsupported attention backend')
         identity['attn_implementation'] = p['attn_implementation']
+    # r4 binds the runtime override without changing the published main config.
+    # r2/r3 records keep their original fingerprint format.
+    if 'tf32_policy' in p:
+        _require(p['tf32_policy'] in ('config', 'disabled'), f'{label}: unsupported TF32 policy')
+        expected_tf32 = bool(p['config'].get('tf32') and p['device'].split(':')[0] == 'cuda'
+                             and p['tf32_policy'] == 'config')
+        _require(type(p.get('tf32')) is bool and p['tf32'] == expected_tf32,
+                 f'{label}: TF32 setting disagrees with its runtime policy/config/device')
+        identity.update(tf32_policy=p['tf32_policy'], tf32=p['tf32'])
     fingerprint = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
     _require(p['fingerprint'] == fingerprint, f'{label}: fingerprint does not match its config/model/source/data/device identity')
     cfg, manifest, _, sources = context
