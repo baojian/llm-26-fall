@@ -1,8 +1,10 @@
 # Lecture 09: Reinforcement learning and policy optimization
 
 Week 9, November 4, 2026. Sections 1–8 consolidate REINFORCE and PPO.
-Sections 9–11 prepare GRPO and DPO as supplementary material: they were not
-covered in the Week 9 class and are not prerequisites for Quiz 4.
+Sections 9–11 collect GRPO and DPO as supplementary material. **Instructor
+update, November 11:** these topics have now been covered across Lectures 8–10
+and serve as review for the remaining course. This coverage update does not
+change the published Quiz 4 scope.
 
 These notes adapt the instructor's November 4 reference, *Policy optimization
 for LLMs: REINFORCE, PPO, GRPO and DPO*, with consistent notation and small
@@ -206,7 +208,7 @@ for a candidate response. Replacing one with the other changes the algorithm.
 
 ## 9. Supplement: GRPO and within-prompt groups
 
-This material was not taught in Week 9. Outcome-based GRPO draws $G\ge2$
+For review of the Lectures 8–10 sequence, outcome-based GRPO draws $G\ge2$
 responses for one prompt and standardizes their rewards:
 
 $$\bar R=\frac1G\sum_iR_i,\quad s_R=\sqrt{\frac1G\sum_i(R_i-\bar R)^2},\quad\hat A_i=\frac{R_i-\bar R}{s_R+\varepsilon_{\mathrm{num}}}.$$

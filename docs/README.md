@@ -6,16 +6,20 @@
 - [Lecture 09: REINFORCE, PPO, and the GRPO/DPO supplement](lecture-09-policy-optimization.html).
 - [Lecture 10: Data preparation, evaluation and experimental design](lecture-10-data-evaluation.html).
 
-These English notes match the revised November 10 teaching sequence. Rebuild
-their HTML after editing the matching Markdown with
+The November 11 instructor update confirms that GRPO and DPO, alongside the
+SFT/RM/PPO foundations, have been covered across Lectures 8–10. Their examples
+remain collected in the Lecture 09 supplement for review. Rebuild these English
+notes after editing the matching Markdown with
 `node scripts/build-lecture-notes.mjs`. Equations and styles are hosted locally.
 
 ## Remaining six lectures
 
-The [current course plan](course-revision.html) connects the taught SFT/RM/PPO
-sequence to Lecture 10 and provides timed preparation routes for Lectures 11–16:
-DPO/GRPO, retrieval, inference and test-time compute, masked diffusion, agents,
-and project synthesis. Each route includes readings and a CPU fallback.
+The [current course plan](course-revision.html) builds on the completed
+post-training sequence and Lecture 10's data/evaluation materials. It provides
+timed preparation routes for Lectures 11–16: efficient adaptation and
+distillation, retrieval, inference and test-time compute, agents, masked
+diffusion, and project synthesis. Each route includes readings, proposed
+classroom exercises, expected evidence and a CPU fallback.
 Future decks and notebooks still need preparation and verification. Edit
 [the Markdown source](course-revision.md); the same builder generates its HTML.
 

@@ -6,11 +6,13 @@ must be verified first. Numbers marked *measured* come from tests run on the
 course cluster on September 11; numbers marked *assumed* or *estimated* are
 stated assumptions to be replaced by measurements.
 
-**Schedule note, November 10:** the week assignments below are historical
+**Schedule note, November 11:** the week assignments below are historical
 preparation targets, not a record of completed cluster runs. The
-[current teaching plan](course-revision.html) places SFT/RM/PPO in Lectures
-08–09, data and evaluation in Lecture 10, and DPO/GRPO in Lecture 11. Use that
-plan for lecture dates; the September measurements here have not been rerun.
+[current teaching plan](course-revision.html) records SFT/RM/PPO and DPO/GRPO
+as covered across Lectures 8–10, retains the data/evaluation materials in
+Lecture 10, and adds efficient adaptation and distillation in Lecture 11.
+Use that plan for lecture dates; the September measurements here have not
+been rerun.
 
 ## 1. Target in one sentence
 

@@ -185,7 +185,7 @@
     <div class="card"><h3>Assignments</h3><p>All count equally (15% each); submission dates are listed below.</p><ul>
       <li><a href="https://github.com/baojian/llm-26-fall/tree/main/assignments/a1-tokenization-and-language-models" target="_blank" rel="noopener noreferrer">A1 · Tokenization and language models</a><br><span class="muted">Due Sep 30, 23:59 (Asia/Shanghai)</span></li>
       <li><a href="https://github.com/baojian/llm-26-fall/tree/main/assignments/a2-build-a-small-lm" target="_blank" rel="noopener noreferrer">A2 · Build and investigate a small language model</a><br><span class="muted">Due Oct 31, 23:59 (Asia/Shanghai)</span></li>
-      <li>A3 · Adapt and evaluate · Dec 2 (Week 13)</li>
+      <li>A3 · SFT, RM, and PPO · Fri, Dec 4 (Week 13)</li>
     </ul><p><a href="https://github.com/baojian/llm-26-fall/issues?q=is%3Aissue%20label%3Aassignment" target="_blank" rel="noopener noreferrer">Assignment announcements</a></p></div>
     <div class="card"><h3>Individual project</h3><ul>
       <li><a href="#project-candidates">Candidate projects released · Oct 10 (Week 5)</a></li>
@@ -301,7 +301,7 @@
         <td class="num">9</td>
         <td class="date">Nov 4</td>
         <td><strong>Reinforcement learning and PPO</strong><span class="lens">How can sampled rewards improve a language-model policy?</span></td>
-        <td>Policy gradients; REINFORCE and baselines; value estimates and GAE; PPO clipping and rollout bookkeeping. GRPO and DPO slides are supplementary and were not taught in Week 9.
+        <td>Policy gradients; REINFORCE and baselines; value estimates and GAE; PPO clipping and rollout bookkeeping. The GRPO and DPO supplement reviews topics covered across Lectures 8–10.
           <div class="practice"><strong>Practice:</strong> Check a score-function gradient, calculate PPO clipping for both advantage signs, and trace a short GAE recursion.</div>
           <div class="materials"><strong>Notes:</strong> <a href="docs/lecture-09-policy-optimization.html">Lecture 9 notes</a></div>
           <div class="materials"><strong>Slides:</strong> <a href="slides/lecture-09/" data-local-path="/slides/lecture-09/" target="_blank" rel="noopener noreferrer">lecture-09-slides</a></div>
@@ -319,7 +319,7 @@
           <div class="materials"><strong>Slides:</strong> <a href="slides/lecture-10/" data-local-path="/slides/lecture-10/" target="_blank" rel="noopener noreferrer">lecture-10-slides</a></div>
           <div class="materials"><strong>Exercise:</strong> <a href="http://127.0.0.1:8000/slides/shared/notebook.html?lecture=lecture-10" data-local-path="/slides/shared/notebook.html?lecture=lecture-10" target="_blank" rel="noopener noreferrer">practice.ipynb</a></div>
           <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2406.17557" target="_blank" rel="noopener noreferrer">Penedo et al., FineWeb</a> · <a href="slides/lecture-10/optional-reading.md">Reading guide</a></div></td>
-        <td>Quiz 4; A3 released</td>
+        <td>Quiz 4; A3 release Friday, November 13</td>
       </tr>
       <tr id="lecture-11" data-start="2026-11-15">
         <td class="num">11</td>
@@ -335,7 +335,7 @@
         <td class="date">Nov 25</td>
         <td><strong>Retrieval and retrieval-augmented generation</strong><span class="lens">When should a system retrieve evidence, and when should it abstain?</span></td>
         <td>TF-IDF/BM25; dense retrieval; reranking; chunking; context construction; retrieval recall, answer support, and unanswerable questions.
-          <div class="practice"><strong>Practice:</strong> Compare retrieval or chunking choices on the same questions; distinguish retrieval failures, unsupported generation and appropriate abstention.</div>
+          <div class="practice"><strong>Practice:</strong> Compare retrieval policies on the same questions; use supplied supporting context to diagnose retrieval failures, unsupported generation and appropriate abstention.</div>
           <div class="materials"><strong>Plan:</strong> <a href="docs/course-revision.html#lecture-12-retrieval-and-rag">Lecture 12 preparation plan</a></div>
           <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2004.04906" target="_blank" rel="noopener noreferrer">DPR</a> · <a href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener noreferrer">RAG</a></div></td>
         <td>Project progress update due</td>
@@ -348,33 +348,33 @@
           <div class="practice"><strong>Practice:</strong> Check a cache or batching change, then compare candidate-selection strategies at declared attempt, token and time budgets.</div>
           <div class="materials"><strong>Plan:</strong> <a href="docs/course-revision.html#lecture-13-inference-and-computation-at-test-time">Lecture 13 preparation plan</a></div>
           <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2205.14135" target="_blank" rel="noopener noreferrer">FlashAttention</a> · <a href="https://arxiv.org/abs/2309.06180" target="_blank" rel="noopener noreferrer">vLLM</a> · <a href="https://arxiv.org/abs/2408.03314" target="_blank" rel="noopener noreferrer">Test-time compute</a></div></td>
-        <td>A3 due</td>
+        <td>A3 due Friday, December 4</td>
       </tr>
       <tr id="lecture-14" data-start="2026-12-06">
         <td class="num">14</td>
         <td class="date">Dec 9</td>
-        <td><strong>Masked diffusion language models</strong><span class="lens">What changes when generation can update multiple token positions?</span></td>
-        <td>BERT as a masked-prediction contrast; a discrete masking process and denoising objective; iterative unmasking, conditioning and sampling schedules; quality and compute comparisons with autoregression.
-          <div class="practice"><strong>Practice:</strong> Trace a small masked sampler and compare assumptions, step counts and costs; parallel token updates alone do not establish a speedup.</div>
-          <div class="materials"><strong>Plan:</strong> <a href="docs/course-revision.html#lecture-14-masked-diffusion-language-models">Lecture 14 preparation plan</a></div>
-          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2406.07524" target="_blank" rel="noopener noreferrer">MDLM</a> · <a href="https://arxiv.org/abs/2502.09992" target="_blank" rel="noopener noreferrer">LLaDA</a></div></td>
+        <td><strong>Agents and tool use</strong><span class="lens">When does a tool-use loop improve an outcome enough to justify its cost?</span></td>
+        <td>Bounded tool use; stopping conditions; trace inspection; prompt injection and tool permissions; recovery from tool errors; compare with direct generation and a fixed retrieval pipeline.
+          <div class="practice"><strong>Practice:</strong> Replay a bounded agent, repair a failed tool call, and compare success, tokens, latency and budget exhaustion with simpler baselines.</div>
+          <div class="materials"><strong>Plan:</strong> <a href="docs/course-revision.html#lecture-14-agents-and-tool-use">Lecture 14 preparation plan</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener noreferrer">ReAct</a> · <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener noreferrer">SWE-bench</a></div></td>
         <td>Quiz 5</td>
       </tr>
       <tr id="lecture-15" data-start="2026-12-13">
         <td class="num">15</td>
         <td class="date">Dec 16</td>
-        <td><strong>Agents and tool use</strong><span class="lens">When does a tool-use loop improve an outcome enough to justify its cost?</span></td>
-        <td>Bounded tool use; stopping conditions; trace inspection; prompt injection and tool permissions; compare with direct generation.
-          <div class="practice"><strong>Practice:</strong> Compare direct generation with a bounded agent on the same tasks; inspect success, failures, tool calls, tokens, latency and stopping behavior.</div>
-          <div class="materials"><strong>Plan:</strong> <a href="docs/course-revision.html#lecture-15-agents-and-tool-use">Lecture 15 preparation plan</a></div>
-          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener noreferrer">ReAct</a> · <a href="https://arxiv.org/abs/2310.06770" target="_blank" rel="noopener noreferrer">SWE-bench</a></div></td>
+        <td><strong>Masked diffusion language models</strong><span class="lens">What changes when generation can update multiple token positions?</span></td>
+        <td>BERT as a masked-prediction contrast; a discrete masking process and denoising objective; iterative unmasking, conditioning and sampling schedules; quality and compute comparisons with autoregression.
+          <div class="practice"><strong>Practice:</strong> Compare two unmasking schedules in a CPU toy sampler, then audit a quality/cost comparison with autoregression.</div>
+          <div class="materials"><strong>Plan:</strong> <a href="docs/course-revision.html#lecture-15-masked-diffusion-language-models">Lecture 15 preparation plan</a></div>
+          <div class="materials"><strong>References:</strong> <a href="https://arxiv.org/abs/2406.07524" target="_blank" rel="noopener noreferrer">MDLM</a> · <a href="https://arxiv.org/abs/2502.09992" target="_blank" rel="noopener noreferrer">LLaDA</a></div></td>
         <td>—</td>
       </tr>
       <tr id="lecture-16" data-start="2026-12-20">
         <td class="num">16</td>
         <td class="date">Dec 23</td>
         <td><strong>Research synthesis and project revision</strong><span class="lens">Which claims are supported by our experiments, and what still needs to be checked?</span></td>
-        <td>Connect course methods to project findings; inspect baselines, controlled comparisons, uncertainty and failure cases. Revise the six-page main report, code and experiment record using written feedback.
+        <td>Choose among data changes, adaptation, retrieval, inference compute and tools using project evidence; inspect controls, uncertainty and failure cases. Revise the six-page main report, code and experiment record using written feedback.
           <div class="practice"><strong>Practice:</strong> Trace one project claim to its evidence, narrow an unsupported conclusion and prepare the final revision checklist.</div>
           <div class="materials"><strong>Plan:</strong> <a href="docs/course-revision.html#lecture-16-research-synthesis-and-project-revision">Lecture 16 preparation plan</a></div>
           <div class="materials"><strong>References:</strong> <a href="docs/project-candidates.html">Project guidance</a> · <a href="docs/lecture-10-data-evaluation.html#11-a-minimum-useful-experiment-report">Experiment-report template</a></div></td>
@@ -388,6 +388,7 @@
         <td>Final report, code, and experiment record due</td>
       </tr>
     </tbody></table></div>
+    <p>November 11 coverage update: SFT, reward models, PPO, GRPO and DPO have been covered across Lectures 8–10. The remaining six lectures build on these foundations.</p>
     <p>Lecture 11 preserves the instructor's diffusion-language-model slides. Lectures 12–16 link to preparation plans with readings, classroom activities and estimated compute budgets.</p>
     <p>There are 16 teaching sessions, including the Saturday make-up class on October 10. References will remain available on this course page. December 23 is reserved for research synthesis and project revision. Individual project feedback is provided through written comments and office hours.</p>
 </section>
@@ -404,7 +405,7 @@
       <ul>
         <li><strong>A1 · Tokenization and language models (15%).</strong> <span>Released September 16; due September 30, 2026, 23:59 (Asia/Shanghai).</span> <span>Build a byte-level BPE tokenizer, smoothed n-gram baselines, and a small neural language model; evaluate on held-out English and Chinese text.</span> <a href="https://github.com/baojian/llm-26-fall/tree/main/assignments/a1-tokenization-and-language-models" target="_blank" rel="noopener noreferrer">Handout, starter code, and data</a> · <a href="https://github.com/baojian/llm-26-fall/issues/140" target="_blank" rel="noopener noreferrer">Announcement and questions</a>. <a href="https://elearning.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">Submit privately through eLearning</a>.</li>
         <li><strong>A2 · Build and investigate a small language model (15%).</strong> <span>Released October 10; due October 31, 2026, 23:59 (Asia/Shanghai).</span> <span>Build a causal Transformer, verify training and checkpoint restart, compare decoding settings, and investigate exact-document deduplication at a fixed training budget.</span> <a href="https://github.com/baojian/llm-26-fall/tree/main/assignments/a2-build-a-small-lm" target="_blank" rel="noopener noreferrer">Handout, starter code, and data</a>. <a href="https://elearning.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">Submit privately through eLearning</a>.</li>
-        <li>A3 · Adapt and evaluate (15%). Released November 11; due December 2, 2026, 23:59 (Asia/Shanghai). SFT on a supplied pretrained checkpoint with correct response-token masking; compare with the unadapted model on a held-out task. Inspect both improvements and regressions. DPO or GRPO is an extension.</li>
+        <li><strong>A3 · SFT, Reward Modeling, and PPO (15%).</strong> <span>Release version November 13; due Friday, December 4, 2026, 23:59 (Asia/Shanghai).</span> <span>Implement response-only SFT, a preference reward model, PPO objectives, and paired evaluation. Run the fixed GPT-2 pipeline on one compatible CUDA GPU and compare baseline, SFT, and PPO outputs on held-out grounded questions. Inspect improvements, regressions, and reward failures.</span> <a href="https://github.com/baojian/llm-26-fall/tree/main/assignments/a3-sft-rm-ppo" target="_blank" rel="noopener noreferrer">Handout, starter code, and data</a>. <a href="https://elearning.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">Submit privately through eLearning</a>.</li>
       </ul>
     </div>
     <div class="card">

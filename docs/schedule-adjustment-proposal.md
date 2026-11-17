@@ -2,6 +2,11 @@
 
 **Prepared and approved:** September 29, 2026. **Status:** approved for publication.
 
+**November 13 update:** A3's release package is dated November 13 and its
+deadline is now Friday, December 4, 2026, 23:59 Asia/Shanghai. This supersedes
+the A3 dates in the September 29 record below and retains a 21-day work window.
+See the [current schedule](schedule.md#assessment-dates).
+
 **October 9 update:** the instructor extended the project proposal deadline
 from October 14 to **October 21, 2026, 23:59 Asia/Shanghai (UTC+08:00)** to give
 students more time to consider their project questions. This supersedes the

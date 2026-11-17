@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+.pytest_cache/
+outputs/
+*.pt
+*.safetensors
+*.zip
+results.json
+report.md
+evidence/

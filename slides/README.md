@@ -105,8 +105,9 @@ preferences and reward models. Its 31 slides and four offline exercises match
 
 [Lecture 09](lecture-09/index.html) develops REINFORCE, baselines, PPO and GAE.
 Its 41-slide material bank includes four core exercises and a clearly marked
-GRPO/DPO supplement with two optional practices. The supplement was not taught
-in Week 9. See [the notes](../docs/lecture-09-policy-optimization.html) and
+GRPO/DPO supplement with two optional practices. The instructor confirmed on
+November 11 that these topics were covered across Lectures 8–10; the supplement
+now serves as review. See [the notes](../docs/lecture-09-policy-optimization.html) and
 [teaching plan](lecture-09/teaching-plan.md).
 
 [Lecture 10](lecture-10/index.html) connects data preparation and quality to
