@@ -55,7 +55,7 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
 | 8 | Wed, Oct 28, 2026 | [InstructGPT, SFT and reward models](lecture-08-instructgpt.html) | A2 due **Sat, Oct 31** |
 | 9 | Wed, Nov 4, 2026 | [Reinforcement learning, REINFORCE and PPO](lecture-09-policy-optimization.html) | — |
 | 10 | Wed, Nov 11, 2026 | [Data preparation, evaluation and experimental design](lecture-10-data-evaluation.html) | Quiz 4; A3 released |
-| 11 | Wed, Nov 18, 2026 | [DPO, GRPO and verifiable rewards](course-revision.html#lecture-11-dpo-grpo-and-verifiable-rewards) | — |
+| 11 | Wed, Nov 18, 2026 | [Diffusion Language Models](../slides/lecture-11/) | — |
 | 12 | Wed, Nov 25, 2026 | [Retrieval and retrieval-augmented generation](course-revision.html#lecture-12-retrieval-and-rag) | Project progress update due |
 | 13 | Wed, Dec 2, 2026 | [Efficient inference and computation at test time](course-revision.html#lecture-13-inference-and-computation-at-test-time) | A3 due |
 | 14 | Wed, Dec 9, 2026 | [Masked diffusion language models](course-revision.html#lecture-14-masked-diffusion-language-models) | Quiz 5 |

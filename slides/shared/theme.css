@@ -115,6 +115,10 @@ body { margin: 0; font-family: var(--r-main-font); color: var(--r-main-color); }
 .reveal .plot { width: 100%; height: 410px; margin: 0 0 20px; }
 .reveal .diagram, .reveal .animation, .reveal .animation-poster { display: block; width: 100%; height: 410px; max-width: 100%; max-height: none; object-fit: contain; margin: 0 0 20px; border: 0; box-shadow: none; }
 .reveal .animation-poster { display: none; }
+/* Faithful imports keep the original page geometry and an accessible title. */
+.reveal .slides > section.source-slide { padding: 0; }
+.reveal .source-slide .source-slide-image { position: absolute; inset: 0; display: block; width: 100%; height: 100%; max-width: none; max-height: none; object-fit: contain; margin: 0; border: 0; box-shadow: none; }
+.reveal .source-slide .source-slide-title { position: absolute; width: 1px; height: 1px; padding: 0; margin: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 @media (max-width: 600px) {
   .course-toolbar { font-size: 12px; gap: 8px; top: 4px; right: 8px; }
   .course-toolbar .lang-toggle button { padding: 4px 7px; font-size: 12px; }
@@ -122,6 +126,7 @@ body { margin: 0; font-family: var(--r-main-font); color: var(--r-main-color); }
 }
 /* Use the same content area on screen and paper so a checked deck still fits. */
 html.reveal-print .reveal .slides section { height: 720px !important; padding: 20px 64px 58px !important; }
+html.reveal-print .reveal .slides section.source-slide { padding: 0 !important; }
 html.reveal-print .reveal .slides section.title-slide,
 html.reveal-print .reveal .slides section.section-slide { display: flex !important; }
 html.reveal-print .reveal .animation,

@@ -125,6 +125,13 @@ See [the notes](../docs/lecture-10-data-evaluation.html),
 [asset provenance](lecture-10/assets/README.md).
 All three notebooks run offline on CPU with the standard library (0 GPU-hours).
 
+[Lecture 11](lecture-11/index.html) preserves all 69 slides of the instructor's
+diffusion-language-model PowerPoint in their original style and order. Vector
+page imports, five original GIFs, the click reveal, and source hyperlinks run
+inside the shared Reveal.js viewer. This first pass changes no teaching content
+and adds no notebook. See the [conversion guide](lecture-11/README.md) and
+[source provenance](lecture-11/assets/README.md).
+
 ## Teaching from a classroom browser
 
 Once the slide files reach the branch published by GitHub Pages, open the deck

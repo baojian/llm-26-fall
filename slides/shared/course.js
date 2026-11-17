@@ -6,10 +6,12 @@
   document.getElementById('help-button').addEventListener('click', () => help.showModal());
   const notebookLink = document.getElementById('notebook-link');
   const lecture = new URL('./', location.href).pathname.split('/').filter(Boolean).pop();
-  notebookLink.href = new URL(`shared/notebook.html?lecture=${encodeURIComponent(lecture)}`, base);
-  notebookLink.target = '_blank';
-  notebookLink.rel = 'noopener noreferrer';
-  notebookLink.removeAttribute('download');
+  if (notebookLink) {
+    notebookLink.href = new URL(`shared/notebook.html?lecture=${encodeURIComponent(lecture)}`, base);
+    notebookLink.target = '_blank';
+    notebookLink.rel = 'noopener noreferrer';
+    notebookLink.removeAttribute('download');
+  }
   const languageNote = document.querySelector('.course-language-note');
   function updateLanguage() {
     languageNote.hidden = CourseLanguage.get() !== 'zh';
@@ -23,6 +25,7 @@
     const response = await fetch('lecture.json');
     if (!response.ok) throw new Error('The lecture details could not be loaded.');
     const metadata = await response.json();
+    if (metadata.notebook === false && notebookLink) notebookLink.hidden = true;
     document.title = `${metadata.title} · CS40008.01`;
     document.querySelector('.slides').lang = metadata.language || 'en';
     await Reveal.initialize({

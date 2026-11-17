@@ -1,0 +1,9 @@
+{
+  "number": "11",
+  "title": "Diffusion Language Models",
+  "subtitle": "Lecture 11 – NLP and LLMs",
+  "language": "en",
+  "notebook": false,
+  "demo": "demo.js",
+  "source_preservation": "assets/source-manifest.json"
+}

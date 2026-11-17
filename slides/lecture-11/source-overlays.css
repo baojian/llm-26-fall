@@ -1,0 +1,60 @@
+/* Coordinates are taken from the source PowerPoint's 1280 × 720 canvas. */
+.reveal .slides .source-overlay {
+  position: absolute;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+  max-width: none;
+  max-height: none;
+  box-sizing: border-box;
+}
+.reveal .slides .source-overlay[hidden] { display: none; }
+.reveal .slides img.source-overlay { object-fit: fill; }
+.reveal .slides .source-gif,
+.reveal .slides .source-initial-diagram { z-index: 2; pointer-events: none; }
+.reveal .slides .source-image29 {
+  left: 109.500052px; top: 229.145932px;
+  width: 1051.249974px; height: 438.020787px;
+}
+.reveal .slides .source-image31 {
+  left: 361.333333px; top: 194.583307px;
+  width: 886.666562px; height: 437.333333px;
+}
+.reveal .slides .source-image32 {
+  left: 427.958425px; top: 205.500052px;
+  width: 368.439895px; height: 447.749921px;
+}
+.reveal .slides .source-image33 {
+  left: 26.313911px; top: 205.500052px;
+  width: 351.255748px; height: 447.749921px;
+}
+.reveal .slides .source-image34 {
+  left: 846.787087px; top: 205.500052px;
+  width: 359.462467px; height: 447.515171px;
+}
+.reveal .slides .source-initial-diagram {
+  left: 115.467507px; top: 116.333333px;
+  width: 1039.398215px; height: 578.333333px;
+  /* PowerPoint's source effect is an immediate appearance. */
+  transition: none;
+}
+.reveal .slides .source-link {
+  z-index: 3;
+  background: transparent;
+  color: transparent;
+  text-decoration: none;
+}
+.reveal .slides .source-link:focus-visible {
+  outline: 3px solid #176bc0;
+  outline-offset: 2px;
+}
+html.reveal-print .source-gif,
+html.reveal-print .source-initial-diagram { display: none !important; }
+/* Original page numbers are already part of the preserved artwork. */
+html.reveal-print .pdf-page:has(.source-slide) .slide-number-pdf { display: none !important; }
+@media print {
+  .source-gif,
+  .source-initial-diagram { display: none !important; }
+}

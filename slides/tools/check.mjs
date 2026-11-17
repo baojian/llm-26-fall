@@ -17,8 +17,9 @@ const source = await readFile(path.join(deck, 'slides.md'), 'utf8');
 assert.doesNotMatch(source, /REPLACE:|\{\{[^}]+\}\}/, 'Replace the template prompts before checking a lecture.');
 assert.doesNotMatch(source, /\bstyle\s*=|<style\b|r-fit-text/, 'Use the shared layouts instead of slide-specific styles or automatic text shrinking.');
 const metadata = JSON.parse(await readFile(path.join(deck, 'lecture.json'), 'utf8'));
-const defaultNotebook = metadata.notebook || 'practice.ipynb';
-const notebooks = new Map(await Promise.all([defaultNotebook, ...(metadata.additional_notebooks || [])].map(async filename => {
+const defaultNotebook = metadata.notebook === false ? null : metadata.notebook || 'practice.ipynb';
+const notebookFiles = [...(defaultNotebook ? [defaultNotebook] : []), ...(metadata.additional_notebooks || [])];
+const notebooks = new Map(await Promise.all(notebookFiles.map(async filename => {
   assert.match(filename, /^[a-z0-9][a-z0-9_-]*\.ipynb$/, 'Keep registered notebooks inside the lecture folder.');
   const notebook = JSON.parse(await readFile(path.join(deck, filename), 'utf8'));
   assert.equal(notebook.nbformat, 4);
@@ -29,6 +30,21 @@ const slideSources = text => text.split(/^---$/m).map(section => section.trim())
   id: /<!--\s*\.slide:[^>]*\bid="([^"]+)"/.exec(section)?.[1],
   section,
 }));
+let sourcePreservation;
+if (metadata.source_preservation) {
+  assert.match(metadata.source_preservation, /^[a-z0-9][a-z0-9_/-]*\.json$/, 'Use a local source-preservation manifest.');
+  sourcePreservation = JSON.parse(await readFile(path.join(deck, metadata.source_preservation), 'utf8'));
+  assert.match(sourcePreservation.source_sha256, /^[a-f0-9]{64}$/, 'Record the original PowerPoint SHA-256.');
+  assert.equal(sourcePreservation.width, 1280);
+  assert.equal(sourcePreservation.height, 720);
+  assert.deepEqual(slideSources(source).map(slide => slide.id), sourcePreservation.slides.map(slide => slide.id),
+    'Preserve every source page in its original order.');
+  for (const slide of sourcePreservation.slides) {
+    assert.match(slide.asset, /^assets\/[a-zA-Z0-9_/-]+\.(svg|png|jpg|jpeg)$/, 'Keep imported slide images in local assets.');
+    assert.equal(createHash('sha256').update(await readFile(path.join(deck, slide.asset))).digest('hex'), slide.sha256,
+      `${slide.id}: preserve the recorded source-page image.`);
+  }
+}
 const componentSources = ['lecture-05-test', 'lecture-05'].includes(folder)
   ? slideSources(await readFile(path.join(slidesRoot, 'lecture-05-test/slides.md'), 'utf8')) : [];
 const adaptations = folder === 'lecture-05'
@@ -36,8 +52,9 @@ const adaptations = folder === 'lecture-05'
 for (const { id: slideId, section } of slideSources(source)) {
   const attributes = /<!--\s*\.slide:([^>]+)-->/m.exec(section)?.[1] || '';
   const filename = /\bdata-exercise-notebook="([^"]+)"/.exec(attributes)?.[1] || defaultNotebook;
-  assert.ok(notebooks.has(filename), `${slideId}: register the exercise notebook ${filename} in lecture.json.`);
+  if (filename) assert.ok(notebooks.has(filename), `${slideId}: register the exercise notebook ${filename} in lecture.json.`);
   for (const [, id] of section.matchAll(/(?:Exercise|Practice|Implementation)\s+([EP]\d+)/g)) {
+    assert.ok(notebooks.has(filename), `${slideId}: register a notebook for ${id}.`);
     assert.ok(notebooks.get(filename).cells.some(cell => cell.cell_type === 'markdown'
       && new RegExp(`\\b${id}\\b`).test(cell.source.join(''))), `${slideId}: ${filename} is missing ${id}.`);
   }
@@ -161,6 +178,19 @@ try {
   const ids = await page.locator('.slides > section').evaluateAll(sections => sections.map(section => section.id));
   assert.ok(ids.every(Boolean), 'Give every slide a stable ID.');
   assert.equal(new Set(ids).size, ids.length, 'Slide IDs must be unique.');
+  const importedSlides = await page.locator('.slides > section.source-slide').evaluateAll(sections => sections.map(section => ({
+    id: section.id,
+    imageCount: section.querySelectorAll('img.source-slide-image').length,
+    asset: section.querySelector('img.source-slide-image')?.getAttribute('src'),
+    title: section.querySelector('h1.source-slide-title,h2.source-slide-title')?.textContent.trim(),
+  })));
+  if (importedSlides.length || sourcePreservation) {
+    assert.ok(sourcePreservation, 'Source-slide layouts require a preservation manifest.');
+    assert.deepEqual(importedSlides.map(slide => ({ id: slide.id, asset: slide.asset })),
+      sourcePreservation.slides.map(slide => ({ id: slide.id, asset: slide.asset })), 'Render each recorded source image on its matching slide.');
+    for (const slide of importedSlides) assert.ok(slide.imageCount === 1 && slide.title, `${slide.id}: include one source image and an accessible title.`);
+  }
+  if (metadata.notebook === false) assert.equal(await page.locator('#notebook-link').isVisible(), false, 'Hide the notebook link when this lecture has no notebook.');
   const checkedSlides = [];
   for (const viewport of [{ width: 1440, height: 900 }, { width: 1280, height: 720 }, { width: 1024, height: 768 }]) {
     await page.setViewportSize(viewport);
@@ -168,6 +198,7 @@ try {
       await page.evaluate(async index => {
         Reveal.slide(index);
         Reveal.getCurrentSlide().querySelectorAll('.fragment').forEach(el => el.classList.add('visible'));
+        await Promise.all([...Reveal.getCurrentSlide().querySelectorAll('img.source-slide-image')].map(image => image.decode()));
         await document.fonts.ready;
         Reveal.layout();
         await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
@@ -177,15 +208,22 @@ try {
         const box = slide.getBoundingClientRect();
         const scale = Reveal.getScale();
         const problems = [];
-        const elements = [...slide.querySelectorAll('h1,h2,h3,p,li,pre,table,.columns,.katex-display,input,button,.plot,.plot text,img,video')].filter(el => !el.closest('aside.notes'));
+        const imported = slide.classList.contains('source-slide');
+        const contentBottom = box.bottom - (imported ? -1 : 35 * scale);
+        const elements = [...slide.querySelectorAll('h1,h2,h3,p,li,pre,table,.columns,.katex-display,input,button,.plot,.plot text,img,video')].filter(el => !el.closest('aside.notes') && !(imported && el.matches('.source-slide-title')));
         if (!slide.querySelector('h1,h2')) problems.push('Missing heading');
         if (slide.querySelector('.katex-error')) problems.push('Unrendered equation');
         for (const el of elements) {
           if (el.closest('.katex') && !el.classList.contains('katex-display')) continue;
           const bounds = el.getBoundingClientRect();
           const label = el.textContent.trim().slice(0, 70) || el.tagName;
+          if (imported && el.matches('img.source-slide-image')) {
+            if (!el.complete || !el.naturalWidth) problems.push('Source image did not load');
+            if (['left', 'right', 'top', 'bottom'].some(edge => Math.abs(bounds[edge] - box[edge]) > 1)) problems.push('Source image must fill the original page frame');
+            if (Math.abs(el.naturalWidth / el.naturalHeight - 1280 / 720) > 0.002) problems.push('Source image must preserve the 16:9 page ratio');
+          }
           if (!bounds.width || !bounds.height) continue;
-          if (bounds.left < box.left - 1 || bounds.right > box.right + 1 || bounds.top < box.top - 1 || bounds.bottom > box.bottom - 35 * scale) problems.push(`Outside slide content area: ${label}`);
+          if (bounds.left < box.left - 1 || bounds.right > box.right + 1 || bounds.top < box.top - 1 || bounds.bottom > contentBottom) problems.push(`Outside slide content area: ${label}`);
           if (el.scrollWidth > el.clientWidth + 3 && ['PRE', 'TABLE', 'P', 'H1', 'H2', 'H3', 'LI'].includes(el.tagName)) problems.push(`Horizontal overflow: ${label}`);
           const font = parseFloat(getComputedStyle(el).fontSize);
           const minimum = el.closest('.source,.caption,.eyebrow,.exercise-meta,.plot') ? 24 : el.tagName === 'PRE' ? 26 : ['H1', 'H2'].includes(el.tagName) ? 44 : 26;
@@ -824,16 +862,23 @@ try {
     await page.setViewportSize({ width: 1600, height: 1000 });
     await page.screenshot({ path: path.join(output, 'print-preview.png'), animations: 'disabled' });
     await page.emulateMedia({ media: 'print' });
-    const printPadding = await page.locator('.pdf-page section').evaluateAll(sections => sections.map(section => parseFloat(getComputedStyle(section).paddingLeft)));
+    const printPadding = await page.locator('.pdf-page section:not(.source-slide)').evaluateAll(sections => sections.map(section => parseFloat(getComputedStyle(section).paddingLeft)));
     assert.ok(printPadding.every(padding => padding >= 64), 'PDF export must preserve the slide content margins.');
     const printOverflow = await page.locator('.pdf-page section').evaluateAll(sections => sections.flatMap(section => {
       const box = section.getBoundingClientRect();
       return [...section.querySelectorAll('h1,h2,p,li,pre,table,.plot')]
-        .filter(el => !el.closest('aside.notes'))
-        .filter(el => el.getBoundingClientRect().bottom > box.bottom - 35)
+        .filter(el => !el.closest('aside.notes') && !(section.classList.contains('source-slide') && el.matches('.source-slide-title')))
+        .filter(el => el.getBoundingClientRect().bottom > box.bottom - (section.classList.contains('source-slide') ? 0 : 35))
         .map(el => `${section.id}: ${el.textContent.trim().slice(0, 60)}`);
     }));
     assert.deepEqual(printOverflow, [], 'Content extends into the PDF slide footer.');
+    const importedPrint = await page.locator('.pdf-page section.source-slide').evaluateAll(sections => sections.map(section => {
+      const box = section.getBoundingClientRect();
+      const image = section.querySelector('img.source-slide-image');
+      const bounds = image.getBoundingClientRect();
+      return image.complete && image.naturalWidth > 0 && ['left', 'right', 'top', 'bottom'].every(edge => Math.abs(bounds[edge] - box[edge]) <= 1);
+    }));
+    assert.ok(importedPrint.every(Boolean), 'Print each source image in its complete original page frame.');
     await page.pdf({ path: path.join(output, `${folder}.pdf`), printBackground: true, preferCSSPageSize: true });
   }
   assert.deepEqual(errors, [], 'Browser errors or missing runtime assets.');

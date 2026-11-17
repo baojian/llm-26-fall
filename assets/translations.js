@@ -1,5 +1,9 @@
 // Chinese translations for the English course page. Keep keys in sync with index.html.
 window.courseTranslations = {
+  "Diffusion Language Models": "扩散语言模型",
+  "Image diffusion, autoencoders, VAEs, VQ-VAE, DDPMs, D3PMs, Mercury, LLaDA and Dream.": "图像扩散、自编码器、VAE、VQ-VAE、DDPM、D3PM、Mercury、LLaDA 与 Dream。",
+  "Original slide references": "原课件参考资料",
+  "Lecture 11 preserves the instructor's diffusion-language-model slides. Lectures 12–16 link to preparation plans with readings, classroom activities and estimated compute budgets.": "第 11 讲保留教师原有的扩散语言模型课件。第 12–16 讲链接到备课计划，包含阅读材料、课堂活动和预计算力预算。",
   "Plan:": "计划：",
   "DPO, GRPO and verifiable rewards": "DPO、GRPO 与可验证奖励",
   "How do preferences and rewards change a policy, and how do we check the result?": "偏好与奖励如何改变策略，我们如何检验结果？",
