@@ -274,7 +274,7 @@ class Builder:
                     content, count = re.subn(pattern, replacement, content, flags=re.S)
                     if not count:
                         break
-            heading = kind in ['title','ctrTitle'] or original.strip() == self.title.strip()
+            heading = kind in ['title','ctrTitle'] or original.strip() == self.source_title.strip()
             element = 'h1' if number == 1 and heading else 'h2' if heading else 'p'
             classes = f'native-paragraph {pclass}' + (' native-bullet' if bullet else '')
             if all(tag(c) not in ['r','fld'] or not ''.join(c.itertext()).strip() for c in paragraph):
@@ -282,7 +282,9 @@ class Builder:
             out.append(f'<{element} class="{classes}">{content}</{element}>')
             texts.append(''.join(plaintext)); originals.append(original)
         return (f'<div class="native-text {geometry}" data-source-text-id="{boxid}">\n' + '\n'.join(out) + '\n</div>',
-                {'id': boxid, 'rect': rect, 'paragraphs': texts, 'original_paragraphs': originals, 'font_sizes': sorted(sizes)})
+                {'id': boxid, 'rect': rect, 'paragraphs': texts, 'original_paragraphs': originals,
+                 'font_sizes': sorted(sizes),
+                 'role': 'slide-number' if kind == 'sldNum' else 'title' if heading else 'body'})
 
     def decoration(self, shape):
         rect = self.rect(shape, [shape])
@@ -295,8 +297,14 @@ class Builder:
 
     def build(self):
         previous = json.loads((ROOT / 'assets/source-manifest.json').read_text())
-        manifest = {k:v for k,v in previous.items() if k not in ['slides','media','renderer']}
+        adaptation_path = ROOT / 'adaptations.json'
+        adaptations = json.loads(adaptation_path.read_text())
+        if len(adaptations['titles']) != 69:
+            raise ValueError('Provide exactly one title for each of the 69 source slides.')
+        manifest = {k:v for k,v in previous.items() if k not in ['slides','media','renderer','adaptations']}
         manifest.update(mode='native', renderer='DrawingML → HTML; OMML → KaTeX; original picture bytes', slides=[])
+        manifest['adaptations'] = {'file': 'adaptations.json', 'sha256': sha(adaptation_path.read_bytes()),
+                                   'description': 'Revised headings, standard course cover, and removed source page numbers.'}
         slides = []
         for number in range(1,70):
             name = f'ppt/slides/slide{number}.xml'
@@ -306,10 +314,14 @@ class Builder:
             layout = ET.fromstring(self.archive.read(layoutname))
             mastername = next(r['Target'] for r in self.rels(layoutname).values() if r['Type'].endswith('/slideMaster'))
             master = ET.fromstring(self.archive.read('ppt/' + mastername.removeprefix('../')))
-            self.title = previous['slides'][number-1]['title']
+            source_page = previous['slides'][number-1]
+            self.source_title = source_page.get('original_title', source_page['title'])
+            self.title = adaptations['titles'][number-1]
             sid = 'references' if number == 69 else f'source-{number:03d}'
             page = {'id':sid,'number':number,'title':self.title,'source_xml':name,
-                    'source_xml_sha256':sha(self.archive.read(name)),'text_boxes':[],'illustrations':[]}
+                    'original_title': self.source_title,
+                    'source_xml_sha256':sha(self.archive.read(name)),
+                    'original_text_boxes': [], 'text_boxes':[],'illustrations':[]}
             pieces = [f'<!-- .slide: id="{sid}" class="native-slide" -->\n']
             for s in children(find(layout,'p:cSld/p:spTree')):
                 if tag(s) == 'sp' and ph(s) is None:
@@ -322,9 +334,35 @@ class Builder:
                     chain = [placeholder(s,master), placeholder(s,layout), s]
                     result = self.text(s,chain,master,number,rels)
                     if result:
-                        markup, record = result;pieces.append(markup);page['text_boxes'].append(record)
+                        markup, record = result
+                        page['original_text_boxes'].append(record)
+                        if record['role'] == 'slide-number':
+                            continue
+                        if record['role'] == 'title':
+                            markup = re.sub(r'(<h[12] [^>]*>).*?(</h[12]>)',
+                                            lambda match: match[1] + html.escape(self.title) + match[2],
+                                            markup, flags=re.S)
+                            record = {**record, 'paragraphs': [self.title]}
+                        pieces.append(markup);page['text_boxes'].append(record)
                     elif find(s,'p:spPr/a:xfrm') is not None:
                         pieces.append(self.decoration(s))
+            if number == 1:
+                cover = adaptations['cover']
+                pieces = [f'<!-- .slide: id="{sid}" class="native-slide title-slide course-cover" -->\n']
+                page['text_boxes'] = []
+                for identifier, element, classname, value, size in [
+                    ('course', 'p', 'eyebrow', cover['course'], 24),
+                    ('title', 'h1', '', self.title, 68),
+                    ('subtitle', 'p', 'subtitle', cover['subtitle'], 34),
+                    ('byline', 'p', 'byline', '\n'.join(cover['byline']), 26),
+                ]:
+                    boxid = f'cover-{identifier}'
+                    classattr = f' class="{classname}"' if classname else ''
+                    content = html.escape(value).replace('\n', '<br>')
+                    pieces.append(f'<div class="native-text" data-source-text-id="{boxid}">\n'
+                                  f'<{element}{classattr}>{content}</{element}>\n</div>')
+                    page['text_boxes'].append({'id': boxid, 'paragraphs': [value],
+                                              'font_sizes': [size], 'role': 'course-cover'})
             slides.append('\n'.join(pieces));manifest['slides'].append(page)
         (ROOT/'slides.md').write_text('\n\n---\n\n'.join(slides)+'\n')
         (ROOT/'native-layout.css').write_text('/* Source-derived positions and typography; edit these alongside slides.md. */\n'+'\n'.join(self.css)+'\n')

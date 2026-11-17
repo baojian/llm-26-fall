@@ -1,9 +1,10 @@
 # Lecture 11 — Diffusion Language Models
 
-Round 2 converts the instructor's PowerPoint into editable Reveal.js content.
-All 69 slides retain their original order, wording, course label, date,
-illustrations, citations, and page numbers. Teaching-content revisions remain
-for a later pass.
+The instructor's PowerPoint is converted into editable Reveal.js content.
+All 69 slides retain their original order, body text, equations, illustrations,
+and citations. The third pass gives the pages specific topic headings, removes
+the 69 original page-number placeholders, and uses the shared course cover
+with CS40008.01 and November 18, 2026. Reveal's navigation counter remains.
 
 ## Preview and edit
 
@@ -16,7 +17,7 @@ uv run python scripts/slides.py serve
 <http://127.0.0.1:8000/slides/lecture-11/>
 
 - Edit headings, paragraphs, references, and equations directly in
-  [slides.md](slides.md). The 180 text boxes are real HTML, not page images.
+  [slides.md](slides.md). The 113 text boxes are real HTML, not page images.
 - The 31 equations use editable TeX inside `$...$` delimiters and the course's
   local KaTeX renderer. Original mathematical notation and wording are retained.
 - The 69 illustration instances use 66 original picture files, including five
@@ -28,6 +29,10 @@ uv run python scripts/slides.py serve
 - For a later approved content revision, update the manifest's expected
   `paragraphs` alongside the HTML/TeX; retain `original_paragraphs` and source
   hashes as the historical baseline.
+- [adaptations.json](adaptations.json) records the revised page titles and
+  course cover. The builder reapplies these changes and excludes source slide
+  numbers on every rebuild. The cover uses the same shared typography and
+  spacing as Lecture 10; content pages retain their source layout.
 - [demo.js](demo.js) manages GIF playback. Slide 6's second picture is a Reveal
   fragment. Print displays its final state and first-frame GIF posters.
 
@@ -41,14 +46,15 @@ transcript hidden in notes.
 The source design uses Tahoma with occasional font overrides. CSS preserves
 those font choices with system fallbacks. Browser font metrics and KaTeX cause
 small line-wrap and paragraph-spacing differences from PowerPoint. Source
-font sizes are retained; text is not automatically shrunk. In slide 49, three
+font sizes on content pages are retained; text is not automatically shrunk. In slide 49, three
 paragraph gaps are reduced by 6px to accommodate inline math without overlap.
-Original small citations and labels are retained for this unchanged-content
-revision.
+Original small citations and illustration labels are retained.
 
 [The manifest](assets/source-manifest.json) records the source PPTX hash,
 original DrawingML text, editable TeX/text, text-box IDs, source font sizes,
-illustration geometry/crops, and image hashes. `mc:Choice` is used for modern
+illustration geometry/crops, and image hashes. It also keeps all 180 original
+text boxes, including the removed numbers and replaced cover, separately from
+the 113 current text boxes. `mc:Choice` is used for modern
 math, avoiding duplicated legacy fallback pictures. Main text is searchable
 and selectable in the browser and PDF. Illustration labels remain raster text.
 
@@ -58,9 +64,10 @@ loaded through Reveal's lazy image support; all runtime resources are local.
 
 ## Rebuild and verify
 
-Routine edits should change the HTML/TeX and CSS directly. Rebuilding replaces
-those edits with a new conversion of the recorded source PPTX. The original
-PowerPoint is kept outside the repository.
+Routine body edits should change the HTML/TeX and CSS directly. Update titles
+and cover text in `adaptations.json`, then rebuild. Rebuilding replaces manual
+HTML edits with a new conversion of the recorded source PPTX and reapplies the
+title/cover adaptations. The original PowerPoint is kept outside the repository.
 
 ```sh
 uv run --with pillow==12.1.0 python slides/lecture-11/build_native.py SOURCE.pptx
@@ -74,7 +81,8 @@ The builder verifies the source hash. Pillow is only an authoring dependency
 for lossless first-frame GIF posters. Viewing requires neither Python nor a
 network connection to an external service.
 
-Checks cover source text/order, visible native headings, source font sizes,
+Checks cover body text/order, revised native headings, removed page numbers,
+course cover, source font sizes,
 clipping, image hashes/crops, math rendering, text selection/editing, GIF
 playback, links, click reveals, and PDF output. Review artifacts are kept in
 ignored `slides/.checks/lecture-11/`.

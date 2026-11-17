@@ -127,11 +127,12 @@ See [the notes](../docs/lecture-10-data-evaluation.html),
 All three notebooks run offline on CPU with the standard library (0 GPU-hours).
 
 [Lecture 11](lecture-11/index.html) preserves all 69 slides of the instructor's
-diffusion-language-model PowerPoint in their original style and order. Its
-second pass uses 180 editable HTML text boxes, 31 KaTeX equations, and 69
+diffusion-language-model PowerPoint in their original order and content-page
+layout. It uses 113 editable HTML text boxes, 31 KaTeX equations, and 69
 original illustration instances, including five GIFs. The click reveal and
-source links run inside the shared Reveal.js viewer. Teaching content remains
-unchanged and no notebook is added. See the [conversion guide](lecture-11/README.md) and
+source links run inside the shared Reveal.js viewer. Page headings are revised,
+the cover matches the course format, and original page numbers are removed.
+Body content remains unchanged and no notebook is added. See the [conversion guide](lecture-11/README.md) and
 [source provenance](lecture-11/assets/README.md).
 
 ## Teaching from a classroom browser

@@ -1,5 +1,12 @@
 /* Match the supplied PowerPoint while keeping text and math editable. */
 .reveal .slides > section.native-slide { padding: 0; background: #fff; }
+/* Use the same cover layout and typography as the other course lectures. */
+.reveal .slides > section.course-cover {
+  padding: 20px 64px 58px; background: transparent;
+}
+.reveal .native-slide.course-cover .native-text {
+  position: static; display: flow-root; flex: none;
+}
 .reveal .native-slide .native-text,
 .reveal .native-slide .native-figure,
 .reveal .native-slide .native-decoration { position: absolute; box-sizing: border-box; }
@@ -10,7 +17,7 @@
   letter-spacing: normal; max-width: none; text-transform: none;
   overflow-wrap: normal; word-break: normal;
 }
-.reveal .native-slide .native-text > :last-child { margin-bottom: 0; }
+.reveal .native-slide:not(.course-cover) .native-text > :last-child { margin-bottom: 0; }
 .reveal .native-slide .native-bullet::before {
   content: '•'; position: absolute; left: -24px; font-family: Arial, sans-serif;
 }
@@ -26,6 +33,7 @@
 .reveal .native-slide a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 1px; }
 .reveal .native-slide .fragment { transition: none; }
 html.reveal-print .reveal .slides section.native-slide { padding: 0 !important; }
+html.reveal-print .reveal .slides section.course-cover { padding: 20px 64px 58px !important; }
 html.reveal-print .pdf-page:has(.native-slide) .slide-number-pdf { display: none !important; }
 /* KaTeX needs slightly more line height than the source inline equations. */
 .reveal #source-049 .native-paragraph:not(:last-child) { margin-bottom: 18px; }

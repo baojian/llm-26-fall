@@ -10,10 +10,11 @@
     {
       "id": "source-001",
       "number": 1,
-      "title": "Lecture 11 – Diffusion Language Models",
+      "title": "Diffusion language models",
       "source_xml": "ppt/slides/slide1.xml",
+      "original_title": "Lecture 11 – Diffusion Language Models",
       "source_xml_sha256": "833f7f2114101577328c9d3dfef55951337ed8fcc55579e54794df6adeb73baa",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s001-text2",
           "rect": [
@@ -30,7 +31,8 @@
           ],
           "font_sizes": [
             64.0
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s001-text3",
@@ -54,7 +56,8 @@
           ],
           "font_sizes": [
             26.6667
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s001-text8",
@@ -72,7 +75,50 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "cover-course",
+          "paragraphs": [
+            "CS40008.01"
+          ],
+          "font_sizes": [
+            24
+          ],
+          "role": "course-cover"
+        },
+        {
+          "id": "cover-title",
+          "paragraphs": [
+            "Diffusion language models"
+          ],
+          "font_sizes": [
+            68
+          ],
+          "role": "course-cover"
+        },
+        {
+          "id": "cover-subtitle",
+          "paragraphs": [
+            "Lecture 11 · NLP and LLMs"
+          ],
+          "font_sizes": [
+            34
+          ],
+          "role": "course-cover"
+        },
+        {
+          "id": "cover-byline",
+          "paragraphs": [
+            "Baojian Zhou\nSchool of Data Science\nFudan University\nNovember 18, 2026"
+          ],
+          "font_sizes": [
+            26
+          ],
+          "role": "course-cover"
         }
       ],
       "illustrations": []
@@ -80,10 +126,11 @@
     {
       "id": "source-002",
       "number": 2,
-      "title": "Introduction",
+      "title": "Diffusion intuition",
       "source_xml": "ppt/slides/slide2.xml",
+      "original_title": "Introduction",
       "source_xml_sha256": "4f0b2701d366b99c12b3fcb4e88893e4c8cc18bf235199476332f9e08a4d5a64",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s002-text3",
           "rect": [
@@ -100,7 +147,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s002-text4",
@@ -118,7 +166,29 @@
           ],
           "font_sizes": [
             80.0
-          ]
+          ],
+          "role": "title"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s002-text4",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            578.2921784776903
+          ],
+          "paragraphs": [
+            "Diffusion intuition"
+          ],
+          "original_paragraphs": [
+            "Introduction"
+          ],
+          "font_sizes": [
+            80.0
+          ],
+          "role": "title"
         }
       ],
       "illustrations": []
@@ -126,10 +196,11 @@
     {
       "id": "source-003",
       "number": 3,
-      "title": "What is diffusion model?",
+      "title": "What is a diffusion model?",
       "source_xml": "ppt/slides/slide3.xml",
+      "original_title": "What is diffusion model?",
       "source_xml_sha256": "d97fc5b6effbb0f2dd4613c322e772dbccf05f73045ed3bea475c990d87a7393",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s003-text2",
           "rect": [
@@ -146,7 +217,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s003-text3",
@@ -164,7 +236,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s003-text4",
@@ -182,7 +255,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s003-text6",
@@ -200,7 +274,67 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "body"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s003-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "What is a diffusion model?"
+          ],
+          "original_paragraphs": [
+            "What is diffusion model?"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s003-text3",
+          "rect": [
+            33.00010498687664,
+            255.43548556430446,
+            1168.9166404199475,
+            209.12902887139109
+          ],
+          "paragraphs": [
+            "Creating noise from data is easy; creating data from noise is generative modeling"
+          ],
+          "original_paragraphs": [
+            "Creating noise from data is easy; creating data from noise is generative modeling"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "body"
+        },
+        {
+          "id": "s003-text6",
+          "rect": [
+            952.9997900262467,
+            613.8103937007874,
+            327.0,
+            67.85627296587927
+          ],
+          "paragraphs": [
+            "Song, Yang, et al. Score-based generative modeling through stochastic differential equations. arXiv:2011.13456 (2020)."
+          ],
+          "original_paragraphs": [
+            "Song, Yang, et al. Score-based generative modeling through stochastic differential equations. arXiv:2011.13456 (2020)."
+          ],
+          "font_sizes": [
+            16.0
+          ],
+          "role": "body"
         }
       ],
       "illustrations": []
@@ -208,10 +342,11 @@
     {
       "id": "source-004",
       "number": 4,
-      "title": "Diffusion models in image world",
+      "title": "AI-generated artwork with Midjourney",
       "source_xml": "ppt/slides/slide4.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "e7f863cbe4f15528900a34f650e2f0061c4e4161aa352e5ad06b93a022c65eb2",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s004-text2",
           "rect": [
@@ -228,7 +363,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s004-text4",
@@ -246,7 +382,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s004-text6",
@@ -264,7 +401,8 @@
           ],
           "font_sizes": [
             24.0
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s004-text8",
@@ -282,7 +420,67 @@
           ],
           "font_sizes": [
             18.6667
-          ]
+          ],
+          "role": "body"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s004-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "AI-generated artwork with Midjourney"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s004-text6",
+          "rect": [
+            917.2499737532809,
+            124.78120734908137,
+            306.0,
+            38.77501312335958
+          ],
+          "paragraphs": [
+            "Théâtre D'opéra Spatial"
+          ],
+          "original_paragraphs": [
+            "Théâtre D'opéra Spatial"
+          ],
+          "font_sizes": [
+            24.0
+          ],
+          "role": "body"
+        },
+        {
+          "id": "s004-text8",
+          "rect": [
+            953.8125984251968,
+            163.55622047244094,
+            287.19475065616797,
+            100.16871391076116
+          ],
+          "paragraphs": [
+            "A digital arts piece generated and edited by an American man named Jason M. Allen with AI model Midjourney"
+          ],
+          "original_paragraphs": [
+            "A digital arts piece generated and edited by an American man named Jason M. Allen with AI model Midjourney"
+          ],
+          "font_sizes": [
+            18.6667
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -308,10 +506,11 @@
     {
       "id": "source-005",
       "number": 5,
-      "title": "Diffusion models in image world",
+      "title": "Midjourney image examples",
       "source_xml": "ppt/slides/slide5.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "49328f2eb8ba782d8fcfad6a3693cfca050a2b0fa2d90452958ebbeb6ab5a775",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s005-text2",
           "rect": [
@@ -328,7 +527,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s005-text4",
@@ -346,7 +546,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s005-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Midjourney image examples"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -372,10 +594,11 @@
     {
       "id": "source-006",
       "number": 6,
-      "title": "Diffusion models in image world",
+      "title": "From noise to structured images",
       "source_xml": "ppt/slides/slide6.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "fbef00601784238a628e10901a1c4666e5399001221bf845b5d214db2489e48e",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s006-text2",
           "rect": [
@@ -392,7 +615,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s006-text4",
@@ -410,7 +634,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s006-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "From noise to structured images"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -453,10 +699,11 @@
     {
       "id": "source-007",
       "number": 7,
-      "title": "Diffusion models in image world",
+      "title": "Generating images in one step is hard",
       "source_xml": "ppt/slides/slide7.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "327a9836f90cb2f0efa202644e6f96028639a18f088e2bf617bec97346132925",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s007-text2",
           "rect": [
@@ -473,7 +720,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s007-text4",
@@ -491,7 +739,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s007-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Generating images in one step is hard"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -517,10 +787,11 @@
     {
       "id": "source-008",
       "number": 8,
-      "title": "Diffusion models in image world",
+      "title": "Adding noise to images is easy",
       "source_xml": "ppt/slides/slide8.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "081aa116df3f0cda4d527a0630c2b4e4317d14cc8a721bb5627b91ef63469ae7",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s008-text2",
           "rect": [
@@ -537,7 +808,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s008-text4",
@@ -555,7 +827,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s008-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Adding noise to images is easy"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -581,10 +875,11 @@
     {
       "id": "source-009",
       "number": 9,
-      "title": "Diffusion models in image world",
+      "title": "Corrupting a raspberry image",
       "source_xml": "ppt/slides/slide9.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "8527482ed76cfd37622d6df6881b45eff76b7df7ab7d07ea493d534a10231f75",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s009-text2",
           "rect": [
@@ -601,7 +896,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s009-text4",
@@ -619,7 +915,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s009-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Corrupting a raspberry image"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -645,10 +963,11 @@
     {
       "id": "source-010",
       "number": 10,
-      "title": "Diffusion models in image world",
+      "title": "Forward diffusion in small steps",
       "source_xml": "ppt/slides/slide10.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "daeb2c74683ede8a075b36915a5be79daec5f5bb73cff8b6935c5a76e633882d",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s010-text2",
           "rect": [
@@ -665,7 +984,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s010-text4",
@@ -683,7 +1003,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s010-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Forward diffusion in small steps"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -709,10 +1051,11 @@
     {
       "id": "source-011",
       "number": 11,
-      "title": "Diffusion models in image world",
+      "title": "Reversing the path from data to noise",
       "source_xml": "ppt/slides/slide11.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "dea7bc56098fc6539ea5764f0e9a87af9abe487f3213b7b7b4bb1d8d4be6a247",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s011-text2",
           "rect": [
@@ -729,7 +1072,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s011-text4",
@@ -747,7 +1091,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s011-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Reversing the path from data to noise"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -773,10 +1139,11 @@
     {
       "id": "source-012",
       "number": 12,
-      "title": "Diffusion models in image world",
+      "title": "Denoising through intermediate states",
       "source_xml": "ppt/slides/slide12.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "6a768de939775a02c64c69aff5c9f3783dd24f6421c91222d544a87aa1dd05b0",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s012-text2",
           "rect": [
@@ -793,7 +1160,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s012-text4",
@@ -811,7 +1179,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s012-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Denoising through intermediate states"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -837,10 +1227,11 @@
     {
       "id": "source-013",
       "number": 13,
-      "title": "Diffusion models in image world",
+      "title": "Forward and reverse diffusion paths",
       "source_xml": "ppt/slides/slide13.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "2feeb3ecc9f55f66070c53911a7a76272b2dd1604194cebd5f9d450506fa9e6b",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s013-text2",
           "rect": [
@@ -857,7 +1248,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s013-text4",
@@ -875,7 +1267,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s013-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Forward and reverse diffusion paths"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -901,10 +1315,11 @@
     {
       "id": "source-014",
       "number": 14,
-      "title": "Diffusion models in image world",
+      "title": "Different starts, different trajectories",
       "source_xml": "ppt/slides/slide14.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "8d4842935147fc6cb620b07093c1c14c9487a334acec467998532717137ad69b",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s014-text2",
           "rect": [
@@ -921,7 +1336,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s014-text4",
@@ -939,7 +1355,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s014-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Different starts, different trajectories"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -965,10 +1403,11 @@
     {
       "id": "source-015",
       "number": 15,
-      "title": "Diffusion models in image world",
+      "title": "Many paths from noise to images",
       "source_xml": "ppt/slides/slide15.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "d4d4de51ff328031d70d3004ec71c7b38f65c4331bcef754cbca5e0bbce639be",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s015-text2",
           "rect": [
@@ -985,7 +1424,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s015-text4",
@@ -1003,7 +1443,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s015-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Many paths from noise to images"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1029,10 +1491,11 @@
     {
       "id": "source-016",
       "number": 16,
-      "title": "Diffusion models in image world training",
+      "title": "Training a denoising network",
       "source_xml": "ppt/slides/slide16.xml",
+      "original_title": "Diffusion models in image world training",
       "source_xml_sha256": "2e1a592e7b0e9b917869cb8639b38fdd80b9515d37eeb2a83651166f95a63b62",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s016-text2",
           "rect": [
@@ -1050,7 +1513,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s016-text4",
@@ -1068,7 +1532,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s016-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Training a denoising network"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world training"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1094,10 +1581,11 @@
     {
       "id": "source-017",
       "number": 17,
-      "title": "Diffusion models in image world training",
+      "title": "Learning a local denoising step",
       "source_xml": "ppt/slides/slide17.xml",
+      "original_title": "Diffusion models in image world training",
       "source_xml_sha256": "a61432ebfa64c78f4630ec1a752ac10a682dc159ba98b101480947013943fd8a",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s017-text2",
           "rect": [
@@ -1115,7 +1603,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s017-text4",
@@ -1133,7 +1622,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s017-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Learning a local denoising step"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world training"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1159,10 +1671,11 @@
     {
       "id": "source-018",
       "number": 18,
-      "title": "Diffusion models in image world training",
+      "title": "Predicting the denoising direction",
       "source_xml": "ppt/slides/slide18.xml",
+      "original_title": "Diffusion models in image world training",
       "source_xml_sha256": "81fe501a7bec1da2dadbe500a1d222b7c951e345ec6ae46b9464adb8b917ef8f",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s018-text2",
           "rect": [
@@ -1180,7 +1693,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s018-text4",
@@ -1198,7 +1712,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s018-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Predicting the denoising direction"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world training"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1224,10 +1761,11 @@
     {
       "id": "source-019",
       "number": 19,
-      "title": "Diffusion models in image world training",
+      "title": "Training at a different noise level",
       "source_xml": "ppt/slides/slide19.xml",
+      "original_title": "Diffusion models in image world training",
       "source_xml_sha256": "08d3adbd1df24de70f2c0e4d3596a50377554eeb798dbb17a3dc3c7a0229bf5e",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s019-text2",
           "rect": [
@@ -1245,7 +1783,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s019-text4",
@@ -1263,7 +1802,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s019-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Training at a different noise level"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world training"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1289,10 +1851,11 @@
     {
       "id": "source-020",
       "number": 20,
-      "title": "Diffusion models in image world training",
+      "title": "Predicting another denoising direction",
       "source_xml": "ppt/slides/slide20.xml",
+      "original_title": "Diffusion models in image world training",
       "source_xml_sha256": "3b7811f5783c69792d6aaa0317b2c99f58cba4475544ac7a3f076092eee8f509",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s020-text2",
           "rect": [
@@ -1310,7 +1873,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s020-text4",
@@ -1328,7 +1892,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s020-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Predicting another denoising direction"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world training"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1354,10 +1941,11 @@
     {
       "id": "source-021",
       "number": 21,
-      "title": "Diffusion models in image world training",
+      "title": "Training closer to the data distribution",
       "source_xml": "ppt/slides/slide21.xml",
+      "original_title": "Diffusion models in image world training",
       "source_xml_sha256": "1fe3f716357cf769ffaed3118c4663c4ea374cf50bafc11ef9ed403baafff3df",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s021-text2",
           "rect": [
@@ -1375,7 +1963,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s021-text4",
@@ -1393,7 +1982,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s021-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Training closer to the data distribution"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world training"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1419,10 +2031,11 @@
     {
       "id": "source-022",
       "number": 22,
-      "title": "Diffusion models in image world training",
+      "title": "Learning the next denoising direction",
       "source_xml": "ppt/slides/slide22.xml",
+      "original_title": "Diffusion models in image world training",
       "source_xml_sha256": "3a18c6ecacd0665eaa62133e71bf01c460a293bc3a9f969b400801cf80f77593",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s022-text2",
           "rect": [
@@ -1440,7 +2053,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s022-text4",
@@ -1458,7 +2072,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s022-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Learning the next denoising direction"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world training"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1484,10 +2121,11 @@
     {
       "id": "source-023",
       "number": 23,
-      "title": "Diffusion models in image world",
+      "title": "Sampling starts from random noise",
       "source_xml": "ppt/slides/slide23.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "efa76d707535da07e25b3b8b1cd0753f3f44f22d32138ba41fdb24c9482b3046",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s023-text2",
           "rect": [
@@ -1504,7 +2142,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s023-text4",
@@ -1522,7 +2161,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s023-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Sampling starts from random noise"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1548,10 +2209,11 @@
     {
       "id": "source-024",
       "number": 24,
-      "title": "Diffusion models in image world sampling",
+      "title": "Sampling: predict the first update",
       "source_xml": "ppt/slides/slide24.xml",
+      "original_title": "Diffusion models in image world sampling",
       "source_xml_sha256": "01b03d1990341448a52e1631e38132e2cca18505adea54b9be9d4992a66af5c0",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s024-text2",
           "rect": [
@@ -1569,7 +2231,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s024-text4",
@@ -1587,7 +2250,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s024-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Sampling: predict the first update"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world sampling"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1613,10 +2299,11 @@
     {
       "id": "source-025",
       "number": 25,
-      "title": "Diffusion models in image world sampling",
+      "title": "Sampling: take a denoising step",
       "source_xml": "ppt/slides/slide25.xml",
+      "original_title": "Diffusion models in image world sampling",
       "source_xml_sha256": "615a7e93adc3a9fd7980eb095fe5a8d76a63420d835e34d14aa88cf56eb6ce8e",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s025-text2",
           "rect": [
@@ -1634,7 +2321,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s025-text4",
@@ -1652,7 +2340,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s025-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Sampling: take a denoising step"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world sampling"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1678,10 +2389,11 @@
     {
       "id": "source-026",
       "number": 26,
-      "title": "Diffusion models in image world sampling",
+      "title": "Sampling: predict the next update",
       "source_xml": "ppt/slides/slide26.xml",
+      "original_title": "Diffusion models in image world sampling",
       "source_xml_sha256": "807a5a092c0560b21b96959b9cd2672c26af687ccd866f99515842b236449772",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s026-text2",
           "rect": [
@@ -1699,7 +2411,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s026-text4",
@@ -1717,7 +2430,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s026-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Sampling: predict the next update"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world sampling"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1743,10 +2479,11 @@
     {
       "id": "source-027",
       "number": 27,
-      "title": "Diffusion models in image world sampling",
+      "title": "Sampling: apply the next update",
       "source_xml": "ppt/slides/slide27.xml",
+      "original_title": "Diffusion models in image world sampling",
       "source_xml_sha256": "92738b43abf6f5ee135353f9087d063012886e013a3ce38a7fec1bebfd9ee741",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s027-text2",
           "rect": [
@@ -1764,7 +2501,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s027-text4",
@@ -1782,7 +2520,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s027-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Sampling: apply the next update"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world sampling"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1808,10 +2569,11 @@
     {
       "id": "source-028",
       "number": 28,
-      "title": "Diffusion models in image world sampling",
+      "title": "Sampling: repeat the denoising steps",
       "source_xml": "ppt/slides/slide28.xml",
+      "original_title": "Diffusion models in image world sampling",
       "source_xml_sha256": "ca699b49183899bd0bdd76ba3ff6365ae4eb576f7b0db2cf67327aa0d5a5e78d",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s028-text2",
           "rect": [
@@ -1829,7 +2591,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s028-text4",
@@ -1847,7 +2610,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s028-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Sampling: repeat the denoising steps"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world sampling"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1873,10 +2659,11 @@
     {
       "id": "source-029",
       "number": 29,
-      "title": "Diffusion models in image world sampling",
+      "title": "Sampling: reach an image",
       "source_xml": "ppt/slides/slide29.xml",
+      "original_title": "Diffusion models in image world sampling",
       "source_xml_sha256": "b54e1c7245674ce3589578a5209312fb0a9336bd202b4f880a982132c7837682",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s029-text2",
           "rect": [
@@ -1894,7 +2681,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s029-text4",
@@ -1912,7 +2700,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s029-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Sampling: reach an image"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world sampling"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -1938,10 +2749,11 @@
     {
       "id": "source-030",
       "number": 30,
-      "title": "Diffusion models in image world",
+      "title": "Diffusion across image classes",
       "source_xml": "ppt/slides/slide30.xml",
+      "original_title": "Diffusion models in image world",
       "source_xml_sha256": "bcd784dcab8d2bc843a5ef2ceb0371cebacb1b92650e9003d24292c85c8984bc",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s030-text2",
           "rect": [
@@ -1958,7 +2770,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s030-text4",
@@ -1976,7 +2789,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s030-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Diffusion across image classes"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in image world"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -2002,10 +2837,11 @@
     {
       "id": "source-031",
       "number": 31,
-      "title": "Diffusion models in language",
+      "title": "LLaDA: generation beyond left to right",
       "source_xml": "ppt/slides/slide31.xml",
+      "original_title": "Diffusion models in language",
       "source_xml_sha256": "c4621f4d68ed341785a05311cbe413293dfe0082f5f010e1efe4ae46b5b1d68e",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s031-text2",
           "rect": [
@@ -2022,7 +2858,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s031-text3",
@@ -2040,7 +2877,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s031-text4",
@@ -2058,7 +2896,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s031-text9",
@@ -2076,7 +2915,67 @@
           ],
           "font_sizes": [
             24.0
-          ]
+          ],
+          "role": "body"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s031-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "LLaDA: generation beyond left to right"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in language"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s031-text3",
+          "rect": [
+            54.333333333333336,
+            116.37102362204725,
+            755.6666666666666,
+            122.12913385826772
+          ],
+          "paragraphs": [
+            "A text generation method different from the traditional left-to-right approach"
+          ],
+          "original_paragraphs": [
+            "A text generation method different from the traditional left-to-right approach"
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
+        },
+        {
+          "id": "s031-text9",
+          "rect": [
+            1062.0,
+            675.2755905511812,
+            160.2498687664042,
+            38.77501312335958
+          ],
+          "paragraphs": [
+            "LLaDA model"
+          ],
+          "original_paragraphs": [
+            "LLaDA model"
+          ],
+          "font_sizes": [
+            24.0
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -2102,10 +3001,11 @@
     {
       "id": "source-032",
       "number": 32,
-      "title": "Diffusion models in language",
+      "title": "LLaDA: scaling versus autoregression",
       "source_xml": "ppt/slides/slide32.xml",
+      "original_title": "Diffusion models in language",
       "source_xml_sha256": "14e0fae0296a30b9a5ca338c6dde9cb9f65519a726a1da66f1fd3a23066575dc",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s032-text2",
           "rect": [
@@ -2122,7 +3022,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s032-text4",
@@ -2140,7 +3041,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s032-text5",
@@ -2158,7 +3060,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s032-text6",
@@ -2176,7 +3079,67 @@
           ],
           "font_sizes": [
             24.0
-          ]
+          ],
+          "role": "body"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s032-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "LLaDA: scaling versus autoregression"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in language"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s032-text5",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            105.6290813648294
+          ],
+          "paragraphs": [
+            "LLaDA demonstrates impressive scalability, with its overall trend being highly competitive with that of AR baseline on the same data."
+          ],
+          "original_paragraphs": [
+            "LLaDA demonstrates impressive scalability, with its overall trend being highly competitive with that of AR baseline on the same data."
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
+        },
+        {
+          "id": "s032-text6",
+          "rect": [
+            1062.0,
+            675.2755905511812,
+            160.2498687664042,
+            38.77501312335958
+          ],
+          "paragraphs": [
+            "LLaDA model"
+          ],
+          "original_paragraphs": [
+            "LLaDA model"
+          ],
+          "font_sizes": [
+            24.0
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -2202,10 +3165,11 @@
     {
       "id": "source-033",
       "number": 33,
-      "title": "Diffusion models in language",
+      "title": "Dream: generation in arbitrary orders",
       "source_xml": "ppt/slides/slide33.xml",
+      "original_title": "Diffusion models in language",
       "source_xml_sha256": "887f81a4caee498e0c9c2fc44d8ba07ea1c4783767b50bb0d662af12c4f53fe0",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s033-text2",
           "rect": [
@@ -2222,7 +3186,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s033-text3",
@@ -2240,7 +3205,8 @@
           ],
           "font_sizes": [
             21.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s033-text4",
@@ -2258,7 +3224,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s033-text5",
@@ -2276,7 +3243,67 @@
           ],
           "font_sizes": [
             24.0
-          ]
+          ],
+          "role": "body"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s033-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Dream: generation in arbitrary orders"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in language"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s033-text3",
+          "rect": [
+            22.083464566929134,
+            294.8709711286089,
+            330.4165879265092,
+            215.87905511811024
+          ],
+          "paragraphs": [
+            "Diffusion models are not constrained to sequential (e.g., left-to-right) generation, enabling outputs to be synthesized in arbitrary orders. This allows for more diverse user queries."
+          ],
+          "original_paragraphs": [
+            "Diffusion models are not constrained to sequential (e.g., left-to-right) generation, enabling outputs to be synthesized in arbitrary orders. This allows for more diverse user queries."
+          ],
+          "font_sizes": [
+            21.3333
+          ],
+          "role": "body"
+        },
+        {
+          "id": "s033-text5",
+          "rect": [
+            1059.7499212598425,
+            668.2500787401575,
+            163.3261942257218,
+            38.77501312335958
+          ],
+          "paragraphs": [
+            "Dream model"
+          ],
+          "original_paragraphs": [
+            "Dream model"
+          ],
+          "font_sizes": [
+            24.0
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -2302,10 +3329,11 @@
     {
       "id": "source-034",
       "number": 34,
-      "title": "Diffusion models in language",
+      "title": "Dream: controlling decoding behavior",
       "source_xml": "ppt/slides/slide34.xml",
+      "original_title": "Diffusion models in language",
       "source_xml_sha256": "e3d9197728d962e0402000f0ab9502f6d2b741bd2bee4f29c4918e5a39e5a111",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s034-text2",
           "rect": [
@@ -2322,7 +3350,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s034-text3",
@@ -2340,7 +3369,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s034-text4",
@@ -2358,7 +3388,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s034-text5",
@@ -2376,7 +3407,67 @@
           ],
           "font_sizes": [
             24.0
-          ]
+          ],
+          "role": "body"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s034-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Dream: controlling decoding behavior"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in language"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s034-text3",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            578.2921784776903
+          ],
+          "paragraphs": [
+            "Controlling the decoding behavior"
+          ],
+          "original_paragraphs": [
+            "Controlling the decoding behavior"
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
+        },
+        {
+          "id": "s034-text5",
+          "rect": [
+            1059.7499212598425,
+            668.2500787401575,
+            163.3261942257218,
+            38.77501312335958
+          ],
+          "paragraphs": [
+            "Dream model"
+          ],
+          "original_paragraphs": [
+            "Dream model"
+          ],
+          "font_sizes": [
+            24.0
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -2436,10 +3527,11 @@
     {
       "id": "source-035",
       "number": 35,
-      "title": "Diffusion models in language",
+      "title": "Dream: the quality–speed trade-off",
       "source_xml": "ppt/slides/slide35.xml",
+      "original_title": "Diffusion models in language",
       "source_xml_sha256": "820e9141c5701698e891c4cf929cc2ab017ef490ea6fac8221683b929e405f92",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s035-text2",
           "rect": [
@@ -2456,7 +3548,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s035-text4",
@@ -2474,7 +3567,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s035-text5",
@@ -2492,7 +3586,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s035-text6",
@@ -2510,7 +3605,67 @@
           ],
           "font_sizes": [
             24.0
-          ]
+          ],
+          "role": "body"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s035-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Dream: the quality–speed trade-off"
+          ],
+          "original_paragraphs": [
+            "Diffusion models in language"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s035-text5",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            64.0828346456693
+          ],
+          "paragraphs": [
+            "Quality-speed Trade-off"
+          ],
+          "original_paragraphs": [
+            "Quality-speed Trade-off"
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
+        },
+        {
+          "id": "s035-text6",
+          "rect": [
+            1059.7499212598425,
+            668.2500787401575,
+            163.3261942257218,
+            38.77501312335958
+          ],
+          "paragraphs": [
+            "Dream model"
+          ],
+          "original_paragraphs": [
+            "Dream model"
+          ],
+          "font_sizes": [
+            24.0
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -2536,10 +3691,11 @@
     {
       "id": "source-036",
       "number": 36,
-      "title": "Diffusion Models",
+      "title": "Foundations of diffusion",
       "source_xml": "ppt/slides/slide36.xml",
+      "original_title": "Diffusion Models",
       "source_xml_sha256": "755cba59087eada5626a8ff5adf3529af5a53080bc7e24d486350e50dcb0e483",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s036-text3",
           "rect": [
@@ -2556,7 +3712,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s036-text4",
@@ -2574,7 +3731,29 @@
           ],
           "font_sizes": [
             80.0
-          ]
+          ],
+          "role": "title"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s036-text4",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            578.2921784776903
+          ],
+          "paragraphs": [
+            "Foundations of diffusion"
+          ],
+          "original_paragraphs": [
+            "Diffusion Models"
+          ],
+          "font_sizes": [
+            80.0
+          ],
+          "role": "title"
         }
       ],
       "illustrations": []
@@ -2582,10 +3761,11 @@
     {
       "id": "source-037",
       "number": 37,
-      "title": "Autoencoder",
+      "title": "Autoencoders reconstruct their inputs",
       "source_xml": "ppt/slides/slide37.xml",
+      "original_title": "Autoencoder",
       "source_xml_sha256": "15e4f5d5c57a4e810706af561c95cf85b7d722e3505c6760b9dda873424cb2c0",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s037-text2",
           "rect": [
@@ -2602,7 +3782,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s037-text4",
@@ -2620,7 +3801,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s037-text5",
@@ -2638,7 +3820,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s037-text7",
@@ -2656,7 +3839,8 @@
           ],
           "font_sizes": [
             24.0
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s037-text9",
@@ -2674,7 +3858,86 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s037-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Autoencoders reconstruct their inputs"
+          ],
+          "original_paragraphs": [
+            "Autoencoder"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s037-text5",
+          "rect": [
+            54.33343832020997,
+            116.3709186351706,
+            1139.66656167979,
+            111.6290813648294
+          ],
+          "paragraphs": [
+            "Autoencoder is a neural network designed to learn an identity function in an unsupervised way to reconstruct the original input."
+          ],
+          "original_paragraphs": [
+            "Autoencoder is a neural network designed to learn an identity function in an unsupervised way to reconstruct the original input."
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
+        },
+        {
+          "id": "s037-text7",
+          "rect": [
+            887.8122834645669,
+            378.08115485564304,
+            343.68755905511813,
+            67.85627296587927
+          ],
+          "paragraphs": [
+            "Reducing the Dimensionality of Data with Neural Networks"
+          ],
+          "original_paragraphs": [
+            "Reducing the Dimensionality of Data with Neural Networks"
+          ],
+          "font_sizes": [
+            24.0
+          ],
+          "role": "body"
+        },
+        {
+          "id": "s037-text9",
+          "rect": [
+            54.33343832020997,
+            603.6290813648294,
+            1147.7500262467192,
+            100.16871391076116
+          ],
+          "paragraphs": [
+            "The encoder network essentially accomplishes the dimensionality reduction, just like we use Principal Component Analysis (PCA)."
+          ],
+          "original_paragraphs": [
+            "The encoder network essentially accomplishes the dimensionality reduction, just like we use Principal Component Analysis (PCA)."
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -2700,10 +3963,11 @@
     {
       "id": "source-038",
       "number": 38,
-      "title": "Autoencoder",
+      "title": "Encoder, latent code, and decoder",
       "source_xml": "ppt/slides/slide38.xml",
+      "original_title": "Autoencoder",
       "source_xml_sha256": "4d6500ce4c764f870b594ba99677a6f2d00a130b378979e729d92e40975e29b7",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s038-text2",
           "rect": [
@@ -2720,7 +3984,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s038-text3",
@@ -2742,7 +4007,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s038-text4",
@@ -2760,7 +4026,52 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s038-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Encoder, latent code, and decoder"
+          ],
+          "original_paragraphs": [
+            "Autoencoder"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s038-text3",
+          "rect": [
+            54.33343832020997,
+            116.3709186351706,
+            718.9165354330709,
+            578.2921784776903
+          ],
+          "paragraphs": [
+            "The model contains an encoder function $g(\\cdot )$ parameterized by $\\phi $ and a decoder function $f(\\cdot )$ parameterized by $\\boldsymbol{\\theta }$",
+            "The low-dimensional code learned for input $\\boldsymbol{x}$ in the bottleneck layer is $\\boldsymbol{z}={g}_{\\phi }\\left(\\boldsymbol{x}\\right)$ and the reconstructed input is ${\\boldsymbol{x} }^{\\prime }={f}_{\\theta }({g}_{\\phi }(\\boldsymbol{x}))$",
+            "The parameters $\\textcolor{#1F1F1F}{(}\\textcolor{#1F1F1F}{\\boldsymbol{\\phi } }\\textcolor{#1F1F1F}{\\boldsymbol{,} }\\textcolor{#1F1F1F}{\\boldsymbol{\\theta } }\\textcolor{#1F1F1F}{)}$ are learned together to output a reconstructed data sample same as the original input"
+          ],
+          "original_paragraphs": [
+            "The model contains an encoder function 𝑔(⋅) parameterized by 𝜙 and a decoder function 𝑓(⋅) parameterized by 𝜽",
+            "The low-dimensional code learned for input 𝒙 in the bottleneck layer is 𝒛=𝑔𝜙𝒙 and the reconstructed input is 𝒙′=𝑓𝜃(𝑔𝜙(𝒙))",
+            "The parameters (𝝓,𝜽) are learned together to output a reconstructed data sample same as the original input"
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -2786,10 +4097,11 @@
     {
       "id": "source-039",
       "number": 39,
-      "title": "Autoencoder denoising version",
+      "title": "Denoising autoencoders",
       "source_xml": "ppt/slides/slide39.xml",
+      "original_title": "Autoencoder denoising version",
       "source_xml_sha256": "50dec01a05399077ccc868684c5554e11866b31be52c209d26eec4db8690c883",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s039-text2",
           "rect": [
@@ -2807,7 +4119,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s039-text3",
@@ -2831,7 +4144,8 @@
           ],
           "font_sizes": [
             32.0
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s039-text4",
@@ -2849,7 +4163,55 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s039-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Denoising autoencoders"
+          ],
+          "original_paragraphs": [
+            "Autoencoder denoising version"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s039-text3",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            649.6622572178478,
+            565.2956430446194
+          ],
+          "paragraphs": [
+            "The standard autoencoder quantifies the difference between two vectors, such as cross entropy when the activation function is sigmoid, or as simple as MSE loss:",
+            "$\\displaystyle {L}_{AE}\\left(\\theta ,\\phi \\right)=\\frac{1}{n}\\sum\\limits_{i=1}^{n}{ {\\left({\\boldsymbol{x} }^{(i)}-{f}_{\\theta }({g}_{\\phi }({\\boldsymbol{x} }^{(i)}))\\right)}^{2} }$",
+            "The denoising version tries to avoid overfitting and improve the robustness",
+            "$\\displaystyle {L}_{\\textcolor{#00B050}{DAE} }\\left(\\theta ,\\phi \\right)=\\frac{1}{n}\\sum\\limits_{i=1}^{n}{ {\\left({\\boldsymbol{x} }^{(i)}-{f}_{\\theta }({g}_{\\phi }({\\textcolor{#00B050}{\\tilde{\\textcolor{#00B050}{\\boldsymbol{x} } } } }^{(i)}))\\right)}^{2} }$"
+          ],
+          "original_paragraphs": [
+            "The standard autoencoder quantifies the difference between two vectors, such as cross entropy when the activation function is sigmoid, or as simple as MSE loss:",
+            "𝐿𝐴𝐸𝜃,𝜙=1𝑛𝑖=1𝑛𝒙(𝑖)−𝑓𝜃(𝑔𝜙(𝒙(𝑖)))2",
+            "The denoising version tries to avoid overfitting and improve the robustness",
+            "𝐿𝐷𝐴𝐸𝜃,𝜙=1𝑛𝑖=1𝑛𝒙(𝑖)−𝑓𝜃(𝑔𝜙(𝒙(𝑖)))2"
+          ],
+          "font_sizes": [
+            32.0
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -2892,10 +4254,11 @@
     {
       "id": "source-040",
       "number": 40,
-      "title": "Variational Autoencoder (VAE)",
+      "title": "VAEs enable sampling in latent space",
       "source_xml": "ppt/slides/slide40.xml",
+      "original_title": "Variational Autoencoder (VAE)",
       "source_xml_sha256": "fc5d2e9ac5efb085a72955e45dd2dfd917bf39bbcb53893d9bcdbcc5df1e1e0b",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s040-text2",
           "rect": [
@@ -2912,7 +4275,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s040-text3",
@@ -2941,7 +4305,8 @@
           "font_sizes": [
             32.0,
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s040-text4",
@@ -2959,7 +4324,59 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s040-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "VAEs enable sampling in latent space"
+          ],
+          "original_paragraphs": [
+            "Variational Autoencoder (VAE)"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s040-text3",
+          "rect": [
+            54.33343832020997,
+            116.3709186351706,
+            812.6666666666666,
+            578.2921784776903
+          ],
+          "paragraphs": [
+            "Autoencoders",
+            "learn a low dimensional representation of the input, but hard to work with as a generative model",
+            "one of the key limitations of autoencoders is that we have no way of sampling from them!",
+            "Variational autoencoders (VAEs)",
+            "by contrast learn a continuous latent space that is easy to sample from",
+            "can generate new data (e.g. images) by sampling from the learned generative model"
+          ],
+          "original_paragraphs": [
+            "Autoencoders",
+            "learn a low dimensional representation of the input, but hard to work with as a generative model",
+            "one of the key limitations of autoencoders is that we have no way of sampling from them!",
+            "Variational autoencoders (VAEs)",
+            "by contrast learn a continuous latent space that is easy to sample from",
+            "can generate new data (e.g. images) by sampling from the learned generative model"
+          ],
+          "font_sizes": [
+            32.0,
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -3002,10 +4419,11 @@
     {
       "id": "source-041",
       "number": 41,
-      "title": "Variational Autoencoder (VAE)",
+      "title": "VAE encoder and decoder distributions",
       "source_xml": "ppt/slides/slide41.xml",
+      "original_title": "Variational Autoencoder (VAE)",
       "source_xml_sha256": "179c5fdf01712cb9f2d486310188e656c4cdca6d994286739df7b5b606008295",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s041-text2",
           "rect": [
@@ -3022,7 +4440,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s041-text3",
@@ -3056,7 +4475,8 @@
             24.6667,
             29.6,
             34.5333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s041-text4",
@@ -3074,7 +4494,64 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s041-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "VAE encoder and decoder distributions"
+          ],
+          "original_paragraphs": [
+            "Variational Autoencoder (VAE)"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s041-text3",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            798.4166929133859,
+            578.2921784776903
+          ],
+          "paragraphs": [
+            "Neural Network Perspective",
+            "We can view a variational autoencoder (VAE) as an autoencoder consisting of two neural networks",
+            "VAEs (as autoencoders) define two distributions",
+            "encoder: ${q}_{\\boldsymbol{\\phi } }\\left(\\boldsymbol{z}\\middle|\\boldsymbol{x}\\right)$",
+            "decoder: ${p}_{\\boldsymbol{\\theta } }\\left(\\boldsymbol{x}\\middle|\\boldsymbol{z}\\right)$",
+            "We can also view the VAE from the perspective of variational inference",
+            "Model: ${q}_{\\boldsymbol{\\phi } }\\left(\\boldsymbol{z}\\middle|\\boldsymbol{x}\\right)$",
+            "Variational approximation: ${p}_{\\boldsymbol{\\theta } }\\left(\\boldsymbol{x}\\middle|\\boldsymbol{z}\\right)$"
+          ],
+          "original_paragraphs": [
+            "Neural Network Perspective",
+            "We can view a variational autoencoder (VAE) as an autoencoder consisting of two neural networks",
+            "VAEs (as autoencoders) define two distributions",
+            "encoder: 𝑞𝝓𝒛𝒙",
+            "decoder: 𝑝𝜽𝒙𝒛",
+            "We can also view the VAE from the perspective of variational inference",
+            "Model: 𝑞𝝓𝒛𝒙",
+            "Variational approximation: 𝑝𝜽𝒙𝒛"
+          ],
+          "font_sizes": [
+            24.6667,
+            29.6,
+            34.5333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -3117,10 +4594,11 @@
     {
       "id": "source-042",
       "number": 42,
-      "title": "Variational Autoencoder (VAE)",
+      "title": "Generating images with VAEs",
       "source_xml": "ppt/slides/slide42.xml",
+      "original_title": "Variational Autoencoder (VAE)",
       "source_xml_sha256": "bbb7b06b40beab1b8c358984bd2232c1374c9472e0e37dfba2e0fb8e8ffc2cf8",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s042-text2",
           "rect": [
@@ -3137,7 +4615,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s042-text3",
@@ -3155,7 +4634,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s042-text4",
@@ -3173,7 +4653,48 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s042-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Generating images with VAEs"
+          ],
+          "original_paragraphs": [
+            "Variational Autoencoder (VAE)"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s042-text3",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            69.6290813648294
+          ],
+          "paragraphs": [
+            "VAEs for Image Generation"
+          ],
+          "original_paragraphs": [
+            "VAEs for Image Generation"
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -3216,10 +4737,11 @@
     {
       "id": "source-043",
       "number": 43,
-      "title": "Variational Autoencoder (VAE)",
+      "title": "VAE samples across latent dimensions",
       "source_xml": "ppt/slides/slide43.xml",
+      "original_title": "Variational Autoencoder (VAE)",
       "source_xml_sha256": "c75f2051642e3b09556fb021b89490cfd24f291bf9cd11aff55f5b066e85262a",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s043-text2",
           "rect": [
@@ -3236,7 +4758,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s043-text3",
@@ -3254,7 +4777,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s043-text4",
@@ -3272,7 +4796,48 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s043-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "VAE samples across latent dimensions"
+          ],
+          "original_paragraphs": [
+            "Variational Autoencoder (VAE)"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s043-text3",
+          "rect": [
+            54.33343832020997,
+            116.37102362204725,
+            993.4166929133859,
+            116.12913385826772
+          ],
+          "paragraphs": [
+            "Random samples from learned generative models of MNIST for different dimensionalities of latent space"
+          ],
+          "original_paragraphs": [
+            "Random samples from learned generative models of MNIST for different dimensionalities of latent space"
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -3298,10 +4863,11 @@
     {
       "id": "source-044",
       "number": 44,
-      "title": "Discrete VAE",
+      "title": "A sequence-to-sequence VAE for text",
       "source_xml": "ppt/slides/slide44.xml",
+      "original_title": "Discrete VAE",
       "source_xml_sha256": "f4131d748681604afad834ca66ccf900d3ae3b4ab51583071be7b74a696c86b6",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s044-text2",
           "rect": [
@@ -3318,7 +4884,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s044-text3",
@@ -3343,7 +4910,8 @@
           "font_sizes": [
             32.0,
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s044-text4",
@@ -3361,7 +4929,55 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s044-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "A sequence-to-sequence VAE for text"
+          ],
+          "original_paragraphs": [
+            "Discrete VAE"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s044-text3",
+          "rect": [
+            54.333333333333336,
+            116.37102362204725,
+            911.6666666666666,
+            289.14603674540683
+          ],
+          "paragraphs": [
+            "example of an application of VAEs to discrete data",
+            "built on the sequence-to-sequence framework",
+            "input is read in by an LSTM",
+            "output is generated by an LSTM-LM"
+          ],
+          "original_paragraphs": [
+            "example of an application of VAEs to discrete data",
+            "built on the sequence-to-sequence framework",
+            "input is read in by an LSTM",
+            "output is generated by an LSTM-LM"
+          ],
+          "font_sizes": [
+            32.0,
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -3404,10 +5020,11 @@
     {
       "id": "source-045",
       "number": 45,
-      "title": "Discrete VAE",
+      "title": "Interpolating between sentence encodings",
       "source_xml": "ppt/slides/slide45.xml",
+      "original_title": "Discrete VAE",
       "source_xml_sha256": "ffee8db0bc367e3ce9cdf07a979e3ed859ca04a871d3fd9e66a85abbfa22b665",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s045-text2",
           "rect": [
@@ -3424,7 +5041,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s045-text3",
@@ -3442,7 +5060,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s045-text4",
@@ -3460,7 +5079,48 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s045-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Interpolating between sentence encodings"
+          ],
+          "original_paragraphs": [
+            "Discrete VAE"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s045-text3",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            578.2921784776903
+          ],
+          "paragraphs": [
+            "VAEs for Text Generation: Sentences produced by greedily decoding from points between two sentence encodings with a conventional autoencoder. The intermediate sentences are not plausible English"
+          ],
+          "original_paragraphs": [
+            "VAEs for Text Generation: Sentences produced by greedily decoding from points between two sentence encodings with a conventional autoencoder. The intermediate sentences are not plausible English"
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -3486,10 +5146,11 @@
     {
       "id": "source-046",
       "number": 46,
-      "title": "Discrete VAE",
+      "title": "Imputing missing words with a text VAE",
       "source_xml": "ppt/slides/slide46.xml",
+      "original_title": "Discrete VAE",
       "source_xml_sha256": "259f18fe39886863486283622140f3db5e0776df1987ddab4dfff082af19955b",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s046-text2",
           "rect": [
@@ -3506,7 +5167,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s046-text3",
@@ -3524,7 +5186,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s046-text4",
@@ -3542,7 +5205,48 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s046-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Imputing missing words with a text VAE"
+          ],
+          "original_paragraphs": [
+            "Discrete VAE"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s046-text3",
+          "rect": [
+            54.333333333333336,
+            116.37102362204725,
+            708.4166929133859,
+            110.12902887139107
+          ],
+          "paragraphs": [
+            "Examples of using beam search to impute missing words within sentences."
+          ],
+          "original_paragraphs": [
+            "Examples of using beam search to impute missing words within sentences."
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -3568,10 +5272,11 @@
     {
       "id": "source-047",
       "number": 47,
-      "title": "VQ-VAE",
+      "title": "VQ-VAE: learning discrete latent codes",
       "source_xml": "ppt/slides/slide47.xml",
+      "original_title": "VQ-VAE",
       "source_xml_sha256": "5cfe5a5c2e3348cb91dec7d324c14599755050d45efa32313ca4940c49b12402",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s047-text2",
           "rect": [
@@ -3588,7 +5293,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s047-text3",
@@ -3606,7 +5312,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s047-text4",
@@ -3624,7 +5331,48 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s047-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "VQ-VAE: learning discrete latent codes"
+          ],
+          "original_paragraphs": [
+            "VQ-VAE"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s047-text3",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            154.37910761154856
+          ],
+          "paragraphs": [
+            "Vector Quantized VAE: model learns a discrete latent variable by the encoder, since discrete representations may be a more natural fit for problems like language, speech, reasoning, etc."
+          ],
+          "original_paragraphs": [
+            "Vector Quantized VAE: model learns a discrete latent variable by the encoder, since discrete representations may be a more natural fit for problems like language, speech, reasoning, etc."
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -3650,10 +5398,11 @@
     {
       "id": "source-048",
       "number": 48,
-      "title": "VQ-VAE",
+      "title": "VQ-VAE: nearest-neighbor codebook lookup",
       "source_xml": "ppt/slides/slide48.xml",
+      "original_title": "VQ-VAE",
       "source_xml_sha256": "beb9701908894906ac025161715b951e73d805c0f6b7f10a096ebbf774b18a23",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s048-text2",
           "rect": [
@@ -3670,7 +5419,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s048-text3",
@@ -3697,7 +5447,8 @@
           "font_sizes": [
             32.0,
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s048-text4",
@@ -3715,7 +5466,57 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s048-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "VQ-VAE: nearest-neighbor codebook lookup"
+          ],
+          "original_paragraphs": [
+            "VQ-VAE"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s048-text3",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            578.2921784776903
+          ],
+          "paragraphs": [
+            " latent embedding space (also known as “codebook”): $\\boldsymbol{e}\\in {R}^{K\\times D}$",
+            "$K$ is the number of latent variable categories",
+            "$D$ is the embedding size. An individual embedding vector is ${\\boldsymbol{e} }_{i}\\in {R}^{D}$",
+            "Encoder $E(\\boldsymbol{x})$ output  goes through a nearest-neighbor lookup to match to one of $K$ embedding vectors ",
+            "matched code vector becomes the input for the decoder $D(\\cdot )$"
+          ],
+          "original_paragraphs": [
+            " latent embedding space (also known as “codebook”): 𝒆∈𝑅𝐾×𝐷",
+            "𝐾 is the number of latent variable categories",
+            "𝐷 is the embedding size. An individual embedding vector is 𝒆𝑖∈𝑅𝐷",
+            "Encoder 𝐸(𝒙) output  goes through a nearest-neighbor lookup to match to one of 𝐾 embedding vectors ",
+            "matched code vector becomes the input for the decoder 𝐷(⋅)"
+          ],
+          "font_sizes": [
+            32.0,
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": []
@@ -3723,10 +5524,11 @@
     {
       "id": "source-049",
       "number": 49,
-      "title": "DDPMs",
+      "title": "DDPMs: generation through denoising",
       "source_xml": "ppt/slides/slide49.xml",
+      "original_title": "DDPMs",
       "source_xml_sha256": "6ea6b1d1a61bde6d5e2d469398c652ce2394110ffc2a3aa58d7d159a8b35605c",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s049-text2",
           "rect": [
@@ -3743,7 +5545,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s049-text3",
@@ -3768,7 +5571,8 @@
           "font_sizes": [
             32.0,
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s049-text4",
@@ -3786,7 +5590,55 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s049-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "DDPMs: generation through denoising"
+          ],
+          "original_paragraphs": [
+            "DDPMs"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s049-text3",
+          "rect": [
+            54.333333333333336,
+            116.37102362204725,
+            1161.6666666666667,
+            410.1291338582677
+          ],
+          "paragraphs": [
+            "Denoising Diffusion Probabilistic Models (DDPMs): a class of likelihood-based models that generate samples by gradually removing noise from a signal.",
+            "Given a dataset of samples $\\boldsymbol{x}$ drawn from ${p}_{\\mathrm{data} }(\\boldsymbol{x})$, learn a model ${p}_{\\theta }\\left(\\boldsymbol{x}\\right)\\approx \\ {p}_{\\mathrm{data} }(\\boldsymbol{x})$ such that we can:",
+            "generate new samples $\\boldsymbol{x}\\sim {p}_{\\theta }(\\boldsymbol{x})$",
+            "estimate the probability density of the sample ${p}_{\\theta }(\\boldsymbol{x})$"
+          ],
+          "original_paragraphs": [
+            "Denoising Diffusion Probabilistic Models (DDPMs): a class of likelihood-based models that generate samples by gradually removing noise from a signal.",
+            "Given a dataset of samples 𝒙 drawn from 𝑝data(𝒙), learn a model 𝑝𝜃𝒙≈ 𝑝data(𝒙) such that we can:",
+            "generate new samples 𝒙∼𝑝𝜃(𝒙)",
+            "estimate the probability density of the sample 𝑝𝜃(𝒙)"
+          ],
+          "font_sizes": [
+            32.0,
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -3829,10 +5681,11 @@
     {
       "id": "source-050",
       "number": 50,
-      "title": "DDPMs",
+      "title": "Fixed forward, learned reverse process",
       "source_xml": "ppt/slides/slide50.xml",
+      "original_title": "DDPMs",
       "source_xml_sha256": "bb89364d14af1cf3c8dda09954108dfee69cb72f095c2828ec85000d2143ca20",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s050-text2",
           "rect": [
@@ -3849,7 +5702,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s050-text3",
@@ -3869,7 +5723,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s050-text4",
@@ -3887,7 +5742,50 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s050-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Fixed forward, learned reverse process"
+          ],
+          "original_paragraphs": [
+            "DDPMs"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s050-text3",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            243.6290813648294
+          ],
+          "paragraphs": [
+            "Forward diffusion process: Corrupt the image till it becomes Gaussian noise (Fixed process)",
+            "Reverse diffusion process: Gradually remove the noise till you recover the image (Learned process)"
+          ],
+          "original_paragraphs": [
+            "Forward diffusion process: Corrupt the image till it becomes Gaussian noise (Fixed process)",
+            "Reverse diffusion process: Gradually remove the noise till you recover the image (Learned process)"
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -3913,10 +5811,11 @@
     {
       "id": "source-051",
       "number": 51,
-      "title": "DDPMs",
+      "title": "Diffusion as two Markov chains",
       "source_xml": "ppt/slides/slide51.xml",
+      "original_title": "DDPMs",
       "source_xml_sha256": "8f4aeb4f95285e3dfb132b5c6ef74c65da25fe80e49874b6cbc8ab63b4925b8a",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s051-text2",
           "rect": [
@@ -3933,7 +5832,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s051-text3",
@@ -3956,7 +5856,8 @@
           "font_sizes": [
             32.0,
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s051-text4",
@@ -3974,7 +5875,53 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s051-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Diffusion as two Markov chains"
+          ],
+          "original_paragraphs": [
+            "DDPMs"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s051-text3",
+          "rect": [
+            54.33343832020997,
+            116.3709186351706,
+            874.166719160105,
+            248.87905511811024
+          ],
+          "paragraphs": [
+            "Both forward and reverse processes are formalized as a Markovian processes, therefore:",
+            "$\\displaystyle q({\\boldsymbol{x} }_{t}\\mid {\\boldsymbol{x} }_{t-1},\\ \\ldots ,\\ {\\boldsymbol{x} }_{0})=q({\\boldsymbol{x} }_{t}\\mid \\ {\\boldsymbol{x} }_{t-1})$",
+            "$\\displaystyle p({\\boldsymbol{x} }_{t-1}\\mid {\\boldsymbol{x} }_{t},\\ \\ldots ,\\ {\\boldsymbol{x} }_{T})=p({\\boldsymbol{x} }_{t-1}\\mid {\\boldsymbol{x} }_{t})$"
+          ],
+          "original_paragraphs": [
+            "Both forward and reverse processes are formalized as a Markovian processes, therefore:",
+            "𝑞(𝒙𝑡∣𝒙𝑡−1, …, 𝒙0)=𝑞(𝒙𝑡∣ 𝒙𝑡−1)",
+            "𝑝(𝒙𝑡−1∣𝒙𝑡, …, 𝒙𝑇)=𝑝(𝒙𝑡−1∣𝒙𝑡)"
+          ],
+          "font_sizes": [
+            32.0,
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -4000,10 +5947,11 @@
     {
       "id": "source-052",
       "number": 52,
-      "title": "DDPMs",
+      "title": "DDPM samples: CelebA-HQ and CIFAR-10",
       "source_xml": "ppt/slides/slide52.xml",
+      "original_title": "DDPMs",
       "source_xml_sha256": "8af9eefe861a7b0c3d3432c607ef14113b224d72f5940130c4c812f89368f830",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s052-text2",
           "rect": [
@@ -4020,7 +5968,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s052-text4",
@@ -4038,7 +5987,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s052-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "DDPM samples: CelebA-HQ and CIFAR-10"
+          ],
+          "original_paragraphs": [
+            "DDPMs"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -4064,10 +6035,11 @@
     {
       "id": "source-053",
       "number": 53,
-      "title": "DDPMs",
+      "title": "DDPM samples and compression",
       "source_xml": "ppt/slides/slide53.xml",
+      "original_title": "DDPMs",
       "source_xml_sha256": "db470d08e5ef725880e6c8d647e50bc4e8e6b2ce388189b8f4bd18492465e349",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s053-text4",
           "rect": [
@@ -4084,7 +6056,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s053-text8",
@@ -4102,7 +6075,29 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s053-text8",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "DDPM samples and compression"
+          ],
+          "original_paragraphs": [
+            "DDPMs"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -4128,10 +6123,11 @@
     {
       "id": "source-054",
       "number": 54,
-      "title": "D3PMs",
+      "title": "D3PMs: diffusion in discrete spaces",
       "source_xml": "ppt/slides/slide54.xml",
+      "original_title": "D3PMs",
       "source_xml_sha256": "fed9503c6d3f0c24d7f1ae29811f19652d8390d5823a2dd4d5024f3037c27096",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s054-text2",
           "rect": [
@@ -4148,7 +6144,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s054-text3",
@@ -4173,7 +6170,8 @@
           "font_sizes": [
             32.0,
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s054-text4",
@@ -4191,7 +6189,55 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s054-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "D3PMs: diffusion in discrete spaces"
+          ],
+          "original_paragraphs": [
+            "D3PMs"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s054-text3",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            578.2921784776903
+          ],
+          "paragraphs": [
+            "Structured Denoising Diffusion Models in Discrete State-Spaces",
+            "Traditional models only allow continuous data due to Gaussian Noise which can take on any real value, like pixel intensities in images",
+            "expands on discrete diffusion models by modelling structured discrete data in the noising process",
+            "discrete-appropriate noise is added: Could be flipping bits (classification), changing tokens (text) or changing between categorical states (categorization)"
+          ],
+          "original_paragraphs": [
+            "Structured Denoising Diffusion Models in Discrete State-Spaces",
+            "Traditional models only allow continuous data due to Gaussian Noise which can take on any real value, like pixel intensities in images",
+            "expands on discrete diffusion models by modelling structured discrete data in the noising process",
+            "discrete-appropriate noise is added: Could be flipping bits (classification), changing tokens (text) or changing between categorical states (categorization)"
+          ],
+          "font_sizes": [
+            32.0,
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": []
@@ -4199,10 +6245,11 @@
     {
       "id": "source-055",
       "number": 55,
-      "title": "D3PMs",
+      "title": "D3PMs: choosing a transition kernel",
       "source_xml": "ppt/slides/slide55.xml",
+      "original_title": "D3PMs",
       "source_xml_sha256": "6ef50774cc1ab7f36e8b4c084a4dd34a146bb4ee39ecb546efe11cfa77137e45",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s055-text2",
           "rect": [
@@ -4219,7 +6266,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s055-text4",
@@ -4237,7 +6285,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s055-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "D3PMs: choosing a transition kernel"
+          ],
+          "original_paragraphs": [
+            "D3PMs"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -4263,10 +6333,11 @@
     {
       "id": "source-056",
       "number": 56,
-      "title": "D3PMs",
+      "title": "D3PM results on text8",
       "source_xml": "ppt/slides/slide56.xml",
+      "original_title": "D3PMs",
       "source_xml_sha256": "bf33298fbcc336ebd8b3ce9f13d1c10c654fa3aa01e4a6689851a130ad8c7a58",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s056-text2",
           "rect": [
@@ -4283,7 +6354,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s056-text3",
@@ -4301,7 +6373,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s056-text4",
@@ -4319,7 +6392,48 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s056-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "D3PM results on text8"
+          ],
+          "original_paragraphs": [
+            "D3PMs"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s056-text3",
+          "rect": [
+            54.333333333333336,
+            116.37102362204725,
+            1161.6666666666667,
+            92.12913385826772
+          ],
+          "paragraphs": [
+            "Quantitative results on text8"
+          ],
+          "original_paragraphs": [
+            "Quantitative results on text8"
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -4345,10 +6459,11 @@
     {
       "id": "source-057",
       "number": 57,
-      "title": "D3PMs",
+      "title": "D3PM sampling speed and reconstruction",
       "source_xml": "ppt/slides/slide57.xml",
+      "original_title": "D3PMs",
       "source_xml_sha256": "921ff88bb8309aee3916419a4bfed1a763e3d090f02059e588ead5b5272b0998",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s057-text2",
           "rect": [
@@ -4365,7 +6480,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s057-text4",
@@ -4383,7 +6499,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s057-text7",
@@ -4403,7 +6520,50 @@
           ],
           "font_sizes": [
             34.5333
-          ]
+          ],
+          "role": "body"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s057-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "D3PM sampling speed and reconstruction"
+          ],
+          "original_paragraphs": [
+            "D3PMs"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s057-text7",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            204.51958005249344
+          ],
+          "paragraphs": [
+            "Left: perplexity v.s. sampling iterations for LM1B",
+            "Right: Using a trained D3PM absorbing model for LM1B to (top) generate new sentences and (bottom) reconstruct corrupted examples."
+          ],
+          "original_paragraphs": [
+            "Left: perplexity v.s. sampling iterations for LM1B",
+            "Right: Using a trained D3PM absorbing model for LM1B to (top) generate new sentences and (bottom) reconstruct corrupted examples."
+          ],
+          "font_sizes": [
+            34.5333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -4429,10 +6589,11 @@
     {
       "id": "source-058",
       "number": 58,
-      "title": "D3PMs",
+      "title": "D3PM perplexity on LM1B",
       "source_xml": "ppt/slides/slide58.xml",
+      "original_title": "D3PMs",
       "source_xml_sha256": "0552bdb4d3206501ec84894671da6aa670a72fdab8663590ab71fcef8ded0f5a",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s058-text2",
           "rect": [
@@ -4449,7 +6610,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s058-text3",
@@ -4467,7 +6629,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s058-text4",
@@ -4485,7 +6648,48 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s058-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "D3PM perplexity on LM1B"
+          ],
+          "original_paragraphs": [
+            "D3PMs"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s058-text3",
+          "rect": [
+            54.333333333333336,
+            116.37102362204725,
+            1161.6666666666667,
+            156.6290813648294
+          ],
+          "paragraphs": [
+            "Quantitative results on LM1B. Perplexity reported on the test set. Results are reported on two seeds. All models have context window length 128 and 12 layers"
+          ],
+          "original_paragraphs": [
+            "Quantitative results on LM1B. Perplexity reported on the test set. Results are reported on two seeds. All models have context window length 128 and 12 layers"
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -4511,10 +6715,11 @@
     {
       "id": "source-059",
       "number": 59,
-      "title": "Diffusion LLMs",
+      "title": "Diffusion language models",
       "source_xml": "ppt/slides/slide59.xml",
+      "original_title": "Diffusion LLMs",
       "source_xml_sha256": "53316051770ecede9c7371597717912d36c32218e1aa88fdbca7fd7d39834435",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s059-text3",
           "rect": [
@@ -4531,7 +6736,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s059-text4",
@@ -4549,7 +6755,29 @@
           ],
           "font_sizes": [
             80.0
-          ]
+          ],
+          "role": "title"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s059-text4",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            578.2921784776903
+          ],
+          "paragraphs": [
+            "Diffusion language models"
+          ],
+          "original_paragraphs": [
+            "Diffusion LLMs"
+          ],
+          "font_sizes": [
+            80.0
+          ],
+          "role": "title"
         }
       ],
       "illustrations": []
@@ -4557,10 +6785,11 @@
     {
       "id": "source-060",
       "number": 60,
-      "title": "Mercury",
+      "title": "Mercury: a diffusion language model",
       "source_xml": "ppt/slides/slide60.xml",
+      "original_title": "Mercury",
       "source_xml_sha256": "c9b626d1993de1a8d3c4c8bd170248d734f716153bb5bb765dfb493277b9d431",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s060-text2",
           "rect": [
@@ -4577,7 +6806,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s060-text3",
@@ -4595,7 +6825,8 @@
           ],
           "font_sizes": [
             58.6667
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s060-text4",
@@ -4613,7 +6844,48 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s060-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Mercury: a diffusion language model"
+          ],
+          "original_paragraphs": [
+            "Mercury"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s060-text3",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            578.2921784776903
+          ],
+          "paragraphs": [
+            "https://chat.inceptionlabs.ai/ "
+          ],
+          "original_paragraphs": [
+            "https://chat.inceptionlabs.ai/ "
+          ],
+          "font_sizes": [
+            58.6667
+          ],
+          "role": "body"
         }
       ],
       "illustrations": []
@@ -4621,10 +6893,11 @@
     {
       "id": "source-061",
       "number": 61,
-      "title": "LLaDA",
+      "title": "LLaDA: large language diffusion models",
       "source_xml": "ppt/slides/slide61.xml",
+      "original_title": "LLaDA",
       "source_xml_sha256": "53423a81ad721edda17fe5ef836d5fa0e94f6cf4d505d6f038c06ce58e65d21c",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s061-text2",
           "rect": [
@@ -4641,7 +6914,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s061-text4",
@@ -4659,7 +6933,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s061-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "LLaDA: large language diffusion models"
+          ],
+          "original_paragraphs": [
+            "LLaDA"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -4685,10 +6981,11 @@
     {
       "id": "source-062",
       "number": 62,
-      "title": "LLaDA the big picture",
+      "title": "LLaDA: pretraining, SFT, and sampling",
       "source_xml": "ppt/slides/slide62.xml",
+      "original_title": "LLaDA the big picture",
       "source_xml_sha256": "c80c172aeac3e3c26ac9cf84763f1d5b8dbb7724a9adc539e4cb90b1066891bb",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s062-text2",
           "rect": [
@@ -4706,7 +7003,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s062-text3",
@@ -4728,7 +7026,8 @@
           ],
           "font_sizes": [
             24.0
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s062-text4",
@@ -4746,7 +7045,53 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s062-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "LLaDA: pretraining, SFT, and sampling"
+          ],
+          "original_paragraphs": [
+            "LLaDA the big picture"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s062-text3",
+          "rect": [
+            54.333333333333336,
+            116.37102362204725,
+            1191.66687664042,
+            191.87905511811024
+          ],
+          "paragraphs": [
+            "LLaDA is a masked diffusion model that follows standard pretraining and SFT while sampling via diffusion. ",
+            "During pretraining, it masks all tokens randomly at ratio $t\\sim U[0,1]$ ; in SFT, only response tokens may be masked. ",
+            "The model simulates diffusion from full masking $(t=1)$ to unmasking $(t=0)$, predicting all masks simultaneously at each step with flexible remasking."
+          ],
+          "original_paragraphs": [
+            "LLaDA is a masked diffusion model that follows standard pretraining and SFT while sampling via diffusion. ",
+            "During pretraining, it masks all tokens randomly at ratio 𝑡∼𝑈[0,1] ; in SFT, only response tokens may be masked. ",
+            "The model simulates diffusion from full masking (𝑡=1) to unmasking (𝑡=0), predicting all masks simultaneously at each step with flexible remasking."
+          ],
+          "font_sizes": [
+            24.0
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -4772,10 +7117,11 @@
     {
       "id": "source-063",
       "number": 63,
-      "title": "LLaDA competitive performance",
+      "title": "LLaDA across tasks and model variants",
       "source_xml": "ppt/slides/slide63.xml",
+      "original_title": "LLaDA competitive performance",
       "source_xml_sha256": "7835f0f9846f5cafb82a6bfeb72c0169b25e482498205ffd13a184058c2fd168",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s063-text2",
           "rect": [
@@ -4793,7 +7139,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s063-text4",
@@ -4811,7 +7158,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s063-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "LLaDA across tasks and model variants"
+          ],
+          "original_paragraphs": [
+            "LLaDA competitive performance"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -4837,10 +7207,11 @@
     {
       "id": "source-064",
       "number": 64,
-      "title": "LLaDA competitive performance",
+      "title": "LLaDA benchmark results",
       "source_xml": "ppt/slides/slide64.xml",
+      "original_title": "LLaDA competitive performance",
       "source_xml_sha256": "c07d52871d19c2c5bdb94e46eff6677942c28550fabf32c447768cfcc578506a",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s064-text2",
           "rect": [
@@ -4858,7 +7229,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s064-text4",
@@ -4876,7 +7248,30 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s064-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "LLaDA benchmark results"
+          ],
+          "original_paragraphs": [
+            "LLaDA competitive performance"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -4902,10 +7297,11 @@
     {
       "id": "source-065",
       "number": 65,
-      "title": "LLaDA competitive performance",
+      "title": "LLaDA sampling and multi-turn dialogue",
       "source_xml": "ppt/slides/slide65.xml",
+      "original_title": "LLaDA competitive performance",
       "source_xml_sha256": "4684ea418c2b9d86d2c3900ac2a67c12121e3a0992894785e73ac9fe9069c1e1",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s065-text2",
           "rect": [
@@ -4923,7 +7319,8 @@
           "font_sizes": [
             37.3333,
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s065-text3",
@@ -4941,7 +7338,8 @@
           ],
           "font_sizes": [
             26.6667
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s065-text4",
@@ -4959,7 +7357,49 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s065-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "LLaDA sampling and multi-turn dialogue"
+          ],
+          "original_paragraphs": [
+            "LLaDA competitive performance"
+          ],
+          "font_sizes": [
+            37.3333,
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s065-text3",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            122.87905511811023
+          ],
+          "paragraphs": [
+            "Visualization of the Sampling Process and a Generated Multi-round Dialogue. In the response of LLaDA, darker colors indicate tokens predicted in the later stages of sampling, while lighter colors correspond to earlier predictions."
+          ],
+          "original_paragraphs": [
+            "Visualization of the Sampling Process and a Generated Multi-round Dialogue. In the response of LLaDA, darker colors indicate tokens predicted in the later stages of sampling, while lighter colors correspond to earlier predictions."
+          ],
+          "font_sizes": [
+            26.6667
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -4985,10 +7425,11 @@
     {
       "id": "source-066",
       "number": 66,
-      "title": "Dream",
+      "title": "Dream: reusing autoregressive weights",
       "source_xml": "ppt/slides/slide66.xml",
+      "original_title": "Dream",
       "source_xml_sha256": "23386a5d984425e21febe1f2eb453c699dad62ee626f413c7d8f7c8b2cd0da06",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s066-text2",
           "rect": [
@@ -5005,7 +7446,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s066-text4",
@@ -5023,7 +7465,8 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
         },
         {
           "id": "s066-text6",
@@ -5041,7 +7484,48 @@
           ],
           "font_sizes": [
             32.0
-          ]
+          ],
+          "role": "body"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s066-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Dream: reusing autoregressive weights"
+          ],
+          "original_paragraphs": [
+            "Dream"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s066-text6",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            98.87905511811023
+          ],
+          "paragraphs": [
+            "Leveraging pre-trained weights from existing autoregressive (AR) models provides a non-trivial initialization strategy for diffusion language models"
+          ],
+          "original_paragraphs": [
+            "Leveraging pre-trained weights from existing autoregressive (AR) models provides a non-trivial initialization strategy for diffusion language models"
+          ],
+          "font_sizes": [
+            32.0
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -5067,10 +7551,11 @@
     {
       "id": "source-067",
       "number": 67,
-      "title": "Dream",
+      "title": "Dream compared with other base models",
       "source_xml": "ppt/slides/slide67.xml",
+      "original_title": "Dream",
       "source_xml_sha256": "b1c31273ff65221a827175b3d822711300f483c689443ee45e887b05558f6a57",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s067-text2",
           "rect": [
@@ -5087,7 +7572,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s067-text3",
@@ -5105,7 +7591,8 @@
           ],
           "font_sizes": [
             26.6667
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s067-text4",
@@ -5123,7 +7610,48 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s067-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Dream compared with other base models"
+          ],
+          "original_paragraphs": [
+            "Dream"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s067-text3",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            122.87905511811023
+          ],
+          "paragraphs": [
+            "Comparison of base models on standard evaluation benchmarks. * indicates Dream 7B, LLaDA 8B, Qwen2.5 7B and LLaMA3 8B are evaluated under the same protocol. The best results are bolded and the second best are underlined. "
+          ],
+          "original_paragraphs": [
+            "Comparison of base models on standard evaluation benchmarks. * indicates Dream 7B, LLaDA 8B, Qwen2.5 7B and LLaMA3 8B are evaluated under the same protocol. The best results are bolded and the second best are underlined. "
+          ],
+          "font_sizes": [
+            26.6667
+          ],
+          "role": "body"
         }
       ],
       "illustrations": [
@@ -5149,10 +7677,11 @@
     {
       "id": "source-068",
       "number": 68,
-      "title": "Dream",
+      "title": "Dream: scratch versus AR initialization",
       "source_xml": "ppt/slides/slide68.xml",
+      "original_title": "Dream",
       "source_xml_sha256": "103ed32efbb5a8340c3c36f29a63a4916dc31ad4fef74799d200204829244808",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s068-text2",
           "rect": [
@@ -5169,7 +7698,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s068-text4",
@@ -5187,7 +7717,29 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s068-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "Dream: scratch versus AR initialization"
+          ],
+          "original_paragraphs": [
+            "Dream"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
         }
       ],
       "illustrations": [
@@ -5215,8 +7767,9 @@
       "number": 69,
       "title": "References",
       "source_xml": "ppt/slides/slide69.xml",
+      "original_title": "References",
       "source_xml_sha256": "ba04406b2d22993ac63d032152b0d43b333c45b5334cd0bfc8ee4152cdcfa6ec",
-      "text_boxes": [
+      "original_text_boxes": [
         {
           "id": "s069-text2",
           "rect": [
@@ -5233,7 +7786,8 @@
           ],
           "font_sizes": [
             53.3333
-          ]
+          ],
+          "role": "title"
         },
         {
           "id": "s069-text3",
@@ -5261,7 +7815,8 @@
           ],
           "font_sizes": [
             37.3333
-          ]
+          ],
+          "role": "body"
         },
         {
           "id": "s069-text4",
@@ -5279,10 +7834,66 @@
           ],
           "font_sizes": [
             16.0
-          ]
+          ],
+          "role": "slide-number"
+        }
+      ],
+      "text_boxes": [
+        {
+          "id": "s069-text2",
+          "rect": [
+            33.00010498687664,
+            25.336902887139107,
+            1213.0001049868767,
+            64.08272965879264
+          ],
+          "paragraphs": [
+            "References"
+          ],
+          "original_paragraphs": [
+            "References"
+          ],
+          "font_sizes": [
+            53.3333
+          ],
+          "role": "title"
+        },
+        {
+          "id": "s069-text3",
+          "rect": [
+            54.333333333333336,
+            116.3709186351706,
+            1161.6666666666667,
+            578.2921784776903
+          ],
+          "paragraphs": [
+            "[1] https://stanford.edu/class/ee367/slides/lecture12.pdf ",
+            "[2] https://lemuelpuglisi.github.io/rg2023-ddpm-slides/",
+            "[3] https://hkunlp.github.io/blog/2025/dream/ ",
+            "[4] https://ml-gsai.github.io/LLaDA-demo/ ",
+            "[5] https://deepmind.google/models/gemini-diffusion/",
+            "[6] https://chat.inceptionlabs.ai/  "
+          ],
+          "original_paragraphs": [
+            "[1] https://stanford.edu/class/ee367/slides/lecture12.pdf ",
+            "[2] https://lemuelpuglisi.github.io/rg2023-ddpm-slides/",
+            "[3] https://hkunlp.github.io/blog/2025/dream/ ",
+            "[4] https://ml-gsai.github.io/LLaDA-demo/ ",
+            "[5] https://deepmind.google/models/gemini-diffusion/",
+            "[6] https://chat.inceptionlabs.ai/  "
+          ],
+          "font_sizes": [
+            37.3333
+          ],
+          "role": "body"
         }
       ],
       "illustrations": []
     }
-  ]
+  ],
+  "adaptations": {
+    "file": "adaptations.json",
+    "sha256": "679c3aa0ecbe3858ee6a56668a55d312d9a943e91f29afd3d335cb9e91da3091",
+    "description": "Revised headings, standard course cover, and removed source page numbers."
+  }
 }

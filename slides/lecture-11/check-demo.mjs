@@ -9,8 +9,21 @@ assert.equal(manifest.mode, 'native', 'Check the editable HTML conversion.');
 assert.equal(manifest.slides.length, 69);
 const illustrations = manifest.slides.flatMap(slide => slide.illustrations);
 const textBoxes = manifest.slides.flatMap(slide => slide.text_boxes);
+const originalBoxes = manifest.slides.flatMap(slide => slide.original_text_boxes);
+const originalNumbers = originalBoxes.filter(box => box.role === 'slide-number');
 assert.equal(illustrations.length, 69);
-assert.equal(textBoxes.length, 180);
+assert.equal(originalBoxes.length, 180, 'Keep the original text inventory for comparison.');
+assert.equal(originalNumbers.length, 69);
+assert.equal(textBoxes.length, 113, 'Retain 41 body boxes, 68 revised titles, and four cover boxes.');
+assert.ok(originalNumbers.every(original => !textBoxes.some(box => box.id === original.id)),
+  'Remove the original numeric footers from every slide.');
+const expectedCover = [
+  ['cover-course', 'CS40008.01'],
+  ['cover-title', 'Diffusion language models'],
+  ['cover-subtitle', 'Lecture 11 · NLP and LLMs'],
+  ['cover-byline', 'Baojian Zhou\nSchool of Data Science\nFudan University\nNovember 18, 2026'],
+];
+assert.deepEqual(manifest.slides[0].text_boxes.map(box => [box.id, box.paragraphs.join('\n')]), expectedCover);
 for (const illustration of illustrations) {
   const bytes = await readFile(new URL(illustration.asset, import.meta.url));
   assert.equal(createHash('sha256').update(bytes).digest('hex'), illustration.sha256,
@@ -35,7 +48,7 @@ try {
   await page.evaluate(() => window.courseReady);
   assert.equal(await page.locator('#course-error').isVisible(), false);
   assert.equal(await page.evaluate(() => Reveal.getTotalSlides()), 69);
-  assert.equal(await page.locator('.slides .native-text').count(), 180);
+  assert.equal(await page.locator('.slides .native-text').count(), textBoxes.length);
   assert.equal(await page.locator('.slides .katex').count(), 31);
   assert.equal(await page.locator('.slides .katex-error').count(), 0);
   assert.equal(await page.locator('.slides .native-figure').count(), 69);
@@ -55,6 +68,15 @@ try {
   'There must be no outlined full-slide SVG standing in for native text.');
   assert.equal(await page.locator('.slides img[src$=".svg"], .slides img[data-src$=".svg"]').count(), 0);
 
+  for (const [id, expected] of expectedCover) {
+    const element = page.locator(`[data-source-text-id="${id}"]`);
+    assert.equal(await element.count(), 1);
+    assert.equal((await element.innerText()).replace(/\s+/g, ' ').trim(), expected.replace(/\s+/g, ' '));
+  }
+  assert.doesNotMatch(await page.locator('#source-001').innerText(), /DATA130030|11\/18\/2026/);
+  assert.equal(await page.locator('[data-source-text-id]').evaluateAll((items, ids) =>
+    items.filter(item => ids.includes(item.dataset.sourceTextId)).length, originalNumbers.map(box => box.id)), 0);
+
   async function showSlide(index) {
     await page.evaluate(value => Reveal.slide(value, 0, -1), index);
     await page.waitForFunction(id => Reveal.getCurrentSlide().id === id, manifest.slides[index].id);
@@ -66,6 +88,9 @@ try {
     assert.equal(await heading.count(), 1, `${slide.id}: one native heading.`);
     assert.equal(await heading.isVisible(), true, `${slide.id}: the heading must be visible.`);
     assert.equal((await heading.innerText()).replace(/\s+/g, ' ').trim(), slide.title);
+    assert.equal(await page.locator(`#${slide.id} .native-text`).evaluateAll((items, number) =>
+      items.filter(item => item.textContent.trim() === String(number)).length, slide.number), 0,
+    `${slide.id}: no original numeric footer remains in the slide content.`);
   }
 
   // Select and temporarily edit a visible text node. Separate image elements
@@ -165,7 +190,7 @@ try {
   await page.evaluate(() => window.courseReady);
   await page.waitForFunction(() => document.querySelectorAll('.pdf-page').length === 69);
   assert.equal(await page.locator('.pdf-page').count(), 69);
-  assert.equal(await page.locator('.pdf-page .native-text').count(), 180);
+  assert.equal(await page.locator('.pdf-page .native-text').count(), textBoxes.length);
   assert.equal(await page.locator('.pdf-page .katex').count(), 31);
   assert.equal(await page.locator('.native-gif').count(), 5);
   assert.ok(await page.locator('.native-gif').evaluateAll(images => images.every(image =>
@@ -175,12 +200,14 @@ try {
     'Print retains the final state of the original click reveal.');
   assert.deepEqual(errors, []);
   await writeFile(new URL('native-demo-report.json', output), JSON.stringify({
-    slides: 69, nativeTextBoxes: 180, equations: 31, illustrationInstances: 69,
+    slides: 69, nativeTextBoxes: textBoxes.length, originalTextBoxes: originalBoxes.length,
+    removedOriginalSlideNumbers: originalNumbers.length, updatedCourseCover: true,
+    equations: 31, illustrationInstances: 69,
     uniqueOriginalIllustrations: new Set(illustrations.map(item => item.asset)).size,
     visibleHeadings: 69, selectedAndEditedRealText: true, originalMediaHashes: true,
     animatedAssets, referenceLinks, printPages: 69, printUsesPosters: true, errors,
   }, null, 2) + '\n');
-  console.log('Passed: 69 native slides, 180 editable text boxes, 31 equations, 69 original illustrations, text selection/editing, click reveal, all five GIFs, six references, and 69 print pages.');
+  console.log('Passed: 69 revised titles, course cover, 113 editable text boxes, no original numeric footers, 31 equations, 69 original illustrations, text selection/editing, click reveal, all five GIFs, six references, and 69 print pages.');
 } finally {
   await browser.close();
 }
