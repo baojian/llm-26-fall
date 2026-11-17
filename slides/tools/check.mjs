@@ -37,14 +37,29 @@ if (metadata.source_preservation) {
   assert.match(sourcePreservation.source_sha256, /^[a-f0-9]{64}$/, 'Record the original PowerPoint SHA-256.');
   assert.equal(sourcePreservation.width, 1280);
   assert.equal(sourcePreservation.height, 720);
+  assert.ok(!sourcePreservation.mode || ['image', 'native'].includes(sourcePreservation.mode), 'Use image or native source-preservation mode.');
   assert.deepEqual(slideSources(source).map(slide => slide.id), sourcePreservation.slides.map(slide => slide.id),
     'Preserve every source page in its original order.');
   for (const slide of sourcePreservation.slides) {
-    assert.match(slide.asset, /^assets\/[a-zA-Z0-9_/-]+\.(svg|png|jpg|jpeg)$/, 'Keep imported slide images in local assets.');
-    assert.equal(createHash('sha256').update(await readFile(path.join(deck, slide.asset))).digest('hex'), slide.sha256,
-      `${slide.id}: preserve the recorded source-page image.`);
+    const assets = sourcePreservation.mode === 'native' ? slide.illustrations : [slide];
+    assert.ok(Array.isArray(assets), `${slide.id}: record the source illustrations.`);
+    for (const asset of assets) {
+      assert.match(asset.asset, /^assets\/[a-zA-Z0-9_/-]+\.(svg|png|jpg|jpeg|gif)$/, 'Keep imported illustrations in local assets.');
+      assert.equal(createHash('sha256').update(await readFile(path.join(deck, asset.asset))).digest('hex'), asset.sha256,
+        `${slide.id}: preserve the recorded source artwork.`);
+    }
+    if (sourcePreservation.mode === 'native') {
+      assert.ok(Array.isArray(slide.text_boxes) && slide.text_boxes.length, `${slide.id}: record the native source text.`);
+      assert.equal(new Set(slide.text_boxes.map(box => box.id)).size, slide.text_boxes.length, `${slide.id}: source text box IDs must be unique.`);
+      for (const box of slide.text_boxes) {
+        assert.ok(typeof box.id === 'string' && box.id, `${slide.id}: give each source text box an ID.`);
+        assert.ok(Array.isArray(box.paragraphs) && box.paragraphs.every(text => typeof text === 'string'), `${slide.id}/${box.id}: preserve source paragraphs.`);
+        assert.ok(Array.isArray(box.font_sizes) && box.font_sizes.length && box.font_sizes.every(size => Number.isFinite(size) && size > 0), `${slide.id}/${box.id}: record source-derived font sizes.`);
+      }
+    }
   }
 }
+const nativePreservation = sourcePreservation?.mode === 'native';
 const componentSources = ['lecture-05-test', 'lecture-05'].includes(folder)
   ? slideSources(await readFile(path.join(slidesRoot, 'lecture-05-test/slides.md'), 'utf8')) : [];
 const adaptations = folder === 'lecture-05'
@@ -184,11 +199,39 @@ try {
     asset: section.querySelector('img.source-slide-image')?.getAttribute('src'),
     title: section.querySelector('h1.source-slide-title,h2.source-slide-title')?.textContent.trim(),
   })));
-  if (importedSlides.length || sourcePreservation) {
+  if (importedSlides.length || (sourcePreservation && !nativePreservation)) {
     assert.ok(sourcePreservation, 'Source-slide layouts require a preservation manifest.');
+    assert.ok(!nativePreservation, 'Native slides must not use full-page source images.');
     assert.deepEqual(importedSlides.map(slide => ({ id: slide.id, asset: slide.asset })),
       sourcePreservation.slides.map(slide => ({ id: slide.id, asset: slide.asset })), 'Render each recorded source image on its matching slide.');
     for (const slide of importedSlides) assert.ok(slide.imageCount === 1 && slide.title, `${slide.id}: include one source image and an accessible title.`);
+  }
+  const nativeSlides = await page.locator('.slides > section.native-slide').evaluateAll(sections => sections.map(section => ({
+    id: section.id,
+    illustrations: [...section.querySelectorAll('img')].flatMap(image => [image.dataset.src, image.getAttribute('src'), image.dataset.gifSource, image.dataset.poster].filter(Boolean)),
+    textBoxes: [...section.querySelectorAll('.native-text')].map(box => ({
+      id: box.dataset.sourceTextId,
+      paragraphs: [...box.querySelectorAll('h1,h2,h3,p')].map(paragraph => {
+        const copy = paragraph.cloneNode(true);
+        copy.querySelectorAll('.katex').forEach(math => math.replaceWith(`$${math.querySelector('annotation').textContent}$`));
+        copy.querySelectorAll('br').forEach(lineBreak => lineBreak.replaceWith('\n'));
+        return copy.textContent.replace(/\s+/g, ' ').trim();
+      }).filter(Boolean),
+    })),
+  })));
+  if (nativeSlides.length || nativePreservation) {
+    assert.ok(nativePreservation, 'Native source slides require a native preservation manifest.');
+    if (folder === 'lecture-11') assert.equal(count, 69, 'Retain all 69 original Lecture 11 slides.');
+    assert.deepEqual(nativeSlides.map(slide => slide.id), sourcePreservation.slides.map(slide => slide.id), 'Render all source slides as native HTML, in order.');
+    for (const [index, slide] of nativeSlides.entries()) {
+      assert.deepEqual(slide.textBoxes, sourcePreservation.slides[index].text_boxes.map(box => ({
+        id: box.id,
+        paragraphs: box.paragraphs.map(text => text.replace(/\s+/g, ' ').trim()).filter(Boolean),
+      })), `${slide.id}: keep every source paragraph in native, semantic HTML.`);
+      for (const illustration of sourcePreservation.slides[index].illustrations) {
+        assert.ok(slide.illustrations.includes(illustration.asset), `${slide.id}: render the recorded illustration ${illustration.asset}.`);
+      }
+    }
   }
   if (metadata.notebook === false) assert.equal(await page.locator('#notebook-link').isVisible(), false, 'Hide the notebook link when this lecture has no notebook.');
   const checkedSlides = [];
@@ -198,25 +241,40 @@ try {
       await page.evaluate(async index => {
         Reveal.slide(index);
         Reveal.getCurrentSlide().querySelectorAll('.fragment').forEach(el => el.classList.add('visible'));
-        await Promise.all([...Reveal.getCurrentSlide().querySelectorAll('img.source-slide-image')].map(image => image.decode()));
+        await Promise.all([...Reveal.getCurrentSlide().querySelectorAll('img.source-slide-image,.native-figure img[src],.native-figure img[data-src]')].map(async image => {
+          const deadline = performance.now() + 10000;
+          while (!image.getAttribute('src')) {
+            if (performance.now() > deadline) throw new Error(`Reveal did not load the current slide image: ${image.dataset.src}`);
+            await new Promise(resolve => requestAnimationFrame(resolve));
+          }
+          await image.decode();
+        }));
         await document.fonts.ready;
         Reveal.layout();
         await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
       }, i);
-      const result = await page.evaluate(() => {
+      const result = await page.evaluate(sourceSlide => {
         const slide = Reveal.getCurrentSlide();
         const box = slide.getBoundingClientRect();
         const scale = Reveal.getScale();
         const problems = [];
         const imported = slide.classList.contains('source-slide');
-        const contentBottom = box.bottom - (imported ? -1 : 35 * scale);
-        const elements = [...slide.querySelectorAll('h1,h2,h3,p,li,pre,table,.columns,.katex-display,input,button,.plot,.plot text,img,video')].filter(el => !el.closest('aside.notes') && !(imported && el.matches('.source-slide-title')));
+        const native = slide.classList.contains('native-slide');
+        const contentBottom = box.bottom - (imported || native ? -1 : 35 * scale);
+        const elements = [...slide.querySelectorAll('h1,h2,h3,p,li,pre,table,.columns,.katex-display,input,button,.plot,.plot text,img,video,.native-text,.native-figure')].filter(el => !el.closest('aside.notes') && !(imported && el.matches('.source-slide-title')));
         if (!slide.querySelector('h1,h2')) problems.push('Missing heading');
         if (slide.querySelector('.katex-error')) problems.push('Unrendered equation');
         for (const el of elements) {
           if (el.closest('.katex') && !el.classList.contains('katex-display')) continue;
           const bounds = el.getBoundingClientRect();
           const label = el.textContent.trim().slice(0, 70) || el.tagName;
+          const figure = native && el.matches('img') && el.closest('.native-figure');
+          if (figure) {
+            const style = getComputedStyle(figure);
+            if (!['hidden', 'clip'].includes(style.overflowX) || !['hidden', 'clip'].includes(style.overflowY)) problems.push('Native figure crops must clip their image to the checked wrapper');
+            if (!el.complete || !el.naturalWidth) problems.push('Native illustration did not load');
+            continue;
+          }
           if (imported && el.matches('img.source-slide-image')) {
             if (!el.complete || !el.naturalWidth) problems.push('Source image did not load');
             if (['left', 'right', 'top', 'bottom'].some(edge => Math.abs(bounds[edge] - box[edge]) > 1)) problems.push('Source image must fill the original page frame');
@@ -227,10 +285,45 @@ try {
           if (el.scrollWidth > el.clientWidth + 3 && ['PRE', 'TABLE', 'P', 'H1', 'H2', 'H3', 'LI'].includes(el.tagName)) problems.push(`Horizontal overflow: ${label}`);
           const font = parseFloat(getComputedStyle(el).fontSize);
           const minimum = el.closest('.source,.caption,.eyebrow,.exercise-meta,.plot') ? 24 : el.tagName === 'PRE' ? 26 : ['H1', 'H2'].includes(el.tagName) ? 44 : 26;
-          if (font < minimum && (el.textContent.trim() || el.matches('input'))) problems.push(`Text too small (${font}px): ${label}`);
+          if (!(native && el.closest('.native-text')) && font < minimum && (el.textContent.trim() || el.matches('input'))) problems.push(`Text too small (${font}px): ${label}`);
+        }
+        if (native) {
+          const visible = element => {
+            const rect = element.getBoundingClientRect();
+            for (let node = element; node && node !== slide.parentElement; node = node.parentElement) {
+              const style = getComputedStyle(node);
+              if (style.display === 'none' || style.visibility !== 'visible' || Number(style.opacity) === 0 || style.clipPath !== 'none') return false;
+            }
+            return rect.width > 1 && rect.height > 1;
+          };
+          if (![...slide.querySelectorAll('.native-text h1,.native-text h2')].some(heading => heading.textContent.trim() && visible(heading))) problems.push('Native slide needs a visible HTML heading');
+          if (slide.querySelector('.source-slide-image')) problems.push('Native slides cannot contain a full-page source image');
+          for (const image of slide.querySelectorAll('img')) {
+            const bounds = (image.closest('.native-figure') || image).getBoundingClientRect();
+            if (bounds.width >= box.width * 0.95 && bounds.height >= box.height * 0.95) problems.push('Native slides cannot use a full-frame image');
+          }
+          for (const textBox of slide.querySelectorAll('.native-text')) {
+            const record = sourceSlide.text_boxes.find(item => item.id === textBox.dataset.sourceTextId);
+            if (!visible(textBox)) problems.push(`Hidden native text: ${textBox.dataset.sourceTextId}`);
+            if (textBox.scrollWidth > textBox.clientWidth + 3 || textBox.scrollHeight > textBox.clientHeight + 3) problems.push(`Native text overflows its box: ${textBox.dataset.sourceTextId}`);
+            const walker = document.createTreeWalker(textBox, NodeFilter.SHOW_TEXT);
+            for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+              if (!node.textContent.trim()) continue;
+              const parent = node.parentElement;
+              if (parent.closest('.katex')) continue;
+              const font = parseFloat(getComputedStyle(parent).fontSize);
+              if (!record.font_sizes.some(size => Math.abs(size - font) <= 0.15)) problems.push(`Font differs from source (${font}px): ${node.textContent.trim().slice(0, 40)}`);
+              if (!visible(parent)) problems.push(`Hidden native text run: ${node.textContent.trim().slice(0, 40)}`);
+              const range = document.createRange();
+              range.selectNodeContents(node);
+              for (const bounds of range.getClientRects()) {
+                if (bounds.left < box.left - 1 || bounds.right > box.right + 1 || bounds.top < box.top - 1 || bounds.bottom > box.bottom + 1) problems.push(`Native text outside slide: ${node.textContent.trim().slice(0, 40)}`);
+              }
+            }
+          }
         }
         return { id: slide.id, title: slide.querySelector('h1,h2')?.textContent, problems };
-      });
+      }, nativePreservation ? sourcePreservation.slides[i] : null);
       if (result.problems.length) {
         await page.screenshot({ path: path.join(output, `failure-${viewport.width}.png`), animations: 'disabled' });
       }
@@ -241,8 +334,8 @@ try {
       }
     }
   }
-  const assets = await page.locator('.slides [src], .slides [poster], .slides [data-plotly], .slides [data-excalidraw-source], .slides [data-manim-source]').evaluateAll(elements => elements.flatMap(el => {
-    return ['src', 'poster', 'data-plotly', 'data-excalidraw-source', 'data-manim-source'].map(name => el.getAttribute(name)).filter(Boolean);
+  const assets = await page.locator('.slides [src], .slides [data-src], .slides [data-gif-source], .slides [data-poster], .slides [poster], .slides [data-plotly], .slides [data-excalidraw-source], .slides [data-manim-source]').evaluateAll(elements => elements.flatMap(el => {
+    return ['src', 'data-src', 'data-gif-source', 'data-poster', 'poster', 'data-plotly', 'data-excalidraw-source', 'data-manim-source'].map(name => el.getAttribute(name)).filter(Boolean);
   }));
   for (const asset of new Set(assets)) {
     const target = new URL(asset, url);
@@ -858,17 +951,20 @@ try {
       assert.equal(await page.locator('#memory-visual').getAttribute('data-total-mib'), '250');
       assert.equal(await page.locator('.pdf-page svg[role="img"]').count(), 2, 'Print both initial interactive examples.');
     }
-    await page.evaluate(() => document.fonts.ready);
+    await page.evaluate(async () => {
+      await document.fonts.ready;
+      await Promise.all([...document.querySelectorAll('.pdf-page .native-figure img[src]')].map(image => image.decode()));
+    });
     await page.setViewportSize({ width: 1600, height: 1000 });
     await page.screenshot({ path: path.join(output, 'print-preview.png'), animations: 'disabled' });
     await page.emulateMedia({ media: 'print' });
-    const printPadding = await page.locator('.pdf-page section:not(.source-slide)').evaluateAll(sections => sections.map(section => parseFloat(getComputedStyle(section).paddingLeft)));
+    const printPadding = await page.locator('.pdf-page section:not(.source-slide):not(.native-slide)').evaluateAll(sections => sections.map(section => parseFloat(getComputedStyle(section).paddingLeft)));
     assert.ok(printPadding.every(padding => padding >= 64), 'PDF export must preserve the slide content margins.');
     const printOverflow = await page.locator('.pdf-page section').evaluateAll(sections => sections.flatMap(section => {
       const box = section.getBoundingClientRect();
       return [...section.querySelectorAll('h1,h2,p,li,pre,table,.plot')]
         .filter(el => !el.closest('aside.notes') && !(section.classList.contains('source-slide') && el.matches('.source-slide-title')))
-        .filter(el => el.getBoundingClientRect().bottom > box.bottom - (section.classList.contains('source-slide') ? 0 : 35))
+        .filter(el => el.getBoundingClientRect().bottom > box.bottom - (section.matches('.source-slide,.native-slide') ? -1 : 35))
         .map(el => `${section.id}: ${el.textContent.trim().slice(0, 60)}`);
     }));
     assert.deepEqual(printOverflow, [], 'Content extends into the PDF slide footer.');
@@ -879,6 +975,18 @@ try {
       return image.complete && image.naturalWidth > 0 && ['left', 'right', 'top', 'bottom'].every(edge => Math.abs(bounds[edge] - box[edge]) <= 1);
     }));
     assert.ok(importedPrint.every(Boolean), 'Print each source image in its complete original page frame.');
+    const nativePrint = await page.locator('.pdf-page section.native-slide').evaluateAll(sections => sections.flatMap(section => {
+      const frame = section.getBoundingClientRect();
+      return [...section.querySelectorAll('.native-text,.native-figure')].flatMap(element => {
+        const bounds = element.getBoundingClientRect();
+        const problems = [];
+        if (bounds.left < frame.left - 1 || bounds.right > frame.right + 1 || bounds.top < frame.top - 1 || bounds.bottom > frame.bottom + 1) problems.push(`${section.id}: native content outside print page`);
+        if (element.matches('.native-text') && (element.scrollWidth > element.clientWidth + 3 || element.scrollHeight > element.clientHeight + 3)) problems.push(`${section.id}: native text overflows in print`);
+        if (element.matches('.native-figure') && [...element.querySelectorAll('img')].some(image => !image.complete || !image.naturalWidth)) problems.push(`${section.id}: native illustration did not load for print`);
+        return problems;
+      });
+    }));
+    assert.deepEqual(nativePrint, [], 'Preserve native text and figure bounds in print.');
     await page.pdf({ path: path.join(output, `${folder}.pdf`), printBackground: true, preferCSSPageSize: true });
   }
   assert.deepEqual(errors, [], 'Browser errors or missing runtime assets.');

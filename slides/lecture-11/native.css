@@ -1,0 +1,31 @@
+/* Match the supplied PowerPoint while keeping text and math editable. */
+.reveal .slides > section.native-slide { padding: 0; background: #fff; }
+.reveal .native-slide .native-text,
+.reveal .native-slide .native-figure,
+.reveal .native-slide .native-decoration { position: absolute; box-sizing: border-box; }
+.reveal .native-slide .native-text { display: flex; flex-direction: column; }
+.reveal .native-slide .native-paragraph {
+  position: relative; flex-shrink: 0; padding: 0; margin: 0;
+  font-family: Tahoma, Verdana, Arial, sans-serif; font-weight: 400;
+  letter-spacing: normal; max-width: none; text-transform: none;
+  overflow-wrap: normal; word-break: normal;
+}
+.reveal .native-slide .native-text > :last-child { margin-bottom: 0; }
+.reveal .native-slide .native-bullet::before {
+  content: '•'; position: absolute; left: -24px; font-family: Arial, sans-serif;
+}
+.reveal .native-slide .native-figure { overflow: hidden; }
+.reveal .native-slide .native-figure img {
+  position: absolute; display: block; object-fit: fill; max-width: none;
+  max-height: none; margin: 0; border: 0; box-shadow: none;
+}
+.reveal .native-slide .native-picture-link { position: absolute; inset: 0; }
+.reveal .native-slide .katex { font-size: 1em; }
+.reveal .native-slide .native-display-math { text-align: center; }
+.reveal .native-slide .native-display-math .katex { font-size: 1em; }
+.reveal .native-slide a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 1px; }
+.reveal .native-slide .fragment { transition: none; }
+html.reveal-print .reveal .slides section.native-slide { padding: 0 !important; }
+html.reveal-print .pdf-page:has(.native-slide) .slide-number-pdf { display: none !important; }
+/* KaTeX needs slightly more line height than the source inline equations. */
+.reveal #source-049 .native-paragraph:not(:last-child) { margin-bottom: 18px; }

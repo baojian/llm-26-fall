@@ -1,18 +1,18 @@
 # Source assets
 
-All lecture artwork comes from the instructor-supplied
+All illustrations come from the instructor-supplied
 `lecture-11-diffusion-language-models.pptx`. Attribution printed in that deck
-is preserved on the corresponding page. No claims, figures, or references
-were added or updated during this conversion.
+remains on the corresponding page. No teaching claims or references were
+changed during conversion.
 
-- `slides/slide-001.svg` through `slides/slide-069.svg`: complete pages from
-  the Microsoft PowerPoint PDF export, converted with PyMuPDF 1.26.7.
-- `media/image29.gif`, `image31.gif`, `image32.gif`, `image33.gif`,
-  `image34.gif`: unchanged animated files extracted from the PPTX.
-- `media/image3.png`: unchanged underlying illustration used to reproduce
-  slide 6 before the original click-to-appear step.
-- `source-manifest.json`: source SHA-256, page and media SHA-256 values,
-  source text, page order, and clickable link geometry.
+- `media/`: 66 original PNG/JPEG/GIF files used by 69 picture instances. Their
+  bytes match the source PPTX; the original crops on slides 6 and 58 are CSS.
+- `media/*-poster.png`: lossless first-frame GIF posters for printing and
+  inactive slides, derived with Pillow 12.1.0.
+- `source-manifest.json`: source SHA-256, source text and TeX, picture SHA-256
+  values, page order, original geometry/crops and source font sizes.
 
-The original PPTX remains the editable source for all objects. The SVG page
-imports provide the visual baseline for a future native Reveal.js revision.
+Headings, body text, lists, equations and references are native HTML/KaTeX in
+`../slides.md`. No full-slide SVG/PNG is loaded by the deck. Text embedded in
+illustrations remains part of the original picture. Four red annotation
+rectangles are native CSS outlines.

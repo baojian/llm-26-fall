@@ -1,60 +1,80 @@
 # Lecture 11 — Diffusion Language Models
 
-This is the unchanged-content baseline of the instructor's
-`lecture-11-diffusion-language-models.pptx`, prepared on November 18, 2026
-(Asia/Shanghai). It preserves all 69 pages in their original order, including
-the original course label, date, wording, equations, figures, citations, and
-page numbers. Content improvements are deferred to a later revision.
+Round 2 converts the instructor's PowerPoint into editable Reveal.js content.
+All 69 slides retain their original order, wording, course label, date,
+illustrations, citations, and page numbers. Teaching-content revisions remain
+for a later pass.
 
-Open [the Reveal.js deck](index.html) through the course server:
+## Preview and edit
+
+Run the course server and open the lecture:
 
 ```sh
 uv run python scripts/slides.py serve
 ```
 
-Then visit <http://127.0.0.1:8000/slides/lecture-11/>. The course toolbar,
-keyboard navigation, overview, speaker view, References, and Print use the
-same shared framework as earlier lectures. No notebook or new exercise was
-added because neither exists in the supplied deck.
+<http://127.0.0.1:8000/slides/lecture-11/>
 
-## Preservation format
+- Edit headings, paragraphs, references, and equations directly in
+  [slides.md](slides.md). The 180 text boxes are real HTML, not page images.
+- The 31 equations use editable TeX inside `$...$` delimiters and the course's
+  local KaTeX renderer. Original mathematical notation and wording are retained.
+- The 69 illustration instances use 66 original picture files, including five
+  GIFs. Text inside paper screenshots and diagrams remains part of those images.
+- [native-layout.css](native-layout.css) records the original positions and run
+  typography. Each text box has a stable `data-source-text-id`; CSS class names
+  connect it to its geometry and text styles. [native.css](native.css) contains
+  common layout rules and the small slide 49 spacing adjustment for KaTeX.
+- For a later approved content revision, update the manifest's expected
+  `paragraphs` alongside the HTML/TeX; retain `original_paragraphs` and source
+  hashes as the historical baseline.
+- [demo.js](demo.js) manages GIF playback. Slide 6's second picture is a Reveal
+  fragment. Print displays its final state and first-frame GIF posters.
 
-Microsoft PowerPoint exported the original deck to PDF. Each PDF page was
-converted into a self-contained SVG with glyph outlines and embedded images,
-preserving typography without requiring the original fonts on classroom
-computers. These are vector page imports, not individually editable HTML
-text boxes. Edit or rebuild individual pages in a later content revision.
+The deck keeps the course toolbar, keyboard navigation, overview, speaker view,
+References, and Print. No notebook or new exercise was added. The PowerPoint
+has no authored speaker notes; the content is now visible HTML rather than a
+transcript hidden in notes.
 
-[slides.md](slides.md) contains the original page sequence, accessible titles,
-and verbatim extracted text in speaker notes. The source has no authored
-speaker notes. [The manifest](assets/source-manifest.json) records source and
-asset hashes, source XML page names, text, and link rectangles. Mathematical
-layout is preserved in the SVG; the extracted text is an editing aid, not a
-replacement for the rendered equations. Text inside source pictures remains
-in those pictures.
+## Preservation and limitations
 
-The five original GIFs run on slides 31, 33, and 34. Slide 6 retains its
-original click-to-appear illustration. Print shows the final illustration
-and the original PowerPoint poster frames for GIFs. Original hyperlinks
-remain clickable, including the picture link on slide 44 omitted by the
-PowerPoint PDF exporter.
+The source design uses Tahoma with occasional font overrides. CSS preserves
+those font choices with system fallbacks. Browser font metrics and KaTeX cause
+small line-wrap and paragraph-spacing differences from PowerPoint. Source
+font sizes are retained; text is not automatically shrunk. In slide 49, three
+paragraph gaps are reduced by 6px to accommodate inline math without overlap.
+Original small citations and labels are retained for this unchanged-content
+revision.
 
-## Rebuild and check
+[The manifest](assets/source-manifest.json) records the source PPTX hash,
+original DrawingML text, editable TeX/text, text-box IDs, source font sizes,
+illustration geometry/crops, and image hashes. `mc:Choice` is used for modern
+math, avoiding duplicated legacy fallback pictures. Main text is searchable
+and selectable in the browser and PDF. Illustration labels remain raster text.
 
-Export all 69 pages with Microsoft PowerPoint for Mac, then run:
+The first round's full-slide SVGs have been removed from the current deck.
+The earlier vector baseline remains in Git history. Original image files are
+loaded through Reveal's lazy image support; all runtime resources are local.
+
+## Rebuild and verify
+
+Routine edits should change the HTML/TeX and CSS directly. Rebuilding replaces
+those edits with a new conversion of the recorded source PPTX. The original
+PowerPoint is kept outside the repository.
 
 ```sh
-uv run --with pymupdf==1.26.7 python slides/lecture-11/import_source.py SOURCE.pptx POWERPOINT_EXPORT.pdf
+uv run --with pillow==12.1.0 python slides/lecture-11/build_native.py SOURCE.pptx
 npm --prefix slides run check -- lecture-11
 npm --prefix slides run pdf -- lecture-11
+node slides/lecture-11/check-demo.mjs http://127.0.0.1:8000
+uv run python -m pytest tests/test_lecture_11_math.py -q
 ```
 
-The source PPTX and intermediate PDF are not committed. The importer uses
-PyMuPDF only during authoring; viewing needs no Python or external network
-requests. Source-preservation metadata enables complete-frame checks without
-changing the layout requirements for ordinary course slides. Original small
-figure labels are deliberately retained in this baseline.
+The builder verifies the source hash. Pillow is only an authoring dependency
+for lossless first-frame GIF posters. Viewing requires neither Python nor a
+network connection to an external service.
 
-Review artifacts remain under `slides/.checks/lecture-11/`. The lecture's
-`check-demo.mjs` checks media hashes, hyperlink preservation, and the click
-sequence against a running course server.
+Checks cover source text/order, visible native headings, source font sizes,
+clipping, image hashes/crops, math rendering, text selection/editing, GIF
+playback, links, click reveals, and PDF output. Review artifacts are kept in
+ignored `slides/.checks/lecture-11/`.
