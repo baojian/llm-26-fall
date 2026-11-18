@@ -10,7 +10,7 @@
     {
       "id": "source-001",
       "number": 1,
-      "title": "Diffusion language models",
+      "title": "Diffusion models and diffusion language models",
       "source_xml": "ppt/slides/slide1.xml",
       "original_title": "Lecture 11 – Diffusion Language Models",
       "source_xml_sha256": "833f7f2114101577328c9d3dfef55951337ed8fcc55579e54794df6adeb73baa",
@@ -93,7 +93,7 @@
         {
           "id": "cover-title",
           "paragraphs": [
-            "Diffusion language models"
+            "Diffusion models and diffusion language models"
           ],
           "font_sizes": [
             68
@@ -7893,7 +7893,7 @@
   ],
   "adaptations": {
     "file": "adaptations.json",
-    "sha256": "679c3aa0ecbe3858ee6a56668a55d312d9a943e91f29afd3d335cb9e91da3091",
+    "sha256": "2e43e916866663fad0399dd0475a80ba7be0bb3835ec33e92e830981cd3cc646",
     "description": "Revised headings, standard course cover, and removed source page numbers."
   }
 }

@@ -16,11 +16,13 @@ notes after editing the matching Markdown with
 
 The [current course plan](course-revision.html) builds on the completed
 post-training sequence and Lecture 10's data/evaluation materials. It provides
-timed preparation routes for Lectures 11–16: efficient adaptation and
-distillation, retrieval, inference and test-time compute, agents, masked
-diffusion, and project synthesis. Each route includes readings, proposed
-classroom exercises, expected evidence and a CPU fallback.
-Future decks and notebooks still need preparation and verification. Edit
+the released [Lecture 11 slides](../slides/lecture-11/) on diffusion models and
+diffusion language models, from image denoising to Mercury, LLaDA and Dream.
+It also provides timed preparation routes for Lectures 12–16: retrieval,
+inference and test-time compute, agents, a masked-diffusion follow-up, and
+project synthesis. These future routes include readings, proposed classroom
+exercises, expected evidence and a CPU fallback; their decks and notebooks
+still need preparation and verification. Edit
 [the Markdown source](course-revision.md); the same builder generates its HTML.
 
 ## Other course readings

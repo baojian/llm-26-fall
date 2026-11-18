@@ -55,7 +55,7 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
 | 8 | Wed, Oct 28, 2026 | [InstructGPT, SFT and reward models](lecture-08-instructgpt.html) | A2 due **Sat, Oct 31** |
 | 9 | Wed, Nov 4, 2026 | [Reinforcement learning, REINFORCE and PPO](lecture-09-policy-optimization.html) | — |
 | 10 | Wed, Nov 11, 2026 | [Data preparation, evaluation and experimental design](lecture-10-data-evaluation.html) | Quiz 4; [A3 release Friday, Nov 13](../assignments/a3-sft-rm-ppo/README.md) |
-| 11 | Wed, Nov 18, 2026 | [Diffusion Language Models](../slides/lecture-11/) | — |
+| 11 | Wed, Nov 18, 2026 | [Diffusion models and diffusion language models](../slides/lecture-11/) | — |
 | 12 | Wed, Nov 25, 2026 | [Retrieval and retrieval-augmented generation](course-revision.html#lecture-12-retrieval-and-rag) | Project progress update due |
 | 13 | Wed, Dec 2, 2026 | [Efficient inference and computation at test time](course-revision.html#lecture-13-inference-and-computation-at-test-time) | A3 due Friday, Dec 4 |
 | 14 | Wed, Dec 9, 2026 | [Agents and tool use](course-revision.html#lecture-14-agents-and-tool-use) | Quiz 5 |
@@ -78,10 +78,13 @@ Weeks follow the university academic calendar: they run Sunday through Saturday,
   REINFORCE/PPO, GRPO and DPO. The Lecture 09 supplement now serves as review;
   Lecture 10's data/evaluation materials remain the experiment-protocol
   reference. Assignment dates, published quiz scope and weights are unchanged.
-- Lectures 11–16 link to preparation plans, not completed slide packages.
-  Lecture 11 adds LoRA/QLoRA and distillation; Lectures 12–13 develop retrieval
-  and inference/test-time compute. Agents move to Lecture 14, followed by
-  masked diffusion in Lecture 15. Quiz 5 stays on December 9 and covers
+- **November 18 update:** Lecture 11 covers diffusion models and diffusion
+  language models, with its slide deck linked above. It introduces forward
+  noising, learned denoising, training and sampling, then Mercury, LLaDA and
+  Dream. This replaces the earlier adaptation/distillation plan for Lecture 11.
+- Lectures 12–16 retain preparation plans. Lectures 12–13 develop retrieval
+  and inference/test-time compute. Agents remain in Lecture 14, followed by
+  the planned masked-diffusion follow-up in Lecture 15. Quiz 5 stays on December 9 and covers
   previously taught core material, not the new agent lesson.
 - December 23 includes guided revision of project claims and evidence.
   Project checkpoints remain individual written submissions through eLearning.

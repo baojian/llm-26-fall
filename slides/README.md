@@ -126,7 +126,9 @@ See [the notes](../docs/lecture-10-data-evaluation.html),
 [asset provenance](lecture-10/assets/README.md).
 All three notebooks run offline on CPU with the standard library (0 GPU-hours).
 
-[Lecture 11](lecture-11/index.html) preserves all 69 slides of the instructor's
+[Lecture 11](lecture-11/index.html) covers diffusion models and diffusion
+language models: forward noising and learned denoising, autoencoder/VAE and
+DDPM/D3PM foundations, then Mercury, LLaDA and Dream. It preserves all 69 slides of the instructor's
 diffusion-language-model PowerPoint in their original order and content-page
 layout. It uses 113 editable HTML text boxes, 31 KaTeX equations, and 69
 original illustration instances, including five GIFs. The click reveal and

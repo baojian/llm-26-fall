@@ -1,6 +1,6 @@
 # Course progress and the remaining six lectures
 
-## Current progress: November 11, 2026
+## Current progress: November 18, 2026
 
 The instructor confirms that Lectures 8–10 have covered InstructGPT, SFT,
 reward models, REINFORCE/PPO, GRPO and DPO. These are prerequisites for the
@@ -9,16 +9,17 @@ now serve as review; Lecture 11 will not repeat that introduction. Lecture 10's
 data preparation, evaluation and experimental-design materials remain the
 protocol reference for the experiments below.
 
-The next six meetings, Lectures 11–16, cover efficient adaptation and
-distillation, retrieval, inference and test-time compute, agents, masked
-diffusion, and research synthesis. Agents move ahead of diffusion so students
-can use the retrieval and inference lessons in a bounded system earlier.
+Lecture 11 covers **diffusion models and diffusion language models**, from
+forward corruption and reverse denoising to discrete text generation.
+Lectures 12–16 retain their planned topics: retrieval, inference and test-time
+compute, agents, a masked-diffusion follow-up, and research synthesis.
 The [current schedule](schedule.md) and [notes index](README.md) carry this
 sequence. Existing assessment dates and weights remain unchanged.
 
-Lectures 01–10 have slide and notebook packages. The sections below are
-**preparation plans for Lectures 11–16**, not a claim that six new decks or demos
-are ready. Lecture 10 has 57 core slides, five offline exercises and an optional
+Lectures 01–10 have slide and notebook packages. Lecture 11 has an available
+[69-slide deck](../slides/lecture-11/) with the instructor's original figures
+and demonstrations. Lectures 12–16 below remain **preparation plans**.
+Lecture 10 has 57 core slides, five offline exercises and an optional
 appendix; its [teaching plan](../slides/lecture-10/teaching-plan.md) reserves
 15 minutes for Quiz 4 after 120 minutes of instruction.
 
@@ -39,17 +40,18 @@ dates and class times use **Asia/Shanghai (UTC+08:00)**.
   training, resource-accounting, and evaluation work from CS336.
 - Build on the completed post-training sequence. Use brief prerequisite checks
   instead of another SFT, PPO, DPO or GRPO derivation. Lecture 11 introduces
-  new parameter-efficiency and teacher–student mechanisms.
-- Carry one small, versioned task collection through adaptation, retrieval,
+  diffusion-based generation of images and language.
+- Carry one small, versioned task collection through retrieval,
   inference and agents where suitable. Keep its evaluation questions held out
-  of teacher generation and tuning. Each class changes one declared factor
+  of model tuning. Each class changes one declared factor
   and produces an interpretable comparison; students need not change projects.
 - Use one individual project per student. No presentations, posters, oral
   defenses, assigned project pods, or shared group deliverables are required.
 - Allow substantial AI assistance. Grade the question, design, evidence,
   interpretation, and reproducibility. More experimental iteration is encouraged;
   code volume and application feature count are not learning objectives.
-- Keep diffusion as one late course session and an advanced project option.
+- Introduce diffusion models and diffusion language models in Lecture 11;
+  retain Lecture 15's planned masked-generation follow-up.
   Remove the requirement to interpret every early topic as a denoising process.
 - Write teaching materials in English, following the repository guidelines.
 
@@ -73,7 +75,7 @@ mandatory curriculum delivered during every meeting.
 | 8 | Oct 28 | InstructGPT, SFT and reward models — taught | Response-token masking and a checked preference-pair likelihood |
 | 9 | Nov 4 | REINFORCE, PPO and GAE — taught | A policy-gradient trace; old-policy versus reference-policy roles |
 | 10 | Nov 11 | Data preparation, evaluation and experimental design | A controlled data-policy comparison, leakage audit and paired uncertainty |
-| 11 | Nov 18 | Efficient adaptation and distillation | A LoRA parameter count, teacher–student loss check and controlled adaptation comparison |
+| 11 | Nov 18 | [Diffusion models and diffusion language models](../slides/lecture-11/) | Explain forward corruption and reverse denoising, then connect continuous and discrete diffusion to text generation |
 | 12 | Nov 25 | Retrieval and RAG | Separate measurements of retrieval and generation failures |
 | 13 | Dec 2 | Efficient inference and computation at test time | A latency/memory comparison and quality-versus-attempt-budget curve |
 | 14 | Dec 9 | Agents and tool use | A bounded tool-use evaluation with inspected traces and costs |
@@ -97,37 +99,25 @@ the instructor's latest coverage update applies to the post-training sequence
 across Weeks 8–10 without assigning every algorithm to a particular meeting.
 Assessment dates remain as listed in the [current schedule](schedule.md).
 
-## Lecture 11: Efficient adaptation and distillation
+## Lecture 11: Diffusion models and diffusion language models
 
-**November 18 · 135 minutes.** How can we transfer useful behavior under a
-small training budget? Start from the familiar SFT objective and independent
-evaluation boundary. Distinguish which parameters we train from where the
-training targets come from.
+**November 18 · 135 minutes.** How can a model generate data by reversing a
+corruption process, and how does this idea apply to language?
+The [69-slide lecture](../slides/lecture-11/) covers both diffusion models and
+diffusion language models, preserving the instructor's explanations,
+equations, illustrations and animated examples.
 
-By the end, students should be able to count LoRA parameters, explain what
-QLoRA stores in low precision, distinguish sequence-level and token-level
-distillation, and design a comparison that measures both gains and regressions.
+| Content | Coverage in the slides |
+| --- | --- |
+| Diffusion intuition and mechanisms | Forward corruption, reverse denoising, training and sampling |
+| Generative-model foundations | Autoencoders, VAEs, VQ-VAE, DDPMs and D3PMs |
+| Diffusion language models | Mercury, LLaDA and Dream, with the original generation demonstrations |
 
-| Period | Teaching route | Student evidence |
-| --- | --- | --- |
-| 1, 45 min | Frozen base weights and low-rank updates; rank and target-layer choices; QLoRA's frozen quantized base versus trainable adapters | E01, 8 min: trace a tiny matrix update, count trainable parameters and identify memory that LoRA does not remove |
-| 2, 45 min | Teacher-generated responses versus soft next-token targets; temperature and KL direction; student-generated prefixes as an on-policy distillation bridge | E02, 8 min: compare hard-target cross-entropy with a teacher–student loss and identify whose prefixes were sampled |
-| 3, 45 min | Compare an unchanged checkpoint, ordinary adaptation and teacher-data adaptation; hold the student, token budget and evaluation protocol fixed | E03, 15 min: audit supplied run records, separate a teacher-data change from a rank change, and report one gain and one regression |
-
-Read [LoRA, Section 4](https://arxiv.org/abs/2106.09685) and
-[QLoRA, Section 3](https://arxiv.org/abs/2305.14314).
-[Generalized Knowledge Distillation](https://arxiv.org/abs/2306.13649) supplies
-the bridge from fixed teacher responses to teacher feedback on student-generated
-sequences; its full training algorithm is optional reading.
-
-Prepare a CPU matrix example, same-vocabulary probability fixtures and a small
-set of saved teacher responses with provenance. Token-level KL needs aligned
-token distributions; sequence-level text targets do not require identical
-tokenizers. Include a teacher error and a held-out failure slice. Teacher
-agreement alone is not evidence of task improvement. The classroom comparison
-may use clearly labeled supplied results; any live run is an optional small
-LoRA experiment, not a requirement to train a large teacher or repeat RLHF.
-This is ungraded practice supporting A3 and the project, with no new A3 rule.
+Use the [references in the deck](../slides/lecture-11/#/references) for the
+papers behind these explanations. The existing figures and demonstrations run
+in the browser on a CPU; classroom viewing requires **0 GPU-hours** and no
+model training. This release contains the slides, with no companion notebook
+or newly assigned exercises. Assessment requirements remain unchanged.
 
 ## Lecture 12: Retrieval and RAG
 
@@ -137,7 +127,7 @@ document IDs carried from retrieval through citation scoring.
 
 Students should distinguish a knowledge-access problem from a parameter-update
 problem, locate failures in the pipeline, and justify a retrieval change with
-held-out evidence. Reuse Lecture 11's task protocol while changing access to
+held-out evidence. Reuse Lecture 10's evaluation protocol while changing access to
 documents rather than the model weights.
 
 | Period | Teaching route | Student evidence |
@@ -214,7 +204,8 @@ optional extensions; its questions remain in the instructor repository.
 
 ## Lecture 15: Masked diffusion language models
 
-**December 16 · 135 minutes.** What changes when a generator can update
+**December 16 · 135 minutes.** This planned follow-up builds on Lecture 11.
+What changes when a generator can update
 multiple positions? Retrieve BERT's masked prediction objective and the causal
 decoder as distinct starting points, then apply Lecture 13's cost accounting.
 
@@ -267,8 +258,9 @@ No presentation, poster or new oral assessment is introduced.
 
 ## Preparation status and compute budgets
 
-The six routes above are plans. Each needs a finished deck, checked examples
-and a classroom rehearsal. Exercise IDs and times are proposed authoring
+Lecture 11's 69-slide package is available. The five routes for Lectures 12–16
+remain plans; each needs a finished deck, checked examples and a classroom
+rehearsal. Their exercise IDs and times are proposed authoring
 targets, not claims that new notebooks are available; prepare expected answers
 and validate them before release. All classroom activities are ungraded.
 Preserve a CPU route for every lesson. The following
@@ -277,7 +269,7 @@ allocations or claims about an already-tested model.
 
 | Lecture | Minimum route to prepare | Optional live rehearsal: memory per GPU; total GPU-hours |
 | --- | --- | --- |
-| 11 | CPU matrix/loss fixtures, saved teacher responses and run records; 0 GPU-hours | One 16–24 GB GPU; up to 1 GPU-hour total for a short LoRA run on a model of at most 1B parameters, using saved teacher data |
+| 11 | Available slides, figures and demonstrations in a CPU browser; 0 GPU-hours | None required; no model training |
 | 12 | CPU retrieval and saved responses; 0 GPU-hours | One 16–24 GB GPU; up to 0.25 GPU-hours for generation across all runs |
 | 13 | CPU cache example and saved candidate traces; 0 GPU-hours | One 16–24 GB GPU; up to 0.25 GPU-hours for profiling across all runs |
 | 14 | CPU tools and replayed episodes; 0 GPU-hours | One 16–24 GB GPU; up to 0.25 GPU-hours for bounded generation across all runs |
@@ -304,9 +296,9 @@ available as references; do not delete their source files.
 | L06 GPT/pretraining | Existing GPT training notebook, AdamW, scheduling, checkpoint use, HellaSwag example | ELMo history and repeated beam-search variants shortened; model-generation catalog optional | Make training configuration and failure diagnosis explicit outcomes |
 | L07 benchmarks | Representative task examples and distinctions between loss and downstream scores | Dataset-by-dataset GLUE/SuperGLUE catalog and many leaderboard slides become reference tables | Contamination, prompt sensitivity, uncertainty, metrics, and error analysis |
 | BERT notebook | Masked prediction, contextual embeddings, classification example | Standalone BERT/SpanBERT family survey | Integrate architecture comparison with evaluation and retrieval |
-| SFT/RM/PPO notebook | SFT, response-token masking, preference data, reward diagnostics; PPO/GAE as taught | Full classroom notebook implementation optional; A3 separately requires its fixed GPT-2 SFT/RM/PPO recipe | Post-training foundations completed across Weeks 8–10; efficient adaptation/distillation in Week 11 and agent evaluation in Week 14 |
+| SFT/RM/PPO notebook | SFT, response-token masking, preference data, reward diagnostics; PPO/GAE as taught | Full classroom notebook implementation optional; A3 separately requires its fixed GPT-2 SFT/RM/PPO recipe | Post-training foundations completed across Weeks 8–10; independent evaluation and the planned agent lesson in Week 14 |
 | L10 retrieval/RAG | TF-IDF/BM25, dense retrieval, reranking, pipeline and evaluation | Detailed ColBERT internals optional | Evidence support, abstention, and retrieval-versus-generation failure analysis |
-| Frontier sessions | Practical inference, one diffusion session, one agent task | Repeated RLHF content folded into alignment; broad frontier survey optional | Workload-specific measurement and focused project investigation |
+| Frontier sessions | Practical inference, diffusion foundations and a planned masked-generation follow-up, one agent task | Repeated RLHF content folded into alignment; broad frontier survey optional | Workload-specific measurement and focused project investigation |
 
 Spring sources inspected:
 [course outline](https://baojian.github.io/llm-26/),
@@ -330,7 +322,7 @@ requirements for this course.
 | L13–14 data; A4 | Week 10; Lecture 02 tasks, A2 or project | Small supplied corpus, filtering/deduplication, and controlled comparison |
 | L09/L11 scaling; A3 | Week 7 | Fit supplied run results and optionally add small local runs; no Stanford API dependency |
 | L12 evaluation | Week 10 and project | Choose appropriate tasks, audit validity, and qualify conclusions |
-| L15–16 post-training; A5 | Weeks 8–10; A3 context | SFT/RM/PPO, DPO and GRPO already covered; Week 11 builds on them with adaptation efficiency and distillation; A3 requires its supplied GPT-2 SFT/RM/PPO recipe |
+| L15–16 post-training; A5 | Weeks 8–10; A3 context | SFT/RM/PPO, DPO and GRPO already covered; A3 requires its supplied GPT-2 SFT/RM/PPO recipe |
 | L10 inference; A2 systems selections | Week 13 | Measure caching/batching/quantization; custom kernels and distributed training optional |
 
 Source repositories:

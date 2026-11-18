@@ -37,3 +37,7 @@ html.reveal-print .reveal .slides section.course-cover { padding: 20px 64px 58px
 html.reveal-print .pdf-page:has(.native-slide) .slide-number-pdf { display: none !important; }
 /* KaTeX needs slightly more line height than the source inline equations. */
 .reveal #source-049 .native-paragraph:not(:last-child) { margin-bottom: 18px; }
+/* Arial on Linux is wider than Tahoma for these short source links. The
+   original 141px content width wrapped the label below the slide edge. */
+.reveal .native-slide .native-text[data-source-text-id="s031-text9"],
+.reveal .native-slide .native-text[data-source-text-id="s032-text6"] { width: 200px; }

@@ -328,7 +328,7 @@ verifier, not a trained-policy result. Even passing both tests does not prove
 general correctness. Once a check guides a repair or candidate selection,
 it is development evidence; retain a separate final evaluation for the claim.
 This revisits the post-training objectives covered across Lectures 8–10 and
-prepares the independent evaluation of Lecture 11's adaptation experiments.
+supports independent evaluation of later generation, retrieval and agent experiments.
 For an empirical study of optimizing a proxy, read
 [Gao et al., Scaling Laws for Reward Model Overoptimization](https://arxiv.org/abs/2210.10760).
 Their reward-model experiments are distinct from this two-function illustration.
@@ -413,6 +413,6 @@ E02 also checks why disjoint question IDs do not establish an unseen-article spl
 - [Lecture 10 reading guide and versioned benchmark examples](../slides/lecture-10/optional-reading.md).
 - [Lecture 08: SFT and reward-model data](lecture-08-instructgpt.html).
 - [Lecture 09: policy-training and evaluation distributions](lecture-09-policy-optimization.html).
-- [Lecture 11 plan: efficient adaptation and distillation](course-revision.html#lecture-11-efficient-adaptation-and-distillation).
+- [Lecture 11: diffusion models and diffusion language models](../slides/lecture-11/).
 - [FineWeb methods and controlled data comparisons](https://arxiv.org/abs/2406.17557).
 - [DataComp-LM benchmark design](https://arxiv.org/abs/2406.11794).

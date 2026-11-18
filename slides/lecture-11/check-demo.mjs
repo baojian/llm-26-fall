@@ -19,7 +19,7 @@ assert.ok(originalNumbers.every(original => !textBoxes.some(box => box.id === or
   'Remove the original numeric footers from every slide.');
 const expectedCover = [
   ['cover-course', 'CS40008.01'],
-  ['cover-title', 'Diffusion language models'],
+  ['cover-title', 'Diffusion models and diffusion language models'],
   ['cover-subtitle', 'Lecture 11 · NLP and LLMs'],
   ['cover-byline', 'Baojian Zhou\nSchool of Data Science\nFudan University\nNovember 18, 2026'],
 ];

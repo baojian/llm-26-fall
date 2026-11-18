@@ -1,9 +1,10 @@
 // Chinese translations for the English course page. Keep keys in sync with index.html.
 window.courseTranslations = {
-  "Diffusion Language Models": "扩散语言模型",
-  "Image diffusion, autoencoders, VAEs, VQ-VAE, DDPMs, D3PMs, Mercury, LLaDA and Dream.": "图像扩散、自编码器、VAE、VQ-VAE、DDPM、D3PM、Mercury、LLaDA 与 Dream。",
-  "Original slide references": "原课件参考资料",
-  "Lecture 11 preserves the instructor's diffusion-language-model slides. Lectures 12–16 link to preparation plans with readings, classroom activities and estimated compute budgets.": "第 11 讲保留教师原有的扩散语言模型课件。第 12–16 讲链接到备课计划，包含阅读材料、课堂活动和预计算力预算。",
+  "Diffusion models and diffusion language models": "扩散模型与扩散语言模型",
+  "How does learning to reverse noise generate images and text?": "如何通过学习逆转加噪过程来生成图像和文本？",
+  "Forward noising and learned denoising; autoencoders, VAEs and VQ-VAE; continuous and discrete diffusion (DDPMs and D3PMs); diffusion language models, including Mercury, LLaDA and Dream. Training and sampling, generation order, and quality–speed trade-offs.": "前向加噪与学习去噪；自编码器、VAE 与 VQ-VAE；连续和离散扩散（DDPM 与 D3PM）；扩散语言模型，包括 Mercury、LLaDA 与 Dream。训练和采样、生成顺序，以及质量与速度的权衡。",
+  "Slide references": "课件参考资料",
+  "Lecture 11 introduces diffusion models for images, then extends denoising to language generation. Its slides cover the foundations, training and sampling processes, and diffusion language models. Lectures 12–16 link to preparation plans with readings, classroom activities and estimated compute budgets.": "第 11 讲先介绍图像扩散模型，再将去噪方法扩展到语言生成。课件涵盖基础概念、训练与采样过程，以及扩散语言模型。第 12–16 讲链接到备课计划，包含阅读材料、课堂活动和预计算力预算。",
   "Plan:": "计划：",
   "Efficient adaptation and distillation": "高效适配与知识蒸馏",
   "How can we transfer useful behavior under a small training budget?": "如何在有限训练预算下迁移有用的能力？",

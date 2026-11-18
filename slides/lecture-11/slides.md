@@ -4,7 +4,7 @@
 <p class="eyebrow">CS40008.01</p>
 </div>
 <div class="native-text" data-source-text-id="cover-title">
-<h1>Diffusion language models</h1>
+<h1>Diffusion models and diffusion language models</h1>
 </div>
 <div class="native-text" data-source-text-id="cover-subtitle">
 <p class="subtitle">Lecture 11 · NLP and LLMs</p>

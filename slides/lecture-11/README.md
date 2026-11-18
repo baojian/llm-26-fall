@@ -1,4 +1,9 @@
-# Lecture 11 — Diffusion Language Models
+# Lecture 11 — Diffusion models and diffusion language models
+
+The lecture introduces forward noising and learned denoising for image
+generation, builds the autoencoder/VAE and DDPM/D3PM foundations, then covers
+diffusion language models through Mercury, LLaDA and Dream. Training, sampling,
+generation order, and quality–speed trade-offs connect the two parts.
 
 The instructor's PowerPoint is converted into editable Reveal.js content.
 All 69 slides retain their original order, body text, equations, illustrations,
@@ -25,7 +30,8 @@ uv run python scripts/slides.py serve
 - [native-layout.css](native-layout.css) records the original positions and run
   typography. Each text box has a stable `data-source-text-id`; CSS class names
   connect it to its geometry and text styles. [native.css](native.css) contains
-  common layout rules and the small slide 49 spacing adjustment for KaTeX.
+  common layout rules, the slide 49 spacing adjustment for KaTeX, and the
+  footer-link width adjustment for Linux font fallback.
 - For a later approved content revision, update the manifest's expected
   `paragraphs` alongside the HTML/TeX; retain `original_paragraphs` and source
   hashes as the historical baseline.
@@ -48,7 +54,10 @@ those font choices with system fallbacks. Browser font metrics and KaTeX cause
 small line-wrap and paragraph-spacing differences from PowerPoint. Source
 font sizes on content pages are retained; text is not automatically shrunk. In slide 49, three
 paragraph gaps are reduced by 6px to accommodate inline math without overlap.
-Original small citations and illustration labels are retained.
+On slides 31–32, the LLaDA link boxes are widened from 160.25px to 200px
+to keep the original 24px label on one line when Linux falls back to Arial.
+Their position, wording, and font size are unchanged. Original small citations
+and illustration labels are retained.
 
 [The manifest](assets/source-manifest.json) records the source PPTX hash,
 original DrawingML text, editable TeX/text, text-box IDs, source font sizes,
