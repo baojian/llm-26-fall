@@ -248,7 +248,22 @@ try {
     await page.locator(`#lecture-${number}`).screenshot({ path: path.join(output, `course-week-${number}-zh.png`) });
   }
   for (const language of ['en', 'zh']) {
-    for (const number of ['11', '12', '13', '14', '15', '16']) {
+    await page.goto(`${origin}/index.html?lang=${language}`, { waitUntil: 'networkidle' });
+    const releasedRow = page.locator('#lecture-11');
+    const releasedTitle = await releasedRow.locator('td').nth(2).locator('strong').textContent();
+    assert.match(releasedTitle, language === 'en' ? /diffusion models.*diffusion language models/i : /扩散模型.*扩散语言模型/);
+    assert.doesNotMatch(await releasedRow.textContent(), /LoRA|QLoRA|distillation|蒸馏|To be updated|待更新/);
+    const slides = releasedRow.locator('a[data-local-path="/slides/lecture-11/"]');
+    assert.equal(await slides.count(), 1, 'Lecture 11 links to its published slides.');
+    await releasedRow.screenshot({ path: path.join(output, `course-week-11-${language}.png`) });
+    const [deck] = await Promise.all([context.waitForEvent('page'), slides.click()]);
+    deck.on('pageerror', error => errors.push(error.message));
+    await deck.waitForLoadState('networkidle');
+    await deck.evaluate(() => window.courseReady);
+    assert.equal(await deck.locator('#course-error').isVisible(), false);
+    assert.equal(await deck.evaluate(() => Reveal.getTotalSlides()), 69);
+    await deck.close();
+    for (const number of ['12', '13', '14', '15', '16']) {
       await page.goto(`${origin}/index.html?lang=${language}`, { waitUntil: 'networkidle' });
       const row = page.locator(`#lecture-${number}`);
       const plan = row.locator('a[href^="docs/course-revision.html#"]');
@@ -264,7 +279,7 @@ try {
   assert.deepEqual(errors, [], 'Browser errors or external runtime dependencies.');
   console.log('Passed bilingual articles, six accessible diagrams, tabs, copying, anchors, mobile layout, print, offline viewing, shared language controls, and project catalog filter/reset/topic navigation.');
   console.log('Review images: slides/.checks/notes/');
-  console.log('Passed Week 8–10 notes, the remaining-six plan, equations, local links, mobile layouts, print and bilingual course rows.');
+  console.log('Passed Week 8–10 notes, Lecture 11 slide navigation, remaining-course plans, equations, local links, mobile layouts, print and bilingual course rows.');
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));
