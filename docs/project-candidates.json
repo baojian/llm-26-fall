@@ -575,6 +575,13 @@
       "url": "https://arxiv.org/abs/2406.07524",
       "kind": "Research paper"
     },
+    "uncode": {
+      "title": "Empirical Analysis of Decoding Biases in Masked Diffusion Models",
+      "authors": "Huang et al.",
+      "year": "ACL 2026",
+      "url": "https://aclanthology.org/2026.acl-long.311/",
+      "kind": "Research paper"
+    },
     "whisper": {
       "title": "Robust Speech Recognition via Large-Scale Weak Supervision",
       "authors": "Radford et al.",
@@ -2032,13 +2039,15 @@
       "fallback": "Use 50 prompts and outputs capped at 64 tokens; no conversion training or 8B model is needed.",
       "sources": [
         "dllm",
-        "mdlm"
+        "mdlm",
+        "uncode"
       ],
       "upstream": "",
       "status": "Unreviewed",
       "reading_notes": {
         "dllm": "Load Tiny-A2D and inspect the released sampler.",
-        "mdlm": "Understand masked prediction and unmasking schedules."
+        "mdlm": "Understand masked prediction and unmasking schedules.",
+        "uncode": "Optional: Read Section 3, especially Figure 2, for a comparison of confidence and uniform unmasking on GSM8K and Sudoku and an example of tracing when each token position is unmasked."
       },
       "resources": {
         "max_gpus": 1,
